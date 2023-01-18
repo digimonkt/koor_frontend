@@ -1,4 +1,5 @@
 import AuthLayout from "./layout";
+import LogoutForm from "./logout";
 const registration = {
   title: "Register",
   subTitle: "I want to register as...",
@@ -9,3 +10,4 @@ const login = {
 };
 export const Registration = AuthLayout(registration);
 export const Login = AuthLayout(login);
+export const Logout = LogoutForm;
