@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { UnauthorizedRoute } from "./utils/routes";
 
 function App() {
-  const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   return (
     <div className="App">
       <Header />
