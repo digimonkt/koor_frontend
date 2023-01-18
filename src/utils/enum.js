@@ -1,5 +1,5 @@
 export const USER_ROLES = Object.freeze({
-  jobSeeker: "jobSeeker",
+  jobSeeker: "job-seeker",
   employer: "employer",
   vendor: "vendor",
 });

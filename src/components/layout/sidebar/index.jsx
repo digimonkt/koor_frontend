@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { SVG } from "../../../assets/svg";
 import { USER_ROLES } from "../../../utils/enum";
+import { navigationOptions } from "./navigation";
 
 function Sidebar() {
   const { role, currentUser } = useSelector((state) => state.auth);
@@ -37,12 +38,14 @@ function Sidebar() {
             }`}
           >
             <li>
-              <Link to="/profile">
-                <span className="menu-icon">
-                  <SVG.DashboardIcon />
-                </span>
-                <span>Dashboard</span>
-              </Link>
+              {navigationOptions(role).map((option) => (
+                <Link to={option.to} key={option.id}>
+                  <span className="menu-icon">
+                    <option.icon />
+                  </span>
+                  <span>{option.title}</span>
+                </Link>
+              ))}
             </li>
           </ul>
         </PerfectScrollbar>

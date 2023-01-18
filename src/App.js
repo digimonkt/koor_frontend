@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { UnauthorizedRoute } from "./utils/routes";
 
 function App() {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, role } = useSelector((state) => state.auth);
   return (
     <div className="App">
       <Header />
@@ -25,6 +25,7 @@ function App() {
         {UNAUTHENTICATED_ROUTES.map((route) => {
           return (
             <Route
+              key={route.id}
               path={route.path}
               element={
                 <UnauthorizedRoute>

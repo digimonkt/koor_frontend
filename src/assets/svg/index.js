@@ -11,7 +11,17 @@ import { ReactComponent as EyeOff } from "./eyeOff.svg";
 import { ReactComponent as EyeOpen } from "./eyeOpen.svg";
 import { ReactComponent as UserIcon } from "./user.svg";
 import { ReactComponent as DashboardIcon } from "./dashboard.svg";
+import { ReactComponent as ProfileIcon } from "./profile.svg";
+import { ReactComponent as CircleRightIcon } from "./rightCircle.svg";
+import { ReactComponent as SaveIcon } from "./save.svg";
+import { ReactComponent as MessageIcon } from "./message.svg";
+import { ReactComponent as CalenderIcon } from "./calender.svg";
+import { ReactComponent as JobsIcon } from "./jobs.svg";
+import { ReactComponent as TendersIcon } from "./tenders.svg";
 export const SVG = {
+  CalenderIcon,
+  JobsIcon,
+  TendersIcon,
   KoorLogo,
   SearchIcon,
   NotificationIcon,
@@ -25,4 +35,8 @@ export const SVG = {
   EyeOpen,
   UserIcon,
   DashboardIcon,
+  ProfileIcon,
+  CircleRightIcon,
+  SaveIcon,
+  MessageIcon,
 };

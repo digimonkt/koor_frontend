@@ -4,10 +4,14 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function UnauthenticatedRouteComponent({ children, redirectURL }) {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { isLoggedIn, role } = useSelector((state) => state.auth);
   const location = useLocation();
   if (isLoggedIn) {
-    return <Navigate to={location.state?.from || redirectURL} />;
+    return (
+      <Navigate
+        to={location.state?.from || redirectURL || `../${role}/my-profile`}
+      />
+    );
   }
   return <div>{children}</div>;
 }
@@ -15,9 +19,6 @@ function UnauthenticatedRouteComponent({ children, redirectURL }) {
 UnauthenticatedRouteComponent.propTypes = {
   children: PropTypes.element.isRequired,
   redirectURL: PropTypes.string,
-};
-UnauthenticatedRouteComponent.defaultProps = {
-  redirectURL: "/home",
 };
 
 export default UnauthenticatedRouteComponent;
