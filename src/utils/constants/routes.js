@@ -1,27 +1,50 @@
-import AuthenticatedRouteExample from "../../pages/authenticatedRouteExample";
-import PublicRouteExample from "../../pages/publicRouteExample";
-import UnauthenticatedRouteExample from "../../pages/unauthenticatedRouteExample";
+import { Login, Registration } from "src/pages/auth";
+import EmployerProfile from "src/pages/employer/myProfile";
+import JobSeekerProfile from "src/pages/jobSeeker/myProfile";
+import VendorProfile from "src/pages/vendor/myProfile";
 
-export const PUBLIC_ROUTE = [
+// prefix => `/`
+export const ROUTES = [
   {
-    id: "publicRouteExample",
+    id: "login",
+    name: "login",
+    path: "/login",
+    component: Login,
+  },
+  {
+    id: "register",
+    name: "register",
     path: "/",
-    element: PublicRouteExample,
+    component: Registration,
   },
 ];
 
-export const AUTHENTICATED_ROUTE = [
+// prefix => `/job-seeker`
+export const JOB_SEEKER_ROUTES = [
   {
-    id: "authenticatedRouteExample",
-    path: "/authenticated",
-    element: AuthenticatedRouteExample,
+    id: "myProfile",
+    name: "My Profile",
+    path: "/my-profile",
+    component: JobSeekerProfile,
   },
 ];
 
-export const UNAUTHENTICATED_ROUTE = [
+// prefix => `/vendor`
+export const VENDOR_ROUTES = [
   {
-    id: "unauthenticatedRouteExample",
-    path: "/unauthenticated",
-    element: UnauthenticatedRouteExample,
+    id: "myProfile",
+    name: "My Profile",
+    path: "/my-profile",
+    component: VendorProfile,
+  },
+];
+
+// prefix => `/employer`
+export const EMPLOYER_ROUTES = [
+  {
+    id: "myProfile",
+    name: "My Profile",
+    path: "/my-profile",
+    component: EmployerProfile,
   },
 ];
