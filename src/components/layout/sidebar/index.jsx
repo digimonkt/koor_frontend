@@ -1,4 +1,4 @@
-import { Avatar, Box } from "@mui/material";
+import { Avatar, Box, Stack } from "@mui/material";
 import React from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link } from "react-router-dom";
@@ -50,6 +50,12 @@ function Sidebar() {
           </ul>
         </PerfectScrollbar>
       </div>
+      <Stack direction="row" spacing={2} alignItems="center">
+        <span className="logout-icon">
+          <SVG.LogoutIcon />
+        </span>
+        <span>Log Out</span>
+      </Stack>
     </Box>
   );
 }

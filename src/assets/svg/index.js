@@ -24,7 +24,9 @@ import { ReactComponent as MessageIcon } from "./message.svg";
 import { ReactComponent as CalenderIcon } from "./calender.svg";
 import { ReactComponent as JobsIcon } from "./jobs.svg";
 import { ReactComponent as TendersIcon } from "./tenders.svg";
+import { ReactComponent as LogoutIcon } from "./logout.svg";
 export const SVG = {
+  LogoutIcon,
   CalenderIcon,
   JobsIcon,
   TendersIcon,
