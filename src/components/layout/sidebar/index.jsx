@@ -6,12 +6,12 @@ import { useSelector } from "react-redux";
 import { SVG } from "../../../assets/svg";
 import { USER_ROLES } from "../../../utils/enum";
 import { navigationOptions } from "./navigation";
-
 function Sidebar() {
   const { role, currentUser } = useSelector((state) => state.auth);
   const location = useLocation();
-  return (
-    <Box component="nav" sx={{ width: { sm: 300 }, flexShrink: { sm: 0 } }}>
+
+  const drawer = (
+    <>
       <div className="p-3 border-top border-bottom text-center user-details savetender">
         <Avatar
           sx={{
@@ -77,6 +77,11 @@ function Sidebar() {
           </Stack>
         </Link>
       </div>
+    </>
+  );
+  return (
+    <Box component="nav" sx={{ width: { sm: 300 }, flexShrink: { sm: 0 } }}>
+      {drawer}
     </Box>
   );
 }
