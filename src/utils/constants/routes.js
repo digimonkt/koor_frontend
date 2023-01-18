@@ -1,22 +1,29 @@
-import { Login, Registration } from "../../pages/auth";
+import { Login, Logout, Registration } from "../../pages/auth";
 import EmployerProfile from "../../pages/employer/myProfile";
 import JobSeekerProfile from "../../pages/jobSeeker/myProfile";
 import VendorProfile from "../../pages/vendor/myProfile";
 
 // prefix => `/`
-export const ROUTES = [];
+export const ROUTES = [
+  {
+    id: "logout",
+    name: "Logout",
+    path: "/logout",
+    component: Logout,
+  },
+];
 
 // prefix => `/`
 export const UNAUTHENTICATED_ROUTES = [
   {
     id: "login",
-    name: "login",
+    name: "Login",
     path: "/login",
     component: Login,
   },
   {
     id: "register",
-    name: "register",
+    name: "Register",
     path: "/",
     component: Registration,
   },
