@@ -1,15 +1,24 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { FilledButton } from "../../components/button";
 import { LabeledInput } from "../../components/input";
 import { setIsLoggedIn } from "../../redux/slice/user";
 import { USER_ROLES } from "../../utils/enum";
 
 function RegistrationForm({ role }) {
+  // navigate
+  const navigate = useNavigate();
+
+  // redux dispatcher
   const dispatch = useDispatch();
+
   const handleRegister = () => {
     dispatch(setIsLoggedIn(true));
+
+    navigate(`/${role}/my-profile/job-criteria`);
   };
+
   return (
     <div>
       <div className="form-content">

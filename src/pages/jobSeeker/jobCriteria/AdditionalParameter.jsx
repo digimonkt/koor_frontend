@@ -138,7 +138,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
         <Cbutton
           variant="outlined"
           component={Link}
-          to="/profile/add-info"
+          to="/job-seeker/my-profile/update-profile"
           sx={{
             "&.MuiButton-outlined": {
               borderRadius: "73px",

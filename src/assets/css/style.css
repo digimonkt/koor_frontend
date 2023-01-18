@@ -694,6 +694,7 @@ hr {
   font-size: 18px;
   line-height: 27px;
   color: #eea23d;
+  cursor: pointer;
 }
 .add-content h2 {
   font-size: 28px;

@@ -76,7 +76,7 @@ function AuthLayout({ title, subTitle }) {
                       <div className="register-des mt-4">
                         {AuthOptions.map((option) => {
                           return (
-                            <Link to={`?role=${option.role}`}>
+                            <Link key={option.id} to={`?role=${option.role}`}>
                               <Stack
                                 direction="row"
                                 spacing={2}
