@@ -10,7 +10,6 @@ import RegistrationForm from "src/pages/auth/registrationForm";
 import { IMAGES } from "src/assets/images";
 import { useAppDispatch, useAppSelector } from "src/redux/hooks";
 import { setUserRole } from "src/redux/slice/auth";
-import { RootState } from "src/redux/store";
 
 const AuthOptions = [
   {
@@ -46,8 +45,8 @@ function AuthLayout({ title, subTitle }) {
     useEffect(() => {
       const url = new URL(window.location.href);
       const role = url.searchParams.get("role");
-      if (Object.values(USER_ROLES).includes(role as USER_ROLES)) {
-        dispatch(setUserRole(role as USER_ROLES));
+      if (Object.values(USER_ROLES).includes(role)) {
+        dispatch(setUserRole(role));
       } else {
         dispatch(setUserRole(undefined));
         navigate(location.pathname);
