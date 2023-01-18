@@ -1,18 +1,15 @@
 import { FilledButton } from "src/components/button";
 import { LabeledInput } from "src/components/input";
 import { useAppDispatch } from "src/redux/hooks";
-import { setCurrentUser, setIsLoggedIn, USER } from "src/redux/slice/auth";
+import { setCurrentUser, setIsLoggedIn } from "src/redux/slice/auth";
 import { USER_ROLES } from "src/utils/enum";
 import { generateJobSeeker } from "src/utils/fakeData";
 
-interface ILoginForm {
-  role: USER_ROLES | "";
-}
-function LoginForm({ role }: ILoginForm) {
+function LoginForm({ role }) {
   const dispatch = useAppDispatch();
   const handleLogin = () => {
     dispatch(setIsLoggedIn(true));
-    let currentUser: USER = {
+    let currentUser = {
       profileImage: "",
       mobileNumber: "",
       email: "",

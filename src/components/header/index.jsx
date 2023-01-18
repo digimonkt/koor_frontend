@@ -11,23 +11,15 @@ import { SearchCategory, SelectBox } from "src/components/header/style";
 import { FilledButton, OutlinedButton } from "src/components/button";
 import { SVG } from "src/assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import { useAppSelector } from "src/redux/hooks";
 import { USER_ROLES } from "src/utils/enum";
-import { RootState } from "src/redux/store";
 
 const ismenu = true;
-enum searchType {
-  Talent = "talent",
-  Tenders = "tenders",
-  Vendors = "vendors",
-}
+
 function Header() {
-  const { role, isLoggedIn } = useAppSelector((state: RootState) => state.auth);
-  const [searchPlaceholder, setSearchPlaceholder] = useState<
-    "Jobs" | "Tenders" | "Vendors"
-  >("Jobs");
-  const [search, setSearch] = useState<searchType>(searchType.Talent);
+  const { role, isLoggedIn } = useAppSelector((state) => state.auth);
+  const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
+  const [search, setSearch] = useState("talent");
   useEffect(() => {
     switch (role) {
       case USER_ROLES.jobSeeker:
@@ -72,7 +64,7 @@ function Header() {
                 >
                   <SelectBox
                     value={search}
-                    onChange={(e) => setSearch(e.target.value as searchType)}
+                    onChange={(e) => setSearch(e.target.value)}
                     inputProps={{ "aria-label": "Without label" }}
                     displayEmpty
                     sx={{ width: "100px" }}

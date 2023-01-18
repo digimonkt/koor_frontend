@@ -3,14 +3,11 @@ import React from "react";
 import { SVG } from "src/assets/svg";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { useAppSelector } from "src/redux/hooks";
-import { RootState } from "src/redux/store";
 import { USER_ROLES } from "src/utils/enum";
 import { Link } from "react-router-dom";
 
 function Sidebar() {
-  const { role, currentUser } = useAppSelector(
-    (state: RootState) => state.auth
-  );
+  const { role, currentUser } = useAppSelector((state) => state.auth);
   return (
     <Box component="nav" sx={{ width: { sm: 300 }, flexShrink: { sm: 0 } }}>
       <div className="p-3 border-top border-bottom text-center user-details savetender">

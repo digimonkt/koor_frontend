@@ -1,13 +1,7 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { IButton } from "src/components/button";
 
-function OutlinedButtonComponent({
-  className,
-  title,
-  onClick,
-  ...rest
-}: IButton) {
+function OutlinedButtonComponent({ className, title, onClick, ...rest }) {
   return (
     <Button
       variant="outlined"

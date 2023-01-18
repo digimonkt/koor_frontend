@@ -1,11 +1,7 @@
 import { CardContent, CardContentTypeMap } from "@mui/material";
-import { DefaultComponentProps } from "@mui/material/OverridableComponent";
 import React from "react";
 
-interface ICardContent extends DefaultComponentProps<CardContentTypeMap> {
-  children: React.ReactNode | React.ReactNode[];
-}
-function CardContentComponent({ children, ...rest }: ICardContent) {
+function CardContentComponent({ children, ...rest }) {
   return (
     <CardContent
       sx={{

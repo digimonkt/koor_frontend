@@ -1,10 +1,6 @@
 import { Card, CardTypeMap } from "@mui/material";
-import { DefaultComponentProps } from "@mui/material/OverridableComponent";
 
-interface ICard extends DefaultComponentProps<CardTypeMap> {
-  children: React.ReactNode | React.ReactNode[];
-}
-function CardComponent({ children, ...rest }: ICard) {
+function CardComponent({ children, ...rest }) {
   return (
     <Card
       className="CardWidth"

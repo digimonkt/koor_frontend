@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { IButton } from "src/components/button";
 
 function FilledButtonComponent({
   className,
@@ -7,7 +6,7 @@ function FilledButtonComponent({
   onClick,
   isBlueButton,
   ...rest
-}: IButton) {
+}) {
   return (
     <Button
       className={`outline-login ${className} ${isBlueButton && "bluebtn"}`}

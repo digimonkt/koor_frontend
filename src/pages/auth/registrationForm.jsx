@@ -4,10 +4,8 @@ import { LabeledInput } from "src/components/input";
 import { useAppDispatch } from "src/redux/hooks";
 import { setIsLoggedIn } from "src/redux/slice/auth";
 import { USER_ROLES } from "src/utils/enum";
-interface IRegistrationForm {
-  role: USER_ROLES | "";
-}
-function RegistrationForm({ role }: IRegistrationForm) {
+
+function RegistrationForm({ role }) {
   const dispatch = useAppDispatch();
   const handleRegister = () => {
     dispatch(setIsLoggedIn(true));
