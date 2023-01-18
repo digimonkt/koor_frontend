@@ -70,7 +70,7 @@ function JobCard({ logo, selfJob, applied }) {
             )}
             <Stack direction="row" spacing={1}>
               <span>
-                <SVG.ClockIcon />
+                <SVG.ClockIconSmall />
               </span>{" "}
               <div className="textdes">
                 Posted At: <span>August 28, 2022</span>

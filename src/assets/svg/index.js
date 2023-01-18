@@ -49,10 +49,12 @@ import { ReactComponent as SmallLangugeIcon } from "./smallLangugeIcon.svg";
 import { ReactComponent as SmallSkillsIcon } from "./smallSkillsIcon.svg";
 import { ReactComponent as CreditIcon } from "./creditIcon.svg";
 import { ReactComponent as ClockIcon } from "./clockIcon.svg";
+import { ReactComponent as ClockIconSmall } from "./clock.svg";
 import { ReactComponent as FilterIcon } from "./filter.svg";
 import { ReactComponent as ActiveJob } from "./activeJob.svg";
 import { ReactComponent as OpenNewIcon } from "./openNewIcon.svg";
 export const SVG = {
+  ClockIconSmall,
   PauseIcon,
   BriefcaseIcon,
   BegClock,
