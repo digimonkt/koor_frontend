@@ -1,10 +1,11 @@
 import Header from "./components/header";
 import React from "react";
 import Footer from "./components/footer";
-import { ROUTES } from "./utils/constants/routes";
+import { ROUTES, UNAUTHENTICATED_ROUTES } from "./utils/constants/routes";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { useSelector } from "react-redux";
+import { UnauthorizedRoute } from "./utils/routes";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -18,6 +19,18 @@ function App() {
               path={route.path}
               element={<route.component />}
               key={route.id}
+            />
+          );
+        })}
+        {UNAUTHENTICATED_ROUTES.map((route) => {
+          return (
+            <Route
+              path={route.path}
+              element={
+                <UnauthorizedRoute>
+                  <route.component />
+                </UnauthorizedRoute>
+              }
             />
           );
         })}

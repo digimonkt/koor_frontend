@@ -4,7 +4,10 @@ import JobSeekerProfile from "../../pages/jobSeeker/myProfile";
 import VendorProfile from "../../pages/vendor/myProfile";
 
 // prefix => `/`
-export const ROUTES = [
+export const ROUTES = [];
+
+// prefix => `/`
+export const UNAUTHENTICATED_ROUTES = [
   {
     id: "login",
     name: "login",
