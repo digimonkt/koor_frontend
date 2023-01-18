@@ -17,7 +17,17 @@ import { ReactComponent as CheckIcon } from "./checkIcon.svg";
 import { ReactComponent as OneIcon } from "./oneIcon.svg";
 import { ReactComponent as StartIcon } from "./startIcon.svg";
 import { ReactComponent as UncheckICon } from "./uncheckICon.svg";
+import { ReactComponent as ProfileIcon } from "./profile.svg";
+import { ReactComponent as CircleRightIcon } from "./rightCircle.svg";
+import { ReactComponent as SaveIcon } from "./save.svg";
+import { ReactComponent as MessageIcon } from "./message.svg";
+import { ReactComponent as CalenderIcon } from "./calender.svg";
+import { ReactComponent as JobsIcon } from "./jobs.svg";
+import { ReactComponent as TendersIcon } from "./tenders.svg";
 export const SVG = {
+  CalenderIcon,
+  JobsIcon,
+  TendersIcon,
   KoorLogo,
   SearchIcon,
   NotificationIcon,
@@ -31,10 +41,17 @@ export const SVG = {
   EyeOpen,
   UserIcon,
   DashboardIcon,
+<<<<<<< HEAD
   ArrowUpIcon,
   CheckBoxIcon,
   CheckIcon,
   OneIcon,
   StartIcon,
   UncheckICon,
+=======
+  ProfileIcon,
+  CircleRightIcon,
+  SaveIcon,
+  MessageIcon,
+>>>>>>> db7932074d9e26adf12292a60964bbdb8117758a
 };

@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { JOB_SEEKER_ROUTES } from "../../utils/constants/routes";
 import { JobSeekerRoute } from "../../utils/routes";
 import Sidebar from "./sidebar";
 
 function Layout() {
+  const { role } = useSelector((state) => state.auth);
   return (
     <Box sx={{ display: "flex", marginTop: "81px" }}>
       <Sidebar />
@@ -22,7 +24,7 @@ function Layout() {
           {JOB_SEEKER_ROUTES.map((route) => {
             return (
               <Route
-                path={`/job-seeker${route.path}`}
+                path={`/${role}${route.path}`}
                 key={route.id}
                 element={
                   <JobSeekerRoute>
