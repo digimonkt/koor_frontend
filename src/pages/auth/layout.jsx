@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Container, Grid, Stack } from "@mui/material";
-import { SVG } from "src/assets/svg";
-import { Card, CardContent } from "src/components/card";
-import { USER_ROLES } from "src/utils/enum";
+import { SVG } from "../../assets/svg";
+import { Card, CardContent } from "../../components/card";
+import { USER_ROLES } from "../../utils/enum";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LoginForm from "src/pages/auth/loginForm";
-import RegistrationForm from "src/pages/auth/registrationForm";
-import { IMAGES } from "src/assets/images";
-import { useAppDispatch, useAppSelector } from "src/redux/hooks";
-import { setUserRole } from "src/redux/slice/auth";
+import LoginForm from "./loginForm";
+import RegistrationForm from "./registrationForm";
+import { IMAGES } from "../../assets/images";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserRole } from "../../redux/slice/user";
 
 const AuthOptions = [
   {
@@ -36,8 +36,8 @@ function AuthLayout({ title, subTitle }) {
   return function () {
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const { role } = useAppSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const { role } = useSelector((state) => state.auth);
     const [isLoginPage, setIsLoginPage] = useState(false);
     useEffect(() => {
       setIsLoginPage(location.pathname === "/login");

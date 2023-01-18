@@ -1,9 +1,9 @@
-import Header from "src/components/header";
+import Header from "./components/header";
 import React from "react";
-import Footer from "src/components/footer";
-import { ROUTES } from "src/utils/constants/route";
+import Footer from "./components/footer";
+import { ROUTES } from "./utils/constants/routes";
 import { Route, Routes } from "react-router-dom";
-import Layout from "src/components/layout";
+import Layout from "./components/layout";
 import { useSelector } from "react-redux";
 
 function App() {

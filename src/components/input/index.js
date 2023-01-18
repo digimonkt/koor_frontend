@@ -1,3 +1,3 @@
-import LabeledInputComponent from "src/components/input/labeledInput";
+import LabeledInputComponent from "./labeledInput";
 
 export const LabeledInput = LabeledInputComponent;

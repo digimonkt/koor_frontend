@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { USER_ROLES } from "src/utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 
 const initialState = {
   isLoggedIn: false,

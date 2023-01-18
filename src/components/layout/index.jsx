@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
-import Sidebar from "src/components/layout/sidebar";
-import { JOB_SEEKER_ROUTES } from "src/utils/constants/route";
-import { JobSeekerRoute } from "src/utils/routes";
+import { JOB_SEEKER_ROUTES } from "../../utils/constants/routes";
+import { JobSeekerRoute } from "../../utils/routes";
+import Sidebar from "./sidebar";
 
 function Layout() {
   return (

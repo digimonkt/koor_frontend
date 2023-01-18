@@ -1,7 +1,7 @@
-import { Login, Registration } from "src/pages/auth";
-import EmployerProfile from "src/pages/employer/myProfile";
-import JobSeekerProfile from "src/pages/jobSeeker/myProfile";
-import VendorProfile from "src/pages/vendor/myProfile";
+import { Login, Registration } from "../../pages/auth";
+import EmployerProfile from "../../pages/employer/myProfile";
+import JobSeekerProfile from "../../pages/jobSeeker/myProfile";
+import VendorProfile from "../../pages/vendor/myProfile";
 
 // prefix => `/`
 export const ROUTES = [

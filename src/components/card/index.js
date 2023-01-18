@@ -1,5 +1,5 @@
-import CardComponent from "src/components/card/card";
-import CardContentComponent from "src/components/card/cardContent";
+import CardComponent from "./card";
+import CardContentComponent from "./cardContent";
 
 export const Card = CardComponent;
 export const CardContent = CardContentComponent;

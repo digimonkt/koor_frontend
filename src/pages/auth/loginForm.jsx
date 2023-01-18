@@ -1,12 +1,12 @@
-import { FilledButton } from "src/components/button";
-import { LabeledInput } from "src/components/input";
-import { useAppDispatch } from "src/redux/hooks";
-import { setCurrentUser, setIsLoggedIn } from "src/redux/slice/auth";
-import { USER_ROLES } from "src/utils/enum";
-import { generateJobSeeker } from "src/utils/fakeData";
+import { useDispatch } from "react-redux";
+import { FilledButton } from "../../components/button";
+import { LabeledInput } from "../../components/input";
+import { setCurrentUser, setIsLoggedIn } from "../../redux/slice/user";
+import { USER_ROLES } from "../../utils/enum";
+import { generateJobSeeker } from "../../utils/fakeData";
 
 function LoginForm({ role }) {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const handleLogin = () => {
     dispatch(setIsLoggedIn(true));
     let currentUser = {

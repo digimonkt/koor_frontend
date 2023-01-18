@@ -1,4 +1,4 @@
-import { CardContent, CardContentTypeMap } from "@mui/material";
+import { CardContent } from "@mui/material";
 import React from "react";
 
 function CardContentComponent({ children, ...rest }) {

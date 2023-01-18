@@ -1,12 +1,12 @@
 import React from "react";
-import { FilledButton } from "src/components/button";
-import { LabeledInput } from "src/components/input";
-import { useAppDispatch } from "src/redux/hooks";
-import { setIsLoggedIn } from "src/redux/slice/auth";
-import { USER_ROLES } from "src/utils/enum";
+import { useDispatch } from "react-redux";
+import { FilledButton } from "../../components/button";
+import { LabeledInput } from "../../components/input";
+import { setIsLoggedIn } from "../../redux/slice/user";
+import { USER_ROLES } from "../../utils/enum";
 
 function RegistrationForm({ role }) {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const handleRegister = () => {
     dispatch(setIsLoggedIn(true));
   };

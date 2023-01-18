@@ -7,17 +7,23 @@ import {
   Stack,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { SearchCategory, SelectBox } from "src/components/header/style";
-import { FilledButton, OutlinedButton } from "src/components/button";
-import { SVG } from "src/assets/svg";
+import { SearchCategory, SelectBox } from "./style";
+import { FilledButton, OutlinedButton } from "../button";
+import { SVG } from "../../assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useAppSelector } from "src/redux/hooks";
-import { USER_ROLES } from "src/utils/enum";
+import { USER_ROLES } from "../../utils/enum";
+import { useSelector } from "react-redux";
 
 const ismenu = true;
 
+const searchType = Object.freeze({
+  Talent: "talent",
+  Tenders: "tenders",
+  Vendors: "vendors",
+});
+
 function Header() {
-  const { role, isLoggedIn } = useAppSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("talent");
   useEffect(() => {

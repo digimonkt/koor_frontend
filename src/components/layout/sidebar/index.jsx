@@ -1,13 +1,13 @@
 import { Avatar, Box } from "@mui/material";
 import React from "react";
-import { SVG } from "src/assets/svg";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { useAppSelector } from "src/redux/hooks";
-import { USER_ROLES } from "src/utils/enum";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { SVG } from "../../../assets/svg";
+import { USER_ROLES } from "../../../utils/enum";
 
 function Sidebar() {
-  const { role, currentUser } = useAppSelector((state) => state.auth);
+  const { role, currentUser } = useSelector((state) => state.auth);
   return (
     <Box component="nav" sx={{ width: { sm: 300 }, flexShrink: { sm: 0 } }}>
       <div className="p-3 border-top border-bottom text-center user-details savetender">

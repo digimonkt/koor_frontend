@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SVG } from "src/assets/svg";
+import { SVG } from "../../assets/svg";
 
 function LabeledInputComponent({ password, title, subtitle, ...rest }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
