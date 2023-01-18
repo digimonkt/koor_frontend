@@ -41,17 +41,14 @@ export const SVG = {
   EyeOpen,
   UserIcon,
   DashboardIcon,
-<<<<<<< HEAD
   ArrowUpIcon,
   CheckBoxIcon,
   CheckIcon,
   OneIcon,
   StartIcon,
   UncheckICon,
-=======
   ProfileIcon,
   CircleRightIcon,
   SaveIcon,
   MessageIcon,
->>>>>>> db7932074d9e26adf12292a60964bbdb8117758a
 };
