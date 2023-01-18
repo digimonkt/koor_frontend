@@ -3,24 +3,19 @@ import { FilledButton } from "../../components/button";
 import { LabeledInput } from "../../components/input";
 import { setCurrentUser, setIsLoggedIn } from "../../redux/slice/user";
 import { USER_ROLES } from "../../utils/enum";
-import { generateJobSeeker } from "../../utils/fakeData";
+import { generateEmployer, generateJobSeeker } from "../../utils/fakeData";
 
 function LoginForm({ role }) {
   const dispatch = useDispatch();
   const handleLogin = () => {
     dispatch(setIsLoggedIn(true));
-    let currentUser = {
-      profileImage: "",
-      mobileNumber: "",
-      email: "",
-      name: "",
-      jobLetterApplicationNotification: false,
-      newsLetterApplicationNotification: false,
-    };
+    let currentUser;
     if (role === USER_ROLES.jobSeeker) {
       currentUser = generateJobSeeker();
+    } else if (role === USER_ROLES.employer) {
+      currentUser = generateEmployer();
     }
-    dispatch(setCurrentUser(currentUser));
+    if (currentUser) dispatch(setCurrentUser(currentUser));
   };
   return (
     <>
