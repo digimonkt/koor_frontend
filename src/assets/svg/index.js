@@ -32,13 +32,23 @@ import { ReactComponent as WorkIcon } from "./workIcon.svg";
 import { ReactComponent as PlushIcon } from "./plushIcon.svg";
 import { ReactComponent as SkillsIcon } from "./skillsIcon.svg";
 import { ReactComponent as Savefile } from "./savefile.svg";
-import { ReactComponent as Edit } from "./edit.svg";
 import { ReactComponent as CancelIcon } from "./cancelIcon.svg";
 import { ReactComponent as LanguageIcon } from "./languageIcon.svg";
 import { ReactComponent as EducationIcon } from "./educationIcon.svg";
 import { ReactComponent as EditIcon } from "./editIcon.svg";
 import { ReactComponent as DeleteICon } from "./deleteICon.svg";
+import { ReactComponent as LocationIcon } from "./location.svg";
+import { ReactComponent as BegClock } from "./begClock.svg";
+import { ReactComponent as MoonCircle } from "./moonCircle.svg";
+import { ReactComponent as BriefcaseIcon } from "./briefcase.svg";
+import { ReactComponent as PauseIcon } from "./pause.svg";
 export const SVG = {
+  PauseIcon,
+  BriefcaseIcon,
+  MoonCircle,
+  BegClock,
+  LocationIcon,
+  EditIcon,
   LogoutIcon,
   CalenderIcon,
   JobsIcon,
@@ -73,10 +83,8 @@ export const SVG = {
   PlushIcon,
   SkillsIcon,
   Savefile,
-  Edit,
   CancelIcon,
   LanguageIcon,
   EducationIcon,
-  EditIcon,
   DeleteICon,
 };

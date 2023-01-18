@@ -135,9 +135,9 @@ const Skills = () => {
             buttontext={
               <>
                 <span className="me-3 d-inline-flex">
-                  <SVG.Edit />
+                  <SVG.EditIcon />
                 </span>
-                edit skills
+                Edit skills
               </>
             }
           />

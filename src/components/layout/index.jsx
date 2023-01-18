@@ -1,8 +1,11 @@
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { JOB_SEEKER_ROUTES } from "../../utils/constants/routes";
-import { JobSeekerRoute } from "../../utils/routes";
+import {
+  EMPLOYER_ROUTES,
+  JOB_SEEKER_ROUTES,
+} from "../../utils/constants/routes";
+import { EmployerRoute, JobSeekerRoute } from "../../utils/routes";
 import Sidebar from "./sidebar";
 
 function Layout() {
@@ -30,6 +33,19 @@ function Layout() {
                   <JobSeekerRoute>
                     <route.component />
                   </JobSeekerRoute>
+                }
+              />
+            );
+          })}
+          {EMPLOYER_ROUTES.map((route) => {
+            return (
+              <Route
+                path={`/${role}${route.path}`}
+                key={route.id}
+                element={
+                  <EmployerRoute>
+                    <route.component />
+                  </EmployerRoute>
                 }
               />
             );

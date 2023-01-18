@@ -1,5 +1,5 @@
 import { Login, Logout, Registration } from "../../pages/auth";
-import EmployerProfile from "../../pages/employer/myProfile";
+import { ManageJobs, MyProfile as EmployerProfile } from "../../pages/employer";
 import JobSeekerCriteria from "../../pages/jobSeeker/jobCriteria";
 import VendorProfile from "../../pages/vendor/myProfile";
 import JobSeekerProfile from "../../pages/jobSeeker/myProfile";
@@ -70,5 +70,11 @@ export const EMPLOYER_ROUTES = [
     name: "My Profile",
     path: "/my-profile",
     component: EmployerProfile,
+  },
+  {
+    id: "manageJobs",
+    name: "Manage Jobs",
+    path: "/manage-jobs",
+    component: ManageJobs,
   },
 ];

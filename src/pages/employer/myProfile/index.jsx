@@ -1,7 +1,7 @@
 import React from "react";
 
-function MyProfile() {
+function MyProfileComponent() {
   return <div>Employer MyProfile</div>;
 }
 
-export default MyProfile;
+export default MyProfileComponent;

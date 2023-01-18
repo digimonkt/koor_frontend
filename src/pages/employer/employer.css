@@ -1,0 +1,698 @@
+.card-count h1 {
+  margin: 0px;
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.card-count p {
+  margin: 0;
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+}
+span.blueview {
+  width: 16px;
+  height: 16px;
+
+  border: 4px solid;
+  border-radius: 100%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.views {
+  display: flex;
+  align-items: center;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+
+  letter-spacing: 0.02em;
+
+  color: #121212;
+}
+
+.views b {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.series-box ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+
+  letter-spacing: 0.02em;
+
+  color: rgb(18 18 18 / 75%);
+}
+
+.series-box ul li {
+  padding: 5px 0px;
+}
+.series-box ul li b {
+  font-weight: 600;
+  color: #121212;
+}
+
+.series-box h2 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
+
+  color: #121212;
+  margin-bottom: 16px;
+}
+.recent-box h3 {
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 34px;
+  /* identical to box height */
+
+  /* Black #121212 */
+  color: #121212;
+  margin: 0;
+}
+
+.recent-box p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+
+  letter-spacing: 0.02em;
+
+  color: #848484;
+}
+.recent-content h4 {
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #121212;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+.recent-research span {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+  color: #848484;
+  margin-right: 10px;
+}
+
+.recent-research {
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+
+  /* Black #121212 */
+  color: rgb(18 18 18 / 75%);
+}
+.chiplabel {
+  font-family: "Poppins" !important;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px !important;
+  line-height: 18px;
+  color: #121212 !important;
+  opacity: 0.75;
+  padding: 5px 10px !important;
+}
+.meets {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 21px;
+  white-space: nowrap;
+
+  color: #848484;
+}
+.recent-descrition p {
+  color: #121212;
+  margin: 0;
+}
+.border-recent {
+  border-bottom: 1px solid #cacaca;
+  padding: 16px 0px;
+}
+.border-recent:last-child {
+  border-bottom: 0px;
+}
+.edit-button button {
+  background: transparent;
+  border: 0px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #274593;
+  display: block;
+  text-transform: capitalize !important;
+  padding: 6px 10px !important;
+}
+.edit-button button span {
+  display: block;
+  white-space: nowrap;
+}
+.recent-research {
+  display: flex;
+}
+.job-count {
+  font-family: "Bahnschrift" !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  background: #cacaca !important;
+  line-height: 22px !important;
+  color: #f0f0f0 !important;
+}
+.Mui-selected .job-count {
+  background: #d5e3f7 !important;
+  color: #274593 !important;
+}
+.jobsearch {
+  width: 100%;
+
+  font-family: "Poppins";
+
+  font-style: normal;
+
+  font-weight: 400;
+
+  font-size: 16px;
+
+  line-height: 24px;
+
+  color: #848484;
+
+  outline: none;
+
+  border: 0;
+  padding-left: 45px;
+
+  border-radius: 100px;
+  background: #fff url("../../assets/images/search.png") no-repeat 15px 8px;
+  box-sizing: border-box;
+}
+
+.searchjob-box {
+  background: #ffffff;
+  border: 1px solid #cacaca;
+  box-shadow: 0px 15px 40px rgb(0 0 0 / 5%);
+  border-radius: 100px;
+  padding: 10px 12px 10px 0px;
+}
+
+.jobt-btn-search {
+  background: #d5e3f7;
+  border-radius: 33px;
+  padding: 7px 20px 5px 20px;
+  border: 0;
+  color: #274593;
+  cursor: pointer;
+}
+.jobt-btn-search:hover {
+  background: #1976d20a;
+}
+.job-button-card button {
+  background: transparent;
+  border: 0px;
+  padding: 5px 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+
+  text-align: center;
+  letter-spacing: 0.02em;
+
+  /* Blue #274593 */
+  color: #274593;
+  outline: none;
+  cursor: pointer;
+}
+.toggle-application {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+  letter-spacing: 0.02em;
+
+  color: #274593;
+}
+
+.arrowjobs {
+  transition: transform 0.6s ease;
+}
+
+.arrowjobs.active svg {
+  transform: rotate(0deg);
+}
+
+span.arrowjobs svg {
+  transition: transform 0.6s ease;
+  transform: rotate(-180deg);
+}
+
+.my-jobs h2 {
+  margin: 0;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 27px;
+  /* identical to box height */
+  letter-spacing: 0.02em;
+
+  /* Black #121212 */
+  color: #121212;
+}
+
+.my-jobs p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  /* or 133% */
+  letter-spacing: 0.02em;
+
+  /* Black #121212 */
+  color: #121212;
+}
+.cricle {
+  display: inline-flex;
+  background: #cacaca;
+  border-radius: 38px;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  /* identical to box height, or 167% */
+  letter-spacing: 0.02em;
+
+  /* Black #121212 */
+  color: #121212;
+}
+.chip-cricle {
+  font-family: "Poppins" !important;
+
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+
+  letter-spacing: 0.02em;
+
+  color: #121212 !important;
+  padding-left: 10px !important;
+}
+.font-w {
+  font-weight: 500;
+}
+.recent-content a {
+  text-decoration: none;
+  color: #121212;
+}
+.job-border {
+  border-bottom: 1px solid #cacaca;
+}
+.user-application h4 {
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #121212;
+  margin: 0px 0px 5px 0px;
+}
+
+.user-application span {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #121212;
+  margin: 0;
+}
+.user-descrition {
+  width: 50%;
+}
+
+.user-descrition p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 18px;
+  /* or 129% */
+
+  /* Black #121212 */
+  color: #121212;
+  margin-top: 0;
+}
+
+.attachment-box h2 {
+  margin: 0 0px 5px;
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height */
+
+  /* Black #121212 */
+  color: #121212;
+}
+
+.attachment-box ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.attachment-box ul li {
+  display: block;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+
+  color: #121212;
+  padding: 5px 0px;
+}
+.user-skills {
+  border-top: 1px solid #cacaca;
+  margin-top: 20px;
+}
+
+.user-descrition p:last-child {
+  margin-bottom: 0px;
+}
+.skills-card {
+  padding-top: 24px;
+}
+
+.skills-card h3 {
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  /* identical to box height */
+
+  /* Black #121212 */
+  color: #121212;
+  margin: 0 0px 16px;
+}
+
+.skills-card p {
+  margin: 0px;
+}
+
+.skills-card ul {
+  margin: 0px;
+  padding: 0;
+  list-style: none;
+}
+
+.skills-card ul li {
+  position: relative;
+  padding: 10px 5px 10px 18px;
+  border-bottom: 1px solid #cacaca;
+}
+
+.skills-card ul li:before {
+  width: 8px;
+  height: 8px;
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  background: #274593;
+  border-radius: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.list-content p {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: 0.02em;
+
+  /* Black #121212 */
+  color: #121212;
+}
+.skills-card ul li:last-child {
+  border-bottom: 0px;
+}
+.right-pull {
+  float: right;
+}
+.form-content label {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+
+  color: #121212;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+.job-content h2 {
+  margin: 0;
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 34px;
+
+  color: #121212;
+}
+.styles_attachment {
+  border: 2px dashed #cacaca;
+  border-radius: 6px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: #000000;
+  padding: 30px;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.styles_attachment p {
+  margin: 0px;
+}
+
+.styles_attachment p span {
+  font-weight: 600;
+}
+
+.styles_attachment small {
+  display: block;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height */
+  text-align: center;
+
+  /* Dark grey */
+  color: #848484;
+}
+.attachment-box.inline-attacment li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-tracate {
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 1rem;
+}
+.current-creatdit {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+
+  color: #121212;
+  margin: 0;
+}
+.mb-30 {
+  margin-bottom: 32px !important;
+}
+.itemvalue {
+  padding: 20px 40px;
+  border: 2px solid #d5e3f7;
+  border-radius: 20px;
+}
+
+.itemvalue h4 {
+  margin: 0 0px 20px;
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: 0.02em;
+}
+
+.itemvalue span {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.itemvalue ul li {
+  padding: 1px 0px;
+  color: #848484;
+}
+
+.itemvalue ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.itemvalue ul li span {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.02em;
+  text-align: left;
+}
+
+.itemvalue ul svg {
+  width: 20px;
+  color: #848484;
+}
+.selected-card {
+  border-radius: 20px;
+}
+.icon-width svg {
+  width: 135px;
+  height: 109px;
+}
+.description-newjob {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.01em;
+
+  color: #121212;
+}
+.backappling {
+  font-family: "Bahnschrift";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  /* identical to box height, or 138% */
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  /* Dark grey */
+  color: #848484;
+}
+@media (min-width: 1200px) {
+  .itemvalue ul {
+    height: 140px;
+  }
+}
+
+.selected-card {
+  background: #002c6a;
+  border-color: #002c6a;
+  box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35);
+}
+
+.selected-card span {
+  color: #fff;
+}
+
+.selected-card h4 {
+  color: #fff;
+}
+
+.selected-card ul svg {
+  color: #fff;
+}
+.telentsearchicon {
+  position: absolute;
+  left: 28px;
+  top: 19px;
+  display: inline-flex;
+}
+.searchmainbox {
+  position: relative;
+  width: 100%;
+}
