@@ -1,0 +1,173 @@
+import React, { useEffect, useState } from "react";
+import {
+  Container,
+  FormControl,
+  IconButton,
+  MenuItem,
+  Stack,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import { SearchCategory, SelectBox } from "src/components/header/style";
+import { FilledButton, OutlinedButton } from "src/components/button";
+import { SVG } from "src/assets/svg";
+import MenuIcon from "@mui/icons-material/Menu";
+
+import { useAppSelector } from "src/redux/hooks";
+import { USER_ROLES } from "src/utils/enum";
+import { RootState } from "src/redux/store";
+
+const ismenu = true;
+enum searchType {
+  Talent = "talent",
+  Tenders = "tenders",
+  Vendors = "vendors",
+}
+function Header() {
+  const { role, isLoggedIn } = useAppSelector((state: RootState) => state.auth);
+  const [searchPlaceholder, setSearchPlaceholder] = useState<
+    "Jobs" | "Tenders" | "Vendors"
+  >("Jobs");
+  const [search, setSearch] = useState<searchType>(searchType.Talent);
+  useEffect(() => {
+    switch (role) {
+      case USER_ROLES.jobSeeker:
+        setSearchPlaceholder("Jobs");
+        break;
+      case USER_ROLES.employer:
+        setSearchPlaceholder("Vendors");
+        break;
+      case USER_ROLES.vendor:
+        setSearchPlaceholder("Tenders");
+        break;
+      default:
+        break;
+    }
+  }, [role]);
+
+  return (
+    <header>
+      <Container>
+        <Stack
+          direction="row"
+          spacing="3"
+          alignItems={{ xs: "start", lg: "center" }}
+        >
+          <Link to="/" className="navbar-brand">
+            <SVG.KoorLogo />
+          </Link>
+          <div className="">
+            <SearchCategory direction="row" spacing={1} alignItems="center">
+              <Link to="/talent-search" className="d-inline-flex">
+                <SVG.SearchIcon />
+              </Link>
+              {role === "employer" ? (
+                <FormControl
+                  sx={{
+                    "&.MuiSelect-select": {
+                      fontFamily: "Poppins",
+                      fontSize: "16px",
+                    },
+                  }}
+                  size="small"
+                >
+                  <SelectBox
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value as searchType)}
+                    inputProps={{ "aria-label": "Without label" }}
+                    displayEmpty
+                    sx={{ width: "100px" }}
+                  >
+                    <MenuItem value={searchType.Talent}>Talent</MenuItem>
+                    <MenuItem value={searchType.Tenders}>Tenders</MenuItem>
+                    <MenuItem value={searchType.Vendors}>Vendors</MenuItem>
+                  </SelectBox>
+                </FormControl>
+              ) : (
+                ""
+              )}
+              <input
+                className="employersearch"
+                placeholder={role === "employer" ? "" : searchPlaceholder}
+              />
+            </SearchCategory>
+          </div>
+
+          <div
+            className="ms-auto"
+            // ref={menu}
+          >
+            <IconButton
+              // onClick={() => setIsmenu(!ismenu)}
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              sx={{
+                mr: 2,
+                fontSize: "14px",
+                display: { sm: "none" },
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <ul
+              className={`menu ${ismenu && "menu-selected"} ${
+                role !== USER_ROLES.jobSeeker ? "color-change" : null
+              }`}
+            >
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              {!isLoggedIn && (
+                <li>
+                  <Link to="/about-us">About Us</Link>
+                </li>
+              )}
+              <li>
+                <Link to="/resources">Resources</Link>
+              </li>
+              {isLoggedIn ? (
+                <>
+                  <li>
+                    <IconButton
+                      disableFocusRipple={false}
+                      sx={{
+                        "&.MuiIconButton-root": {
+                          p: 0,
+                        },
+                      }}
+                    >
+                      <SVG.NotificationIcon />
+                    </IconButton>
+                  </li>
+                  <li>
+                    <Link to={`/${role}/my-profile`}>
+                      <FilledButton
+                        title="My Profile"
+                        isBlueButton={role !== USER_ROLES.jobSeeker}
+                      />
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/">
+                      <OutlinedButton title="Register" />
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/login">
+                      <FilledButton title="Login" />
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
+        </Stack>
+      </Container>
+    </header>
+  );
+}
+
+export default Header;
