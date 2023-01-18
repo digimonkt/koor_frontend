@@ -42,6 +42,15 @@ import { ReactComponent as BegClock } from "./begClock.svg";
 import { ReactComponent as MoonCircle } from "./moonCircle.svg";
 import { ReactComponent as BriefcaseIcon } from "./briefcase.svg";
 import { ReactComponent as PauseIcon } from "./pause.svg";
+import { ReactComponent as ActiveJob } from "./activeJob.svg";
+import { ReactComponent as OpenNewIcon } from "./openNewIcon.svg";
+import { ReactComponent as StarIcon } from "./starIcon.svg";
+import { ReactComponent as UserGroupIcon } from "./userGroupIcon.svg";
+import { ReactComponent as SchoolIcon } from "./schoolIcon.svg";
+import { ReactComponent as SmallLangugeIcon } from "./smallLangugeIcon.svg";
+import { ReactComponent as SmallSkillsIcon } from "./smallSkillsIcon.svg";
+import { ReactComponent as CreditIcon } from "./creditIcon.svg";
+import { ReactComponent as ClockIcon } from "./clockIcon.svg";
 export const SVG = {
   PauseIcon,
   BriefcaseIcon,
@@ -87,4 +96,13 @@ export const SVG = {
   LanguageIcon,
   EducationIcon,
   DeleteICon,
+  ActiveJob,
+  OpenNewIcon,
+  StarIcon,
+  UserGroupIcon,
+  SchoolIcon,
+  SmallLangugeIcon,
+  SmallSkillsIcon,
+  CreditIcon,
+  ClockIcon,
 };
