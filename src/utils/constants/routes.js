@@ -1,9 +1,15 @@
 import { Login, Logout, Registration } from "../../pages/auth";
-import { ManageJobs, MyProfile as EmployerProfile } from "../../pages/employer";
-import JobSeekerCriteria from "../../pages/jobSeeker/jobCriteria";
+import {
+  ManageJobs,
+  MyProfile as EmployerProfile,
+  Dashboard as EmployerDashboard,
+} from "../../pages/employer";
+import {
+  JobCriteria as JobSeekerCriteria,
+  MyProfile as JobSeekerProfile,
+  UpdateProfile as JobSeekerUpdateProfile,
+} from "../../pages/jobSeeker";
 import VendorProfile from "../../pages/vendor/myProfile";
-import JobSeekerProfile from "../../pages/jobSeeker/myProfile";
-import UpdateProfile from "../../pages/jobSeeker/updateProfile";
 
 // prefix => `/`
 export const ROUTES = [
@@ -49,7 +55,7 @@ export const JOB_SEEKER_ROUTES = [
     id: "addProfileInfo",
     name: "addProfileInfo",
     path: "/my-profile/update-profile",
-    component: UpdateProfile,
+    component: JobSeekerUpdateProfile,
   },
 ];
 
@@ -76,5 +82,11 @@ export const EMPLOYER_ROUTES = [
     name: "Manage Jobs",
     path: "/manage-jobs",
     component: ManageJobs,
+  },
+  {
+    id: "dashboard",
+    name: "Dashboard",
+    path: "/dashboard",
+    component: EmployerDashboard,
   },
 ];
