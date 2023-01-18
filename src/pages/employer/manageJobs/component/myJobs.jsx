@@ -1,10 +1,17 @@
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, Stack } from "@mui/material";
 import React from "react";
+import { SVG } from "../../../../assets/svg";
 import JobCard from "../../../../components/jobCard";
 
 function MyJobs() {
   return (
     <div className="py-3">
+      <div className="mb-3">
+        <Stack direction="row" spacing={0} className="searchjob-box">
+          <input className="jobsearch" placeholder="Search your jobs" />
+          <button className="jobt-btn-search">{<SVG.SearchIcon />}</button>
+        </Stack>
+      </div>
       <Card
         sx={{
           "&.MuiCard-root": {
@@ -21,7 +28,7 @@ function MyJobs() {
             },
           }}
         >
-          <JobCard />
+          <JobCard selfJob />
         </CardContent>
       </Card>
     </div>

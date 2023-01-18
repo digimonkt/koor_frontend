@@ -1,13 +1,40 @@
 import { Divider, Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { IMAGES } from "../../assets/images";
 import { SVG } from "../../assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 
-function JobCard() {
+function JobCard({ logo, selfJob, applied }) {
+  const [gridProps, setGridProps] = useState({});
+  useEffect(() => {
+    if (logo) {
+      setGridProps({
+        alignItems: "center",
+        sx: { my: 3 },
+      });
+    }
+  }, [logo]);
   return (
-    <Grid container spacing={2}>
-      <Grid item xl={9} lg={9} xs={12}>
+    <Grid container spacing={2} {...gridProps}>
+      {logo && (
+        <Grid
+          item
+          lg={2}
+          xs={12}
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "12.666667%",
+              flexBasis: "12.666667%",
+            },
+          }}
+        >
+          <div className="squer-width">
+            <img src={IMAGES.FacebookBoxIcon} alt="" />
+          </div>
+        </Grid>
+      )}
+      <Grid item lg={logo ? 8 : 9} xs={12}>
         <div className="my-jobs">
           <h2>RETAIL ASSISTANT CASHIER</h2>
           <p>
@@ -31,16 +58,28 @@ function JobCard() {
             className="mt-3"
             divider={<Divider orientation="vertical" flexItem />}
           >
+            {!selfJob && (
+              <Stack direction="row" spacing={1}>
+                <span>
+                  <SVG.BriefcaseIcon />
+                </span>{" "}
+                <div className="textdes">
+                  Company: <span>Facebook</span>
+                </div>
+              </Stack>
+            )}
             <Stack direction="row" spacing={1}>
-              <span>{<SVG.BriefcaseIcon />}</span>{" "}
+              <span>
+                <SVG.ClockIcon />
+              </span>{" "}
               <div className="textdes">
-                Company: <span>August 28, 2022</span>
+                Posted At: <span>August 28, 2022</span>
               </div>
             </Stack>
           </Stack>
         </div>
       </Grid>
-      <Grid item xl={3} lg={3} xs={12}>
+      <Grid item lg={logo ? 2 : 3} xs={12}>
         <div className="text-end">
           <SolidButton title="2 Days" />
         </div>
@@ -60,16 +99,29 @@ function JobCard() {
               3,500
             </h4>
           </div>
-          <div className="job-button-card">
-            <button>
-              {<SVG.PauseIcon />}
-              <span className="d-block">Hold</span>
-            </button>
-            <button>
-              {<SVG.EditIcon />}
-              <span className="d-block">Edit</span>
-            </button>
-          </div>
+          {selfJob ? (
+            <div className="job-button-card">
+              <button>
+                {<SVG.PauseIcon />}
+                <span className="d-block">Hold</span>
+              </button>
+              <button>
+                {<SVG.EditIcon />}
+                <span className="d-block">Edit</span>
+              </button>
+            </div>
+          ) : (
+            <>
+              {!applied ? (
+                <>
+                  <div className="bookmark pe-lg-4">
+                    <SVG.SaveIcon />
+                    <span>Saved</span>
+                  </div>
+                </>
+              ) : null}
+            </>
+          )}
         </Stack>
       </Grid>
     </Grid>

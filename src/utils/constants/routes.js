@@ -8,6 +8,8 @@ import {
   JobCriteria as JobSeekerCriteria,
   MyProfile as JobSeekerProfile,
   UpdateProfile as JobSeekerUpdateProfile,
+  AppliedJobs,
+  SavedJobs,
 } from "../../pages/jobSeeker";
 import VendorProfile from "../../pages/vendor/myProfile";
 
@@ -47,15 +49,27 @@ export const JOB_SEEKER_ROUTES = [
   },
   {
     id: "jobCriteria",
-    name: "jobCriteria",
+    name: "Job Criteria",
     path: "/my-profile/job-criteria",
     component: JobSeekerCriteria,
   },
   {
     id: "addProfileInfo",
-    name: "addProfileInfo",
+    name: "Add Profile Info",
     path: "/my-profile/update-profile",
     component: JobSeekerUpdateProfile,
+  },
+  {
+    id: "appliedJobs",
+    name: "Applied Jobs",
+    path: "/jobs/applied",
+    component: AppliedJobs,
+  },
+  {
+    id: "savedJobs",
+    name: "Saved Jobs",
+    path: "/jobs/saved",
+    component: SavedJobs,
   },
 ];
 

@@ -42,7 +42,11 @@ import { ReactComponent as BegClock } from "./begClock.svg";
 import { ReactComponent as MoonCircle } from "./moonCircle.svg";
 import { ReactComponent as BriefcaseIcon } from "./briefcase.svg";
 import { ReactComponent as PauseIcon } from "./pause.svg";
+import { ReactComponent as FilterIcon } from "./filter.svg";
+import { ReactComponent as ClockIcon } from "./clock.svg";
 export const SVG = {
+  ClockIcon,
+  FilterIcon,
   PauseIcon,
   BriefcaseIcon,
   MoonCircle,
