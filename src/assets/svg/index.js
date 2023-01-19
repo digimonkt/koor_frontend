@@ -61,6 +61,15 @@ import { ReactComponent as Notificationactive } from "./notificationactive.svg";
 import { ReactComponent as Notificationinactive } from "./notificationinactive.svg";
 import { ReactComponent as Favorite } from "./favorite.svg";
 import { ReactComponent as HeaderSearch } from "./headerSearch.svg";
+import { ReactComponent as BagClock } from "./bagclock.svg";
+import { ReactComponent as Clock } from "./clock.svg";
+import { ReactComponent as LeftArrow } from "./leftarrow.svg";
+import { ReactComponent as OrangeIcon } from "./orangeIcon.svg";
+import { ReactComponent as StartDate } from "./startdate.svg";
+import { ReactComponent as BlueFlag } from "./blueflag.svg";
+import { ReactComponent as Enable } from "./enable.svg";
+import { ReactComponent as HalfCircle } from "./halfcircle.svg";
+
 export const SVG = {
   ClockIconSmall,
   PauseIcon,
@@ -125,4 +134,12 @@ export const SVG = {
   Notificationinactive,
   Favorite,
   HeaderSearch,
+  Clock,
+  LeftArrow,
+  Enable,
+  BlueFlag,
+  BagClock,
+  HalfCircle,
+  OrangeIcon,
+  StartDate,
 };

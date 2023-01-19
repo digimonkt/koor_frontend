@@ -4,6 +4,7 @@ import {
   MyProfile as EmployerProfile,
   Dashboard as EmployerDashboard,
 } from "../../pages/employer";
+import JobDetails from "../../pages/jobs/jobDetails";
 import JobSearch from "../../pages/jobSearch";
 import { PostJobs } from "../../pages/jobs";
 import {
@@ -82,6 +83,12 @@ export const JOB_SEEKER_ROUTES = [
     name: "Saved Jobs",
     path: "/jobs/saved",
     component: SavedJobs,
+  },
+  {
+    id: "jobDetails",
+    name: "Job Details",
+    path: "/jobs/details/:jobId",
+    component: JobDetails,
   },
 ];
 

@@ -4,8 +4,12 @@ import { IMAGES } from "../../assets/images";
 import { SVG } from "../../assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { USER_ROLES } from "../../utils/enum";
 
 function JobCard({ logo, selfJob, applied }) {
+  const { role } = useSelector((state) => state.auth);
   const [gridProps, setGridProps] = useState({});
   useEffect(() => {
     if (logo) {
@@ -36,7 +40,15 @@ function JobCard({ logo, selfJob, applied }) {
       )}
       <Grid item lg={logo ? 8 : 9} xs={12}>
         <div className="my-jobs">
-          <h2>RETAIL ASSISTANT CASHIER</h2>
+          <h2>
+            {role === USER_ROLES.jobSeeker ? (
+              <Link to="/job-seeker/jobs/details/:jobId">
+                RETAIL ASSISTANT CASHIER
+              </Link>
+            ) : (
+              "RETAIL ASSISTANT CASHIER"
+            )}
+          </h2>
           <p>
             Role and Responsibilities · Provide good customer service · Maintain
             store cleanliness. Check and display goods/merchandise · Cashiering
