@@ -10,119 +10,22 @@ import {
   Stack,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import img from "../../../../../assert/images/recent-1.png";
+import { IMAGES } from "../../../assets/images";
 import React from "react";
-import {
-  attachIcon,
-  blockedIcon,
-  eventIcon,
-  location,
-  messageIcon,
-  rejectIcon,
-  starIcon,
-} from "../../../../../utils/svg.file";
-import Cbutton from "../../../../button";
-import { Link } from "react-router-dom";
+import { OutlinedButton } from "../../../components/button";
+import { Link, useNavigate } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
+import {
+  EDUCATION,
+  langugesList,
+  skillsList,
+  WORK_EXPRIENCE,
+} from "./applicantData";
+
 const ApplicantDetails = () => {
-  const WORK_EXPRIENCE = [
-    {
-      title: "Freelancer",
-      subtitle: "Upwork",
-      date: "May 2018 - Present",
-    },
-    {
-      title: "Lead UX/UI Designer",
-      subtitle: "Another company",
+  // navigate
+  const navigate = useNavigate();
 
-      date: "January 2022 - September 2022",
-    },
-    {
-      title: "Senior UX/UI Designer",
-      subtitle: "Koor",
-      description:
-        "Key responsibilities text. For example, assist in th preparation of regularly scheduled reports. Testing way longer text to see if it will generate two lines of text.",
-      date: "January 2022 - September 2022",
-    },
-    {
-      title: "No job",
-      suptitle: "Another company",
-      description: "Only a few key responsibilities.",
-      date: "January 2022 - September 2022",
-    },
-    {
-      title: "Test of many jobs",
-      suptitle: "Google",
-
-      date: "January 2022 - September 2022",
-    },
-  ];
-  const EDUCATION = [
-    {
-      title: "Degree",
-      subtitle: "Cambridge University",
-      date: "2017 - 2022",
-    },
-    {
-      title: "Senior UX/UI Designer",
-      subtitle: "Koor",
-      description:
-        "Key responsibilities text. For example, assist in th preparation of regularly scheduled reports. Testing two lines of text.",
-      date: "2017 - 2022",
-    },
-    {
-      title: "Middle UX/UI Designer",
-      subtitle: "Koor",
-      description:
-        "Key responsibilities text. For example, assist in th preparation of regularly scheduled reports. Testing two lines of text.",
-      date: "2017 - 2022",
-    },
-  ];
-  const skillsList = [
-    "Calls",
-    "Event Management",
-    "Stock Taking",
-    "Gaming",
-    "Very long skill pill for test",
-    "Test",
-    "Cashier",
-    "Sales",
-    "Accountant",
-    "Art",
-    "Long skill to test how much we can fit",
-  ];
-  const langugesList = [
-    {
-      title: "English",
-      subtitle: (
-        <>
-          Spoken: <strong>Fluent</strong>
-          <br />
-          Written: <strong>Fluent</strong>
-        </>
-      ),
-    },
-    {
-      title: "German",
-      subtitle: (
-        <>
-          Spoken: <strong>Conversational</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-    {
-      title: "Spanish",
-      subtitle: (
-        <>
-          Spoken: <strong>Basic</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-  ];
   return (
     <>
       <div className="job-application">
@@ -142,13 +45,15 @@ const ApplicantDetails = () => {
               },
             }}
           >
+            {/* -------------- header  ------------ */}
+
             <Stack
               direction="row"
               spacing={2}
               alignItems={{ xs: "start", lg: "center" }}
               className="recent-content job-border pb-2 mb-3"
             >
-              <IconButton LinkComponent={Link} to="/manage-jobs">
+              <IconButton LinkComponent={Link} onClick={() => navigate(-1)}>
                 <ArrowBackIcon />
               </IconButton>
               <Stack
@@ -167,14 +72,21 @@ const ApplicantDetails = () => {
                 </div>
               </Stack>
             </Stack>
+
+            {/* -------------- applicant basic info ---------- */}
+
             <Grid container spacing={2} sx={{ mb: 4 }}>
               <Grid item xl={6} lg={6} xs={12}>
                 <Stack direction="row" spacing={2} alignItems="center">
-                  <Avatar src={img} sx={{ width: "70px", height: "70px" }} />
+                  <Avatar
+                    src={IMAGES.RecentOne}
+                    sx={{ width: "70px", height: "70px" }}
+                  />
                   <div className="user-application">
                     <h4>Muraua Birhuneya</h4>
                     <Stack direction="row" spacing={1} alignItems="center">
-                      <span>{location}</span> <span>Paris, France</span>
+                      <span>{<SVG.LocationIcon />}</span>{" "}
+                      <span>Paris, France</span>
                     </Stack>
                   </div>
                 </Stack>
@@ -187,43 +99,36 @@ const ApplicantDetails = () => {
                   alignItems="center"
                 >
                   <Button variant="link">
-                    {eventIcon} <span>Interview planned</span>
+                    {<SVG.EventIcon />} <span>Interview planned</span>
                   </Button>
                   <Button variant="link">
-                    {starIcon} <span>Shortlisted</span>
+                    {<SVG.StarIcon />} <span>Shortlisted</span>
                   </Button>
                   <Button variant="link">
-                    {rejectIcon} <span>Reject</span>
+                    {<SVG.RejectIcon />} <span>Reject</span>
                   </Button>
                   <Button variant="link">
-                    {blockedIcon} <span>Blacklist</span>
+                    {<SVG.BlockedIcon />} <span>Blacklist</span>
                   </Button>
 
-                  <Cbutton
-                    variant="outlined"
-                    sx={{
-                      "&.MuiButton-outlined": {
-                        borderRadius: "50px",
-
-                        color: "#274593",
-                        fontWeight: "400",
-                        fontSize: "12px",
-                        fontFamily: "Poppins",
-                        padding: "5px 25px",
-                        border: "1px solid #274593",
-                        textTransform: "capitalize",
-                        whiteSpace: "nowrap",
-                        display: "flex",
-                        alignItems: "center",
-                        height: "40px",
-                      },
+                  <OutlinedButton
+                    style={{
+                      fontWeight: "400",
+                      fontSize: "12px",
+                      display: "flex",
+                      alignItems: "center",
+                      width: "130px",
+                      height: "40px",
                     }}
-                  >
-                    <span className="me-2 d-inline-flex">
-                      {<SVG.MessageIcon />}
-                    </span>{" "}
-                    Message
-                  </Cbutton>
+                    title={
+                      <>
+                        <span className="me-2 d-inline-flex">
+                          {<SVG.MessageIcon />}
+                        </span>{" "}
+                        Message
+                      </>
+                    }
+                  />
                 </Stack>
               </Grid>
             </Grid>
@@ -259,7 +164,7 @@ const ApplicantDetails = () => {
                         mr: 2,
                       }}
                     >
-                      {attachIcon}
+                      {<SVG.AttachIcon />}
                     </IconButton>
                     Muraua_Birhuneya_resume_2022.pdf
                   </li>
@@ -274,13 +179,16 @@ const ApplicantDetails = () => {
                         mr: 2,
                       }}
                     >
-                      {attachIcon}
+                      {<SVG.AttachIcon />}
                     </IconButton>
                     examples_of_work.jpeg
                   </li>
                 </ul>
               </div>
             </Stack>
+
+            {/* ---------------- education, experience and skills -------- */}
+
             <div className="user-skills">
               <Grid container spacing={2}>
                 <Grid item xl={6} lg={6}>
