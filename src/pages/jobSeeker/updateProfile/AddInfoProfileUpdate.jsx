@@ -215,7 +215,7 @@ const AddInfoProfileUpdate = (props) => {
                   value="wish"
                   control={
                     <Checkbox
-                      icon={<SVG.UncheckICon />}
+                      icon={<SVG.UncheckIcon />}
                       checkedIcon={<SVG.CheckBoxIcon />}
                       sx={{
                         color: "#CACACA",
@@ -233,7 +233,7 @@ const AddInfoProfileUpdate = (props) => {
                   value="receive"
                   control={
                     <Checkbox
-                      icon={<SVG.UncheckICon />}
+                      icon={<SVG.UncheckIcon />}
                       checkedIcon={<SVG.CheckBoxIcon />}
                       sx={{
                         color: "#CACACA",

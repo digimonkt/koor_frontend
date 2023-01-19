@@ -1,11 +1,13 @@
 import { Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IMAGES } from "../../assets/images";
 import { SVG } from "../../assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 
 function JobCard({ logo, selfJob, applied }) {
+  const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   useEffect(() => {
     if (logo) {
@@ -105,7 +107,7 @@ function JobCard({ logo, selfJob, applied }) {
                 {<SVG.PauseIcon />}
                 <span className="d-block">Hold</span>
               </button>
-              <button>
+              <button onClick={() => {navigate("/employer/jobs/post?jobId=ID")}}>
                 {<SVG.EditIcon />}
                 <span className="d-block">Edit</span>
               </button>

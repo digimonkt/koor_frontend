@@ -75,7 +75,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               <FormLabelBox
                 control={
                   <Checkbox
-                    icon={<SVG.UncheckICon />}
+                    icon={<SVG.UncheckIcon />}
                     checkedIcon={<SVG.CheckBoxIcon />}
                     defaultChecked
                     sx={{
@@ -92,7 +92,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                 label={<span className="ms-2 me-3 check-label">Part Time</span>}
               />
               <FormLabelBox
-                icon={<SVG.UncheckICon />}
+                icon={<SVG.UncheckIcon />}
                 checkedIcon={<SVG.CheckBoxIcon />}
                 disabled
                 control={
@@ -113,7 +113,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               <FormLabelBox
                 control={
                   <Checkbox
-                    icon={<SVG.UncheckICon />}
+                    icon={<SVG.UncheckIcon />}
                     checkedIcon={<SVG.CheckBoxIcon />}
                     defaultChecked
                     sx={{
