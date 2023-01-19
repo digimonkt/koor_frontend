@@ -1,5 +1,6 @@
 import { Chip, Stack } from "@mui/material";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
 import { OutlinedButton } from "../../../components/button";
 import AllApplication from "./component/allApplication";
@@ -43,12 +44,12 @@ function ManageJobsComponent() {
             // to="/manage-jobs/post-a-new-job"
             variant="outlined"
             title={
-              <>
+              <Link to="/employer/jobs/post">
                 <span className="me-3">
                   <SVG.EditIcon />
                 </span>
                 Post new job
-              </>
+              </Link>
             }
           />
         </div>

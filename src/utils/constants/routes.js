@@ -5,6 +5,7 @@ import {
   Dashboard as EmployerDashboard,
 } from "../../pages/employer";
 import JobSearch from "../../pages/jobSearch";
+import { PostJobs } from "../../pages/jobs";
 import {
   JobCriteria as JobSeekerCriteria,
   MyProfile as JobSeekerProfile,
@@ -113,5 +114,11 @@ export const EMPLOYER_ROUTES = [
     name: "Dashboard",
     path: "/dashboard",
     component: EmployerDashboard,
+  },
+  {
+    id: "postJobs",
+    name: "Post Jobs",
+    path: "/jobs/post",
+    component: PostJobs,
   },
 ];
