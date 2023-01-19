@@ -7,6 +7,7 @@ import RecentTwo from "./recent-2.png";
 import RecentThree from "./recent-3.png";
 import RecentFour from "./recent-4.png";
 import RecentFive from "./recent-5.png";
+import Lotus from "./lotus.png";
 export const IMAGES = {
   SearchIcon,
   AppleBoxIcon,
@@ -17,4 +18,5 @@ export const IMAGES = {
   RecentThree,
   RecentFour,
   RecentFive,
+  Lotus,
 };

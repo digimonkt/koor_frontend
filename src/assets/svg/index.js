@@ -61,10 +61,6 @@ import { ReactComponent as Notificationactive } from "./notificationactive.svg";
 import { ReactComponent as Notificationinactive } from "./notificationinactive.svg";
 import { ReactComponent as Favorite } from "./favorite.svg";
 import { ReactComponent as HeaderSearch } from "./headerSearch.svg";
-import { ReactComponent as BlockedIcon } from "./blockedIcon.svg";
-import { ReactComponent as AttachIcon } from "./attach.svg";
-import { ReactComponent as EventIcon } from "./eventIcon.svg";
-import { ReactComponent as RejectIcon } from "./rejectIcon.svg";
 export const SVG = {
   ClockIconSmall,
   PauseIcon,
@@ -129,8 +125,4 @@ export const SVG = {
   Notificationinactive,
   Favorite,
   HeaderSearch,
-  BlockedIcon,
-  AttachIcon,
-  EventIcon,
-  RejectIcon,
 };

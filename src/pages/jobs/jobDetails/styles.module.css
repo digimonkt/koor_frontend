@@ -1,0 +1,311 @@
+.Jobcard{
+    box-shadow: 0px 15px 40px 0px #0000000D;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 110px;
+    margin-bottom: 40px;
+}
+.postJob {
+    display: flex;
+    align-items: center;
+}
+.postJob p {
+    margin-left: 24px;
+    margin-top: 0;
+    font-family: 'Poppins';
+    font-weight: 600;
+    font-size: 18px;
+}
+.clocs {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.clocs p {
+    margin-left: 3%;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+.clocs span {
+    font-weight: 300!important;
+    font-family: 'Poppins';
+}
+.greenbtn {
+    background-color: #4CAF50!important;
+    width: 100px!important;
+    font-size: 12px!important;
+    padding: 0!important;
+    height: 32px!important;
+    color: #fff!important;
+    margin: 0 20px!important;
+
+}
+.contentJob p {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'Poppins';
+}
+.contentJob h4 {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+.monthBox {
+    text-align: center;
+    border-bottom: 1px solid #CACACA;
+    margin: 0 14px;
+    padding-bottom: 4px;
+}
+.monthBox h4 {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+.monthBox p {
+    color: #EEA23D;
+    font-size: 16px!important;
+    font-family: 'Bahnschrift';
+    padding-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.monthBox span {
+    font-size: 32px!important;
+}
+.lotusimg {
+    display: flex;
+    align-items: center;
+    margin: 20px 20px 0 20px;
+
+}
+.lotusimg h3 {
+    font-size: 18px;
+    margin-left: 18px;
+    text-transform: capitalize!important;
+}
+.Numbers {
+    text-align: center;
+}
+.Numbers span {
+    display: block;
+    color: #121212;
+    opacity: 0.5;
+}
+.lotus {
+    border-bottom: 1px solid #CACACA;
+    padding-bottom: 20px;
+}
+.enablebtn {
+    background-color: #EEA23D!important;
+    width: 250px!important;
+    height: 44px!important;
+    font-weight: 600!important;
+    padding: 0!important;
+    font-size: 16px!important;
+    margin-bottom: 7%!important;
+    color: #121212!important;
+    border-radius: 60px!important;
+}
+.enablebtn span {
+    position: relative;
+    top: 4px;
+    right: 4px;
+}
+.outlinebtn {
+    width: 250px!important;
+    height: 44px!important;
+    border: 1px solid #FFA500!important;
+    border-radius: 60px!important;
+    color: #FFA500!important;
+    font-size: 16px!important;
+    font-weight: 600!important;
+}
+.outlinebtn svg path {
+    fill: #FFA500!important;
+}
+.outlinebtn span {
+    position: relative;
+    right: 10px;
+    top: 4px;
+}
+.jobpostbtn {
+    padding-top: 30px;
+    text-align: center;
+}
+.iconbutton {
+    background-color: #F0F0F0!important;
+    font-size: 12px!important;
+    width: 124px!important;
+    height: 28px!important;
+    border-radius: 60px!important;
+    color: #000!important;
+    margin-right: 14px!important;
+}
+.iconbtn {
+    display: flex;
+    align-items: center;
+}
+.iconbutton span {
+    position: relative;
+    right: 4px;
+    top: 3px;
+}
+.datesatrt {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+}
+.datesatrt span {
+    margin-right: 1%;
+    display: inline-flex;
+}
+.datesatrt p {
+    font-size: 16px;
+    white-space: nowrap;
+}
+.downloadtext {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.grids {
+    border-bottom: 1px solid #CACACA;
+    padding-bottom: 16px;
+}
+.downloadtext p {
+    color: #EEA23D;
+    font-size: 16px;
+    margin-left:25px !important;
+    font-family: 'Poppins';
+}
+.downloadtext svg{
+    width:32px;
+    height:32px
+}
+.downloadattachment h6 {
+    font-size: 16px;
+    margin-bottom: 9px;
+}
+.required h6 {
+    font-size: 16px;
+    margin: 0;
+}
+.educations {
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+}
+.english {
+    display: flex;
+    align-items: center;
+}
+.englishtext span {
+display: block;
+}
+.dots {
+    width: 8px!important;
+    height: 8px!important;
+    border-radius: 100%;
+    display: block;
+    background: #EEA23D;
+    position: relative;
+    top: 8px;
+}
+.englishtext {
+    margin-left: 4%!important;
+}
+.englishtext h6 {
+    font-size: 14px;
+}
+.language h6 {
+    font-size: 18px;
+}
+.englishtext span {
+    font-size: 14px;
+    font-family: 'poppins';
+    padding-top: 4px;
+}
+.location p {
+    color: #274593;
+    font-size: 12px;
+}
+.educations p {
+    font-size: 14px;
+    margin-left: 2%!important;
+}
+.educations span {
+    width: 8px!important;
+    height: 8px!important;
+    border-radius: 100%;
+    display: block;
+    background: #EEA23D;
+}
+.skilssbtn {
+    display: flex;
+    align-items: center;
+}
+.grybtn {
+    background-color: #F0F0F0!important;
+    font-size: 12px!important;
+    color: #121212!important;
+    width: auto!important;
+    height: 30px!important;
+    border-radius: 60px!important;
+    font-family: 'poppins';
+    margin-right: 15px!important;
+}
+.secondDiv {
+    border-bottom: 1px solid #CACACA;
+    padding-bottom: 25px;
+    padding-top: 11px;
+}
+.LikeJob p {
+    color: #EEA23D;
+    font-size: 16px;
+    font-family: 'poppins';
+    font-weight: 600;
+}
+.LikeJob span {
+    color: #848484;
+}
+.LikeJob h2 {
+    color: #121212;
+    font-size: 18px;
+    text-transform: capitalize;
+    padding-top: 12px;
+    padding-bottom: 11px;
+    text-transform: uppercase;
+}
+.requirement h5 {
+    font-size: 18px;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+h3{
+    text-transform: uppercase;
+}
+.requirement {
+    border-right: 1px solid #CACACA;
+    margin-right: 20px;
+}
+.location {
+    margin-right: 18px;
+}
+.startDate{
+    font-family: 'Poppins';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 18px;
+/* identical to box height */
+
+text-align: center;
+
+/* Black #121212 */
+
+color: #121212;
+
+opacity: 0.7;
+}
+.startB{ font-family: 'Poppins'; font-weight: 600; color: #121212; font-size: 16px;}
