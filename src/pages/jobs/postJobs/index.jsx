@@ -7,7 +7,7 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import {
@@ -21,9 +21,6 @@ import { JobFormControl } from "../../jobSeeker/myProfile/job-preferences";
 import { FilledButton, OutlinedButton } from "../../../components/button";
 
 function PostJobsComponent() {
-  const [jobDetails, setJobDetails] = useState({
-    
-  })
   return (
     <div className="job-application">
       <Card
