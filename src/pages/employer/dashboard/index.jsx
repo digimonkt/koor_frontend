@@ -1,49 +1,12 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  CardContent,
-  Divider,
-  Grid,
-  Stack,
-} from "@mui/material";
+import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React from "react";
-import { SVG } from "../../../assets/svg";
 import { Cbutton } from "../../../components/button";
 import "./dashboard.css";
 import { RECENT_ITEMS } from "./recentHelper";
 import { DonutChart, AreaChart } from "../components";
+import ApplicationCard from "../../../components/applicationCard";
+import { employerCard } from "./employerCardData";
 
-const employerCard = [
-  {
-    icon: <SVG.CreditIcon />,
-    title: "371",
-    subtitle: "available credits (~55 job posts)",
-    bgcolor: "#FCB74F",
-    boxshadow: "0px 5px 25px rgba(252, 183, 79, 0.5)",
-  },
-  {
-    icon: <SVG.ClockIcon />,
-    title: "244",
-    subtitle: "days until credits are expired",
-    bgcolor: "#5CC1E0",
-    boxshadow: "0px 5px 25px rgba(92, 193, 224, 0.5)",
-  },
-  {
-    icon: <SVG.ActiveJob />,
-    title: "2",
-    subtitle: "active job posts",
-    bgcolor: "#61C78A",
-    boxshadow: "0px 5px 25px rgba(97, 199, 138, 0.5)",
-  },
-  {
-    icon: <SVG.UserGroupIcon />,
-    title: "31",
-    subtitle: "applications received",
-    bgcolor: "#9C62E8",
-    boxshadow: "0px 5px 25px rgba(156, 98, 232, 0.5)",
-  },
-];
 const Dashboard = () => {
   return (
     <>
@@ -147,61 +110,16 @@ const Dashboard = () => {
                     <p>Recent application</p>
                   </Stack>
                   {RECENT_ITEMS.map((item, index) => (
-                    <Stack
-                      direction={{ xs: "column", lg: "row" }}
-                      spacing={{ xs: "2", lg: "2" }}
-                      alignItems={{ xs: "start", lg: "center" }}
-                      justifyContent={{ xs: "center", lg: "space-between" }}
-                      className="border-recent"
+                    <ApplicationCard
+                      image={item.img}
+                      title={item.title}
+                      subTitle={item.subtitle}
+                      description={item.description}
+                      chiplabel={item.chiplabel}
+                      requirement={item.requirement}
+                      isDisabled={item.disabled}
                       key={index}
-                    >
-                      <Stack direction="row" spacing={2} alignItems="center">
-                        <Avatar
-                          src={item.img}
-                          sx={{ width: "70px", height: "70px" }}
-                        />{" "}
-                        <div className="recent-content">
-                          <Stack
-                            direction="row"
-                            divider={
-                              <Divider orientation="vertical" flexItem />
-                            }
-                            spacing={2}
-                            alignItems="center"
-                            sx={{ mb: 1 }}
-                          >
-                            <h4>{item.title}</h4>
-                            <div className="recent-research">
-                              {item.subtitle}
-                            </div>
-                          </Stack>
-                          <Stack
-                            direction="row"
-                            spacing={2}
-                            alignItems="center"
-                            sx={{ mb: 1 }}
-                          >
-                            <span className="meets">{item.requirement}</span>{" "}
-                            {item.chiplabel}
-                          </Stack>
-                          <div className="recent-descrition">
-                            <p>{item.description}</p>
-                          </div>
-                        </div>
-                      </Stack>
-                      <Stack
-                        direction="row"
-                        spacing={0}
-                        className="edit-button"
-                      >
-                        <Button variant="link" disabled={item.disabled}>
-                          {<SVG.StarIcon />} <span>Shortlist</span>
-                        </Button>
-                        <Button variant="link">
-                          {<SVG.OpenNewIcon />} <span>View</span>
-                        </Button>
-                      </Stack>
-                    </Stack>
+                    />
                   ))}
 
                   <div className="text-center mt-4">

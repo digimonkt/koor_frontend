@@ -3,60 +3,20 @@ import {
   CardContent,
   Checkbox,
   FormControl,
-  FormControlLabel,
   FormGroup,
   MenuItem,
   Radio,
   RadioGroup,
-  Select,
   Stack,
 } from "@mui/material";
 import React, { useState } from "react";
-import { styled } from "@mui/material/styles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { SVG } from "../../../assets/svg";
 import { Cbutton } from "../../../components/button";
+import { FormControlReminder, FormLabelBox, SelectBox } from "./style";
 
-export const FormLabelBox = styled(FormControlLabel)`
-  & .MuiFormControlLabel-label {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    color: #121212;
-  }
-`;
-export const FormControlReminder = styled(FormControlLabel)`
-  & .MuiFormControlLabel-label {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-
-    color: #121212;
-  }
-`;
-export const SelectBox = styled(Select)`
-  & .MuiSelect-select {
-    background: #f0f0f0;
-    border-radius: 10px;
-  }
-  &.MuiInputBase-root {
-    border-radius: 10px;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 22px;
-    letter-spacing: 0.02em;
-    color: #121212;
-  }
-  & fieldset {
-    display: none;
-  }
-`;
 const AddInfoProfileUpdate = (props) => {
   const [age, setAge] = useState("");
 
