@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack } from "@mui/material";
+import { Avatar, Box, Drawer, Stack } from "@mui/material";
 import React from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link, useLocation } from "react-router-dom";
@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { SVG } from "../../../assets/svg";
 import { USER_ROLES } from "../../../utils/enum";
 import { navigationOptions } from "./navigation";
+import "./styles.css";
+const drawerWidth = 300;
 function Sidebar() {
   const { role, currentUser } = useSelector((state) => state.auth);
   const location = useLocation();
@@ -81,7 +83,21 @@ function Sidebar() {
   );
   return (
     <Box component="nav" sx={{ width: { sm: 300 }, flexShrink: { sm: 0 } }}>
-      {drawer}
+      <Drawer
+        variant="permanent"
+        sx={{
+          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: drawerWidth,
+            top: "81px",
+            minHeight: "495px",
+          },
+        }}
+        open
+      >
+        {drawer}
+      </Drawer>
     </Box>
   );
 }
