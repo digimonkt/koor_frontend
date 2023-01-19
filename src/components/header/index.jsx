@@ -55,7 +55,10 @@ function Header() {
           </Link>
           <div className="">
             <SearchCategory direction="row" spacing={1} alignItems="center">
-              <Link to="/talent-search" className="d-inline-flex">
+              <Link
+                to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
+                className="d-inline-flex"
+              >
                 <SVG.SearchIcon />
               </Link>
               {role === "employer" ? (

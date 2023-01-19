@@ -53,6 +53,14 @@ import { ReactComponent as ClockIconSmall } from "./clock.svg";
 import { ReactComponent as FilterIcon } from "./filter.svg";
 import { ReactComponent as ActiveJob } from "./activeJob.svg";
 import { ReactComponent as OpenNewIcon } from "./openNewIcon.svg";
+import { ReactComponent as ArrowUpward } from "./arrow_upward.svg";
+import { ReactComponent as FillterICon } from "./fillterICon.svg";
+import { ReactComponent as Buttonsearch } from "./buttonsearch.svg";
+import { ReactComponent as Downarrow } from "./downarrow.svg";
+import { ReactComponent as Notificationactive } from "./notificationactive.svg";
+import { ReactComponent as Notificationinactive } from "./notificationinactive.svg";
+import { ReactComponent as Favorite } from "./favorite.svg";
+import { ReactComponent as HeaderSearch } from "./headerSearch.svg";
 export const SVG = {
   ClockIconSmall,
   PauseIcon,
@@ -109,4 +117,12 @@ export const SVG = {
   ClockIcon,
   FilterIcon,
   MoonCircle,
+  ArrowUpward,
+  FillterICon,
+  Buttonsearch,
+  Downarrow,
+  Notificationactive,
+  Notificationinactive,
+  Favorite,
+  HeaderSearch,
 };

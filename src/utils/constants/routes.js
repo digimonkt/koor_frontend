@@ -4,6 +4,7 @@ import {
   MyProfile as EmployerProfile,
   Dashboard as EmployerDashboard,
 } from "../../pages/employer";
+import JobSearch from "../../pages/jobSearch";
 import {
   JobCriteria as JobSeekerCriteria,
   MyProfile as JobSeekerProfile,
@@ -36,6 +37,16 @@ export const UNAUTHENTICATED_ROUTES = [
     name: "Register",
     path: "/",
     component: Registration,
+  },
+];
+
+//
+export const AUTHENTICATED_ROUTES = [
+  {
+    id: "jobSearch",
+    name: "jobSearch",
+    path: "/job-search",
+    component: JobSearch,
   },
 ];
 
