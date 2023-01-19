@@ -65,7 +65,7 @@ const JobPreferences = () => {
               <JobFormControl
                 control={
                   <Checkbox
-                    icon={<SVG.UncheckICon />}
+                    icon={<SVG.UncheckIcon />}
                     checkedIcon={<SVG.CheckBoxIcon />}
                     sx={{
                       color: "#CACACA",
@@ -97,7 +97,7 @@ const JobPreferences = () => {
               <JobFormControl
                 control={
                   <Checkbox
-                    icon={<SVG.UncheckICon />}
+                    icon={<SVG.UncheckIcon />}
                     checkedIcon={<SVG.CheckBoxIcon />}
                     sx={{
                       color: "#CACACA",
@@ -125,7 +125,7 @@ const JobPreferences = () => {
               <JobFormControl
                 control={
                   <Checkbox
-                    icon={<SVG.UncheckICon />}
+                    icon={<SVG.UncheckIcon />}
                     checkedIcon={<SVG.CheckBoxIcon />}
                     sx={{
                       color: "#CACACA",
@@ -142,7 +142,7 @@ const JobPreferences = () => {
               <JobFormControl
                 control={
                   <Checkbox
-                    icon={<SVG.UncheckICon />}
+                    icon={<SVG.UncheckIcon />}
                     checkedIcon={<SVG.CheckBoxIcon />}
                     sx={{
                       color: "#CACACA",
@@ -159,7 +159,7 @@ const JobPreferences = () => {
               <JobFormControl
                 control={
                   <Checkbox
-                    icon={<SVG.UncheckICon />}
+                    icon={<SVG.UncheckIcon />}
                     checkedIcon={<SVG.CheckBoxIcon />}
                     sx={{
                       color: "#CACACA",

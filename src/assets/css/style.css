@@ -175,7 +175,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
 header {
   filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.05));
   background: #fff;
-  padding: 17.5px 0px;
+  padding: 10.5px 0px;
   position: fixed;
   width: 100%;
   top: 0px;
@@ -217,10 +217,10 @@ header {
   border-radius: 73px !important;
   padding: 10px 30px !important;
   color: #274593 !important;
-  font-size: 16px !important;
+  /* font-size: 16px !important; */
   letter-spacing: 0.03em !important;
   font-family: "Bahnschrift" !important;
-  font-weight: 600 !important;
+  /* font-weight: 600 !important; */
 }
 .outline-login {
   background: #eea23d !important;
@@ -879,7 +879,7 @@ hr {
 }
 .bookmark {
   text-align: center;
-  color: #EEA23D
+  color: #eea23d;
 }
 
 .bookmark span {

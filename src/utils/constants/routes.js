@@ -4,9 +4,13 @@ import {
   MyProfile as EmployerProfile,
   Dashboard as EmployerDashboard,
 } from "../../pages/employer";
-import JobDetails from "../../pages/jobs/jobDetails";
-import JobSearch from "../../pages/jobSearch";
-import { PostJobs } from "../../pages/jobs";
+import {
+  PostJobs,
+  JobSearch,
+  ApplicantDetails,
+  JobDetails,
+} from "../../pages/jobs";
+
 import {
   JobCriteria as JobSeekerCriteria,
   MyProfile as JobSeekerProfile,
@@ -115,6 +119,12 @@ export const EMPLOYER_ROUTES = [
     name: "Manage Jobs",
     path: "/manage-jobs",
     component: ManageJobs,
+  },
+  {
+    id: "applicantDetails",
+    name: "Applicant Detials",
+    path: "/manage-jobs/applicant-details",
+    component: ApplicantDetails,
   },
   {
     id: "dashboard",

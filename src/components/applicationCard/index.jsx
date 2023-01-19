@@ -1,6 +1,7 @@
 import { Avatar, Button, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { SVG } from "../../assets/svg";
 
 const ApplicationCard = ({
@@ -13,6 +14,14 @@ const ApplicationCard = ({
   isDisabled,
   isMessagable,
 }) => {
+  // navigate
+  const navigate = useNavigate();
+
+  // handle navigation
+  const handleNavigate = () => {
+    navigate("/employer/manage-jobs/applicant-details");
+  };
+
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -46,7 +55,7 @@ const ApplicationCard = ({
         <Button variant="link" disabled={isDisabled}>
           {<SVG.StarIcon />} <span>Shortlist</span>
         </Button>
-        <Button variant="link">
+        <Button onClick={handleNavigate} variant="link">
           {<SVG.OpenNewIcon />} <span>View</span>
         </Button>
         {isMessagable && (

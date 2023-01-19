@@ -82,7 +82,7 @@ const CheckBox = ({ onChange, value }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
     <Checkbox
-      icon={<SVG.UncheckICon />}
+      icon={<SVG.UncheckIcon />}
       checkedIcon={<SVG.CheckBoxIcon />}
       checked={value}
       onChange={(e) => {

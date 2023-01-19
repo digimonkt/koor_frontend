@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { SearchButton } from "../../components/button";
+import { SearchButton } from "../../../components/button";
 import MenuList from "@mui/material/MenuList";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import Checkbox from "@mui/material/Checkbox";
 import { SelectStyled } from "./style";
-import { SVG } from "../../assets/svg";
+import { SVG } from "../../../assets/svg";
 import styles from "./styles.module.css";
 import { MenuItem } from "@mui/material";
 
@@ -14,7 +14,7 @@ const CheckBox = ({ onChange, value }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
     <Checkbox
-      icon={<SVG.UncheckICon />}
+      icon={<SVG.UncheckIcon />}
       checkedIcon={<SVG.CheckBoxIcon />}
       checked={value}
       onChange={(e) => {
