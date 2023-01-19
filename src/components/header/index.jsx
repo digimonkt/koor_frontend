@@ -6,7 +6,7 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "../../assets/svg";
@@ -23,6 +23,9 @@ const searchType = Object.freeze({
 });
 
 function Header() {
+  // navigate
+  const navigate = useNavigate();
+
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("talent");
@@ -87,6 +90,13 @@ function Header() {
                 ""
               )}
               <input
+                onKeyDown={(e) => {
+                  if (e.key === "enter" || e.key === "Enter") {
+                    navigate(
+                      role === USER_ROLES.jobSeeker ? "/job-search" : "/"
+                    );
+                  }
+                }}
                 className="employersearch"
                 placeholder={role === "employer" ? "" : searchPlaceholder}
               />
