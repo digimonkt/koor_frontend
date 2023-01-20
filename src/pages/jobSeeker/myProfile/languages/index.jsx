@@ -4,7 +4,6 @@ import { SVG } from "../../../../assets/svg";
 import ModalView from "../../updateProfile/modal";
 import UpdateInfo from "../../updateProfile/modal/update-info";
 import { Cbutton } from "../../../../components/button";
-import CardList from "../education/cardlist";
 
 const Languages = () => {
   const [open, setOpen] = React.useState(false);
@@ -68,9 +67,7 @@ const Languages = () => {
             <h2 className="mb-4">Languages</h2>
             <ul className="listitems">
               {langugesList.map((item, index) => (
-                <li key={index}>
-                  <CardList {...item} />
-                </li>
+                <li key={index}>{/* <CardList {...item} /> */}</li>
               ))}
             </ul>
 

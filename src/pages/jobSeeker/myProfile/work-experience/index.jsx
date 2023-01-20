@@ -4,7 +4,6 @@ import { SVG } from "../../../../assets/svg";
 import ModalView from "../../updateProfile/modal";
 import UpdateInfo from "../../updateProfile/modal/update-info";
 import { Cbutton } from "../../../../components/button";
-import CardList from "../education/cardlist";
 const WorkExperience = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -74,9 +73,7 @@ const WorkExperience = () => {
             <h2 className="mb-4">Work experience</h2>
             <ul className="listitems">
               {workList.map((item, index) => (
-                <li key={index}>
-                  <CardList {...item} />
-                </li>
+                <li key={index}>{/* <CardList {...item} /> */}</li>
               ))}
             </ul>
 

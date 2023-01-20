@@ -1,39 +1,37 @@
 import { Card, CardContent } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { SVG } from "../../../../assets/svg";
 import ModalView from "../../updateProfile/modal";
-import UpdateInfo from "../../updateProfile/modal/update-info";
 import { Cbutton } from "../../../../components/button";
-import CardList from "./cardlist";
+import EducationCard from "../../../../components/educationCard";
+import EditEducation from "./editEducation";
 
 const educationList = [
   {
     title: "Degree",
-    subtitle: "Cambridge University",
-    date: "2017 - 2022",
-  },
-  {
-    title: "Senior UX/UI Designer",
-    subtitle: (
-      <>
-        koor <br /> Key responsibilities text. For example, assist in th
-        preparation of regularly scheduled reports. Testing two lines of text.
-      </>
-    ),
-
-    date: "2017 - 2022",
+    organization: "Cambridge University",
+    startYear: 2001,
+    endYear: null,
+    isPresent: true,
+    description: "THis is the description",
   },
 ];
 
 const Education = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = useState(false);
+
+  const [educations, setEducations] = useState([...educationList]);
+
+  const handleToggleModel = () => {
+    setOpen(!open);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleSubmit = (value) => {
+    console.log(value);
+    setEducations((prevState) => [...prevState, value]);
+    handleToggleModel();
   };
+
   return (
     <>
       <Card
@@ -54,9 +52,9 @@ const Education = () => {
           <div className="add-content">
             <h2 className="mb-4">Education</h2>
             <ul className="listitems">
-              {educationList.map((item, index) => (
+              {educations.map((item, index) => (
                 <li key={index}>
-                  <CardList {...item} />
+                  <EducationCard {...item} />
                 </li>
               ))}
             </ul>
@@ -64,7 +62,7 @@ const Education = () => {
             <div className="text-center mt-4">
               <Cbutton
                 variant="outlined"
-                onClick={handleClickOpen}
+                onClick={handleToggleModel}
                 sx={{
                   "&.MuiButton-outlined": {
                     borderRadius: "73px",
@@ -94,35 +92,8 @@ const Education = () => {
       </Card>
       <ModalView
         open={open}
-        handleClose={handleClose}
-        content={
-          <UpdateInfo
-            title="Education"
-            color="#EEA23D"
-            bgcolor="#FEEFD3"
-            icon={<SVG.EducationIcon />}
-            description={[
-              <>
-                <p>
-                  Mentioning your education helps to prove your proficiency for
-                  your future employer. Add it to boost your job bids. That how
-                  we can display empty cards – icon and some tips to fill up the
-                  info.
-                </p>
-              </>,
-            ]}
-            buttonHover="#eea23d14"
-            handleClose={handleClose}
-            buttontext={
-              <>
-                <span className="me-3 d-inline-flex">
-                  <SVG.PlushIcon />
-                </span>{" "}
-                Add education
-              </>
-            }
-          />
-        }
+        handleClose={handleToggleModel}
+        content={<EditEducation handleSubmit={handleSubmit} />}
       />
     </>
   );
