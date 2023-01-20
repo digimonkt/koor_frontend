@@ -34,7 +34,7 @@ export const RECENT_ITEMS = [
     ),
     description:
       "Information about the person that they attach as a plain text to grab employer’s attention. We can fit two rows here to be able to showcase yourself before a potential employer even opens your resume. Like “Hi, I’m Maraua and I’m the perfect fit for you...”",
-    disabled: "disabled",
+    disabled: true,
   },
   {
     img: IMAGES.RecentTwo,

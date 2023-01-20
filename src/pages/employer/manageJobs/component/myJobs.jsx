@@ -1,9 +1,15 @@
 import { Card, CardContent, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { SVG } from "../../../../assets/svg";
+import ApplicationCard from "../../../../components/applicationCard";
 import JobCard from "../../../../components/jobCard";
+import { RECENT_ITEMS } from "../../dashboard/recentHelper";
+import ApplicantList from "./applicantList";
 
 function MyJobs() {
+  // state management
+  const [isActive, setIsActive] = useState(false);
+
   return (
     <div className="py-3">
       <div className="mb-3">
@@ -29,6 +35,27 @@ function MyJobs() {
           }}
         >
           <JobCard selfJob />
+          <ApplicantList
+            isActive={isActive}
+            handleActive={() => setIsActive(!isActive)}
+          />
+          {isActive && (
+            <div className="recent-box mt-3">
+              {RECENT_ITEMS.map((item, index) => (
+                <ApplicationCard
+                  image={item.img}
+                  title={item.title}
+                  subTitle={item.subtitle}
+                  description={item.description}
+                  chiplabel={item.chiplabel}
+                  requirement={item.requirement}
+                  isDisabled={item.disabled}
+                  key={index}
+                  isMessagable={true}
+                />
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
