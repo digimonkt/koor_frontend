@@ -128,7 +128,7 @@ const JobDetails = () => {
                   </div>
                 </div>
                 <div className={`${styles.jobpostbtn}`}>
-                  <Link to="/applyjob">
+                  <Link to="../jobs/applyJob/:jobId">
                     <Searchbutton
                       text="Apply for this job"
                       className={`${styles.enablebtn}`}

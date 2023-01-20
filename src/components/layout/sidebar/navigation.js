@@ -7,18 +7,21 @@ const JobSeekerNavigationOptions = Object.freeze([
     icon: SVG.ProfileIcon,
     title: "My Profile",
     id: "myProfile",
+    isDisable: false,
   },
   {
     to: "/jobs/applied",
     icon: SVG.CircleRightIcon,
     title: "Applied jobs",
     id: "appliedJobs",
+    isDisable: false,
   },
   {
     to: "/jobs/saved",
     icon: SVG.SaveIcon,
     title: "Saved Jobs",
     id: "savedJobs",
+    isDisable: false,
   },
   {
     to: "/messages",
@@ -26,6 +29,7 @@ const JobSeekerNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
+    isDisable: true,
   },
 ]);
 const EmployerNavigationOptions = Object.freeze([
@@ -34,24 +38,28 @@ const EmployerNavigationOptions = Object.freeze([
     icon: SVG.DashboardIcon,
     title: "Dashboard",
     id: "dashboard",
+    isDisable: false,
   },
   {
     to: "/manage-jobs",
     icon: SVG.JobsIcon,
     title: "Manage jobs",
     id: "manageJobs",
+    isDisable: false,
   },
   {
     to: "/manage-tenders",
     icon: SVG.TendersIcon,
     title: "Manage tenders",
     id: "manageTenders",
+    isDisable: true,
   },
   {
     to: "/calender",
     icon: SVG.CalenderIcon,
     title: "Calender",
     id: "calender",
+    isDisable: true,
   },
   {
     to: "/messages",
@@ -59,6 +67,7 @@ const EmployerNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
+    isDisable: true,
   },
 ]);
 
@@ -67,23 +76,27 @@ const VendorNavigationOptions = Object.freeze([
     icon: SVG.DashboardIcon,
     title: "Dashboard",
     id: "dashboard",
+    isDisable: false,
   },
   {
     icon: SVG.ProfileIcon,
     title: "My Profile",
     id: "myProfile",
+    isDisable: false,
   },
 
   {
     icon: SVG.CalenderIcon,
     title: "Calender",
     id: "calender",
+    isDisable: true,
   },
   {
     icon: SVG.MessageIcon,
     title: "Messages",
     id: "messages",
     count: 2,
+    isDisable: true,
   },
 ]);
 

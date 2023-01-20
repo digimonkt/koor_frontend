@@ -73,6 +73,7 @@ import { ReactComponent as OrangeIcon } from "./orangeIcon.svg";
 import { ReactComponent as StartDate } from "./startdate.svg";
 import { ReactComponent as Enable } from "./enable.svg";
 import { ReactComponent as BlueFlag } from "./blueflag.svg";
+import { ReactComponent as Crossed } from "./crossed.svg";
 
 export const SVG = {
   ClockIconSmall,
@@ -150,4 +151,5 @@ export const SVG = {
   OrangeIcon,
   Enable,
   BlueFlag,
+  Crossed,
 };

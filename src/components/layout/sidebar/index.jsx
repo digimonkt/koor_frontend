@@ -43,6 +43,9 @@ function Sidebar() {
             <li>
               {navigationOptions(role).map((option) => (
                 <Link
+                  style={{
+                    pointerEvents: option.isDisable && "none",
+                  }}
                   to={option.to}
                   key={option.id}
                   className={
