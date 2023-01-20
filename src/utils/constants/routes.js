@@ -9,7 +9,6 @@ import {
   JobSearch,
   ApplicantDetails,
   JobDetails,
-  ApplyForJob,
 } from "../../pages/jobs";
 
 import {
@@ -54,12 +53,6 @@ export const AUTHENTICATED_ROUTES = [
     name: "jobSearch",
     path: "/job-search",
     component: JobSearch,
-  },
-  {
-    id: "applyForJob",
-    name: "Apply For Job",
-    path: "/jobs/applyJob/:jobId",
-    component: ApplyForJob,
   },
 ];
 
