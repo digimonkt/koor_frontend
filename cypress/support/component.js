@@ -23,7 +23,11 @@ import { mount } from "cypress/react18";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "../../src/redux/store";
 import { Provider } from "react-redux";
-import React from "react";
+import "../../src/index.css";
+import "../../src/assets/css/banhnschrift.css";
+import "../../src/assets/css/spacing.css";
+import "../../src/assets/css/style.css";
+
 Cypress.Commands.add("mount", mount);
 
 Cypress.Commands.add("mountApplication", (component, options = {}) => {
