@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/display-name */
 import { Container, Grid, Stack } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { Card, CardContent } from "../../components/card";
@@ -137,7 +137,7 @@ function AuthLayout({ title, subTitle }) {
                         </>
                       )}
 
-                      <div className={`bottombar mt-5`}>
+                      <div className={"bottombar mt-5"}>
                         <span>Already have an account?</span>
                         <Link
                           to={isLoginPage ? "/" : "/login"}

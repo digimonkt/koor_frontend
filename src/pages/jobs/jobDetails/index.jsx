@@ -27,7 +27,7 @@ const JobDetails = () => {
               </Grid>
               <Grid item xs={4}>
                 <div className={`${styles.clocs}`}>
-                  <span>{<SVG.Clock />}</span>
+                  <span>{<SVG.ClockIconSmall />}</span>
                   <p className="mb-0 mt-0">
                     <span>Posted:</span> August 28, 2022
                   </p>

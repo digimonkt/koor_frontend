@@ -1,11 +1,10 @@
 import { Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { IMAGES } from "../../assets/images";
 import { SVG } from "../../assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "../../utils/enum";
 

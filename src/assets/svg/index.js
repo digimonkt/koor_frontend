@@ -66,7 +66,6 @@ import { ReactComponent as RejectIcon } from "./rejectIcon.svg";
 import { ReactComponent as BlockedIcon } from "./blockedIcon.svg";
 import { ReactComponent as AttachIcon } from "./attachIcon.svg";
 import { ReactComponent as LeftArrow } from "./leftarrow.svg";
-import { ReactComponent as Clock } from "./clock.svg";
 import { ReactComponent as BagClock } from "./bagclock.svg";
 import { ReactComponent as HalfCircle } from "./halfcircle.svg";
 import { ReactComponent as OrangeIcon } from "./orangeIcon.svg";
@@ -144,7 +143,6 @@ export const SVG = {
   BlockedIcon,
   AttachIcon,
   LeftArrow,
-  Clock,
   BagClock,
   HalfCircle,
   StartDate,
