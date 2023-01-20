@@ -71,12 +71,16 @@ function AuthLayout({ title, subTitle }) {
                 >
                   {!role ? (
                     <div className="content-box">
-                      <h5>{title}</h5>
-                      <p>{subTitle}</p>
-                      <div className="register-des mt-4">
+                      <h5 data-cy="title">{title}</h5>
+                      <p data-cy="subTitle">{subTitle}</p>
+                      <div className="register-des mt-4" data-cy="authOptions">
                         {AuthOptions.map((option) => {
                           return (
-                            <Link key={option.id} to={`?role=${option.role}`}>
+                            <Link
+                              data-cy={`role-${option.role}`}
+                              key={option.id}
+                              to={`?role=${option.role}`}
+                            >
                               <Stack
                                 direction="row"
                                 spacing={2}
