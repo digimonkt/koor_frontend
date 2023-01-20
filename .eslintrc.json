@@ -27,6 +27,7 @@
     ],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "multiline-ternary": "off"
+    "multiline-ternary": "off",
+    "react/no-unescaped-entities": "off"
   }
 }

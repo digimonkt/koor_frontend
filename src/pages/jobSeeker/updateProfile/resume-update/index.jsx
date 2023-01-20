@@ -14,7 +14,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 backgroundColor: bgcolor,
                 width: "101px",
                 height: "101px",
-                color: color,
+                color,
               },
             }}
           >

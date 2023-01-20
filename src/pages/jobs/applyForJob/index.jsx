@@ -259,7 +259,7 @@ const ApplyForJob = () => {
           </div>
         </div>
       </Container>
-      {/* 
+      {/*
       <ModalView
         open={open}
         handleClose={handleClose}

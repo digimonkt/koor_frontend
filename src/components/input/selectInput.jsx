@@ -44,7 +44,11 @@ function SelectInputComponent({ options, className, ...rest }) {
         {...rest}
       >
         {options.map((option) => {
-          return <MenuItem value={option.value}>{option.label}</MenuItem>;
+          return (
+            <MenuItem value={option.value} key={option.value}>
+              {option.label}
+            </MenuItem>
+          );
         })}
       </SelectBox>
     </FormControl>

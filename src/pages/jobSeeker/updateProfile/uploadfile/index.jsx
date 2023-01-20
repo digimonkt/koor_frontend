@@ -84,7 +84,7 @@ const UploadFile = ({ title, color, bgcolor, textcolor }) => {
                     borderRadius: "73px",
 
                     border: `1px solid ${color}`,
-                    color: color,
+                    color,
                     fontWeight: "500",
                     fontSize: "16px",
                     fontFamily: "Bahnschrift",

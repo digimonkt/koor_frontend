@@ -58,6 +58,7 @@ const Skills = () => {
             <Stack direction="row" spacing={0} flexWrap="wrap">
               {skillsList.map((item, index) => (
                 <Chip
+                  key={index}
                   label={item}
                   onClick={handleClick}
                   onDelete={handleDelete}

@@ -235,6 +235,7 @@ const ApplicantDetails = () => {
                     <Stack direction="row" spacing={0} flexWrap="wrap">
                       {skillsList.map((item, index) => (
                         <Chip
+                          key={index}
                           label={item}
                           sx={{
                             fontSize: "12px",

@@ -5,7 +5,7 @@ import { SVG } from "../../assets/svg";
 
 function AttachmentDragNDropInputComponent({ files, handleDrop, deleteFile }) {
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: handleDrop ? handleDrop : () => {},
+    onDrop: handleDrop || (() => {}),
     multiple: true,
     maxFiles: 10,
   });
