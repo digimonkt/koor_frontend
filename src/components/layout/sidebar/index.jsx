@@ -45,6 +45,8 @@ function Sidebar() {
                 <Link
                   style={{
                     pointerEvents: option.isDisable && "none",
+                    backgroundColor: option.isDisable && "#F2F3F4",
+                    borderRadius: option.isDisable && "27px 0px 0px 27px",
                   }}
                   to={option.to}
                   key={option.id}
