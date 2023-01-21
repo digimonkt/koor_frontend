@@ -167,7 +167,7 @@ function Header() {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/login">
+                    <Link data-cy="login-nav" to="/login">
                       <FilledButton title="Login" />
                     </Link>
                   </li>

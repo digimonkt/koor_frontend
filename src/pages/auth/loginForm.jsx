@@ -26,13 +26,16 @@ function LoginForm({ role }) {
               placeholder="Your Email"
               title="Login"
               subtitle="Your mobile phone or email"
+              data-cy="login-email"
+              type="email"
             />
           </div>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Password"
-              password
               title="Password"
+              data-cy="login-password"
+              type="password"
             />
           </div>
           <div className="text-end forgots">
@@ -44,6 +47,7 @@ function LoginForm({ role }) {
               title="Login"
               isBlueButton={role !== USER_ROLES.jobSeeker}
               onClick={handleLogin}
+              data-cy="login-button"
             />
           </div>
         </form>

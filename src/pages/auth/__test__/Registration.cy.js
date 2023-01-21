@@ -1,6 +1,4 @@
 import React from "react";
-import { setUserRole } from "../../../redux/slice/user";
-import { store } from "../../../redux/store";
 import { USER_ROLES } from "../../../utils/enum";
 import { Registration } from "../index";
 const jobSeeker = `[data-cy=role-${USER_ROLES.jobSeeker}]`;
@@ -24,8 +22,8 @@ describe("<Registration />", () => {
     cy.get(vendor);
   });
   it("Job Seeker registration", () => {
-    const role = USER_ROLES.jobSeeker;
-    store.dispatch(setUserRole(role));
+    cy.get(jobSeeker).click();
+    cy.window().its("store").invoke("getState");
   });
   // it("Employer registration", () => {
   //   const role = USER_ROLES.employer;

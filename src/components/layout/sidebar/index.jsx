@@ -64,7 +64,7 @@ function Sidebar() {
           </ul>
         </PerfectScrollbar>
       </div>
-      <div className="logout">
+      <div className="logout" data-cy="logout-button-nav">
         <Link
           to="/logout"
           style={{
