@@ -1,0 +1,13 @@
+ <svg
+    width="35"
+    height="35"
+    viewBox="0 0 35 35"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="34.974" height="34.7435" rx="17.3718" fill="#FEEFD3" />
+    <path
+      d="M19.2258 26.3717H16.5417V13.0973L14.3855 14.1866V11.3678L16.7663 10.0426H19.2258V26.3717Z"
+      fill="#121212"
+    />
+  </svg>
