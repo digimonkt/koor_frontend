@@ -6,6 +6,7 @@ import { OutlinedButton } from "../../../../components/button";
 const color = "#EEA23D";
 const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
+
 function EditEducation({ handleSubmit }) {
   const [formValues, setFormValues] = useState({
     degree: "",
@@ -21,7 +22,12 @@ function EditEducation({ handleSubmit }) {
     <div>
       <>
         <h1 className="headding">Education</h1>
-        <Stack direction="row" spacing={2}>
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems={{ xs: "start", lg: "center" }}
+          className="mb-3"
+        >
           <IconButton
             sx={{
               "&.MuiIconButton-root": {
@@ -35,24 +41,48 @@ function EditEducation({ handleSubmit }) {
             <SVG.EducationIcon />
           </IconButton>
           <div className="description">
-            <input
-              type="text"
-              placeholder="degree"
-              name="degree"
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              placeholder="location"
-              name="location"
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              placeholder="description"
-              name="description"
-              onChange={handleChange}
-            />
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2 }}
+              alignItems={{ xs: "start", lg: "center" }}
+              className="mb-3"
+            >
+              <input
+                type="text"
+                placeholder="Degree"
+                className="add-form-control"
+                name="degree"
+                onChange={handleChange}
+              />
+            </Stack>
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2 }}
+              alignItems={{ xs: "start", lg: "center" }}
+              className="mb-3"
+            >
+              <input
+                type="text"
+                placeholder="Location"
+                className="add-form-control"
+                name="location"
+                onChange={handleChange}
+              />
+            </Stack>
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2 }}
+              alignItems={{ xs: "start", lg: "center" }}
+              className="mb-3"
+            >
+              <input
+                type="text"
+                placeholder="Description"
+                className="add-form-control"
+                name="description"
+                onChange={handleChange}
+              />
+            </Stack>
           </div>
         </Stack>
         <div className="text-center mt-3">

@@ -1,9 +1,9 @@
 import { Card, CardContent } from "@mui/material";
 import React from "react";
 import { SVG } from "../../../../assets/svg";
-import ModalView from "../../updateProfile/modal";
-import UpdateInfo from "../../updateProfile/modal/update-info";
+import DialogBox from "../../../../components/layout/dialogBox";
 import { Cbutton } from "../../../../components/button";
+import EditLanguages from "./editLanguages";
 
 const Languages = () => {
   const [open, setOpen] = React.useState(false);
@@ -102,36 +102,9 @@ const Languages = () => {
           </div>
         </CardContent>
       </Card>
-      <ModalView
-        open={open}
-        handleClose={handleClose}
-        content={
-          <UpdateInfo
-            title="Languages"
-            color="#EEA23D"
-            bgcolor="#FEEFD3"
-            icon={<SVG.LanguageIcon />}
-            description={[
-              <>
-                <p>
-                  Add languages that your can speak or write. This will be
-                  helpfull in multi-cultural or tourist regions.
-                </p>
-              </>,
-            ]}
-            buttonHover="#eea23d14"
-            handleClose={handleClose}
-            buttontext={
-              <>
-                <span className="me-3 d-inline-flex">
-                  <SVG.PlushIcon />
-                </span>
-                Add Language
-              </>
-            }
-          />
-        }
-      />
+      <DialogBox open={open} handleClose={handleClose}>
+        <EditLanguages />
+      </DialogBox>
     </>
   );
 };

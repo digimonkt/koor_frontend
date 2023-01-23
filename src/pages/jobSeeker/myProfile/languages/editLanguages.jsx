@@ -7,11 +7,11 @@ const color = "#EEA23D";
 const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
-function EditWorkExperience({ handleSubmit }) {
+function EditLanguages({ handleSubmit }) {
   const [formValues, setFormValues] = useState({
-    role: "",
-    description: "",
-    date: "",
+    name: "",
+    spoken: "",
+    written: "",
   });
   const handleChange = (e) => {
     const name = e.target.name;
@@ -21,7 +21,7 @@ function EditWorkExperience({ handleSubmit }) {
   return (
     <div>
       <>
-        <h1 className="headding">Education</h1>
+        <h1 className="headding">Languages</h1>
         <Stack
           direction="row"
           spacing={2}
@@ -38,7 +38,7 @@ function EditWorkExperience({ handleSubmit }) {
               },
             }}
           >
-            <SVG.WorkIcon />
+            <SVG.LanguageIcon />
           </IconButton>
           <div className="description">
             <Stack
@@ -49,8 +49,8 @@ function EditWorkExperience({ handleSubmit }) {
             >
               <input
                 type="text"
-                placeholder="Role"
-                name="role"
+                placeholder="Name"
+                name="name"
                 className="add-form-control"
                 onChange={handleChange}
               />
@@ -63,8 +63,8 @@ function EditWorkExperience({ handleSubmit }) {
             >
               <input
                 type="text"
-                placeholder="Description"
-                name="description"
+                placeholder="Spoken"
+                name="spoken"
                 className="add-form-control"
                 onChange={handleChange}
               />
@@ -77,8 +77,8 @@ function EditWorkExperience({ handleSubmit }) {
             >
               <input
                 type="text"
-                placeholder="Date"
-                name="date"
+                placeholder="Written"
+                name="written"
                 className="add-form-control"
                 onChange={handleChange}
               />
@@ -92,7 +92,7 @@ function EditWorkExperience({ handleSubmit }) {
                 <span className="me-3 d-inline-flex">
                   <SVG.PlushIcon />
                 </span>{" "}
-                Add Work Experience
+                Add Language
               </>
             }
             sx={{
@@ -110,4 +110,4 @@ function EditWorkExperience({ handleSubmit }) {
   );
 }
 
-export default EditWorkExperience;
+export default EditLanguages;
