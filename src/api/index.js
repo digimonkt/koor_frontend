@@ -3,7 +3,6 @@ import QueryString from "qs";
 import { SERVER_URL } from "../utils/serverUrl";
 import { localStorage } from "../utils/localStorage";
 
-
 export const axiosInstance = axios.create({
   baseURL: `${SERVER_URL}/api`,
   headers: {
@@ -19,9 +18,7 @@ axiosInstance.interceptors.response.use(function (response) {
   return response;
 });
 
-export const request = async (
-  config
-) => {
+export const request = async (config) => {
   try {
     if (!config.headers) {
       config.headers = {};
@@ -31,7 +28,7 @@ export const request = async (
     }
     const accessToken = localStorage.getAccessToken();
     if (accessToken) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     const response = await axiosInstance.request({ ...config });
     return {
@@ -41,7 +38,7 @@ export const request = async (
   } catch (error) {
     if (error) {
       if (error.response) {
-        const axiosError = error
+        const axiosError = error;
         if (axiosError.response && axiosError.response.data) {
           let errorMessage = axiosError.response.data.errors;
           // check for 500 to handle message defined by the app
@@ -59,8 +56,8 @@ export const request = async (
           };
         }
       } else {
-        const axiosError = error
-        let errorMessage = axiosError.message;
+        const axiosError = error;
+        const errorMessage = axiosError.message;
 
         return {
           remote: "failure",
@@ -74,9 +71,7 @@ export const request = async (
   }
 };
 
-export const parseResponse = (
-  response
-) => {
+export const parseResponse = (response) => {
   const data = JSON.parse(response);
   if (data && (data.errors || data.error)) {
     return {
