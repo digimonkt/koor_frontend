@@ -1,9 +1,11 @@
 import { Card, CardContent } from "@mui/material";
 import React from "react";
 import { SVG } from "../../../../assets/svg";
-import ModalView from "../../updateProfile/modal";
-import UpdateInfo from "../../updateProfile/modal/update-info";
+// import ModalView from "../../updateProfile/modal";
+// import UpdateInfo from "../../updateProfile/modal/update-info";
 import { Cbutton } from "../../../../components/button";
+import DialogBox from "../../../../components/layout/dialogBox";
+import EditWorkExperience from "./editWorkExperience";
 const WorkExperience = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -108,37 +110,9 @@ const WorkExperience = () => {
           </div>
         </CardContent>
       </Card>
-      <ModalView
-        open={open}
-        handleClose={handleClose}
-        content={
-          <UpdateInfo
-            title="Work Experience"
-            color="#EEA23D"
-            bgcolor="#FEEFD3"
-            icon={<SVG.WorkIcon />}
-            description={[
-              <>
-                <p>
-                  Where have you worked before? In what companies, on what role
-                  with what responsibilities? Feel free to share to make your
-                  profile more complete and attractive for potential employers.
-                </p>
-              </>,
-            ]}
-            buttonHover="#eea23d14"
-            handleClose={handleClose}
-            buttontext={
-              <>
-                <span className="me-3 d-inline-flex">
-                  <SVG.PlushIcon />
-                </span>{" "}
-                Add work experience
-              </>
-            }
-          />
-        }
-      />
+      <DialogBox open={open} handleClose={handleClose}>
+        <EditWorkExperience />
+      </DialogBox>
     </>
   );
 };
