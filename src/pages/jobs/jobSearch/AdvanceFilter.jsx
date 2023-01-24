@@ -86,10 +86,12 @@ const AdvanceFilter = () => {
               Advanced filter{" "}
               {data ? (
                 <>
-                  <span>{<SVG.ArrowUpIcon />}</span>
+                  <span style={{ marginLeft: "10px" }}>
+                    {<SVG.ArrowUpIcon />}
+                  </span>
                 </>
               ) : (
-                <span>{<SVG.Downarrow />}</span>
+                <span style={{ marginLeft: "10px" }}>{<SVG.Downarrow />}</span>
               )}
             </p>
           </MenuItem>
