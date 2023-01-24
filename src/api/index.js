@@ -1,15 +1,12 @@
 import axios from "axios";
-import QueryString from "qs";
 import { SERVER_URL } from "../utils/serverUrl";
-import { localStorage } from "../utils/localStorage";
+import { globalLocalStorage } from "../utils/localStorage";
 
 export const axiosInstance = axios.create({
   baseURL: `${SERVER_URL}/api`,
   headers: {
     "Content-Type": "application/json",
   },
-  paramsSerializer: (params) =>
-    QueryString.stringify(params, { arrayFormat: "brackets" }),
 });
 
 axiosInstance.interceptors.response.use(function (response) {
@@ -26,7 +23,7 @@ export const request = async (config) => {
     if (!config.headers["Content-Type"]) {
       config.headers["Content-Type"] = "application/json";
     }
-    const accessToken = localStorage.getAccessToken();
+    const accessToken = globalLocalStorage.getAccessToken();
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

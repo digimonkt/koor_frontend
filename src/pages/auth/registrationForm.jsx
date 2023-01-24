@@ -1,22 +1,41 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { CreateUserAPI } from "../../api/user";
+// import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import { FilledButton } from "../../components/button";
 import { LabeledInput } from "../../components/input";
-import { setIsLoggedIn } from "../../redux/slice/user";
+// import { setIsLoggedIn } from "../../redux/slice/user";
 import { USER_ROLES } from "../../utils/enum";
 
 function RegistrationForm({ role }) {
   // navigate
-  const navigate = useNavigate();
-
+  // const navigate = useNavigate();
   // redux dispatcher
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const handleRegister = () => {
-    dispatch(setIsLoggedIn(true));
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    mobileNumber: "",
+  });
 
-    navigate(`/${role}/my-profile/job-criteria`);
+  const handleChange = (e) => {
+    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
+
+  const handleRegister = async () => {
+    console.log({ form });
+    const payload = {
+      email: form.email,
+      mobileNumber: form.mobileNumber,
+      password: form.password,
+      role,
+    };
+    const res = await CreateUserAPI(payload);
+    console.log({ res });
+    // dispatch(setIsLoggedIn(true));
+    // navigate(`/${role}/my-profile/job-criteria`);
   };
 
   return (
@@ -28,23 +47,38 @@ function RegistrationForm({ role }) {
               placeholder="Your Email"
               title="Email"
               subtitle="No email? Register with mobile number!"
+              name="email"
+              onChange={handleChange}
+              value={form.email}
             />
           </div>
           <div className="form-group mb-3">
-            <LabeledInput placeholder="Your Mobile Number" title="Email" />
+            <LabeledInput
+              placeholder="Your Mobile Number"
+              title="Mobile"
+              name="mobileNumber"
+              onChange={handleChange}
+              value={form.mobileNumber}
+            />
           </div>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Password"
-              password
+              type="password"
               title="Create new password"
+              name="password"
+              onChange={handleChange}
+              value={form.password}
             />
           </div>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Re-enter Password"
-              password
               title="Repeat your password"
+              type="password"
+              name="confirmPassword"
+              onChange={handleChange}
+              value={form.confirmPassword}
             />
           </div>
 
