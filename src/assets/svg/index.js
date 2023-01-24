@@ -73,6 +73,9 @@ import { ReactComponent as StartDate } from "./startdate.svg";
 import { ReactComponent as Enable } from "./enable.svg";
 import { ReactComponent as BlueFlag } from "./blueflag.svg";
 import { ReactComponent as Crossed } from "./crossed.svg";
+import { ReactComponent as Google } from "./google.svg";
+import { ReactComponent as Apple } from "./apple.svg";
+import { ReactComponent as Facebook } from "./facebookicon.svg";
 
 export const SVG = {
   ClockIconSmall,
@@ -150,4 +153,7 @@ export const SVG = {
   Enable,
   BlueFlag,
   Crossed,
+  Google,
+  Apple,
+  Facebook,
 };
