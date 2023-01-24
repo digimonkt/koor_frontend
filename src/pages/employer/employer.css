@@ -301,6 +301,14 @@ span.arrowjobs svg {
   /* Black #121212 */
   color: #121212;
 }
+.my-jobs h2 a {
+  font-family: "Poppins";
+
+  color: #121212;
+}
+.my-jobs h2 a:hover {
+  color: #121212;
+}
 
 .my-jobs p {
   font-family: "Poppins";
