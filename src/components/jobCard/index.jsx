@@ -21,25 +21,37 @@ function JobCard({ logo, selfJob, applied }) {
     }
   }, [logo]);
   return (
-    <Grid container spacing={2} {...gridProps}>
+    <Grid container spacing={1.875} {...gridProps}>
       {logo && (
         <Grid
           item
-          lg={2}
-          xs={12}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "12.666667%",
-              flexBasis: "12.666667%",
+              maxWidth: "10.555%",
+              flexBasis: "10.555%",
             },
           }}
         >
           <div className="squer-width">
-            <img src={IMAGES.FacebookBoxIcon} alt="" />
+            <img
+              src={IMAGES.FacebookBoxIcon}
+              alt=""
+              style={{ width: "100%", height: "85px" }}
+            />
           </div>
         </Grid>
       )}
-      <Grid item lg={logo ? 8 : 9} xs={12}>
+      <Grid
+        item
+        // lg={logo ? 8 : 9}
+        // xs={12}
+        sx={{
+          "@media (min-width: 1200px)": {
+            maxWidth: "72%",
+            flexBasis: "72%",
+          },
+        }}
+      >
         <div className="my-jobs">
           <h2>
             {role === USER_ROLES.jobSeeker ? (
