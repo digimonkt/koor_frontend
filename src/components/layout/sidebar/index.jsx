@@ -72,8 +72,8 @@ function Sidebar() {
               role === USER_ROLES.employer
                 ? "#274593"
                 : role === USER_ROLES.vendor
-                  ? "#274593"
-                  : null,
+                ? "#274593"
+                : null,
           }}
         >
           <Stack direction="row" spacing={2} alignItems="center">
