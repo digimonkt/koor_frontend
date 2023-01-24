@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginForm from "./loginForm";
 import RegistrationForm from "./registrationForm";
-import { IMAGES } from "../../assets/images";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "../../redux/slice/user";
 
@@ -66,7 +66,7 @@ function AuthLayout({ title, subTitle }) {
               <Card>
                 <CardContent
                   sx={{
-                    padding: `50px 60px ${!role ? "!important" : ""}`,
+                    padding: `75px 60px ${!role ? "!important" : ""}`,
                   }}
                 >
                   {!role ? (
@@ -128,13 +128,13 @@ function AuthLayout({ title, subTitle }) {
                               justifyContent="center"
                             >
                               <Link to="!#">
-                                <img src={IMAGES.GoogleBoxIcon} alt="" />
+                                <SVG.Google />
                               </Link>
                               <Link to="!#">
-                                <img src={IMAGES.AppleBoxIcon} alt="" />
+                                <SVG.Apple />
                               </Link>
                               <Link to="!#">
-                                <img src={IMAGES.FacebookBoxIcon} alt="" />
+                                <SVG.Facebook />
                               </Link>
                             </Stack>
                           </div>

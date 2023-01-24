@@ -1,114 +1,117 @@
 body {
-    background-color: #E5E5E5!important;
+  background-color: #e5e5e5 !important;
 }
 .body {
-    /* max-width: 1140px!important; */
-    margin: 0 auto;
+  /* max-width: 1140px!important; */
+  margin: 0 auto;
 }
 .checkboxDiv {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    top: 10px;
-    margin: 0 10px;
-    font-family: 'Poppins';
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 10px;
+  margin: 0 10px;
+  font-family: "Poppins";
 }
-.checkboxDiv span{font-size: 16px; font-weight: 400;}
+.checkboxDiv span {
+  font-size: 16px;
+  font-weight: 400;
+}
 .btnActive span {
-    margin-right: 4px!important;
-    position: relative;
-    top: 3px;
+  margin-right: 4px !important;
+  position: relative;
+  top: 3px;
 }
 .btninActive span {
-    margin-right: 4px!important;
-    position: relative;
-    top: 3px;
+  margin-right: 4px !important;
+  position: relative;
+  top: 3px;
 }
 .btninActive {
-    background: #FEEFD3!important;
-border: 1px solid #EEA23D!important;
-border-radius: 73px!important;
-font-size: 12px!important;
-color: #000!important;
-font-weight: 400!important;
-height: 42px!important;
+  background: #feefd3 !important;
+  border: 1px solid #eea23d !important;
+  border-radius: 73px !important;
+  font-size: 12px !important;
+  color: #000 !important;
+  font-weight: 400 !important;
+  height: 42px !important;
 }
 .btnActive {
-    background: #F0F0F0!important;
-    width: auto!important;
-    height: 42px!important;
-    border-radius: 64px!important;
-    color: #848484!important;
-    font-size: 14px!important;
-    font-family: 'Poppins' !important;
-    font-weight: 400 !important;
-    text-transform: capitalize !important;
+  background: #f0f0f0 !important;
+  width: auto !important;
+  height: 42px !important;
+  border-radius: 64px !important;
+  color: #848484 !important;
+  font-size: 14px !important;
+  font-family: "Poppins" !important;
+  font-weight: 400 !important;
+  text-transform: capitalize !important;
 }
 
 .MuiList-root.MuiList-padding.css-h4y409-MuiList-root {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .searchResult {
-    box-shadow: 0px 15px 40px 0px #0000000D;
-   border-radius: 10px;
-   background-color: #fff;
-   margin: 28px 0;
-   padding: 0 18px 20px;
+  box-shadow: 0px 15px 40px 0px #0000000d;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 28px 0;
+  padding: 0 18px 0px;
 }
 .jobcards {
-    box-shadow: 0px 15px 40px 0px #0000000D;
-    border-radius: 10px;
-    background-color: #fff;
-    padding: 20px;
+  box-shadow: 0px 15px 40px 0px #0000000d;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 30px;
 }
 .historySearch {
-    display: flex;
-    justify-content: space-between;
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #CACACA;
-    margin-top: 25px;
-    padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #cacaca;
+  margin-top: 25px;
+  padding-top: 15px;
 }
-.historySearch h5{
-    font-family: 'Poppins';
-font-style: normal;
-font-weight: 400;
-font-size: 14px;
-line-height: 21px;
-/* identical to box height */
+.historySearch h5 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height */
 
-letter-spacing: 0.02em;
+  letter-spacing: 0.02em;
 
-/* Black #121212 */
+  /* Black #121212 */
 
-color: #121212;
+  color: #121212;
 }
 .savesearch {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .savesearch span {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #848484;
-    margin: 0 16px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #848484;
+  margin: 0 16px;
 }
 .savesearch span svg {
-    position: relative;
-    right: 10px;
+  position: relative;
+  right: 10px;
 }
 .savesearch button {
-    color: #EEA23D!important;
-    border: 1px solid #EEA23D!important;
-    border-radius: 70px!important;
-    padding: 5px 16px;
+  color: #eea23d !important;
+  border: 1px solid #eea23d !important;
+  border-radius: 70px !important;
+  padding: 5px 16px;
 }
 .savesearch button span {
-    margin: 0!important;
+  margin: 0 !important;
 }
 .savesearch button span svg {
-    right: 0!important;
+  right: 0 !important;
 }

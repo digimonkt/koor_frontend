@@ -40,7 +40,7 @@ const JobDetails = () => {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={9}>
+              <Grid item xs={12} lg={8}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
                   <p>
@@ -108,7 +108,7 @@ const JobDetails = () => {
                   </div>
                 </div>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={12} lg={4}>
                 <div className={`${styles.monthBox}`}>
                   <h4>UP TO</h4>
                   <p className="m-0">

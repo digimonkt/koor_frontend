@@ -14,7 +14,6 @@
   justify-content: flex-start;
   padding-top: 16px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #cacaca;
 }
 .lables .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover {
   -webkit-text-decoration: none;
@@ -64,6 +63,7 @@
   color: #ffa500;
   font-weight: 400;
   padding-left: 16px;
+  margin: 0px;
 }
 iframe {
   border: 0;
@@ -132,6 +132,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
 }
 .SelectDropdown {
   padding-top: 22px;
+  border-top: 1px solid #cacaca;
 }
 .SelectDropdown .MuiFormControl-root.css-ptt77l-MuiFormControl-root {
   width: 100% !important;
@@ -194,9 +195,12 @@ header {
 .menu li {
   list-style: none;
   display: inline-block;
-  padding: 0px 15px;
+  padding: 0px 8px;
 }
 
+.menu li:last-child {
+  padding-right: 0px;
+}
 .menu li a {
   text-decoration: none;
   font-weight: 400;
@@ -306,7 +310,7 @@ header {
 }
 .register {
   background: url("../images/yellow-bg.png") no-repeat center top;
-  margin-top: 81px;
+  margin-top: 68px;
   background-size: 100% 100%;
 }
 .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
@@ -441,6 +445,7 @@ header {
   font-weight: 400;
   letter-spacing: 0.02rem;
   color: #848484;
+  font-family: "Poppins";
 }
 
 .bottombar a {

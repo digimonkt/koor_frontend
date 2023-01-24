@@ -21,7 +21,7 @@ function JobCard({ logo, selfJob, applied }) {
     }
   }, [logo]);
   return (
-    <Grid container spacing={2} {...gridProps}>
+    <Grid container spacing={1.875} {...gridProps}>
       {logo && (
         <Grid
           item
