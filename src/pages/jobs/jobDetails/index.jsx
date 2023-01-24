@@ -11,7 +11,7 @@ const JobDetails = () => {
   return (
     <>
       <Container>
-        <div className={`${styles.Jobcard}`}>
+        <div className={`${styles.Jobcard}`} style={{ marginTop: "0px" }}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={8}>
