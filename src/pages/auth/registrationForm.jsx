@@ -1,5 +1,5 @@
 import React from "react";
-import { CreateUserAPI } from "../../api/user";
+import { CreateUserAPI } from "@api/user";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "@components/button";
