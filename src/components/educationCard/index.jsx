@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 import { USER_ROLES } from "../../utils/enum";
 
 function EducationCard({

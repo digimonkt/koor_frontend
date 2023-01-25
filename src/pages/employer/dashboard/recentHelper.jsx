@@ -1,6 +1,6 @@
 import { Chip } from "@mui/material";
-import { IMAGES } from "../../../assets/images";
-import { SVG } from "../../../assets/svg";
+import { IMAGES } from "@assets/images";
+import { SVG } from "@assets/svg";
 
 export const RECENT_ITEMS = [
   {

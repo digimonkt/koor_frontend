@@ -1,7 +1,7 @@
 import { Divider, FormControl, MenuItem, Stack } from "@mui/material";
 import React from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { SelectBoxStyle } from "../../../components/input";
+import { SelectBoxStyle } from "@components/input";
 
 function CurrencyInput({ title, currency, handleOptionChange, ...rest }) {
   return (

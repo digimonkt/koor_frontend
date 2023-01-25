@@ -9,9 +9,9 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 import { FormLabelBox, SelectBox } from ".";
-import { SVG } from "../../../assets/svg";
-import { Cbutton } from "../../../components/button";
+import { SVG } from "@assets/svg";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { OutlinedButton } from "@components/button";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   return (
@@ -135,18 +135,23 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
         </Grid>
       </div>
       <div className="text-center">
-        <Cbutton
-          variant="outlined"
+        <OutlinedButton
+          title={
+            <>
+              <span className="me-2 d-inline-flex">
+                <SVG.CheckIcon />
+              </span>{" "}
+              Done
+            </>
+          }
           component={Link}
           to="/job-seeker/my-profile/update-profile"
           sx={{
             "&.MuiButton-outlined": {
-              borderRadius: "73px",
-              border: "1px solid #EEA23D",
-              color: "#EEA23D",
+              border: "1px solid #EEA23D !important",
+              color: "#EEA23D !important",
               fontWeight: "500",
               fontSize: "16px",
-              fontFamily: "Bahnschrift",
               padding: "10px 30px",
 
               "&:hover": {
@@ -154,12 +159,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               },
             },
           }}
-        >
-          <span className="me-2 d-inline-flex">
-            <SVG.CheckIcon />
-          </span>{" "}
-          Done
-        </Cbutton>
+        />
       </div>
     </div>
   );

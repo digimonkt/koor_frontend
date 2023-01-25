@@ -1,8 +1,8 @@
+import { OutlinedButton } from "@components/button";
 import { Avatar, Stack } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { SVG } from "../../../../assets/svg";
-import { Cbutton } from "../../../../components/button";
+import { SVG } from "@assets/svg";
 
 const UploadFile = ({ title, color, bgcolor, textcolor }) => {
   const [files, setFiles] = useState([]);
@@ -77,17 +77,21 @@ const UploadFile = ({ title, color, bgcolor, textcolor }) => {
               </div>
             </div>
             <div className="text-center">
-              <Cbutton
-                variant="outlined"
+              <OutlinedButton
+                title={
+                  <>
+                    <span className="me-2 d-inline-flex">
+                      <SVG.CheckIcon />
+                    </span>
+                    Save photo
+                  </>
+                }
                 sx={{
                   "&.MuiButton-outlined": {
-                    borderRadius: "73px",
-
-                    border: `1px solid ${color}`,
-                    color,
+                    border: `1px solid ${color} !important`,
+                    color: `${color} !important`,
                     fontWeight: "500",
                     fontSize: "16px",
-                    fontFamily: "Bahnschrift",
                     padding: "6px 30px",
                     "&:hover": { background: bgcolor },
                     "@media (max-width: 992px)": {
@@ -96,12 +100,7 @@ const UploadFile = ({ title, color, bgcolor, textcolor }) => {
                     },
                   },
                 }}
-              >
-                <span className="me-2 d-inline-flex">
-                  <SVG.CheckIcon />
-                </span>
-                Save photo
-              </Cbutton>
+              />
             </div>
           </Stack>
         </Stack>

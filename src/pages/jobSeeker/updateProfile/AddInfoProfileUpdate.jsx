@@ -13,9 +13,9 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { SVG } from "../../../assets/svg";
-import { Cbutton } from "../../../components/button";
+import { SVG } from "@assets/svg";
 import { FormControlReminder, FormLabelBox, SelectBox } from "./style";
+import { OutlinedButton } from "@components/button";
 
 const AddInfoProfileUpdate = (props) => {
   const [age, setAge] = useState("");
@@ -249,17 +249,23 @@ const AddInfoProfileUpdate = (props) => {
                 />
               </FormGroup>
               <div className="text-center mt-5">
-                <Cbutton
+                <OutlinedButton
+                  title={
+                    <>
+                      {" "}
+                      <span className="me-2 d-inline-flex">
+                        <SVG.CheckIcon />
+                      </span>{" "}
+                      update info
+                    </>
+                  }
                   onClick={props.handleClickOpen}
-                  variant="outlined"
                   sx={{
                     "&.MuiButton-outlined": {
-                      borderRadius: "73px",
-                      border: "1px solid #EEA23D",
-                      color: "#EEA23D",
+                      border: "1px solid #EEA23D !important",
+                      color: "#EEA23D !important",
                       fontWeight: "500",
                       fontSize: "16px",
-                      fontFamily: "Bahnschrift",
                       padding: "10px 30px",
                       "&:hover": { background: "rgba(255, 165, 0, 0.1)" },
                       "@media (max-width: 992px)": {
@@ -268,12 +274,7 @@ const AddInfoProfileUpdate = (props) => {
                       },
                     },
                   }}
-                >
-                  <span className="me-2 d-inline-flex">
-                    <SVG.CheckIcon />
-                  </span>{" "}
-                  update info
-                </Cbutton>
+                />
               </div>
             </form>
           </div>

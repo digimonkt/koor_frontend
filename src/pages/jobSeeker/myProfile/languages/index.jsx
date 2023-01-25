@@ -1,8 +1,8 @@
+import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
 import React from "react";
-import { SVG } from "../../../../assets/svg";
-import DialogBox from "../../../../components/layout/dialogBox";
-import { Cbutton } from "../../../../components/button";
+import { SVG } from "@assets/svg";
+import DialogBox from "@components/layout/dialogBox";
 import EditLanguages from "./editLanguages";
 
 const Languages = () => {
@@ -72,17 +72,22 @@ const Languages = () => {
             </ul>
 
             <div className="text-center mt-4">
-              <Cbutton
+              <OutlinedButton
+                title={
+                  <>
+                    <span className="me-2 d-inline-flex">
+                      <SVG.PlushIcon />
+                    </span>
+                    Add language
+                  </>
+                }
                 onClick={handleClickOpen}
-                variant="outlined"
                 sx={{
                   "&.MuiButton-outlined": {
-                    borderRadius: "73px",
-                    border: "1px solid #EEA23D",
-                    color: "#EEA23D",
+                    border: "1px solid #EEA23D !important",
+                    color: "#EEA23D !important",
                     fontWeight: "500",
                     fontSize: "16px",
-                    fontFamily: "Bahnschrift",
                     padding: "6px 30px",
 
                     "&:hover": { background: "#eea23d14" },
@@ -92,12 +97,7 @@ const Languages = () => {
                     },
                   },
                 }}
-              >
-                <span className="me-2 d-inline-flex">
-                  <SVG.PlushIcon />
-                </span>
-                Add language
-              </Cbutton>
+              />
             </div>
           </div>
         </CardContent>
