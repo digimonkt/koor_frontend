@@ -2,7 +2,7 @@ import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
 import React from "react";
 import { SVG } from "@assets/svg";
-import DialogBox from "@components/layout/dialogBox";
+import DialogBox from "@components/dialogBox";
 import EditLanguages from "./editLanguages";
 
 const Languages = () => {

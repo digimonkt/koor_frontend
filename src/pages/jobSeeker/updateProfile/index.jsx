@@ -6,7 +6,7 @@ import UploadFile from "./uploadfile";
 import ResumeUpdate from "./resume-update";
 import { SVG } from "@assets/svg";
 import { useNavigate } from "react-router-dom";
-import DialogBox from "@components/layout/dialogBox";
+import DialogBox from "@components/dialogBox";
 
 const UpdateProfile = () => {
   // navigate

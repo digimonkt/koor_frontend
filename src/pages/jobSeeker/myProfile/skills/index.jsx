@@ -2,7 +2,7 @@ import { Card, CardContent, Chip, Stack } from "@mui/material";
 import React from "react";
 import { SVG } from "@assets/svg";
 import UpdateInfo from "../../updateProfile/update-info";
-import DialogBox from "@components/layout/dialogBox";
+import DialogBox from "@components/dialogBox";
 import { OutlinedButton } from "@components/button";
 
 const Skills = () => {
