@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CreateUserAPI } from "../../api/user";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,16 +15,6 @@ function RegistrationForm({ role }) {
   const navigate = useNavigate();
   // redux dispatcher
   const dispatch = useDispatch();
-
-  // eslint-disable-next-line no-unused-vars
-  const [formErrors, setFormErrors] = useState({});
-  // eslint-disable-next-line no-unused-vars
-  const [form, setForm] = useState({
-    email: "",
-    mobileNumber: "",
-    password: "",
-    confirmPassword: "",
-  });
 
   const formik = useFormik({
     initialValues: {
