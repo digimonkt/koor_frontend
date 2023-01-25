@@ -1,7 +1,7 @@
 import { IconButton, Stack } from "@mui/material";
 import React, { useState } from "react";
-import { SVG } from "../../../../assets/svg";
-import { OutlinedButton } from "../../../../components/button";
+import { SVG } from "@assets/svg";
+import { OutlinedButton } from "@components/button";
 
 const color = "#EEA23D";
 const bgcolor = "#FEEFD3";

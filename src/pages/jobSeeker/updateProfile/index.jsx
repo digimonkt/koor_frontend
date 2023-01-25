@@ -1,12 +1,12 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React from "react";
-import ModalView from "./modal";
-import UpdateInfo from "./modal/update-info";
+import UpdateInfo from "./update-info";
 import AddInfoProfileUpdate from "./AddInfoProfileUpdate";
 import UploadFile from "./uploadfile";
 import ResumeUpdate from "./resume-update";
-import { SVG } from "../../../assets/svg";
+import { SVG } from "@assets/svg";
 import { useNavigate } from "react-router-dom";
+import DialogBox from "@components/layout/dialogBox";
 
 const UpdateProfile = () => {
   // navigate
@@ -98,30 +98,26 @@ const UpdateProfile = () => {
           </Stack>
         </Grid>
       </Grid>
-      <ModalView
-        open={open}
-        handleClose={handleClose}
-        content={
-          <UpdateInfo
-            title="Great!"
-            color="#EEA23D"
-            bgcolor="#FEEFD3"
-            description={[
-              <>
-                <p>
-                  Thank you for adding this important information. Our team will
-                  review it and activate your account within 24 hours.{" "}
-                </p>
-                <p>Psst, it may happen even faster, stay tuned 😉</p>
-              </>,
-            ]}
-            buttonHover="rgba(255, 165, 0, 0.1)"
-            handleClose={handleClose}
-            buttontext="Got it"
-            icon={<SVG.AlertCheckICon />}
-          />
-        }
-      />
+      <DialogBox open={open} handleClose={handleClose}>
+        <UpdateInfo
+          title="Great!"
+          color="#EEA23D"
+          bgcolor="#FEEFD3"
+          description={[
+            <>
+              <p>
+                Thank you for adding this important information. Our team will
+                review it and activate your account within 24 hours.{" "}
+              </p>
+              <p>Psst, it may happen even faster, stay tuned 😉</p>
+            </>,
+          ]}
+          buttonHover="rgba(255, 165, 0, 0.1)"
+          handleClose={handleClose}
+          buttontext="Got it"
+          icon={<SVG.AlertCheckICon />}
+        />
+      </DialogBox>
     </>
   );
 };

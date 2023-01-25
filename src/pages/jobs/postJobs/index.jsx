@@ -15,10 +15,10 @@ import {
   CheckboxInput,
   LabeledInput,
   SelectInput,
-} from "../../../components/input";
+} from "@components/input";
 import CurrencyInput from "./currencyInput";
 import { JobFormControl } from "../../jobSeeker/myProfile/job-preferences";
-import { FilledButton, OutlinedButton } from "../../../components/button";
+import { FilledButton, OutlinedButton } from "@components/button";
 
 function PostJobsComponent() {
   return (

@@ -1,13 +1,12 @@
 /* eslint-disable react/display-name */
 import { Container, Grid, Stack } from "@mui/material";
-import { SVG } from "../../assets/svg";
-import { Card, CardContent } from "../../components/card";
+import { SVG } from "@assets/svg";
+import { Card, CardContent } from "@components/card";
 import { USER_ROLES } from "../../utils/enum";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginForm from "./loginForm";
 import RegistrationForm from "./registrationForm";
-
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "../../redux/slice/user";
 

@@ -1,6 +1,6 @@
+import { OutlinedButton } from "@components/button";
 import { IconButton, Stack } from "@mui/material";
 import React from "react";
-import { Cbutton } from "../../../../../components/button";
 
 const UpdateInfo = ({
   title,
@@ -31,25 +31,20 @@ const UpdateInfo = ({
         <div className="description">{description}</div>
       </Stack>
       <div className="text-center mt-3">
-        <Cbutton
-          variant="outlined"
+        <OutlinedButton
+          title={buttontext}
           sx={{
             "&.MuiButton-outlined": {
-              borderRadius: "73px",
-              border: `1px solid ${color}`,
-              color: { color },
+              border: `1px solid ${color} !important`,
+              color: `${color} !important`,
               fontWeight: "500",
               fontSize: "16px",
-              fontFamily: "Bahnschrift",
               padding: "10px 30px",
-
               "&:hover": { background: buttonHover },
             },
           }}
           onClick={handleClose}
-        >
-          {buttontext}
-        </Cbutton>
+        />
       </div>
     </>
   );

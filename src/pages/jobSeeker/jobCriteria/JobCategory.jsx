@@ -1,7 +1,7 @@
+import { OutlinedButton } from "@components/button";
 import { Checkbox, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SVG } from "../../../assets/svg";
-import { Cbutton } from "../../../components/button";
+import { SVG } from "@assets/svg";
 import { stepContents } from "./ProfileHelper";
 
 const StepCheckMarks = ({ options, title, id }) => {
@@ -112,29 +112,29 @@ const JobCategory = ({ handleNext }) => {
       })}
 
       <div className="text-center border-top pt-5">
-        <Cbutton
+        <OutlinedButton
+          title={
+            <>
+              Next{" "}
+              <span className="ms-2">
+                <SVG.StartIcon />
+              </span>
+            </>
+          }
           onClick={handleNext}
-          variant="outlined"
           sx={{
             "&.MuiButton-outlined": {
-              borderRadius: "73px",
-              border: "1px solid #EEA23D",
-              color: "#EEA23D",
+              border: "1px solid #EEA23D !important",
+              color: "#EEA23D !important",
               fontWeight: "500",
               fontSize: "16px",
-              fontFamily: "Bahnschrift",
               padding: "10px 30px",
               "&:hover": {
                 background: "rgba(255, 165, 0, 0.1)",
               },
             },
           }}
-        >
-          Next{" "}
-          <span className="ms-2">
-            <SVG.StartIcon />
-          </span>
-        </Cbutton>
+        />
       </div>
     </div>
   );

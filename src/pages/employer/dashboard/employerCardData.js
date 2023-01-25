@@ -1,4 +1,4 @@
-import { SVG } from "../../../assets/svg";
+import { SVG } from "@assets/svg";
 
 export const employerCard = [
   {

@@ -2,16 +2,16 @@ import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { SearchButton } from "../../../components/button";
+import { SearchButton } from "@components/button";
 import React, { useState } from "react";
-import { AttachmentFile } from "../../../components";
+import AttachmentFile from "@components/attatchmentFile";
 // import NewPostJobModal from "../employer/postjob/modal-content/NewPostJobModal";
 // import CancelJob from "../employer/postjob/modal-content/CancelJob";
 // import ModalView from "../add-info-profile/modal";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
-import { SVG } from "../../../assets/svg";
-import { IMAGES } from "../../../assets/images";
+import { SVG } from "@assets/svg";
+import { IMAGES } from "@assets/images";
 
 const ApplyForJob = () => {
   // navigate

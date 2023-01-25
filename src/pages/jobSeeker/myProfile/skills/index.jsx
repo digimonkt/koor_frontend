@@ -1,9 +1,9 @@
 import { Card, CardContent, Chip, Stack } from "@mui/material";
 import React from "react";
-import { SVG } from "../../../../assets/svg";
-import ModalView from "../../updateProfile/modal";
-import UpdateInfo from "../../updateProfile/modal/update-info";
-import { Cbutton } from "../../../../components/button";
+import { SVG } from "@assets/svg";
+import UpdateInfo from "../../updateProfile/update-info";
+import DialogBox from "@components/layout/dialogBox";
+import { OutlinedButton } from "@components/button";
 
 const Skills = () => {
   const [open, setOpen] = React.useState(false);
@@ -83,17 +83,22 @@ const Skills = () => {
             </div>
 
             <div className="text-center mt-4">
-              <Cbutton
-                variant="outlined"
+              <OutlinedButton
+                title={
+                  <>
+                    <span className="me-2 d-inline-flex">
+                      <SVG.Savefile />
+                    </span>
+                    save Skills
+                  </>
+                }
                 onClick={handleClickOpen}
                 sx={{
                   "&.MuiButton-outlined": {
-                    borderRadius: "73px",
-                    border: "1px solid #EEA23D",
-                    color: "#EEA23D",
+                    border: "1px solid #EEA23D !important",
+                    color: "#EEA23D !important",
                     fontWeight: "500",
                     fontSize: "16px",
-                    fontFamily: "Bahnschrift",
                     padding: "6px 30px",
 
                     "&:hover": { background: "#eea23d14" },
@@ -103,47 +108,38 @@ const Skills = () => {
                     },
                   },
                 }}
-              >
-                <span className="me-2 d-inline-flex">
-                  <SVG.Savefile />
-                </span>
-                save Skills
-              </Cbutton>
+              />
             </div>
           </div>
         </CardContent>
       </Card>
-      <ModalView
-        open={open}
-        handleClose={handleClose}
-        content={
-          <UpdateInfo
-            title="Skills"
-            color="#EEA23D"
-            bgcolor="#FEEFD3"
-            icon={<SVG.SkillsIcon />}
-            description={[
-              <>
-                <p>
-                  List your skills that you think will be usefull for a jobs
-                  you’re looking for. Highlight your strenghts and remember to
-                  be honest.
-                </p>
-              </>,
-            ]}
-            buttonHover="#eea23d14"
-            handleClose={handleClose}
-            buttontext={
-              <>
-                <span className="me-3 d-inline-flex">
-                  <SVG.EditIcon />
-                </span>
-                Edit skills
-              </>
-            }
-          />
-        }
-      />
+      <DialogBox open={open} handleClose={handleClose}>
+        <UpdateInfo
+          title="Skills"
+          color="#EEA23D"
+          bgcolor="#FEEFD3"
+          icon={<SVG.SkillsIcon />}
+          description={[
+            <>
+              <p>
+                List your skills that you think will be usefull for a jobs
+                you’re looking for. Highlight your strenghts and remember to be
+                honest.
+              </p>
+            </>,
+          ]}
+          buttonHover="#eea23d14"
+          handleClose={handleClose}
+          buttontext={
+            <>
+              <span className="me-3 d-inline-flex">
+                <SVG.EditIcon />
+              </span>
+              Edit skills
+            </>
+          }
+        />
+      </DialogBox>
     </>
   );
 };
