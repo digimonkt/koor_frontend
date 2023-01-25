@@ -1,7 +1,7 @@
 import { Grid, IconButton } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 
 const AttachmentFile = () => {
   const [myFiles, setMyFiles] = useState([]);

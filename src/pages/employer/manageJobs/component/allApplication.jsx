@@ -1,7 +1,7 @@
 import { Card, CardContent, Stack } from "@mui/material";
 import React from "react";
-import { SVG } from "../../../../assets/svg";
-import ApplicationCard from "../../../../components/applicationCard";
+import { SVG } from "@assets/svg";
+import ApplicationCard from "@components/applicationCard";
 import { RECENT_ITEMS } from "../../dashboard/recentHelper";
 
 function AllApplication() {

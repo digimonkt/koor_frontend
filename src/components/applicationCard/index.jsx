@@ -2,7 +2,7 @@ import { Avatar, Button, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 
 const ApplicationCard = ({
   image,

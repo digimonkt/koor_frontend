@@ -1,11 +1,11 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React from "react";
-import { Cbutton } from "../../../components/button";
 import "./dashboard.css";
 import { RECENT_ITEMS } from "./recentHelper";
-import { DonutChart, AreaChart } from "../components";
-import ApplicationCard from "../../../components/applicationCard";
+import { DonutChart, AreaChart } from "@components/charts";
+import ApplicationCard from "@components/applicationCard";
 import { employerCard } from "./employerCardData";
+import { OutlinedButton } from "@components/button";
 
 const Dashboard = () => {
   return (
@@ -109,6 +109,7 @@ const Dashboard = () => {
                     <h3>Recent application</h3>
                     <p>Recent application</p>
                   </Stack>
+
                   {RECENT_ITEMS.map((item, index) => (
                     <ApplicationCard
                       image={item.img}
@@ -123,8 +124,8 @@ const Dashboard = () => {
                   ))}
 
                   <div className="text-center mt-4">
-                    <Cbutton
-                      variant="outlined"
+                    <OutlinedButton
+                      title="Show more"
                       sx={{
                         "&.MuiButton-outlined": {
                           borderRadius: "73px",
@@ -138,9 +139,7 @@ const Dashboard = () => {
                           "&:hover": { background: "#1976d20a" },
                         },
                       }}
-                    >
-                      Show more
-                    </Cbutton>
+                    />
                   </div>
                 </div>
               </CardContent>

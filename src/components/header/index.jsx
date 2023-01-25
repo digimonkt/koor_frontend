@@ -9,7 +9,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import { USER_ROLES } from "../../utils/enum";
 import { useSelector } from "react-redux";

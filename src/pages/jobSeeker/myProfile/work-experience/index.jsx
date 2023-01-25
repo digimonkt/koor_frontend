@@ -1,10 +1,10 @@
+import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
 import React from "react";
 import { SVG } from "../../../../assets/svg";
 // import ModalView from "../../updateProfile/modal";
 // import UpdateInfo from "../../updateProfile/modal/update-info";
-import { Cbutton } from "../../../../components/button";
-import DialogBox from "../../../../components/layout/dialogBox";
+import DialogBox from "@components/dialogBox";
 import EditWorkExperience from "./editWorkExperience";
 const WorkExperience = () => {
   const [open, setOpen] = React.useState(false);
@@ -80,17 +80,22 @@ const WorkExperience = () => {
             </ul>
 
             <div className="text-center mt-4">
-              <Cbutton
+              <OutlinedButton
+                title={
+                  <>
+                    <span className="me-2 d-inline-flex">
+                      <SVG.PlushIcon />
+                    </span>
+                    Add work experience
+                  </>
+                }
                 onClick={handleClickOpen}
-                variant="outlined"
                 sx={{
                   "&.MuiButton-outlined": {
-                    borderRadius: "73px",
-                    border: "1px solid #EEA23D",
-                    color: "#EEA23D",
+                    border: "1px solid #EEA23D !important",
+                    color: "#EEA23D !important",
                     fontWeight: "500",
                     fontSize: "16px",
-                    fontFamily: "Bahnschrift",
                     padding: "6px 30px",
 
                     "&:hover": { background: "#eea23d14" },
@@ -100,12 +105,7 @@ const WorkExperience = () => {
                     },
                   },
                 }}
-              >
-                <span className="me-2 d-inline-flex">
-                  <SVG.PlushIcon />
-                </span>
-                Add work experience
-              </Cbutton>
+              />
             </div>
           </div>
         </CardContent>

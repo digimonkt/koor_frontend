@@ -10,11 +10,11 @@ import {
   Stack,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { IMAGES } from "../../../assets/images";
+import { IMAGES } from "@assets/images";
 import React from "react";
-import { OutlinedButton } from "../../../components/button";
+import { OutlinedButton } from "@components/button";
 import { Link, useNavigate } from "react-router-dom";
-import { SVG } from "../../../assets/svg";
+import { SVG } from "@assets/svg";
 import {
   EDUCATION,
   langugesList,

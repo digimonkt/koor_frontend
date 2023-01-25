@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { SVG } from "../../../../assets/svg";
+import { SVG } from "@assets/svg";
 
 const ApplicantList = ({ handleActive, isActive }) => {
   return (
