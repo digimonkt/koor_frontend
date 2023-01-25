@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "../../utils/enum";
+import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
 
 /**
  * **NOTE**: Vendor is pending.

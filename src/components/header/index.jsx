@@ -11,7 +11,7 @@ import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "@assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
-import { USER_ROLES } from "../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 import { useSelector } from "react-redux";
 
 const ismenu = true;

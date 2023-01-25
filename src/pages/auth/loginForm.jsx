@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import { FilledButton } from "@components/button";
 import { LabeledInput } from "@components/input";
-import { setCurrentUser, setIsLoggedIn } from "../../redux/slice/user";
-import { USER_ROLES } from "../../utils/enum";
-import { generateEmployer, generateJobSeeker } from "../../utils/fakeData";
+import { setCurrentUser, setIsLoggedIn } from "@redux/slice/user";
+import { USER_ROLES } from "@utils/enum";
+import { generateEmployer, generateJobSeeker } from "@utils/fakeData";
 
 function LoginForm({ role }) {
   const dispatch = useDispatch();
