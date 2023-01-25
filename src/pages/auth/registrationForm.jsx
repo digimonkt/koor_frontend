@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "@components/button";
 import { LabeledInput } from "@components/input";
-import { setIsLoggedIn } from "../../redux/slice/user";
-import { USER_ROLES } from "../../utils/enum";
+import { setIsLoggedIn } from "@redux/slice/user";
+import { USER_ROLES } from "@utils/enum";
 
 function RegistrationForm({ role }) {
   // navigate

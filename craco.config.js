@@ -3,6 +3,8 @@ const path = require("path");
 const alias = (prefix = "src") => ({
   "@components": `${prefix}/components`,
   "@assets": `${prefix}/assets`,
+  "@redux": `${prefix}/redux`,
+  "@utils": `${prefix}/utils`,
 });
 
 const SRC = "./src";
