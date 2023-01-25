@@ -8,7 +8,7 @@ import { setIsLoggedIn } from "@redux/slice/user";
 import { USER_ROLES } from "@utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
-import { ErrorMessage } from "../../components/caption";
+import { ErrorMessage } from "@components/caption";
 
 function RegistrationForm({ role }) {
   // navigate
