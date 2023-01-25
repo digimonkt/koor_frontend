@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { CreateUserAPI } from "../../api/user";
-// import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { FilledButton } from "../../components/button";
 import { LabeledInput } from "../../components/input";
-// import { setIsLoggedIn } from "../../redux/slice/user";
+import { setIsLoggedIn } from "../../redux/slice/user";
 import { USER_ROLES } from "../../utils/enum";
+import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
+import { ErrorMessage } from "../../components/caption";
 
 function RegistrationForm({ role }) {
   // navigate
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // redux dispatcher
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  // eslint-disable-next-line no-unused-vars
   const [formErrors, setFormErrors] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [form, setForm] = useState({
     email: "",
     mobileNumber: "",
@@ -21,85 +26,85 @@ function RegistrationForm({ role }) {
     confirmPassword: "",
   });
 
-  const handleChange = (e) => {
-    setForm((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
-  };
-
-  const handleRegister = async () => {
-    console.log({ form });
-    const { isValid, errors } = validateRegistrationForm(form);
-    if (!isValid) {
-      setFormErrors(errors);
-      return;
-    } else {
-      setFormErrors({});
-    }
-
-    const payload = {
-      email: form.email,
-      mobileNumber: form.mobileNumber,
-      password: form.password,
-      role,
-    };
-
-    const res = await CreateUserAPI(payload);
-    console.log({ res });
-    // dispatch(setIsLoggedIn(true));
-    // navigate(`/${role}/my-profile/job-criteria`);
-  };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      mobileNumber: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: validateRegistrationForm,
+    onSubmit: async (values) => {
+      const payload = {
+        email: values.email,
+        mobileNumber: values.mobileNumber,
+        password: values.password,
+        role,
+      };
+      const res = await CreateUserAPI(payload);
+      if (res.remote === "success") {
+        dispatch(setIsLoggedIn(true));
+        navigate(`/${role}/my-profile/job-criteria`);
+      } else {
+        console.log({ res });
+      }
+    },
+  });
 
   return (
     <div>
       <div className="form-content">
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Email"
               title="Email"
               subtitle="No email? Register with mobile number!"
-              name="email"
               type="email"
-              onChange={handleChange}
-              value={form.email}
+              {...formik.getFieldProps("email")}
             />
           </div>
-          <p style={{ color: "red" }}>{formErrors.email}</p>
+          {formik.touched.email && formik.errors.email ? (
+            <ErrorMessage>{formik.errors.email}</ErrorMessage>
+          ) : null}
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Mobile Number"
               title="Mobile"
-              name="mobileNumber"
               type="number"
-              onChange={handleChange}
+              {...formik.getFieldProps("mobileNumber")}
             />
           </div>
-          <p style={{ color: "red" }}>{formErrors.mobileNumber}</p>
+          {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
+            <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
+          ) : null}
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Password"
               type="password"
               title="Create new password"
-              name="password"
-              onChange={handleChange}
+              {...formik.getFieldProps("password")}
             />
           </div>
-          <p style={{ color: "red" }}>{formErrors.password}</p>
+          {formik.touched.password && formik.errors.password ? (
+            <ErrorMessage>{formik.errors.password}</ErrorMessage>
+          ) : null}
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Re-enter Password"
               title="Repeat your password"
               type="password"
-              name="confirmPassword"
-              onChange={handleChange}
-              value={form.confirmPassword}
+              {...formik.getFieldProps("confirmPassword")}
             />
           </div>
-          <p style={{ color: "red" }}>{formErrors.confirmPassword}</p>
+          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+            <ErrorMessage>{formik.errors.confirmPassword}</ErrorMessage>
+          ) : null}
           <div className="my-4 text-center">
             <FilledButton
               title="Register"
               isBlueButton={role !== USER_ROLES.jobSeeker}
-              onClick={handleRegister}
+              type="submit"
             />
           </div>
         </form>
