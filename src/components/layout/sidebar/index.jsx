@@ -4,7 +4,7 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { SVG } from "@assets/svg";
-import { USER_ROLES } from "../../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 import { navigationOptions } from "./navigation";
 import "./styles.css";
 

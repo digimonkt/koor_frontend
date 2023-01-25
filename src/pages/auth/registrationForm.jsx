@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "@components/button";
 import { LabeledInput } from "@components/input";
-import { setIsLoggedIn } from "../../redux/slice/user";
-import { USER_ROLES } from "../../utils/enum";
+import { setIsLoggedIn } from "@redux/slice/user";
+import { USER_ROLES } from "@utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
 import { ErrorMessage } from "../../components/caption";
@@ -63,10 +63,10 @@ function RegistrationForm({ role }) {
               type="email"
               {...formik.getFieldProps("email")}
             />
+            {formik.touched.email && formik.errors.email ? (
+              <ErrorMessage>{formik.errors.email}</ErrorMessage>
+            ) : null}
           </div>
-          {formik.touched.email && formik.errors.email ? (
-            <ErrorMessage>{formik.errors.email}</ErrorMessage>
-          ) : null}
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Mobile Number"
@@ -74,10 +74,10 @@ function RegistrationForm({ role }) {
               type="number"
               {...formik.getFieldProps("mobileNumber")}
             />
+            {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
+              <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
+            ) : null}
           </div>
-          {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
-            <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
-          ) : null}
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Password"
@@ -85,10 +85,10 @@ function RegistrationForm({ role }) {
               title="Create new password"
               {...formik.getFieldProps("password")}
             />
+            {formik.touched.password && formik.errors.password ? (
+              <ErrorMessage>{formik.errors.password}</ErrorMessage>
+            ) : null}
           </div>
-          {formik.touched.password && formik.errors.password ? (
-            <ErrorMessage>{formik.errors.password}</ErrorMessage>
-          ) : null}
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Re-enter Password"
@@ -96,10 +96,10 @@ function RegistrationForm({ role }) {
               type="password"
               {...formik.getFieldProps("confirmPassword")}
             />
+            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+              <ErrorMessage>{formik.errors.confirmPassword}</ErrorMessage>
+            ) : null}
           </div>
-          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <ErrorMessage>{formik.errors.confirmPassword}</ErrorMessage>
-          ) : null}
           <div className="my-4 text-center">
             <FilledButton
               title="Register"

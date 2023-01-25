@@ -6,7 +6,7 @@ import { SVG } from "@assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 
 function JobCard({ logo, selfJob, applied }) {
   const { role } = useSelector((state) => state.auth);
