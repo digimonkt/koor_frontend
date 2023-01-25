@@ -2,8 +2,6 @@ import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
 import React from "react";
 import { SVG } from "@assets/svg";
-// import ModalView from "../../updateProfile/modal";
-// import UpdateInfo from "../../updateProfile/modal/update-info";
 import DialogBox from "@components/dialogBox";
 import EditWorkExperience from "./editWorkExperience";
 const WorkExperience = () => {
