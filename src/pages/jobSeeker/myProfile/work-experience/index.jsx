@@ -4,7 +4,7 @@ import React from "react";
 import { SVG } from "@assets/svg";
 // import ModalView from "../../updateProfile/modal";
 // import UpdateInfo from "../../updateProfile/modal/update-info";
-import DialogBox from "@components/layout/dialogBox";
+import DialogBox from "@components/dialogBox";
 import EditWorkExperience from "./editWorkExperience";
 const WorkExperience = () => {
   const [open, setOpen] = React.useState(false);
