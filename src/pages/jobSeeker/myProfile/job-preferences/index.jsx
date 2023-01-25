@@ -9,10 +9,10 @@ import {
   Stack,
 } from "@mui/material";
 import React, { useState } from "react";
-import { SVG } from "../../../../assets/svg";
+import { SVG } from "@assets/svg";
 import styled from "@emotion/styled";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Cbutton } from "../../../../components/button";
+import { OutlinedButton } from "@components/button";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -215,16 +215,21 @@ const JobPreferences = () => {
               </FormControl>
             </Stack>
             <div className="mt-4">
-              <Cbutton
-                variant="outlined"
+              <OutlinedButton
+                title={
+                  <>
+                    <span className="me-2 d-inline-flex">
+                      <SVG.SaveIcon />
+                    </span>
+                    Save preferences
+                  </>
+                }
                 sx={{
                   "&.MuiButton-outlined": {
-                    borderRadius: "73px",
-                    border: "1px solid #EEA23D",
-                    color: "#EEA23D",
+                    border: "1px solid #EEA23D !important",
+                    color: "#EEA23D !important",
                     fontWeight: "500",
                     fontSize: "16px",
-                    fontFamily: "Bahnschrift",
                     padding: "6px 30px",
 
                     "&:hover": { background: "#eea23d14" },
@@ -234,12 +239,7 @@ const JobPreferences = () => {
                     },
                   },
                 }}
-              >
-                <span className="me-2 d-inline-flex">
-                  <SVG.SaveIcon />
-                </span>
-                Save preferences
-              </Cbutton>
+              />
             </div>
           </div>
         </Stack>

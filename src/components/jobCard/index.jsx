@@ -1,8 +1,8 @@
 import { Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { IMAGES } from "../../assets/images";
-import { SVG } from "../../assets/svg";
+import { IMAGES } from "@assets/images";
+import { SVG } from "@assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";

@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import React from "react";
+
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: #f0f0f0;

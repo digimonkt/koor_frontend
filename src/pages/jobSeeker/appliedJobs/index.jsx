@@ -8,8 +8,8 @@ import {
   Stack,
 } from "@mui/material";
 import React from "react";
-import { SVG } from "../../../assets/svg";
-import JobCard from "../../../components/jobCard";
+import { SVG } from "@assets/svg";
+import JobCard from "@components/jobCard";
 
 function AppliedJobsComponent() {
   const [anchorEl, setAnchorEl] = React.useState(null);

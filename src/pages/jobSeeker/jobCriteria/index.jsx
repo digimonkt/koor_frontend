@@ -11,7 +11,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { styled } from "@mui/material/styles";
-import { SVG } from "../../../assets/svg";
+import { SVG } from "@assets/svg";
 import JobCategory from "./JobCategory";
 import AdditionalParameter from "./AdditionalParameter";
 

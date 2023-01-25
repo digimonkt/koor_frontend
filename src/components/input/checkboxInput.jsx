@@ -1,6 +1,6 @@
 import { Checkbox } from "@mui/material";
 import React from "react";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 
 function CheckboxInputComponent({ ...rest }) {
   return (

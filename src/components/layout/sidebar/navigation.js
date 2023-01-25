@@ -1,4 +1,4 @@
-import { SVG } from "../../../assets/svg";
+import { SVG } from "@assets/svg";
 import { USER_ROLES } from "../../../utils/enum";
 
 const JobSeekerNavigationOptions = Object.freeze([

@@ -1,10 +1,10 @@
 import { Card, CardContent } from "@mui/material";
 import React, { useState } from "react";
-import { SVG } from "../../../../assets/svg";
-import { OutlinedButton } from "../../../../components/button";
-import EducationCard from "../../../../components/educationCard";
+import { SVG } from "@assets/svg";
+import { OutlinedButton } from "@components/button";
+import EducationCard from "@components/educationCard";
 import EditEducation from "./editEducation";
-import DialogBox from "../../../../components/layout/dialogBox";
+import DialogBox from "@components/layout/dialogBox";
 
 const educationList = [
   {
