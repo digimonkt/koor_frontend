@@ -1,6 +1,6 @@
 import api from ".";
+
 export const CreateUserAPI = async (data) => {
-  console.log({ data });
   const response = await api.request({
     url: "/v1/user",
     method: "POST",

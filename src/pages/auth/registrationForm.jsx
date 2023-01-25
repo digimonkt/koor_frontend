@@ -6,18 +6,19 @@ import { FilledButton } from "../../components/button";
 import { LabeledInput } from "../../components/input";
 // import { setIsLoggedIn } from "../../redux/slice/user";
 import { USER_ROLES } from "../../utils/enum";
+import { validateRegistrationForm } from "./validator";
 
 function RegistrationForm({ role }) {
   // navigate
   // const navigate = useNavigate();
   // redux dispatcher
   // const dispatch = useDispatch();
-
+  const [formErrors, setFormErrors] = useState({});
   const [form, setForm] = useState({
     email: "",
+    mobileNumber: "",
     password: "",
     confirmPassword: "",
-    mobileNumber: "",
   });
 
   const handleChange = (e) => {
@@ -26,12 +27,21 @@ function RegistrationForm({ role }) {
 
   const handleRegister = async () => {
     console.log({ form });
+    const { isValid, errors } = validateRegistrationForm(form);
+    if (!isValid) {
+      setFormErrors(errors);
+      return;
+    } else {
+      setFormErrors({});
+    }
+
     const payload = {
       email: form.email,
       mobileNumber: form.mobileNumber,
       password: form.password,
       role,
     };
+
     const res = await CreateUserAPI(payload);
     console.log({ res });
     // dispatch(setIsLoggedIn(true));
@@ -48,19 +58,22 @@ function RegistrationForm({ role }) {
               title="Email"
               subtitle="No email? Register with mobile number!"
               name="email"
+              type="email"
               onChange={handleChange}
               value={form.email}
             />
           </div>
+          <p style={{ color: "red" }}>{formErrors.email}</p>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Mobile Number"
               title="Mobile"
               name="mobileNumber"
+              type="number"
               onChange={handleChange}
-              value={form.mobileNumber}
             />
           </div>
+          <p style={{ color: "red" }}>{formErrors.mobileNumber}</p>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Password"
@@ -68,9 +81,9 @@ function RegistrationForm({ role }) {
               title="Create new password"
               name="password"
               onChange={handleChange}
-              value={form.password}
             />
           </div>
+          <p style={{ color: "red" }}>{formErrors.password}</p>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Re-enter Password"
@@ -81,7 +94,7 @@ function RegistrationForm({ role }) {
               value={form.confirmPassword}
             />
           </div>
-
+          <p style={{ color: "red" }}>{formErrors.confirmPassword}</p>
           <div className="my-4 text-center">
             <FilledButton
               title="Register"
