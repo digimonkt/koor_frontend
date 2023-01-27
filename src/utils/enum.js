@@ -33,3 +33,8 @@ export const LANGUAGE_PROFICIENCY = {
   conversational: "conversational",
   fluent: "fluent",
 };
+
+export const MODAL_TYPES = {
+  editEducationModal: "editEducationModal",
+  addEducationModal: "addEducationModal",
+};

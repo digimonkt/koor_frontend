@@ -18,17 +18,17 @@ export function generateJobSeeker() {
       market_information: false,
       job_notification: false,
     },
-    education_record: [
+    educationRecord: [
       {
         id: faker.database.mongodbObjectId(),
-        title: faker.name.jobTitle(),
-        start_date: faker.date
+        degree: faker.name.jobTitle(),
+        startDate: faker.date
           .between("2020-01-01T00:00:00.000Z", "2030-01-01T00:00:00.000Z")
           .toISOString(),
-        end_date: faker.date
+        endDate: faker.date
           .between("2020-01-01T00:00:00.000Z", "2030-01-01T00:00:00.000Z")
           .toISOString(),
-        present: faker.datatype.boolean(),
+        isPresent: faker.datatype.boolean(),
         organization: faker.company.name(),
         description: faker.name.jobDescriptor(),
       },
@@ -71,3 +71,26 @@ export function generateEmployer() {
     },
   };
 }
+
+export function generateRandomId(length) {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+// date formate function "yyyy-mm-dd"
+export const formatDateFunc = (dateData) => {
+  const d = new Date(dateData);
+  // const date = d.getDate();
+  // const month = d.getMonth() + 1;
+  const year = d.getFullYear();
+
+  return year;
+};

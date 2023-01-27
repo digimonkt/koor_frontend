@@ -42,7 +42,7 @@ const initialState = {
         description: "",
       },
      */
-    education_record: [],
+    educationRecord: [],
     /**
      * {
         id: "",
@@ -54,7 +54,7 @@ const initialState = {
         description: "",
       },
      */
-    work_experience: [],
+    workExperience: [],
     /**
      * {
         id: "",
@@ -97,7 +97,15 @@ export const authSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    setEducationRecord: (state, action) => {
+      state.currentUser.educationRecord = action.payload;
+    },
   },
 });
-export const { setIsLoggedIn, setUserRole, setCurrentUser } = authSlice.actions;
+export const {
+  setIsLoggedIn,
+  setUserRole,
+  setCurrentUser,
+  setEducationRecord,
+} = authSlice.actions;
 export default authSlice.reducer;
