@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 
-function LabeledInputComponent({ title, subtitle, ...rest }) {
+function LabeledInputComponent({ title, subtitle, type, ...rest }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const handleChangePasswordVisibility = () => {
     setIsVisiblePassword(!isVisiblePassword);
@@ -33,15 +33,15 @@ function LabeledInputComponent({ title, subtitle, ...rest }) {
         <input
           className="form-control"
           type={
-            rest.type === "password"
+            type === "password"
               ? isVisiblePassword
                 ? "text"
                 : "password"
-              : rest.type
+              : type
           }
           {...rest}
         />
-        {rest.type === "password" ? (
+        {type === "password" ? (
           <div onClick={handleChangePasswordVisibility}>
             {!isVisiblePassword ? <SVG.EyeOpen /> : <SVG.EyeOff />}
           </div>
