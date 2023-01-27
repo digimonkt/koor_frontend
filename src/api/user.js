@@ -8,3 +8,12 @@ export const CreateUserAPI = async (data) => {
   });
   return response;
 };
+
+export const LoginUserAPI = async (data) => {
+  const response = await api.request({
+    url: "/v1/user/session",
+    method: "POST",
+    data,
+  });
+  return response;
+};

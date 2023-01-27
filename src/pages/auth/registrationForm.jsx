@@ -6,13 +6,15 @@ import { FilledButton } from "../../components/button";
 import { LabeledInput } from "../../components/input";
 // import { setIsLoggedIn } from "../../redux/slice/user";
 import { USER_ROLES } from "../../utils/enum";
-import { validateRegistrationForm } from "./validator";
+import { newSignup } from "./validator";
+// import { validateRegistrationForm } from "./validator";
 
 function RegistrationForm({ role }) {
   // navigate
   // const navigate = useNavigate();
   // redux dispatcher
   // const dispatch = useDispatch();
+
   const [formErrors, setFormErrors] = useState({});
   const [form, setForm] = useState({
     email: "",
@@ -27,14 +29,15 @@ function RegistrationForm({ role }) {
 
   const handleRegister = async () => {
     console.log({ form });
-    const { isValid, errors } = validateRegistrationForm(form);
+    const { isValid, errors } = newSignup(form);
+    // const isValid = newSignup(form);
+    // console.log(isValid);
     if (!isValid) {
       setFormErrors(errors);
       return;
     } else {
       setFormErrors({});
     }
-
     const payload = {
       email: form.email,
       mobileNumber: form.mobileNumber,
@@ -71,6 +74,7 @@ function RegistrationForm({ role }) {
               name="mobileNumber"
               type="number"
               onChange={handleChange}
+              value={form.mobileNumber}
             />
           </div>
           <p style={{ color: "red" }}>{formErrors.mobileNumber}</p>
@@ -80,6 +84,7 @@ function RegistrationForm({ role }) {
               type="password"
               title="Create new password"
               name="password"
+              value={form.password}
               onChange={handleChange}
             />
           </div>
