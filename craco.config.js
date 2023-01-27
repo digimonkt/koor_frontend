@@ -6,6 +6,7 @@ const alias = (prefix = "src") => ({
   "@redux": `${prefix}/redux`,
   "@utils": `${prefix}/utils`,
   "@api": `${prefix}/api`,
+  "@pages": `${prefix}/pages`,
 });
 
 const SRC = "./src";

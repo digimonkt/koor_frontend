@@ -1,16 +1,16 @@
-import { Login, Logout, Registration } from "../../pages/auth";
+import { Login, Logout, Registration } from "@pages/auth";
 import {
   ManageJobs,
   MyProfile as EmployerProfile,
   Dashboard as EmployerDashboard,
-} from "../../pages/employer";
+} from "@pages/employer";
 import {
   PostJobs,
   JobSearch,
   ApplicantDetails,
   JobDetails,
   ApplyForJob,
-} from "../../pages/jobs";
+} from "@pages/jobs";
 
 import {
   JobCriteria as JobSeekerCriteria,
@@ -18,8 +18,8 @@ import {
   UpdateProfile as JobSeekerUpdateProfile,
   AppliedJobs,
   SavedJobs,
-} from "../../pages/jobSeeker";
-import VendorProfile from "../../pages/vendor/myProfile";
+} from "@pages/jobSeeker";
+import VendorProfile from "@pages/vendor/myProfile";
 
 // prefix => `/`
 export const ROUTES = [
