@@ -707,6 +707,29 @@ hr {
   color: #121212;
   font-weight: 600;
 }
+.date-picker-style {
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  height: 38px;
+}
+.add-form-control-textarea {
+  background: #f0f0f0;
+  border-radius: 10px;
+  outline: none;
+  border: 0;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  /* height: 38px; */
+  letter-spacing: 0.02em;
+
+  box-sizing: border-box;
+  color: #121212;
+  padding: 6px 12px;
+  width: 100%;
+}
 .add-form-control {
   background: #f0f0f0;
   border-radius: 10px;

@@ -10,6 +10,9 @@ function EducationCard({
   startYear,
   endYear,
   organization,
+  isPresent,
+  handleDelete,
+  handleEdit,
 }) {
   const { role } = useSelector((state) => state.auth);
   return (
@@ -22,18 +25,18 @@ function EducationCard({
       <div className="list-content">
         <h5>{title}</h5>
         <h6>{organization}</h6>
-        <p>description</p>
+        <p>{description}</p>
         <span>
-          {startYear}-{endYear || "Present"}
+          {startYear}-{isPresent ? "Present" : endYear}
         </span>
       </div>
       {role === USER_ROLES.jobSeeker && (
         <Stack direction="row" spacing={1} className="list-button">
-          <button>
+          <button onClick={() => handleEdit()}>
             <SVG.EditIcon />
             <span>Edit</span>
           </button>
-          <button>
+          <button onClick={() => handleDelete()}>
             <SVG.DeleteICon />
             <span>Delete</span>
           </button>

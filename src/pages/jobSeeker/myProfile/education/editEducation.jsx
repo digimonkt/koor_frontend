@@ -1,34 +1,41 @@
-import { IconButton, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
+import CustomDatePicker from "@components/datePicker";
+import CustomCheckBox from "@components/checkBox";
 
 const color = "#EEA23D";
-const bgcolor = "#FEEFD3";
+// const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
-function EditEducation({ handleSubmit }) {
-  const [formValues, setFormValues] = useState({
-    degree: "",
-    location: "",
-    description: "",
+const EditEducation = ({ handleSubmit, editData }) => {
+  const [educationData, setEducationData] = useState({
+    id: editData?.id,
+    organization: editData?.organization,
+    degree: editData?.degree,
+    startDate: editData?.startDate,
+    endDate: editData?.endDate,
+    description: editData?.description,
+    isPresent: editData?.isPresent,
   });
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setFormValues({ ...formValues, [name]: value });
+    setEducationData({ ...educationData, [name]: value });
   };
+
   return (
     <div>
       <>
-        <h1 className="headding">Education</h1>
+        <h1 className="headding">Edit Education</h1>
         <Stack
           direction="row"
           spacing={2}
           alignItems={{ xs: "start", lg: "center" }}
           className="mb-3"
         >
-          <IconButton
+          {/* <IconButton
             sx={{
               "&.MuiIconButton-root": {
                 backgroundColor: bgcolor,
@@ -39,7 +46,7 @@ function EditEducation({ handleSubmit }) {
             }}
           >
             <SVG.EducationIcon />
-          </IconButton>
+          </IconButton> */}
           <div className="description">
             <Stack
               direction={{ xs: "column", lg: "row" }}
@@ -49,9 +56,18 @@ function EditEducation({ handleSubmit }) {
             >
               <input
                 type="text"
+                placeholder="Organinzation"
+                className="add-form-control"
+                name="organization"
+                value={educationData.organization}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
                 placeholder="Degree"
                 className="add-form-control"
                 name="degree"
+                value={educationData.degree}
                 onChange={handleChange}
               />
             </Stack>
@@ -61,25 +77,61 @@ function EditEducation({ handleSubmit }) {
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <input
-                type="text"
-                placeholder="Location"
-                className="add-form-control"
-                name="location"
-                onChange={handleChange}
+              <CustomDatePicker
+                placeholder="start date"
+                dateValue={educationData.startDate}
+                handleDateValue={(vl) =>
+                  setEducationData((prev) => ({
+                    ...prev,
+                    startDate: vl,
+                  }))
+                }
+              />
+              <CustomDatePicker
+                isDisabled={educationData.isPresent}
+                placeholder="end date"
+                dateValue={educationData.endDate}
+                handleDateValue={(vl) =>
+                  setEducationData((prev) => ({
+                    ...prev,
+                    endDate: vl,
+                  }))
+                }
               />
             </Stack>
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2 }}
+              className="mb-3"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <CustomCheckBox
+                checked={educationData.isPresent}
+                handleChecked={(vl) =>
+                  setEducationData((prev) => ({ ...prev, isPresent: vl }))
+                }
+                label="Present"
+              />
+            </Stack>
+
             <Stack
               direction={{ xs: "column", lg: "row" }}
               spacing={{ xs: 2, lg: 2 }}
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <input
+              <textarea
                 type="text"
                 placeholder="Description"
-                className="add-form-control"
+                className="add-form-control-textarea"
                 name="description"
+                rows="4"
+                cols="50"
+                value={educationData.description}
                 onChange={handleChange}
               />
             </Stack>
@@ -90,9 +142,9 @@ function EditEducation({ handleSubmit }) {
             title={
               <>
                 <span className="me-3 d-inline-flex">
-                  <SVG.PlushIcon />
+                  <SVG.EditIcon />
                 </span>{" "}
-                Add education
+                Edit education
               </>
             }
             sx={{
@@ -102,12 +154,12 @@ function EditEducation({ handleSubmit }) {
                 "&:hover": { background: buttonHover },
               },
             }}
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(educationData)}
           />
         </div>
       </>
     </div>
   );
-}
+};
 
 export default EditEducation;
