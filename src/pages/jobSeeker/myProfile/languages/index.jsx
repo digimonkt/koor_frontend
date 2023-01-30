@@ -1,51 +1,48 @@
 import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { SVG } from "@assets/svg";
+import CreateLanguages from "./createLanguages";
+import LanguageCard from "@components/languageCard";
 import DialogBox from "@components/dialogBox";
-import EditLanguages from "./editLanguages";
+
+const langugesList = [
+  {
+    id: 1,
+    language: "Hindi",
+    spoken: "Hindi, English",
+    written: "Hindi, English",
+  },
+];
 
 const Languages = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = useState(false);
+  const [languages, setLanguages] = useState([...langugesList]);
+  const updateLanguageList = (obj, index) => {
+    const temp = languages;
+    temp[index] = obj;
+    setLanguages(temp);
   };
 
-  const handleClose = () => {
+  const handleToggleModel = () => {
+    setLanguages(!languages);
+  };
+
+  const deleteLanguage = (id) => {
+    const temp = languages.filter((val, index) => {
+      return index !== id;
+    });
+    console.log(temp);
+    setLanguages(temp);
+  };
+
+  const saveTask = (taskObj) => {
+    const tempList = languages;
+    tempList.push(taskObj);
+    setLanguages(languages);
     setOpen(false);
   };
-  const langugesList = [
-    {
-      title: "English",
-      subtitle: (
-        <>
-          Spoken: <strong>Fluent</strong>
-          <br />
-          Written: <strong>Fluent</strong>
-        </>
-      ),
-    },
-    {
-      title: "German",
-      subtitle: (
-        <>
-          Spoken: <strong>Conversational</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-    {
-      title: "Spanish",
-      subtitle: (
-        <>
-          Spoken: <strong>Basic</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-  ];
+
   return (
     <>
       <Card
@@ -66,13 +63,24 @@ const Languages = () => {
           <div className="add-content">
             <h2 className="mb-4">Languages</h2>
             <ul className="listitems">
-              {langugesList.map((item, index) => (
-                <li key={index}>{/* <CardList {...item} /> */}</li>
-              ))}
+              {languages.length > 0 ? (
+                languages.map((obj, index) => (
+                  <li key={index}>
+                    <LanguageCard
+                      taskObj={obj}
+                      index={index}
+                      deleteLanguage={deleteLanguage}
+                      updateLanguageList={updateLanguageList}
+                    />
+                  </li>
+                ))
+              ) : (
+                <h5>No languages</h5>
+              )}
             </ul>
-
             <div className="text-center mt-4">
               <OutlinedButton
+                onClick={() => setOpen(true)}
                 title={
                   <>
                     <span className="me-2 d-inline-flex">
@@ -81,7 +89,6 @@ const Languages = () => {
                     Add language
                   </>
                 }
-                onClick={handleClickOpen}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -89,7 +96,6 @@ const Languages = () => {
                     fontWeight: "500",
                     fontSize: "16px",
                     padding: "6px 30px",
-
                     "&:hover": { background: "#eea23d14" },
                     "@media (max-width: 992px)": {
                       padding: "10px 16px",
@@ -102,8 +108,8 @@ const Languages = () => {
           </div>
         </CardContent>
       </Card>
-      <DialogBox open={open} handleClose={handleClose}>
-        <EditLanguages />
+      <DialogBox open={open} handleToggleModel={handleToggleModel}>
+        <CreateLanguages saveTask={saveTask} />
       </DialogBox>
     </>
   );
