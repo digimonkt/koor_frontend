@@ -1,7 +1,7 @@
-import { Grid } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-// import { SVG } from "@assets/svg";
+import { SVG } from "@assets/svg";
 
 const AttachmentFile = ({ handleDrop }) => {
   const [myFiles, setMyFiles] = useState([]);
@@ -13,12 +13,12 @@ const AttachmentFile = ({ handleDrop }) => {
     [myFiles]
   );
 
-  // const removeFile = (file) => () => {
-  //   const newFiles = [...myFiles];
-  //   newFiles.splice(newFiles.indexOf(file), 1);
-  //   setMyFiles(newFiles);
-  // handleDrop(newFiles)
-  // };
+  const removeFile = (file) => () => {
+    const newFiles = [...myFiles];
+    newFiles.splice(newFiles.indexOf(file), 1);
+    setMyFiles(newFiles);
+    handleDrop(newFiles);
+  };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -28,7 +28,7 @@ const AttachmentFile = ({ handleDrop }) => {
   const acceptedFileItems = myFiles.map((file) => (
     <li key={file.path}>
       <div className="text-tracate">
-        {/* <IconButton
+        <IconButton
           sx={{
             background: "#D5E3F7",
             color: "#274593",
@@ -39,16 +39,16 @@ const AttachmentFile = ({ handleDrop }) => {
           }}
         >
           {SVG.AttachIcon}
-        </IconButton> */}
+        </IconButton>
         {file.path}
       </div>
-      {/* <IconButton
+      <IconButton
         onClick={removeFile(file)}
         disableFocusRipple
         sx={{ color: "#274593" }}
       >
         {SVG.DeleteICon}
-      </IconButton> */}
+      </IconButton>
     </li>
   ));
 

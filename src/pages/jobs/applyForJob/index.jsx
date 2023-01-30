@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { SearchButton } from "@components/button";
 import React, { useState } from "react";
-import AttachmentFile from "@components/attatchmentFile";
+// import AttachmentFile from "@components/attatchmentFile";
 // import NewPostJobModal from "../employer/postjob/modal-content/NewPostJobModal";
 // import CancelJob from "../employer/postjob/modal-content/CancelJob";
 // import ModalView from "../add-info-profile/modal";
@@ -14,6 +14,8 @@ import { SVG } from "@assets/svg";
 import { IMAGES } from "@assets/images";
 import { useFormik } from "formik";
 import { applyJobValidationSchema } from "./validator";
+import { AttachmentDragNDropInput } from "@components/input";
+import { ErrorMessage } from "@components/caption";
 
 const ApplyForJob = () => {
   // navigate
@@ -37,7 +39,7 @@ const ApplyForJob = () => {
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
-      fileDrops: [],
+      attachments: [],
     },
     validationSchema: applyJobValidationSchema,
     onSubmit: (values) => {
@@ -251,18 +253,33 @@ const ApplyForJob = () => {
                 {...formik.getFieldProps("shortLetter")}
               />
               {formik.touched.shortLetter && formik.errors.shortLetter && (
-                <p style={{ color: "red" }}>{formik.errors.shortLetter}</p>
+                <ErrorMessage>{formik.errors.shortLetter}</ErrorMessage>
               )}
             </div>
             <Grid item xl={12} lg={12} xs={12} className="attachments">
               <h2 className="mt-4 mb-3">Attach files</h2>
-              <AttachmentFile
-                handleDrop={(drops) =>
-                  formik.setValues({ ...formik.values, fileDrops: drops })
-                }
+              <AttachmentDragNDropInput
+                files={formik.getFieldProps("attachments").value}
+                handleDrop={(file) => {
+                  formik.setValues({
+                    ...formik.values,
+                    attachments: [
+                      ...formik.getFieldProps("attachments").value,
+                      file[0],
+                    ],
+                  });
+                }}
+                deleteFile={(file) => {
+                  formik.setValues({
+                    ...formik.values,
+                    attachments: formik.values.attachments.filter(
+                      (el) => el !== file
+                    ),
+                  });
+                }}
               />
-              {formik.touched.fileDrops && formik.errors.fileDrops && (
-                <p style={{ color: "red" }}>{formik.errors.fileDrops}</p>
+              {formik.touched.attachments && formik.errors.attachments && (
+                <ErrorMessage>{formik.errors.attachments}</ErrorMessage>
               )}
             </Grid>
 
