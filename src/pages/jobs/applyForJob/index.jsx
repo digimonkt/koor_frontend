@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { IMAGES } from "@assets/images";
+import { useFormik } from "formik";
+import { applyJobValidationSchema } from "./validator";
 
 const ApplyForJob = () => {
   // navigate
@@ -29,6 +31,21 @@ const ApplyForJob = () => {
   //   const handleClose = () => {
   //     setOpen(false);
   //   };
+
+  // formik validation and values setup
+
+  const formik = useFormik({
+    initialValues: {
+      shortLetter: "",
+      fileDrops: [],
+    },
+    validationSchema: applyJobValidationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  console.log("forkmik apply job -- ", formik.values);
 
   return (
     <div>
@@ -233,11 +250,22 @@ const ApplyForJob = () => {
                 className={`${styles.textarea}`}
                 minRows={3}
                 placeholder="Write a few words about yourself and why you think that you are a good fit for this particular job."
+                {...formik.getFieldProps("shortLetter")}
               />
+              {formik.touched.shortLetter && formik.errors.shortLetter && (
+                <p style={{ color: "red" }}>{formik.errors.shortLetter}</p>
+              )}
             </div>
             <Grid item xl={12} lg={12} xs={12} className="attachments">
               <h2 className="mt-4 mb-3">Attach files</h2>
-              <AttachmentFile />
+              <AttachmentFile
+                handleDrop={(drops) =>
+                  formik.setValues({ ...formik.values, fileDrops: drops })
+                }
+              />
+              {formik.touched.fileDrops && formik.errors.fileDrops && (
+                <p style={{ color: "red" }}>{formik.errors.fileDrops}</p>
+              )}
             </Grid>
 
             <Stack
@@ -253,7 +281,7 @@ const ApplyForJob = () => {
               <SearchButton
                 text="Apply"
                 className={`${styles.applybtn}`}
-                // handleClickOpen={() => handleClickOpen("postjob")}
+                handleClickOpen={formik.handleSubmit}
               />
             </Stack>
           </div>
