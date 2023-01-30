@@ -13,7 +13,7 @@ const color = "#EEA23D";
 const buttonHover = "#eea23d14";
 
 const EditEducation = ({ handleSubmit, editData }) => {
-  // formik validation and values setup with yup
+  // formik validation and values setup
 
   const formik = useFormik({
     initialValues: {
