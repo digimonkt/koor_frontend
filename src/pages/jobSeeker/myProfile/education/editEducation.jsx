@@ -1,29 +1,48 @@
 import { Stack } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 import CustomDatePicker from "@components/datePicker";
 import CustomCheckBox from "@components/checkBox";
+import { useFormik } from "formik";
+import { educationValidationSchema } from "./validation";
+import { ErrorMessage } from "@components/caption";
 
 const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
 const EditEducation = ({ handleSubmit, editData }) => {
-  const [educationData, setEducationData] = useState({
-    id: editData?.id,
-    organization: editData?.organization,
-    degree: editData?.degree,
-    startDate: editData?.startDate,
-    endDate: editData?.endDate,
-    description: editData?.description,
-    isPresent: editData?.isPresent,
+  // formik validation and values setup
+
+  const formik = useFormik({
+    initialValues: {
+      id: "",
+      organization: "",
+      degree: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      isPresent: false,
+    },
+    validationSchema: educationValidationSchema,
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
   });
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setEducationData({ ...educationData, [name]: value });
-  };
+
+  useEffect(() => {
+    formik.setValues({
+      ...formik.values,
+      id: editData?.id,
+      organization: editData?.organization,
+      degree: editData?.degree,
+      startDate: editData?.startDate,
+      endDate: editData?.endDate,
+      description: editData?.description,
+      isPresent: editData?.isPresent,
+    });
+  }, []);
 
   return (
     <div>
@@ -54,22 +73,28 @@ const EditEducation = ({ handleSubmit, editData }) => {
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <input
-                type="text"
-                placeholder="Organinzation"
-                className="add-form-control"
-                name="organization"
-                value={educationData.organization}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                placeholder="Degree"
-                className="add-form-control"
-                name="degree"
-                value={educationData.degree}
-                onChange={handleChange}
-              />
+              <div>
+                <input
+                  type="text"
+                  placeholder="Organinzation"
+                  className="add-form-control"
+                  {...formik.getFieldProps("organization")}
+                />
+                {formik.touched.organization && formik.errors.organization ? (
+                  <ErrorMessage>{formik.errors.organization}</ErrorMessage>
+                ) : null}
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Degree"
+                  className="add-form-control"
+                  {...formik.getFieldProps("degree")}
+                />
+                {formik.touched.degree && formik.errors.degree ? (
+                  <ErrorMessage>{formik.errors.degree}</ErrorMessage>
+                ) : null}
+              </div>
             </Stack>
             <Stack
               direction={{ xs: "column", lg: "row" }}
@@ -77,27 +102,31 @@ const EditEducation = ({ handleSubmit, editData }) => {
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <CustomDatePicker
-                placeholder="start date"
-                dateValue={educationData.startDate}
-                handleDateValue={(vl) =>
-                  setEducationData((prev) => ({
-                    ...prev,
-                    startDate: vl,
-                  }))
-                }
-              />
-              <CustomDatePicker
-                isDisabled={educationData.isPresent}
-                placeholder="end date"
-                dateValue={educationData.endDate}
-                handleDateValue={(vl) =>
-                  setEducationData((prev) => ({
-                    ...prev,
-                    endDate: vl,
-                  }))
-                }
-              />
+              <div>
+                <CustomDatePicker
+                  placeholder="start date"
+                  dateValue={formik.values.startDate}
+                  handleDateValue={(vl) =>
+                    formik.setValues({ ...formik.values, startDate: vl })
+                  }
+                />
+                {formik.touched.startDate && formik.errors.startDate ? (
+                  <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                ) : null}
+              </div>
+              <div>
+                <CustomDatePicker
+                  isDisabled={formik.values.isPresent}
+                  placeholder="end date"
+                  dateValue={formik.values.endDate}
+                  handleDateValue={(vl) =>
+                    formik.setValues({ ...formik.values, endDate: vl })
+                  }
+                />
+                {formik.touched.endDate && formik.errors.endDate ? (
+                  <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
+                ) : null}
+              </div>
             </Stack>
             <Stack
               direction={{ xs: "column", lg: "row" }}
@@ -110,9 +139,9 @@ const EditEducation = ({ handleSubmit, editData }) => {
               }}
             >
               <CustomCheckBox
-                checked={educationData.isPresent}
+                checked={formik.values.isPresent}
                 handleChecked={(vl) =>
-                  setEducationData((prev) => ({ ...prev, isPresent: vl }))
+                  formik.setValues({ ...formik.values, isPresent: vl })
                 }
                 label="Present"
               />
@@ -124,16 +153,19 @@ const EditEducation = ({ handleSubmit, editData }) => {
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <textarea
-                type="text"
-                placeholder="Description"
-                className="add-form-control-textarea"
-                name="description"
-                rows="4"
-                cols="50"
-                value={educationData.description}
-                onChange={handleChange}
-              />
+              <div>
+                <textarea
+                  type="text"
+                  placeholder="Description"
+                  className="add-form-control-textarea"
+                  rows="4"
+                  cols="50"
+                  {...formik.getFieldProps("description")}
+                />
+                {formik.touched.description && formik.errors.description ? (
+                  <ErrorMessage>{formik.errors.description}</ErrorMessage>
+                ) : null}
+              </div>
             </Stack>
           </div>
         </Stack>
@@ -154,7 +186,7 @@ const EditEducation = ({ handleSubmit, editData }) => {
                 "&:hover": { background: buttonHover },
               },
             }}
-            onClick={() => handleSubmit(educationData)}
+            onClick={formik.handleSubmit}
           />
         </div>
       </>

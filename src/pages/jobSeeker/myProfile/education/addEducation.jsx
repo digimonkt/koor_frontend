@@ -1,30 +1,36 @@
 import { Stack } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 import CustomDatePicker from "@components/datePicker";
 import CustomCheckBox from "@components/checkBox";
 import { generateRandomId } from "@utils/fakeData";
+import { useFormik } from "formik";
+import { educationValidationSchema } from "./validation";
+import { ErrorMessage } from "@components/caption";
 
 const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
 function AddEducation({ handleSubmit }) {
-  const [educationData, setEducationData] = useState({
-    id: generateRandomId(7),
-    organization: "",
-    degree: "",
-    startDate: "",
-    endDate: "",
-    description: "",
-    isPresent: false,
+  // formik validation and values setup
+
+  const formik = useFormik({
+    initialValues: {
+      id: generateRandomId(7),
+      organization: "",
+      degree: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+      isPresent: false,
+    },
+    validationSchema: educationValidationSchema,
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
   });
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setEducationData({ ...educationData, [name]: value });
-  };
 
   return (
     <div>
@@ -55,20 +61,28 @@ function AddEducation({ handleSubmit }) {
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <input
-                type="text"
-                placeholder="Organinzation"
-                className="add-form-control"
-                name="organization"
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                placeholder="Degree"
-                className="add-form-control"
-                name="degree"
-                onChange={handleChange}
-              />
+              <div>
+                <input
+                  type="text"
+                  placeholder="Organinzation"
+                  className="add-form-control"
+                  {...formik.getFieldProps("organization")}
+                />
+                {formik.touched.organization && formik.errors.organization ? (
+                  <ErrorMessage>{formik.errors.organization}</ErrorMessage>
+                ) : null}
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Degree"
+                  className="add-form-control"
+                  {...formik.getFieldProps("degree")}
+                />
+                {formik.touched.degree && formik.errors.degree ? (
+                  <ErrorMessage>{formik.errors.degree}</ErrorMessage>
+                ) : null}
+              </div>
             </Stack>
             <Stack
               direction={{ xs: "column", lg: "row" }}
@@ -76,27 +90,31 @@ function AddEducation({ handleSubmit }) {
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <CustomDatePicker
-                placeholder="start date"
-                dateValue={educationData.startDate}
-                handleDateValue={(vl) =>
-                  setEducationData((prev) => ({
-                    ...prev,
-                    startDate: vl,
-                  }))
-                }
-              />
-              <CustomDatePicker
-                isDisabled={educationData.isPresent}
-                placeholder="end date"
-                dateValue={educationData.endDate}
-                handleDateValue={(vl) =>
-                  setEducationData((prev) => ({
-                    ...prev,
-                    endDate: vl,
-                  }))
-                }
-              />
+              <div>
+                <CustomDatePicker
+                  placeholder="start date"
+                  dateValue={formik.values.startDate}
+                  handleDateValue={(vl) =>
+                    formik.setValues({ ...formik.values, startDate: vl })
+                  }
+                />
+                {formik.touched.startDate && formik.errors.startDate ? (
+                  <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                ) : null}
+              </div>
+              <div>
+                <CustomDatePicker
+                  isDisabled={formik.values.isPresent}
+                  placeholder="end date"
+                  dateValue={formik.values.endDate}
+                  handleDateValue={(vl) =>
+                    formik.setValues({ ...formik.values, endDate: vl })
+                  }
+                />
+                {formik.touched.endDate && formik.errors.endDate ? (
+                  <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
+                ) : null}
+              </div>
             </Stack>
             <Stack
               direction={{ xs: "column", lg: "row" }}
@@ -109,9 +127,9 @@ function AddEducation({ handleSubmit }) {
               }}
             >
               <CustomCheckBox
-                checked={educationData.isPresent}
+                checked={formik.values.isPresent}
                 handleChecked={(vl) =>
-                  setEducationData((prev) => ({ ...prev, isPresent: vl }))
+                  formik.setValues({ ...formik.values, isPresent: vl })
                 }
                 label="Present"
               />
@@ -123,15 +141,19 @@ function AddEducation({ handleSubmit }) {
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <textarea
-                type="text"
-                placeholder="Description"
-                className="add-form-control-textarea"
-                name="description"
-                rows="4"
-                cols="50"
-                onChange={handleChange}
-              />
+              <div>
+                <textarea
+                  type="text"
+                  placeholder="Description"
+                  className="add-form-control-textarea"
+                  rows="4"
+                  cols="50"
+                  {...formik.getFieldProps("description")}
+                />
+                {formik.touched.description && formik.errors.description ? (
+                  <ErrorMessage>{formik.errors.description}</ErrorMessage>
+                ) : null}
+              </div>
             </Stack>
           </div>
         </Stack>
@@ -152,7 +174,7 @@ function AddEducation({ handleSubmit }) {
                 "&:hover": { background: buttonHover },
               },
             }}
-            onClick={() => handleSubmit(educationData)}
+            onClick={formik.handleSubmit}
           />
         </div>
       </>
