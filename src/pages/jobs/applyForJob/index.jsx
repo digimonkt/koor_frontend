@@ -45,8 +45,6 @@ const ApplyForJob = () => {
     },
   });
 
-  console.log("forkmik apply job -- ", formik.values);
-
   return (
     <div>
       <Container>
