@@ -138,8 +138,8 @@ function EditLanguages({ handleSubmit }) {
               <>
                 <span className="me-3 d-inline-flex">
                   <SVG.PlushIcon />
-                </span>{" "}
-                Add Language
+                </span>
+                Update Language
               </>
             }
             sx={{
@@ -149,7 +149,6 @@ function EditLanguages({ handleSubmit }) {
                 "&:hover": { background: buttonHover },
               },
             }}
-            onClick={handleSubmit}
           />
         </div>
       </>

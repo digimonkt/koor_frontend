@@ -1,5 +1,5 @@
 import { IconButton, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 
@@ -7,10 +7,10 @@ const color = "#EEA23D";
 const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
-const EditWorkExperience = ({ taskObj, updateExperience }) => {
+const CreateWorkExperience = ({ saveTask }) => {
   const [role, setRole] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+  const [date, seDate] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,28 +19,23 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
     } else if (name === "description") {
       setDescription(value);
     } else if (name === "date") {
-      setDate(value);
+      seDate(value);
     }
   };
 
-  useEffect(() => {
-    setRole(taskObj.role);
-    setDescription(taskObj.description);
-    setDate(taskObj.date);
-  }, []);
-
-  const handleUpdate = (e) => {
+  const handleSave = (e) => {
     e.preventDefault();
-    const tempObj = {};
-    tempObj.role = role;
-    tempObj.description = description;
-    tempObj.date = date;
-    updateExperience(tempObj);
+    const taskObj = {};
+    taskObj.role = role;
+    taskObj.description = description;
+    taskObj.date = date;
+    saveTask(taskObj);
   };
+
   return (
     <div>
       <>
-        <h1 className="headding">Edit Work experience</h1>
+        <h1 className="headding">Work Experience</h1>
         <Stack
           direction="row"
           spacing={2}
@@ -57,7 +52,7 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
               },
             }}
           >
-            <SVG.WorkIcon />
+            <SVG.LanguageIcon />
           </IconButton>
           <div className="description">
             <Stack
@@ -97,7 +92,7 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
               className="mb-3"
             >
               <input
-                type="date"
+                type="text"
                 placeholder="Date"
                 name="date"
                 value={date}
@@ -109,13 +104,13 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
         </Stack>
         <div className="text-center mt-3">
           <OutlinedButton
-            onClick={handleUpdate}
+            onClick={handleSave}
             title={
               <>
                 <span className="me-3 d-inline-flex">
                   <SVG.PlushIcon />
                 </span>{" "}
-                Update Work Experience
+                Add Work Experience
               </>
             }
             sx={{
@@ -132,4 +127,4 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
   );
 };
 
-export default EditWorkExperience;
+export default CreateWorkExperience;

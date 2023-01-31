@@ -1,5 +1,5 @@
 import { IconButton, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 
@@ -7,40 +7,35 @@ const color = "#EEA23D";
 const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
-const EditWorkExperience = ({ taskObj, updateExperience }) => {
-  const [role, setRole] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
+const CreateLanguages = ({ saveTask }) => {
+  const [language, setLanguage] = useState("");
+  const [spoken, setSpoken] = useState("");
+  const [written, setWritten] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "role") {
-      setRole(value);
-    } else if (name === "description") {
-      setDescription(value);
-    } else if (name === "date") {
-      setDate(value);
+    if (name === "language") {
+      setLanguage(value);
+    } else if (name === "spoken") {
+      setSpoken(value);
+    } else if (name === "written") {
+      setWritten(value);
     }
   };
 
-  useEffect(() => {
-    setRole(taskObj.role);
-    setDescription(taskObj.description);
-    setDate(taskObj.date);
-  }, []);
-
-  const handleUpdate = (e) => {
+  const handleSave = (e) => {
     e.preventDefault();
-    const tempObj = {};
-    tempObj.role = role;
-    tempObj.description = description;
-    tempObj.date = date;
-    updateExperience(tempObj);
+    const taskObj = {};
+    taskObj.language = language;
+    taskObj.spoken = spoken;
+    taskObj.written = written;
+    saveTask(taskObj);
   };
+
   return (
     <div>
       <>
-        <h1 className="headding">Edit Work experience</h1>
+        <h1 className="headding">Languages</h1>
         <Stack
           direction="row"
           spacing={2}
@@ -57,7 +52,7 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
               },
             }}
           >
-            <SVG.WorkIcon />
+            <SVG.LanguageIcon />
           </IconButton>
           <div className="description">
             <Stack
@@ -68,9 +63,9 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
             >
               <input
                 type="text"
-                placeholder="Role"
-                name="role"
-                value={role}
+                placeholder="Language"
+                name="language"
+                value={language}
                 className="add-form-control"
                 onChange={handleChange}
               />
@@ -83,9 +78,9 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
             >
               <input
                 type="text"
-                placeholder="Description"
-                name="description"
-                value={description}
+                placeholder="Spoken"
+                name="spoken"
+                value={spoken}
                 className="add-form-control"
                 onChange={handleChange}
               />
@@ -97,10 +92,10 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
               className="mb-3"
             >
               <input
-                type="date"
-                placeholder="Date"
-                name="date"
-                value={date}
+                type="text"
+                placeholder="Written"
+                name="written"
+                value={written}
                 className="add-form-control"
                 onChange={handleChange}
               />
@@ -109,13 +104,13 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
         </Stack>
         <div className="text-center mt-3">
           <OutlinedButton
-            onClick={handleUpdate}
+            onClick={handleSave}
             title={
               <>
                 <span className="me-3 d-inline-flex">
                   <SVG.PlushIcon />
                 </span>{" "}
-                Update Work Experience
+                Add Language
               </>
             }
             sx={{
@@ -132,4 +127,4 @@ const EditWorkExperience = ({ taskObj, updateExperience }) => {
   );
 };
 
-export default EditWorkExperience;
+export default CreateLanguages;

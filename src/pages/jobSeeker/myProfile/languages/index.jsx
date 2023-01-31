@@ -2,9 +2,9 @@ import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
 import React from "react";
 import { SVG } from "@assets/svg";
+import LanguageCard from "@components/languageCard";
 import DialogBox from "@components/dialogBox";
 import EditLanguages from "./editLanguages";
-import LanguageCard from "@components/languageCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalOpen } from "@redux/slice/modal";
 import { MODAL_TYPES } from "@utils/enum";
@@ -45,7 +45,6 @@ const Languages = () => {
                 <li key={index}>{<LanguageCard />}</li>
               ))}
             </ul>
-
             <div className="text-center mt-4">
               <OutlinedButton
                 title={
@@ -64,7 +63,6 @@ const Languages = () => {
                     fontWeight: "500",
                     fontSize: "16px",
                     padding: "6px 30px",
-
                     "&:hover": { background: "#eea23d14" },
                     "@media (max-width: 992px)": {
                       padding: "10px 16px",
