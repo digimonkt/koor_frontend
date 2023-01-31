@@ -4,48 +4,23 @@ import React from "react";
 import { SVG } from "@assets/svg";
 import DialogBox from "@components/dialogBox";
 import EditLanguages from "./editLanguages";
+import LanguageCard from "@components/languageCard";
+import { useDispatch, useSelector } from "react-redux";
+import { setModalOpen } from "@redux/slice/modal";
+import { MODAL_TYPES } from "@utils/enum";
 
 const Languages = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  // redux dispatcher and selector
+  const dispatch = useDispatch();
+  const languageData = useSelector((state) => state.auth.currentUser.languages);
+  const modalType = useSelector((state) => state.modal.modalOpen);
+
+  // state management
+  // handle modal toggle
+  const handleToggleModel = (type = "") => {
+    dispatch(setModalOpen(type));
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const langugesList = [
-    {
-      title: "English",
-      subtitle: (
-        <>
-          Spoken: <strong>Fluent</strong>
-          <br />
-          Written: <strong>Fluent</strong>
-        </>
-      ),
-    },
-    {
-      title: "German",
-      subtitle: (
-        <>
-          Spoken: <strong>Conversational</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-    {
-      title: "Spanish",
-      subtitle: (
-        <>
-          Spoken: <strong>Basic</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-  ];
   return (
     <>
       <Card
@@ -66,8 +41,8 @@ const Languages = () => {
           <div className="add-content">
             <h2 className="mb-4">Languages</h2>
             <ul className="listitems">
-              {langugesList.map((item, index) => (
-                <li key={index}>{/* <CardList {...item} /> */}</li>
+              {languageData.map((item, index) => (
+                <li key={index}>{<LanguageCard />}</li>
               ))}
             </ul>
 
@@ -81,7 +56,7 @@ const Languages = () => {
                     Add language
                   </>
                 }
-                onClick={handleClickOpen}
+                onClick={() => handleToggleModel(MODAL_TYPES.addLanguageModal)}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -102,9 +77,14 @@ const Languages = () => {
           </div>
         </CardContent>
       </Card>
-      <DialogBox open={open} handleClose={handleClose}>
-        <EditLanguages />
-      </DialogBox>
+      {modalType === MODAL_TYPES.addLanguageModal && (
+        <DialogBox
+          open={modalType === MODAL_TYPES.addLanguageModal}
+          handleClose={handleToggleModel}
+        >
+          <EditLanguages />
+        </DialogBox>
+      )}
     </>
   );
 };

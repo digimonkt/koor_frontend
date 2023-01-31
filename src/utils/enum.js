@@ -23,18 +23,20 @@ export const ORGANIZATION_TYPE = Object.freeze({
   government: "government",
 });
 
-export const GENDER = {
+export const GENDER = Object.freeze({
   male: "male",
   female: "female",
-};
+});
 
-export const LANGUAGE_PROFICIENCY = {
+export const LANGUAGE_PROFICIENCY = Object.freeze({
   basic: "basic",
   conversational: "conversational",
   fluent: "fluent",
-};
+});
 
-export const MODAL_TYPES = {
+export const MODAL_TYPES = Object.freeze({
   editEducationModal: "editEducationModal",
   addEducationModal: "addEducationModal",
-};
+  addLanguageModal: "addLanguageModal",
+  editLanguageModal: "editLanguageModal",
+});

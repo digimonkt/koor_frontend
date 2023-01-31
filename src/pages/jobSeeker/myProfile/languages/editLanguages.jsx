@@ -1,34 +1,66 @@
-import { IconButton, Stack } from "@mui/material";
-import React, { useState } from "react";
+import { Stack } from "@mui/material";
+import React from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
+import { LANGUAGE_PROFICIENCY } from "@utils/enum";
+import CustomDropDown from "@components/dropDown";
 
 const color = "#EEA23D";
-const bgcolor = "#FEEFD3";
+// const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
+// language proficiency data
+const languageProficiencyData = [
+  {
+    id: 1,
+    title: "Basic",
+    value: LANGUAGE_PROFICIENCY.basic,
+  },
+  {
+    id: 2,
+    title: "Conversational",
+    value: LANGUAGE_PROFICIENCY.conversational,
+  },
+  {
+    id: 3,
+    title: "Fluent",
+    value: LANGUAGE_PROFICIENCY.fluent,
+  },
+];
+
+// language data
+const languageData = [
+  {
+    id: 1,
+    title: "Hindi",
+    value: "hindi",
+  },
+  {
+    id: 2,
+    title: "English",
+    value: "english",
+  },
+  {
+    id: 3,
+    title: "Spanish",
+    value: "spanish",
+  },
+];
+
 function EditLanguages({ handleSubmit }) {
-  const [formValues, setFormValues] = useState({
-    name: "",
-    spoken: "",
-    written: "",
-  });
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setFormValues({ ...formValues, [name]: value });
-  };
+  // formik values and validation
+
   return (
     <div>
       <>
-        <h1 className="headding">Languages</h1>
+        <h1 className="headding">Add Languages</h1>
         <Stack
           direction="row"
           spacing={2}
           alignItems={{ xs: "start", lg: "center" }}
           className="mb-3"
         >
-          <IconButton
+          {/* <IconButton
             sx={{
               "&.MuiIconButton-root": {
                 backgroundColor: bgcolor,
@@ -39,49 +71,64 @@ function EditLanguages({ handleSubmit }) {
             }}
           >
             <SVG.LanguageIcon />
-          </IconButton>
-          <div className="description">
+          </IconButton> */}
+          <div style={{ width: "100%" }} className="description">
             <Stack
               direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
+              spacing={{ xs: 2, lg: 2, md: 2 }}
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <input
-                type="text"
-                placeholder="Name"
-                name="name"
-                className="add-form-control"
-                onChange={handleChange}
-              />
+              <label
+                style={{ fontWeight: 700, fontSize: "14px" }}
+                className="w-40"
+              >
+                Language
+              </label>
+              <div style={{ width: "60%" }}>
+                <CustomDropDown
+                  optionData={languageData}
+                  placeholder="Select your language"
+                />
+              </div>
             </Stack>
             <Stack
               direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
+              spacing={{ xs: 2, lg: 4.5, md: 2 }}
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <input
-                type="text"
-                placeholder="Spoken"
-                name="spoken"
-                className="add-form-control"
-                onChange={handleChange}
-              />
+              <label
+                style={{ fontWeight: 700, fontSize: "14px" }}
+                className="w-40"
+              >
+                Spoken
+              </label>
+              <div style={{ width: "60%" }}>
+                <CustomDropDown
+                  optionData={languageProficiencyData}
+                  placeholder="Select your proficiency"
+                />
+              </div>
             </Stack>
             <Stack
               direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
+              spacing={{ xs: 2, lg: 4.5, md: 2 }}
               alignItems={{ xs: "start", lg: "center" }}
               className="mb-3"
             >
-              <input
-                type="text"
-                placeholder="Written"
-                name="written"
-                className="add-form-control"
-                onChange={handleChange}
-              />
+              <label
+                style={{ fontWeight: 700, fontSize: "14px" }}
+                className="w-40"
+              >
+                Written
+              </label>
+              <div style={{ width: "60%" }}>
+                <CustomDropDown
+                  optionData={languageProficiencyData}
+                  placeholder="Select your proficiency"
+                />
+              </div>
             </Stack>
           </div>
         </Stack>
