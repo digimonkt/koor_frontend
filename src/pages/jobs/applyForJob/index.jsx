@@ -4,10 +4,6 @@ import Grid from "@mui/material/Grid";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { SearchButton } from "@components/button";
 import React, { useState } from "react";
-// import AttachmentFile from "@components/attatchmentFile";
-// import NewPostJobModal from "../employer/postjob/modal-content/NewPostJobModal";
-// import CancelJob from "../employer/postjob/modal-content/CancelJob";
-// import ModalView from "../add-info-profile/modal";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
@@ -302,36 +298,6 @@ const ApplyForJob = () => {
           </div>
         </div>
       </Container>
-      {/*
-      <ModalView
-        open={open}
-        handleClose={handleClose}
-        modalclass="apply-modalwidth"
-        content={
-          open === "postjob" ? (
-            <NewPostJobModal
-              title="Done!"
-              description="Your application was submitted. The employer will reach out to you if they will find you suitable for the job. Stay tuned."
-              buttontext="Back to jobs search"
-              icon={applypostjob}
-              handleClose={handleClose}
-              color="#EEA23D"
-              url="/jobadvancedsearch"
-              buttonHover="rgba(255, 165, 0, 0.1)"
-            />
-          ) : open === "cancelJob" ? (
-            <CancelJob
-              title="Cancel applying?"
-              description="Are you sure you want to go back and delete all the info you’ve added? "
-              color="#EEA23D"
-              buttontext="Yes, cancel"
-              handleClose={handleClose}
-              url="/jobpost"
-              buttonHover="rgba(255, 165, 0, 0.1)"
-            />
-          ) : null
-        }
-      /> */}
     </div>
   );
 };
