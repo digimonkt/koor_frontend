@@ -48,11 +48,11 @@ const EmployerNavigationOptions = Object.freeze([
     isDisable: false,
   },
   {
-    to: "/manage-tenders",
+    to: "/employer-manage-tenders",
     icon: SVG.TendersIcon,
     title: "Manage tenders",
     id: "manageTenders",
-    isDisable: true,
+    isDisable: false,
   },
   {
     to: "/calender",
@@ -62,12 +62,12 @@ const EmployerNavigationOptions = Object.freeze([
     isDisable: true,
   },
   {
-    to: "/messages",
+    to: "/chat",
     icon: SVG.MessageIcon,
     title: "Messages",
     id: "messages",
     count: 2,
-    isDisable: true,
+    isDisable: false,
   },
 ]);
 
