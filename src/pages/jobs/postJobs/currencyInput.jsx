@@ -1,37 +1,45 @@
-import { Divider, FormControl, MenuItem, Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import React from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { SelectBoxStyle } from "@components/input";
-
-function CurrencyInput({ title, currency, handleOptionChange, ...rest }) {
+import { SelectInput } from "@components/input";
+import { ErrorMessage } from "@components/caption";
+import { PAY_PERIOD } from "@utils/enum";
+// input onChange, name and onBlur must be present in optionsValues or else it will not work
+function CurrencyInput({ title, currency, optionsValues, errors, ...rest }) {
   return (
-    <div>
-      <label>{title}</label>
+    <>
+      <label className="mb-2">{title}</label>
       <Stack direction="row" spacing={0} alignItems="center" className="usd-bg">
-        <div className="usd">{currency}</div>
-        <input className="usdinput" placeholder="0" {...rest} />
+        <SelectInput
+          options={[
+            {
+              value: "usd",
+              label: "USD",
+            },
+          ]}
+          className="usd"
+          {...((optionsValues && optionsValues.currency) || {})}
+        />
+        <input
+          className="usdinput"
+          placeholder="0"
+          {...rest}
+          {...((optionsValues && optionsValues.input) || {})}
+        />
         <Divider orientation="vertical" variant="middle" flexItem />
 
-        <FormControl
-          sx={{
-            "&.MuiSelect-select": {
-              fontFamily: "Poppins",
-              fontSize: "12px",
-            },
-          }}
-          size="small"
-          className="iconsize-select"
-        >
-          <SelectBoxStyle
-            IconComponent={KeyboardArrowDownIcon}
-            onChange={(e) => handleOptionChange && handleOptionChange(e)}
-          >
-            <MenuItem value="from">From</MenuItem>
-            <MenuItem value="upTo">Up to</MenuItem>
-          </SelectBoxStyle>
-        </FormControl>
+        <SelectInput
+          options={Object.keys(PAY_PERIOD).map((period) => ({
+            value: PAY_PERIOD[period],
+            label: `per ${period}`,
+          }))}
+          style={{ width: "30%" }}
+          {...((optionsValues && optionsValues.payPeriod) || {})}
+        />
       </Stack>
-    </div>
+      <ErrorMessage>{errors?.input}</ErrorMessage>
+      <ErrorMessage>{errors?.title}</ErrorMessage>
+      <ErrorMessage>{errors?.payPeriod}</ErrorMessage>
+    </>
   );
 }
 

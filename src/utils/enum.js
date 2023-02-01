@@ -33,3 +33,11 @@ export const LANGUAGE_PROFICIENCY = {
   conversational: "conversational",
   fluent: "fluent",
 };
+
+export const PAY_PERIOD = {
+  year: "yearly",
+  quarter: "quarterly",
+  month: "monthly",
+  week: "weekly",
+  hour: "hourly",
+};

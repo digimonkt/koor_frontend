@@ -9,7 +9,7 @@ function ErrorMessageComponent({ children }) {
       sx={{
         "&.MuiTypography-root": {
           fontFamily: "Poppins",
-          fontSize: "16px",
+          fontSize: "14px",
           fontWeight: "300",
         },
       }}
