@@ -76,6 +76,11 @@ import { ReactComponent as Crossed } from "./crossed.svg";
 import { ReactComponent as Google } from "./google.svg";
 import { ReactComponent as Apple } from "./apple.svg";
 import { ReactComponent as Facebook } from "./facebookicon.svg";
+import { ReactComponent as EditDashIcon } from "./editDashIcon.svg";
+import { ReactComponent as SellIcon } from "./sellIcon.svg";
+import { ReactComponent as CategoryIcon } from "./CategoryIcon.svg";
+import { ReactComponent as SearchIConJob } from "./searchIConJob.svg";
+import { ReactComponent as CalenderChat } from "./calenderchat.svg";
 
 export const SVG = {
   ClockIconSmall,
@@ -156,4 +161,9 @@ export const SVG = {
   Google,
   Apple,
   Facebook,
+  EditDashIcon,
+  SellIcon,
+  CategoryIcon,
+  SearchIConJob,
+  CalenderChat,
 };
