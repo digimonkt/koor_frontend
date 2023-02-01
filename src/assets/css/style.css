@@ -1359,6 +1359,7 @@ span.count {
 
 .usd {
   padding: 8px;
+  width: 100px !important;
   background: #cacaca40;
   border-radius: 10px;
   font-family: "Poppins";
@@ -1389,7 +1390,7 @@ span.count {
   margin-right: 5px;
   color: #121212;
   opacity: 0.5;
-  width: calc(100% - 165px);
+  width: calc(100% - 190px);
 }
 .usd-bg {
   background: #f0f0f0;

@@ -42,3 +42,12 @@ export const MODAL_TYPES = Object.freeze({
   addworkExperienceModal: "addworkExperienceModal",
   editworkExperienceModal: "editworkExperienceModal",
 });
+
+
+export const PAY_PERIOD = Object.freeze({
+  year: "yearly",
+  quarter: "quarterly",
+  month: "monthly",
+  week: "weekly",
+  hour: "hourly",
+});
