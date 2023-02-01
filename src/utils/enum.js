@@ -39,4 +39,6 @@ export const MODAL_TYPES = Object.freeze({
   addEducationModal: "addEducationModal",
   addLanguageModal: "addLanguageModal",
   editLanguageModal: "editLanguageModal",
+  addworkExperienceModal: "addworkExperienceModal",
+  editworkExperienceModal: "editworkExperienceModal",
 });

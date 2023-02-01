@@ -33,17 +33,17 @@ export function generateJobSeeker() {
         description: faker.name.jobDescriptor(),
       },
     ],
-    work_experience: [
+    workExperience: [
       {
         id: faker.database.mongodbObjectId(),
         title: faker.name.jobTitle(),
-        start_date: faker.date
+        startDate: faker.date
           .between("2020-01-01T00:00:00.000Z", "2030-01-01T00:00:00.000Z")
           .toISOString(),
-        end_date: faker.date
+        endDate: faker.date
           .between("2020-01-01T00:00:00.000Z", "2030-01-01T00:00:00.000Z")
           .toISOString(),
-        present: faker.datatype.boolean(),
+        isPresent: faker.datatype.boolean(),
         organization: faker.company.name(),
         description: faker.name.jobDescriptor(),
       },

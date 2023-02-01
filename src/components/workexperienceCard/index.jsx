@@ -1,28 +1,20 @@
 import { Stack } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { SVG } from "@assets/svg";
 import { USER_ROLES } from "@utils/enum";
-import DialogBox from "@components/dialogBox";
-import EditWorkExperience from "@pages/jobSeeker/myProfile/work-experience/editWorkExperience";
 
 function WorkExperienceCard({
-  deleteExperience,
-  index,
-  taskObj,
-  updateExperienceList,
+  title,
+  organization,
+  startDate,
+  endDate,
+  isPresent,
+  description,
+  handleDelete,
+  handleEdit,
 }) {
   const { role } = useSelector((state) => state.auth);
-  const [open, setOpen] = useState(false);
-
-  const updateExperience = (obj) => {
-    updateExperienceList(obj, index);
-    setOpen(false);
-  };
-
-  const handleToggleModel = () => {
-    setOpen(!open);
-  };
 
   return (
     <Stack
@@ -32,32 +24,25 @@ function WorkExperienceCard({
       alignItems="center"
     >
       <div className="list-content">
-        <h5>{taskObj.role}</h5>
-        <h6>{taskObj.description}</h6>
-        <h6>{taskObj.date}</h6>
+        <h5>{title}</h5>
+        <h6>{organization}</h6>
+        <p>{description}</p>
+        <span>
+          {startDate}-{isPresent ? "Present" : endDate}
+        </span>
       </div>
       {role === USER_ROLES.jobSeeker && (
         <Stack direction="row" spacing={1} className="list-button">
-          <button onClick={() => setOpen(true)}>
+          <button onClick={() => handleEdit()}>
             <SVG.EditIcon />
             <span>Edit</span>
           </button>
-          <button
-            onClick={() => {
-              deleteExperience(index);
-            }}
-          >
+          <button onClick={() => handleDelete()}>
             <SVG.DeleteICon />
             <span>Delete</span>
           </button>
         </Stack>
       )}
-      <DialogBox open={open} handleToggleModel={handleToggleModel}>
-        <EditWorkExperience
-          updateExperience={updateExperience}
-          taskObj={taskObj}
-        />
-      </DialogBox>
     </Stack>
   );
 }

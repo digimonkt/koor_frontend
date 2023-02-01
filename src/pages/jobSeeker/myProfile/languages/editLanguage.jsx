@@ -1,9 +1,12 @@
 import { Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 import { LANGUAGE_PROFICIENCY } from "@utils/enum";
 import CustomDropDown from "@components/dropDown";
+import { useFormik } from "formik/dist";
+import { languageValidationSchema } from "./validation";
+import { ErrorMessage } from "@components/caption";
 
 const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
@@ -47,31 +50,41 @@ const languageData = [
   },
 ];
 
-function EditLanguages({ handleSubmit }) {
+function EditLanguages({ handleSubmit, updateData }) {
   // formik values and validation
+  const formik = useFormik({
+    initialValues: {
+      id: "",
+      language: "",
+      spoken: "",
+      written: "",
+    },
+    validationSchema: languageValidationSchema,
+    onSubmit: (values) => {
+      handleSubmit(values);
+    },
+  });
+
+  useEffect(() => {
+    formik.setValues({
+      ...formik.values,
+      id: updateData.id,
+      language: updateData.language,
+      spoken: updateData.spoken,
+      written: updateData.written,
+    });
+  }, []);
 
   return (
     <div>
       <>
-        <h1 className="headding">Add Languages</h1>
+        <h1 className="headding">Edit Languages</h1>
         <Stack
           direction="row"
           spacing={2}
           alignItems={{ xs: "start", lg: "center" }}
           className="mb-3"
         >
-          {/* <IconButton
-            sx={{
-              "&.MuiIconButton-root": {
-                backgroundColor: bgcolor,
-                width: "101px",
-                height: "101px",
-                color: { color },
-              },
-            }}
-          >
-            <SVG.LanguageIcon />
-          </IconButton> */}
           <div style={{ width: "100%" }} className="description">
             <Stack
               direction={{ xs: "column", lg: "row" }}
@@ -89,7 +102,14 @@ function EditLanguages({ handleSubmit }) {
                 <CustomDropDown
                   optionData={languageData}
                   placeholder="Select your language"
+                  value={formik.values.language}
+                  onChange={(vl) =>
+                    formik.setValues({ ...formik.values, language: vl })
+                  }
                 />
+                {formik.touched.language && formik.errors.language ? (
+                  <ErrorMessage>{formik.errors.language}</ErrorMessage>
+                ) : null}
               </div>
             </Stack>
             <Stack
@@ -108,7 +128,14 @@ function EditLanguages({ handleSubmit }) {
                 <CustomDropDown
                   optionData={languageProficiencyData}
                   placeholder="Select your proficiency"
+                  value={formik.values.spoken}
+                  onChange={(vl) =>
+                    formik.setValues({ ...formik.values, spoken: vl })
+                  }
                 />
+                {formik.touched.spoken && formik.errors.spoken ? (
+                  <ErrorMessage>{formik.errors.spoken}</ErrorMessage>
+                ) : null}
               </div>
             </Stack>
             <Stack
@@ -127,13 +154,21 @@ function EditLanguages({ handleSubmit }) {
                 <CustomDropDown
                   optionData={languageProficiencyData}
                   placeholder="Select your proficiency"
+                  value={formik.values.written}
+                  onChange={(vl) =>
+                    formik.setValues({ ...formik.values, written: vl })
+                  }
                 />
+                {formik.touched.written && formik.errors.written ? (
+                  <ErrorMessage>{formik.errors.written}</ErrorMessage>
+                ) : null}
               </div>
             </Stack>
           </div>
         </Stack>
         <div className="text-center mt-3">
           <OutlinedButton
+            onClick={formik.handleSubmit}
             title={
               <>
                 <span className="me-3 d-inline-flex">

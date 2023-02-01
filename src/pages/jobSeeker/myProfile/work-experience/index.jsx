@@ -5,42 +5,59 @@ import { SVG } from "@assets/svg";
 import DialogBox from "@components/dialogBox";
 import WorkExperienceCard from "@components/workexperienceCard";
 import CreateWorkExperience from "./createWorkExperience";
-
-const workList = [
-  {
-    id: 1,
-    role: "Freelancer",
-    description: "Upwork",
-    date: "May 2018 - Present",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { MODAL_TYPES } from "@utils/enum";
+import { setModalOpen } from "@redux/slice/modal";
+import { setWorkExperience } from "@redux/slice/user";
+import { formatDateFunc } from "@utils/fakeData";
+import EditWorkExperience from "./editWorkExperience";
 
 const WorkExperience = () => {
-  const [open, setOpen] = useState(false);
-  const [experiences, setExperiences] = useState([...workList]);
-  const updateExperienceList = (obj, index) => {
-    const temp = experiences;
-    temp[index] = obj;
-    setExperiences(temp);
+  // redux dispatch and selector
+  const dispatch = useDispatch();
+  const workExperienceData = useSelector(
+    (state) => state.auth.currentUser.workExperience
+  );
+
+  const modalType = useSelector((state) => state.modal.modalOpen);
+
+  // state management
+  const [editData, setEditData] = useState("");
+
+  // handle modal toggle
+  const handleToggleModel = (type = "") => {
+    dispatch(setModalOpen(type));
   };
 
-  const handleToggleModel = () => {
-    setExperiences(!experiences);
+  // handle submit
+  const handleSubmit = (value) => {
+    const result = [...workExperienceData] || [];
+    dispatch(setWorkExperience([...result, value]));
+    handleToggleModel();
   };
 
-  const deleteExperience = (id) => {
-    const temp = experiences.filter((val, index) => {
-      return index !== id;
-    });
-    console.log(temp);
-    setExperiences(temp);
+  // handle delete
+  const handleDelete = (id) => {
+    const filteredData = workExperienceData?.filter((el) => el.id !== id);
+    dispatch(setWorkExperience(filteredData));
   };
 
-  const saveTask = (taskObj) => {
-    const tempList = experiences;
-    tempList.push(taskObj);
-    setExperiences(experiences);
-    setOpen(false);
+  // handle toggle edit modal
+  const handleToggleEditModal = (id) => {
+    const filteredData = workExperienceData?.find((el) => el.id === id);
+    handleToggleModel(MODAL_TYPES.editworkExperienceModal);
+
+    setEditData(filteredData);
+  };
+
+  // handle submit edited data
+  const handleSubmitEditedData = (data) => {
+    const result = workExperienceData.map((item) =>
+      item.id === data.id ? data : item
+    );
+
+    dispatch(setWorkExperience(result));
+    dispatch(setModalOpen(""));
   };
 
   return (
@@ -63,25 +80,27 @@ const WorkExperience = () => {
           <div className="add-content">
             <h2 className="mb-4">Work experience</h2>
             <ul className="listitems">
-              {experiences.length > 0 ? (
-                experiences.map((obj, index) => (
-                  <li key={index}>
-                    <WorkExperienceCard
-                      taskObj={obj}
-                      index={index}
-                      deleteExperience={deleteExperience}
-                      updateExperienceList={updateExperienceList}
-                    />
-                  </li>
-                ))
-              ) : (
-                <h5>No Work experience</h5>
-              )}
+              {workExperienceData?.map((item) => (
+                <li key={item.id}>
+                  <WorkExperienceCard
+                    title={item.title}
+                    organization={item.organization}
+                    startDate={formatDateFunc(item.startDate)}
+                    endDate={formatDateFunc(item.endDate)}
+                    isPresent={item.isPresent}
+                    description={item.description}
+                    handleDelete={() => handleDelete(item.id)}
+                    handleEdit={() => handleToggleEditModal(item.id)}
+                  />
+                </li>
+              ))}
             </ul>
 
             <div className="text-center mt-4">
               <OutlinedButton
-                onClick={() => setOpen(true)}
+                onClick={() =>
+                  handleToggleModel(MODAL_TYPES.addworkExperienceModal)
+                }
                 title={
                   <>
                     <span className="me-2 d-inline-flex">
@@ -109,9 +128,26 @@ const WorkExperience = () => {
           </div>
         </CardContent>
       </Card>
-      <DialogBox open={open} handleToggleModel={handleToggleModel}>
-        <CreateWorkExperience saveTask={saveTask} />
-      </DialogBox>
+      {modalType === MODAL_TYPES.addworkExperienceModal && (
+        <DialogBox
+          open={modalType === MODAL_TYPES.addworkExperienceModal}
+          handleClose={() => handleToggleModel()}
+        >
+          <CreateWorkExperience handleSubmit={(data) => handleSubmit(data)} />
+        </DialogBox>
+      )}
+
+      {modalType === MODAL_TYPES.editworkExperienceModal && (
+        <DialogBox
+          open={modalType === MODAL_TYPES.editworkExperienceModal}
+          handleClose={() => handleToggleModel()}
+        >
+          <EditWorkExperience
+            editData={editData}
+            handleSubmit={(data) => handleSubmitEditedData(data)}
+          />
+        </DialogBox>
+      )}
     </>
   );
 };

@@ -1,13 +1,15 @@
 import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import LanguageCard from "@components/languageCard";
 import DialogBox from "@components/dialogBox";
-import EditLanguages from "./editLanguages";
+import AddLanguages from "./addLanguages";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalOpen } from "@redux/slice/modal";
 import { MODAL_TYPES } from "@utils/enum";
+import { setLanguages } from "@redux/slice/user";
+import EditLanguages from "./editLanguage";
 
 const Languages = () => {
   // redux dispatcher and selector
@@ -16,9 +18,42 @@ const Languages = () => {
   const modalType = useSelector((state) => state.modal.modalOpen);
 
   // state management
+
+  const [editedData, setEditedData] = useState("");
+
   // handle modal toggle
   const handleToggleModel = (type = "") => {
     dispatch(setModalOpen(type));
+  };
+
+  // handle submit language
+  const handleSubmit = (value) => {
+    const result = [...languageData] || [];
+    dispatch(setLanguages([...result, value]));
+    handleToggleModel();
+  };
+
+  // handle delete
+  const handleDelete = (id) => {
+    const filteredData = languageData.filter((el) => el.id !== id);
+    dispatch(setLanguages(filteredData));
+  };
+
+  // handle toogle edit modal
+  const handleToogleEditModal = (id) => {
+    const filteredData = languageData?.find((el) => el.id === id);
+    handleToggleModel(MODAL_TYPES.editLanguageModal);
+
+    setEditedData(filteredData);
+  };
+
+  // handle submit edited data
+  const handleSubmitEditedData = (data) => {
+    const result = languageData.map((item) =>
+      item.id === data.id ? data : item
+    );
+    dispatch(setLanguages(result));
+    handleToggleModel();
   };
 
   return (
@@ -41,8 +76,18 @@ const Languages = () => {
           <div className="add-content">
             <h2 className="mb-4">Languages</h2>
             <ul className="listitems">
-              {languageData.map((item, index) => (
-                <li key={index}>{<LanguageCard />}</li>
+              {languageData.map((item) => (
+                <li key={item.id}>
+                  {
+                    <LanguageCard
+                      title={item.language}
+                      spoken={item.spoken}
+                      written={item.written}
+                      handleDelete={() => handleDelete(item.id)}
+                      handleEdit={() => handleToogleEditModal(item.id)}
+                    />
+                  }
+                </li>
               ))}
             </ul>
             <div className="text-center mt-4">
@@ -80,7 +125,18 @@ const Languages = () => {
           open={modalType === MODAL_TYPES.addLanguageModal}
           handleClose={handleToggleModel}
         >
-          <EditLanguages />
+          <AddLanguages handleSubmit={(vl) => handleSubmit(vl)} />
+        </DialogBox>
+      )}
+      {modalType === MODAL_TYPES.editLanguageModal && (
+        <DialogBox
+          open={modalType === MODAL_TYPES.editLanguageModal}
+          handleClose={handleToggleModel}
+        >
+          <EditLanguages
+            handleSubmit={(vl) => handleSubmitEditedData(vl)}
+            updateData={editedData}
+          />
         </DialogBox>
       )}
     </>

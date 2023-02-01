@@ -100,6 +100,12 @@ export const authSlice = createSlice({
     setEducationRecord: (state, action) => {
       state.currentUser.educationRecord = action.payload;
     },
+    setLanguages: (state, action) => {
+      state.currentUser.languages = action.payload;
+    },
+    setWorkExperience: (state, action) => {
+      state.currentUser.workExperience = action.payload;
+    },
   },
 });
 export const {
@@ -107,5 +113,7 @@ export const {
   setUserRole,
   setCurrentUser,
   setEducationRecord,
+  setLanguages,
+  setWorkExperience,
 } = authSlice.actions;
 export default authSlice.reducer;
