@@ -3,6 +3,7 @@ import {
   ManageJobs,
   MyProfile as EmployerProfile,
   Dashboard as EmployerDashboard,
+  ManageTenders as EmployerManageTenders,
 } from "@pages/employer";
 import {
   PostJobs,
@@ -19,6 +20,8 @@ import {
   AppliedJobs,
   SavedJobs,
 } from "@pages/jobSeeker";
+import { ChatBox } from "@pages/messages";
+import { PostTender } from "@pages/tenders";
 import VendorProfile from "@pages/vendor/myProfile";
 
 // prefix => `/`
@@ -128,6 +131,12 @@ export const EMPLOYER_ROUTES = [
     component: ManageJobs,
   },
   {
+    id: "manageTenders",
+    name: "Manage Tenders",
+    path: "/employer-manage-tenders",
+    component: EmployerManageTenders,
+  },
+  {
     id: "applicantDetails",
     name: "Applicant Detials",
     path: "/manage-jobs/applicant-details",
@@ -144,5 +153,17 @@ export const EMPLOYER_ROUTES = [
     name: "Post Jobs",
     path: "/jobs/post",
     component: PostJobs,
+  },
+  {
+    id: "postTender",
+    name: "Post Tender",
+    path: "/tender/post",
+    component: PostTender,
+  },
+  {
+    id: "chat",
+    name: "chat",
+    path: "/chat",
+    component: ChatBox,
   },
 ];
