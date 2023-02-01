@@ -151,7 +151,7 @@ const CreateWorkExperience = ({ handleSubmit }) => {
                 <span className="me-3 d-inline-flex">
                   <SVG.PlushIcon />
                 </span>{" "}
-                Add education
+                Add Work Experience
               </>
             }
             sx={{

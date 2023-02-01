@@ -47,7 +47,7 @@ const EditWorkExperience = ({ handleSubmit, editData }) => {
   return (
     <div>
       <>
-        <h1 className="headding">Edit Education</h1>
+        <h1 className="headding">Edit Work Experience</h1>
         <Stack
           direction="row"
           spacing={2}
@@ -164,7 +164,7 @@ const EditWorkExperience = ({ handleSubmit, editData }) => {
                 <span className="me-3 d-inline-flex">
                   <SVG.EditIcon />
                 </span>{" "}
-                Edit education
+                Edit Work Experience
               </>
             }
             sx={{
