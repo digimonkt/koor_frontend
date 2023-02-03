@@ -10,7 +10,7 @@ import {
   styled,
 } from "@mui/material";
 import React, { useState } from "react";
-import { RECENT_ITEMS } from "../../recentHelper";
+import { RECENT_ITEMS } from "../recentHelper";
 import { SVG } from "@assets/svg";
 export const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
