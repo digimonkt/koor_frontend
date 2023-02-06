@@ -1,12 +1,10 @@
 import { Chip } from "@mui/material";
-import pf from "./assets/pf.png";
-import recent2 from "./assets/education.png";
-import recent3 from "./assets/eon.png";
 import { SVG } from "@assets/svg";
+import { IMAGES } from "@assets/images";
 
 export const MANAGE_TENDERS_ITEMS = [
   {
-    img: pf,
+    img: IMAGES.Pf,
     title: "Path finder",
     plan: "Interview plan",
 
@@ -34,7 +32,7 @@ export const MANAGE_TENDERS_ITEMS = [
     disabled: "disabled",
   },
   {
-    img: recent2,
+    img: IMAGES.Education,
     title: "Education development trust",
     plan: "Interview planned",
 
@@ -56,7 +54,7 @@ export const MANAGE_TENDERS_ITEMS = [
       "Viverra venenatis arcu consectetur nisl eu risus et ullamcorper elementum. Varius neque facilisi dolor donec commodo lobortis est sollicitudin. Enim, ipsum et varius ante. Pulvinar condimen…",
   },
   {
-    img: recent3,
+    img: IMAGES.Eon,
     title: "Education development trust",
     plan: "Interview plan",
 
