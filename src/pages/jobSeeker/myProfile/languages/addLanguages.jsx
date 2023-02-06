@@ -3,11 +3,11 @@ import React from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 import { LANGUAGE_PROFICIENCY } from "@utils/enum";
-import CustomDropDown from "@components/dropDown";
 import { useFormik } from "formik/dist";
 import { languageValidationSchema } from "./validation";
 import { ErrorMessage } from "@components/caption";
 import { generateRandomId } from "@utils/fakeData";
+import SelectInputComponent from "@components/input/selectInput";
 
 const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
@@ -17,17 +17,17 @@ const buttonHover = "#eea23d14";
 const languageProficiencyData = [
   {
     id: 1,
-    title: "Basic",
+    label: "Basic",
     value: LANGUAGE_PROFICIENCY.basic,
   },
   {
     id: 2,
-    title: "Conversational",
+    label: "Conversational",
     value: LANGUAGE_PROFICIENCY.conversational,
   },
   {
     id: 3,
-    title: "Fluent",
+    label: "Fluent",
     value: LANGUAGE_PROFICIENCY.fluent,
   },
 ];
@@ -36,17 +36,17 @@ const languageProficiencyData = [
 const languageData = [
   {
     id: 1,
-    title: "Hindi",
+    label: "Hindi",
     value: "hindi",
   },
   {
     id: 2,
-    title: "English",
+    label: "English",
     value: "english",
   },
   {
     id: 3,
-    title: "Spanish",
+    label: "Spanish",
     value: "spanish",
   },
 ];
@@ -90,11 +90,11 @@ function AddLanguages({ handleSubmit }) {
                 Language
               </label>
               <div style={{ width: "60%" }}>
-                <CustomDropDown
-                  optionData={languageData}
+                <SelectInputComponent
+                  options={languageData}
                   placeholder="Select your language"
                   value={formik.values.language}
-                  onChange={(vl) =>
+                  handleChange={(vl) =>
                     formik.setValues({ ...formik.values, language: vl })
                   }
                 />
@@ -116,11 +116,11 @@ function AddLanguages({ handleSubmit }) {
                 Spoken
               </label>
               <div style={{ width: "60%" }}>
-                <CustomDropDown
-                  optionData={languageProficiencyData}
+                <SelectInputComponent
+                  options={languageProficiencyData}
                   placeholder="Select your proficiency"
                   value={formik.values.spoken}
-                  onChange={(vl) =>
+                  handleChange={(vl) =>
                     formik.setValues({ ...formik.values, spoken: vl })
                   }
                 />
@@ -142,11 +142,11 @@ function AddLanguages({ handleSubmit }) {
                 Written
               </label>
               <div style={{ width: "60%" }}>
-                <CustomDropDown
-                  optionData={languageProficiencyData}
+                <SelectInputComponent
+                  options={languageProficiencyData}
                   placeholder="Select your proficiency"
                   value={formik.values.written}
-                  onChange={(vl) =>
+                  handleChange={(vl) =>
                     formik.setValues({ ...formik.values, written: vl })
                   }
                 />

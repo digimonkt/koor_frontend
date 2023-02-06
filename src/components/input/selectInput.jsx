@@ -33,6 +33,7 @@ function SelectInputComponent({
   value,
   placeholder,
   style,
+  handleChange,
   ...rest
 }) {
   return (
@@ -58,6 +59,7 @@ function SelectInputComponent({
             ? undefined
             : () => <div className={styles.placeholder}>{placeholder}</div>
         }
+        onChange={(e) => handleChange(e.target.value)}
         {...rest}
       >
         {options.map((option) => {
