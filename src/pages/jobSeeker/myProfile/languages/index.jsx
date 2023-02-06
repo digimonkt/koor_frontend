@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import LanguageCard from "@components/languageCard";
 import DialogBox from "@components/dialogBox";
-import AddLanguages from "./addLanguages";
+// import AddLanguages from "./addLanguages";
 import { useDispatch, useSelector } from "react-redux";
 import { setModalOpen } from "@redux/slice/modal";
 import { MODAL_TYPES } from "@utils/enum";
@@ -125,7 +125,11 @@ const Languages = () => {
           open={modalType === MODAL_TYPES.addLanguageModal}
           handleClose={handleToggleModel}
         >
-          <AddLanguages handleSubmit={(vl) => handleSubmit(vl)} />
+          <EditLanguages
+            handleSubmit={(vl) => handleSubmit(vl)}
+            buttonTitle="Add Language"
+            modalTitle="Add Language"
+          />
         </DialogBox>
       )}
       {modalType === MODAL_TYPES.editLanguageModal && (
@@ -136,6 +140,8 @@ const Languages = () => {
           <EditLanguages
             handleSubmit={(vl) => handleSubmitEditedData(vl)}
             updateData={editedData}
+            buttonTitle="Update Language"
+            modalTitle="Edit Language"
           />
         </DialogBox>
       )}

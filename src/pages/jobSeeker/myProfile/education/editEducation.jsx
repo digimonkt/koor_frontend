@@ -12,7 +12,7 @@ const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
-const EditEducation = ({ handleSubmit, editData }) => {
+const EditEducation = ({ handleSubmit, editData, buttonTitle, modalTitle }) => {
   // formik validation and values setup
 
   const formik = useFormik({
@@ -34,38 +34,26 @@ const EditEducation = ({ handleSubmit, editData }) => {
   useEffect(() => {
     formik.setValues({
       ...formik.values,
-      id: editData?.id,
-      organization: editData?.organization,
-      degree: editData?.degree,
-      startDate: editData?.startDate,
-      endDate: editData?.endDate,
-      description: editData?.description,
-      isPresent: editData?.isPresent,
+      id: editData?.id ? editData?.id : "",
+      organization: editData?.organization ? editData?.organization : "",
+      degree: editData?.degree ? editData?.degree : "",
+      startDate: editData?.startDate ? editData?.startDate : "",
+      endDate: editData?.endDate ? editData?.endDate : "",
+      description: editData?.description ? editData?.description : "",
+      isPresent: editData?.isPresent ? editData?.isPresent : false,
     });
   }, []);
 
   return (
     <div>
       <>
-        <h1 className="headding">Edit Education</h1>
+        <h1 className="headding">{modalTitle}</h1>
         <Stack
           direction="row"
           spacing={2}
           alignItems={{ xs: "start", lg: "center" }}
           className="mb-3"
         >
-          {/* <IconButton
-            sx={{
-              "&.MuiIconButton-root": {
-                backgroundColor: bgcolor,
-                width: "101px",
-                height: "101px",
-                color: { color },
-              },
-            }}
-          >
-            <SVG.EducationIcon />
-          </IconButton> */}
           <div className="description">
             <Stack
               direction={{ xs: "column", lg: "row" }}
@@ -176,7 +164,7 @@ const EditEducation = ({ handleSubmit, editData }) => {
                 <span className="me-3 d-inline-flex">
                   <SVG.EditIcon />
                 </span>{" "}
-                Edit education
+                {buttonTitle}
               </>
             }
             sx={{

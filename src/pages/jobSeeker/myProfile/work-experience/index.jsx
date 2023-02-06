@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import DialogBox from "@components/dialogBox";
 import WorkExperienceCard from "@components/workexperienceCard";
-import CreateWorkExperience from "./createWorkExperience";
 import { useDispatch, useSelector } from "react-redux";
 import { MODAL_TYPES } from "@utils/enum";
 import { setModalOpen } from "@redux/slice/modal";
@@ -133,7 +132,11 @@ const WorkExperience = () => {
           open={modalType === MODAL_TYPES.addworkExperienceModal}
           handleClose={() => handleToggleModel()}
         >
-          <CreateWorkExperience handleSubmit={(data) => handleSubmit(data)} />
+          <EditWorkExperience
+            handleSubmit={(data) => handleSubmit(data)}
+            buttonTitle="Add Work Experience"
+            modalTitle="Add Work Experience"
+          />
         </DialogBox>
       )}
 
@@ -145,6 +148,8 @@ const WorkExperience = () => {
           <EditWorkExperience
             editData={editData}
             handleSubmit={(data) => handleSubmitEditedData(data)}
+            buttonTitle="Update Work Experience"
+            modalTitle="Edit Work Experience"
           />
         </DialogBox>
       )}

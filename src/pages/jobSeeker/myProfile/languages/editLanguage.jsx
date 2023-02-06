@@ -50,7 +50,7 @@ const languageData = [
   },
 ];
 
-function EditLanguages({ handleSubmit, updateData }) {
+function EditLanguages({ handleSubmit, updateData, buttonTitle, modalTitle }) {
   // formik values and validation
   const formik = useFormik({
     initialValues: {
@@ -68,17 +68,17 @@ function EditLanguages({ handleSubmit, updateData }) {
   useEffect(() => {
     formik.setValues({
       ...formik.values,
-      id: updateData.id,
-      language: updateData.language,
-      spoken: updateData.spoken,
-      written: updateData.written,
+      id: updateData?.id ? updateData?.id : "",
+      language: updateData?.language ? updateData?.language : "",
+      spoken: updateData?.spoken ? updateData?.spoken : "",
+      written: updateData?.written ? updateData?.written : "",
     });
   }, []);
 
   return (
     <div>
       <>
-        <h1 className="headding">Edit Languages</h1>
+        <h1 className="headding">{modalTitle}</h1>
         <Stack
           direction="row"
           spacing={2}
@@ -174,7 +174,7 @@ function EditLanguages({ handleSubmit, updateData }) {
                 <span className="me-3 d-inline-flex">
                   <SVG.PlushIcon />
                 </span>
-                Update Language
+                {buttonTitle}
               </>
             }
             sx={{

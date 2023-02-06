@@ -12,7 +12,12 @@ const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
-const EditWorkExperience = ({ handleSubmit, editData }) => {
+const EditWorkExperience = ({
+  handleSubmit,
+  editData,
+  buttonTitle,
+  modalTitle,
+}) => {
   // formik validation and values setup
 
   const formik = useFormik({
@@ -34,20 +39,20 @@ const EditWorkExperience = ({ handleSubmit, editData }) => {
   useEffect(() => {
     formik.setValues({
       ...formik.values,
-      id: editData?.id,
-      organization: editData?.organization,
-      title: editData?.title,
-      startDate: editData?.startDate,
-      endDate: editData?.endDate,
-      description: editData?.description,
-      isPresent: editData?.isPresent,
+      id: editData?.id ? editData?.id : "",
+      organization: editData?.organization ? editData?.organization : "",
+      title: editData?.title ? editData?.title : "",
+      startDate: editData?.startDate ? editData?.startDate : "",
+      endDate: editData?.endDate ? editData?.endDate : "",
+      description: editData?.description ? editData?.description : "",
+      isPresent: editData?.isPresent ? editData?.isPresent : "",
     });
   }, []);
 
   return (
     <div>
       <>
-        <h1 className="headding">Edit Work Experience</h1>
+        <h1 className="headding">{modalTitle}</h1>
         <Stack
           direction="row"
           spacing={2}
@@ -164,7 +169,7 @@ const EditWorkExperience = ({ handleSubmit, editData }) => {
                 <span className="me-3 d-inline-flex">
                   <SVG.EditIcon />
                 </span>{" "}
-                Edit Work Experience
+                {buttonTitle}
               </>
             }
             sx={{

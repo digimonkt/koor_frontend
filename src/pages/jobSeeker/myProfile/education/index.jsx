@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 import EducationCard from "@components/educationCard";
-import AddEducation from "./addEducation";
 import DialogBox from "@components/dialogBox";
 import { useDispatch, useSelector } from "react-redux";
 import { setEducationRecord } from "@redux/slice/user";
@@ -129,7 +128,11 @@ const Education = () => {
           open={modalType === MODAL_TYPES.addEducationModal}
           handleClose={() => handleToggleModel()}
         >
-          <AddEducation handleSubmit={(data) => handleSubmit(data)} />
+          <EditEducation
+            handleSubmit={(data) => handleSubmit(data)}
+            buttonTitle="Add Education"
+            modalTitle="Add Education"
+          />
         </DialogBox>
       )}
 
@@ -141,6 +144,8 @@ const Education = () => {
           <EditEducation
             editData={editData}
             handleSubmit={(data) => handleSubmitEditedData(data)}
+            buttonTitle="Update Education"
+            modalTitle="Edit Education"
           />
         </DialogBox>
       )}
