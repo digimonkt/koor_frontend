@@ -54,7 +54,7 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <AreaChart />
+                  <AreaChart title="Job posts analytics" />
                 </div>
               </CardContent>
             </Card>
@@ -77,7 +77,7 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <DonutChart />
+                  <DonutChart totalShare={"48 total shares:"} />
                 </div>
               </CardContent>
             </Card>

@@ -13,6 +13,7 @@ const ApplicationCard = ({
   description,
   isDisabled,
   isMessagable,
+  sx,
 }) => {
   // navigate
   const navigate = useNavigate();
@@ -38,12 +39,17 @@ const ApplicationCard = ({
             divider={<Divider orientation="vertical" flexItem />}
             spacing={2}
             alignItems="center"
-            sx={{ mb: 1 }}
+            sx={{ mb: 1, ...sx }}
           >
             <h4>{title}</h4>
             <div className="recent-research">{subTitle}</div>
           </Stack>
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 1 }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            sx={{ mb: 1, ...sx }}
+          >
             <span className="meets">{requirement}</span> {chiplabel}
           </Stack>
           <div className="recent-descrition">
