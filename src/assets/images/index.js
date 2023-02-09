@@ -13,6 +13,10 @@ import User from "./chatuser1.png";
 import Pf from "./pf.png";
 import Education from "./education.png";
 import Eon from "./eon.png";
+import ResourceOne from "./resources1.png";
+import ResourceTwo from "./resources2.png";
+import ResourceThree from "./resources3.png";
+import ResourceFour from "./resources4.png";
 
 export const IMAGES = {
   SearchIcon,
@@ -30,4 +34,8 @@ export const IMAGES = {
   Pf,
   Education,
   Eon,
+  ResourceOne,
+  ResourceTwo,
+  ResourceThree,
+  ResourceFour,
 };

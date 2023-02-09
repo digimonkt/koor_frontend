@@ -21,6 +21,7 @@ import {
   SavedJobs,
 } from "@pages/jobSeeker";
 import { ChatBox } from "@pages/messages";
+import { Resources } from "@pages/resources";
 import { PostTender } from "@pages/tenders";
 import VendorProfile from "@pages/vendor/myProfile";
 
@@ -31,6 +32,12 @@ export const ROUTES = [
     name: "Logout",
     path: "/logout",
     component: Logout,
+  },
+  {
+    id: "resources",
+    name: "Resources",
+    path: "/resources",
+    component: Resources,
   },
 ];
 
