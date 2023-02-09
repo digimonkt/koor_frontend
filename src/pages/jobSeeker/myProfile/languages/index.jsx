@@ -26,13 +26,6 @@ const Languages = () => {
     dispatch(setModalOpen(type));
   };
 
-  // handle submit language
-  const handleSubmit = (value) => {
-    const result = [...languageData] || [];
-    dispatch(setLanguages([...result, value]));
-    handleToggleModel();
-  };
-
   // handle delete
   const handleDelete = (id) => {
     const filteredData = languageData.filter((el) => el.id !== id);
@@ -45,15 +38,6 @@ const Languages = () => {
     handleToggleModel(MODAL_TYPES.editLanguageModal);
 
     setEditedData(filteredData);
-  };
-
-  // handle submit edited data
-  const handleSubmitEditedData = (data) => {
-    const result = languageData.map((item) =>
-      item.id === data.id ? data : item
-    );
-    dispatch(setLanguages(result));
-    handleToggleModel();
   };
 
   return (
@@ -100,7 +84,7 @@ const Languages = () => {
                     Add language
                   </>
                 }
-                onClick={() => handleToggleModel(MODAL_TYPES.addLanguageModal)}
+                onClick={() => handleToggleModel(MODAL_TYPES.editLanguageModal)}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -120,28 +104,17 @@ const Languages = () => {
           </div>
         </CardContent>
       </Card>
-      {modalType === MODAL_TYPES.addLanguageModal && (
-        <DialogBox
-          open={modalType === MODAL_TYPES.addLanguageModal}
-          handleClose={handleToggleModel}
-        >
-          <EditLanguages
-            handleSubmit={(vl) => handleSubmit(vl)}
-            buttonTitle="Add Language"
-            modalTitle="Add Language"
-          />
-        </DialogBox>
-      )}
+
       {modalType === MODAL_TYPES.editLanguageModal && (
         <DialogBox
           open={modalType === MODAL_TYPES.editLanguageModal}
           handleClose={handleToggleModel}
         >
           <EditLanguages
-            handleSubmit={(vl) => handleSubmitEditedData(vl)}
+            handleClose={() => handleToggleModel()}
             updateData={editedData}
-            buttonTitle="Update Language"
-            modalTitle="Edit Language"
+            buttonTitle={editedData ? "Edit Language" : "Add Language"}
+            modalTitle={editedData ? "Update Language" : "Add Language"}
           />
         </DialogBox>
       )}

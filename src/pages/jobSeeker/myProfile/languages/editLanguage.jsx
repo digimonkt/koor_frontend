@@ -7,6 +7,8 @@ import { useFormik } from "formik/dist";
 import { languageValidationSchema } from "./validation";
 import { ErrorMessage } from "@components/caption";
 import SelectInputComponent from "@components/input/selectInput";
+import { useDispatch, useSelector } from "react-redux";
+import { setLanguages } from "@redux/slice/user";
 
 const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
@@ -50,7 +52,13 @@ const languageData = [
   },
 ];
 
-function EditLanguages({ handleSubmit, updateData, buttonTitle, modalTitle }) {
+function EditLanguages({ handleClose, updateData, buttonTitle, modalTitle }) {
+  // redux dispatcher and selector
+  const dispatch = useDispatch();
+  const languagesData = useSelector(
+    (state) => state.auth.currentUser.languages
+  );
+
   // formik values and validation
   const formik = useFormik({
     initialValues: {
@@ -64,6 +72,30 @@ function EditLanguages({ handleSubmit, updateData, buttonTitle, modalTitle }) {
       handleSubmit(values);
     },
   });
+
+  // handle submit language
+  const handleCreate = (value) => {
+    const result = [...languagesData] || [];
+    dispatch(setLanguages([...result, value]));
+    handleClose();
+  };
+
+  // handle submit edited data
+  const handleSubmitEditedData = (data) => {
+    const result = languagesData.map((item) =>
+      item.id === data.id ? data : item
+    );
+    dispatch(setLanguages(result));
+    handleClose();
+  };
+
+  const handleSubmit = (values) => {
+    if (updateData) {
+      handleSubmitEditedData(values);
+    } else {
+      handleCreate(values);
+    }
+  };
 
   useEffect(() => {
     formik.setValues({

@@ -7,12 +7,21 @@ import CustomCheckBox from "@components/checkBox";
 import { useFormik } from "formik";
 import { educationValidationSchema } from "./validation";
 import { ErrorMessage } from "@components/caption";
+import { useDispatch, useSelector } from "react-redux";
+import { setEducationRecord } from "@redux/slice/user";
+import { setModalOpen } from "@redux/slice/modal";
 
 const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
-const EditEducation = ({ handleSubmit, editData, buttonTitle, modalTitle }) => {
+const EditEducation = ({ editData, buttonTitle, modalTitle, handleClose }) => {
+  // redux dispatch and selector
+  const dispatch = useDispatch();
+  const educationData = useSelector(
+    (state) => state.auth.currentUser.educationRecord
+  );
+
   // formik validation and values setup
 
   const formik = useFormik({
@@ -30,6 +39,31 @@ const EditEducation = ({ handleSubmit, editData, buttonTitle, modalTitle }) => {
       handleSubmit(values);
     },
   });
+
+  // handle submit
+  const handleCreate = (value) => {
+    const result = [...educationData] || [];
+    dispatch(setEducationRecord([...result, value]));
+    handleClose();
+  };
+
+  // handle submit edited data
+  const handleSubmitEditedData = (data) => {
+    const result = educationData.map((item) =>
+      item.id === data.id ? data : item
+    );
+
+    dispatch(setEducationRecord(result));
+    dispatch(setModalOpen(""));
+  };
+
+  const handleSubmit = (values) => {
+    if (editData) {
+      handleSubmitEditedData(values);
+    } else {
+      handleCreate(values);
+    }
+  };
 
   useEffect(() => {
     formik.setValues({

@@ -36,10 +36,7 @@ export const LANGUAGE_PROFICIENCY = Object.freeze({
 
 export const MODAL_TYPES = Object.freeze({
   editEducationModal: "editEducationModal",
-  addEducationModal: "addEducationModal",
-  addLanguageModal: "addLanguageModal",
   editLanguageModal: "editLanguageModal",
-  addworkExperienceModal: "addworkExperienceModal",
   editworkExperienceModal: "editworkExperienceModal",
 });
 

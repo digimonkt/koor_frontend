@@ -28,13 +28,6 @@ const WorkExperience = () => {
     dispatch(setModalOpen(type));
   };
 
-  // handle submit
-  const handleSubmit = (value) => {
-    const result = [...workExperienceData] || [];
-    dispatch(setWorkExperience([...result, value]));
-    handleToggleModel();
-  };
-
   // handle delete
   const handleDelete = (id) => {
     const filteredData = workExperienceData?.filter((el) => el.id !== id);
@@ -47,16 +40,6 @@ const WorkExperience = () => {
     handleToggleModel(MODAL_TYPES.editworkExperienceModal);
 
     setEditData(filteredData);
-  };
-
-  // handle submit edited data
-  const handleSubmitEditedData = (data) => {
-    const result = workExperienceData.map((item) =>
-      item.id === data.id ? data : item
-    );
-
-    dispatch(setWorkExperience(result));
-    dispatch(setModalOpen(""));
   };
 
   return (
@@ -98,7 +81,7 @@ const WorkExperience = () => {
             <div className="text-center mt-4">
               <OutlinedButton
                 onClick={() =>
-                  handleToggleModel(MODAL_TYPES.addworkExperienceModal)
+                  handleToggleModel(MODAL_TYPES.editworkExperienceModal)
                 }
                 title={
                   <>
@@ -127,18 +110,6 @@ const WorkExperience = () => {
           </div>
         </CardContent>
       </Card>
-      {modalType === MODAL_TYPES.addworkExperienceModal && (
-        <DialogBox
-          open={modalType === MODAL_TYPES.addworkExperienceModal}
-          handleClose={() => handleToggleModel()}
-        >
-          <EditWorkExperience
-            handleSubmit={(data) => handleSubmit(data)}
-            buttonTitle="Add Work Experience"
-            modalTitle="Add Work Experience"
-          />
-        </DialogBox>
-      )}
 
       {modalType === MODAL_TYPES.editworkExperienceModal && (
         <DialogBox
@@ -147,9 +118,13 @@ const WorkExperience = () => {
         >
           <EditWorkExperience
             editData={editData}
-            handleSubmit={(data) => handleSubmitEditedData(data)}
-            buttonTitle="Update Work Experience"
-            modalTitle="Edit Work Experience"
+            handleClose={() => handleToggleModel()}
+            buttonTitle={
+              editData ? "Edit Work Experience" : "Add Work Experience"
+            }
+            modalTitle={
+              editData ? "Update Work Experience" : "Add Work Experience"
+            }
           />
         </DialogBox>
       )}

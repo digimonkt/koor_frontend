@@ -27,13 +27,6 @@ const Education = () => {
     dispatch(setModalOpen(type));
   };
 
-  // handle submit
-  const handleSubmit = (value) => {
-    const result = [...educationData] || [];
-    dispatch(setEducationRecord([...result, value]));
-    handleToggleModel();
-  };
-
   // handle delete
   const handleDelete = (id) => {
     const filteredData = educationData?.filter((el) => el.id !== id);
@@ -46,16 +39,6 @@ const Education = () => {
     handleToggleModel(MODAL_TYPES.editEducationModal);
 
     setEditData(filteredData);
-  };
-
-  // handle submit edited data
-  const handleSubmitEditedData = (data) => {
-    const result = educationData.map((item) =>
-      item.id === data.id ? data : item
-    );
-
-    dispatch(setEducationRecord(result));
-    dispatch(setModalOpen(""));
   };
 
   return (
@@ -96,7 +79,9 @@ const Education = () => {
 
             <div className="text-center mt-4">
               <OutlinedButton
-                onClick={() => handleToggleModel(MODAL_TYPES.addEducationModal)}
+                onClick={() =>
+                  handleToggleModel(MODAL_TYPES.editEducationModal)
+                }
                 title={
                   <>
                     <span className="me-2 d-inline-flex">
@@ -123,19 +108,6 @@ const Education = () => {
           </div>
         </CardContent>
       </Card>
-      {modalType === MODAL_TYPES.addEducationModal && (
-        <DialogBox
-          open={modalType === MODAL_TYPES.addEducationModal}
-          handleClose={() => handleToggleModel()}
-        >
-          <EditEducation
-            handleSubmit={(data) => handleSubmit(data)}
-            buttonTitle="Add Education"
-            modalTitle="Add Education"
-          />
-        </DialogBox>
-      )}
-
       {modalType === MODAL_TYPES.editEducationModal && (
         <DialogBox
           open={modalType === MODAL_TYPES.editEducationModal}
@@ -143,9 +115,9 @@ const Education = () => {
         >
           <EditEducation
             editData={editData}
-            handleSubmit={(data) => handleSubmitEditedData(data)}
-            buttonTitle="Update Education"
-            modalTitle="Edit Education"
+            handleClose={() => handleToggleModel()}
+            buttonTitle={editData ? "Edit Education" : "Add Education"}
+            modalTitle={editData ? "Update Education" : "Add Education"}
           />
         </DialogBox>
       )}

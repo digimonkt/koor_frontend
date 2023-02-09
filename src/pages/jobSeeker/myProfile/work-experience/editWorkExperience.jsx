@@ -7,17 +7,26 @@ import CustomCheckBox from "@components/checkBox";
 import { useFormik } from "formik";
 import { workExperienceValidationSchema } from "./validation";
 import { ErrorMessage } from "@components/caption";
+import { useDispatch, useSelector } from "react-redux";
+import { setWorkExperience } from "@redux/slice/user";
+import { setModalOpen } from "@redux/slice/modal";
 
 const color = "#EEA23D";
 // const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
 const EditWorkExperience = ({
-  handleSubmit,
+  handleClose,
   editData,
   buttonTitle,
   modalTitle,
 }) => {
+  // redux dispatch and selector
+  const dispatch = useDispatch();
+  const workExperienceData = useSelector(
+    (state) => state.auth.currentUser.workExperience
+  );
+
   // formik validation and values setup
 
   const formik = useFormik({
@@ -35,6 +44,31 @@ const EditWorkExperience = ({
       handleSubmit(values);
     },
   });
+
+  // handle submit
+  const handleCreate = (value) => {
+    const result = [...workExperienceData] || [];
+    dispatch(setWorkExperience([...result, value]));
+    handleClose();
+  };
+
+  // handle submit edited data
+  const handleSubmitEditedData = (data) => {
+    const result = workExperienceData.map((item) =>
+      item.id === data.id ? data : item
+    );
+
+    dispatch(setWorkExperience(result));
+    dispatch(setModalOpen(""));
+  };
+
+  const handleSubmit = (values) => {
+    if (editData) {
+      handleSubmitEditedData(values);
+    } else {
+      handleCreate(values);
+    }
+  };
 
   useEffect(() => {
     formik.setValues({
