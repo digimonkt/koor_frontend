@@ -10,6 +10,7 @@ import RecentFive from "./recent-5.png";
 import Lotus from "./lotus.png";
 import UserMessage from "./usermassage.png";
 import User from "./chatuser1.png";
+import Doc from "./doc.png";
 
 export const IMAGES = {
   SearchIcon,
@@ -24,4 +25,5 @@ export const IMAGES = {
   Lotus,
   UserMessage,
   User,
+  Doc,
 };

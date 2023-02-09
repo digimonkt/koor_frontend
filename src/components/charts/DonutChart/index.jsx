@@ -26,7 +26,7 @@ export const SelectBox = styled(Select)`
     display: none;
   }
 `;
-const DonutChart = () => {
+const DonutChart = ({ totalShare }) => {
   const [isSelect, setIsSelect] = useState("");
 
   const handleChange = (event) => {
@@ -129,7 +129,7 @@ const DonutChart = () => {
         </Grid>
         <Grid item xl={7} lg={7}>
           <div className="series-box">
-            <h2>48 total shares:</h2>
+            <h2>{totalShare}</h2>
             <ul>
               <li>
                 <b>22</b> – Direct link share (65%)
