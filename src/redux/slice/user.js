@@ -8,6 +8,7 @@ import { USER_ROLES } from "./../../utils/enum";
 const initialState = {
   isLoggedIn: false,
   role: USER_ROLES.vendor,
+  isHomePage: false,
   currentUser: {
     id: "",
     email: "",
@@ -98,7 +99,11 @@ export const authSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    setIstHomePage: (state, action) => {
+      state.isHomePage = action.payload;
+    },
   },
 });
-export const { setIsLoggedIn, setUserRole, setCurrentUser } = authSlice.actions;
+export const { setIsLoggedIn, setUserRole, setCurrentUser, setIstHomePage } =
+  authSlice.actions;
 export default authSlice.reducer;
