@@ -120,6 +120,7 @@ const Dashboard = () => {
                       requirement={item.requirement}
                       isDisabled={item.disabled}
                       key={index}
+                      url="/employer/manage-jobs/applicant-details"
                     />
                   ))}
 
