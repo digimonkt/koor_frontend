@@ -1,6 +1,6 @@
 import Header from "./components/header";
 import React from "react";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 import {
   AUTHENTICATED_ROUTES,
   ROUTES,
@@ -10,9 +10,11 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { useSelector } from "react-redux";
 import { AuthorizedRoute, UnauthorizedRoute } from "./utils/routes";
+import InnerFooter from "./components/footer/innerfooter";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
+
   return (
     <div className="App">
       <Header />
@@ -60,7 +62,7 @@ function App() {
           }
         />
       </Routes>
-      {!isLoggedIn && <Footer />}
+      {!isLoggedIn && <InnerFooter />}
     </div>
   );
 }

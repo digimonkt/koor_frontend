@@ -5,6 +5,7 @@ import {
   Dashboard as EmployerDashboard,
   ManageTenders as EmployerManageTenders,
 } from "@pages/employer";
+import Home from "@pages/home";
 import {
   PostJobs,
   JobSearch,
@@ -45,8 +46,14 @@ export const UNAUTHENTICATED_ROUTES = [
   {
     id: "register",
     name: "Register",
-    path: "/",
+    path: "/Register",
     component: Registration,
+  },
+  {
+    id: "home",
+    name: "Home",
+    path: "/",
+    component: Home,
   },
 ];
 

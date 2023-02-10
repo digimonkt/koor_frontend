@@ -333,7 +333,7 @@ header {
 }
 .vendor {
   background: url("../images/imgs.png") no-repeat center top !important;
-  margin-top: 81px;
+  margin-top: 68px;
   background-size: 100% 100% !important;
 }
 .content-box h5 {
@@ -1611,4 +1611,8 @@ input.employersearch {
   /* Dark grey */
   color: #848484;
   outline: none;
+}
+
+.iconfooter a {
+  color: #274593;
 }

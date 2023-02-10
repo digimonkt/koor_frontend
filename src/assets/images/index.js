@@ -11,6 +11,8 @@ import Lotus from "./lotus.png";
 import UserMessage from "./usermassage.png";
 import User from "./chatuser1.png";
 import Doc from "./doc.png";
+import GoogleStroe from "./google-store.png";
+import appleStroe from "./apple-store.png";
 
 export const IMAGES = {
   SearchIcon,
@@ -26,4 +28,6 @@ export const IMAGES = {
   UserMessage,
   User,
   Doc,
+  appleStroe,
+  GoogleStroe,
 };
