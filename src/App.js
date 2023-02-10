@@ -10,9 +10,11 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { useSelector } from "react-redux";
 import { AuthorizedRoute, UnauthorizedRoute } from "./utils/routes";
+// import InnerFooter from "./components/footer/innerfooter";
 
 function App() {
   const { isLoggedIn } = useSelector((state) => state.auth);
+
   return (
     <div className="App">
       <Header />
