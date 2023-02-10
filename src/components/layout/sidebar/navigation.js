@@ -76,12 +76,20 @@ const VendorNavigationOptions = Object.freeze([
     icon: SVG.DashboardIcon,
     title: "Dashboard",
     id: "dashboard",
-    isDisable: false,
+    to: "/dashboard-2",
   },
   {
+    to: "/my-profile-2",
     icon: SVG.ProfileIcon,
     title: "My Profile",
     id: "myProfile",
+    isDisable: false,
+  },
+  {
+    to: "/job/saved",
+    icon: SVG.SaveIcon,
+    title: "Saved Jobs",
+    id: "savedJobs",
     isDisable: false,
   },
 
@@ -96,7 +104,7 @@ const VendorNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
-    isDisable: true,
+    to: "/chat-2",
   },
 ]);
 
@@ -112,7 +120,7 @@ export const navigationOptions = (role) => {
         ...option,
         to: `/job-seeker${option.to}`,
       }));
-    case USER_ROLES.VendorNavigationOptions:
+    case USER_ROLES.vendor:
       return VendorNavigationOptions.map((option) => ({
         ...option,
         to: `/vendor${option.to}`,
