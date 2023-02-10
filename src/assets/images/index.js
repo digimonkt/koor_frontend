@@ -17,6 +17,7 @@ import ResourceOne from "./resources1.png";
 import ResourceTwo from "./resources2.png";
 import ResourceThree from "./resources3.png";
 import ResourceFour from "./resources4.png";
+import Doc from "./doc.png";
 
 export const IMAGES = {
   SearchIcon,
@@ -38,4 +39,5 @@ export const IMAGES = {
   ResourceTwo,
   ResourceThree,
   ResourceFour,
+  Doc,
 };

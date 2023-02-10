@@ -13,7 +13,6 @@ const drawerWidth = 300;
 function Sidebar() {
   const { role, currentUser } = useSelector((state) => state.auth);
   const location = useLocation();
-
   const drawer = (
     <>
       <div className="p-3 border-top border-bottom text-center user-details savetender">
