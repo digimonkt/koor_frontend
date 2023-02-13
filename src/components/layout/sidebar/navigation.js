@@ -118,7 +118,7 @@ export const navigationOptions = (role) => {
     case USER_ROLES.jobSeeker:
       return JobSeekerNavigationOptions.map((option) => ({
         ...option,
-        to: `/job-seeker${option.to}`,
+        to: `/${USER_ROLES.jobSeeker}${option.to}`,
       }));
     case USER_ROLES.vendor:
       return VendorNavigationOptions.map((option) => ({

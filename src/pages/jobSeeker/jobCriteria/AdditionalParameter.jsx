@@ -12,6 +12,7 @@ import { FormLabelBox, SelectBox } from ".";
 import { SVG } from "@assets/svg";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { OutlinedButton } from "@components/button";
+import { USER_ROLES } from "@utils/enum";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   return (
@@ -145,7 +146,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             </>
           }
           component={Link}
-          to="/job-seeker/my-profile/update-profile"
+          to={`/${USER_ROLES.jobSeeker}/my-profile/update-profile`}
           sx={{
             "&.MuiButton-outlined": {
               border: "1px solid #EEA23D !important",
