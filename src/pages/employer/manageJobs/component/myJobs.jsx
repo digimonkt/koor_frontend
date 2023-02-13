@@ -1,8 +1,8 @@
 import { Card, CardContent, Stack } from "@mui/material";
 import React, { useState } from "react";
-import { SVG } from "../../../../assets/svg";
-import ApplicationCard from "../../../../components/applicationCard";
-import JobCard from "../../../../components/jobCard";
+import { SVG } from "@assets/svg";
+import ApplicationCard from "@components/applicationCard";
+import JobCard from "@components/jobCard";
 import { RECENT_ITEMS } from "../../dashboard/recentHelper";
 import ApplicantList from "./applicantList";
 

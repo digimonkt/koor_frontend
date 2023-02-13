@@ -1,12 +1,12 @@
 import { Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { IMAGES } from "../../assets/images";
-import { SVG } from "../../assets/svg";
+import { IMAGES } from "@assets/images";
+import { SVG } from "@assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 
 function JobCard({ logo, selfJob, applied }) {
   const { role } = useSelector((state) => state.auth);

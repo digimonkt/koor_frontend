@@ -1,11 +1,11 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React from "react";
-import { Cbutton } from "../../../components/button";
 import "./dashboard.css";
 import { RECENT_ITEMS } from "./recentHelper";
-import { DonutChart, AreaChart } from "../components";
-import ApplicationCard from "../../../components/applicationCard";
+import { DonutChart, AreaChart } from "@components/charts";
+import ApplicationCard from "@components/applicationCard";
 import { employerCard } from "./employerCardData";
+import { OutlinedButton } from "@components/button";
 
 const Dashboard = () => {
   return (
@@ -54,7 +54,7 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <AreaChart />
+                  <AreaChart title="Job posts analytics" />
                 </div>
               </CardContent>
             </Card>
@@ -77,7 +77,7 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <DonutChart />
+                  <DonutChart totalShare={"48 total shares:"} />
                 </div>
               </CardContent>
             </Card>
@@ -109,6 +109,7 @@ const Dashboard = () => {
                     <h3>Recent application</h3>
                     <p>Recent application</p>
                   </Stack>
+
                   {RECENT_ITEMS.map((item, index) => (
                     <ApplicationCard
                       image={item.img}
@@ -119,12 +120,13 @@ const Dashboard = () => {
                       requirement={item.requirement}
                       isDisabled={item.disabled}
                       key={index}
+                      url="/employer/manage-jobs/applicant-details"
                     />
                   ))}
 
                   <div className="text-center mt-4">
-                    <Cbutton
-                      variant="outlined"
+                    <OutlinedButton
+                      title="Show more"
                       sx={{
                         "&.MuiButton-outlined": {
                           borderRadius: "73px",
@@ -138,9 +140,7 @@ const Dashboard = () => {
                           "&:hover": { background: "#1976d20a" },
                         },
                       }}
-                    >
-                      Show more
-                    </Cbutton>
+                    />
                   </div>
                 </div>
               </CardContent>

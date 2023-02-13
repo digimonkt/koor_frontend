@@ -1,5 +1,5 @@
 export const USER_ROLES = Object.freeze({
-  jobSeeker: "job-seeker",
+  jobSeeker: "job_seeker",
   employer: "employer",
   vendor: "vendor",
 });
@@ -32,4 +32,12 @@ export const LANGUAGE_PROFICIENCY = {
   basic: "basic",
   conversational: "conversational",
   fluent: "fluent",
+};
+
+export const PAY_PERIOD = {
+  year: "yearly",
+  quarter: "quarterly",
+  month: "monthly",
+  week: "weekly",
+  hour: "hourly",
 };

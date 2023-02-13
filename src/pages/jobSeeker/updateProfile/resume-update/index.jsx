@@ -1,7 +1,7 @@
+import { OutlinedButton } from "@components/button";
 import { Divider, IconButton, Stack } from "@mui/material";
 import React from "react";
-import { SVG } from "../../../../assets/svg";
-import { Cbutton } from "../../../../components/button";
+import { SVG } from "@assets/svg";
 const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
   return (
     <>
@@ -23,16 +23,21 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
           <div className="description">{description}</div>
         </Stack>
         <div className="my-4 text-center">
-          <Cbutton
-            variant="outlined"
+          <OutlinedButton
+            title={
+              <>
+                <span className="me-2 d-inline-flex">
+                  <SVG.UploadIcon />
+                </span>
+                download your resume
+              </>
+            }
             sx={{
               "&.MuiButton-outlined": {
-                borderRadius: "73px",
-                border: "1px solid #EEA23D",
-                color: "#EEA23D",
+                border: "1px solid #EEA23D !important",
+                color: "#EEA23D !important",
                 fontWeight: "500",
                 fontSize: "16px",
-                fontFamily: "Bahnschrift",
                 padding: "6px 30px",
                 width: buttonWidth,
                 "&:hover": { background: "rgba(255, 165, 0, 0.1)" },
@@ -42,12 +47,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 },
               },
             }}
-          >
-            <span className="me-2 d-inline-flex">
-              <SVG.UploadIcon />
-            </span>
-            download your resume
-          </Cbutton>
+          />
         </div>
 
         <Divider />

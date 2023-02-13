@@ -1,16 +1,17 @@
-import { Login, Logout, Registration } from "../../pages/auth";
+import { Login, Logout, Registration } from "@pages/auth";
 import {
   ManageJobs,
   MyProfile as EmployerProfile,
   Dashboard as EmployerDashboard,
-} from "../../pages/employer";
+  ManageTenders as EmployerManageTenders,
+} from "@pages/employer";
 import {
   PostJobs,
   JobSearch,
   ApplicantDetails,
   JobDetails,
   ApplyForJob,
-} from "../../pages/jobs";
+} from "@pages/jobs";
 
 import {
   JobCriteria as JobSeekerCriteria,
@@ -18,8 +19,11 @@ import {
   UpdateProfile as JobSeekerUpdateProfile,
   AppliedJobs,
   SavedJobs,
-} from "../../pages/jobSeeker";
-import VendorProfile from "../../pages/vendor/myProfile";
+} from "@pages/jobSeeker";
+import { ChatBox } from "@pages/messages";
+import { Resources } from "@pages/resources";
+import { PostTender } from "@pages/tenders";
+import { VendorMyProfile, VendorDashboard } from "@pages/vendor";
 
 // prefix => `/`
 export const ROUTES = [
@@ -28,6 +32,12 @@ export const ROUTES = [
     name: "Logout",
     path: "/logout",
     component: Logout,
+  },
+  {
+    id: "resources",
+    name: "Resources",
+    path: "/resources",
+    component: Resources,
   },
 ];
 
@@ -108,8 +118,26 @@ export const VENDOR_ROUTES = [
   {
     id: "myProfile",
     name: "My Profile",
-    path: "/my-profile",
-    component: VendorProfile,
+    path: "/my-profile-2",
+    component: VendorMyProfile,
+  },
+  {
+    id: "dashboard",
+    name: "Dashboard",
+    path: "/dashboard-2",
+    component: VendorDashboard,
+  },
+  {
+    id: "vendorsavedJobs",
+    name: "vendor saved Jobs",
+    path: "/job/saved",
+    component: SavedJobs,
+  },
+  {
+    id: "chat",
+    name: "chat",
+    path: "/chat-2",
+    component: ChatBox,
   },
 ];
 
@@ -128,6 +156,12 @@ export const EMPLOYER_ROUTES = [
     component: ManageJobs,
   },
   {
+    id: "manageTenders",
+    name: "Manage Tenders",
+    path: "/employer-manage-tenders",
+    component: EmployerManageTenders,
+  },
+  {
     id: "applicantDetails",
     name: "Applicant Detials",
     path: "/manage-jobs/applicant-details",
@@ -144,5 +178,17 @@ export const EMPLOYER_ROUTES = [
     name: "Post Jobs",
     path: "/jobs/post",
     component: PostJobs,
+  },
+  {
+    id: "postTender",
+    name: "Post Tender",
+    path: "/tender/post",
+    component: PostTender,
+  },
+  {
+    id: "chat",
+    name: "chat",
+    path: "/chat",
+    component: ChatBox,
   },
 ];

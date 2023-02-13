@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import React from "react";
+import styles from "./input.module.css";
+
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: #f0f0f0;
@@ -24,10 +26,18 @@ export const SelectBox = styled(Select)`
     display: none;
   }
 `;
-function SelectInputComponent({ options, className, ...rest }) {
+
+function SelectInputComponent({
+  options,
+  className,
+  value,
+  placeholder,
+  style,
+  ...rest
+}) {
   return (
     <FormControl
-      className={`iconsize-select ${className}`}
+      className={`iconsize-select ${className} `}
       sx={{
         "&.MuiSelect-select": {
           fontFamily: "Poppins",
@@ -36,11 +46,18 @@ function SelectInputComponent({ options, className, ...rest }) {
       }}
       size="small"
       fullWidth
+      style={style || {}}
     >
       <SelectBox
         inputProps={{ "aria-label": "Without label" }}
         IconComponent={KeyboardArrowDownIcon}
         displayEmpty
+        value={value}
+        renderValue={
+          value !== ""
+            ? undefined
+            : () => <div className={styles.placeholder}>{placeholder}</div>
+        }
         {...rest}
       >
         {options.map((option) => {

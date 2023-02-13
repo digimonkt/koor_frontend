@@ -9,10 +9,10 @@ import {
   Divider,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { SVG } from "../../../assets/svg";
-import Paginations from "../../../components/pagination";
-import Searchinput from "../../../components/searchInput";
-import JobCard from "../../../components/jobCard";
+import { SVG } from "@assets/svg";
+import Paginations from "@components/pagination";
+import Searchinput from "@components/searchInput";
+import JobCard from "@components/jobCard";
 import AdvanceFilter from "./AdvanceFilter";
 
 export default function JobSearch() {

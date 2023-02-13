@@ -1,31 +1,8 @@
-import { Select, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
-import { styled } from "@mui/material/styles";
 
-export const SelectBox = styled(Select)`
-  & .MuiSelect-select {
-    background: #f0f0f0;
-    border-radius: 10px;
-    padding: 8px 25px 8px 30px;
-  }
-  &.MuiInputBase-root {
-    border-radius: 10px;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 22px;
-
-    letter-spacing: 0.02em;
-
-    color: #121212;
-  }
-  & fieldset {
-    display: none;
-  }
-`;
-const AreaChart = () => {
+const AreaChart = ({ title }) => {
   const [state] = React.useState({
     data: [
       {
@@ -121,7 +98,7 @@ const AreaChart = () => {
         alignItems="center"
         sx={{ marginBottom: "29px" }}
       >
-        <h2>Job posts analytics</h2>
+        <h2>{title}</h2>
       </Stack>
       <Stack direction="row" spacing={5}>
         <div className="views">

@@ -2,7 +2,7 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
 import { Container, IconButton } from "@mui/material";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 
 export default function Searchinput({ placeholder, svg }) {
   return (

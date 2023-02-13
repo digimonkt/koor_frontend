@@ -9,9 +9,9 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
-import { USER_ROLES } from "../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 import { useSelector } from "react-redux";
 
 const ismenu = true;
@@ -25,7 +25,6 @@ const searchType = Object.freeze({
 function Header() {
   // navigate
   const navigate = useNavigate();
-
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("talent");
@@ -56,7 +55,7 @@ function Header() {
           <Link to="/" className="navbar-brand">
             <SVG.KoorLogo />
           </Link>
-          <div className="">
+          {isLoggedIn ? <div className="">
             <SearchCategory direction="row" spacing={1} alignItems="center">
               <Link
                 to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
@@ -101,11 +100,11 @@ function Header() {
                 placeholder={role === "employer" ? "" : searchPlaceholder}
               />
             </SearchCategory>
-          </div>
+          </div> : ""}
 
           <div
             className="ms-auto"
-            // ref={menu}
+          // ref={menu}
           >
             <IconButton
               // onClick={() => setIsmenu(!ismenu)}
@@ -121,9 +120,8 @@ function Header() {
               <MenuIcon />
             </IconButton>
             <ul
-              className={`menu ${ismenu && "menu-selected"} ${
-                role !== USER_ROLES.jobSeeker ? "color-change" : null
-              }`}
+              className={`menu ${ismenu && "menu-selected"} ${role !== USER_ROLES.jobSeeker ? "color-change" : null
+                }`}
             >
               <li>
                 <Link to="/">Home</Link>

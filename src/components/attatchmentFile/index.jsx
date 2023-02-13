@@ -1,13 +1,14 @@
 import { Grid, IconButton } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 
-const AttachmentFile = () => {
+const AttachmentFile = ({ handleDrop }) => {
   const [myFiles, setMyFiles] = useState([]);
   const onDrop = useCallback(
     (acceptedFiles) => {
       setMyFiles([...myFiles, ...acceptedFiles]);
+      handleDrop([...myFiles, ...acceptedFiles]);
     },
     [myFiles]
   );
@@ -16,6 +17,7 @@ const AttachmentFile = () => {
     const newFiles = [...myFiles];
     newFiles.splice(newFiles.indexOf(file), 1);
     setMyFiles(newFiles);
+    handleDrop(newFiles);
   };
 
   const { getRootProps, getInputProps } = useDropzone({

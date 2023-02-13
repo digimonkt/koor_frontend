@@ -1,8 +1,8 @@
 import { Chip, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { SVG } from "../../../assets/svg";
-import { OutlinedButton } from "../../../components/button";
+import { SVG } from "@assets/svg";
+import { OutlinedButton } from "@components/button";
 import AllApplication from "./component/allApplication";
 import MyJobs from "./component/myJobs";
 import { AntTab, AntTabs } from "./style";
@@ -42,7 +42,6 @@ function ManageJobsComponent() {
           <OutlinedButton
             // LinkComponent={Link}
             // to="/manage-jobs/post-a-new-job"
-            variant="outlined"
             title={
               <Link to="/employer/jobs/post">
                 <span className="me-3">

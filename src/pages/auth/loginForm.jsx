@@ -1,17 +1,16 @@
 // import { useDispatch } from "react-redux";
-import { FilledButton } from "../../components/button";
-import { LabeledInput } from "../../components/input";
-// import { setCurrentUser, setIsLoggedIn } from "../../redux/slice/user";
-import { USER_ROLES } from "../../utils/enum";
-// import { generateEmployer, generateJobSeeker } from "../../utils/fakeData";
-import { LoginUserAPI } from "../../api/user";
-import React, { useState } from "react";
-import { validateLoginForm } from "./validator";
-// import { useNavigate } from "react-router";
+import { FilledButton } from "@components/button";
+import { LabeledInput } from "@components/input";
+// import { setCurrentUser, setIsLoggedIn } from "@redux/slice/user";
+import { USER_ROLES } from "@utils/enum";
+// import { generateEmployer, generateJobSeeker } from "@utils/fakeData";
+import { useState } from "react";
+import { LoginUserAPI } from "@api/user";
 
 function LoginForm({ role }) {
   // const dispatch = useDispatch();
   // const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [formErrors, setFormErrors] = useState({});
   const [form, setForm] = useState({
     email: "",
@@ -24,13 +23,13 @@ function LoginForm({ role }) {
 
   const handleLogin = async () => {
     console.log({ form });
-    const { isValid, errors } = validateLoginForm(form);
-    if (!isValid) {
-      setFormErrors(errors);
-      return;
-    } else {
-      setFormErrors({});
-    }
+    // const { isValid, errors } = validateLoginForm(form);
+    // if (!isValid) {
+    //   setFormErrors(errors);
+    //   return;
+    // } else {
+    //   setFormErrors({});
+    // }
 
     const payload = {
       email: form.email,

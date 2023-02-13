@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "../../utils/enum";
+import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
+import { USER_ROLES } from "./../../utils/enum";
 
 /**
  * **NOTE**: Vendor is pending.
  */
 const initialState = {
   isLoggedIn: false,
-  role: "",
+  role: USER_ROLES.vendor,
   currentUser: {
     id: "",
     email: "",

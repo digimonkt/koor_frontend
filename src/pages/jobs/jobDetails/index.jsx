@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { SVG } from "../../../assets/svg";
-import Searchbutton from "../../../components/button/Searchbutton";
-import { IMAGES } from "../../../assets/images";
+import { SVG } from "@assets/svg";
+import Searchbutton from "@components/button/Searchbutton";
+import { IMAGES } from "@assets/images";
 import { Link } from "react-router-dom";
 
 const JobDetails = () => {

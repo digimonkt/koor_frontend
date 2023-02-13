@@ -1,7 +1,7 @@
 import { Grid, IconButton } from "@mui/material";
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { SVG } from "../../assets/svg";
+import { SVG } from "@assets/svg";
 
 function AttachmentDragNDropInputComponent({ files, handleDrop, deleteFile }) {
   const { getRootProps, getInputProps } = useDropzone({

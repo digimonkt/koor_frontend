@@ -3,15 +3,16 @@ import React from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { SVG } from "../../../assets/svg";
-import { USER_ROLES } from "../../../utils/enum";
+import { SVG } from "@assets/svg";
+import { USER_ROLES } from "@utils/enum";
 import { navigationOptions } from "./navigation";
 import "./styles.css";
+
 const drawerWidth = 300;
+
 function Sidebar() {
   const { role, currentUser } = useSelector((state) => state.auth);
   const location = useLocation();
-
   const drawer = (
     <>
       <div className="p-3 border-top border-bottom text-center user-details savetender">
