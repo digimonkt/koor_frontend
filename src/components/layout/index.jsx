@@ -24,47 +24,45 @@ function Layout() {
           minHeight: "544px",
         }}
       >
-        <Routes>
-          {JOB_SEEKER_ROUTES.map((route) => {
-            return (
-              <Route
-                path={`/${role}${route.path}`}
-                key={route.id}
-                element={
-                  <JobSeekerRoute>
-                    <route.component />
-                  </JobSeekerRoute>
-                }
-              />
-            );
-          })}
-          {EMPLOYER_ROUTES.map((route) => {
-            return (
-              <Route
-                path={`/${role}${route.path}`}
-                key={route.id}
-                element={
-                  <EmployerRoute>
-                    <route.component />
-                  </EmployerRoute>
-                }
-              />
-            );
-          })}
-          {VENDOR_ROUTES.map((route) => {
-            return (
-              <Route
-                path={`/${role}${route.path}`}
-                key={route.id}
-                element={
-                  <VendorRoute>
-                    <route.component />
-                  </VendorRoute>
-                }
-              />
-            );
-          })}
-        </Routes>
+        <JobSeekerRoute>
+          <Routes>
+            {JOB_SEEKER_ROUTES.map((route) => {
+              return (
+                <Route
+                  path={`/${role}${route.path}`}
+                  key={route.id}
+                  element={<route.component />}
+                />
+              );
+            })}
+          </Routes>
+        </JobSeekerRoute>
+        <EmployerRoute>
+          <Routes>
+            {EMPLOYER_ROUTES.map((route) => {
+              return (
+                <Route
+                  path={`/${role}${route.path}`}
+                  key={route.id}
+                  element={<route.component />}
+                />
+              );
+            })}
+          </Routes>
+        </EmployerRoute>
+        <VendorRoute>
+          <Routes>
+            {VENDOR_ROUTES.map((route) => {
+              return (
+                <Route
+                  path={`/${role}${route.path}`}
+                  key={route.id}
+                  element={<route.component />}
+                />
+              );
+            })}
+          </Routes>
+        </VendorRoute>
       </Box>
     </Box>
   );

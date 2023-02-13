@@ -82,7 +82,7 @@ export const RECENT_ITEMS = [
         <Chip
           label="Language"
           className="chiplabel"
-          icon={<SVG.smallLangugeIcon />}
+          icon={<SVG.SmallLangugeIcon />}
         />
       </>
     ),
