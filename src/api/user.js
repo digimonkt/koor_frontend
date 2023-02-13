@@ -11,7 +11,7 @@ export const CreateUserAPI = async (data) => {
 
 export const LoginUserAPI = async (data) => {
   const response = await api.request({
-    url: "/v1/user/session",
+    url: "/v1/users/session",
     method: "POST",
     data,
   });

@@ -10,12 +10,11 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(function (response) {
-  // ... do something
-  const newAccessToken = response.headers["x-access"];
+  const newAccessToken = response.headers.get("x-access");
   if (newAccessToken !== globalLocalStorage.getAccessToken()) {
     globalLocalStorage.setAccessToken(newAccessToken);
   }
-  const newRefreshToken = response.headers["x-refresh"];
+  const newRefreshToken = response.headers.get("x-refresh");
   if (newRefreshToken !== globalLocalStorage.getRefreshToken()) {
     globalLocalStorage.setRefreshToken(newRefreshToken);
   }
@@ -39,6 +38,7 @@ export const request = async (config) => {
       config.headers["x-refresh"] = `Bearer ${refreshToken}`;
     }
     const response = await axiosInstance.request({ ...config });
+    console.log({ body: response });
     return {
       remote: "success",
       data: response.data,

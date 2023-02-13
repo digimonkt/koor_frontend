@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
 import { USER_ROLES } from "./../../utils/enum";
 
@@ -84,6 +84,11 @@ const initialState = {
   },
 };
 
+const getUserDetails = createAsyncThunk(
+  "users/getUserDetails",
+  async (_, { rejectWithValue }) => {}
+);
+
 export const authSlice = createSlice({
   name: "auth",
   // `createSlice` will infer the state type from the `initialState` argument
@@ -98,6 +103,11 @@ export const authSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getUserDetails.fulfilled, (state, action) => {
+      state.currentUser = action.payload;
+    });
   },
 });
 export const { setIsLoggedIn, setUserRole, setCurrentUser } = authSlice.actions;
