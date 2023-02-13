@@ -3,7 +3,7 @@ import { SERVER_URL } from "../utils/serverUrl";
 import { globalLocalStorage } from "../utils/localStorage";
 
 export const axiosInstance = axios.create({
-  baseURL: `${SERVER_URL}/api`,
+  baseURL: `${SERVER_URL}api`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,7 +11,14 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(function (response) {
   // ... do something
-
+  const newAccessToken = response.headers["x-access"];
+  if (newAccessToken !== globalLocalStorage.getAccessToken()) {
+    globalLocalStorage.setAccessToken(newAccessToken);
+  }
+  const newRefreshToken = response.headers["x-refresh"];
+  if (newRefreshToken !== globalLocalStorage.getRefreshToken()) {
+    globalLocalStorage.setRefreshToken(newRefreshToken);
+  }
   return response;
 });
 
@@ -27,6 +34,10 @@ export const request = async (config) => {
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    const refreshToken = globalLocalStorage.getRefreshToken();
+    if (refreshToken) {
+      config.headers["x-refresh"] = `Bearer ${refreshToken}`;
+    }
     const response = await axiosInstance.request({ ...config });
     return {
       remote: "success",
@@ -37,12 +48,15 @@ export const request = async (config) => {
       if (error.response) {
         const axiosError = error;
         if (axiosError.response && axiosError.response.data) {
-          let errorMessage = axiosError.response.data.errors;
+          let errorMessage = axiosError.response.data;
           // check for 500 to handle message defined by the app
           if (axiosError.response.status === 500) {
-            errorMessage = "Internal Server Error";
-          } else {
-            errorMessage = error.response.data.errors;
+            errorMessage = {
+              message: ["Internal Server Error"],
+            };
+          }
+          for (const key in errorMessage) {
+            errorMessage[key] = errorMessage[key][0];
           }
           return {
             remote: "failure",
