@@ -8,6 +8,7 @@ import {
 } from "@utils/constants/routes";
 import { EmployerRoute, JobSeekerRoute, VendorRoute } from "@utils/routes";
 import Sidebar from "./sidebar";
+import { USER_ROLES } from "@utils/enum";
 
 function Layout() {
   const { role } = useSelector((state) => state.auth);
@@ -24,45 +25,51 @@ function Layout() {
           minHeight: "544px",
         }}
       >
-        <JobSeekerRoute>
-          <Routes>
-            {JOB_SEEKER_ROUTES.map((route) => {
-              return (
-                <Route
-                  path={`/${role}${route.path}`}
-                  key={route.id}
-                  element={<route.component />}
-                />
-              );
-            })}
-          </Routes>
-        </JobSeekerRoute>
-        <EmployerRoute>
-          <Routes>
-            {EMPLOYER_ROUTES.map((route) => {
-              return (
-                <Route
-                  path={`/${role}${route.path}`}
-                  key={route.id}
-                  element={<route.component />}
-                />
-              );
-            })}
-          </Routes>
-        </EmployerRoute>
-        <VendorRoute>
-          <Routes>
-            {VENDOR_ROUTES.map((route) => {
-              return (
-                <Route
-                  path={`/${role}${route.path}`}
-                  key={route.id}
-                  element={<route.component />}
-                />
-              );
-            })}
-          </Routes>
-        </VendorRoute>
+        {role === USER_ROLES.jobSeeker ? (
+          <JobSeekerRoute>
+            <Routes>
+              {JOB_SEEKER_ROUTES.map((route) => {
+                return (
+                  <Route
+                    path={`/${role}${route.path}`}
+                    key={route.id}
+                    element={<route.component />}
+                  />
+                );
+              })}
+            </Routes>
+          </JobSeekerRoute>
+        ) : role === USER_ROLES.employer ? (
+          <EmployerRoute>
+            <Routes>
+              {EMPLOYER_ROUTES.map((route) => {
+                return (
+                  <Route
+                    path={`/${role}${route.path}`}
+                    key={route.id}
+                    element={<route.component />}
+                  />
+                );
+              })}
+            </Routes>
+          </EmployerRoute>
+        ) : role === USER_ROLES.vendor ? (
+          <VendorRoute>
+            <Routes>
+              {VENDOR_ROUTES.map((route) => {
+                return (
+                  <Route
+                    path={`/${role}${route.path}`}
+                    key={route.id}
+                    element={<route.component />}
+                  />
+                );
+              })}
+            </Routes>
+          </VendorRoute>
+        ) : (
+          ""
+        )}
       </Box>
     </Box>
   );

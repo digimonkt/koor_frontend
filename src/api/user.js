@@ -36,3 +36,11 @@ export const GetUserDetailsAPI = async (data) => {
   }
   return response;
 };
+
+export const LogoutUserAPI = async () => {
+  const response = await api.request({
+    url: urlcat("/v1/users/delete-session"),
+    method: "DELETE",
+  });
+  return response;
+};
