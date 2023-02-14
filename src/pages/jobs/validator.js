@@ -6,10 +6,11 @@ export const validateCreateJobInput = Yup.object().shape({
   budgetPayPeriod: Yup.string().required("Pay period is required"),
   description: Yup.string().required("Description is required"),
   country: Yup.string().required("Country is required"),
-  city: Yup.string().required("City is required"),
+  // city: Yup.string().required("City is required"),
   address: Yup.string().required("Address is required"),
-  jobCategory1: Yup.string().required("Job Category is required"),
-  jobCategory2: Yup.string().optional(),
+  jobCategories: Yup.array()
+    .of(Yup.string())
+    .min(1, "One Job Category is required"),
   isFullTime: Yup.boolean(),
   isPartTime: Yup.boolean(),
   hasContract: Yup.boolean(),
@@ -51,10 +52,6 @@ export const validateCreateJobInput = Yup.object().shape({
     }
   ),
   highestEducation: Yup.string().required("Education Level is required"),
-  language1: Yup.string().required("Language is required"),
-  language2: Yup.string().optional(),
-  language3: Yup.string().optional(),
-  skill1: Yup.string().required("Skill is required"),
-  skill2: Yup.string().optional(),
-  skill3: Yup.string().optional(),
+  languages: Yup.array().of(Yup.string()).min(1, "One Language is required"),
+  skills: Yup.array().of(Yup.string()).min(1, "One Skill is required"),
 });

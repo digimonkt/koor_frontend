@@ -49,6 +49,10 @@ export const request = async (config) => {
       data: response.data,
     };
   } catch (error) {
+    console.log(error.response.headers);
+    if (error.response.headers["x-access"]) {
+      globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
+    }
     if (error) {
       if (error.response) {
         const axiosError = error;

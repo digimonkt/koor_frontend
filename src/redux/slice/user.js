@@ -88,7 +88,6 @@ export const getUserDetails = createAsyncThunk(
   "users/getUserDetails",
   async (data, { rejectWithValue }) => {
     const res = await GetUserDetailsAPI(data);
-    console.log({ res });
     if (res.remote === "success") {
       return res.data;
     } else {
