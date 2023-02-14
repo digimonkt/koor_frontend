@@ -5,9 +5,10 @@ import {
   FormGroup,
   Grid,
   IconButton,
+  Slider,
   Stack,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import {
@@ -33,6 +34,7 @@ import {
   getSkills,
 } from "@redux/slice/choices";
 import { createJobAPI } from "@api/employer";
+import { ErrorToast, SuccessToast } from "@components/toast";
 
 function PostJobsComponent() {
   const dispatch = useDispatch();
@@ -44,6 +46,8 @@ function PostJobsComponent() {
     languages,
     skills,
   } = useSelector((state) => state.choices);
+
+  const [submitting, setSubmitting] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -72,7 +76,8 @@ function PostJobsComponent() {
       attachments: [],
     },
     validationSchema: validateCreateJobInput,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
+      setSubmitting("loading");
       const payload = {
         title: values.title,
         budget_currency: values.budgetCurrency,
@@ -109,12 +114,12 @@ function PostJobsComponent() {
       }
       const res = await createJobAPI(newFormData);
       if (res.remote === "success") {
-        console.log(res);
+        setSubmitting("submitted");
+        resetForm();
       } else {
         console.log(res);
+        setSubmitting("error");
       }
-      // now newFormData can be used to send in api
-      // NOTE: `timing` is remaining
     },
   });
 
@@ -258,7 +263,7 @@ function PostJobsComponent() {
                   <Grid item xl={3} lg={3} xs={12}>
                     <label>Working place address</label>
                     <input
-                      placeholder="Menara Suruhanjaya Syakinat St..."
+                      placeholder="Address"
                       className="add-form-control"
                       {...formik.getFieldProps("address")}
                     />
@@ -326,13 +331,24 @@ function PostJobsComponent() {
                     </FormGroup>
                   </Grid>
                   <Grid item xl={4} lg={4} xs={12}>
-                    <label>Timing</label>
-                    <input
+                    <label>Timing ({formik.values.workingDays} Day week)</label>
+                    <Slider
+                      defaultValue={5}
+                      step={1}
+                      marks
+                      min={1}
+                      max={7}
+                      valueLabelDisplay="auto"
+                      valueLabelFormat={(value) => `${value} Day week`}
+                      {...formik.getFieldProps("workingDays")}
+                      value={formik.getFieldProps("workingDays").value || 5}
+                    />
+                    {/* <input
                       type="text"
                       placeholder="5 Day week"
                       className="add-form-control"
                       {...formik.getFieldProps("workingDays")}
-                    />
+                    /> */}
                     {formik.touched.timing && formik.errors.timing ? (
                       <ErrorMessage>{formik.errors.timing}</ErrorMessage>
                     ) : null}
@@ -425,7 +441,6 @@ function PostJobsComponent() {
                     <Grid container spacing={2}>
                       <Grid item xl={4} lg={4} xs={12}>
                         <SelectInput
-                          defaultValue=""
                           placeholder="Select a Language"
                           options={languages.data.map((language) => ({
                             value: language.id,
@@ -553,6 +568,7 @@ function PostJobsComponent() {
                   >
                     <OutlinedButton
                       title="Cancel"
+                      disabled={submitting === "loading"}
                       sx={{
                         "&.MuiButton-outlined": {
                           borderRadius: "73px",
@@ -575,9 +591,12 @@ function PostJobsComponent() {
                       }}
                     />
                     <FilledButton
-                      title="POST THE JOB"
+                      title={
+                        submitting === "loading" ? "Posting..." : "POST THE JOB"
+                      }
                       isBlueButton
                       type="submit"
+                      disabled={submitting === "loading"}
                     />
                   </Stack>
                 </Grid>
@@ -586,6 +605,16 @@ function PostJobsComponent() {
           </div>
         </CardContent>
       </Card>
+      <SuccessToast
+        open={submitting === "submitted"}
+        handleClose={() => setSubmitting("")}
+        message="Job Posted Successfully"
+      />
+      <ErrorToast
+        open={submitting === "error"}
+        handleClose={() => setSubmitting("")}
+        message="Some thing went wrong!"
+      />
     </div>
   );
 }

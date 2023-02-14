@@ -93,7 +93,6 @@ export const getCities = createAsyncThunk(
   "choices/getCities",
   async (data, { rejectWithValue }) => {
     const res = await getCitiesAPI(data);
-    console.log({ res });
     if (res.remote === "success") {
       return {
         countryId: data.countryId,
