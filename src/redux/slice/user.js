@@ -1,13 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { GetUserDetailsAPI } from "@api/user";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
-import { USER_ROLES } from "./../../utils/enum";
+import { globalLocalStorage } from "@utils/localStorage";
 
 /**
  * **NOTE**: Vendor is pending.
  */
 const initialState = {
   isLoggedIn: false,
-  role: USER_ROLES.vendor,
+  role: "",
   currentUser: {
     id: "",
     email: "",
@@ -22,12 +23,11 @@ const initialState = {
       // job-seeker
       gender: GENDER.male,
       dob: "",
-      employment_status: EMPLOYMENT_STATUS.unEmployed,
-      market_information: false,
-      job_notification: false,
+      employmentStatus: EMPLOYMENT_STATUS.unEmployed,
+      marketInformationNotification: false,
+      jobNotification: false,
 
       // employer
-      organization_name: "",
       organization_type: ORGANIZATION_TYPE.business,
       license_id: "",
       license_id_file: "",
@@ -36,32 +36,32 @@ const initialState = {
      *  {
         id: "",
         title: "",
-        start_date: "",
-        end_date: "",
+        startDate: "",
+        endDate: "",
         present: false,
         organization: "",
         description: "",
       },
      */
-    education_record: [],
+    educationRecord: [],
     /**
      * {
         id: "",
         title: "",
-        start_date: "",
-        end_date: "",
+        startDate: "",
+        endDate: "",
         present: false,
         organization: "",
         description: "",
       },
      */
-    work_experience: [],
+    workExperience: [],
     /**
      * {
         id: "",
         title: "",
-        file_path: "",
-        created_at: "",
+        filePath: "",
+        createdAt: "",
       },
      */
     resume: [],
@@ -84,12 +84,28 @@ const initialState = {
   },
 };
 
+export const getUserDetails = createAsyncThunk(
+  "users/getUserDetails",
+  async (data, { rejectWithValue }) => {
+    const res = await GetUserDetailsAPI(data);
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setIsLoggedIn: (state, action) => {
+      if (!action.payload) {
+        globalLocalStorage.removeAccessToken();
+        globalLocalStorage.removeRefreshToken();
+      }
       state.isLoggedIn = action.payload;
     },
     setUserRole: (state, action) => {
@@ -98,6 +114,12 @@ export const authSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getUserDetails.fulfilled, (state, action) => {
+      state.currentUser = action.payload;
+      state.role = action.payload.role;
+    });
   },
 });
 export const { setIsLoggedIn, setUserRole, setCurrentUser } = authSlice.actions;

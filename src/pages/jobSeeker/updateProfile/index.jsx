@@ -1,12 +1,13 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React from "react";
 import UpdateInfo from "./update-info";
-import AddInfoProfileUpdate from "./AddInfoProfileUpdate";
 import UploadFile from "./uploadfile";
 import ResumeUpdate from "./resume-update";
 import { SVG } from "@assets/svg";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "@components/dialogBox";
+import { USER_ROLES } from "@utils/enum";
+import AboutMe from "../aboutMe";
 
 const UpdateProfile = () => {
   // navigate
@@ -27,7 +28,7 @@ const UpdateProfile = () => {
       <Stack direction="row" spacing={3} className="mb-3">
         <h1 className="headding m-0">Add info to complete your profile</h1>
         <span
-          onClick={() => navigate("/job-seeker/my-profile")}
+          onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)}
           className="later"
         >
           Do it later
@@ -35,7 +36,7 @@ const UpdateProfile = () => {
       </Stack>
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>
-          <AddInfoProfileUpdate handleClickOpen={handleClickOpen} />
+          <AboutMe handleClickOpen={handleClickOpen} />
         </Grid>
         <Grid item lg={6} xs={12}>
           <Stack direction="column" spacing={2}>

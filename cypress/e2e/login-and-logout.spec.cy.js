@@ -19,7 +19,7 @@ describe("login and logout", () => {
     cy.getByTestId("login-email").get("[type='email']").type("test@test.com");
     cy.getByTestId("login-password").type("HelloWorld");
     cy.getByTestId("login-button").click();
-    cy.url().should("include", "/job-seeker/my-profile");
+    cy.url().should("include", `${USER_ROLES.jobSeeker}/my-profile`);
     cy.getByTestId("logout-button-nav").click();
     cy.url().should("include", "/login");
   });

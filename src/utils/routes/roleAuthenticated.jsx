@@ -11,7 +11,9 @@ function RoleRouteComponent(authRole) {
     const navigate = useNavigate();
     const { role } = useSelector((state) => state.auth);
     useEffect(() => {
-      if (role !== authRole) {
+      if (!role) {
+        navigate("/login");
+      } else if (role !== authRole) {
         navigate(`/${role}/my-profile`);
       }
     }, [navigate, role]);

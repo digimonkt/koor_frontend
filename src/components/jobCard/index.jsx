@@ -8,7 +8,7 @@ import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
 
-function JobCard({ logo, selfJob, applied }) {
+function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
@@ -55,27 +55,40 @@ function JobCard({ logo, selfJob, applied }) {
         <div className="my-jobs">
           <h2>
             {role === USER_ROLES.jobSeeker ? (
-              <Link to="/job-seeker/jobs/details/:jobId">
-                RETAIL ASSISTANT CASHIER
+              <Link to={`/${USER_ROLES.jobSeeker}/jobs/details/:jobId`}>
+                {jobDetails?.title || "RETAIL ASSISTANT CASHIER"}
               </Link>
             ) : (
-              "RETAIL ASSISTANT CASHIER"
+              jobDetails?.title || "RETAIL ASSISTANT CASHIER"
             )}
           </h2>
           <p>
-            Role and Responsibilities · Provide good customer service · Maintain
-            store cleanliness. Check and display goods/merchandise · Cashiering
-            duties as and when needed Qualifications and Education Requirements·
-            Minimum SPM and above· No experience needed · Good verbal...
+            {jobDetails?.description ||
+              "Role and Responsibilities · Provide good customer service · Maintain store cleanliness. Check and display goods/merchandise · Cashiering duties as and when needed Qualifications and Education Requirements· Minimum SPM and above· No experience needed · Good verbal..."}
           </p>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 1, sm: 1, md: 1 }}
             sx={{ width: "100%" }}
           >
-            <ChipBox label="Dusseldorf" icon={<>{<SVG.LocationIcon />}</>} />
-            <ChipBox label="5-Day week" icon={<>{<SVG.BegClock />}</>} />
-            <ChipBox label="Full time" icon={<>{<SVG.MoonCircle />}</>} />
+            <ChipBox
+              label={jobDetails?.country || "Dusseldorf"}
+              icon={<>{<SVG.LocationIcon />}</>}
+            />
+            <ChipBox
+              label={`${jobDetails?.workingDays || 2}-Day Week` || "5-Day week"}
+              icon={<>{<SVG.BegClock />}</>}
+            />
+            <ChipBox
+              label={
+                jobDetails?.isFullTime
+                  ? "Full time"
+                  : jobDetails?.isPartTime
+                  ? "Part time"
+                  : "Contract"
+              }
+              icon={<>{<SVG.MoonCircle />}</>}
+            />
           </Stack>
           <Stack
             direction="row"
@@ -120,8 +133,8 @@ function JobCard({ logo, selfJob, applied }) {
           <div className="pricebox py-3">
             <span className="d-block">UP TO</span>
             <h4>
-              <small>$</small>
-              3,500
+              <small>{"$"}</small>
+              {jobDetails?.budgetAmount || "3,500"}
             </h4>
           </div>
           {selfJob ? (

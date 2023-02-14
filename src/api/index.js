@@ -10,13 +10,18 @@ export const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(function (response) {
-  // ... do something
-  const newAccessToken = response.headers["x-access"];
-  if (newAccessToken !== globalLocalStorage.getAccessToken()) {
+  const newAccessToken = response.headers.get("x-access");
+  if (
+    newAccessToken &&
+    newAccessToken !== globalLocalStorage.getAccessToken()
+  ) {
     globalLocalStorage.setAccessToken(newAccessToken);
   }
-  const newRefreshToken = response.headers["x-refresh"];
-  if (newRefreshToken !== globalLocalStorage.getRefreshToken()) {
+  const newRefreshToken = response.headers.get("x-refresh");
+  if (
+    newRefreshToken &&
+    newRefreshToken !== globalLocalStorage.getRefreshToken()
+  ) {
     globalLocalStorage.setRefreshToken(newRefreshToken);
   }
   return response;
@@ -31,12 +36,12 @@ export const request = async (config) => {
       config.headers["Content-Type"] = "application/json";
     }
     const accessToken = globalLocalStorage.getAccessToken();
+    const refreshToken = globalLocalStorage.getRefreshToken();
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
-    const refreshToken = globalLocalStorage.getRefreshToken();
     if (refreshToken) {
-      config.headers["x-refresh"] = `Bearer ${refreshToken}`;
+      config.headers["x-refresh"] = `${refreshToken}`;
     }
     const response = await axiosInstance.request({ ...config });
     return {
@@ -44,6 +49,10 @@ export const request = async (config) => {
       data: response.data,
     };
   } catch (error) {
+    console.log(error.response.headers);
+    if (error.response.headers["x-access"]) {
+      globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
+    }
     if (error) {
       if (error.response) {
         const axiosError = error;

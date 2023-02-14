@@ -73,7 +73,7 @@ export const AUTHENTICATED_ROUTES = [
   },
 ];
 
-// prefix => `/job-seeker`
+// prefix => `/job_seeker`
 export const JOB_SEEKER_ROUTES = [
   {
     id: "myProfile",
