@@ -17,6 +17,8 @@ export const transformJobListResponse = (data) => {
       hasContract: res.has_contract,
       workingDays: res.workingDays,
       status: res.status,
+      createdAt: res.created,
+      applicantCount: res.applicant,
       user: {
         id: res.user.id,
         name: res.user.name,
