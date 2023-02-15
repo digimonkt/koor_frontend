@@ -21,7 +21,7 @@ function HorizontalLabelInputComponent({ label, type, options, ...rest }) {
           <SelectInputComponent options={options || []} {...rest} />
         ) : (
           <div className="showpassword">
-            <input className="form-control" {...rest} />
+            <input className="add-form-control" {...rest} />
           </div>
         )}
       </div>

@@ -14,7 +14,6 @@ import Loader from "@components/loader";
 function LoginForm({ role }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [loading, setIsLoading] = useState(false);
 
   const formik = useFormik({
@@ -28,6 +27,7 @@ function LoginForm({ role }) {
       const payload = {
         email: values.email,
         password: values.password,
+        role,
       };
       const res = await LoginUserAPI(payload);
       if (res.remote === "success") {
