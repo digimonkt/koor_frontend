@@ -6,15 +6,18 @@ import JobCard from "@components/jobCard";
 import { RECENT_ITEMS } from "../../dashboard/recentHelper";
 import ApplicantList from "./applicantList";
 import { getEmployerJobsAPI } from "@api/employer";
+import { useDispatch } from "react-redux";
+import { setTotalCreatedJobs } from "@redux/slice/employer";
 
 function MyJobs() {
-  // state management
+  const dispatch = useDispatch();
   const [isActive, setIsActive] = useState(false);
   const [jobs, setJobs] = useState([]);
   const getAllJobs = useCallback(async () => {
     const res = await getEmployerJobsAPI();
     if (res.remote === "success") {
       setJobs(res.data.results);
+      dispatch(setTotalCreatedJobs(res.data.totalCount || res.data.count));
     } else {
       console.log(res);
     }
@@ -52,7 +55,7 @@ function MyJobs() {
               <JobCard selfJob jobDetails={job} />
               <ApplicantList
                 isActive={isActive}
-                handleActive={() => setIsActive(!isActive)}
+                handleActive={() => setIsActive(false)}
               />
               {isActive && (
                 <div className="recent-box mt-3">

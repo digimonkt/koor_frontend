@@ -49,7 +49,7 @@ export const request = async (config) => {
       data: response.data,
     };
   } catch (error) {
-    console.log(error.response.headers);
+    console.log(error.response);
     if (error.response.headers["x-access"]) {
       globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
     }

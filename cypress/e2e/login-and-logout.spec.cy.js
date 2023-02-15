@@ -25,8 +25,8 @@ describe("login and logout", () => {
   });
   it("Login Logout as Employer", () => {
     cy.getByTestId(`role-${USER_ROLES.employer}`).click();
-    cy.getByTestId("login-email").get("[type='email']").type("test@test.com");
-    cy.getByTestId("login-password").type("HelloWorld");
+    cy.getByTestId("login-email").get("[type='email']").type("employer@gmail.com");
+    cy.getByTestId("login-password").type("123456789");
     cy.getByTestId("login-button").click();
     cy.url().should("include", "/employer/dashboard");
     cy.getByTestId("logout-button-nav").click();

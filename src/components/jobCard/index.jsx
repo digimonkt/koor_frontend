@@ -7,6 +7,7 @@ import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
+import moment from "moment";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { role } = useSelector((state) => state.auth);
@@ -79,16 +80,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               label={`${jobDetails?.workingDays || 2}-Day Week` || "5-Day week"}
               icon={<>{<SVG.BegClock />}</>}
             />
-            <ChipBox
-              label={
-                jobDetails?.isFullTime
-                  ? "Full time"
-                  : jobDetails?.isPartTime
-                  ? "Part time"
-                  : "Contract"
-              }
-              icon={<>{<SVG.MoonCircle />}</>}
-            />
+            {jobDetails?.isFullTime && (
+              <ChipBox label={"FullTime"} icon={<>{<SVG.MoonCircle />}</>} />
+            )}
+            {jobDetails?.isPartTime && (
+              <ChipBox label={"Part time"} icon={<>{<SVG.MoonCircle />}</>} />
+            )}
+            {jobDetails?.hasContract && (
+              <ChipBox label={"Contract"} icon={<>{<SVG.MoonCircle />}</>} />
+            )}
           </Stack>
           <Stack
             direction="row"
@@ -111,7 +111,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <SVG.ClockIconSmall />
               </span>{" "}
               <div className="textdes">
-                Posted At: <span>August 28, 2022</span>
+                Posted At:{" "}
+                <span>{moment(jobDetails?.createdAt).format("ll")}</span>
               </div>
             </Stack>
           </Stack>
@@ -136,6 +137,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               <small>{"$"}</small>
               {jobDetails?.budgetAmount || "3,500"}
             </h4>
+            <span>{jobDetails?.budgetPayPeriod}</span>
           </div>
           {selfJob ? (
             <div className="job-button-card">
