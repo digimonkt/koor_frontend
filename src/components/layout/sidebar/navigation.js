@@ -111,20 +111,26 @@ const VendorNavigationOptions = Object.freeze([
 export const navigationOptions = (role) => {
   switch (role) {
     case USER_ROLES.employer:
-      return EmployerNavigationOptions.map((option) => ({
-        ...option,
-        to: `/employer${option.to}`,
-      }));
+      return EmployerNavigationOptions.filter((item) => !item.isDisable).map(
+        (option) => ({
+          ...option,
+          to: `/employer${option.to}`,
+        })
+      );
     case USER_ROLES.jobSeeker:
-      return JobSeekerNavigationOptions.map((option) => ({
-        ...option,
-        to: `/${USER_ROLES.jobSeeker}${option.to}`,
-      }));
+      return JobSeekerNavigationOptions.filter((item) => !item.isDisable).map(
+        (option) => ({
+          ...option,
+          to: `/${USER_ROLES.jobSeeker}${option.to}`,
+        })
+      );
     case USER_ROLES.vendor:
-      return VendorNavigationOptions.map((option) => ({
-        ...option,
-        to: `/vendor${option.to}`,
-      }));
+      return VendorNavigationOptions.filter((item) => !item.isDisable).map(
+        (option) => ({
+          ...option,
+          to: `/vendor${option.to}`,
+        })
+      );
     default:
       return [];
   }
