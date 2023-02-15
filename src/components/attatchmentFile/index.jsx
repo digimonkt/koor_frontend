@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { SVG } from "@assets/svg";
 
-const AttachmentFile = ({ handleDrop }) => {
+const AttachmentFile = ({ handleDrop, single }) => {
   const [myFiles, setMyFiles] = useState([]);
   const onDrop = useCallback(
     (acceptedFiles) => {
@@ -22,8 +22,8 @@ const AttachmentFile = ({ handleDrop }) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    multiple: true,
-    maxFiles: 10,
+    multiple: !!single,
+    maxFiles: single ? 1 : 10,
   });
   const acceptedFileItems = myFiles.map((file) => (
     <li key={file.path}>
@@ -55,7 +55,7 @@ const AttachmentFile = ({ handleDrop }) => {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xl={6} lg={6} xs={12}>
+        <Grid item xl={single ? 12 : 6} lg={single ? 12 : 6} xs={12}>
           <div {...getRootProps({ className: "dropzone styles_attachment" })}>
             <input {...getInputProps()} />
             <div className="text-center">
@@ -63,20 +63,23 @@ const AttachmentFile = ({ handleDrop }) => {
                 Drag here or{" "}
                 <span style={{ color: "#274593" }}>upload an attachment</span>
               </p>
-              <small>Max 10 files, each one under 50MB</small>
+              {!single && <small>Max 10 files, each one under 50MB</small>}
             </div>
           </div>
         </Grid>
-
-        <Grid
-          item
-          xl={6}
-          lg={6}
-          xs={12}
-          className="attachment-box inline-attacment"
-        >
-          <ul>{acceptedFileItems}</ul>
-        </Grid>
+        {single ? (
+          <Grid
+            item
+            xl={6}
+            lg={6}
+            xs={12}
+            className="attachment-box inline-attacment"
+          >
+            <ul>{acceptedFileItems}</ul>
+          </Grid>
+        ) : (
+          ""
+        )}
       </Grid>
     </>
   );

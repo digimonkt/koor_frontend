@@ -3,11 +3,16 @@ import React from "react";
 import { useDropzone } from "react-dropzone";
 import { SVG } from "@assets/svg";
 
-function AttachmentDragNDropInputComponent({ files, handleDrop, deleteFile }) {
+function AttachmentDragNDropInputComponent({
+  files,
+  handleDrop,
+  deleteFile,
+  single,
+}) {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: handleDrop || (() => {}),
-    multiple: true,
-    maxFiles: 10,
+    multiple: !single,
+    maxFiles: single ? 1 : 10,
   });
   const acceptedFileItems = (files || []).map((file) => (
     <li key={file.path}>
@@ -46,7 +51,7 @@ function AttachmentDragNDropInputComponent({ files, handleDrop, deleteFile }) {
                 Drag here or{" "}
                 <span style={{ color: "#274593" }}>upload an attachment</span>
               </p>
-              <small>Max 10 files, each one under 5MB</small>
+              {!single && <small>Max 10 files, each one under 5MB</small>}
             </div>
           </div>
         </Grid>

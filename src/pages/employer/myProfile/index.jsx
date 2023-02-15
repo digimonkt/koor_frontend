@@ -1,6 +1,11 @@
-import AttachmentFile from "@components/attatchmentFile";
 import { OutlinedButton } from "@components/button";
-import { CheckboxInput, HorizontalLabelInput } from "@components/input";
+import {
+  AttachmentDragNDropInput,
+  CheckboxInput,
+  HorizontalLabelInput,
+  HorizontalPhoneInput,
+} from "@components/input";
+import { ORGANIZATION_TYPE } from "@utils/enum";
 import {
   Card,
   CardContent,
@@ -11,6 +16,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useFormik } from "formik";
 import React from "react";
 const FormControlReminder = styled(FormControlLabel)`
   & .MuiFormControlLabel-label {
@@ -23,13 +29,47 @@ const FormControlReminder = styled(FormControlLabel)`
   }
 `;
 function MyProfileComponent() {
+  const formik = useFormik({
+    initialValues: {
+      organizationName: "",
+      organizationType: ORGANIZATION_TYPE.business,
+      mobileNumber: {
+        national: "",
+        international: "",
+        value: "",
+      },
+      countryCode: "",
+      licenseId: "",
+      license: [],
+      marketingInformationNotification: false,
+      otherNotification: false,
+    },
+    onSubmit: (values) => {
+      const payload = {
+        organization_type: values.organizationType,
+        organization_name: values.organizationName,
+        market_information_notification:
+          values.marketingInformationNotification,
+        other_notification: values.otherNotification,
+        license_id: values.licenseId,
+        license: values.license[0],
+        mobile_number: values.mobileNumber.national,
+        country_code: values.mobileNumber.international.split(" ")[0],
+      };
+      const formData = new FormData();
+      for (const key in payload) {
+        formData.append(key, payload[key]);
+      }
+      console.log({ payload });
+    },
+  });
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
         <h1 className="headding m-0">Add info to complete your profile</h1>
-        <span className="later" style={{ color: "#274593" }}>
+        {/* <span className="later" style={{ color: "#274593" }}>
           Do it later
-        </span>
+        </span> */}
       </Stack>
 
       <Grid container spacing={2}>
@@ -51,24 +91,68 @@ function MyProfileComponent() {
             >
               <div className="add-content">
                 <h2 className="mb-4">About</h2>
-                <form>
-                  <HorizontalLabelInput label="Organization Name" />
+                <form onSubmit={formik.handleSubmit}>
+                  <HorizontalLabelInput
+                    label="Organization Name"
+                    {...formik.getFieldProps("organizationName")}
+                  />
                   <HorizontalLabelInput
                     label="Type of the organization"
                     type="select"
-                    options={[]}
+                    options={[
+                      {
+                        value: ORGANIZATION_TYPE.business,
+                        label: "Business",
+                      },
+                      {
+                        value: ORGANIZATION_TYPE.ngo,
+                        label: "NGO",
+                      },
+                      {
+                        value: ORGANIZATION_TYPE.government,
+                        label: "Government",
+                      },
+                    ]}
+                    {...formik.getFieldProps("organizationType")}
                   />
 
-                  <HorizontalLabelInput label="Mobile Number (optional)" />
-                  <HorizontalLabelInput label="License ID" />
+                  <HorizontalPhoneInput
+                    label="Mobile Number (optional)"
+                    value={formik.values.mobileNumber.value}
+                    onChange={(e) => formik.setFieldValue("mobileNumber", e)}
+                    defaultCountry={formik.values.countryCode}
+                    international
+                    onCountryChange={(e) =>
+                      formik.setFieldValue("countryCode", e)
+                    }
+                    isInvalidNumber={(isValid) => {
+                      if (!isValid) {
+                        formik.setFieldError(
+                          "mobileNumber",
+                          "Invalid Mobile Number"
+                        );
+                      }
+                    }}
+                    onBlur={formik.getFieldProps("mobileNumber").onBlur}
+                  />
+
+                  <HorizontalLabelInput
+                    label="License ID"
+                    {...formik.getFieldProps("licenseId")}
+                  />
 
                   <Stack
                     direction="row"
                     spacing={2}
-                    className="dashedborder mb-3"
                     alignItems="center"
+                    className="dashedborder mb-3"
                   >
-                    <AttachmentFile handleDrop={(e) => console.log(e)} />
+                    <AttachmentDragNDropInput
+                      handleDrop={(e) => formik.setFieldValue("license", e)}
+                      single
+                      files={formik.values.license}
+                      deleteFile={(e) => formik.setFieldValue("license", [])}
+                    />
                   </Stack>
                   <FormGroup
                     row
@@ -93,7 +177,11 @@ function MyProfileComponent() {
                     />
                   </FormGroup>
                   <div className="text-center mt-3">
-                    <OutlinedButton variant="outlined" title="update info" />
+                    <OutlinedButton
+                      variant="outlined"
+                      title="update info"
+                      type="submit"
+                    />
                   </div>
                 </form>
               </div>
