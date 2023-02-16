@@ -16,17 +16,24 @@ import { getUserDetails, setIsLoggedIn } from "@redux/slice/user";
 function App() {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.auth);
-  useEffect(() => {
+  const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
-    if (accessToken) {
+    const refreshToken = globalLocalStorage.getRefreshToken();
+    if (accessToken && refreshToken) {
       dispatch(setIsLoggedIn(true));
+      dispatch(getUserDetails());
+    } else {
+      dispatch(setIsLoggedIn(false));
     }
+  };
+  useEffect(() => {
+    checkLoginStatus();
   }, []);
   useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(getUserDetails());
-    }
-  }, [isLoggedIn]);
+    window.addEventListener("storage", checkLoginStatus);
+    return () => window.removeEventListener("storage", checkLoginStatus);
+  }, []);
+
   return (
     <div className="App">
       <Header />

@@ -1,7 +1,6 @@
 import { GetUserDetailsAPI } from "@api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
-import { globalLocalStorage } from "@utils/localStorage";
 
 /**
  * **NOTE**: Vendor is pending.
@@ -102,10 +101,6 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setIsLoggedIn: (state, action) => {
-      if (!action.payload) {
-        globalLocalStorage.removeAccessToken();
-        globalLocalStorage.removeRefreshToken();
-      }
       state.isLoggedIn = action.payload;
     },
     setUserRole: (state, action) => {
