@@ -1,5 +1,5 @@
 import { Avatar, Box, Drawer, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -7,11 +7,23 @@ import { SVG } from "@assets/svg";
 import { USER_ROLES } from "@utils/enum";
 import { navigationOptions } from "./navigation";
 import "./styles.css";
+import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 const drawerWidth = 300;
 
 function Sidebar() {
   const { role, currentUser } = useSelector((state) => state.auth);
+  const [mobileNumber, setMobileNumber] = useState("");
+  useEffect(() => {
+    const currentUserMobileNumber =
+      currentUser.countryCode && currentUser.mobileNumber
+        ? formatPhoneNumberIntl(
+            currentUser.countryCode + currentUser.mobileNumber
+          )
+        : "";
+    setMobileNumber(currentUserMobileNumber);
+  }, [currentUser]);
+
   const location = useLocation();
   const drawer = (
     <>
@@ -31,7 +43,7 @@ function Sidebar() {
           <SVG.UserIcon />
         </Avatar>
         <h1>{currentUser.name}</h1>
-        <p>{currentUser.mobileNumber}</p>
+        <p>{mobileNumber}</p>
         <p>{currentUser.email}</p>
       </div>
       <div className="sidebar-scroll">

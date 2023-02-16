@@ -27,6 +27,7 @@
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-easy-crop": "^4.7.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-phone-number-input": "^3.2.18",
     "react-redux": "^8.0.5",

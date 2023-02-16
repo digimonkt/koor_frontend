@@ -4,6 +4,7 @@ import {
   CheckboxInput,
   HorizontalLabelInput,
   HorizontalPhoneInput,
+  ProfilePicInput,
 } from "@components/input";
 import { ORGANIZATION_TYPE } from "@utils/enum";
 import {
@@ -17,7 +18,16 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { validateEmployerAboutMe } from "../validator";
+import { ErrorMessage } from "@components/caption";
+import { updateEmployerAboutMe } from "@api/employer";
+import { useSelector } from "react-redux";
+import {
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+} from "react-phone-number-input";
+import Loader from "@components/loader";
 const FormControlReminder = styled(FormControlLabel)`
   & .MuiFormControlLabel-label {
     font-family: "Poppins";
@@ -29,6 +39,8 @@ const FormControlReminder = styled(FormControlLabel)`
   }
 `;
 function MyProfileComponent() {
+  const { currentUser } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       organizationName: "",
@@ -44,7 +56,15 @@ function MyProfileComponent() {
       marketingInformationNotification: false,
       otherNotification: false,
     },
-    onSubmit: (values) => {
+    validationSchema: validateEmployerAboutMe,
+    onSubmit: async (values) => {
+      setLoading(true);
+      const countryCode = values.mobileNumber.international.split(" ")[0];
+      const mobileNumber = (values.mobileNumber.value || "").replace(
+        countryCode,
+        ""
+      );
+
       const payload = {
         organization_type: values.organizationType,
         organization_name: values.organizationName,
@@ -53,16 +73,51 @@ function MyProfileComponent() {
         other_notification: values.otherNotification,
         license_id: values.licenseId,
         license: values.license[0],
-        mobile_number: values.mobileNumber.national,
-        country_code: values.mobileNumber.international.split(" ")[0],
+        mobile_number: mobileNumber,
+        country_code: countryCode,
       };
+      if (payload.mobile_number === currentUser.mobileNumber) {
+        delete payload.mobile_number;
+        delete payload.country_code;
+      }
       const formData = new FormData();
       for (const key in payload) {
         formData.append(key, payload[key]);
       }
-      console.log({ payload });
+      const res = await updateEmployerAboutMe(formData);
+      if (res.remote === "success") {
+        console.log({ res });
+        setLoading(false);
+      } else {
+        console.log({ res });
+        setLoading(false);
+      }
     },
   });
+  useEffect(() => {
+    if (currentUser) {
+      const currentUserMobileNumber =
+        currentUser.countryCode && currentUser.mobileNumber
+          ? currentUser.countryCode + currentUser.mobileNumber
+          : "";
+      formik.setFieldValue("organizationName", currentUser.name);
+      formik.setFieldValue(
+        "organizationType",
+        currentUser.profile.organizationType
+      );
+      formik.setFieldValue("licenseId", currentUser.profile.licenseId);
+      formik.setFieldValue("mobileNumber", {
+        national: currentUserMobileNumber
+          ? formatPhoneNumber(currentUserMobileNumber)
+          : "",
+        international: currentUserMobileNumber
+          ? formatPhoneNumberIntl(currentUserMobileNumber)
+          : "",
+        value: currentUserMobileNumber,
+      });
+    }
+  }, [currentUser]);
+
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
@@ -93,9 +148,16 @@ function MyProfileComponent() {
                 <h2 className="mb-4">About</h2>
                 <form onSubmit={formik.handleSubmit}>
                   <HorizontalLabelInput
+                    placeholder="Organization Name"
                     label="Organization Name"
                     {...formik.getFieldProps("organizationName")}
                   />
+                  {formik.touched.organizationName &&
+                  formik.errors.organizationName ? (
+                    <ErrorMessage>
+                      {formik.errors.organizationName}
+                    </ErrorMessage>
+                  ) : null}
                   <HorizontalLabelInput
                     label="Type of the organization"
                     type="select"
@@ -135,8 +197,11 @@ function MyProfileComponent() {
                     }}
                     onBlur={formik.getFieldProps("mobileNumber").onBlur}
                   />
-
+                  {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
+                    <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
+                  ) : null}
                   <HorizontalLabelInput
+                    placeholder="License ID"
                     label="License ID"
                     {...formik.getFieldProps("licenseId")}
                   />
@@ -160,7 +225,13 @@ function MyProfileComponent() {
                     name="row-radio-buttons-group"
                   >
                     <FormControlReminder
-                      value="wish"
+                      onChange={(e) =>
+                        formik.setFieldValue(
+                          "otherNotification",
+                          e.target.checked
+                        )
+                      }
+                      checked={formik.values.otherNotification}
                       control={<CheckboxInput />}
                       label=" I wish to receive notifications and other related information from Koor"
                     />
@@ -171,16 +242,25 @@ function MyProfileComponent() {
                     name="row-radio-buttons-group"
                   >
                     <FormControlReminder
-                      value="wish"
+                      onChange={(e) =>
+                        formik.setFieldValue(
+                          "marketingInformationNotification",
+                          e.target.checked
+                        )
+                      }
+                      checked={formik.values.marketingInformationNotification}
                       control={<CheckboxInput />}
-                      label=" I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
+                      label="I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
                     />
                   </FormGroup>
                   <div className="text-center mt-3">
                     <OutlinedButton
                       variant="outlined"
-                      title="update info"
+                      title={
+                        loading ? <Loader loading={loading} /> : "Update Info"
+                      }
                       type="submit"
+                      disabled={loading}
                     />
                   </div>
                 </form>
@@ -204,12 +284,12 @@ function MyProfileComponent() {
                 },
               }}
             >
-              {/* <UploadFile
+              <ProfilePicInput
                 title="Your organization logo"
-                textcolor="#274593"
+                textColor="#274593"
                 color="#274593"
-                bgcolor="rgba(40, 71, 146, 0.1)"
-              /> */}
+                bgColor="rgba(40, 71, 146, 0.1)"
+              />
             </CardContent>
           </Card>
         </Grid>
