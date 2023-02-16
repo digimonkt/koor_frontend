@@ -14,7 +14,7 @@ function PhoneNumberInputComponent({
 }) {
   useEffect(() => {
     if (isInvalidNumber) {
-      isInvalidNumber(isValidPhoneNumber(rest.value));
+      isInvalidNumber(isValidPhoneNumber(rest.value || ""));
     }
   }, [rest.value]);
   return (

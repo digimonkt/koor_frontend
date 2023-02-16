@@ -25,3 +25,14 @@ export const getEmployerJobsAPI = async (data) => {
   }
   return res;
 };
+export const updateEmployerAboutMe = async (data) => {
+  const response = await api.request({
+    url: "/v1/users/employer/about-me",
+    method: "PATCH",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};

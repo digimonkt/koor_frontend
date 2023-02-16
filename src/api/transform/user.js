@@ -8,18 +8,18 @@ export const transformGetUserDetails = (data) => {
     profileImage: data.image || "",
     role: data.role,
     profile: {
-      description: data.description || "",
+      description: data.profile.description || "",
       // job-seeker
-      gender: data.gender || "",
-      dob: data.dob || "",
-      employmentStatus: data.employment_status || "",
+      gender: data.profile.gender || "",
+      dob: data.profile.dob || "",
+      employmentStatus: data.profile.employment_status || "",
       marketInformationNotification:
-        data.market_information_notification || false,
-      jobNotification: data.job_notification,
+        data.profile.market_information_notification || false,
+      jobNotification: data.profile.job_notification,
       // employer
-      organizationType: data.organization_type,
-      licenseId: data.license_id,
-      licenseIdFile: data.license_id_file,
+      organizationType: data.profile.organization_type,
+      licenseId: data.profile.license_id,
+      licenseIdFile: data.profile.license_id_file,
     },
     educationRecord: (data.education_record || []).map((record) => ({
       id: record.id,

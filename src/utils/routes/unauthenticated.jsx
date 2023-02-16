@@ -11,7 +11,7 @@ function UnauthenticatedRouteComponent({ children, redirectURL }) {
   useEffect(() => {
     const path = role === USER_ROLES.jobSeeker ? "/my-profile" : "/dashboard";
     const fromPath = location.state?.from.includes(role)
-      ? location.state.from
+      ? location.state?.from
       : null;
     if (role && isLoggedIn) {
       navigate(fromPath || redirectURL || `../${role}${path}`);

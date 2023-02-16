@@ -29,7 +29,7 @@ const JobSeekerNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
-    isDisable: true,
+    isDisable: false,
   },
 ]);
 const EmployerNavigationOptions = Object.freeze([
