@@ -1,10 +1,8 @@
 import React from "react";
 import { CreateUserAPI } from "@api/user";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "@components/button";
 import { LabeledInput } from "@components/input";
-import { setIsLoggedIn } from "@redux/slice/user";
 import { USER_ROLES } from "@utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
@@ -13,8 +11,6 @@ import { ErrorMessage } from "@components/caption";
 function RegistrationForm({ role }) {
   // navigate
   const navigate = useNavigate();
-  // redux dispatcher
-  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +29,6 @@ function RegistrationForm({ role }) {
       };
       const res = await CreateUserAPI(payload);
       if (res.remote === "success") {
-        dispatch(setIsLoggedIn(true));
         if (role === USER_ROLES.jobSeeker) {
           navigate(`/${role}/my-profile/job-criteria`);
         } else {

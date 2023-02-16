@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import {
   EMPLOYER_ROUTES,
@@ -11,7 +10,6 @@ import Sidebar from "./sidebar";
 import { USER_ROLES } from "@utils/enum";
 
 function Layout() {
-  const { role } = useSelector((state) => state.auth);
   return (
     <Box sx={{ display: "flex", marginTop: "81px" }}>
       <Sidebar />
@@ -25,51 +23,57 @@ function Layout() {
           minHeight: "544px",
         }}
       >
-        {role === USER_ROLES.jobSeeker ? (
-          <JobSeekerRoute>
-            <Routes>
-              {JOB_SEEKER_ROUTES.map((route) => {
-                return (
-                  <Route
-                    path={`/${role}${route.path}`}
-                    key={route.id}
-                    element={<route.component />}
-                  />
-                );
-              })}
-            </Routes>
-          </JobSeekerRoute>
-        ) : role === USER_ROLES.employer ? (
-          <EmployerRoute>
-            <Routes>
-              {EMPLOYER_ROUTES.map((route) => {
-                return (
-                  <Route
-                    path={`/${role}${route.path}`}
-                    key={route.id}
-                    element={<route.component />}
-                  />
-                );
-              })}
-            </Routes>
-          </EmployerRoute>
-        ) : role === USER_ROLES.vendor ? (
-          <VendorRoute>
-            <Routes>
-              {VENDOR_ROUTES.map((route) => {
-                return (
-                  <Route
-                    path={`/${role}${route.path}`}
-                    key={route.id}
-                    element={<route.component />}
-                  />
-                );
-              })}
-            </Routes>
-          </VendorRoute>
-        ) : (
+        {/* {role === USER_ROLES.jobSeeker ? ( */}
+        <Routes>
+          {JOB_SEEKER_ROUTES.map((route) => {
+            return (
+              <Route
+                path={`/${USER_ROLES.jobSeeker}${route.path}`}
+                key={route.id}
+                element={
+                  <JobSeekerRoute>
+                    <route.component />
+                  </JobSeekerRoute>
+                }
+              />
+            );
+          })}
+        </Routes>
+        {/* ) : role === USER_ROLES.employer ? ( */}
+        <Routes>
+          {EMPLOYER_ROUTES.map((route) => {
+            return (
+              <Route
+                path={`/${USER_ROLES.employer}${route.path}`}
+                key={route.id}
+                element={
+                  <EmployerRoute>
+                    <route.component />
+                  </EmployerRoute>
+                }
+              />
+            );
+          })}
+        </Routes>
+        {/* ) : role === USER_ROLES.vendor ? ( */}
+        <Routes>
+          {VENDOR_ROUTES.map((route) => {
+            return (
+              <Route
+                path={`/${USER_ROLES.vendor}${route.path}`}
+                key={route.id}
+                element={
+                  <VendorRoute>
+                    <route.component />
+                  </VendorRoute>
+                }
+              />
+            );
+          })}
+        </Routes>
+        {/* ) : (
           ""
-        )}
+        )} */}
       </Box>
     </Box>
   );

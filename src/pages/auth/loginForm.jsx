@@ -1,10 +1,8 @@
-import { useDispatch } from "react-redux";
 import { FilledButton } from "@components/button";
 import { LabeledInput } from "@components/input";
-import { setIsLoggedIn } from "@redux/slice/user";
 import { USER_ROLES } from "@utils/enum";
 import { LoginUserAPI } from "@api/user";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { validateLoginForm } from "./validator";
 import { useFormik } from "formik";
 import { ErrorMessage } from "@components/caption";
@@ -12,8 +10,7 @@ import { useState } from "react";
 import Loader from "@components/loader";
 
 function LoginForm({ role }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [loading, setIsLoading] = useState(false);
 
   const formik = useFormik({
@@ -31,9 +28,8 @@ function LoginForm({ role }) {
       };
       const res = await LoginUserAPI(payload);
       if (res.remote === "success") {
-        dispatch(setIsLoggedIn(true));
         setIsLoading(false);
-        navigate(`/${role}/my-profile/job-criteria`);
+        // navigate(`/${role}/my-profile/job-criteria`);
       } else {
         setIsLoading(false);
         formik.setErrors({ password: "Invalid Credentials" });

@@ -37,19 +37,17 @@ export const request = async (config) => {
     }
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
-    if (accessToken) {
+    if (accessToken && refreshToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-    if (refreshToken) {
       config.headers["x-refresh"] = `${refreshToken}`;
     }
+
     const response = await axiosInstance.request({ ...config });
     return {
       remote: "success",
       data: response.data,
     };
   } catch (error) {
-    console.log(error.response);
     if (error.response.headers["x-access"]) {
       globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
     }
