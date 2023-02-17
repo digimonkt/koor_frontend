@@ -36,3 +36,15 @@ export const updateEmployerAboutMe = async (data) => {
   });
   return response;
 };
+
+export const updateEmployerJobAPI = async (jobId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/jobs/:jobId", { jobId }),
+    method: "PUT",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};

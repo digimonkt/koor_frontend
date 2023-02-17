@@ -14,32 +14,34 @@ function AttachmentDragNDropInputComponent({
     multiple: !single,
     maxFiles: single ? 1 : 10,
   });
-  const acceptedFileItems = (files || []).map((file) => (
-    <li key={file.path}>
-      <div className="text-tracate">
+  const acceptedFileItems = (files || []).map((file) => {
+    return (
+      <li key={file.path}>
+        <div className="text-tracate">
+          <IconButton
+            sx={{
+              background: "#D5E3F7",
+              color: "#274593",
+              "&:hover": {
+                background: "#bcd2f1",
+              },
+              mr: 2,
+            }}
+          >
+            <SVG.AttachIcon />
+          </IconButton>
+          {file.path}
+        </div>
         <IconButton
-          sx={{
-            background: "#D5E3F7",
-            color: "#274593",
-            "&:hover": {
-              background: "#bcd2f1",
-            },
-            mr: 2,
-          }}
+          onClick={() => deleteFile(file)}
+          disableFocusRipple
+          sx={{ color: "#274593" }}
         >
-          <SVG.AttachIcon />
+          <SVG.DeleteICon />
         </IconButton>
-        {file.path}
-      </div>
-      <IconButton
-        onClick={() => deleteFile(file)}
-        disableFocusRipple
-        sx={{ color: "#274593" }}
-      >
-        <SVG.DeleteICon />
-      </IconButton>
-    </li>
-  ));
+      </li>
+    );
+  });
   return (
     <>
       <Grid container spacing={3}>

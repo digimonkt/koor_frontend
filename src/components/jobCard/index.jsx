@@ -7,9 +7,13 @@ import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
-import moment from "moment";
+import dayjs from "dayjs";
+import urlcat from "urlcat";
+import { getColorByRemainingDays } from "@utils/generateColor";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
+  const editUrl = urlcat("/employer/jobs/post", { jobId: jobDetails?.id });
+
   const { role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
@@ -60,7 +64,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 {jobDetails?.title || "RETAIL ASSISTANT CASHIER"}
               </Link>
             ) : (
-              jobDetails?.title || "RETAIL ASSISTANT CASHIER"
+              <Link to={editUrl}>
+                {jobDetails?.title || "RETAIL ASSISTANT CASHIER"}
+              </Link>
             )}
           </h2>
           <p>
@@ -73,7 +79,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             sx={{ width: "100%" }}
           >
             <ChipBox
-              label={jobDetails?.country || "Dusseldorf"}
+              label={jobDetails?.country.title || "Dusseldorf"}
               icon={<>{<SVG.LocationIcon />}</>}
             />
             <ChipBox
@@ -112,7 +118,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               </span>{" "}
               <div className="textdes">
                 Posted At:{" "}
-                <span>{moment(jobDetails?.createdAt).format("ll")}</span>
+                <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
               </div>
             </Stack>
           </Stack>
@@ -120,7 +126,16 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       </Grid>
       <Grid item lg={logo ? 2 : 3} xs={12}>
         <div className="text-end">
-          <SolidButton title="2 Days" />
+          <SolidButton
+            title={
+              jobDetails?.expiredInDays > 0
+                ? `${jobDetails?.expiredInDays} Days`
+                : "Expired"
+            }
+            color={getColorByRemainingDays(
+              jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+            )}
+          />
         </div>
         <Stack
           direction="row"
@@ -132,12 +147,18 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           sx={{ minHeight: "87%" }}
         >
           <div className="pricebox py-3">
-            <span className="d-block">UP TO</span>
-            <h4>
-              <small>{"$"}</small>
-              {jobDetails?.budgetAmount || "3,500"}
-            </h4>
-            <span>{jobDetails?.budgetPayPeriod}</span>
+            {jobDetails?.budgetAmount ? (
+              <>
+                <span className="d-block">UP TO</span>
+                <h4>
+                  <small>{"$"}</small>
+                  {jobDetails?.budgetAmount || "3,500"}
+                </h4>
+                <span>{jobDetails?.budgetPayPeriod}</span>
+              </>
+            ) : (
+              <h3>-</h3>
+            )}
           </div>
           {selfJob ? (
             <div className="job-button-card">
@@ -147,7 +168,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               </button>
               <button
                 onClick={() => {
-                  navigate("/employer/jobs/post?jobId=ID");
+                  if (jobDetails?.id) {
+                    navigate(editUrl);
+                  }
                 }}
               >
                 {<SVG.EditIcon />}
