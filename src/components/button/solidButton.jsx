@@ -5,6 +5,7 @@ function SolidButtonComponent({
   title,
   onClick,
   isBlueButton,
+  color,
   ...rest
 }) {
   return (
@@ -14,12 +15,12 @@ function SolidButtonComponent({
         "&.MuiButton-outlined": {
           borderRadius: "5px",
           border: "0px",
-          color: "#fff",
+          color: "black",
           fontWeight: "400",
           fontSize: "12px",
           fontFamily: "Poppins",
           padding: "5px 10px",
-          background: "#EBB938",
+          background: color,
           textTransform: "capitalize",
           whiteSpace: "nowrap",
         },

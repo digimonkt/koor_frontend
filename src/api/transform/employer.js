@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const transformJobListResponse = (data) => {
   return {
     count: data.count,
@@ -8,7 +10,9 @@ export const transformJobListResponse = (data) => {
       title: res.title,
       description: res.description,
       budgetCurrency: res.budget_currency,
-      budgetAmount: Number(res.budget_amount).toLocaleString() || 0,
+      budgetAmount: Number(res.budget_amount)
+        ? Number(res.budget_amount).toLocaleString()
+        : 0,
       budgetPayPeriod: res.budget_pay_period,
       country: res.country,
       city: res.city,
@@ -16,6 +20,12 @@ export const transformJobListResponse = (data) => {
       isPartTime: res.is_part_time,
       hasContract: res.has_contract,
       workingDays: res.working_days,
+      deadline: res.deadline,
+      expiredInDays: dayjs(res.deadline).diff(
+        dayjs(new Date().toISOString().split("T")[0]),
+        "day",
+        true
+      ),
       status: res.status,
       createdAt: res.created,
       applicantCount: res.applicant,

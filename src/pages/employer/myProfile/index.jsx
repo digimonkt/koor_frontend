@@ -76,13 +76,15 @@ function MyProfileComponent() {
         mobile_number: mobileNumber,
         country_code: countryCode,
       };
+      console.log(payload);
       if (payload.mobile_number === currentUser.mobileNumber) {
         delete payload.mobile_number;
         delete payload.country_code;
       }
+      console.log(payload);
       const formData = new FormData();
       for (const key in payload) {
-        formData.append(key, payload[key]);
+        if (payload[key]) formData.append(key, payload[key]);
       }
       const res = await updateEmployerAboutMe(formData);
       if (res.remote === "success") {
@@ -106,6 +108,7 @@ function MyProfileComponent() {
         currentUser.profile.organizationType
       );
       formik.setFieldValue("licenseId", currentUser.profile.licenseId);
+      // formik.setFieldValue("license", [currentUser.profile.licenseIdFile]);
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
           ? formatPhoneNumber(currentUserMobileNumber)

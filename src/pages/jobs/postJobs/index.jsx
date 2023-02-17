@@ -8,12 +8,13 @@ import {
   Slider,
   Stack,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   AttachmentDragNDropInput,
   CheckboxInput,
+  DateInput,
   LabeledInput,
   SelectInput,
 } from "@components/input";
@@ -33,8 +34,10 @@ import {
   getLanguages,
   getSkills,
 } from "@redux/slice/choices";
-import { createJobAPI } from "@api/employer";
+import { createJobAPI, updateEmployerJobAPI } from "@api/employer";
 import { ErrorToast, SuccessToast } from "@components/toast";
+import dayjs from "dayjs";
+import { getJobDetailsByIdAPI } from "@api/job";
 
 function PostJobsComponent() {
   const dispatch = useDispatch();
@@ -46,9 +49,9 @@ function PostJobsComponent() {
     languages,
     skills,
   } = useSelector((state) => state.choices);
-
+  const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState("");
-
+  const [jobId, setJobId] = useState(null);
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -63,6 +66,7 @@ function PostJobsComponent() {
       isFullTime: false,
       isPartTime: false,
       hasContract: false,
+      deadline: "",
       isContactEmail: false,
       contactEmail: "",
       isContactPhone: false,
@@ -87,19 +91,20 @@ function PostJobsComponent() {
         country: values.country,
         city: values.city,
         address: values.address,
-        jobCategories: values.jobCategories,
+        job_category: values.jobCategories,
         is_full_time: values.isFullTime,
         is_part_time: values.isPartTime,
         has_contract: values.hasContract,
         working_days: values.workingDays,
+        deadline: dayjs(values.deadline).format("YYYY-MM-DD"),
         contact_email: values.isContactEmail ? values.contactEmail : "",
         contact_phone: values.isContactPhone ? values.contactPhone : "",
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
         highest_education: values.highestEducation,
-        languages: values.languages,
-        skills: values.skills,
+        language: values.languages,
+        skill: values.skills,
         attachments: values.attachments,
       };
       const newFormData = new FormData();
@@ -112,17 +117,86 @@ function PostJobsComponent() {
           if (payload[key]) newFormData.append(key, payload[key]);
         }
       }
-      const res = await createJobAPI(newFormData);
-      if (res.remote === "success") {
-        setSubmitting("submitted");
-        resetForm();
+      if (!jobId) {
+        // create
+        const res = await createJobAPI(newFormData);
+        if (res.remote === "success") {
+          setSubmitting("submitted");
+          resetForm();
+        } else {
+          console.log(res);
+          setSubmitting("error");
+        }
       } else {
-        console.log(res);
-        setSubmitting("error");
+        // update
+        const response = updateEmployerJobAPI(jobId, newFormData);
+        console.log({ response });
+        console.log({ payload });
+        if (response.remote === "success") {
+          setSubmitting("submitted");
+        } else {
+          setSubmitting("error");
+        }
       }
     },
   });
 
+  const getJobDetailsById = useCallback(async (jobId) => {
+    const response = await getJobDetailsByIdAPI({ jobId });
+    console.log({ response });
+    if (response.remote === "success") {
+      const { data } = response;
+      formik.setFieldValue("title", data.title);
+      formik.setFieldValue("budgetCurrency", data.budgetCurrency);
+      formik.setFieldValue("budgetAmount", data.budgetAmount);
+      formik.setFieldValue("budgetPayPeriod", data.budgetPayPeriod);
+      formik.setFieldValue("description", data.description);
+      formik.setFieldValue("country", data.country.id);
+      formik.setFieldValue("city", data.city.id);
+      formik.setFieldValue("address", data.address);
+      formik.setFieldValue(
+        "jobCategories",
+        data.jobCategories.map
+          ? data.jobCategories.map((category) => category.id)
+          : []
+      );
+      formik.setFieldValue("isFullTime", data.isFullTime);
+      formik.setFieldValue("isPartTime", data.isPartTime);
+      formik.setFieldValue("hasContract", data.hasContract);
+      formik.setFieldValue("deadline", dayjs(data.deadline));
+      formik.setFieldValue("isContactEmail", Boolean(data.contractEmail));
+      formik.setFieldValue("contactEmail", data.contractEmail);
+      formik.setFieldValue("isContactPhone", Boolean(data.isContactPhone));
+      formik.setFieldValue("contactPhone", data.contactPhone);
+      formik.setFieldValue(
+        "isContactWhatsapp",
+        Boolean(data.isContactWhatsapp)
+      );
+      console.log("whatsapp: ", data.contactWhatsapp);
+      formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
+      formik.setFieldValue("workingDays", data.workingDays);
+      formik.setFieldValue("highestEducation", data.highestEducation.id);
+      formik.setFieldValue(
+        "languages",
+        data.languages.map ? data.languages.map((language) => language.id) : []
+      );
+      formik.setFieldValue("highestEducation", data.highestEducation.id);
+      formik.setFieldValue(
+        "skills",
+        data.skills.map ? data.skills.map((skill) => skill.id) : []
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    const newJobId = searchParams.get("jobId");
+    if (newJobId && jobId !== newJobId) setJobId(newJobId);
+  }, [searchParams.get("jobId")]);
+  useEffect(() => {
+    if (jobId) {
+      getJobDetailsById(jobId);
+    }
+  }, [jobId]);
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -343,15 +417,22 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("workingDays")}
                       value={formik.getFieldProps("workingDays").value || 5}
                     />
-                    {/* <input
-                      type="text"
-                      placeholder="5 Day week"
-                      className="add-form-control"
-                      {...formik.getFieldProps("workingDays")}
-                    /> */}
                     {formik.touched.timing && formik.errors.timing ? (
                       <ErrorMessage>{formik.errors.timing}</ErrorMessage>
                     ) : null}
+                  </Grid>
+                  <Grid item xl={4} lg={4} xs={12}>
+                    <div>
+                      <DateInput
+                        label="Deadline"
+                        onChange={(e) => formik.setFieldValue("deadline", e)}
+                        value={formik.values.deadline}
+                        onBlur={formik.getFieldProps("deadline").onBlur}
+                      />
+                      {formik.touched.deadline && formik.errors.deadline ? (
+                        <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
+                      ) : null}
+                    </div>
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />

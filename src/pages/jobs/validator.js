@@ -1,4 +1,7 @@
+import dayjs from "dayjs";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import * as Yup from "yup";
+dayjs.extend(isSameOrAfter);
 export const validateCreateJobInput = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   budgetCurrency: Yup.string().required("Currency is required"),
@@ -15,6 +18,11 @@ export const validateCreateJobInput = Yup.object().shape({
   isPartTime: Yup.boolean(),
   hasContract: Yup.boolean(),
   isContactEmail: Yup.boolean(),
+  deadline: Yup.string()
+    .required("Deadline is required")
+    .test("isFuture", "Date Must be of Future", (value, context) => {
+      return dayjs(value).isSameOrAfter(dayjs());
+    }),
   contactEmail: Yup.string()
     .email()
     .test("ifPresent", "Contact Email is required", (value, context) => {
