@@ -1,7 +1,7 @@
 import React from "react";
 import Dialog from "@mui/material/Dialog";
 
-const DialogBox = ({ open, handleClose, className, children }) => {
+const DialogBox = ({ open, handleClose, className, children, ...rest }) => {
   return (
     <>
       <Dialog

@@ -1,12 +1,21 @@
 import { OutlinedButton } from "@components/button";
 import { Avatar, Stack } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { SVG } from "@assets/svg";
 import ImageCropper from "@components/imageCropper";
 
-const ProfilePicInputComponent = ({ title, color, bgColor, textColor }) => {
+const ProfilePicInputComponent = ({
+  title,
+  color,
+  bgColor,
+  textColor,
+  handleSave,
+  image,
+  loading,
+}) => {
   const [files, setFiles] = useState([]);
+  const [newImage, setNewImage] = useState("");
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/*": [],
@@ -16,24 +25,35 @@ const ProfilePicInputComponent = ({ title, color, bgColor, textColor }) => {
     },
   });
 
-  const thumbs = files.map((file) => (
-    <Fragment key={file.name}>
-      <Avatar
-        sx={{
-          width: 100,
-          height: 100,
-          color: "#CACACA",
-          "&.MuiAvatar-circular": {
-            background: "#F0F0F0",
-          },
-        }}
-        src={file.preview}
-        onLoad={() => {
-          URL.revokeObjectURL(file.preview);
-        }}
-      />
-    </Fragment>
-  ));
+  useEffect(() => {
+    setNewImage(image);
+  }, [image]);
+
+  const handleUpdateImage = (file) => {
+    setNewImage(file);
+    setFiles([]);
+  };
+
+  const handleSaveImage = () => {
+    if (newImage instanceof File) handleSave(newImage);
+  };
+
+  const thumbs = (
+    <Avatar
+      sx={{
+        width: 100,
+        height: 100,
+        color: "#CACACA",
+        "&.MuiAvatar-circular": {
+          background: "#F0F0F0",
+        },
+      }}
+      src={newImage instanceof File ? URL.createObjectURL(newImage) : newImage}
+      onLoad={() => {
+        URL.revokeObjectURL(newImage);
+      }}
+    />
+  );
 
   useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
@@ -44,9 +64,9 @@ const ProfilePicInputComponent = ({ title, color, bgColor, textColor }) => {
       <div className="add-content">
         <h2>{title}</h2>
         <Stack direction="row" spacing={2} className="mt-4">
-          {!files.length ? (
+          {!newImage ? (
             <Avatar
-              alt="Remy Sharp"
+              alt="profileImage"
               sx={{
                 width: 100,
                 height: 100,
@@ -64,7 +84,7 @@ const ProfilePicInputComponent = ({ title, color, bgColor, textColor }) => {
           <Stack direction="column" spacing={4}>
             <div className="dropimg-userprofile">
               <div {...getRootProps({ className: "dropzone" })}>
-                <input {...getInputProps()} />
+                <input {...getInputProps()} disabled={loading} />
                 <p>
                   Drag here or{" "}
                   <span style={{ color: textColor }}>upload a photo</span>
@@ -75,12 +95,20 @@ const ProfilePicInputComponent = ({ title, color, bgColor, textColor }) => {
               <OutlinedButton
                 title={
                   <>
-                    <span className="me-2 d-inline-flex">
-                      <SVG.CheckIcon />
-                    </span>
-                    Save photo
+                    {loading ? (
+                      "Saving..."
+                    ) : (
+                      <>
+                        <span className="me-2 d-inline-flex">
+                          <SVG.CheckIcon />
+                        </span>
+                        Save photo
+                      </>
+                    )}
                   </>
                 }
+                disabled={loading}
+                onClick={handleSaveImage}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: `1px solid ${color} !important`,
@@ -102,10 +130,11 @@ const ProfilePicInputComponent = ({ title, color, bgColor, textColor }) => {
       </div>
       <ImageCropper
         open={files[0]}
-        handleClose={() => {}}
-        image={
-          "https://letsenhance.io/static/334225cab5be263aad8e3894809594ce/75c5a/MainAfter.jpg"
-        }
+        handleClose={() => {
+          setFiles([]);
+        }}
+        handleSave={handleUpdateImage}
+        image={files[0]}
       />
     </>
   );

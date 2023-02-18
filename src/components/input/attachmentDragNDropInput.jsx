@@ -30,7 +30,7 @@ function AttachmentDragNDropInputComponent({
           >
             <SVG.AttachIcon />
           </IconButton>
-          {file.path}
+          {file.title ? file.title : file.path}
         </div>
         <IconButton
           onClick={() => deleteFile(file)}

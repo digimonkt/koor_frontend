@@ -44,3 +44,15 @@ export const LogoutUserAPI = async () => {
   });
   return response;
 };
+
+export const UpdateProfileImageAPI = async (data) => {
+  const res = await api.request({
+    url: "/v1/users/display-image",
+    method: "PATCH",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return res;
+};
