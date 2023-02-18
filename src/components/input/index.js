@@ -1,8 +1,9 @@
 import AttachmentDragNDropInputComponent from "./attachmentDragNDropInput";
 import CheckboxInputComponent from "./checkboxInput";
 import DateInputComponent from "./dateInput";
-import HorizontalLabelInputComponent from "./horizontalLabelInput";
-import HorizontalPhoneInputComponent from "./horizontalPhoneInput";
+import HorizontalDateInputComponent from "./horizontalInput/horizontalDateInput";
+import HorizontalLabelInputComponent from "./horizontalInput/horizontalLabelInput";
+import HorizontalPhoneInputComponent from "./horizontalInput/horizontalPhoneInput";
 import LabeledInputComponent from "./labeledInput";
 import ProfilePicInputComponent from "./profilePicInput";
 import SelectInputComponent, { SelectBox } from "./selectInput";
@@ -17,3 +18,4 @@ export const HorizontalLabelInput = HorizontalLabelInputComponent;
 export const HorizontalPhoneInput = HorizontalPhoneInputComponent;
 export const ProfilePicInput = ProfilePicInputComponent;
 export const DateInput = DateInputComponent;
+export const HorizontalDateInput = HorizontalDateInputComponent;

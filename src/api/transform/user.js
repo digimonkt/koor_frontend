@@ -7,7 +7,7 @@ export const transformGetUserDetails = (data) => {
     mobileNumber: data.mobile_number || "",
     countryCode: data.country_code || "",
     name: data.name || "",
-    profileImage: data.image.path ? generateFileUrl(data.image.path) : "",
+    profileImage: data.image?.path ? generateFileUrl(data.image.path) : "",
     role: data.role,
     profile: {
       description: data.profile.description || "",
@@ -15,6 +15,7 @@ export const transformGetUserDetails = (data) => {
       gender: data.profile.gender || "",
       dob: data.profile.dob || "",
       employmentStatus: data.profile.employment_status || "",
+      highestEducation: data.profile.highest_education,
       marketInformationNotification:
         data.profile.market_information_notification || false,
       jobNotification: data.profile.job_notification,
