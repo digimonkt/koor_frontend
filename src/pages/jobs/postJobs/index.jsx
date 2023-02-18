@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   AttachmentDragNDropInput,
   CheckboxInput,
@@ -24,7 +24,7 @@ import { FilledButton, OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD } from "@utils/enum";
+import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -39,7 +39,15 @@ import { ErrorToast, SuccessToast } from "@components/toast";
 import dayjs from "dayjs";
 import { getJobDetailsByIdAPI } from "@api/job";
 
+const SUBMITTING_STATUS_ENUM = Object.freeze({
+  loading: "loading",
+  submitted: "submitted",
+  updated: "updated",
+  error: "error",
+  null: "",
+});
 function PostJobsComponent() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     countries,
@@ -50,7 +58,7 @@ function PostJobsComponent() {
     skills,
   } = useSelector((state) => state.choices);
   const [searchParams] = useSearchParams();
-  const [submitting, setSubmitting] = useState("");
+  const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
   const formik = useFormik({
     initialValues: {
@@ -78,10 +86,11 @@ function PostJobsComponent() {
       languages: [],
       skills: [],
       attachments: [],
+      attachmentsRemove: [],
     },
     validationSchema: validateCreateJobInput,
     onSubmit: async (values, { resetForm }) => {
-      setSubmitting("loading");
+      setSubmitting(SUBMITTING_STATUS_ENUM.loading);
       const payload = {
         title: values.title,
         budget_currency: values.budgetCurrency,
@@ -106,44 +115,55 @@ function PostJobsComponent() {
         language: values.languages,
         skill: values.skills,
         attachments: values.attachments,
+        attachments_remove: values.attachmentsRemove,
       };
       const newFormData = new FormData();
       for (const key in payload) {
-        if (payload[key].map) {
-          payload[key].forEach((data) => {
-            newFormData.append(key, data);
+        if (key === "attachments") {
+          payload.attachments.forEach((attachment) => {
+            if (!attachment.id) {
+              newFormData.append(key, attachment);
+            }
           });
         } else {
-          if (payload[key]) newFormData.append(key, payload[key]);
+          if (payload[key].forEach) {
+            payload[key].forEach((data) => {
+              newFormData.append(key, data);
+            });
+          } else {
+            if (payload[key]) newFormData.append(key, payload[key]);
+          }
         }
       }
+      let res;
       if (!jobId) {
         // create
-        const res = await createJobAPI(newFormData);
+        res = await createJobAPI(newFormData);
         if (res.remote === "success") {
-          setSubmitting("submitted");
+          setSubmitting(SUBMITTING_STATUS_ENUM.submitted);
           resetForm();
         } else {
           console.log(res);
-          setSubmitting("error");
+          setSubmitting(SUBMITTING_STATUS_ENUM.error);
         }
       } else {
         // update
-        const response = updateEmployerJobAPI(jobId, newFormData);
-        console.log({ response });
+        res = await updateEmployerJobAPI(jobId, newFormData);
         console.log({ payload });
-        if (response.remote === "success") {
-          setSubmitting("submitted");
+        if (res.remote === "success") {
+          setSubmitting(SUBMITTING_STATUS_ENUM.updated);
         } else {
-          setSubmitting("error");
+          setSubmitting(SUBMITTING_STATUS_ENUM.error);
         }
+      }
+      if (res.remote === "success") {
+        navigate(`/${USER_ROLES.employer}/manage-jobs`);
       }
     },
   });
 
   const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
-    console.log({ response });
     if (response.remote === "success") {
       const { data } = response;
       formik.setFieldValue("title", data.title);
@@ -172,7 +192,6 @@ function PostJobsComponent() {
         "isContactWhatsapp",
         Boolean(data.isContactWhatsapp)
       );
-      console.log("whatsapp: ", data.contactWhatsapp);
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
       formik.setFieldValue("workingDays", data.workingDays);
       formik.setFieldValue("highestEducation", data.highestEducation.id);
@@ -185,9 +204,9 @@ function PostJobsComponent() {
         "skills",
         data.skills.map ? data.skills.map((skill) => skill.id) : []
       );
+      formik.setFieldValue("attachments", data.attachments);
     }
   }, []);
-
   useEffect(() => {
     const newJobId = searchParams.get("jobId");
     if (newJobId && jobId !== newJobId) setJobId(newJobId);
@@ -634,6 +653,20 @@ function PostJobsComponent() {
                         ],
                       });
                     }}
+                    deleteFile={(file) => {
+                      if (file.id) {
+                        formik.setFieldValue("attachmentsRemove", [
+                          ...formik.values.attachmentsRemove,
+                          file.id,
+                        ]);
+                      }
+                      formik.setFieldValue(
+                        "attachments",
+                        formik.values.attachments.filter(
+                          (attachment) => attachment.path !== file.path
+                        )
+                      );
+                    }}
                   />
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
@@ -649,7 +682,7 @@ function PostJobsComponent() {
                   >
                     <OutlinedButton
                       title="Cancel"
-                      disabled={submitting === "loading"}
+                      disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                       sx={{
                         "&.MuiButton-outlined": {
                           borderRadius: "73px",
@@ -673,11 +706,17 @@ function PostJobsComponent() {
                     />
                     <FilledButton
                       title={
-                        submitting === "loading" ? "Posting..." : "POST THE JOB"
+                        submitting === SUBMITTING_STATUS_ENUM.loading
+                          ? jobId
+                            ? "Updating..."
+                            : "Posting..."
+                          : jobId
+                          ? "UPDATE THE JOB"
+                          : "POST THE JOB"
                       }
                       isBlueButton
                       type="submit"
-                      disabled={submitting === "loading"}
+                      disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                     />
                   </Stack>
                 </Grid>
@@ -687,13 +726,18 @@ function PostJobsComponent() {
         </CardContent>
       </Card>
       <SuccessToast
-        open={submitting === "submitted"}
-        handleClose={() => setSubmitting("")}
+        open={submitting === SUBMITTING_STATUS_ENUM.submitted}
+        handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
         message="Job Posted Successfully"
       />
+      <SuccessToast
+        open={submitting === SUBMITTING_STATUS_ENUM.updated}
+        handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
+        message="Job Updated Successfully"
+      />
       <ErrorToast
-        open={submitting === "error"}
-        handleClose={() => setSubmitting("")}
+        open={submitting === SUBMITTING_STATUS_ENUM.error}
+        handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
         message="Some thing went wrong!"
       />
     </div>

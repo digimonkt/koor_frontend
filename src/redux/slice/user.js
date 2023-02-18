@@ -109,13 +109,23 @@ export const authSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    setProfilePic: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        profileImage: action.payload,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
-      state.currentUser = action.payload;
+      if (!action.payload.profileImage) {
+        delete action.payload.profileImage;
+      }
+      state.currentUser = { ...state.currentUser, ...action.payload };
       state.role = action.payload.role;
     });
   },
 });
-export const { setIsLoggedIn, setUserRole, setCurrentUser } = authSlice.actions;
+export const { setIsLoggedIn, setUserRole, setCurrentUser, setProfilePic } =
+  authSlice.actions;
 export default authSlice.reducer;

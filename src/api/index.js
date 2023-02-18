@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SERVER_URL } from "../utils/serverUrl";
+import { SERVER_URL } from "../utils/constants/serverUrl";
 import { globalLocalStorage } from "../utils/localStorage";
 
 export const axiosInstance = axios.create({

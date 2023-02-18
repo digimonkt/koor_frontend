@@ -13,4 +13,9 @@ export const validateEmployerAboutMe = Yup.object().shape({
       return isValidPhoneNumber(value.value);
     }
   ),
+  license: Yup.mixed().test(
+    "elementPresent",
+    "License is required",
+    (value) => !!value.length
+  ),
 });

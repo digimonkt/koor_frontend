@@ -1,3 +1,5 @@
+import { generateFileUrl } from "@utils/generateFileUrl";
+
 export const transformGetUserDetails = (data) => {
   return {
     id: data.id,
@@ -5,7 +7,7 @@ export const transformGetUserDetails = (data) => {
     mobileNumber: data.mobile_number || "",
     countryCode: data.country_code || "",
     name: data.name || "",
-    profileImage: data.image || "",
+    profileImage: data.image.path ? generateFileUrl(data.image.path) : "",
     role: data.role,
     profile: {
       description: data.profile.description || "",

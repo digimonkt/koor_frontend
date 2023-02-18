@@ -22,12 +22,15 @@ import React, { useEffect, useState } from "react";
 import { validateEmployerAboutMe } from "../validator";
 import { ErrorMessage } from "@components/caption";
 import { updateEmployerAboutMe } from "@api/employer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
 import Loader from "@components/loader";
+import { UpdateProfileImageAPI } from "@api/user";
+import { ErrorToast, SuccessToast } from "@components/toast";
+import { setProfilePic } from "@redux/slice/user";
 const FormControlReminder = styled(FormControlLabel)`
   & .MuiFormControlLabel-label {
     font-family: "Poppins";
@@ -41,6 +44,7 @@ const FormControlReminder = styled(FormControlLabel)`
 function MyProfileComponent() {
   const { currentUser } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
+  const [profilePicLoading, setProfilePicLoading] = useState("");
   const formik = useFormik({
     initialValues: {
       organizationName: "",
@@ -76,12 +80,10 @@ function MyProfileComponent() {
         mobile_number: mobileNumber,
         country_code: countryCode,
       };
-      console.log(payload);
       if (payload.mobile_number === currentUser.mobileNumber) {
         delete payload.mobile_number;
         delete payload.country_code;
       }
-      console.log(payload);
       const formData = new FormData();
       for (const key in payload) {
         if (payload[key]) formData.append(key, payload[key]);
@@ -108,7 +110,7 @@ function MyProfileComponent() {
         currentUser.profile.organizationType
       );
       formik.setFieldValue("licenseId", currentUser.profile.licenseId);
-      // formik.setFieldValue("license", [currentUser.profile.licenseIdFile]);
+      formik.setFieldValue("license", [currentUser.profile.licenseIdFile]);
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
           ? formatPhoneNumber(currentUserMobileNumber)
@@ -120,6 +122,16 @@ function MyProfileComponent() {
       });
     }
   }, [currentUser]);
+  const dispatch = useDispatch();
+  const handleProfilePicSave = async (file) => {
+    setProfilePicLoading("loading");
+    const newFormData = new FormData();
+    newFormData.append("profile_image", file);
+    dispatch(setProfilePic(URL.createObjectURL(file)));
+    const res = await UpdateProfileImageAPI(newFormData);
+    if (res.remote === "success") setProfilePicLoading("updated");
+    else setProfilePicLoading("error");
+  };
 
   return (
     <>
@@ -222,6 +234,9 @@ function MyProfileComponent() {
                       deleteFile={(e) => formik.setFieldValue("license", [])}
                     />
                   </Stack>
+                  {formik.touched.license && formik.errors.license ? (
+                    <ErrorMessage>{formik.errors.license}</ErrorMessage>
+                  ) : null}
                   <FormGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
@@ -292,11 +307,22 @@ function MyProfileComponent() {
                 textColor="#274593"
                 color="#274593"
                 bgColor="rgba(40, 71, 146, 0.1)"
+                handleSave={handleProfilePicSave}
+                image={currentUser.profileImage}
+                loading={profilePicLoading === "loading"}
               />
             </CardContent>
           </Card>
         </Grid>
       </Grid>
+      <SuccessToast
+        open={profilePicLoading === "updated"}
+        message="Profile Pic Updated successfully"
+      />
+      <ErrorToast
+        open={profilePicLoading === "error"}
+        message="Something went wrong"
+      />
     </>
   );
 }
