@@ -2,59 +2,86 @@ import {
   Card,
   CardContent,
   Checkbox,
-  FormControl,
   FormGroup,
-  MenuItem,
   Radio,
   RadioGroup,
   Stack,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import React, { useEffect } from "react";
 import { SVG } from "@assets/svg";
-import { FormControlReminder, FormLabelBox, SelectBox } from "./style";
+import { FormControlReminder, FormLabelBox } from "./style";
 import { OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  HorizontalDateInput,
+  HorizontalLabelInput,
+  HorizontalPhoneInput,
+} from "@components/input";
+import { getEducationLevels } from "@redux/slice/choices";
+import { validateJobSeekerAboutMe } from "./validator";
+import { ErrorMessage } from "@components/caption";
+import {
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+} from "react-phone-number-input";
 
 const AboutMe = (props) => {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
-  const [age, setAge] = useState("");
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
-  const [city, setCity] = useState("");
-  const handleCity = (event) => {
-    setCity(event.target.value);
-  };
-
+  const { educationLevels } = useSelector((state) => state.choices);
   const formik = useFormik({
     initialValues: {
+      fullName: "",
       email: "",
-      mobileNumber: "",
+      mobileNumber: {
+        national: "",
+        international: "",
+        value: "",
+      },
+      countryCode: "",
       gender: "",
       dob: "",
       employmentStatus: "",
       description: "",
-      heightEducation: "",
+      highestEducation: "",
       marketInformationNotification: false,
       jobNotification: false,
     },
+    validationSchema: validateJobSeekerAboutMe,
     onSubmit: async (values) => {
       alert(JSON.stringify(values));
     },
   });
+  console.log(formik.errors, formik.values);
   useEffect(() => {
+    if (!educationLevels.data.length) {
+      dispatch(getEducationLevels());
+    }
+  }, []);
+  useEffect(() => {
+    console.log({ currentUser });
+    const currentUserMobileNumber =
+      currentUser.countryCode && currentUser.mobileNumber
+        ? currentUser.countryCode + currentUser.mobileNumber
+        : "";
     const newState = {
+      fullName: currentUser.name,
       email: currentUser.email,
-      mobileNumber: currentUser.mobileNumber,
+      mobileNumber: {
+        national: currentUserMobileNumber
+          ? formatPhoneNumber(currentUserMobileNumber)
+          : "",
+        international: currentUserMobileNumber
+          ? formatPhoneNumberIntl(currentUserMobileNumber)
+          : "",
+        value: currentUserMobileNumber,
+      },
       gender: currentUser.profile.gender,
       dob: currentUser.profile.dob,
       employmentStatus: currentUser.profile.employmentStatus,
       description: currentUser.profile.description,
-      heightEducation: currentUser.profile.heightEducation || "",
+      highestEducation: currentUser.profile.highestEducation || "",
       marketInformationNotification:
         currentUser.profile.marketInformationNotification,
       jobNotification: currentUser.profile.jobNotification,
@@ -82,39 +109,41 @@ const AboutMe = (props) => {
           }}
         >
           <h2 className="mb-4">About Me</h2>
-          <form>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <label className="w-30">Email</label>
-              <div className="w-70">
-                <input
-                  type="text"
-                  placeholder="Email"
-                  className="add-form-control"
-                  {...formik.getFieldProps("email")}
-                />
-              </div>
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <label className="w-30">Mobile number (optional)</label>
-              <div className="w-70">
-                <input
-                  type="text"
-                  placeholder="Mobile Number"
-                  className="add-form-control"
-                  {...formik.getFieldProps("mobileNumber")}
-                />
-              </div>
-            </Stack>
+          <form onSubmit={formik.handleSubmit}>
+            <HorizontalLabelInput
+              placeholder="Full Name"
+              label="Full name"
+              {...formik.getFieldProps("fullName")}
+            />
+            {formik.touched.fullName && formik.errors.fullName ? (
+              <ErrorMessage>{formik.errors.fullName}</ErrorMessage>
+            ) : null}
+            <HorizontalLabelInput
+              placeholder="Email"
+              label="Email"
+              {...formik.getFieldProps("email")}
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <ErrorMessage>{formik.errors.email}</ErrorMessage>
+            ) : null}
+            <HorizontalPhoneInput
+              label="Mobile Number (optional)"
+              value={""}
+              onChange={(e) => formik.setFieldValue("mobileNumber", e)}
+              defaultCountry={formik.values.countryCode}
+              international
+              onCountryChange={(e) => formik.setFieldValue("countryCode", e)}
+              isInvalidNumber={(isValid) => {
+                if (!isValid) {
+                  formik.setFieldError("mobileNumber", "Invalid Mobile Number");
+                }
+              }}
+              onBlur={formik.getFieldProps("mobileNumber").onBlur}
+              name="mobileNumber"
+            />
+            {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
+              <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
+            ) : null}
             <Stack
               direction={{ xs: "column", lg: "row" }}
               spacing={{ xs: 2, lg: 2, md: 2 }}
@@ -158,90 +187,45 @@ const AboutMe = (props) => {
                 />
               </RadioGroup>
             </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2, md: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <label className="w-30">Birth date</label>
-              <div className="w-70">
-                <DatePicker
-                  className="add-form-control"
-                  {...formik.getFieldProps("dob")}
-                />
-              </div>
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2, md: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <label className="w-30">Employment status</label>
-              <div className="w-70">
-                <FormControl fullWidth size="small">
-                  <SelectBox
-                    value={age}
-                    onChange={handleChange}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                    IconComponent={KeyboardArrowUpIcon}
-                  >
-                    <MenuItem value="">
-                      <em
-                        style={{
-                          color: "#848484",
-                          fontStyle: "normal",
-                          fontWeight: 400,
-                        }}
-                      >
-                        {" "}
-                        Select your status
-                      </em>
-                    </MenuItem>
-                    <MenuItem value={10}>Select your status</MenuItem>
-                  </SelectBox>
-                </FormControl>
-              </div>
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2, md: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <label className="w-30">Highest education (optional)</label>
-              <div className="w-70">
-                <FormControl fullWidth size="small">
-                  <SelectBox
-                    value={city}
-                    onChange={handleCity}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                    IconComponent={KeyboardArrowUpIcon}
-                  >
-                    <MenuItem value="">Art diretor</MenuItem>
-                    <MenuItem value={10}>Art diretor 1 </MenuItem>
-                    <MenuItem value={11}>Art diretor 2</MenuItem>
-                  </SelectBox>
-                </FormControl>
-              </div>
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2, md: 2 }}
-              className="mb-3"
-            >
-              <label className="w-30">Introduce yourself (optional)</label>
-              <div className="w-70">
-                <textarea
-                  className="form-control-area"
-                  placeholder="Write a few words about yourself"
-                  {...formik.getFieldProps("description")}
-                ></textarea>
-              </div>
-            </Stack>
+            {formik.touched.gender && formik.errors.gender ? (
+              <ErrorMessage>{formik.errors.gender}</ErrorMessage>
+            ) : null}
+            <HorizontalDateInput
+              label="Birth date"
+              onChange={(e) => formik.setFieldValue("dob", e)}
+              value={formik.values.dob}
+              onBlur={formik.getFieldProps("dob").onBlur}
+            />
+            {formik.touched.dob && formik.errors.dob ? (
+              <ErrorMessage>{formik.errors.dob}</ErrorMessage>
+            ) : null}
+            <HorizontalLabelInput
+              label="Employment status"
+              type="select"
+              placeholder="Select Your status"
+              options={[]}
+              value=""
+            />
+            {formik.touched.employmentStatus &&
+            formik.errors.employmentStatus ? (
+              <ErrorMessage>{formik.errors.employmentStatus}</ErrorMessage>
+            ) : null}
+            <HorizontalLabelInput
+              label="Highest education (optional)"
+              type="select"
+              placeholder="Select Your highest education"
+              options={educationLevels.data.map((educationLevel) => ({
+                value: educationLevel.id,
+                label: educationLevel.title,
+              }))}
+              {...formik.getFieldProps("highestEducation")}
+            />
+            <HorizontalLabelInput
+              label="Introduce yourself (optional)"
+              type="textarea"
+              placeholder="Write a few words about yourself"
+              {...formik.getFieldProps("description")}
+            />
             <FormGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -286,16 +270,16 @@ const AboutMe = (props) => {
             </FormGroup>
             <div className="text-center mt-5">
               <OutlinedButton
+                type="submit"
                 title={
                   <>
-                    {" "}
                     <span className="me-2 d-inline-flex">
                       <SVG.CheckIcon />
-                    </span>{" "}
+                    </span>
                     update info
                   </>
                 }
-                onClick={props.handleClickOpen}
+                // onClick={props.handleClickOpen}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",

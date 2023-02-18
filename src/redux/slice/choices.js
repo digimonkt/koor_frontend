@@ -155,7 +155,11 @@ export const getSkills = createAsyncThunk(
 export const choiceSlice = createSlice({
   name: "choice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetSkillList: (state, action) => {
+      state.skills = initialState.skills;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCountries.fulfilled, (state, action) => {
       state.countries = {
