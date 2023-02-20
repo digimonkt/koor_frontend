@@ -1,10 +1,13 @@
 import { FILE_BASE_URL } from "./constants/serverUrl";
 
 export const generateFileUrl = (fileUrl) => {
-  if (fileUrl.includes("http://") || fileUrl.include("https://")) {
+  if (!fileUrl) {
+    return "";
+  }
+  if (fileUrl.includes("http://") || fileUrl.includes("https://")) {
     return fileUrl;
   } else {
-    const newUrl = FILE_BASE_URL + fileUrl;
+    const newUrl = FILE_BASE_URL + fileUrl.substring(1, fileUrl.length);
     return newUrl;
   }
 };
