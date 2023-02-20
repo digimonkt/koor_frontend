@@ -18,7 +18,7 @@ export const validateJobSeekerAboutMe = Yup.object().shape({
   gender: Yup.string().required("Gender is required"),
   dob: Yup.string()
     .required("Deadline is required")
-    .test("isFuture", "Date Must be of Future", (value, context) => {
+    .test("isFuture", "Date Must be of before 2005-01-01", (value, context) => {
       return dayjs(value).isBefore(dayjs("2006-01-01"));
     }),
   employmentStatus: Yup.string().required("Employment Status is required"),
