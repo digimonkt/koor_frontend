@@ -106,9 +106,6 @@ export const authSlice = createSlice({
     setUserRole: (state, action) => {
       state.role = action.payload;
     },
-    setCurrentUser: (state, action) => {
-      state.currentUser = action.payload;
-    },
     setProfilePic: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
@@ -124,8 +121,10 @@ export const authSlice = createSlice({
       state.currentUser = { ...state.currentUser, ...action.payload };
       state.role = action.payload.role;
     });
+    builder.addCase(getUserDetails.rejected, (state, action) => {
+      console.log({ payload: action.payload, error: action.error, action });
+    });
   },
 });
-export const { setIsLoggedIn, setUserRole, setCurrentUser, setProfilePic } =
-  authSlice.actions;
+export const { setIsLoggedIn, setUserRole, setProfilePic } = authSlice.actions;
 export default authSlice.reducer;
