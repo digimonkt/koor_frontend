@@ -24,6 +24,7 @@ function CurrencyInput({ title, currency, optionsValues, errors, ...rest }) {
           placeholder="0"
           {...rest}
           {...((optionsValues && optionsValues.input) || {})}
+          value={optionsValues ? optionsValues.input.value || "" : ""}
         />
         <Divider orientation="vertical" variant="middle" flexItem />
 

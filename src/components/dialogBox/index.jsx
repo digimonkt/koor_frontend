@@ -1,7 +1,7 @@
 import React from "react";
 import Dialog from "@mui/material/Dialog";
 
-const DialogBox = ({ open, handleClose, className, children }) => {
+const DialogBox = ({ open, handleClose, className, children, ...rest }) => {
   return (
     <>
       <Dialog
@@ -9,7 +9,7 @@ const DialogBox = ({ open, handleClose, className, children }) => {
         onClose={handleClose}
         ariaLabelledBy="responsive-dialog-title"
         className={`modal-box ${className}`}
-        fullWidth="300px"
+        fullWidth
         maxWidth="sm"
       >
         <div>{children}</div>

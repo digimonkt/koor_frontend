@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { GetUserDetailsAPI } from "@api/user";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
 
 /**
@@ -21,12 +22,11 @@ const initialState = {
       // job-seeker
       gender: GENDER.male,
       dob: "",
-      employment_status: EMPLOYMENT_STATUS.unEmployed,
-      market_information: false,
-      job_notification: false,
+      employmentStatus: EMPLOYMENT_STATUS.fresher,
+      marketInformationNotification: false,
+      jobNotification: false,
 
       // employer
-      organization_name: "",
       organization_type: ORGANIZATION_TYPE.business,
       license_id: "",
       license_id_file: "",
@@ -35,8 +35,8 @@ const initialState = {
      *  {
         id: "",
         title: "",
-        start_date: "",
-        end_date: "",
+        startDate: "",
+        endDate: "",
         present: false,
         organization: "",
         description: "",
@@ -47,8 +47,8 @@ const initialState = {
      * {
         id: "",
         title: "",
-        start_date: "",
-        end_date: "",
+        startDate: "",
+        endDate: "",
         present: false,
         organization: "",
         description: "",
@@ -59,8 +59,8 @@ const initialState = {
      * {
         id: "",
         title: "",
-        file_path: "",
-        created_at: "",
+        filePath: "",
+        createdAt: "",
       },
      */
     resume: [],
@@ -83,6 +83,18 @@ const initialState = {
   },
 };
 
+export const getUserDetails = createAsyncThunk(
+  "users/getUserDetails",
+  async (data, { rejectWithValue }) => {
+    const res = await GetUserDetailsAPI(data);
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   // `createSlice` will infer the state type from the `initialState` argument
@@ -94,8 +106,11 @@ export const authSlice = createSlice({
     setUserRole: (state, action) => {
       state.role = action.payload;
     },
-    setCurrentUser: (state, action) => {
-      state.currentUser = action.payload;
+    setProfilePic: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        profileImage: action.payload,
+      };
     },
     setEducationRecord: (state, action) => {
       state.currentUser.educationRecord = action.payload;
@@ -107,6 +122,18 @@ export const authSlice = createSlice({
       state.currentUser.workExperience = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getUserDetails.fulfilled, (state, action) => {
+      if (!action.payload.profileImage) {
+        delete action.payload.profileImage;
+      }
+      state.currentUser = { ...state.currentUser, ...action.payload };
+      state.role = action.payload.role;
+    });
+    builder.addCase(getUserDetails.rejected, (state, action) => {
+      console.log({ payload: action.payload, error: action.error, action });
+    });
+  },
 });
 export const {
   setIsLoggedIn,
@@ -115,5 +142,6 @@ export const {
   setEducationRecord,
   setLanguages,
   setWorkExperience,
+  setProfilePic,
 } = authSlice.actions;
 export default authSlice.reducer;

@@ -5,14 +5,16 @@ import {
   FormGroup,
   Grid,
   IconButton,
+  Slider,
   Stack,
 } from "@mui/material";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   AttachmentDragNDropInput,
   CheckboxInput,
+  DateInput,
   LabeledInput,
   SelectInput,
 } from "@components/input";
@@ -22,77 +24,220 @@ import { FilledButton, OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD } from "@utils/enum";
+import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCities,
+  getCountries,
+  getEducationLevels,
+  getJobCategories,
+  getLanguages,
+  getSkills,
+} from "@redux/slice/choices";
+import { createJobAPI, updateEmployerJobAPI } from "@api/employer";
+import { ErrorToast, SuccessToast } from "@components/toast";
+import dayjs from "dayjs";
+import { getJobDetailsByIdAPI } from "@api/job";
 
+const SUBMITTING_STATUS_ENUM = Object.freeze({
+  loading: "loading",
+  submitted: "submitted",
+  updated: "updated",
+  error: "error",
+  null: "",
+});
 function PostJobsComponent() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    countries,
+    cities,
+    jobCategories,
+    educationLevels,
+    languages,
+    skills,
+  } = useSelector((state) => state.choices);
+  const [searchParams] = useSearchParams();
+  const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
+  const [jobId, setJobId] = useState(null);
   const formik = useFormik({
     initialValues: {
       title: "",
       budgetCurrency: "usd",
-      budgetAmount: null,
+      budgetAmount: 0,
       budgetPayPeriod: PAY_PERIOD.month,
       description: "",
       country: "",
       city: "",
       address: "",
-      jobCategory1: "",
-      jobCategory2: "",
+      jobCategories: [],
       isFullTime: false,
       isPartTime: false,
       hasContract: false,
+      deadline: "",
       isContactEmail: false,
       contactEmail: "",
       isContactPhone: false,
       contactPhone: "",
       isContactWhatsapp: false,
+      workingDays: 5,
       contactWhatsapp: "",
       highestEducation: "",
-      language1: "",
-      language2: "",
-      language3: "",
-      skill1: "",
-      skill2: "",
-      skill3: "",
+      languages: [],
+      skills: [],
       attachments: [],
+      attachmentsRemove: [],
     },
     validationSchema: validateCreateJobInput,
-    onSubmit: (values) => {
+    onSubmit: async (values, { resetForm }) => {
+      setSubmitting(SUBMITTING_STATUS_ENUM.loading);
       const payload = {
         title: values.title,
         budget_currency: values.budgetCurrency,
-        budget_amount: values.budgetCurrency,
+        budget_amount: values.budgetAmount,
         budget_pay_period: values.budgetPayPeriod,
         description: values.description,
         country: values.country,
         city: values.city,
         address: values.address,
-        job_category_1: values.jobCategory1,
-        job_category_2: values.jobCategory2,
+        job_category: values.jobCategories,
         is_full_time: values.isFullTime,
         is_part_time: values.isPartTime,
         has_contract: values.hasContract,
+        working_days: values.workingDays,
+        deadline: dayjs(values.deadline).format("YYYY-MM-DD"),
         contact_email: values.isContactEmail ? values.contactEmail : "",
         contact_phone: values.isContactPhone ? values.contactPhone : "",
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
         highest_education: values.highestEducation,
-        language_1: values.language1,
-        language_2: values.language2,
-        language_3: values.language3,
-        skill_1: values.skill1,
-        skill_2: values.skill2,
-        skill_3: values.skill3,
+        language: values.languages,
+        skill: values.skills,
         attachments: values.attachments,
+        attachments_remove: values.attachmentsRemove,
       };
       const newFormData = new FormData();
       for (const key in payload) {
-        newFormData.append(key, payload[key]);
+        if (key === "attachments") {
+          payload.attachments.forEach((attachment) => {
+            if (!attachment.id) {
+              newFormData.append(key, attachment);
+            }
+          });
+        } else {
+          if (payload[key].forEach) {
+            payload[key].forEach((data) => {
+              newFormData.append(key, data);
+            });
+          } else {
+            if (payload[key]) newFormData.append(key, payload[key]);
+          }
+        }
       }
-      // now newFormData can be used to send in api
-      // NOTE: `timing` is remaining
+      let res;
+      if (!jobId) {
+        // create
+        res = await createJobAPI(newFormData);
+        if (res.remote === "success") {
+          setSubmitting(SUBMITTING_STATUS_ENUM.submitted);
+          resetForm();
+        } else {
+          console.log(res);
+          setSubmitting(SUBMITTING_STATUS_ENUM.error);
+        }
+      } else {
+        // update
+        res = await updateEmployerJobAPI(jobId, newFormData);
+        console.log({ payload });
+        if (res.remote === "success") {
+          setSubmitting(SUBMITTING_STATUS_ENUM.updated);
+        } else {
+          setSubmitting(SUBMITTING_STATUS_ENUM.error);
+        }
+      }
+      if (res.remote === "success") {
+        navigate(`/${USER_ROLES.employer}/manage-jobs`);
+      }
     },
   });
+
+  const getJobDetailsById = useCallback(async (jobId) => {
+    const response = await getJobDetailsByIdAPI({ jobId });
+    if (response.remote === "success") {
+      const { data } = response;
+      formik.setFieldValue("title", data.title);
+      formik.setFieldValue("budgetCurrency", data.budgetCurrency);
+      formik.setFieldValue("budgetAmount", data.budgetAmount);
+      formik.setFieldValue("budgetPayPeriod", data.budgetPayPeriod);
+      formik.setFieldValue("description", data.description);
+      formik.setFieldValue("country", data.country.id);
+      formik.setFieldValue("city", data.city.id);
+      formik.setFieldValue("address", data.address);
+      formik.setFieldValue(
+        "jobCategories",
+        data.jobCategories.map
+          ? data.jobCategories.map((category) => category.id)
+          : []
+      );
+      formik.setFieldValue("isFullTime", data.isFullTime);
+      formik.setFieldValue("isPartTime", data.isPartTime);
+      formik.setFieldValue("hasContract", data.hasContract);
+      formik.setFieldValue("deadline", dayjs(data.deadline));
+      formik.setFieldValue("isContactEmail", Boolean(data.contractEmail));
+      formik.setFieldValue("contactEmail", data.contractEmail);
+      formik.setFieldValue("isContactPhone", Boolean(data.isContactPhone));
+      formik.setFieldValue("contactPhone", data.contactPhone);
+      formik.setFieldValue(
+        "isContactWhatsapp",
+        Boolean(data.isContactWhatsapp)
+      );
+      formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
+      formik.setFieldValue("workingDays", data.workingDays);
+      formik.setFieldValue("highestEducation", data.highestEducation.id);
+      formik.setFieldValue(
+        "languages",
+        data.languages.map ? data.languages.map((language) => language.id) : []
+      );
+      formik.setFieldValue("highestEducation", data.highestEducation.id);
+      formik.setFieldValue(
+        "skills",
+        data.skills.map ? data.skills.map((skill) => skill.id) : []
+      );
+      formik.setFieldValue("attachments", data.attachments);
+    }
+  }, []);
+  useEffect(() => {
+    const newJobId = searchParams.get("jobId");
+    if (newJobId && jobId !== newJobId) setJobId(newJobId);
+  }, [searchParams.get("jobId")]);
+  useEffect(() => {
+    if (jobId) {
+      getJobDetailsById(jobId);
+    }
+  }, [jobId]);
+  useEffect(() => {
+    if (!countries.data.length) {
+      dispatch(getCountries());
+    }
+    if (!jobCategories.data.length) {
+      dispatch(getJobCategories());
+    }
+    if (!educationLevels.data.length) {
+      dispatch(getEducationLevels());
+    }
+    if (!languages.data.length) {
+      dispatch(getLanguages());
+    }
+    if (!skills.data.length) {
+      dispatch(getSkills());
+    }
+  }, []);
+  useEffect(() => {
+    if (formik.values.country && !cities.data[formik.values.country]?.length) {
+      dispatch(getCities({ countryId: formik.values.country }));
+    }
+  }, [formik.values.country]);
   return (
     <div className="job-application">
       <Card
@@ -176,8 +321,10 @@ function PostJobsComponent() {
                         <SelectInput
                           placeholder="Country"
                           defaultValue=""
-                          options={[{ value: "1", label: "India" }]}
-                          value="1"
+                          options={countries.data.map((country) => ({
+                            value: country.id,
+                            label: country.title,
+                          }))}
                           {...formik.getFieldProps("country")}
                         />
                         {formik.touched.country && formik.errors.country ? (
@@ -186,10 +333,18 @@ function PostJobsComponent() {
                       </Grid>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
-                          placeholder="City"
-                          defaultValue=""
-                          options={[{ value: "1", label: "Gwalior" }]}
-                          value="1"
+                          placeholder={
+                            formik.values.country
+                              ? "City"
+                              : "Select Country first"
+                          }
+                          disabled={!formik.values.country}
+                          options={(
+                            cities.data[formik.values.country] || []
+                          ).map((country) => ({
+                            value: country.id,
+                            label: country.title,
+                          }))}
                           {...formik.getFieldProps("city")}
                         />
                         {formik.touched.city && formik.errors.city ? (
@@ -201,7 +356,7 @@ function PostJobsComponent() {
                   <Grid item xl={3} lg={3} xs={12}>
                     <label>Working place address</label>
                     <input
-                      placeholder="Menara Suruhanjaya Syakinat St..."
+                      placeholder="Address"
                       className="add-form-control"
                       {...formik.getFieldProps("address")}
                     />
@@ -216,13 +371,19 @@ function PostJobsComponent() {
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Job category"
-                          options={[{ value: "react", label: "ReactJS" }]}
-                          {...formik.getFieldProps("jobCategory1")}
+                          options={jobCategories.data.map((jobCategory) => ({
+                            value: jobCategory.id,
+                            label: jobCategory.title,
+                          }))}
+                          name={"jobCategories[0]"}
+                          value={formik.values.jobCategories[0] || ""}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
-                        {formik.touched.jobCategory1 &&
-                        formik.errors.jobCategory1 ? (
+                        {formik.touched.jobCategories &&
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
-                            {formik.errors.jobCategory1}
+                            {formik.errors.jobCategories}
                           </ErrorMessage>
                         ) : null}
                       </Grid>
@@ -230,15 +391,15 @@ function PostJobsComponent() {
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Job category"
-                          options={[{ value: "react", label: "ReactJS" }]}
-                          {...formik.getFieldProps("jobCategory2")}
+                          options={jobCategories.data.map((jobCategory) => ({
+                            value: jobCategory.id,
+                            label: jobCategory.title,
+                          }))}
+                          name="jobCategories[1]"
+                          value={formik.values.jobCategories[1] || ""}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
-                        {formik.touched.jobCategory2 &&
-                        formik.errors.jobCategory2 ? (
-                          <ErrorMessage>
-                            {formik.errors.jobCategory2}
-                          </ErrorMessage>
-                        ) : null}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -263,16 +424,34 @@ function PostJobsComponent() {
                     </FormGroup>
                   </Grid>
                   <Grid item xl={4} lg={4} xs={12}>
-                    <label>Timing</label>
-                    <input
-                      type="text"
-                      placeholder="5 Day week"
-                      className="add-form-control"
-                      // {...formik.getFieldProps("hasContract")}
+                    <label>Timing ({formik.values.workingDays} Day week)</label>
+                    <Slider
+                      defaultValue={5}
+                      step={1}
+                      marks
+                      min={1}
+                      max={7}
+                      valueLabelDisplay="auto"
+                      valueLabelFormat={(value) => `${value} Day week`}
+                      {...formik.getFieldProps("workingDays")}
+                      value={formik.getFieldProps("workingDays").value || 5}
                     />
                     {formik.touched.timing && formik.errors.timing ? (
                       <ErrorMessage>{formik.errors.timing}</ErrorMessage>
                     ) : null}
+                  </Grid>
+                  <Grid item xl={4} lg={4} xs={12}>
+                    <div>
+                      <DateInput
+                        label="Deadline"
+                        onChange={(e) => formik.setFieldValue("deadline", e)}
+                        value={formik.values.deadline}
+                        onBlur={formik.getFieldProps("deadline").onBlur}
+                      />
+                      {formik.touched.deadline && formik.errors.deadline ? (
+                        <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
+                      ) : null}
+                    </div>
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
@@ -341,11 +520,10 @@ function PostJobsComponent() {
                     <SelectInput
                       defaultValue=""
                       placeholder="Choose an education level"
-                      options={[
-                        { value: "1", label: "Education 1" },
-                        { value: "2", label: "Education 2" },
-                        { value: "3", label: "Education 3" },
-                      ]}
+                      options={educationLevels.data.map((educationLevel) => ({
+                        value: educationLevel.id,
+                        label: educationLevel.title,
+                      }))}
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
@@ -363,39 +541,44 @@ function PostJobsComponent() {
                     <Grid container spacing={2}>
                       <Grid item xl={4} lg={4} xs={12}>
                         <SelectInput
-                          defaultValue=""
                           placeholder="Select a Language"
-                          options={[
-                            { value: "english", label: "English" },
-                            { value: "hindi", label: "Hindi" },
-                            { value: "sanskrit", label: "Sanskrit" },
-                          ]}
-                          {...formik.getFieldProps("language1")}
+                          options={languages.data.map((language) => ({
+                            value: language.id,
+                            label: language.title,
+                          }))}
+                          name="languages[0]"
+                          value={formik.values.languages[0] || ""}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
-                        {formik.touched.language1 && formik.errors.language1 ? (
-                          <ErrorMessage>{formik.errors.language1}</ErrorMessage>
+                        {formik.touched.languages && formik.errors.languages ? (
+                          <ErrorMessage>{formik.errors.languages}</ErrorMessage>
                         ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>
                         <SelectInput
                           placeholder="Select a Language"
-                          options={[
-                            { value: "english", label: "English" },
-                            { value: "hindi", label: "Hindi" },
-                            { value: "sanskrit", label: "Sanskrit" },
-                          ]}
-                          {...formik.getFieldProps("language2")}
+                          options={languages.data.map((language) => ({
+                            value: language.id,
+                            label: language.title,
+                          }))}
+                          name="languages[1]"
+                          value={formik.values.languages[1] || ""}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>
                         <SelectInput
                           placeholder="Select a Language"
-                          options={[
-                            { value: "english", label: "English" },
-                            { value: "hindi", label: "Hindi" },
-                            { value: "sanskrit", label: "Sanskrit" },
-                          ]}
-                          {...formik.getFieldProps("language3")}
+                          options={languages.data.map((language) => ({
+                            value: language.id,
+                            label: language.title,
+                          }))}
+                          name="languages[2]"
+                          value={formik.values.languages[2] || ""}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
                       </Grid>
                     </Grid>
@@ -411,66 +594,45 @@ function PostJobsComponent() {
                       <SelectInput
                         defaultValue=""
                         placeholder="Select a Skill"
-                        options={[
-                          {
-                            value: "1",
-                            label: "Skill 1",
-                          },
-                          {
-                            value: "2",
-                            label: "Skill 2",
-                          },
-                          {
-                            value: "3",
-                            label: "Skill 3",
-                          },
-                        ]}
-                        {...formik.getFieldProps("skill1")}
+                        options={skills.data.map((skill) => ({
+                          value: skill.id,
+                          label: skill.title,
+                        }))}
+                        name="skills[0]"
+                        value={formik.values.skills[0] || ""}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                       />
-                      {formik.touched.skill1 && formik.errors.skill1 ? (
-                        <ErrorMessage>{formik.errors.skill1}</ErrorMessage>
+                      {formik.touched.skills && formik.errors.skills ? (
+                        <ErrorMessage>{formik.errors.skills}</ErrorMessage>
                       ) : null}
                     </Grid>
                     <Grid item xl={4} lg={4} xs={12}>
                       <SelectInput
                         defaultValue=""
                         placeholder="Select a Skill"
-                        options={[
-                          {
-                            value: "1",
-                            label: "Skill 1",
-                          },
-                          {
-                            value: "2",
-                            label: "Skill 2",
-                          },
-                          {
-                            value: "3",
-                            label: "Skill 3",
-                          },
-                        ]}
-                        {...formik.getFieldProps("skill2")}
+                        options={skills.data.map((skill) => ({
+                          value: skill.id,
+                          label: skill.title,
+                        }))}
+                        name="skills[1]"
+                        value={formik.values.skills[1] || ""}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                       />
                     </Grid>
                     <Grid item xl={4} lg={4} xs={12}>
                       <SelectInput
                         defaultValue=""
                         placeholder="Select a Skill"
-                        options={[
-                          {
-                            value: "1",
-                            label: "Skill 1",
-                          },
-                          {
-                            value: "2",
-                            label: "Skill 2",
-                          },
-                          {
-                            value: "3",
-                            label: "Skill 3",
-                          },
-                        ]}
-                        {...formik.getFieldProps("skill3")}
+                        options={skills.data.map((skill) => ({
+                          value: skill.id,
+                          label: skill.title,
+                        }))}
+                        name="skills[2]"
+                        value={formik.values.skills[2] || ""}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                       />
                     </Grid>
                   </Grid>
@@ -491,6 +653,20 @@ function PostJobsComponent() {
                         ],
                       });
                     }}
+                    deleteFile={(file) => {
+                      if (file.id) {
+                        formik.setFieldValue("attachmentsRemove", [
+                          ...formik.values.attachmentsRemove,
+                          file.id,
+                        ]);
+                      }
+                      formik.setFieldValue(
+                        "attachments",
+                        formik.values.attachments.filter(
+                          (attachment) => attachment.path !== file.path
+                        )
+                      );
+                    }}
                   />
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
@@ -506,6 +682,7 @@ function PostJobsComponent() {
                   >
                     <OutlinedButton
                       title="Cancel"
+                      disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                       sx={{
                         "&.MuiButton-outlined": {
                           borderRadius: "73px",
@@ -528,9 +705,18 @@ function PostJobsComponent() {
                       }}
                     />
                     <FilledButton
-                      title="POST THE JOB"
+                      title={
+                        submitting === SUBMITTING_STATUS_ENUM.loading
+                          ? jobId
+                            ? "Updating..."
+                            : "Posting..."
+                          : jobId
+                          ? "UPDATE THE JOB"
+                          : "POST THE JOB"
+                      }
                       isBlueButton
                       type="submit"
+                      disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                     />
                   </Stack>
                 </Grid>
@@ -539,6 +725,21 @@ function PostJobsComponent() {
           </div>
         </CardContent>
       </Card>
+      <SuccessToast
+        open={submitting === SUBMITTING_STATUS_ENUM.submitted}
+        handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
+        message="Job Posted Successfully"
+      />
+      <SuccessToast
+        open={submitting === SUBMITTING_STATUS_ENUM.updated}
+        handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
+        message="Job Updated Successfully"
+      />
+      <ErrorToast
+        open={submitting === SUBMITTING_STATUS_ENUM.error}
+        handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
+        message="Some thing went wrong!"
+      />
     </div>
   );
 }

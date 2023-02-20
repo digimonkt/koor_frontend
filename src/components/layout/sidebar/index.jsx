@@ -1,19 +1,38 @@
 import { Avatar, Box, Drawer, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { SVG } from "@assets/svg";
 import { USER_ROLES } from "@utils/enum";
 import { navigationOptions } from "./navigation";
 import "./styles.css";
+import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 const drawerWidth = 300;
 
 function Sidebar() {
+  const navigate = useNavigate();
   const { role, currentUser } = useSelector((state) => state.auth);
-  const location = useLocation();
+  const [mobileNumber, setMobileNumber] = useState("");
 
+  const navigateToUpdateProfile = () => {
+    if (role === USER_ROLES.jobSeeker) {
+      navigate("/job_seeker/my-profile/update-profile");
+    }
+  };
+
+  useEffect(() => {
+    const currentUserMobileNumber =
+      currentUser.countryCode && currentUser.mobileNumber
+        ? formatPhoneNumberIntl(
+            currentUser.countryCode + currentUser.mobileNumber
+          )
+        : "";
+    setMobileNumber(currentUserMobileNumber);
+  }, [currentUser]);
+
+  const location = useLocation();
   const drawer = (
     <>
       <div className="p-3 border-top border-bottom text-center user-details savetender">
@@ -28,11 +47,12 @@ function Sidebar() {
             },
           }}
           src={currentUser.profileImage}
+          onClick={navigateToUpdateProfile}
         >
           <SVG.UserIcon />
         </Avatar>
         <h1>{currentUser.name}</h1>
-        <p>{currentUser.mobileNumber}</p>
+        <p>{mobileNumber}</p>
         <p>{currentUser.email}</p>
       </div>
       <div className="sidebar-scroll">

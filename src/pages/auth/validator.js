@@ -17,7 +17,8 @@ export const validateRegistrationForm = Yup.object().shape({
     .required("Confirm Password is Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
-// .atLeastOneFieldExist(
-//   ["email", "mobileNumber"],
-//   "Email or Mobile Number is required"
-// );
+
+export const validateLoginForm = Yup.object().shape({
+  email: Yup.string().email("Invalid Email").required("Email is required"),
+  password: Yup.string().required("Password is Required"),
+});

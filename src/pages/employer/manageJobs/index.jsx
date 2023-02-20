@@ -1,15 +1,16 @@
 import { Chip, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 import AllApplication from "./component/allApplication";
 import MyJobs from "./component/myJobs";
 import { AntTab, AntTabs } from "./style";
+import { useSelector } from "react-redux";
 
 function ManageJobsComponent() {
+  const { totalCreatedJobs } = useSelector((state) => state.employer);
   const [panel, setPanel] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [tabs, setTabs] = useState([
     {
       title: "My jobs",
@@ -18,10 +19,21 @@ function ManageJobsComponent() {
     },
     {
       title: "All applications",
-      count: 107,
+      count: 0,
       component: AllApplication,
     },
   ]);
+  useEffect(() => {
+    setTabs((prevState) => {
+      const newTabs = prevState.map((tab) => {
+        if (tab.title === "My jobs") {
+          tab.count = totalCreatedJobs;
+        }
+        return tab;
+      });
+      return newTabs;
+    });
+  }, [totalCreatedJobs]);
   return (
     <div className="manage-jobs">
       <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>

@@ -11,7 +11,7 @@ function CheckboxInputComponent({ ...rest }) {
       sx={{
         color: "#CACACA",
         transition: "all 0.5s ease-out",
-        padding: "9px 5px",
+        padding: "9px 10px",
         "&.Mui-checked": {
           color: "#274593",
           transition: "all 0.5s ease-out",

@@ -29,7 +29,7 @@ const JobSeekerNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
-    isDisable: true,
+    isDisable: false,
   },
 ]);
 const EmployerNavigationOptions = Object.freeze([
@@ -76,12 +76,20 @@ const VendorNavigationOptions = Object.freeze([
     icon: SVG.DashboardIcon,
     title: "Dashboard",
     id: "dashboard",
-    isDisable: false,
+    to: "/dashboard-2",
   },
   {
+    to: "/my-profile-2",
     icon: SVG.ProfileIcon,
     title: "My Profile",
     id: "myProfile",
+    isDisable: false,
+  },
+  {
+    to: "/job/saved",
+    icon: SVG.SaveIcon,
+    title: "Saved Jobs",
+    id: "savedJobs",
     isDisable: false,
   },
 
@@ -96,27 +104,33 @@ const VendorNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
-    isDisable: true,
+    to: "/chat-2",
   },
 ]);
 
 export const navigationOptions = (role) => {
   switch (role) {
     case USER_ROLES.employer:
-      return EmployerNavigationOptions.map((option) => ({
-        ...option,
-        to: `/employer${option.to}`,
-      }));
+      return EmployerNavigationOptions.filter((item) => !item.isDisable).map(
+        (option) => ({
+          ...option,
+          to: `/employer${option.to}`,
+        })
+      );
     case USER_ROLES.jobSeeker:
-      return JobSeekerNavigationOptions.map((option) => ({
-        ...option,
-        to: `/job-seeker${option.to}`,
-      }));
-    case USER_ROLES.VendorNavigationOptions:
-      return VendorNavigationOptions.map((option) => ({
-        ...option,
-        to: `/vendor${option.to}`,
-      }));
+      return JobSeekerNavigationOptions.filter((item) => !item.isDisable).map(
+        (option) => ({
+          ...option,
+          to: `/${USER_ROLES.jobSeeker}${option.to}`,
+        })
+      );
+    case USER_ROLES.vendor:
+      return VendorNavigationOptions.filter((item) => !item.isDisable).map(
+        (option) => ({
+          ...option,
+          to: `/vendor${option.to}`,
+        })
+      );
     default:
       return [];
   }

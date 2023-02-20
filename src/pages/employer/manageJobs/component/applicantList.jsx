@@ -15,7 +15,7 @@ const ApplicantList = ({ handleActive, isActive }) => {
       <div className="toggle-application">
         Applications{" "}
         <Chip
-          label="3"
+          label="0"
           sx={{
             background: "#D5E3F7",
             fontSize: "14px",

@@ -52,9 +52,9 @@ const StackStyled = styled("div")(() => ({
 const ChatBox = () => {
   const [openDateModal, setOpenDateModal] = useState(false);
   const [value, setValue] = useState(dayjs("2022-04-07"));
-  const handleClickOpen = () => {
-    setOpenDateModal(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpenDateModal(true);
+  // };
 
   const handleCloseDate = () => {
     setOpenDateModal(false);
@@ -170,7 +170,7 @@ const ChatBox = () => {
                     </div>
                   </Button>
                   <Button
-                    onClick={handleClickOpen}
+                    // onClick={handleClickOpen}
                     variant="text"
                     className="buttonbox"
                     sx={{

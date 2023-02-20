@@ -23,7 +23,7 @@ import {
 import { ChatBox } from "@pages/messages";
 import { Resources } from "@pages/resources";
 import { PostTender } from "@pages/tenders";
-import VendorProfile from "@pages/vendor/myProfile";
+import { VendorMyProfile, VendorDashboard } from "@pages/vendor";
 
 // prefix => `/`
 export const ROUTES = [
@@ -73,7 +73,7 @@ export const AUTHENTICATED_ROUTES = [
   },
 ];
 
-// prefix => `/job-seeker`
+// prefix => `/job_seeker`
 export const JOB_SEEKER_ROUTES = [
   {
     id: "myProfile",
@@ -118,8 +118,26 @@ export const VENDOR_ROUTES = [
   {
     id: "myProfile",
     name: "My Profile",
-    path: "/my-profile",
-    component: VendorProfile,
+    path: "/my-profile-2",
+    component: VendorMyProfile,
+  },
+  {
+    id: "dashboard",
+    name: "Dashboard",
+    path: "/dashboard-2",
+    component: VendorDashboard,
+  },
+  {
+    id: "vendorsavedJobs",
+    name: "vendor saved Jobs",
+    path: "/job/saved",
+    component: SavedJobs,
+  },
+  {
+    id: "chat",
+    name: "chat",
+    path: "/chat-2",
+    component: ChatBox,
   },
 ];
 

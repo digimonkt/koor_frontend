@@ -1,17 +1,29 @@
 import axios from "axios";
-import { SERVER_URL } from "../utils/serverUrl";
+import { SERVER_URL } from "../utils/constants/serverUrl";
 import { globalLocalStorage } from "../utils/localStorage";
 
 export const axiosInstance = axios.create({
-  baseURL: `${SERVER_URL}/api`,
+  baseURL: `${SERVER_URL}api`,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 axiosInstance.interceptors.response.use(function (response) {
-  // ... do something
-
+  const newAccessToken = response.headers.get("x-access");
+  if (
+    newAccessToken &&
+    newAccessToken !== globalLocalStorage.getAccessToken()
+  ) {
+    globalLocalStorage.setAccessToken(newAccessToken);
+  }
+  const newRefreshToken = response.headers.get("x-refresh");
+  if (
+    newRefreshToken &&
+    newRefreshToken !== globalLocalStorage.getRefreshToken()
+  ) {
+    globalLocalStorage.setRefreshToken(newRefreshToken);
+  }
   return response;
 });
 
@@ -24,25 +36,34 @@ export const request = async (config) => {
       config.headers["Content-Type"] = "application/json";
     }
     const accessToken = globalLocalStorage.getAccessToken();
-    if (accessToken) {
+    const refreshToken = globalLocalStorage.getRefreshToken();
+    if (accessToken && refreshToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers["x-refresh"] = `${refreshToken}`;
     }
+
     const response = await axiosInstance.request({ ...config });
     return {
       remote: "success",
       data: response.data,
     };
   } catch (error) {
+    if (error.response.headers["x-access"]) {
+      globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
+    }
     if (error) {
       if (error.response) {
         const axiosError = error;
         if (axiosError.response && axiosError.response.data) {
-          let errorMessage = axiosError.response.data.errors;
+          let errorMessage = axiosError.response.data;
           // check for 500 to handle message defined by the app
           if (axiosError.response.status === 500) {
-            errorMessage = "Internal Server Error";
-          } else {
-            errorMessage = error.response.data.errors;
+            errorMessage = {
+              message: ["Internal Server Error"],
+            };
+          }
+          for (const key in errorMessage) {
+            errorMessage[key] = errorMessage[key][0];
           }
           return {
             remote: "failure",

@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-const AreaChart = () => {
+const AreaChart = ({ title }) => {
   const [state] = React.useState({
     data: [
       {
@@ -98,7 +98,7 @@ const AreaChart = () => {
         alignItems="center"
         sx={{ marginBottom: "29px" }}
       >
-        <h2>Job posts analytics</h2>
+        <h2>{title}</h2>
       </Stack>
       <Stack direction="row" spacing={5}>
         <div className="views">

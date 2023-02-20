@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import AuthReducer from "./slice/user";
-import ModalReducer from "./slice/modal";
-
+import ChoiceReducer from "./slice/choices";
+import EmployerReducer from "./slice/employer";
 export const store = configureStore({
   reducer: {
     auth: AuthReducer,
-    modal: ModalReducer,
+    choices: ChoiceReducer,
+    employer: EmployerReducer,
   },
 });

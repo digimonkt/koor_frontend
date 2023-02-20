@@ -1,0 +1,5 @@
+.date_picker_error fieldset,
+.date_picker_error label {
+  border-color: #ccc !important;
+  color: black !important;
+}

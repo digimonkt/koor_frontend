@@ -19,17 +19,21 @@
     "@types/react-dom": "^18.0.9",
     "apexcharts": "^3.36.3",
     "axios": "^1.2.3",
+    "dayjs": "^1.11.7",
     "envalid": "^7.3.1",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
-    "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
+    "react-easy-crop": "^4.7.0",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-phone-number-input": "^3.2.18",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
+    "source-map-explorer": "^2.5.3",
+    "urlcat": "^3.1.0",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
@@ -38,7 +42,8 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": [

@@ -1,34 +1,57 @@
-import { useDispatch } from "react-redux";
 import { FilledButton } from "@components/button";
 import { LabeledInput } from "@components/input";
-import { setCurrentUser, setIsLoggedIn } from "@redux/slice/user";
 import { USER_ROLES } from "@utils/enum";
-import { generateEmployer, generateJobSeeker } from "@utils/fakeData";
+import { LoginUserAPI } from "@api/user";
+// import { useNavigate } from "react-router-dom";
+import { validateLoginForm } from "./validator";
+import { useFormik } from "formik";
+import { ErrorMessage } from "@components/caption";
+import { useState } from "react";
+import Loader from "@components/loader";
 
 function LoginForm({ role }) {
-  const dispatch = useDispatch();
-  const handleLogin = () => {
-    dispatch(setIsLoggedIn(true));
-    let currentUser;
-    if (role === USER_ROLES.jobSeeker) {
-      currentUser = generateJobSeeker();
-    } else if (role === USER_ROLES.employer) {
-      currentUser = generateEmployer();
-    }
-    if (currentUser) dispatch(setCurrentUser(currentUser));
-  };
+  // const navigate = useNavigate();
+  const [loading, setIsLoading] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validateLoginForm,
+    onSubmit: async (values) => {
+      setIsLoading(true);
+      const payload = {
+        email: values.email,
+        password: values.password,
+        role,
+      };
+      const res = await LoginUserAPI(payload);
+      if (res.remote === "success") {
+        setIsLoading(false);
+        // navigate(`/${role}/my-profile/job-criteria`);
+      } else {
+        setIsLoading(false);
+        formik.setErrors({ password: "Invalid Credentials" });
+      }
+    },
+  });
   return (
     <>
       <div className="form-content">
-        <form>
+        <form onSubmit={formik.handleSubmit}>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Email"
-              title="Login"
+              title="Email"
               subtitle="Your mobile phone or email"
               data-cy="login-email"
               type="email"
+              {...formik.getFieldProps("email")}
             />
+            {formik.touched.email && formik.errors.email ? (
+              <ErrorMessage>{formik.errors.email}</ErrorMessage>
+            ) : null}
           </div>
           <div className="form-group mb-3">
             <LabeledInput
@@ -36,7 +59,11 @@ function LoginForm({ role }) {
               title="Password"
               data-cy="login-password"
               type="password"
+              {...formik.getFieldProps("password")}
             />
+            {formik.touched.password && formik.errors.password ? (
+              <ErrorMessage>{formik.errors.password}</ErrorMessage>
+            ) : null}
           </div>
           <div className="text-end forgots">
             <span>Forgot password?</span>
@@ -44,10 +71,11 @@ function LoginForm({ role }) {
 
           <div className="my-4 text-center">
             <FilledButton
-              title="Login"
+              title={loading ? <Loader loading={loading} /> : "Login"}
               isBlueButton={role !== USER_ROLES.jobSeeker}
-              onClick={handleLogin}
               data-cy="login-button"
+              type="submit"
+              disabled={loading}
             />
           </div>
         </form>
