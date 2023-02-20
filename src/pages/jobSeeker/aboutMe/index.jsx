@@ -25,6 +25,8 @@ import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
+import { EMPLOYMENT_STATUS } from "@utils/enum";
+import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
@@ -50,17 +52,41 @@ const AboutMe = (props) => {
     },
     validationSchema: validateJobSeekerAboutMe,
     onSubmit: async (values) => {
-      alert(JSON.stringify(values));
+      console.log(values);
+      const countryCode = values.mobileNumber.international.split(" ")[0];
+      const mobileNumber = (values.mobileNumber.value || "").replace(
+        countryCode,
+        ""
+      );
+
+      const payload = {
+        full_name: values.fullName,
+        email: values.email,
+        mobile_number: mobileNumber,
+        country_code: countryCode,
+        employment_status: values.employmentStatus,
+        description: values.description,
+        highest_education: values.highestEducation,
+        market_information_notification: values.marketInformationNotification,
+        job_notification: values.jobNotification,
+      };
+      if (payload.mobile_number === currentUser.mobileNumber) {
+        delete payload.mobile_number;
+        delete payload.country_code;
+      }
+      if (payload.email === currentUser.email) {
+        delete payload.email;
+      }
+      const res = await updateJobSeekerAboutMeAPI(payload);
+      console.log(res);
     },
   });
-  console.log(formik.errors, formik.values);
   useEffect(() => {
     if (!educationLevels.data.length) {
       dispatch(getEducationLevels());
     }
   }, []);
   useEffect(() => {
-    console.log({ currentUser });
     const currentUserMobileNumber =
       currentUser.countryCode && currentUser.mobileNumber
         ? currentUser.countryCode + currentUser.mobileNumber
@@ -203,8 +229,13 @@ const AboutMe = (props) => {
               label="Employment status"
               type="select"
               placeholder="Select Your status"
-              options={[]}
-              value=""
+              options={Object.keys(EMPLOYMENT_STATUS).map((status) => {
+                return {
+                  value: EMPLOYMENT_STATUS[status],
+                  label: status[0].toUpperCase() + status.substring(1),
+                };
+              })}
+              {...formik.getFieldProps("employmentStatus")}
             />
             {formik.touched.employmentStatus &&
             formik.errors.employmentStatus ? (
@@ -232,7 +263,6 @@ const AboutMe = (props) => {
               name="row-radio-buttons-group"
             >
               <FormControlReminder
-                value="wish"
                 control={
                   <Checkbox
                     icon={<SVG.UncheckIcon />}
@@ -247,10 +277,13 @@ const AboutMe = (props) => {
                     }}
                   />
                 }
+                onChange={(e) =>
+                  formik.setFieldValue("jobNotification", e.target.checked)
+                }
+                checked={formik.values.jobNotification || false}
                 label=" I wish to receive Job Application Notifications and other Job-related information from Koor "
               />
               <FormControlReminder
-                value="receive"
                 control={
                   <Checkbox
                     icon={<SVG.UncheckIcon />}
@@ -265,6 +298,13 @@ const AboutMe = (props) => {
                     }}
                   />
                 }
+                onChange={(e) =>
+                  formik.setFieldValue(
+                    "marketInformationNotification",
+                    e.target.checked
+                  )
+                }
+                checked={formik.values.marketInformationNotification || false}
                 label="I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
               />
             </FormGroup>

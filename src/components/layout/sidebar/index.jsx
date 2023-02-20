@@ -1,7 +1,7 @@
 import { Avatar, Box, Drawer, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { SVG } from "@assets/svg";
 import { USER_ROLES } from "@utils/enum";
@@ -12,8 +12,16 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 const drawerWidth = 300;
 
 function Sidebar() {
+  const navigate = useNavigate();
   const { role, currentUser } = useSelector((state) => state.auth);
   const [mobileNumber, setMobileNumber] = useState("");
+
+  const navigateToUpdateProfile = () => {
+    if (role === USER_ROLES.jobSeeker) {
+      navigate("/job_seeker/my-profile/update-profile");
+    }
+  };
+
   useEffect(() => {
     const currentUserMobileNumber =
       currentUser.countryCode && currentUser.mobileNumber
@@ -39,6 +47,7 @@ function Sidebar() {
             },
           }}
           src={currentUser.profileImage}
+          onClick={navigateToUpdateProfile}
         >
           <SVG.UserIcon />
         </Avatar>

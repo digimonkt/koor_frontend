@@ -42,6 +42,7 @@ const FormControlReminder = styled(FormControlLabel)`
   }
 `;
 function MyProfileComponent() {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [profilePicLoading, setProfilePicLoading] = useState("");
@@ -122,7 +123,6 @@ function MyProfileComponent() {
       });
     }
   }, [currentUser]);
-  const dispatch = useDispatch();
   const handleProfilePicSave = async (file) => {
     setProfilePicLoading("loading");
     const newFormData = new FormData();
