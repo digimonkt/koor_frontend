@@ -1,19 +1,19 @@
 import {
   Card,
   CardContent,
-  Checkbox,
   FormGroup,
   Radio,
   RadioGroup,
   Stack,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
-import { FormControlReminder, FormLabelBox } from "./style";
+import { FormLabelBox } from "./style";
 import { OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  CheckboxInput,
   HorizontalDateInput,
   HorizontalLabelInput,
   HorizontalPhoneInput,
@@ -27,11 +27,14 @@ import {
 } from "react-phone-number-input";
 import { EMPLOYMENT_STATUS } from "@utils/enum";
 import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
+import { ErrorToast, SuccessToast } from "@components/toast";
+import { FormControlReminder } from "@components/style";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const { educationLevels } = useSelector((state) => state.choices);
+  const [loading, setLoading] = useState("");
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -52,7 +55,7 @@ const AboutMe = (props) => {
     },
     validationSchema: validateJobSeekerAboutMe,
     onSubmit: async (values) => {
-      console.log(values);
+      setLoading("loading");
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
@@ -79,6 +82,11 @@ const AboutMe = (props) => {
       }
       const res = await updateJobSeekerAboutMeAPI(payload);
       console.log(res);
+      if (res.remote === "success") {
+        setLoading("submitted");
+      } else {
+        setLoading("error");
+      }
     },
   });
   useEffect(() => {
@@ -264,9 +272,7 @@ const AboutMe = (props) => {
             >
               <FormControlReminder
                 control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
+                  <CheckboxInput
                     sx={{
                       color: "#CACACA",
                       transition: "all 0.5s ease-out",
@@ -285,9 +291,7 @@ const AboutMe = (props) => {
               />
               <FormControlReminder
                 control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
+                  <CheckboxInput
                     sx={{
                       color: "#CACACA",
                       transition: "all 0.5s ease-out",
@@ -310,6 +314,7 @@ const AboutMe = (props) => {
             </FormGroup>
             <div className="text-center mt-5">
               <OutlinedButton
+                disabled={loading === "loading"}
                 type="submit"
                 title={
                   <>
@@ -319,7 +324,6 @@ const AboutMe = (props) => {
                     update info
                   </>
                 }
-                // onClick={props.handleClickOpen}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -339,6 +343,16 @@ const AboutMe = (props) => {
           </form>
         </CardContent>
       </Card>
+      <SuccessToast
+        open={loading === "submitted"}
+        handleClose={() => setLoading("")}
+        message="About me updated Successfully"
+      />
+      <ErrorToast
+        open={loading === "error"}
+        handleClose={() => setLoading("")}
+        message="Something went wrong"
+      />
     </>
   );
 };

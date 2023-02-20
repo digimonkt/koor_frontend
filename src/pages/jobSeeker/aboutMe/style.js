@@ -10,16 +10,7 @@ export const FormLabelBox = styled(FormControlLabel)`
     color: #121212;
   }
 `;
-export const FormControlReminder = styled(FormControlLabel)`
-  & .MuiFormControlLabel-label {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
 
-    color: #121212;
-  }
-`;
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: #f0f0f0;

@@ -7,7 +7,7 @@ const DialogBox = ({ open, handleClose, className, children, ...rest }) => {
       <Dialog
         open={open}
         onClose={handleClose}
-        ariaLabelledBy="responsive-dialog-title"
+        aria-labelledby="responsive-dialog-title"
         className={`modal-box ${className}`}
         fullWidth
         maxWidth="sm"

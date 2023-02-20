@@ -1,109 +1,130 @@
-import { IconButton, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
+import { CheckboxInput, DateInput, LabeledInput } from "@components/input";
+import { Grid } from "@mui/material";
+import { useFormik } from "formik";
+import { FormControlReminder } from "@components/style";
+import { validateEditEducation } from "../validator";
 
 const color = "#EEA23D";
-const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
 
 function EditEducation({ handleSubmit }) {
-  const [formValues, setFormValues] = useState({
-    degree: "",
-    location: "",
-    description: "",
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      institute: "",
+      educationLevel: "",
+      startDate: "",
+      endDate: "",
+      isPresent: false,
+    },
+    validationSchema: validateEditEducation,
+    onSubmit: (values) => {
+      console.log({ values });
+    },
   });
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setFormValues({ ...formValues, [name]: value });
-  };
+  console.log(formik.errors);
   return (
     <div>
       <>
         <h1 className="headding">Education</h1>
-        <Stack
-          direction="row"
-          spacing={2}
-          alignItems={{ xs: "start", lg: "center" }}
-          className="mb-3"
-        >
-          <IconButton
-            sx={{
-              "&.MuiIconButton-root": {
-                backgroundColor: bgcolor,
-                width: "101px",
-                height: "101px",
-                color: { color },
-              },
-            }}
-          >
-            <SVG.EducationIcon />
-          </IconButton>
-          <div className="description">
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <input
-                type="text"
-                placeholder="Degree"
+        <div className="form-content">
+          <form onSubmit={formik.handleSubmit}>
+            <div className="form-group mb-3">
+              <LabeledInput
+                placeholder="Select"
+                title="Education Level"
+                labelWeight={500}
                 className="add-form-control"
-                name="degree"
-                onChange={handleChange}
+                {...formik.getFieldProps("educationLevel")}
               />
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <input
-                type="text"
-                placeholder="Location"
+            </div>
+            <div className="form-group mb-3">
+              <LabeledInput
+                placeholder="Ex: Certificate in Electronics"
+                title="Diploma / certificate / degree"
+                labelWeight={500}
                 className="add-form-control"
-                name="location"
-                onChange={handleChange}
+                {...formik.getFieldProps("title")}
               />
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <input
-                type="text"
-                placeholder="Description"
+            </div>
+            <div className="form-group mb-3">
+              <LabeledInput
+                placeholder="Ex: Singapore Polytechnic"
+                title="School /institute"
+                labelWeight={500}
                 className="add-form-control"
-                name="description"
-                onChange={handleChange}
+                {...formik.getFieldProps("institute")}
               />
-            </Stack>
-          </div>
-        </Stack>
-        <div className="text-center mt-3">
-          <OutlinedButton
-            title={
-              <>
-                <span className="me-3 d-inline-flex">
-                  <SVG.PlushIcon />
-                </span>{" "}
-                Add education
-              </>
-            }
-            sx={{
-              "&.MuiButtonBase-root": {
-                border: `1px solid ${color} !important`,
-                color: `${color} !important`,
-                "&:hover": { background: buttonHover },
-              },
-            }}
-            onClick={handleSubmit}
-          />
+            </div>
+            <label
+              className="mb-1 d-inline-block"
+              style={{
+                fontWeight: 500,
+              }}
+            >
+              School period
+            </label>
+            <Grid container spacing={2}>
+              <Grid item lg={6} xs={12}>
+                <DateInput
+                  label="Start"
+                  onChange={(e) => formik.setFieldValue("startDate", e)}
+                  value={formik.values.startDate}
+                  onBlur={formik.getFieldProps("startDate").onBlur}
+                />
+              </Grid>
+              <Grid item lg={6} xs={12}>
+                <DateInput
+                  label="End"
+                  onChange={(e) => formik.setFieldValue("endDate", e)}
+                  value={formik.values.endDate}
+                  onBlur={formik.getFieldProps("endDate").onBlur}
+                />
+              </Grid>
+            </Grid>
+            <FormControlReminder
+              control={
+                <CheckboxInput
+                  sx={{
+                    color: "#CACACA",
+                    transition: "all 0.5s ease-out",
+                    "&.Mui-checked": {
+                      color: "#EEA23D",
+                      transition: "all 0.5s ease-out",
+                    },
+                  }}
+                />
+              }
+              label="I am currently studying"
+              onChange={(e) =>
+                formik.setFieldValue("isPresent", e.target.checked)
+              }
+              checked={formik.values.isPresent || false}
+            />
+            <div className="text-center mt-3">
+              <OutlinedButton
+                title={
+                  <>
+                    <span className="me-3 d-inline-flex">
+                      <SVG.PlushIcon />
+                    </span>{" "}
+                    Add education
+                  </>
+                }
+                sx={{
+                  "&.MuiButtonBase-root": {
+                    border: `1px solid ${color} !important`,
+                    color: `${color} !important`,
+                    "&:hover": { background: buttonHover },
+                  },
+                }}
+                type="submit"
+              />
+            </div>
+          </form>
         </div>
       </>
     </div>

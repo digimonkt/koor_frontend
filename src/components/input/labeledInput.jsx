@@ -2,7 +2,13 @@ import { Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 
-function LabeledInputComponent({ title, subtitle, type, ...rest }) {
+function LabeledInputComponent({
+  title,
+  subtitle,
+  type,
+  labelWeight,
+  ...rest
+}) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const handleChangePasswordVisibility = () => {
     setIsVisiblePassword(!isVisiblePassword);
@@ -20,7 +26,18 @@ function LabeledInputComponent({ title, subtitle, type, ...rest }) {
         justifyContent="space-between"
         className="mb-2"
       >
-        {title ? <label className="mb-1 d-inline-block">{title}</label> : ""}
+        {title ? (
+          <label
+            className="mb-1 d-inline-block"
+            style={{
+              fontWeight: labelWeight,
+            }}
+          >
+            {title}
+          </label>
+        ) : (
+          ""
+        )}
         {subtitle ? (
           <Stack direction="row" spacing={1} alignItems="center">
             <span className="text-gray">{subtitle}</span>
