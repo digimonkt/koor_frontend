@@ -6,7 +6,7 @@ export const USER_ROLES = Object.freeze({
 
 export const EMPLOYMENT_STATUS = Object.freeze({
   employed: "employed",
-  unEmployed: "unEmployed",
+  fresher: "fresher",
   other: "other",
 });
 
@@ -26,6 +26,7 @@ export const ORGANIZATION_TYPE = Object.freeze({
 export const GENDER = {
   male: "male",
   female: "female",
+  trans: "trans",
 };
 
 export const LANGUAGE_PROFICIENCY = {

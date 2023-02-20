@@ -22,7 +22,7 @@ const initialState = {
       // job-seeker
       gender: GENDER.male,
       dob: "",
-      employmentStatus: EMPLOYMENT_STATUS.unEmployed,
+      employmentStatus: EMPLOYMENT_STATUS.fresher,
       marketInformationNotification: false,
       jobNotification: false,
 
