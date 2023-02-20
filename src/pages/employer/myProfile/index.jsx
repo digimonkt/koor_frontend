@@ -85,9 +85,19 @@ function MyProfileComponent() {
         delete payload.mobile_number;
         delete payload.country_code;
       }
+      if (payload.license_id === currentUser.profile.licenseId) {
+        delete payload.license_id;
+      }
       const formData = new FormData();
       for (const key in payload) {
-        if (payload[key]) formData.append(key, payload[key]);
+        console.log({ key, payload });
+        if (key === "license") {
+          if (payload[key] instanceof File) {
+            formData.append(key, payload[key]);
+          }
+        } else {
+          if (payload[key]) formData.append(key, payload[key]);
+        }
       }
       const res = await updateEmployerAboutMe(formData);
       if (res.remote === "success") {
