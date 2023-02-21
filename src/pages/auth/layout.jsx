@@ -47,7 +47,7 @@ function AuthLayout({ title, subTitle }) {
       if (Object.values(USER_ROLES).includes(role)) {
         dispatch(setUserRole(role));
       } else {
-        dispatch(setUserRole(undefined));
+        // dispatch(setUserRole(undefined));
         navigate(location.pathname);
       }
     }, [dispatch, location.pathname, location.search, navigate]);

@@ -10,7 +10,6 @@ export const validateEditEducation = Yup.object({
     "isEndDatePresent",
     "End Date is required",
     (value, context) => {
-      console.log(context, value);
       const { parent } = context;
       if (parent.isPresent) {
         return true;

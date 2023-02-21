@@ -18,7 +18,7 @@ const educationList = [
 ];
 
 const Education = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const [educations, setEducations] = useState([...educationList]);
 
