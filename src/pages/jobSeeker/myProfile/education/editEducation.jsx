@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
 import {
@@ -13,14 +13,22 @@ import { FormControlReminder } from "@components/style";
 import { validateEditEducation } from "../validator";
 import { ErrorMessage } from "@components/caption";
 import dayjs from "dayjs";
-import { DATE_FORMATE } from "@utils/constants/constants";
-import { useSelector } from "react-redux";
+import { DATE_FORMAT } from "@utils/constants/constants";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addEducationDetailsAPI,
+  updateEducationDetailsAPI,
+} from "@api/jobSeeker";
+import { setSuccessToast } from "@redux/slice/toast";
+import Loader from "@components/loader";
+import { updateEducationRecord } from "@redux/slice/user";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
-
-function EditEducation({ handleSubmit }) {
+function EditEducation({ handleSubmit, currentSelected }) {
+  const dispatch = useDispatch();
   const { educationLevels } = useSelector((state) => state.choices);
+  const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -31,19 +39,67 @@ function EditEducation({ handleSubmit }) {
       isPresent: false,
     },
     validationSchema: validateEditEducation,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      setLoading(true);
       const payload = {
         title: values.title,
         institute: values.institute,
         education_level: values.educationLevel,
-        start_date: dayjs(values.startDate).format(DATE_FORMATE),
+        start_date: dayjs(values.startDate).format(DATE_FORMAT),
         end_date: values.isPresent
           ? null
-          : dayjs(values.endDate).format(DATE_FORMATE),
+          : dayjs(values.endDate).format(DATE_FORMAT),
       };
+      if (!currentSelected) {
+        const res = await addEducationDetailsAPI(payload);
+        if (res.remote === "success") {
+          dispatch(setSuccessToast("Added Successfully"));
+          handleSubmit();
+        }
+      } else {
+        const res = await updateEducationDetailsAPI(
+          currentSelected.id,
+          payload
+        );
+        if (res.remote === "success") {
+          dispatch(setSuccessToast("Updated Successfully"));
+          dispatch(
+            updateEducationRecord({
+              id: currentSelected.id,
+              title: values.title,
+              institute: values.institute,
+              educationLevel: educationLevels.data.find(
+                (record) => record.id === values.educationLevel
+              ),
+              startDate: dayjs(values.startDate).format(DATE_FORMAT),
+              endDate: values.isPresent
+                ? null
+                : dayjs(values.endDate).format(DATE_FORMAT),
+              isPresent: !currentSelected.endDate,
+            })
+          );
+          handleSubmit();
+        }
+      }
+      setLoading(false);
       console.log({ payload });
     },
   });
+  useEffect(() => {
+    if (currentSelected) {
+      const payload = {
+        title: currentSelected.title,
+        institute: currentSelected.institute,
+        educationLevel: currentSelected.educationLevel.id,
+        startDate: dayjs(currentSelected.startDate),
+        endDate: dayjs(currentSelected.endDate),
+        isPresent: !currentSelected.endDate,
+      };
+      for (const key in payload) {
+        formik.setFieldValue(key, payload[key]);
+      }
+    }
+  }, [currentSelected]);
   return (
     <div>
       <>
@@ -116,6 +172,7 @@ function EditEducation({ handleSubmit }) {
                   onChange={(e) => formik.setFieldValue("endDate", e)}
                   value={formik.values.endDate}
                   onBlur={formik.getFieldProps("endDate").onBlur}
+                  disabled={formik.values.isPresent}
                 />
                 {formik.touched.endDate && formik.errors.endDate ? (
                   <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
@@ -145,10 +202,22 @@ function EditEducation({ handleSubmit }) {
               <OutlinedButton
                 title={
                   <>
-                    <span className="me-3 d-inline-flex">
-                      <SVG.PlushIcon />
-                    </span>{" "}
-                    Add education
+                    {loading ? (
+                      <Loader loading={loading} />
+                    ) : (
+                      <>
+                        {currentSelected ? (
+                          "Add education"
+                        ) : (
+                          <>
+                            <span className="me-3 d-inline-flex">
+                              <SVG.PlushIcon />
+                            </span>{" "}
+                            Add education
+                          </>
+                        )}
+                      </>
+                    )}
                   </>
                 }
                 sx={{
@@ -159,6 +228,7 @@ function EditEducation({ handleSubmit }) {
                   },
                 }}
                 type="submit"
+                disabled={loading}
               />
             </div>
           </form>

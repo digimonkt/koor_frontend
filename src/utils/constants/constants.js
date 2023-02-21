@@ -1,1 +1,2 @@
-export const DATE_FORMATE = "YYYY-MM-DD";
+export const DATE_FORMAT = "YYYY-MM-DD";
+export const YEAR_FORMAT = "YYYY";

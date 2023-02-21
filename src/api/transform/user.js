@@ -27,11 +27,14 @@ export const transformGetUserDetails = (data) => {
     educationRecord: (data.education_record || []).map((record) => ({
       id: record.id,
       title: record.title,
-      startDate: record.startDate,
-      endDate: record.endDate,
-      present: record.present,
-      organization: record.organization,
-      description: record.description,
+      startDate: record.start_date,
+      endDate: record.end_date,
+      present: !record.end_date,
+      institute: record.institute,
+      educationLevel: {
+        id: record.education_level.id,
+        title: record.education_level.title,
+      },
     })),
     workExperience: (data.work_experience || []).map((record) => ({
       id: record.id,

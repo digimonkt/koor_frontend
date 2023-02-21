@@ -12,10 +12,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { AuthorizedRoute, UnauthorizedRoute } from "./utils/routes";
 import { globalLocalStorage } from "@utils/localStorage";
 import { getUserDetails, setIsLoggedIn } from "@redux/slice/user";
+import { ErrorToast, SuccessToast } from "@components/toast";
+import { MESSAGE_TYPE } from "@utils/enum";
+import { resetToast } from "@redux/slice/toast";
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const {
+    auth: { isLoggedIn },
+    toast: { message: toastMessage, type: toastType },
+  } = useSelector((state) => state);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
@@ -81,6 +87,16 @@ function App() {
           }
         />
       </Routes>
+      <SuccessToast
+        open={toastType === MESSAGE_TYPE.success}
+        message={toastMessage}
+        handleClose={() => dispatch(resetToast())}
+      />
+      <ErrorToast
+        open={toastType === MESSAGE_TYPE.error}
+        message={toastMessage}
+        handleClose={() => dispatch(resetToast())}
+      />
       {!isLoggedIn && <Footer />}
     </div>
   );

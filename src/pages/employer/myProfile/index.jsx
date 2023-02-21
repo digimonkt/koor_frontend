@@ -80,7 +80,6 @@ function MyProfileComponent() {
       }
       const formData = new FormData();
       for (const key in payload) {
-        console.log({ key, payload });
         if (key === "license") {
           if (payload[key] instanceof File) {
             formData.append(key, payload[key]);
