@@ -14,3 +14,23 @@ export const getJobDetailsByIdAPI = async (data) => {
   }
   return response;
 };
+
+export const getSearchJobsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/jobs", data),
+    method: "GET",
+  });
+  console.log({ data, response });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        ...response.data,
+        results: response.data.results.map((data) =>
+          transformFullJobDetails(data)
+        ),
+      },
+    };
+  }
+  return response;
+};

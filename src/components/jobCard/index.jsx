@@ -1,7 +1,6 @@
 import { Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { IMAGES } from "@assets/images";
 import { SVG } from "@assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
@@ -10,7 +9,7 @@ import { USER_ROLES } from "@utils/enum";
 import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { getColorByRemainingDays } from "@utils/generateColor";
-
+import { generateFileUrl } from "@utils/generateFileUrl";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const editUrl = urlcat("/employer/jobs/post", { jobId: jobDetails?.id });
 
@@ -39,7 +38,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         >
           <div className="squer-width">
             <img
-              src={IMAGES.FacebookBoxIcon}
+              src={generateFileUrl(jobDetails.user?.image?.path || "")}
               alt=""
               style={{ width: "100%", height: "85px" }}
             />
