@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import {
   Container,
@@ -14,20 +14,48 @@ import Paginations from "@components/pagination";
 import Searchinput from "@components/searchInput";
 import JobCard from "@components/jobCard";
 import AdvanceFilter from "./AdvanceFilter";
+import { useSearchParams } from "react-router-dom";
+import { getSearchJobsAPI } from "@api/job";
 
 export default function JobSearch() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const [searchParams] = useSearchParams();
+  const [search, setSearch] = useState("");
+  const [searchedJobs, setSearchedJobs] = useState([]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const getSearchJobs = async () => {
+    const res = await getSearchJobsAPI({ search });
+    if (res.remote === "success") {
+      console.log({ res, result: res.data.results });
+      setSearchedJobs(res.data.results);
+    }
+  };
+
+  useEffect(() => {
+    if (searchParams.get("search")) {
+      setSearch(search);
+    }
+  }, [searchParams]);
+  useEffect(() => {
+    if (search) {
+      getSearchJobs();
+    }
+  }, [search]);
 
   return (
     <div className={`${styles.body}`}>
-      <Searchinput svg={<SVG.Buttonsearch />} placeholder="Search jobs" />
+      <Searchinput
+        svg={<SVG.Buttonsearch />}
+        placeholder="Search jobs"
+        onChange={(e) => setSearch(e.target.value)}
+      />
       <Container>
         <AdvanceFilter />
       </Container>
@@ -114,9 +142,14 @@ export default function JobSearch() {
               </Menu>
             </Stack>
           </div>
-          <JobCard logo />
-          <Divider />
-          <JobCard logo />
+          {searchedJobs.map((job) => {
+            return (
+              <>
+                <JobCard logo key={job.id} jobDetails={job} />
+                <Divider />
+              </>
+            );
+          })}
         </div>
       </Container>
       <div className="paginations pt-4">

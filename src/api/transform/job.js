@@ -32,11 +32,12 @@ export const transformFullJobDetails = (data) => {
       mobileNumber: data.user.mobile_number,
       image: data.user.image,
     },
-    attachments: data.attachments.map((attachment) => ({
-      id: attachment.id,
-      path: attachment.path,
-      type: attachment.type,
-      title: attachment.title,
-    })),
+    attachments:
+      data.attachments?.map((attachment) => ({
+        id: attachment.id,
+        path: attachment.path,
+        type: attachment.type,
+        title: attachment.title,
+      })) || [],
   };
 };

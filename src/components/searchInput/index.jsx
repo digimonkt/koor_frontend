@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { Container, IconButton } from "@mui/material";
 import { SVG } from "@assets/svg";
 
-export default function Searchinput({ placeholder, svg }) {
+export default function Searchinput({ placeholder, svg, ...rest }) {
   return (
     <div>
       <Container>
@@ -22,6 +22,7 @@ export default function Searchinput({ placeholder, svg }) {
             <input
               className={`${styles.searchbox}`}
               placeholder={placeholder}
+              {...rest}
             />
             <span>{svg}</span>
           </div>
