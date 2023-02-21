@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  Checkbox,
   FormGroup,
   Radio,
   RadioGroup,
@@ -9,11 +8,12 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
-import { FormControlReminder, FormLabelBox } from "./style";
+import { FormLabelBox } from "./style";
 import { OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  CheckboxInput,
   HorizontalDateInput,
   HorizontalLabelInput,
   HorizontalPhoneInput,
@@ -28,6 +28,7 @@ import {
 import { EMPLOYMENT_STATUS } from "@utils/enum";
 import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
 import { ErrorToast, SuccessToast } from "@components/toast";
+import { FormControlReminder } from "@components/style";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
@@ -271,9 +272,7 @@ const AboutMe = (props) => {
             >
               <FormControlReminder
                 control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
+                  <CheckboxInput
                     sx={{
                       color: "#CACACA",
                       transition: "all 0.5s ease-out",
@@ -292,9 +291,7 @@ const AboutMe = (props) => {
               />
               <FormControlReminder
                 control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
+                  <CheckboxInput
                     sx={{
                       color: "#CACACA",
                       transition: "all 0.5s ease-out",

@@ -112,6 +112,34 @@ export const authSlice = createSlice({
         profileImage: action.payload,
       };
     },
+    addEducationRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        educationRecord: [...state.currentUser.educationRecord, action.payload],
+      };
+    },
+    updateEducationRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        educationRecord: state.currentUser.educationRecord.map((education) => {
+          if (education.id === action.payload.id) {
+            return {
+              ...education,
+              ...action.payload,
+            };
+          }
+          return education;
+        }),
+      };
+    },
+    deleteEducationRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        educationRecord: state.currentUser.educationRecord.filter(
+          (record) => record.id !== action.payload
+        ),
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
@@ -126,5 +154,12 @@ export const authSlice = createSlice({
     });
   },
 });
-export const { setIsLoggedIn, setUserRole, setProfilePic } = authSlice.actions;
+export const {
+  setIsLoggedIn,
+  setUserRole,
+  setProfilePic,
+  addEducationRecord,
+  updateEducationRecord,
+  deleteEducationRecord,
+} = authSlice.actions;
 export default authSlice.reducer;

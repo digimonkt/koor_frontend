@@ -14,9 +14,7 @@ import {
   FormGroup,
   Grid,
   Stack,
-  FormControlLabel,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { validateEmployerAboutMe } from "../validator";
@@ -31,16 +29,8 @@ import Loader from "@components/loader";
 import { UpdateProfileImageAPI } from "@api/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import { setProfilePic } from "@redux/slice/user";
-const FormControlReminder = styled(FormControlLabel)`
-  & .MuiFormControlLabel-label {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
+import { FormControlReminder } from "@components/style";
 
-    color: #121212;
-  }
-`;
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
@@ -90,7 +80,6 @@ function MyProfileComponent() {
       }
       const formData = new FormData();
       for (const key in payload) {
-        console.log({ key, payload });
         if (key === "license") {
           if (payload[key] instanceof File) {
             formData.append(key, payload[key]);

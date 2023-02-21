@@ -42,3 +42,10 @@ export const PAY_PERIOD = {
   week: "weekly",
   hour: "hourly",
 };
+
+export const MESSAGE_TYPE = {
+  error: "error",
+  success: "success",
+  warning: "warning",
+  null: "",
+};

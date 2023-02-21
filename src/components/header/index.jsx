@@ -28,6 +28,7 @@ function Header() {
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("talent");
+  const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
     switch (role) {
       case USER_ROLES.jobSeeker:
@@ -55,56 +56,63 @@ function Header() {
           <Link to="/" className="navbar-brand">
             <SVG.KoorLogo />
           </Link>
-          {isLoggedIn ? <div className="">
-            <SearchCategory direction="row" spacing={1} alignItems="center">
-              <Link
-                to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
-                className="d-inline-flex"
-              >
-                <SVG.SearchIcon />
-              </Link>
-              {role === "employer" ? (
-                <FormControl
-                  sx={{
-                    "&.MuiSelect-select": {
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                    },
-                  }}
-                  size="small"
+          {isLoggedIn ? (
+            <div className="">
+              <SearchCategory direction="row" spacing={1} alignItems="center">
+                <Link
+                  to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
+                  className="d-inline-flex"
                 >
-                  <SelectBox
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    inputProps={{ "aria-label": "Without label" }}
-                    displayEmpty
-                    sx={{ width: "100px" }}
+                  <SVG.SearchIcon />
+                </Link>
+                {role === "employer" ? (
+                  <FormControl
+                    sx={{
+                      "&.MuiSelect-select": {
+                        fontFamily: "Poppins",
+                        fontSize: "16px",
+                      },
+                    }}
+                    size="small"
                   >
-                    <MenuItem value={searchType.Talent}>Talent</MenuItem>
-                    <MenuItem value={searchType.Tenders}>Tenders</MenuItem>
-                    <MenuItem value={searchType.Vendors}>Vendors</MenuItem>
-                  </SelectBox>
-                </FormControl>
-              ) : (
-                ""
-              )}
-              <input
-                onKeyDown={(e) => {
-                  if (e.key === "enter" || e.key === "Enter") {
-                    navigate(
-                      role === USER_ROLES.jobSeeker ? "/job-search" : "/"
-                    );
-                  }
-                }}
-                className="employersearch"
-                placeholder={role === "employer" ? "" : searchPlaceholder}
-              />
-            </SearchCategory>
-          </div> : ""}
+                    <SelectBox
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      inputProps={{ "aria-label": "Without label" }}
+                      displayEmpty
+                      sx={{ width: "100px" }}
+                    >
+                      <MenuItem value={searchType.Talent}>Talent</MenuItem>
+                      <MenuItem value={searchType.Tenders}>Tenders</MenuItem>
+                      <MenuItem value={searchType.Vendors}>Vendors</MenuItem>
+                    </SelectBox>
+                  </FormControl>
+                ) : (
+                  ""
+                )}
+                <input
+                  onKeyDown={(e) => {
+                    if (e.key === "enter" || e.key === "Enter") {
+                      navigate(
+                        role === USER_ROLES.jobSeeker
+                          ? `/job-search?search=${searchValue}`
+                          : "/"
+                      );
+                    }
+                  }}
+                  className="employersearch"
+                  placeholder={role === "employer" ? "" : searchPlaceholder}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+              </SearchCategory>
+            </div>
+          ) : (
+            ""
+          )}
 
           <div
             className="ms-auto"
-          // ref={menu}
+            // ref={menu}
           >
             <IconButton
               // onClick={() => setIsmenu(!ismenu)}
@@ -120,8 +128,9 @@ function Header() {
               <MenuIcon />
             </IconButton>
             <ul
-              className={`menu ${ismenu && "menu-selected"} ${role !== USER_ROLES.jobSeeker ? "color-change" : null
-                }`}
+              className={`menu ${ismenu && "menu-selected"} ${
+                role !== USER_ROLES.jobSeeker ? "color-change" : null
+              }`}
             >
               <li>
                 <Link to="/">Home</Link>

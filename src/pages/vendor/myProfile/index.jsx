@@ -2,7 +2,6 @@ import {
   Card,
   CardContent,
   FormControl,
-  FormControlLabel,
   FormGroup,
   Grid,
   Select,
@@ -20,6 +19,7 @@ import DialogBox from "@components/dialogBox";
 import { IMAGES } from "@assets/images";
 import { CheckboxInput, LabeledInput, SelectInput } from "@components/input";
 import { SVG } from "@assets/svg";
+import { FormControlReminder } from "@components/style";
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: #f0f0f0;
@@ -39,16 +39,6 @@ export const SelectBox = styled(Select)`
   }
   & fieldset {
     display: none;
-  }
-`;
-export const FormControlReminder = styled(FormControlLabel)`
-  & .MuiFormControlLabel-label {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-
-    color: #121212;
   }
 `;
 

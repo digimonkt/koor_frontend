@@ -38,6 +38,7 @@ import { createJobAPI, updateEmployerJobAPI } from "@api/employer";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import dayjs from "dayjs";
 import { getJobDetailsByIdAPI } from "@api/job";
+import { DATE_FORMAT } from "@utils/constants/constants";
 
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
@@ -105,7 +106,7 @@ function PostJobsComponent() {
         is_part_time: values.isPartTime,
         has_contract: values.hasContract,
         working_days: values.workingDays,
-        deadline: dayjs(values.deadline).format("YYYY-MM-DD"),
+        deadline: dayjs(values.deadline).format(DATE_FORMAT),
         contact_email: values.isContactEmail ? values.contactEmail : "",
         contact_phone: values.isContactPhone ? values.contactPhone : "",
         contact_whatsapp: values.isContactWhatsapp

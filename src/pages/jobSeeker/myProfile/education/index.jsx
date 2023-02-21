@@ -5,30 +5,29 @@ import { OutlinedButton } from "@components/button";
 import EducationCard from "@components/educationCard";
 import EditEducation from "./editEducation";
 import DialogBox from "@components/dialogBox";
-
-const educationList = [
-  {
-    title: "Degree",
-    organization: "Cambridge University",
-    startYear: 2001,
-    endYear: null,
-    isPresent: true,
-    description: "THis is the description",
-  },
-];
+import { useSelector } from "react-redux";
 
 const Education = () => {
-  const [open, setOpen] = useState(false);
+  const {
+    currentUser: { educationRecord },
+  } = useSelector((state) => state.auth);
 
-  const [educations, setEducations] = useState([...educationList]);
+  const [open, setOpen] = useState(false);
+  const [currentSelected, setCurrentSelected] = useState(null);
 
   const handleToggleModel = () => {
     setOpen(!open);
+    if (open) {
+      setCurrentSelected(null);
+    }
   };
 
-  const handleSubmit = (value) => {
-    console.log(value);
-    setEducations((prevState) => [...prevState, value]);
+  const handleSubmit = () => {
+    handleToggleModel();
+  };
+
+  const handleEdit = (value) => {
+    setCurrentSelected(value);
     handleToggleModel();
   };
 
@@ -52,9 +51,12 @@ const Education = () => {
           <div className="add-content">
             <h2 className="mb-4">Education</h2>
             <ul className="listitems">
-              {educations.map((item, index) => (
+              {educationRecord.map((item, index) => (
                 <li key={index}>
-                  <EducationCard {...item} />
+                  <EducationCard
+                    {...item}
+                    handleEdit={() => handleEdit(item)}
+                  />
                 </li>
               ))}
             </ul>
@@ -89,7 +91,10 @@ const Education = () => {
         </CardContent>
       </Card>
       <DialogBox open={open} handleClose={handleToggleModel}>
-        <EditEducation handleSubmit={handleSubmit} />
+        <EditEducation
+          handleSubmit={handleSubmit}
+          currentSelected={currentSelected}
+        />
       </DialogBox>
     </>
   );

@@ -1,109 +1,237 @@
-import { IconButton, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
+import {
+  CheckboxInput,
+  DateInput,
+  LabeledInput,
+  SelectInput,
+} from "@components/input";
+import { Grid } from "@mui/material";
+import { useFormik } from "formik";
+import { FormControlReminder } from "@components/style";
+import { validateEditEducation } from "../validator";
+import { ErrorMessage } from "@components/caption";
+import dayjs from "dayjs";
+import { DATE_FORMAT } from "@utils/constants/constants";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addEducationDetailsAPI,
+  updateEducationDetailsAPI,
+} from "@api/jobSeeker";
+import { setSuccessToast } from "@redux/slice/toast";
+import Loader from "@components/loader";
+import { updateEducationRecord } from "@redux/slice/user";
 
 const color = "#EEA23D";
-const bgcolor = "#FEEFD3";
 const buttonHover = "#eea23d14";
-
-function EditEducation({ handleSubmit }) {
-  const [formValues, setFormValues] = useState({
-    degree: "",
-    location: "",
-    description: "",
+function EditEducation({ handleSubmit, currentSelected }) {
+  const dispatch = useDispatch();
+  const { educationLevels } = useSelector((state) => state.choices);
+  const [loading, setLoading] = useState(false);
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      institute: "",
+      educationLevel: "",
+      startDate: "",
+      endDate: "",
+      isPresent: false,
+    },
+    validationSchema: validateEditEducation,
+    onSubmit: async (values) => {
+      setLoading(true);
+      const payload = {
+        title: values.title,
+        institute: values.institute,
+        education_level: values.educationLevel,
+        start_date: dayjs(values.startDate).format(DATE_FORMAT),
+        end_date: values.isPresent
+          ? null
+          : dayjs(values.endDate).format(DATE_FORMAT),
+      };
+      if (!currentSelected) {
+        const res = await addEducationDetailsAPI(payload);
+        if (res.remote === "success") {
+          dispatch(setSuccessToast("Added Successfully"));
+          handleSubmit();
+        }
+      } else {
+        const res = await updateEducationDetailsAPI(
+          currentSelected.id,
+          payload
+        );
+        if (res.remote === "success") {
+          dispatch(setSuccessToast("Updated Successfully"));
+          dispatch(
+            updateEducationRecord({
+              id: currentSelected.id,
+              title: values.title,
+              institute: values.institute,
+              educationLevel: educationLevels.data.find(
+                (record) => record.id === values.educationLevel
+              ),
+              startDate: dayjs(values.startDate).format(DATE_FORMAT),
+              endDate: values.isPresent
+                ? null
+                : dayjs(values.endDate).format(DATE_FORMAT),
+              isPresent: !currentSelected.endDate,
+            })
+          );
+          handleSubmit();
+        }
+      }
+      setLoading(false);
+      console.log({ payload });
+    },
   });
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setFormValues({ ...formValues, [name]: value });
-  };
+  useEffect(() => {
+    if (currentSelected) {
+      const payload = {
+        title: currentSelected.title,
+        institute: currentSelected.institute,
+        educationLevel: currentSelected.educationLevel.id,
+        startDate: dayjs(currentSelected.startDate),
+        endDate: dayjs(currentSelected.endDate),
+        isPresent: !currentSelected.endDate,
+      };
+      for (const key in payload) {
+        formik.setFieldValue(key, payload[key]);
+      }
+    }
+  }, [currentSelected]);
   return (
     <div>
       <>
         <h1 className="headding">Education</h1>
-        <Stack
-          direction="row"
-          spacing={2}
-          alignItems={{ xs: "start", lg: "center" }}
-          className="mb-3"
-        >
-          <IconButton
-            sx={{
-              "&.MuiIconButton-root": {
-                backgroundColor: bgcolor,
-                width: "101px",
-                height: "101px",
-                color: { color },
-              },
-            }}
-          >
-            <SVG.EducationIcon />
-          </IconButton>
-          <div className="description">
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <input
-                type="text"
-                placeholder="Degree"
+        <div className="form-content">
+          <form onSubmit={formik.handleSubmit}>
+            <div className="form-group mb-3">
+              <SelectInput
+                placeholder="Select"
+                title="Education Level"
+                labelWeight={500}
                 className="add-form-control"
-                name="degree"
-                onChange={handleChange}
+                options={educationLevels.data.map((education) => ({
+                  label: education.title,
+                  value: education.id,
+                }))}
+                {...formik.getFieldProps("educationLevel")}
               />
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <input
-                type="text"
-                placeholder="Location"
+              {formik.touched.educationLevel && formik.errors.educationLevel ? (
+                <ErrorMessage>{formik.errors.educationLevel}</ErrorMessage>
+              ) : null}
+            </div>
+            <div className="form-group mb-3">
+              <LabeledInput
+                placeholder="Ex: Certificate in Electronics"
+                title="Diploma / certificate / degree"
+                labelWeight={500}
                 className="add-form-control"
-                name="location"
-                onChange={handleChange}
+                {...formik.getFieldProps("title")}
               />
-            </Stack>
-            <Stack
-              direction={{ xs: "column", lg: "row" }}
-              spacing={{ xs: 2, lg: 2 }}
-              alignItems={{ xs: "start", lg: "center" }}
-              className="mb-3"
-            >
-              <input
-                type="text"
-                placeholder="Description"
+              {formik.touched.title && formik.errors.title ? (
+                <ErrorMessage>{formik.errors.title}</ErrorMessage>
+              ) : null}
+            </div>
+            <div className="form-group mb-3">
+              <LabeledInput
+                placeholder="Ex: Singapore Polytechnic"
+                title="School / institute"
+                labelWeight={500}
                 className="add-form-control"
-                name="description"
-                onChange={handleChange}
+                {...formik.getFieldProps("institute")}
               />
-            </Stack>
-          </div>
-        </Stack>
-        <div className="text-center mt-3">
-          <OutlinedButton
-            title={
-              <>
-                <span className="me-3 d-inline-flex">
-                  <SVG.PlushIcon />
-                </span>{" "}
-                Add education
-              </>
-            }
-            sx={{
-              "&.MuiButtonBase-root": {
-                border: `1px solid ${color} !important`,
-                color: `${color} !important`,
-                "&:hover": { background: buttonHover },
-              },
-            }}
-            onClick={handleSubmit}
-          />
+              {formik.touched.institute && formik.errors.institute ? (
+                <ErrorMessage>{formik.errors.institute}</ErrorMessage>
+              ) : null}
+            </div>
+            <label
+              className="mb-1 d-inline-block"
+              style={{
+                fontWeight: 500,
+              }}
+            >
+              School period
+            </label>
+            <Grid container spacing={2}>
+              <Grid item lg={6} xs={12}>
+                <DateInput
+                  label="Start"
+                  onChange={(e) => formik.setFieldValue("startDate", e)}
+                  value={formik.values.startDate}
+                  onBlur={formik.getFieldProps("startDate").onBlur}
+                />
+                {formik.touched.startDate && formik.errors.startDate ? (
+                  <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                ) : null}
+              </Grid>
+              <Grid item lg={6} xs={12}>
+                <DateInput
+                  label="End"
+                  onChange={(e) => formik.setFieldValue("endDate", e)}
+                  value={formik.values.endDate}
+                  onBlur={formik.getFieldProps("endDate").onBlur}
+                  disabled={formik.values.isPresent}
+                />
+                {formik.touched.endDate && formik.errors.endDate ? (
+                  <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
+                ) : null}
+              </Grid>
+            </Grid>
+            <FormControlReminder
+              control={
+                <CheckboxInput
+                  sx={{
+                    color: "#CACACA",
+                    transition: "all 0.5s ease-out",
+                    "&.Mui-checked": {
+                      color: "#EEA23D",
+                      transition: "all 0.5s ease-out",
+                    },
+                  }}
+                />
+              }
+              label="I am currently studying"
+              onChange={(e) =>
+                formik.setFieldValue("isPresent", e.target.checked)
+              }
+              checked={formik.values.isPresent || false}
+            />
+            <div className="text-center mt-3">
+              <OutlinedButton
+                title={
+                  <>
+                    {loading ? (
+                      <Loader loading={loading} />
+                    ) : (
+                      <>
+                        {currentSelected ? (
+                          "Add education"
+                        ) : (
+                          <>
+                            <span className="me-3 d-inline-flex">
+                              <SVG.PlushIcon />
+                            </span>{" "}
+                            Add education
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                }
+                sx={{
+                  "&.MuiButtonBase-root": {
+                    border: `1px solid ${color} !important`,
+                    color: `${color} !important`,
+                    "&:hover": { background: buttonHover },
+                  },
+                }}
+                type="submit"
+                disabled={loading}
+              />
+            </div>
+          </form>
         </div>
       </>
     </div>
