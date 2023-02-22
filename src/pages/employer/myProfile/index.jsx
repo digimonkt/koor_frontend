@@ -30,6 +30,7 @@ import { UpdateProfileImageAPI } from "@api/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import { setProfilePic } from "@redux/slice/user";
 import { FormControlReminder } from "@components/style";
+import { setSuccessToast } from "@redux/slice/toast";
 
 function MyProfileComponent() {
   const dispatch = useDispatch();
@@ -91,6 +92,7 @@ function MyProfileComponent() {
       const res = await updateEmployerAboutMe(formData);
       if (res.remote === "success") {
         console.log({ res });
+        dispatch(setSuccessToast("Updated Successfully"));
         setLoading(false);
       } else {
         console.log({ res });
