@@ -8,7 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginForm from "./loginForm";
 import RegistrationForm from "./registrationForm";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsLoggedIn, setUserRole } from "@redux/slice/user";
+import { setUserRole } from "@redux/slice/user";
 
 const AuthOptions = [
   {
@@ -142,20 +142,21 @@ function AuthLayout({ title, subTitle }) {
 
                       <div className={"bottombar mt-5"}>
                         <span>Already have an account?</span>
-                        <Link
+                        <div
                           onClick={() => {
-                            dispatch(setIsLoggedIn(false));
+                            dispatch(setUserRole(""));
+                            navigate(isLoginPage ? "/" : "/login");
                           }}
-                          to={isLoginPage ? "/" : "/login"}
                           style={{
                             color:
                               role === USER_ROLES.jobSeeker
                                 ? "#EEA23D"
                                 : "#274593",
+                            cursor: "pointer",
                           }}
                         >
                           {isLoginPage ? "Register" : "Login"}
-                        </Link>
+                        </div>
                       </div>
                     </>
                   )}
