@@ -65,9 +65,9 @@ function EditEducation({ handleSubmit, currentSelected }) {
               ),
               startDate: dayjs(data.start_date).format(DATE_FORMAT),
               endDate: !data.end_date
-                ? ""
+                ? null
                 : dayjs(data.end_date).format(DATE_FORMAT),
-              isPresent: !data.end_date,
+              present: !data.end_date,
             })
           );
           handleSubmit();
@@ -186,6 +186,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
               <Grid item lg={6} xs={12}>
                 <DateInput
                   label="End"
+                  views={["year"]}
                   onChange={(e) => formik.setFieldValue("endDate", e)}
                   value={formik.values.endDate}
                   onBlur={formik.getFieldProps("endDate").onBlur}

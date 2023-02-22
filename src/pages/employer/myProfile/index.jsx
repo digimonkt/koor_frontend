@@ -110,7 +110,12 @@ function MyProfileComponent() {
         currentUser.profile.organizationType
       );
       formik.setFieldValue("licenseId", currentUser.profile.licenseId);
-      formik.setFieldValue("license", [currentUser.profile.licenseIdFile]);
+      formik.setFieldValue(
+        "license",
+        currentUser.profile.licenseIdFile
+          ? [currentUser.profile.licenseIdFile]
+          : []
+      );
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
           ? formatPhoneNumber(currentUserMobileNumber)
