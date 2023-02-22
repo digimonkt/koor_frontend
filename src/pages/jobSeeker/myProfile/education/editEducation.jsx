@@ -189,8 +189,9 @@ function EditEducation({ handleSubmit, currentSelected }) {
                   views={["year"]}
                   onChange={(e) => formik.setFieldValue("endDate", e)}
                   value={formik.values.endDate}
+                  minDate={formik.values.startDate}
                   onBlur={formik.getFieldProps("endDate").onBlur}
-                  disabled={formik.values.isPresent}
+                  disabled={formik.values.isPresent || !formik.values.startDate}
                 />
                 {formik.touched.endDate && formik.errors.endDate ? (
                   <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
