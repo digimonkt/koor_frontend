@@ -6,6 +6,7 @@ import {
   RadioGroup,
   Stack,
 } from "@mui/material";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import { FormLabelBox } from "./style";
@@ -29,6 +30,7 @@ import { EMPLOYMENT_STATUS } from "@utils/enum";
 import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import { FormControlReminder } from "@components/style";
+import { DATE_FORMAT } from "@utils/constants/constants";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
@@ -67,6 +69,8 @@ const AboutMe = (props) => {
         email: values.email,
         mobile_number: mobileNumber,
         country_code: countryCode,
+        dob: dayjs(values.dob).format(DATE_FORMAT),
+        gender: values.gender,
         employment_status: values.employmentStatus,
         description: values.description,
         highest_education: values.highestEducation,
@@ -112,10 +116,10 @@ const AboutMe = (props) => {
         value: currentUserMobileNumber,
       },
       gender: currentUser.profile.gender,
-      dob: currentUser.profile.dob,
+      dob: currentUser.profile.dob ? dayjs(currentUser.profile.dob) : "",
       employmentStatus: currentUser.profile.employmentStatus,
       description: currentUser.profile.description,
-      highestEducation: currentUser.profile.highestEducation || "",
+      highestEducation: currentUser.profile.highestEducation?.id || "",
       marketInformationNotification:
         currentUser.profile.marketInformationNotification,
       jobNotification: currentUser.profile.jobNotification,
@@ -162,7 +166,7 @@ const AboutMe = (props) => {
             ) : null}
             <HorizontalPhoneInput
               label="Mobile Number (optional)"
-              value={""}
+              value={formik.values.mobileNumber.value}
               onChange={(e) => formik.setFieldValue("mobileNumber", e)}
               defaultCountry={formik.values.countryCode}
               international
@@ -229,6 +233,8 @@ const AboutMe = (props) => {
               onChange={(e) => formik.setFieldValue("dob", e)}
               value={formik.values.dob}
               onBlur={formik.getFieldProps("dob").onBlur}
+              maxDate={dayjs("2006-01-01")}
+              openTo="year"
             />
             {formik.touched.dob && formik.errors.dob ? (
               <ErrorMessage>{formik.errors.dob}</ErrorMessage>
