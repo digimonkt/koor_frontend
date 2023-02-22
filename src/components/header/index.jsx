@@ -12,7 +12,8 @@ import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "@assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import { USER_ROLES } from "@utils/enum";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserRole } from "@redux/slice/user";
 
 const ismenu = true;
 
@@ -23,6 +24,7 @@ const searchType = Object.freeze({
 });
 
 function Header() {
+  const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
   const { role, isLoggedIn } = useSelector((state) => state.auth);
@@ -169,14 +171,25 @@ function Header() {
               ) : (
                 <>
                   <li>
-                    <Link to="/">
+                    <div
+                      onClick={() => {
+                        dispatch(setUserRole(""));
+                        navigate("/");
+                      }}
+                    >
                       <OutlinedButton title="Register" />
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link data-cy="login-nav" to="/login">
+                    <div
+                      data-cy="login-nav"
+                      onClick={() => {
+                        dispatch(setUserRole(""));
+                        navigate("/login");
+                      }}
+                    >
                       <FilledButton title="Login" />
-                    </Link>
+                    </div>
                   </li>
                 </>
               )}
