@@ -111,6 +111,12 @@ export const JOB_SEEKER_ROUTES = [
     path: "/jobs/details/:jobId",
     component: JobDetails,
   },
+  {
+    id: "chat",
+    name: "chat",
+    path: "/chat",
+    component: ChatBox,
+  },
 ];
 
 // prefix => `/vendor`

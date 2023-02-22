@@ -21,7 +21,7 @@ import {
 } from "@api/jobSeeker";
 import { setSuccessToast } from "@redux/slice/toast";
 import Loader from "@components/loader";
-import { updateEducationRecord } from "@redux/slice/user";
+import { addEducationRecord, updateEducationRecord } from "@redux/slice/user";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
@@ -53,7 +53,23 @@ function EditEducation({ handleSubmit, currentSelected }) {
       if (!currentSelected) {
         const res = await addEducationDetailsAPI(payload);
         if (res.remote === "success") {
+          const { data } = res.data;
           dispatch(setSuccessToast("Added Successfully"));
+          dispatch(
+            addEducationRecord({
+              id: data.id,
+              title: data.title,
+              institute: data.institute,
+              educationLevel: educationLevels.data.find(
+                (record) => record.id === data.education_level
+              ),
+              startDate: dayjs(data.start_date).format(DATE_FORMAT),
+              endDate: !data.end_date
+                ? ""
+                : dayjs(data.end_date).format(DATE_FORMAT),
+              isPresent: !data.end_date,
+            })
+          );
           handleSubmit();
         }
       } else {
@@ -158,6 +174,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
               <Grid item lg={6} xs={12}>
                 <DateInput
                   label="Start"
+                  views={["year"]}
                   onChange={(e) => formik.setFieldValue("startDate", e)}
                   value={formik.values.startDate}
                   onBlur={formik.getFieldProps("startDate").onBlur}
@@ -207,7 +224,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
                     ) : (
                       <>
                         {currentSelected ? (
-                          "Add education"
+                          "Update education"
                         ) : (
                           <>
                             <span className="me-3 d-inline-flex">

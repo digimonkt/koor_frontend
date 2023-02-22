@@ -38,7 +38,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         >
           <div className="squer-width">
             <img
-              src={generateFileUrl(jobDetails.user?.image?.path || "")}
+              src={generateFileUrl(jobDetails?.user?.image?.path || "")}
               alt=""
               style={{ width: "100%", height: "85px" }}
             />

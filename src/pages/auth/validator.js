@@ -1,5 +1,5 @@
+import { isValidPhoneNumber } from "react-phone-number-input";
 import * as Yup from "yup";
-import { REGEX } from "../../utils/constants/regex";
 export const validateRegistrationForm = Yup.object().shape({
   email: Yup.string()
     .email("Invalid Email")
@@ -11,7 +11,16 @@ export const validateRegistrationForm = Yup.object().shape({
         return parent.email || parent.mobileNumber;
       }
     ),
-  mobileNumber: Yup.string().matches(REGEX.mobile, "Invalid Mobile Number"),
+  mobileNumber: Yup.mixed().test(
+    "isValidMobileNumber",
+    "Invalid Mobile Number",
+    (value, context) => {
+      if (!value.value) {
+        return true;
+      }
+      return isValidPhoneNumber(value.value);
+    }
+  ),
   password: Yup.string().required("Password is Required"),
   confirmPassword: Yup.string()
     .required("Confirm Password is Required")
