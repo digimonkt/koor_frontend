@@ -5,12 +5,18 @@ import styles from "./style.module.css";
 import React from "react";
 
 function DateInputComponent({ renderInput, ...rest }) {
+  const props = {};
+  if (rest.views) {
+    props.views = rest.views;
+  } else {
+    props.inputFormat = "YYYY/MM/DD";
+  }
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DesktopDatePicker
         className={styles.date_picker_error}
         renderInput={(params) => <TextField {...params} />}
-        inputFormat="YYYY/MM/DD"
+        {...props}
         {...rest}
       />
     </LocalizationProvider>

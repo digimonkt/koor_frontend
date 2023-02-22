@@ -20,7 +20,6 @@ export const getSearchJobsAPI = async (data) => {
     url: urlcat("/v1/jobs", data),
     method: "GET",
   });
-  console.log({ data, response });
   if (response.remote === "success") {
     return {
       remote: "success",

@@ -24,7 +24,7 @@ const JobSeekerNavigationOptions = Object.freeze([
     isDisable: false,
   },
   {
-    to: "/messages",
+    to: "/chat",
     icon: SVG.MessageIcon,
     title: "Messages",
     id: "messages",

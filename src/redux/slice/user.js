@@ -101,6 +101,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setIsLoggedIn: (state, action) => {
+      if (!action.payload) {
+        state.role = "";
+        state.currentUser = initialState.currentUser;
+      }
       state.isLoggedIn = action.payload;
     },
     setUserRole: (state, action) => {
@@ -112,6 +116,7 @@ export const authSlice = createSlice({
         profileImage: action.payload,
       };
     },
+
     addEducationRecord: (state, action) => {
       state.currentUser = {
         ...state.currentUser,

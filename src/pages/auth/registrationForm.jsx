@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { CreateUserAPI } from "@api/user";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "@components/button";
-import { LabeledInput } from "@components/input";
+import { LabeledInput, LabeledPhoneInput } from "@components/input";
 import { USER_ROLES } from "@utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
@@ -15,18 +16,30 @@ function RegistrationForm({ role }) {
   const formik = useFormik({
     initialValues: {
       email: "",
-      mobileNumber: "",
+      mobileNumber: {
+        national: "",
+        international: "",
+        value: "",
+      },
+      countryCode: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: validateRegistrationForm,
     onSubmit: async (values) => {
+      const countryCode = values.mobileNumber.international.split(" ")[0];
+      const mobileNumber = (values.mobileNumber.value || "").replace(
+        countryCode,
+        ""
+      );
       const payload = {
         email: values.email,
-        mobileNumber: values.mobileNumber,
+        mobile_number: mobileNumber,
+        country_code: countryCode,
         password: values.password,
         role,
       };
+      console.log({ payload });
       const res = await CreateUserAPI(payload);
       if (res.remote === "success") {
         if (role === USER_ROLES.jobSeeker) {
@@ -57,11 +70,20 @@ function RegistrationForm({ role }) {
             ) : null}
           </div>
           <div className="form-group mb-3">
-            <LabeledInput
+            <LabeledPhoneInput
               placeholder="Your Mobile Number"
               title="Mobile"
-              type="number"
-              {...formik.getFieldProps("mobileNumber")}
+              onChange={(e) => formik.setFieldValue("mobileNumber", e)}
+              defaultCountry={formik.values.countryCode}
+              international
+              onCountryChange={(e) => formik.setFieldValue("countryCode", e)}
+              isInvalidNumber={(isValid) => {
+                if (!isValid) {
+                  formik.setFieldError("mobileNumber", "Invalid Mobile Number");
+                }
+              }}
+              onBlur={formik.getFieldProps("mobileNumber").onBlur}
+              name="mobileNumber"
             />
             {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
               <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>

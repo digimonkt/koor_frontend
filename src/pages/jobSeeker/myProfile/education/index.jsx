@@ -6,6 +6,7 @@ import EducationCard from "@components/educationCard";
 import EditEducation from "./editEducation";
 import DialogBox from "@components/dialogBox";
 import { useSelector } from "react-redux";
+import NoItem from "../noItem";
 
 const Education = () => {
   const {
@@ -50,16 +51,36 @@ const Education = () => {
         >
           <div className="add-content">
             <h2 className="mb-4">Education</h2>
-            <ul className="listitems">
-              {educationRecord.map((item, index) => (
-                <li key={index}>
-                  <EducationCard
-                    {...item}
-                    handleEdit={() => handleEdit(item)}
-                  />
-                </li>
-              ))}
-            </ul>
+            <>
+              {educationRecord.length ? (
+                <ul className="listitems">
+                  {educationRecord.map((item, index) => (
+                    <li key={index}>
+                      <EducationCard
+                        {...item}
+                        handleEdit={() => handleEdit(item)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <>
+                  <div>
+                    <NoItem
+                      icon={<SVG.EducationIcon />}
+                      description={
+                        <p>
+                          Mentioning your education helps to prove your
+                          proficiency for your future employer. Add it to boost
+                          your job bids. That how we can display empty cards –
+                          icon and some tips to fill up the info.
+                        </p>
+                      }
+                    />
+                  </div>
+                </>
+              )}
+            </>
 
             <div className="text-center mt-4">
               <OutlinedButton
