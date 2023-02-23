@@ -82,11 +82,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               icon={<>{<SVG.LocationIcon />}</>}
             />
             <ChipBox
-              label={`${jobDetails?.workingDays || 2}-Day Week` || "5-Day week"}
+              label={`${jobDetails?.workingDays || 2}-Day Week`}
               icon={<>{<SVG.BegClock />}</>}
             />
             {jobDetails?.isFullTime && (
-              <ChipBox label={"FullTime"} icon={<>{<SVG.MoonCircle />}</>} />
+              <ChipBox label={"Full Time"} icon={<>{<SVG.MoonCircle />}</>} />
             )}
             {jobDetails?.isPartTime && (
               <ChipBox label={"Part time"} icon={<>{<SVG.MoonCircle />}</>} />

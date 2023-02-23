@@ -28,15 +28,16 @@ import {
 } from "react-phone-number-input";
 import { EMPLOYMENT_STATUS } from "@utils/enum";
 import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
-import { ErrorToast, SuccessToast } from "@components/toast";
 import { FormControlReminder } from "@components/style";
 import { DATE_FORMAT } from "@utils/constants/constants";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import { updateCurrentUser } from "@redux/slice/user";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const { educationLevels } = useSelector((state) => state.choices);
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -57,7 +58,7 @@ const AboutMe = (props) => {
     },
     validationSchema: validateJobSeekerAboutMe,
     onSubmit: async (values) => {
-      setLoading("loading");
+      setLoading(true);
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
@@ -85,12 +86,32 @@ const AboutMe = (props) => {
         delete payload.email;
       }
       const res = await updateJobSeekerAboutMeAPI(payload);
-      console.log(res);
       if (res.remote === "success") {
-        setLoading("submitted");
+        dispatch(setSuccessToast("About Me Updated Successfully"));
+        dispatch(
+          updateCurrentUser({
+            name: values.fullName,
+            email: values.email,
+            mobileNumber,
+            countryCode,
+            profile: {
+              gender: values.gender,
+              dob: dayjs(values.dob).format(DATE_FORMAT),
+              employmentStatus: values.employmentStatus,
+              description: values.description,
+              highestEducation: educationLevels.data.find(
+                (level) => level.id === values.highestEducation
+              ),
+              marketInformationNotification:
+                values.marketInformationNotification,
+              jobNotification: values.jobNotification,
+            },
+          })
+        );
       } else {
-        setLoading("error");
+        dispatch(setErrorToast("Something went wrong"));
       }
+      setLoading(false);
     },
   });
   useEffect(() => {
@@ -320,7 +341,7 @@ const AboutMe = (props) => {
             </FormGroup>
             <div className="text-center mt-5">
               <OutlinedButton
-                disabled={loading === "loading"}
+                disabled={loading}
                 type="submit"
                 title={
                   <>
@@ -349,16 +370,6 @@ const AboutMe = (props) => {
           </form>
         </CardContent>
       </Card>
-      <SuccessToast
-        open={loading === "submitted"}
-        handleClose={() => setLoading("")}
-        message="About me updated Successfully"
-      />
-      <ErrorToast
-        open={loading === "error"}
-        handleClose={() => setLoading("")}
-        message="Something went wrong"
-      />
     </>
   );
 };

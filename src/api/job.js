@@ -1,6 +1,9 @@
 import api from ".";
 import urlcat from "urlcat";
-import { transformFullJobDetails } from "./transform/job";
+import {
+  transformFullJobDetails,
+  transformJobListResponse,
+} from "./transform/job";
 export const getJobDetailsByIdAPI = async (data) => {
   const response = await api.request({
     url: urlcat("/v1/jobs/:jobId", data),
@@ -23,12 +26,7 @@ export const getSearchJobsAPI = async (data) => {
   if (response.remote === "success") {
     return {
       remote: "success",
-      data: {
-        ...response.data,
-        results: response.data.results.map((data) =>
-          transformFullJobDetails(data)
-        ),
-      },
+      data: transformJobListResponse(response.data),
     };
   }
   return response;

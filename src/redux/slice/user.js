@@ -117,6 +117,17 @@ export const authSlice = createSlice({
       };
     },
 
+    updateCurrentUser: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        ...action.payload,
+        profile: {
+          ...state.currentUser.profile,
+          ...(action.payload.profile || {}),
+        },
+      };
+    },
+
     addEducationRecord: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
@@ -163,6 +174,7 @@ export const {
   setIsLoggedIn,
   setUserRole,
   setProfilePic,
+  updateCurrentUser,
   addEducationRecord,
   updateEducationRecord,
   deleteEducationRecord,

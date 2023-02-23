@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
 import { Container, IconButton } from "@mui/material";
 import { SVG } from "@assets/svg";
 
-export default function Searchinput({ placeholder, svg, ...rest }) {
+export default function SearchInput({
+  handleSearch,
+  placeholder,
+  svg,
+  value,
+  ...rest
+}) {
+  const [fieldValue, setFieldValue] = useState("");
+  useEffect(() => {
+    if (value) {
+      setFieldValue(value);
+    }
+  }, [value]);
   return (
     <div>
       <Container>
@@ -23,8 +35,15 @@ export default function Searchinput({ placeholder, svg, ...rest }) {
               className={`${styles.searchbox}`}
               placeholder={placeholder}
               {...rest}
+              onChange={(e) => setFieldValue(e.target.value)}
+              value={fieldValue}
+              onKeyDown={(e) => {
+                if (e.key === "enter" || e.key === "Enter") {
+                  handleSearch(fieldValue);
+                }
+              }}
             />
-            <span>{svg}</span>
+            <span onClick={() => handleSearch(fieldValue)}>{svg}</span>
           </div>
         </div>
       </Container>
