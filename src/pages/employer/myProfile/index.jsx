@@ -28,7 +28,7 @@ import {
 import Loader from "@components/loader";
 import { UpdateProfileImageAPI } from "@api/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
-import { setProfilePic } from "@redux/slice/user";
+import { setProfilePic, updateCurrentUser } from "@redux/slice/user";
 import { FormControlReminder } from "@components/style";
 import { setSuccessToast } from "@redux/slice/toast";
 
@@ -91,8 +91,22 @@ function MyProfileComponent() {
       }
       const res = await updateEmployerAboutMe(formData);
       if (res.remote === "success") {
-        console.log({ res });
         dispatch(setSuccessToast("Updated Successfully"));
+        dispatch(
+          updateCurrentUser({
+            name: values.organizationName,
+            mobileNumber,
+            countryCode,
+            profile: {
+              organizationType: values.organizationType,
+              licenseId: values.licenseId,
+              licenseIdFile: values.license[0],
+              marketingInformationNotification:
+                values.marketingInformationNotification,
+              otherNotification: values.otherNotification,
+            },
+          })
+        );
         setLoading(false);
       } else {
         console.log({ res });

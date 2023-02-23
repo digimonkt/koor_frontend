@@ -118,9 +118,6 @@ export const authSlice = createSlice({
     },
 
     updateCurrentUser: (state, action) => {
-      console.log({
-        redux: action.payload,
-      });
       state.currentUser = {
         ...state.currentUser,
         ...action.payload,
