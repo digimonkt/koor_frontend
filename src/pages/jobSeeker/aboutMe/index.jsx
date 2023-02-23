@@ -29,7 +29,7 @@ import {
 import { EMPLOYMENT_STATUS } from "@utils/enum";
 import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
 import { FormControlReminder } from "@components/style";
-import { DATE_FORMAT } from "@utils/constants/constants";
+import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { updateCurrentUser } from "@redux/slice/user";
 
@@ -70,7 +70,7 @@ const AboutMe = (props) => {
         email: values.email,
         mobile_number: mobileNumber,
         country_code: countryCode,
-        dob: dayjs(values.dob).format(DATE_FORMAT),
+        dob: dayjs(values.dob).format(DATABASE_DATE_FORMAT),
         gender: values.gender,
         employment_status: values.employmentStatus,
         description: values.description,
