@@ -13,7 +13,7 @@ import { FormControlReminder } from "@components/style";
 import { validateEditEducation } from "../validator";
 import { ErrorMessage } from "@components/caption";
 import dayjs from "dayjs";
-import { DATE_FORMAT } from "@utils/constants/constants";
+import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addEducationDetailsAPI,
@@ -45,10 +45,10 @@ function EditEducation({ handleSubmit, currentSelected }) {
         title: values.title,
         institute: values.institute,
         education_level: values.educationLevel,
-        start_date: dayjs(values.startDate).format(DATE_FORMAT),
+        start_date: dayjs(values.startDate).format(DATABASE_DATE_FORMAT),
         end_date: values.isPresent
           ? null
-          : dayjs(values.endDate).format(DATE_FORMAT),
+          : dayjs(values.endDate).format(DATABASE_DATE_FORMAT),
       };
       if (!currentSelected) {
         const res = await addEducationDetailsAPI(payload);
