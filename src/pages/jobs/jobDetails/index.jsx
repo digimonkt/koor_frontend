@@ -203,7 +203,7 @@ const JobDetails = () => {
                           background: "#F0F0F0",
                         },
                       }}
-                      src={generateFileUrl(details.user.image.path)}
+                      src={generateFileUrl(details.user.image?.path)}
                     >
                       <SVG.UserIcon />
                     </Avatar>
