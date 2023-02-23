@@ -1,3 +1,43 @@
+import dayjs from "dayjs";
+
+export const transformJobListResponse = (data) => {
+  return {
+    count: data.count,
+    next: data.next,
+    previous: data.previous,
+    results: data.results.map((res) => ({
+      id: res.id,
+      title: res.title,
+      description: res.description,
+      budgetCurrency: res.budget_currency,
+      budgetAmount: Number(res.budget_amount)
+        ? Number(res.budget_amount).toLocaleString()
+        : 0,
+      budgetPayPeriod: res.budget_pay_period,
+      country: res.country,
+      city: res.city,
+      isFullTime: res.is_full_time,
+      isPartTime: res.is_part_time,
+      hasContract: res.has_contract,
+      workingDays: res.working_days,
+      deadline: res.deadline,
+      expiredInDays: dayjs(res.deadline).diff(
+        dayjs(new Date().toISOString().split("T")[0]),
+        "day",
+        true
+      ),
+      status: res.status,
+      createdAt: res.created,
+      applicantCount: res.applicant,
+      user: {
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        image: res.user.image,
+      },
+    })),
+  };
+};
 export const transformFullJobDetails = (data) => {
   return {
     id: data.id,
@@ -24,6 +64,11 @@ export const transformFullJobDetails = (data) => {
     status: data.status,
     applicant: data.applicant,
     createdAt: data.created,
+    expiredInDays: dayjs(data.deadline).diff(
+      dayjs(new Date().toISOString().split("T")[0]),
+      "day",
+      true
+    ),
     user: {
       id: data.user.id,
       name: data.user.name,

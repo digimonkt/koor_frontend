@@ -10,19 +10,23 @@ import {
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { SVG } from "@assets/svg";
-import Paginations from "@components/pagination";
-import Searchinput from "@components/searchInput";
 import JobCard from "@components/jobCard";
 import AdvanceFilter from "./AdvanceFilter";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { getSearchJobsAPI } from "@api/job";
+import Pagination from "@components/pagination";
+import SearchInput from "@components/searchInput";
 
+const LIMIT = 10;
 export default function JobSearch() {
+  const location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const [searchParams] = useSearchParams();
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalJobs, setTotalJobs] = useState(0);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
   const [searchedJobs, setSearchedJobs] = useState([]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,39 +34,58 @@ export default function JobSearch() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const handleSearch = (value) => {
+    setSearchParams({ search: value });
+  };
   const getSearchJobs = async () => {
-    const res = await getSearchJobsAPI({ search });
+    const res = await getSearchJobsAPI({ search, page, limit: LIMIT });
     if (res.remote === "success") {
-      console.log({ res, result: res.data.results });
+      const totalJobs = res.data.count;
+      setTotalJobs(totalJobs);
+      const pages = Math.ceil(totalJobs / LIMIT);
+      setTotalPages(pages);
       setSearchedJobs(res.data.results);
     }
   };
-
   useEffect(() => {
-    if (searchParams.get("search")) {
+    // const queryParams = new URLSearchParams(location.search);
+    const search = searchParams.get("search");
+    if (search) {
+      setPage(1);
+      setTotalPages(1);
       setSearch(search);
     }
-  }, [searchParams]);
+  }, [location.search]);
   useEffect(() => {
-    if (search) {
+    if (totalPages >= page || totalPages === 0) {
       getSearchJobs();
     }
-  }, [search]);
-
+  }, [search, page]);
+  const pagination = () => {
+    return (
+      <Pagination
+        count={totalPages}
+        onChange={(e, page) => {
+          setPage(page);
+        }}
+        page={page}
+      />
+    );
+  };
   return (
     <div className={`${styles.body}`}>
-      <Searchinput
+      <SearchInput
         svg={<SVG.Buttonsearch />}
         placeholder="Search jobs"
-        onChange={(e) => setSearch(e.target.value)}
+        handleSearch={handleSearch}
+        value={search}
       />
       <Container>
         <AdvanceFilter />
       </Container>
       <div className="paginations ">
-        <Container>
-          <Paginations />
-        </Container>
+        <Container>{pagination()}</Container>
       </div>
       <Container>
         <div className={`${styles.jobcards}`}>
@@ -76,7 +99,7 @@ export default function JobSearch() {
               <h2 className="m-0">
                 Job feed
                 <Chip
-                  label="23"
+                  label={totalJobs}
                   className="ms-3"
                   sx={{
                     background: "#FEEFD3",
@@ -144,18 +167,16 @@ export default function JobSearch() {
           </div>
           {searchedJobs.map((job) => {
             return (
-              <>
-                <JobCard logo key={job.id} jobDetails={job} />
+              <React.Fragment key={job.id}>
+                <JobCard logo jobDetails={job} />
                 <Divider />
-              </>
+              </React.Fragment>
             );
           })}
         </div>
       </Container>
       <div className="paginations pt-4">
-        <Container>
-          <Paginations />
-        </Container>
+        <Container>{pagination()}</Container>
       </div>
     </div>
   );

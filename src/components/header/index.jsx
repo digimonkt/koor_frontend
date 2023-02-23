@@ -6,7 +6,12 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "@assets/svg";
@@ -27,6 +32,9 @@ function Header() {
   const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams({});
+
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("talent");
@@ -46,7 +54,10 @@ function Header() {
         break;
     }
   }, [role]);
-
+  useEffect(() => {
+    const search = searchParams.get("search");
+    setSearchValue(search || "");
+  }, [location.search]);
   return (
     <header>
       <Container>
@@ -105,6 +116,7 @@ function Header() {
                   className="employersearch"
                   placeholder={role === "employer" ? "" : searchPlaceholder}
                   onChange={(e) => setSearchValue(e.target.value)}
+                  value={searchValue}
                 />
               </SearchCategory>
             </div>

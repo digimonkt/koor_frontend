@@ -1,6 +1,6 @@
 import api from ".";
 import urlcat from "urlcat";
-import { transformJobListResponse } from "./transform/employer";
+import { transformJobListResponse } from "./transform/job";
 export const createJobAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs"),

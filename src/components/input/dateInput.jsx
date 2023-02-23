@@ -3,13 +3,14 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import styles from "./style.module.css";
 import React from "react";
+import { DATE_FORMAT } from "@utils/constants/constants";
 
 function DateInputComponent({ renderInput, ...rest }) {
   const props = {};
   if (rest.views) {
     props.views = rest.views;
   } else {
-    props.inputFormat = "YYYY/MM/DD";
+    props.inputFormat = DATE_FORMAT;
   }
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
