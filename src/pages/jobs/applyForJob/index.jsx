@@ -142,11 +142,11 @@ const ApplyForJob = () => {
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
                     text="5-Day week"
-                    lefticon={<SVG.BagClock />}
+                    leftIcon={<SVG.BagClock />}
                     className={`${styles.iconbutton}`}
                   />
                   <SearchButton
-                    lefticon={<SVG.HalfCircle />}
+                    leftIcon={<SVG.HalfCircle />}
                     text="Full time"
                     className={`${styles.iconbutton}`}
                   />
