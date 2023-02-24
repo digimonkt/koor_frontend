@@ -7,6 +7,8 @@ function Loader({ loading, style }) {
       in={loading}
       style={{
         transitionDelay: loading ? "200ms" : "0ms",
+        width: "25px",
+        height: "25px",
         ...(style || {}),
       }}
       unmountOnExit

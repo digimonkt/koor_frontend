@@ -118,142 +118,134 @@ function EditEducation({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <>
-        <h1 className="headding">Education</h1>
-        <div className="form-content">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="form-group mb-3">
-              <SelectInput
-                placeholder="Select"
-                title="Education Level"
-                labelWeight={500}
-                className="add-form-control"
-                options={educationLevels.data.map((education) => ({
-                  label: education.title,
-                  value: education.id,
-                }))}
-                {...formik.getFieldProps("educationLevel")}
-              />
-              {formik.touched.educationLevel && formik.errors.educationLevel ? (
-                <ErrorMessage>{formik.errors.educationLevel}</ErrorMessage>
-              ) : null}
-            </div>
-            <div className="form-group mb-3">
-              <LabeledInput
-                placeholder="Ex: Certificate in Electronics"
-                title="Diploma / certificate / degree"
-                labelWeight={500}
-                className="add-form-control"
-                {...formik.getFieldProps("title")}
-              />
-              {formik.touched.title && formik.errors.title ? (
-                <ErrorMessage>{formik.errors.title}</ErrorMessage>
-              ) : null}
-            </div>
-            <div className="form-group mb-3">
-              <LabeledInput
-                placeholder="Ex: Singapore Polytechnic"
-                title="School / institute"
-                labelWeight={500}
-                className="add-form-control"
-                {...formik.getFieldProps("institute")}
-              />
-              {formik.touched.institute && formik.errors.institute ? (
-                <ErrorMessage>{formik.errors.institute}</ErrorMessage>
-              ) : null}
-            </div>
-            <label
-              className="mb-1 d-inline-block"
-              style={{
-                fontWeight: 500,
-              }}
-            >
-              School period
-            </label>
-            <Grid container spacing={2}>
-              <Grid item lg={6} xs={12}>
-                <DateInput
-                  label="Start"
-                  views={["year"]}
-                  onChange={(e) => formik.setFieldValue("startDate", e)}
-                  maxDate={dayjs()}
-                  value={formik.values.startDate}
-                  onBlur={formik.getFieldProps("startDate").onBlur}
-                />
-                {formik.touched.startDate && formik.errors.startDate ? (
-                  <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
-                ) : null}
-              </Grid>
-              <Grid item lg={6} xs={12}>
-                <DateInput
-                  label="End"
-                  views={["year"]}
-                  onChange={(e) => formik.setFieldValue("endDate", e)}
-                  value={formik.values.endDate}
-                  minDate={formik.values.startDate}
-                  onBlur={formik.getFieldProps("endDate").onBlur}
-                  disabled={formik.values.isPresent || !formik.values.startDate}
-                />
-                {formik.touched.endDate && formik.errors.endDate ? (
-                  <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
-                ) : null}
-              </Grid>
-            </Grid>
-            <FormControlReminder
-              control={
-                <CheckboxInput
-                  sx={{
-                    color: "#CACACA",
-                    transition: "all 0.5s ease-out",
-                    "&.Mui-checked": {
-                      color: "#EEA23D",
-                      transition: "all 0.5s ease-out",
-                    },
-                  }}
-                />
-              }
-              label="I am currently studying"
-              onChange={(e) =>
-                formik.setFieldValue("isPresent", e.target.checked)
-              }
-              checked={formik.values.isPresent || false}
+      <h1 className="headding">Education</h1>
+      <div className="form-content">
+        <form onSubmit={formik.handleSubmit}>
+          <div className="form-group mb-3">
+            <SelectInput
+              placeholder="Select"
+              title="Education Level"
+              labelWeight={500}
+              className="add-form-control"
+              options={educationLevels.data.map((education) => ({
+                label: education.title,
+                value: education.id,
+              }))}
+              {...formik.getFieldProps("educationLevel")}
             />
-            <div className="text-center mt-3">
-              <OutlinedButton
-                title={
-                  <>
-                    {loading ? (
-                      <Loader loading={loading} />
-                    ) : (
-                      <>
-                        {currentSelected ? (
-                          "Update education"
-                        ) : (
-                          <>
-                            <span className="me-3 d-inline-flex">
-                              <SVG.PlushIcon />
-                            </span>{" "}
-                            Add education
-                          </>
-                        )}
-                      </>
-                    )}
-                  </>
-                }
+            {formik.touched.educationLevel && formik.errors.educationLevel ? (
+              <ErrorMessage>{formik.errors.educationLevel}</ErrorMessage>
+            ) : null}
+          </div>
+          <div className="form-group mb-3">
+            <LabeledInput
+              placeholder="Ex: Certificate in Electronics"
+              title="Diploma / certificate / degree"
+              labelWeight={500}
+              className="add-form-control"
+              {...formik.getFieldProps("title")}
+            />
+            {formik.touched.title && formik.errors.title ? (
+              <ErrorMessage>{formik.errors.title}</ErrorMessage>
+            ) : null}
+          </div>
+          <div className="form-group mb-3">
+            <LabeledInput
+              placeholder="Ex: Singapore Polytechnic"
+              title="School / institute"
+              labelWeight={500}
+              className="add-form-control"
+              {...formik.getFieldProps("institute")}
+            />
+            {formik.touched.institute && formik.errors.institute ? (
+              <ErrorMessage>{formik.errors.institute}</ErrorMessage>
+            ) : null}
+          </div>
+          <label
+            className="mb-1 d-inline-block"
+            style={{
+              fontWeight: 500,
+            }}
+          >
+            School period
+          </label>
+          <Grid container spacing={2}>
+            <Grid item lg={6} xs={12}>
+              <DateInput
+                label="Start"
+                views={["year"]}
+                onChange={(e) => formik.setFieldValue("startDate", e)}
+                maxDate={dayjs()}
+                value={formik.values.startDate}
+                onBlur={formik.getFieldProps("startDate").onBlur}
+              />
+              {formik.touched.startDate && formik.errors.startDate ? (
+                <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+              ) : null}
+            </Grid>
+            <Grid item lg={6} xs={12}>
+              <DateInput
+                label="End"
+                views={["year"]}
+                onChange={(e) => formik.setFieldValue("endDate", e)}
+                value={formik.values.endDate}
+                minDate={formik.values.startDate}
+                onBlur={formik.getFieldProps("endDate").onBlur}
+                disabled={formik.values.isPresent || !formik.values.startDate}
+              />
+              {formik.touched.endDate && formik.errors.endDate ? (
+                <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
+              ) : null}
+            </Grid>
+          </Grid>
+          <FormControlReminder
+            control={
+              <CheckboxInput
                 sx={{
-                  "&.MuiButtonBase-root": {
-                    border: `1px solid ${color} !important`,
-                    color: `${color} !important`,
-                    "&:hover": { background: buttonHover },
+                  color: "#CACACA",
+                  transition: "all 0.5s ease-out",
+                  "&.Mui-checked": {
+                    color: "#EEA23D",
+                    transition: "all 0.5s ease-out",
                   },
                 }}
-                type="submit"
-                disabled={loading}
               />
-            </div>
-          </form>
-        </div>
-      </>
+            }
+            label="I am currently studying"
+            onChange={(e) =>
+              formik.setFieldValue("isPresent", e.target.checked)
+            }
+            checked={formik.values.isPresent || false}
+          />
+          <div className="text-center mt-3">
+            <OutlinedButton
+              title={
+                <>
+                  {loading ? (
+                    <Loader loading={loading} style={{ color: "#EEA23D" }} />
+                  ) : (
+                    <>
+                      <span className="me-3 d-inline-flex">
+                        <SVG.SaveFile />
+                      </span>{" "}
+                      {currentSelected ? "Update education" : "Save education"}
+                    </>
+                  )}
+                </>
+              }
+              sx={{
+                "&.MuiButtonBase-root": {
+                  border: `1px solid ${color} !important`,
+                  color: `${color} !important`,
+                  "&:hover": { background: buttonHover },
+                },
+              }}
+              type="submit"
+              disabled={loading}
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

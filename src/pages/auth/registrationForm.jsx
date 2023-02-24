@@ -48,7 +48,11 @@ function RegistrationForm({ role }) {
           navigate(`/${role}/my-profile`);
         }
       } else {
-        console.log({ res });
+        console.log({ res: res.error.errors });
+        formik.setErrors({
+          email: res.error.errors.email[0],
+          mobileNumber: res.error.errors.mobile_number,
+        });
       }
     },
   });

@@ -156,6 +156,35 @@ export const authSlice = createSlice({
         ),
       };
     },
+
+    addLanguageRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        languages: [...state.currentUser.languages, action.payload],
+      };
+    },
+    updateLanguageRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        languages: state.currentUser.languages.map((language) => {
+          if (language.id === action.payload.id) {
+            return {
+              ...language,
+              ...action.payload,
+            };
+          }
+          return language;
+        }),
+      };
+    },
+    deleteLanguageRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        languages: state.currentUser.languages.filter(
+          (record) => record.id !== action.payload
+        ),
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
@@ -178,5 +207,8 @@ export const {
   addEducationRecord,
   updateEducationRecord,
   deleteEducationRecord,
+  addLanguageRecord,
+  updateLanguageRecord,
+  deleteLanguageRecord,
 } = authSlice.actions;
 export default authSlice.reducer;

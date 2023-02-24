@@ -24,8 +24,8 @@ function EducationCard({
   const handleDelete = async () => {
     const res = await deleteEducationDetailsAPI(id);
     if (res.remote === "success") {
-      dispatch(setSuccessToast("Deleted Successfully"));
       dispatch(deleteEducationRecord(id));
+      dispatch(setSuccessToast("Education Deleted Successfully"));
     } else {
       dispatch(setSuccessToast("Something went wrong"));
     }
