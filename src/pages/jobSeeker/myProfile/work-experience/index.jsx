@@ -1,57 +1,34 @@
 import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import DialogBox from "@components/dialogBox";
 import EditWorkExperience from "./editWorkExperience";
+import { useSelector } from "react-redux";
+import NoItem from "../noItem";
+import WorkExperienceCard from "@components/workExperienceCard";
 const WorkExperience = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const {
+    currentUser: { workExperiences },
+  } = useSelector((state) => state.auth);
+  const [open, setOpen] = useState(false);
+  const [currentSelected, setCurrentSelected] = useState(null);
+  const handleToggleModel = () => {
+    setOpen(!open);
+    if (open) {
+      setCurrentSelected(null);
+    }
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleSubmit = () => {
+    handleToggleModel();
   };
-  const workList = [
-    {
-      title: "Freelancer",
-      subtitle: "Upwork",
-      date: "May 2018 - Present",
-    },
-    {
-      title: "Lead UX/UI Designer",
-      subtitle: "Another company",
-      date: "January 2022 - September 2022",
-    },
-    {
-      title: "Senior UX/UI Designer",
-      subtitle: (
-        <>
-          Koor
-          <br />
-          Key responsibilities text. For example, assist in th preparation of
-          regularly scheduled reports. Testing two lines of text.
-        </>
-      ),
-      date: "January 2022 - September 2022",
-    },
-    {
-      title: "No job",
-      subtitle: (
-        <>
-          Another company <br />
-          Only a few key responsibilities.
-        </>
-      ),
-      date: "January 2022 - September 2022",
-    },
-    {
-      title: "Test of many jobs",
-      subtitle: "Google",
-      date: "January 2022 - September 2022",
-    },
-  ];
+
+  const handleEdit = (value) => {
+    setCurrentSelected(value);
+    handleToggleModel();
+  };
+
   return (
     <>
       <Card
@@ -72,9 +49,28 @@ const WorkExperience = () => {
           <div className="add-content">
             <h2 className="mb-4">Work experience</h2>
             <ul className="listitems">
-              {workList.map((item, index) => (
-                <li key={index}>{/* <CardList {...item} /> */}</li>
-              ))}
+              {workExperiences.length ? (
+                workExperiences.map((item, index) => (
+                  <li key={index}>
+                    <WorkExperienceCard
+                      {...item}
+                      handleEdit={() => handleEdit(item)}
+                    />
+                  </li>
+                ))
+              ) : (
+                <NoItem
+                  icon={<SVG.WorkIcon />}
+                  description={
+                    <p>
+                      Where have you worked before? In what companies, on what
+                      role with what responsibilities? Feel free to share to
+                      make your profile more complete and attractive for
+                      potential employers.
+                    </p>
+                  }
+                />
+              )}
             </ul>
 
             <div className="text-center mt-4">
@@ -87,7 +83,7 @@ const WorkExperience = () => {
                     Add work experience
                   </>
                 }
-                onClick={handleClickOpen}
+                onClick={handleToggleModel}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -108,8 +104,19 @@ const WorkExperience = () => {
           </div>
         </CardContent>
       </Card>
-      <DialogBox open={open} handleClose={handleClose}>
-        <EditWorkExperience />
+      <DialogBox
+        open={open}
+        handleClose={handleToggleModel}
+        sx={{
+          "& .MuiPaper-root": {
+            width: "800px",
+          },
+        }}
+      >
+        <EditWorkExperience
+          handleSubmit={handleSubmit}
+          currentSelected={currentSelected}
+        />
       </DialogBox>
     </>
   );

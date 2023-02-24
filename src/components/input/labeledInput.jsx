@@ -46,26 +46,30 @@ function LabeledInputComponent({
           ""
         )}
       </Stack>
-      <div className="showpassword">
-        <input
-          className="form-control"
-          type={
-            type === "password"
-              ? isVisiblePassword
-                ? "text"
-                : "password"
-              : type
-          }
-          {...rest}
-        />
-        {type === "password" ? (
-          <div onClick={handleChangePasswordVisibility}>
-            {!isVisiblePassword ? <SVG.EyeOpen /> : <SVG.EyeOff />}
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
+      {type === "textarea" ? (
+        <textarea className="form-control-area" {...rest}></textarea>
+      ) : (
+        <div className="showpassword">
+          <input
+            className="form-control"
+            type={
+              type === "password"
+                ? isVisiblePassword
+                  ? "text"
+                  : "password"
+                : type
+            }
+            {...rest}
+          />
+          {type === "password" ? (
+            <div onClick={handleChangePasswordVisibility}>
+              {!isVisiblePassword ? <SVG.EyeOpen /> : <SVG.EyeOff />}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
     </>
   );
 }
