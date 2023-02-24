@@ -74,7 +74,7 @@ const UpdateProfile = () => {
                 }}
               >
                 <ProfilePicInput
-                  title="Your organization logo"
+                  title="Your Profile Picture"
                   textColor="#274593"
                   color="#274593"
                   bgColor="rgba(40, 71, 146, 0.1)"
