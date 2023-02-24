@@ -37,3 +37,36 @@ export const deleteEducationDetailsAPI = async (id) => {
   });
   return res;
 };
+
+export const addLanguageDetailsAPI = async (data) => {
+  const res = api.request({
+    url: urlcat("/v1/users/job-seeker/language"),
+    method: "POST",
+    data,
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.data,
+    };
+  }
+  return res;
+};
+
+export const updateLanguageDetailsAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/language/:languageId", {
+      languageId: data.id,
+    }),
+    method: "PATCH",
+    data,
+  });
+  return res;
+};
+export const deleteLanguageDetailsAPI = async (languageId) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/language/:languageId", { languageId }),
+    method: "DELETE",
+  });
+  return res;
+};

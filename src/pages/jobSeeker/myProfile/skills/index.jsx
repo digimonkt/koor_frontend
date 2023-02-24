@@ -87,7 +87,7 @@ const Skills = () => {
                 title={
                   <>
                     <span className="me-2 d-inline-flex">
-                      <SVG.Savefile />
+                      <SVG.SaveFile />
                     </span>
                     save Skills
                   </>

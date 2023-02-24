@@ -31,7 +31,7 @@ import { ReactComponent as UploadIcon } from "./uploadIcon.svg";
 import { ReactComponent as WorkIcon } from "./workIcon.svg";
 import { ReactComponent as PlushIcon } from "./plushIcon.svg";
 import { ReactComponent as SkillsIcon } from "./skillsIcon.svg";
-import { ReactComponent as Savefile } from "./savefile.svg";
+import { ReactComponent as SaveFile } from "./savefile.svg";
 import { ReactComponent as CancelIcon } from "./cancelIcon.svg";
 import { ReactComponent as LanguageIcon } from "./languageIcon.svg";
 import { ReactComponent as EducationIcon } from "./educationIcon.svg";
@@ -122,7 +122,7 @@ export const SVG = {
   WorkIcon,
   PlushIcon,
   SkillsIcon,
-  Savefile,
+  SaveFile,
   CancelIcon,
   LanguageIcon,
   EducationIcon,

@@ -28,6 +28,8 @@ export const SelectBox = styled(Select)`
 `;
 
 function SelectInputComponent({
+  title,
+  labelWeight,
   options,
   className,
   value,
@@ -36,39 +38,53 @@ function SelectInputComponent({
   ...rest
 }) {
   return (
-    <FormControl
-      className={`iconsize-select ${className} `}
-      sx={{
-        "&.MuiSelect-select": {
-          fontFamily: "Poppins",
-          fontSize: "12px",
-        },
-      }}
-      size="small"
-      fullWidth
-      style={style || {}}
-    >
-      <SelectBox
-        inputProps={{ "aria-label": "Without label" }}
-        IconComponent={KeyboardArrowDownIcon}
-        displayEmpty
-        value={value}
-        renderValue={
-          value !== ""
-            ? undefined
-            : () => <div className={styles.placeholder}>{placeholder}</div>
-        }
-        {...rest}
+    <>
+      {title ? (
+        <label
+          className="mb-1 d-inline-block"
+          style={{
+            fontWeight: labelWeight,
+          }}
+        >
+          {title}
+        </label>
+      ) : (
+        ""
+      )}
+      <FormControl
+        className={`iconsize-select ${className} `}
+        sx={{
+          "&.MuiSelect-select": {
+            fontFamily: "Poppins",
+            fontSize: "12px",
+          },
+        }}
+        size="small"
+        fullWidth
+        style={style || {}}
       >
-        {options.map((option) => {
-          return (
-            <MenuItem value={option.value} key={option.value}>
-              {option.label}
-            </MenuItem>
-          );
-        })}
-      </SelectBox>
-    </FormControl>
+        <SelectBox
+          inputProps={{ "aria-label": "Without label" }}
+          IconComponent={KeyboardArrowDownIcon}
+          displayEmpty
+          value={value}
+          renderValue={
+            value !== ""
+              ? undefined
+              : () => <div className={styles.placeholder}>{placeholder}</div>
+          }
+          {...rest}
+        >
+          {options.map((option) => {
+            return (
+              <MenuItem value={option.value} key={option.value}>
+                {option.label}
+              </MenuItem>
+            );
+          })}
+        </SelectBox>
+      </FormControl>
+    </>
   );
 }
 

@@ -1,51 +1,35 @@
 import { OutlinedButton } from "@components/button";
 import { Card, CardContent } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import DialogBox from "@components/dialogBox";
 import EditLanguages from "./editLanguages";
+import NoItem from "../noItem";
+import { useSelector } from "react-redux";
+import LanguageCard from "@components/languageCard";
 
 const Languages = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const {
+    currentUser: { languages },
+  } = useSelector((state) => state.auth);
+  const [open, setOpen] = useState(false);
+  const [currentSelected, setCurrentSelected] = useState(null);
+
+  const handleToggleModel = () => {
+    setOpen(!open);
+    if (open) {
+      setCurrentSelected(null);
+    }
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleSubmit = () => {
+    handleToggleModel();
   };
-  const langugesList = [
-    {
-      title: "English",
-      subtitle: (
-        <>
-          Spoken: <strong>Fluent</strong>
-          <br />
-          Written: <strong>Fluent</strong>
-        </>
-      ),
-    },
-    {
-      title: "German",
-      subtitle: (
-        <>
-          Spoken: <strong>Conversational</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-    {
-      title: "Spanish",
-      subtitle: (
-        <>
-          Spoken: <strong>Basic</strong>
-          <br />
-          Written: <strong>Conversational</strong>
-        </>
-      ),
-    },
-  ];
+
+  const handleEdit = (value) => {
+    setCurrentSelected(value);
+    handleToggleModel();
+  };
   return (
     <>
       <Card
@@ -66,9 +50,28 @@ const Languages = () => {
           <div className="add-content">
             <h2 className="mb-4">Languages</h2>
             <ul className="listitems">
-              {langugesList.map((item, index) => (
-                <li key={index}>{/* <CardList {...item} /> */}</li>
-              ))}
+              {languages.length ? (
+                languages.map((item, index) => (
+                  <li key={index}>
+                    <LanguageCard
+                      {...item}
+                      handleEdit={() => handleEdit(item)}
+                    />
+                  </li>
+                ))
+              ) : (
+                <div>
+                  <NoItem
+                    icon={<SVG.LanguageIcon />}
+                    description={
+                      <p>
+                        Add languages that your can speak or write. This will be
+                        helpful in multi-cultural or tourist regions.
+                      </p>
+                    }
+                  />
+                </div>
+              )}
             </ul>
 
             <div className="text-center mt-4">
@@ -81,7 +84,7 @@ const Languages = () => {
                     Add language
                   </>
                 }
-                onClick={handleClickOpen}
+                onClick={handleToggleModel}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -102,8 +105,11 @@ const Languages = () => {
           </div>
         </CardContent>
       </Card>
-      <DialogBox open={open} handleClose={handleClose}>
-        <EditLanguages />
+      <DialogBox open={open} handleClose={handleToggleModel}>
+        <EditLanguages
+          handleSubmit={handleSubmit}
+          currentSelected={currentSelected}
+        />
       </DialogBox>
     </>
   );

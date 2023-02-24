@@ -5,6 +5,7 @@ import HorizontalDateInputComponent from "./horizontalInput/horizontalDateInput"
 import HorizontalLabelInputComponent from "./horizontalInput/horizontalLabelInput";
 import HorizontalPhoneInputComponent from "./horizontalInput/horizontalPhoneInput";
 import LabeledInputComponent from "./labeledInput";
+import LabeledRadioInputComponent from "./labeledRadioInput";
 import LabeledPhoneInputComponent from "./labledPhoneInput";
 import ProfilePicInputComponent from "./profilePicInput";
 import SelectInputComponent, { SelectBox } from "./selectInput";
@@ -21,3 +22,4 @@ export const LabeledPhoneInput = LabeledPhoneInputComponent;
 export const ProfilePicInput = ProfilePicInputComponent;
 export const DateInput = DateInputComponent;
 export const HorizontalDateInput = HorizontalDateInputComponent;
+export const LabeledRadioInput = LabeledRadioInputComponent;
