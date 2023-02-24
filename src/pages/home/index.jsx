@@ -1,4 +1,6 @@
-import { Box, Container } from "@mui/material";
+import { IMAGES } from "@assets/images";
+import { Box } from "@mui/material";
+
 import { setIstHomePage } from "@redux/slice/user";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -16,7 +18,9 @@ const Home = () => {
 
   return (
     <Box sx={{ marginTop: "68px" }}>
-      <Container>Home</Container>
+      <Box sx={{ background: "#fff", "& img": { maxWidth: "100%" } }}>
+        <img src={IMAGES.Banner} alt="" />
+      </Box>
     </Box>
   );
 };

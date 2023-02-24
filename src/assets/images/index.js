@@ -13,6 +13,7 @@ import User from "./chatuser1.png";
 import Doc from "./doc.png";
 import GoogleStroe from "./google-store.png";
 import appleStroe from "./apple-store.png";
+import Banner from "./banner.png";
 
 export const IMAGES = {
   SearchIcon,
@@ -30,4 +31,5 @@ export const IMAGES = {
   Doc,
   appleStroe,
   GoogleStroe,
+  Banner,
 };
