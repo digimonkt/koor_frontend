@@ -1,7 +1,7 @@
 export const menu = [
   {
     id: 1,
-    title: "Koor",
+    title: "Navigate",
     children: [
       {
         id: 1,
@@ -19,8 +19,13 @@ export const menu = [
         url: "#!",
       },
       {
-        id: 3,
-        label: "Resources",
+        id: 4,
+        label: "Register",
+        url: "#!",
+      },
+      {
+        id: 5,
+        label: "Log in",
         url: "#!",
       },
     ],
@@ -31,74 +36,89 @@ export const menu = [
     children: [
       {
         id: 1,
-        label: "Management",
+        label: "Creative",
         url: "#!",
       },
       {
         id: 2,
-        label: "Home and garten",
+        label: "IT & Network",
         url: "#!",
       },
       {
         id: 3,
-        label: "Home and garten",
+        label: "Consulting",
         url: "#!",
       },
       {
         id: 4,
-        label: "Home and garten",
+        label: "Assistance",
+        url: "#!",
+      },
+      {
+        id: 5,
+        label: "Other categories",
         url: "#!",
       },
     ],
   },
   {
     id: 3,
-    title: "Talents",
+    title: "Tenders",
     children: [
       {
         id: 1,
-        label: "Management",
+        label: "Energy",
         url: "#!",
       },
       {
         id: 2,
-        label: "Home and garten",
+        label: "Education",
         url: "#!",
       },
       {
         id: 3,
-        label: "Home and garten",
+        label: "Food supply",
         url: "#!",
       },
       {
         id: 4,
-        label: "Home and garten",
+        label: "NGO",
+        url: "#!",
+      },
+      {
+        id: 5,
+        label: "Heavy machines",
         url: "#!",
       },
     ],
   },
   {
     id: 4,
-    title: "Tenders",
+    title: "Talents",
     children: [
       {
         id: 1,
-        label: "Management",
+        label: "Design & creative",
         url: "#!",
       },
       {
         id: 2,
-        label: "Home and garten",
+        label: "Web development",
         url: "#!",
       },
       {
         id: 3,
-        label: "Home and garten",
+        label: "Virtual assistance",
         url: "#!",
       },
       {
         id: 4,
-        label: "Home and garten",
+        label: "Support",
+        url: "#!",
+      },
+      {
+        id: 5,
+        label: "Accounting",
         url: "#!",
       },
     ],
