@@ -13,12 +13,15 @@ function LanguageCard({ id, language, spoken, written, handleEdit }) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
   const [deleting, setDeleting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
+    setLoading(true);
     const res = await deleteLanguageDetailsAPI(id);
     if (res.remote === "success") {
       dispatch(deleteLanguageRecord(id));
       dispatch(setSuccessToast("Language Delete Successfully"));
     }
+    setLoading(false);
   };
   return (
     <>
@@ -52,6 +55,7 @@ function LanguageCard({ id, language, spoken, written, handleEdit }) {
           content="Are you sure you want to delete language?"
           handleCancel={() => setDeleting(false)}
           handleDelete={handleDelete}
+          loading={loading}
         />
       </DialogBox>
     </>
