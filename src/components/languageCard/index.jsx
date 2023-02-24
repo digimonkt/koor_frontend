@@ -22,6 +22,7 @@ function LanguageCard({ id, language, spoken, written, handleEdit }) {
       dispatch(setSuccessToast("Language Delete Successfully"));
     }
     setLoading(false);
+    setDeleting(false);
   };
   return (
     <>

@@ -36,6 +36,7 @@ function EducationCard({
       dispatch(setSuccessToast("Something went wrong"));
     }
     setLoading(false);
+    setDeleting(false);
   };
   return (
     <>
