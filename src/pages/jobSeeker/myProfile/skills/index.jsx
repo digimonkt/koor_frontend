@@ -1,39 +1,65 @@
 import { Card, CardContent, Chip, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
-import UpdateInfo from "../../updateProfile/update-info";
-import DialogBox from "@components/dialogBox";
+import { getSkills } from "@redux/slice/choices";
 import { OutlinedButton } from "@components/button";
+import { useDebounce } from "usehooks-ts";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./styles.module.css";
+import NoItem from "../noItem";
+import { addSkillsDetailsAPI } from "@api/jobSeeker";
 
 const Skills = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const dispatch = useDispatch();
+  const { skills } = useSelector((state) => state.choices);
+  const {
+    currentUser: { skills: selectedSkills },
+  } = useSelector((state) => state.auth);
+  const [searchSkill, setSearchSkill] = useState("");
+  const debouncedSearchSkillValue = useDebounce(searchSkill, 500);
+  const [newSelectedSkills, setNewSelectedSkills] = useState([]);
+  const [removedSkills, setRemovedSkills] = useState([]);
+  const [allSkills, setAllSkills] = useState([]);
+
+  const handleClick = (skill) => {
+    setSearchSkill("");
+    setNewSelectedSkills((prevState) => [...prevState, skill]);
+    setAllSkills((prevState) => [...prevState, skill]);
+  };
+  const handleDelete = (id) => {
+    setRemovedSkills((prevState) => [...prevState, id]);
+    setAllSkills((prevState) => prevState.filter((state) => state.id !== id));
+    setNewSelectedSkills((prevState) =>
+      prevState.filter((state) => state.id !== id)
+    );
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
+  const updateSkills = async () => {
+    const payload = {
+      skill_add: newSelectedSkills.map((skill) => skill.id),
+      skill_remove: removedSkills,
+    };
+    const res = await addSkillsDetailsAPI(payload);
+    if (res.remote === "success") {
+      console.log(res);
+    }
   };
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
-  };
-  const skillsList = [
-    "UI/UX",
-    "Class B / B1 / B2 ",
-    "Cosmetics",
-    "Beauty Treatments",
-    "Makeup & Styling",
-    "Calls",
-    "Event Management",
-    "Stock Taking",
-    "Very long skill pill for test",
-    "Animation",
-    "Long skill to test how much we can fit",
-  ];
+  useEffect(() => {
+    if (selectedSkills) {
+      setAllSkills((prevState) => [...selectedSkills]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (debouncedSearchSkillValue) {
+      dispatch(
+        getSkills({
+          search: debouncedSearchSkillValue,
+        })
+      );
+    }
+  }, [debouncedSearchSkillValue]);
 
   return (
     <>
@@ -56,32 +82,60 @@ const Skills = () => {
             <h2>Skills</h2>
             <p>Maximum 15 skills</p>
             <Stack direction="row" spacing={0} flexWrap="wrap">
-              {skillsList.map((item, index) => (
-                <Chip
-                  key={index}
-                  label={item}
-                  onClick={handleClick}
-                  onDelete={handleDelete}
-                  deleteIcon={<SVG.CancelIcon />}
-                  sx={{
-                    fontSize: "12px",
-                    fontFamily: "Poppins",
-                    color: "#121212",
-                    fontWeight: "400",
-                    padding: "5px 10px 5px 20px",
-                    margin: "0px 8px 8px 0px",
-                  }}
+              {allSkills.length ? (
+                allSkills.map((item, index) => (
+                  <Chip
+                    key={index}
+                    label={item.title}
+                    onDelete={() => handleDelete(item.id)}
+                    deleteIcon={<SVG.CancelIcon />}
+                    sx={{
+                      fontSize: "12px",
+                      fontFamily: "Poppins",
+                      color: "#121212",
+                      fontWeight: "400",
+                      padding: "5px 10px 5px 20px",
+                      margin: "0px 8px 8px 0px",
+                    }}
+                  />
+                ))
+              ) : (
+                <NoItem
+                  icon={<SVG.SkillsIcon />}
+                  description={
+                    <p>
+                      List your skills that you think will be useful for a jobs
+                      you’re looking for. Highlight your strengths and remember
+                      to be honest.
+                    </p>
+                  }
                 />
-              ))}
+              )}
             </Stack>
 
             <div className="skills-input mt-3">
               <input
                 type="text"
                 placeholder="Start typing a skill to add a new one"
+                onChange={(e) => setSearchSkill(e.target.value)}
+                value={searchSkill}
               />
+              {debouncedSearchSkillValue && (
+                <div className={styles.search_results_box}>
+                  {skills.data.map((skill) => {
+                    return (
+                      <div
+                        key={skill.id}
+                        className={styles.search_results}
+                        onClick={() => handleClick(skill)}
+                      >
+                        {skill.title}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-
             <div className="text-center mt-4">
               <OutlinedButton
                 title={
@@ -89,10 +143,10 @@ const Skills = () => {
                     <span className="me-2 d-inline-flex">
                       <SVG.SaveFile />
                     </span>
-                    save Skills
+                    Save Skills
                   </>
                 }
-                onClick={handleClickOpen}
+                onClick={updateSkills}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -113,33 +167,6 @@ const Skills = () => {
           </div>
         </CardContent>
       </Card>
-      <DialogBox open={open} handleClose={handleClose}>
-        <UpdateInfo
-          title="Skills"
-          color="#EEA23D"
-          bgcolor="#FEEFD3"
-          icon={<SVG.SkillsIcon />}
-          description={[
-            <>
-              <p>
-                List your skills that you think will be usefull for a jobs
-                you’re looking for. Highlight your strenghts and remember to be
-                honest.
-              </p>
-            </>,
-          ]}
-          buttonHover="#eea23d14"
-          handleClose={handleClose}
-          buttontext={
-            <>
-              <span className="me-3 d-inline-flex">
-                <SVG.EditIcon />
-              </span>
-              Edit skills
-            </>
-          }
-        />
-      </DialogBox>
     </>
   );
 };

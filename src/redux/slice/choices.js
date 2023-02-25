@@ -261,6 +261,7 @@ export const choiceSlice = createSlice({
       state.skills = {
         ...state.skills,
         loading: true,
+        data: [],
       };
     });
     builder.addCase(getSkills.rejected, (state) => {

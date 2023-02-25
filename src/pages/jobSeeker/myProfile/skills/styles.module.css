@@ -1,0 +1,16 @@
+.search_results_box {
+  position: absolute;
+  width: 30%;
+  background: white;
+  z-index: 99;
+  padding: 10px 25px;
+}
+.search_results {
+  padding-left: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #cacaca;
+}
+
+.search_results:hover {
+  background-color: #eea23d14;
+}

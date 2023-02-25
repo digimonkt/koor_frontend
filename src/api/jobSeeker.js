@@ -105,3 +105,18 @@ export const deleteWorkExperienceDetailsAPI = async (workExperienceId) => {
   });
   return res;
 };
+
+export const addSkillsDetailsAPI = async (data) => {
+  const res = api.request({
+    url: urlcat("/v1/users/job-seeker/skills"),
+    method: "POST",
+    data,
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.data,
+    };
+  }
+  return res;
+};

@@ -49,7 +49,18 @@ function WorkExperienceCard({
         <div className="list-content">
           <h5>{title}</h5>
           <h6>{organization}</h6>
-          <span>{description}</span> <br />
+          {description ? (
+            <>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: description,
+                }}
+              />
+              <br />
+            </>
+          ) : (
+            ""
+          )}
           <span>
             {dayjs(startDate).format(YEAR_FORMAT)} -{" "}
             {present ? "Present" : dayjs(endDate).format(YEAR_FORMAT)}
