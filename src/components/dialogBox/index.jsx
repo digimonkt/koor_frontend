@@ -11,6 +11,7 @@ const DialogBox = ({ open, handleClose, className, children, ...rest }) => {
         className={`modal-box ${className}`}
         fullWidth
         maxWidth="sm"
+        {...rest}
       >
         <div>{children}</div>
       </Dialog>

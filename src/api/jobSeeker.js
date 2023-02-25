@@ -70,3 +70,53 @@ export const deleteLanguageDetailsAPI = async (languageId) => {
   });
   return res;
 };
+
+export const addWorkExperienceDetailsAPI = async (data) => {
+  const res = api.request({
+    url: urlcat("/v1/users/job-seeker/work-experiences"),
+    method: "POST",
+    data,
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.data,
+    };
+  }
+  return res;
+};
+
+export const updateWorkExperienceDetailsAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/work-experiences/:workExperienceId", {
+      workExperienceId: data.id,
+    }),
+    method: "PATCH",
+    data,
+  });
+  return res;
+};
+export const deleteWorkExperienceDetailsAPI = async (workExperienceId) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/work-experiences/:workExperienceId", {
+      workExperienceId,
+    }),
+    method: "DELETE",
+  });
+  return res;
+};
+
+export const addSkillsDetailsAPI = async (data) => {
+  const res = api.request({
+    url: urlcat("/v1/users/job-seeker/skills"),
+    method: "POST",
+    data,
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.data,
+    };
+  }
+  return res;
+};

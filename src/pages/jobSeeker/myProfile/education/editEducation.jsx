@@ -91,7 +91,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
               endDate: values.isPresent
                 ? null
                 : dayjs(values.endDate).format(DATE_FORMAT),
-              isPresent: !currentSelected.endDate,
+              present: values.isPresent,
             })
           );
           handleSubmit();

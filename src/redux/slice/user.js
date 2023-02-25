@@ -54,7 +54,7 @@ const initialState = {
         description: "",
       },
      */
-    workExperience: [],
+    workExperiences: [],
     /**
      * {
         id: "",
@@ -185,6 +185,37 @@ export const authSlice = createSlice({
         ),
       };
     },
+
+    addWorkExperienceRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        workExperiences: [...state.currentUser.workExperiences, action.payload],
+      };
+    },
+    updateWorkExperienceRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        workExperiences: state.currentUser.workExperiences.map(
+          (workExperience) => {
+            if (workExperience.id === action.payload.id) {
+              return {
+                ...workExperience,
+                ...action.payload,
+              };
+            }
+            return workExperience;
+          }
+        ),
+      };
+    },
+    deleteWorkExperienceRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        workExperiences: state.currentUser.workExperiences.filter(
+          (record) => record.id !== action.payload
+        ),
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
@@ -210,5 +241,8 @@ export const {
   addLanguageRecord,
   updateLanguageRecord,
   deleteLanguageRecord,
+  addWorkExperienceRecord,
+  updateWorkExperienceRecord,
+  deleteWorkExperienceRecord,
 } = authSlice.actions;
 export default authSlice.reducer;
