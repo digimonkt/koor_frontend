@@ -39,6 +39,7 @@ const Skills = () => {
       skill_add: newSelectedSkills.map((skill) => skill.id),
       skill_remove: removedSkills,
     };
+    console.log({ payload });
     const res = await addSkillsDetailsAPI(payload);
     if (res.remote === "success") {
       console.log(res);
@@ -47,7 +48,12 @@ const Skills = () => {
 
   useEffect(() => {
     if (selectedSkills) {
-      setAllSkills((prevState) => [...selectedSkills]);
+      setAllSkills((prevState) => [
+        ...selectedSkills.map((skill) => ({
+          id: skill.id,
+          title: skill.skill.title,
+        })),
+      ]);
     }
   }, []);
 
@@ -113,29 +119,31 @@ const Skills = () => {
               )}
             </Stack>
 
-            <div className="skills-input mt-3">
-              <input
-                type="text"
-                placeholder="Start typing a skill to add a new one"
-                onChange={(e) => setSearchSkill(e.target.value)}
-                value={searchSkill}
-              />
-              {debouncedSearchSkillValue && (
-                <div className={styles.search_results_box}>
-                  {skills.data.map((skill) => {
-                    return (
-                      <div
-                        key={skill.id}
-                        className={styles.search_results}
-                        onClick={() => handleClick(skill)}
-                      >
-                        {skill.title}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
+            {allSkills.length <= 15 && (
+              <div className="skills-input mt-3">
+                <input
+                  type="text"
+                  placeholder="Start typing a skill to add a new one"
+                  onChange={(e) => setSearchSkill(e.target.value)}
+                  value={searchSkill}
+                />
+                {debouncedSearchSkillValue && (
+                  <div className={styles.search_results_box}>
+                    {skills.data.map((skill) => {
+                      return (
+                        <div
+                          key={skill.id}
+                          className={styles.search_results}
+                          onClick={() => handleClick(skill)}
+                        >
+                          {skill.title}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
             <div className="text-center mt-4">
               <OutlinedButton
                 title={
@@ -143,7 +151,7 @@ const Skills = () => {
                     <span className="me-2 d-inline-flex">
                       <SVG.SaveFile />
                     </span>
-                    Save Skills
+                    Update Skills
                   </>
                 }
                 onClick={updateSkills}
