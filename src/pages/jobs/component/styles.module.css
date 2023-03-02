@@ -1,0 +1,113 @@
+.monthBox {
+  text-align: center;
+  border-bottom: 1px solid #cacaca;
+  margin: 0 14px;
+  padding-bottom: 4px;
+}
+.monthBox h4 {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.monthBox p {
+  color: #eea23d;
+  font-size: 16px !important;
+  font-family: "Bahnschrift";
+  padding-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.monthBox span {
+  font-size: 32px !important;
+}
+
+.lotus {
+  border-bottom: 1px solid #cacaca;
+  padding-bottom: 20px;
+}
+
+.lotusimg {
+  display: flex;
+  align-items: center;
+  margin: 20px 20px 0 20px;
+}
+.lotusimg h3 {
+  font-size: 18px;
+  margin-left: 18px;
+  text-transform: capitalize !important;
+}
+
+.Numbers {
+  text-align: center;
+}
+.Numbers span {
+  display: block;
+  color: #121212;
+  opacity: 0.5;
+}
+
+.requirement {
+  border-right: 1px solid #cacaca;
+  margin-right: 20px;
+}
+.requirement h5 {
+  font-size: 18px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+.educations {
+  display: flex;
+  align-items: center;
+  padding-top: 6px;
+}
+.educations p {
+  font-size: 14px;
+  margin-left: 2% !important;
+}
+.educations span {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 100%;
+  display: block;
+  background: #eea23d;
+}
+.language h6 {
+  font-size: 18px;
+}
+.required h6 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.english {
+  display: flex;
+  align-items: center;
+}
+.dots {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 100%;
+  display: block;
+  background: #eea23d;
+  position: relative;
+  top: 8px;
+}
+
+.englishtext {
+  margin-left: 4% !important;
+}
+.skilssbtn {
+  display: flex;
+  align-items: center;
+}
+.grybtn {
+  background-color: #f0f0f0 !important;
+  font-size: 12px !important;
+  color: #121212 !important;
+  width: auto !important;
+  height: 30px !important;
+  border-radius: 60px !important;
+  font-family: "poppins";
+  margin-right: 15px !important;
+}

@@ -52,6 +52,7 @@ export const transformFullJobDetails = (data) => {
     jobCategories: data.job_category,
     deadline: data.deadline,
     isFullTime: data.is_full_time,
+    isApplied: data.is_applied,
     isPartTime: data.is_part_time,
     hasContract: data.has_contract,
     contactEmail: data.contact_email || "",
