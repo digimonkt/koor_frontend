@@ -1,9 +1,7 @@
 import { Card, CardContent, Stack } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
-import ApplicationCard from "@components/applicationCard";
 import JobCard from "@components/jobCard";
-import { RECENT_ITEMS } from "../../dashboard/recentHelper";
 import ApplicantList from "./applicantList";
 import { getEmployerJobsAPI } from "@api/employer";
 import { useDispatch } from "react-redux";
@@ -11,7 +9,6 @@ import { setTotalCreatedJobs } from "@redux/slice/employer";
 
 function MyJobs() {
   const dispatch = useDispatch();
-  const [isActive, setIsActive] = useState(false);
   const [jobs, setJobs] = useState([]);
   const getAllJobs = useCallback(async () => {
     const res = await getEmployerJobsAPI();
@@ -54,26 +51,9 @@ function MyJobs() {
             >
               <JobCard selfJob jobDetails={job} />
               <ApplicantList
-                isActive={isActive}
-                handleActive={() => setIsActive(false)}
+                jobId={job.id}
+                totalApplications={job.applicantCount}
               />
-              {isActive && (
-                <div className="recent-box mt-3">
-                  {RECENT_ITEMS.map((item, index) => (
-                    <ApplicationCard
-                      image={item.img}
-                      title={item.title}
-                      subTitle={item.subtitle}
-                      description={item.description}
-                      chiplabel={item.chiplabel}
-                      requirement={item.requirement}
-                      isDisabled={item.disabled}
-                      key={index}
-                      isMessagable={true}
-                    />
-                  ))}
-                </div>
-              )}
             </CardContent>
           </Card>
         );

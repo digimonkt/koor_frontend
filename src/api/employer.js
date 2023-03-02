@@ -1,6 +1,7 @@
 import api from ".";
 import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
+import { transformApplicationOnJobListData } from "./transform/employer";
 export const createJobAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs"),
@@ -46,5 +47,19 @@ export const updateEmployerJobAPI = async (jobId, data) => {
       "Content-Type": "multipart/form-data",
     },
   });
+  return response;
+};
+
+export const getApplicationOnJobAPI = async (jobId) => {
+  const response = await api.request({
+    url: urlcat("/v1/jobs/:jobId/applications", { jobId }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationOnJobListData(response.data),
+    };
+  }
   return response;
 };

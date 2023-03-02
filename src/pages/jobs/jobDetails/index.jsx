@@ -3,18 +3,19 @@ import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { SVG } from "@assets/svg";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getJobDetailsByIdAPI } from "@api/job";
 import dayjs from "dayjs";
 import { SolidButton, SearchButton } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { Avatar } from "@mui/material";
-import { formatPhoneNumberIntl } from "react-phone-number-input";
+import urlcat from "urlcat";
+import JobCostCard from "../component/jobCostCard";
+import JobRequirementCard from "../component/jobRequirementCard";
 
 const JobDetails = () => {
   const params = useParams();
-
+  const navigate = useNavigate();
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -85,7 +86,7 @@ const JobDetails = () => {
               <Grid item xs={8}>
                 <div className={`${styles.postJob}`}>
                   {/* <Link to="/saved-jobs"> */}
-                  <span>{<SVG.LeftArrow />}</span>
+                  <span onClick={() => navigate(-1)}>{<SVG.LeftArrow />}</span>
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -185,50 +186,23 @@ const JobDetails = () => {
                 </div>
               </Grid>
               <Grid item xs={12} lg={4}>
-                <div className={`${styles.monthBox}`}>
-                  <h4>UP TO</h4>
-                  <p className="m-0">
-                    $ <span>{details.budgetAmount}</span>
-                  </p>
-                  <h5 className="mt-0">/ {details.budgetPayPeriod}</h5>
-                </div>
-                <div className={`${styles.lotus}`}>
-                  <div className={`${styles.lotusimg}`}>
-                    <Avatar
-                      sx={{
-                        width: 100,
-                        height: 100,
-                        color: "#CACACA",
-                        "&.MuiAvatar-colorDefault": {
-                          background: "#F0F0F0",
-                        },
-                      }}
-                      src={generateFileUrl(details.user.image?.path)}
-                    >
-                      <SVG.UserIcon />
-                    </Avatar>
-                    <h3>{details.user.name}</h3>
-                  </div>
-                  <div className={`${styles.Numbers}`}>
-                    <span>{details.user.website}</span>
-                    <span>
-                      {details.user.countryCode && details.user.mobileNumber
-                        ? formatPhoneNumberIntl(
-                            details.user.countryCode + details.user.mobileNumber
-                          )
-                        : ""}
-                    </span>
-                    <span>{details.user.email}</span>
-                  </div>
-                </div>
+                <JobCostCard
+                  amount={details.budgetAmount}
+                  payPeriod={details.budgetPayPeriod}
+                  user={details.user}
+                />
                 <div className={`${styles.jobpostbtn}`}>
-                  <Link to="../job/apply/:jobId">
-                    <SearchButton
-                      text="Apply for this job"
-                      className={`${styles.enablebtn}`}
-                      lefticon={<SVG.Enable />}
-                    />
-                  </Link>
+                  <SearchButton
+                    text={details.isApplied ? "Applied" : "Apply for this job"}
+                    className={`${styles.enablebtn}`}
+                    lefticon={<SVG.Enable />}
+                    disabled={details.isApplied}
+                    onClick={() =>
+                      navigate(
+                        urlcat("../job/apply/:jobId", { jobId: params.jobId })
+                      )
+                    }
+                  />
 
                   <SearchButton
                     text="Save job"
@@ -242,58 +216,11 @@ const JobDetails = () => {
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <div className={`${styles.requirement}`}>
-                  <h5>Requirements:</h5>
-                  <div className={`${styles.required}`}>
-                    <h6>Education</h6>
-                    {details.jobCategories.map((category) => {
-                      return (
-                        <div
-                          className={`${styles.educations}`}
-                          key={category.id}
-                        >
-                          <span></span>
-                          <p className="m-0">{category.title}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className={`${styles.language}`}>
-                    <h6 className="mb-0 mt-3">Languages</h6>
-                    <Grid container spacing={2}>
-                      {details.languages.map((language) => {
-                        return (
-                          <Grid item xs={4} key={language.id}>
-                            <div className={`${styles.english}`}>
-                              <span className={`${styles.dots}`}></span>
-                              <div className={`${styles.englishtext}`}>
-                                <h6 className="mb-0 mt-3">{language.title}</h6>
-                                <span>Spoken: Fluent</span>
-                                <span>Written: Fluent</span>
-                              </div>
-                            </div>
-                            (From where These details come? maybe we need to
-                            change post job form - Saral Shrivastava )
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                    <div className={`${styles.skills}`}>
-                      <h6 className="mb-1">Skills</h6>
-                      <div className={`${styles.skilssbtn}`}>
-                        {details.skills.map((skill) => {
-                          return (
-                            <SearchButton
-                              key={skill.id}
-                              text={skill.title}
-                              className={`${styles.grybtn}`}
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <JobRequirementCard
+                  jobCategories={details.jobCategories}
+                  languages={details.languages}
+                  skills={details.skills}
+                />
               </Grid>
               <Grid item xs={6}>
                 <div className={`${styles.location}`}>

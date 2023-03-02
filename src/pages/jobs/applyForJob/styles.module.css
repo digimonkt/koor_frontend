@@ -268,7 +268,7 @@
 }
 .requirement {
   border-left: 1px solid #cacaca;
-  border-right: 1px solid #cacaca;
+  /* border-right: 1px solid #cacaca; */
   padding: 0 36px 0 40px;
 }
 .requirement p {
@@ -344,4 +344,24 @@
   font-weight: 600;
   color: #121212;
   font-size: 16px;
+}
+
+.cancel_popup {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.cancel_popup p {
+  display: block;
+  color: #121212;
+  opacity: 0.5;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: Bahnschrift;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0.03em;
 }

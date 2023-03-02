@@ -1,10 +1,11 @@
-import { Avatar, Button, Divider } from "@mui/material";
+import { Avatar, Button, Chip, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
 
 const ApplicationCard = ({
+  details,
   image,
   title,
   subTitle,
@@ -23,7 +24,6 @@ const ApplicationCard = ({
   // const handleNavigate = () => {
   //   navigate("/employer/manage-jobs/applicant-details");
   // };
-
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -42,7 +42,7 @@ const ApplicationCard = ({
             alignItems="center"
             sx={{ mb: 1, ...sx }}
           >
-            <h4>{title}</h4>
+            <h4>{details?.user?.name || details?.user?.email}</h4>
             <div className="recent-research">{subTitle}</div>
           </Stack>
           <Stack
@@ -51,10 +51,33 @@ const ApplicationCard = ({
             alignItems="center"
             sx={{ mb: 1, ...sx }}
           >
-            <span className="meets">{requirement}</span> {chiplabel}
+            <span className="meets">Meets your requirements with: </span>
+            <>
+              {details?.education && (
+                <Chip
+                  label="Education"
+                  className="chiplabel"
+                  icon={<SVG.SchoolIcon />}
+                />
+              )}
+              {details?.skills && (
+                <Chip
+                  label="Skills"
+                  className="chiplabel"
+                  icon={<SVG.SmallSkillsIcon />}
+                />
+              )}
+              {details?.language && (
+                <Chip
+                  label="Language"
+                  className="chiplabel"
+                  icon={<SVG.SmallLangugeIcon />}
+                />
+              )}
+            </>
           </Stack>
           <div className="recent-descrition">
-            <p>{description}</p>
+            <p>{details?.shortLetter || details?.user?.description}</p>
           </div>
         </div>
       </Stack>
