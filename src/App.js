@@ -26,7 +26,6 @@ function App() {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
     if (accessToken && refreshToken) {
-      dispatch(setIsLoggedIn(true));
       dispatch(getUserDetails());
     } else {
       dispatch(setIsLoggedIn(false));

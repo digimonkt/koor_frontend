@@ -50,6 +50,10 @@ export const request = async (config) => {
   } catch (error) {
     if (error.response.headers["x-access"]) {
       globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
+    } else {
+      if (error.response.status === 401) {
+        localStorage.clear();
+      }
     }
     if (error) {
       if (error.response) {

@@ -16,6 +16,7 @@ import {
   CheckboxInput,
   DateInput,
   LabeledInput,
+  // LabeledRadioInput,
   SelectInput,
 } from "@components/input";
 import CurrencyInput from "./currencyInput";
@@ -24,7 +25,11 @@ import { FilledButton, OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
+import {
+  PAY_PERIOD,
+  USER_ROLES,
+  // LANGUAGE_PROFICIENCY
+} from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -76,6 +81,7 @@ function PostJobsComponent() {
       isPartTime: false,
       hasContract: false,
       deadline: "",
+      startDate: "",
       isContactEmail: false,
       contactEmail: "",
       isContactPhone: false,
@@ -84,7 +90,11 @@ function PostJobsComponent() {
       workingDays: 5,
       contactWhatsapp: "",
       highestEducation: "",
-      languages: [],
+      languages: [
+        { language: "", spoken: "", written: "" },
+        { language: "", spoken: "", written: "" },
+        { language: "", spoken: "", written: "" },
+      ],
       skills: [],
       attachments: [],
       attachmentsRemove: [],
@@ -107,6 +117,7 @@ function PostJobsComponent() {
         has_contract: values.hasContract,
         working_days: values.workingDays,
         deadline: dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
+        start_date: dayjs(values.startDate).format(DATABASE_DATE_FORMAT),
         contact_email: values.isContactEmail ? values.contactEmail : "",
         contact_phone: values.isContactPhone ? values.contactPhone : "",
         contact_whatsapp: values.isContactWhatsapp
@@ -120,7 +131,13 @@ function PostJobsComponent() {
       };
       const newFormData = new FormData();
       for (const key in payload) {
-        if (key === "attachments") {
+        if (key === "language") {
+          payload.language.forEach((language) => {
+            if (language.id && language.spoken && language.written) {
+              newFormData.append("language", JSON.stringify(language));
+            }
+          });
+        } else if (key === "attachments") {
           payload.attachments.forEach((attachment) => {
             if (!attachment.id) {
               newFormData.append(key, attachment);
@@ -185,20 +202,42 @@ function PostJobsComponent() {
       formik.setFieldValue("isPartTime", data.isPartTime);
       formik.setFieldValue("hasContract", data.hasContract);
       formik.setFieldValue("deadline", dayjs(data.deadline));
-      formik.setFieldValue("isContactEmail", Boolean(data.contractEmail));
-      formik.setFieldValue("contactEmail", data.contractEmail);
-      formik.setFieldValue("isContactPhone", Boolean(data.isContactPhone));
+      formik.setFieldValue("startDate", dayjs(data.startDate));
+      formik.setFieldValue("isContactEmail", Boolean(data.contactEmail));
+      formik.setFieldValue("contactEmail", data.contactEmail);
+      formik.setFieldValue("isContactPhone", Boolean(data.contactPhone));
       formik.setFieldValue("contactPhone", data.contactPhone);
-      formik.setFieldValue(
-        "isContactWhatsapp",
-        Boolean(data.isContactWhatsapp)
-      );
+      formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
       formik.setFieldValue("workingDays", data.workingDays);
       formik.setFieldValue("highestEducation", data.highestEducation.id);
+
+      // !TEMPORARY SOLUTION
       formik.setFieldValue(
         "languages",
-        data.languages.map ? data.languages.map((language) => language.id) : []
+        data.languages.map
+          ? [
+              ...data.languages.map((language) => ({
+                language: language.language.id,
+                spoken: language.spoken,
+                written: language.written,
+              })),
+              {
+                language: "",
+                spoken: "",
+                written: "",
+              },
+              {
+                language: "",
+                spoken: "",
+                written: "",
+              },
+            ]
+          : [1, 2, 3].map(() => ({
+              language: "",
+              spoken: "",
+              written: "",
+            }))
       );
       formik.setFieldValue("highestEducation", data.highestEducation.id);
       formik.setFieldValue(
@@ -404,7 +443,7 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={3} lg={4} xs={12}>
                     <label>Job type</label>
                     <FormGroup row sx={{ marginLeft: "7px" }}>
                       <JobFormControl
@@ -424,7 +463,7 @@ function PostJobsComponent() {
                       />
                     </FormGroup>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={3} lg={4} xs={12}>
                     <label>Timing ({formik.values.workingDays} Day week)</label>
                     <Slider
                       defaultValue={5}
@@ -441,8 +480,21 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.timing}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
-                    <div>
+                  <Grid item xl={3} lg={3} xs={12}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <DateInput
+                        label="Start Date"
+                        onChange={(e) => formik.setFieldValue("startDate", e)}
+                        value={formik.values.startDate}
+                        onBlur={formik.getFieldProps("startDate").onBlur}
+                      />
+                      {formik.touched.startDate && formik.errors.startDate ? (
+                        <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                      ) : null}
+                    </div>
+                  </Grid>
+                  <Grid item xl={3} lg={3} xs={12}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
                       <DateInput
                         label="Deadline"
                         onChange={(e) => formik.setFieldValue("deadline", e)}
@@ -454,6 +506,7 @@ function PostJobsComponent() {
                       ) : null}
                     </div>
                   </Grid>
+
                   <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                   </Grid>
@@ -464,6 +517,7 @@ function PostJobsComponent() {
                     <JobFormControl
                       control={<CheckboxInput />}
                       label="Apply by email"
+                      checked={formik.values.isContactEmail}
                       {...formik.getFieldProps("isContactEmail")}
                     />
                     <input
@@ -480,6 +534,7 @@ function PostJobsComponent() {
                     <JobFormControl
                       control={<CheckboxInput />}
                       label="Apply by call or SMS"
+                      checked={formik.values.isContactPhone}
                       {...formik.getFieldProps("isContactPhone")}
                     />
                     <input
@@ -496,6 +551,7 @@ function PostJobsComponent() {
                     <JobFormControl
                       control={<CheckboxInput />}
                       label="Apply via WhatsApp"
+                      checked={formik.values.isContactWhatsapp}
                       {...formik.getFieldProps("isContactWhatsapp")}
                     />
                     <input
@@ -540,48 +596,65 @@ function PostJobsComponent() {
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
                     </label>
                     <Grid container spacing={2}>
-                      <Grid item xl={4} lg={4} xs={12}>
-                        <SelectInput
-                          placeholder="Select a Language"
-                          options={languages.data.map((language) => ({
-                            value: language.id,
-                            label: language.title,
-                          }))}
-                          name="languages[0]"
-                          value={formik.values.languages[0] || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        {formik.touched.languages && formik.errors.languages ? (
-                          <ErrorMessage>{formik.errors.languages}</ErrorMessage>
-                        ) : null}
-                      </Grid>
-                      <Grid item xl={4} lg={4} xs={12}>
-                        <SelectInput
-                          placeholder="Select a Language"
-                          options={languages.data.map((language) => ({
-                            value: language.id,
-                            label: language.title,
-                          }))}
-                          name="languages[1]"
-                          value={formik.values.languages[1] || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                      </Grid>
-                      <Grid item xl={4} lg={4} xs={12}>
-                        <SelectInput
-                          placeholder="Select a Language"
-                          options={languages.data.map((language) => ({
-                            value: language.id,
-                            label: language.title,
-                          }))}
-                          name="languages[2]"
-                          value={formik.values.languages[2] || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                      </Grid>
+                      {/* {[0, 1, 2].map((i) => {
+                        return (
+                          <Grid item xl={4} lg={4} xs={12} key={i}>
+                            <SelectInput
+                              placeholder="Select a Language"
+                              options={languages.data.map((language) => ({
+                                value: language.id,
+                                label: language.title,
+                              }))}
+                              name={`languages[${i}].language`}
+                              value={formik.values.languages[i].language || ""}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                            />
+                            <LabeledRadioInput
+                              title="Spoken"
+                              name={`languages[${i}].spoken`}
+                              value={formik.values.languages[i].spoken || ""}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              options={Object.keys(LANGUAGE_PROFICIENCY).map(
+                                (prof) => {
+                                  return {
+                                    value: LANGUAGE_PROFICIENCY[prof],
+                                    label: prof,
+                                  };
+                                }
+                              )}
+                            />
+                            <LabeledRadioInput
+                              title="Written"
+                              name={`languages[${i}].written`}
+                              value={formik.values.languages[i].written || ""}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              options={Object.keys(LANGUAGE_PROFICIENCY).map(
+                                (prof) => {
+                                  return {
+                                    value: LANGUAGE_PROFICIENCY[prof],
+                                    label: prof,
+                                  };
+                                }
+                              )}
+                            />
+                            {i === 0 ? (
+                              <>
+                                {formik.touched.languages &&
+                                formik.errors.languages ? (
+                                  <ErrorMessage>
+                                    {formik.errors.languages}
+                                  </ErrorMessage>
+                                ) : null}
+                              </>
+                            ) : (
+                              ""
+                            )}
+                          </Grid>
+                        );
+                      })} */}
                     </Grid>
                   </Grid>
                 </Grid>
