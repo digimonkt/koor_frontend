@@ -224,6 +224,7 @@ export const authSlice = createSlice({
       }
       state.currentUser = { ...state.currentUser, ...action.payload };
       state.role = action.payload.role;
+      state.isLoggedIn = true;
     });
     builder.addCase(getUserDetails.rejected, (state, action) => {
       console.log({ payload: action.payload, error: action.error, action });

@@ -51,6 +51,7 @@ export const transformFullJobDetails = (data) => {
     address: data.address,
     jobCategories: data.job_category,
     deadline: data.deadline,
+    startDate: data.start_date,
     isFullTime: data.is_full_time,
     isApplied: data.is_applied,
     isPartTime: data.is_part_time,

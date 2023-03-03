@@ -23,6 +23,11 @@ export const validateCreateJobInput = Yup.object().shape({
     .test("isFuture", "Date Must be of Future", (value, context) => {
       return dayjs(value).isSameOrAfter(dayjs());
     }),
+  startDate: Yup.string()
+    .required("Start Date is required")
+    .test("isFuture", "Date Must be of Future", (value, context) => {
+      return dayjs(value).isSameOrAfter(dayjs());
+    }),
   contactEmail: Yup.string()
     .email()
     .test("ifPresent", "Contact Email is required", (value, context) => {
@@ -60,6 +65,26 @@ export const validateCreateJobInput = Yup.object().shape({
     }
   ),
   highestEducation: Yup.string().required("Education Level is required"),
-  languages: Yup.array().of(Yup.string()).min(1, "One Language is required"),
+  languages: Yup.array()
+    .of(
+      Yup.object().shape({
+        id: Yup.string(),
+        spoken: Yup.string(),
+        written: Yup.string(),
+      })
+    )
+    .test(
+      "atLeastOneLanguage",
+      "At Least one Language required",
+      (value, context) => {
+        let isPresent = false;
+        value.forEach((val) => {
+          if (val.language && val.spoken && val.written) {
+            isPresent = true;
+          }
+        });
+        return isPresent;
+      }
+    ),
   skills: Yup.array().of(Yup.string()).min(1, "One Skill is required"),
 });

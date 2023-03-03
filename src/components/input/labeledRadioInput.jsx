@@ -8,6 +8,7 @@ const FormLabelBox = styled(FormControlLabel)`
     font-weight: 400;
     font-size: 14px;
     color: #121212;
+    text-transform: capitalize;
   }
 `;
 function LabeledRadioInputComponent({ title, options, labelWeight, ...rest }) {
