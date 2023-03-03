@@ -7,14 +7,16 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import JobCard from "@components/jobCard";
 import { getAppliedJobsAPI } from "@api/jobSeeker";
 
 function AppliedJobsComponent() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [appliedJobsList, setAppliedJobList] = useState([]);
+  const [totalAppliedJobs, setTotalAppliedJobs] = useState(0);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -23,7 +25,10 @@ function AppliedJobsComponent() {
   };
   const getAppliedJobsList = async () => {
     const res = await getAppliedJobsAPI();
-    console.log({ res });
+    if (res.remote === "success") {
+      setTotalAppliedJobs(res.data.count);
+      setAppliedJobList(res.data.results);
+    }
   };
 
   useEffect(() => {
@@ -56,7 +61,7 @@ function AppliedJobsComponent() {
             <h2 className="m-0">
               Applied jobs
               <Chip
-                label="5"
+                label={totalAppliedJobs}
                 className="ms-3"
                 sx={{
                   background: "#FEEFD3",
@@ -124,7 +129,9 @@ function AppliedJobsComponent() {
           </Stack>
         </div>
         <div className="savedjobs">
-          <JobCard logo applied />
+          {appliedJobsList.map((list) => {
+            return <JobCard logo applied key={list.id} jobDetails={list.job} />;
+          })}
         </div>
       </CardContent>
     </Card>
