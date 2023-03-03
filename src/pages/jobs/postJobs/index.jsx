@@ -16,7 +16,7 @@ import {
   CheckboxInput,
   DateInput,
   LabeledInput,
-  // LabeledRadioInput,
+  LabeledRadioInput,
   SelectInput,
 } from "@components/input";
 import CurrencyInput from "./currencyInput";
@@ -25,11 +25,7 @@ import { FilledButton, OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "@components/caption";
-import {
-  PAY_PERIOD,
-  USER_ROLES,
-  // LANGUAGE_PROFICIENCY
-} from "@utils/enum";
+import { PAY_PERIOD, USER_ROLES, LANGUAGE_PROFICIENCY } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -596,7 +592,7 @@ function PostJobsComponent() {
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
                     </label>
                     <Grid container spacing={2}>
-                      {/* {[0, 1, 2].map((i) => {
+                      {[0, 1, 2].map((i) => {
                         return (
                           <Grid item xl={4} lg={4} xs={12} key={i}>
                             <SelectInput
@@ -654,7 +650,7 @@ function PostJobsComponent() {
                             )}
                           </Grid>
                         );
-                      })} */}
+                      })}
                     </Grid>
                   </Grid>
                 </Grid>
