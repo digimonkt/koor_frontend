@@ -26,14 +26,15 @@ function JobRequirementCard({ jobCategories, languages, skills }) {
               <Grid item xs={4} key={language.id}>
                 <div className={`${styles.english}`}>
                   <span className={`${styles.dots}`}></span>
-                  <div className={`${styles.englishtext}`}>
-                    <h6 className="mb-0 mt-3">{language.title}</h6>
-                    <span>Spoken: Fluent</span>
-                    <span>Written: Fluent</span>
+                  <div
+                    className={`${styles.englishtext}`}
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    <h6 className="mb-0 mt-3">{language.language.title}</h6>
+                    <span>Spoken: {language.spoken}</span> <br />
+                    <span>Written: {language.written}</span>
                   </div>
                 </div>
-                (From where These details come? maybe we need to change post job
-                form - Saral Shrivastava )
               </Grid>
             );
           })}

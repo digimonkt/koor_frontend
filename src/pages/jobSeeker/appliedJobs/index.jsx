@@ -7,9 +7,10 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { SVG } from "@assets/svg";
 import JobCard from "@components/jobCard";
+import { getAppliedJobsAPI } from "@api/jobSeeker";
 
 function AppliedJobsComponent() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -20,6 +21,15 @@ function AppliedJobsComponent() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const getAppliedJobsList = async () => {
+    const res = await getAppliedJobsAPI();
+    console.log({ res });
+  };
+
+  useEffect(() => {
+    getAppliedJobsList();
+  }, []);
+
   return (
     <Card
       sx={{

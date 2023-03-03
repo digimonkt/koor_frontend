@@ -132,9 +132,20 @@ span.blueview {
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
-
+  display: flex;
   /* Black #121212 */
+  position: relative;
   color: rgb(18 18 18 / 75%);
+}
+
+.recent-research::before {
+  position: absolute;
+  content: "";
+  border-left: 1px solid #848484;
+  height: 38px;
+  width: 20px;
+  left: -15px;
+  top: -8px;
 }
 .chiplabel {
   font-family: "Poppins" !important;
@@ -186,9 +197,7 @@ span.blueview {
   display: block;
   white-space: nowrap;
 }
-.recent-research {
-  display: flex;
-}
+
 .job-count {
   font-family: "Bahnschrift" !important;
   font-weight: 600 !important;

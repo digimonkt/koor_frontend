@@ -10,6 +10,7 @@ export const transformApplicationOnJobListData = (data) => {
         rejectedAt: result.rejected_at,
         createdAt: result.created,
         shortLetter: result.short_letter,
+        job: result.job,
         user: {
           id: result.user.id,
           name: result.user.name,

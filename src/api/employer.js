@@ -2,6 +2,7 @@ import api from ".";
 import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
 import { transformApplicationOnJobListData } from "./transform/employer";
+import { transformGetUserDetails } from "./transform/user";
 export const createJobAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs"),
@@ -62,4 +63,44 @@ export const getApplicationOnJobAPI = async (jobId) => {
     };
   }
   return response;
+};
+
+export const getRecentApplicationAPI = async () => {
+  const response = await api.request({
+    url: urlcat("/v1/jobs/applications"),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationOnJobListData(response.data),
+    };
+  }
+  return response;
+};
+
+export const getApplicationDetailsAPI = async (applicationId) => {
+  const res = await api.request({
+    url: urlcat("/v1/jobs/applications-detail/:applicationId", {
+      applicationId,
+    }),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    res.data.user.profile = { description: res.data.description };
+    return {
+      remote: "success",
+      data: {
+        id: res.data.id,
+        createdAt: res.data.created,
+        job: res.data.job,
+        rejectedAt: res.data.rejected_at,
+        shortLetter: res.data.short_letter,
+        shortlistedAt: res.data.shortlisted_at,
+        attachments: res.data.attachments,
+        user: { ...transformGetUserDetails(res.data.user) },
+      },
+    };
+  }
+  return res;
 };

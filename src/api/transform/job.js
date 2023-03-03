@@ -44,7 +44,7 @@ export const transformFullJobDetails = (data) => {
     title: data.title,
     description: data.description,
     budgetCurrency: data.budget_currency,
-    budgetAmount: data.budget_amount,
+    budgetAmount: Number(data.budget_amount).toLocaleString(),
     budgetPayPeriod: data.budget_pay_period,
     country: data.country,
     city: data.city,
