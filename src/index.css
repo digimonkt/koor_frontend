@@ -1,3 +1,49 @@
+/* Marque */
+
+.marquee {
+  flex: 0 0 auto;
+  min-width: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  color: #feefd3 !important;
+  flex-direction: row;
+  align-items: center;
+  animation: scroll var(--duration) linear var(--delay) var(--iteration-count);
+  animation-play-state: var(--play);
+  animation-delay: var(--delay);
+  animation-direction: var(--direction);
+}
+
+/* Marque */
+
+.verticalSlider ul.slick-dots {
+  transform: rotate(90deg);
+  position: relative;
+  bottom: 172px;
+}
+
+.slick-dots li button:before {
+  font-family: "slick";
+  font-size: 12px;
+  line-height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  content: "•";
+  text-align: center;
+  opacity: 0.3;
+  color: #274593 !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 1 !important ;
+}
+
 body {
   margin: 0;
   font-family: "Bahnschrift";
@@ -26,4 +72,12 @@ textarea {
   /* Black #121212 */
 
   color: #121212;
+}
+
+@media screen and (max-width: 1440px) {
+  .verticalSlider ul.slick-dots {
+    transform: rotate(90deg);
+    position: relative;
+    bottom: 220px;
+  }
 }

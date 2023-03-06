@@ -81,8 +81,20 @@ import { ReactComponent as SellIcon } from "./sellIcon.svg";
 import { ReactComponent as CategoryIcon } from "./CategoryIcon.svg";
 import { ReactComponent as SearchIConJob } from "./searchIConJob.svg";
 import { ReactComponent as CalenderChat } from "./calenderchat.svg";
+import { ReactComponent as Design } from "./design.svg";
+import { ReactComponent as Market } from "./market.svg";
+import { ReactComponent as Person } from "./person.svg";
+import { ReactComponent as QuestionMark } from "./question_mark.svg";
+import { ReactComponent as Account } from "./account.svg";
+import { ReactComponent as RightArrow } from "./rightArrow.svg";
 
 export const SVG = {
+  RightArrow,
+  Account,
+  QuestionMark,
+  Person,
+  Market,
+  Design,
   ClockIconSmall,
   PauseIcon,
   BriefcaseIcon,

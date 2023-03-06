@@ -14,8 +14,32 @@ import Doc from "./doc.png";
 import GoogleStroe from "./google-store.png";
 import appleStroe from "./apple-store.png";
 import Banner from "./banner.png";
+import Amazon from "./amazon.png";
+import Lingo from "./lingo.png";
+import Dominos from "./dominos.png";
+import Mintra from "./mintra.png";
+import Binance from "./binance.png";
+import Dhl from "./dhl.png";
+import Easy from "./easy.png";
+import Friend from "./friend.png";
+import Useful from "./useful.png";
+import Testi from "./testi.png";
+import Googleplay from "./google_play.png";
+import Appstore from "./app_store.png";
 
 export const IMAGES = {
+  Appstore,
+  Googleplay,
+  Testi,
+  Useful,
+  Friend,
+  Easy,
+  Dhl,
+  Binance,
+  Mintra,
+  Dominos,
+  Lingo,
+  Amazon,
   SearchIcon,
   AppleBoxIcon,
   FacebookBoxIcon,
