@@ -63,7 +63,6 @@ const HomeSection = () => {
               </Grid>
             </>
           ))}
-          ;
         </Grid>
       </Box>
     </>

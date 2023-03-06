@@ -23,7 +23,9 @@
 .home_section_text_box {
   display: flex;
   justify-content: center;
-  padding-top: 130px;
+  padding-top: 100px;
+  padding-left: 141px;
+  padding-right: 141px;
 }
 
 .home_section_img_box {
@@ -33,4 +35,14 @@
 
 .home_section_box {
   margin-top: 50px;
+}
+
+@media screen and (max-width: 1440px) {
+  .home_section_text_box {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    padding-left: 36px;
+    padding-right: 36px;
+  }
 }
