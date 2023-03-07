@@ -1,5 +1,9 @@
 /* Marque */
 
+.css-ece9u5 {
+  min-width: -1px !important;
+}
+
 .marquee {
   flex: 0 0 auto;
   min-width: 100%;

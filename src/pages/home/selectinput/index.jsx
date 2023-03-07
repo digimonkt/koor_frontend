@@ -11,7 +11,6 @@ const SelectInput = ({
   className,
   options,
   value,
-  placeholder,
   handleChange,
   ...rest
 }) => {
@@ -23,15 +22,15 @@ const SelectInput = ({
           <Select
             className={`${styles.selectinput} ${className}`}
             {...rest}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
             value={value}
-            label={label}
+            displayEmpty
+            inputProps={{ "aria-label": "Without label" }}
             onChange={(e) => handleChange(e.target.value)}
-            placeholder={placeholder}
           >
             {options?.map((option) => (
-              <MenuItem value={option.value} key={option}>
+              <MenuItem value={""} key={option}>
                 {option.title}
               </MenuItem>
             ))}

@@ -18,7 +18,7 @@ const InputSearch = ({ placeholder, svg }) => {
         </IconButton>
         <div className="searchmainbox">
           <small className="telentsearchicon">{<SVG.HeaderSearch />}</small>
-          <input className={`${styles.searchbox}`} placeholder={placeholder} />
+          <input className={`${styles.searchbox}`} placeholder={"Search"} />
           <span>{svg}</span>
         </div>
       </div>

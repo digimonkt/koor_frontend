@@ -12,6 +12,12 @@
   padding: 15px 25px 15px 25px !important;
 }
 
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .selectinput {
+    width: 320px;
+  }
+}
+
 @media screen and (max-width: 1440px) {
   .selectinput {
     width: 300px;

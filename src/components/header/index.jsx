@@ -128,6 +128,12 @@ function Header() {
               <li>
                 <Link to="/">Home</Link>
               </li>
+              <li>
+                <Link to="/browse-jobs">Browse Jobs</Link>
+              </li>
+              <li>
+                <Link to="/browse-tenders">Browse tenders</Link>
+              </li>
               {!isLoggedIn && (
                 <li>
                   <Link to="/about-us">About Us</Link>

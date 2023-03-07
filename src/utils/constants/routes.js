@@ -55,6 +55,18 @@ export const UNAUTHENTICATED_ROUTES = [
     path: "/",
     component: Home,
   },
+  {
+    id: "home",
+    name: "Home",
+    path: "/browse-jobs",
+    component: Home,
+  },
+  {
+    id: "home",
+    name: "Home",
+    path: "/browse-tenders",
+    component: Home,
+  },
 ];
 
 //

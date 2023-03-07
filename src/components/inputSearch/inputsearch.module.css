@@ -48,6 +48,12 @@
   color: #848484;
 }
 
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .searchbox {
+    width: 320px;
+  }
+}
+
 @media screen and (max-width: 1440px) {
   .searchbox {
     width: 300px;

@@ -18,14 +18,14 @@ const options = [
   {
     id: 1,
     value: "cat 1",
-    title: "category one",
+    title: "category",
   },
 ];
 const locations = [
   {
     id: 1,
     value: "cat 1",
-    title: "category oneerguhijkl",
+    title: "Location",
   },
 ];
 

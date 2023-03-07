@@ -74,7 +74,7 @@ const InnerFooter = () => {
                 paddingLeft: "5rem",
               }}
             >
-              <Box>
+              <Box sx={{ marginLeft: "auto" }}>
                 <Typography
                   variant="h2"
                   sx={{

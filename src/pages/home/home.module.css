@@ -324,7 +324,143 @@
   background-color: #fff;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .back_img_div {
+    height: 764px;
+  }
+
+  .home_btn_btn {
+    width: 155px;
+  }
+
+  .home_banner_heading_h5 {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 44px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    padding-top: 25%;
+    margin-left: 0%;
+  }
+
+  .home_banner_heading {
+    font-family: "Bahnschrift", sans-serif !important;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 64px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding-top: 21%;
+    margin-left: 0%;
+  }
+
+  .stay_back_img {
+    height: 772px;
+  }
+
+  .new_jobs p {
+    font-size: 13px;
+  }
+
+  .home_img_contents {
+    margin-top: 140px;
+  }
+
+  .location_select {
+    margin-right: 10px;
+  }
+
+  .category_select {
+    margin-right: 10px;
+  }
+
+  .inputsearch_home {
+    margin-right: 10px;
+  }
+
+  .input_select_btn_box {
+    padding-top: 39%;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .back_img_div {
+    height: 764px;
+  }
+
+  .home_banner_heading_h5 {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 44px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    padding-top: 28%;
+    margin-left: 0%;
+  }
+
+  .home_banner_heading {
+    font-family: "Bahnschrift", sans-serif !important;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 64px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding-top: 24%;
+    margin-left: 0%;
+  }
+
+  .stay_back_img {
+    height: 772px;
+  }
+
+  .new_jobs p {
+    font-size: 13px;
+  }
+
+  .home_img_contents {
+    margin-top: 140px;
+  }
+
+  .location_select {
+    margin-right: 10px;
+  }
+
+  .category_select {
+    margin-right: 10px;
+  }
+
+  .inputsearch_home {
+    margin-right: 10px;
+  }
+
+  .input_select_btn_box {
+    padding-top: 39%;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 900px) {
   .back_img_div {
     height: 764px;
   }
