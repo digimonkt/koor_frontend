@@ -1,4 +1,3 @@
-import { Login, Logout, Registration } from "@pages/auth";
 import {
   ManageJobs,
   MyProfile as EmployerProfile,
@@ -15,7 +14,6 @@ import {
 
 import {
   JobCriteria as JobSeekerCriteria,
-  MyProfile as JobSeekerProfile,
   UpdateProfile as JobSeekerUpdateProfile,
   AppliedJobs,
   SavedJobs,
@@ -27,6 +25,20 @@ import { lazy } from "react";
 
 const Resources = lazy(() =>
   import("@pages/resources").then((module) => ({ default: module.Resources }))
+);
+const Logout = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.Logout }))
+);
+const Login = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.Login }))
+);
+const Registration = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.Registration }))
+);
+const JobSeekerProfile = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.MyProfile,
+  }))
 );
 
 // prefix => `/`

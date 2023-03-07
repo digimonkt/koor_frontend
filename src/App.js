@@ -15,6 +15,7 @@ import { getUserDetails, setIsLoggedIn } from "@redux/slice/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import { MESSAGE_TYPE } from "@utils/enum";
 import { resetToast } from "@redux/slice/toast";
+import { FallbackLoading } from "@components/loader/fallbackLoader";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ function App() {
             <Route
               path={route.path}
               element={
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<FallbackLoading />}>
                   <route.component />
                 </Suspense>
               }
@@ -63,9 +64,11 @@ function App() {
               key={route.id}
               path={route.path}
               element={
-                <UnauthorizedRoute>
-                  <route.component />
-                </UnauthorizedRoute>
+                <Suspense fallback={<FallbackLoading />}>
+                  <UnauthorizedRoute>
+                    <route.component />
+                  </UnauthorizedRoute>
+                </Suspense>
               }
             />
           );
