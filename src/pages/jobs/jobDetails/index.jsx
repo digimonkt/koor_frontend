@@ -115,7 +115,7 @@ const JobDetails = () => {
               <Grid item xs={12} lg={8}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
-                  <p>{details.description}</p>
+                  <p className="job-description">{details.description}</p>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
@@ -153,11 +153,9 @@ const JobDetails = () => {
                 <div className={`${styles.datesatrt}`}>
                   <span>{<SVG.StartDate />}</span>
                   <p className="m-0 ms-2">
-                    <span className={`${styles.startDate}`}>Start date:</span>
+                    <span className={`${styles.startDate}`}>Start date:</span>{" "}
                     <b className={`${styles.startB}`}>
-                      Septermber 13 (From where this should come? I think we
-                      need to add one more field in create job form - Saral
-                      Shrivastava)
+                      {dayjs(details.startDate).format("ll")}
                     </b>
                   </p>
                 </div>

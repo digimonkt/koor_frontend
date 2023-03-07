@@ -96,16 +96,12 @@ const ApplicantList = ({ totalApplications, jobId }) => {
           {applicants.map((item, index) => {
             return (
               <ApplicationCard
+                jobId={jobId}
                 details={item}
-                image={item.user.image}
-                title={item.title}
                 subTitle={item.subtitle}
-                description={item.description}
-                chiplabel={item.chiplabel}
-                requirement={item.requirement}
                 isDisabled={item.disabled}
                 key={index}
-                isMessagable={true}
+                isMessagable
               />
             );
           })}

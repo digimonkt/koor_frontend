@@ -1,5 +1,6 @@
 import api from ".";
 import urlcat from "urlcat";
+import { transformJobListResponse } from "./transform/job";
 export const updateJobSeekerAboutMeAPI = async (data) => {
   const res = await api.request({
     url: "/v1/users/job-seeker/about-me",
@@ -107,7 +108,7 @@ export const deleteWorkExperienceDetailsAPI = async (workExperienceId) => {
 };
 
 export const addSkillsDetailsAPI = async (data) => {
-  const res = api.request({
+  const res = await api.request({
     url: urlcat("/v1/users/job-seeker/skills"),
     method: "POST",
     data,
@@ -116,6 +117,34 @@ export const addSkillsDetailsAPI = async (data) => {
     return {
       remote: "success",
       data: res.data.data,
+    };
+  }
+  return res;
+};
+
+export const getAppliedJobsAPI = async () => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/jobs/apply"),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        ...res.data,
+        results: res.data.results.map((result) => {
+          return {
+            attachments: result.attachments,
+            id: result.id,
+            rejectedAt: result.rejected_at,
+            shortLetter: result.short_letter,
+            shortlistedAt: result.shortlisted_at,
+            job: transformJobListResponse({
+              results: [result.job],
+            }).results[0],
+          };
+        }),
+      },
     };
   }
   return res;

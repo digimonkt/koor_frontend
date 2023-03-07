@@ -178,7 +178,7 @@ const ApplyForJob = () => {
               <Grid item xs={4}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
-                  <p>{details.description}</p>
+                  <p className="job-description">{details.description}</p>
 
                   {hide ? (
                     <>

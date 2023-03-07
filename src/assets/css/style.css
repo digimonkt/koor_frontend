@@ -1613,3 +1613,7 @@ input.employersearch {
   color: #848484;
   outline: none;
 }
+
+.job-description {
+  white-space: pre-line;
+}

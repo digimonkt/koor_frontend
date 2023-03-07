@@ -170,7 +170,7 @@ export const EMPLOYER_ROUTES = [
   {
     id: "applicantDetails",
     name: "Applicant Detials",
-    path: "/manage-jobs/applicant-details",
+    path: "/manage-jobs/:jobId/applicant-details/:applicationId",
     component: ApplicantDetails,
   },
   {

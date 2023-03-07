@@ -3,15 +3,18 @@ import { Stack } from "@mui/system";
 import React from "react";
 import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
+import urlcat from "urlcat";
+import { USER_ROLES } from "@utils/enum";
+import { generateFileUrl } from "@utils/generateFileUrl";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 const ApplicationCard = ({
   details,
+  jobId,
   image,
-  title,
   subTitle,
-  requirement,
-  chiplabel,
-  description,
   isDisabled,
   isMessagable,
   sx,
@@ -24,6 +27,7 @@ const ApplicationCard = ({
   // const handleNavigate = () => {
   //   navigate("/employer/manage-jobs/applicant-details");
   // };
+  console.log({ details });
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -33,7 +37,10 @@ const ApplicationCard = ({
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Avatar src={image} sx={{ width: "70px", height: "70px" }} />{" "}
+        <Avatar
+          src={generateFileUrl(details?.user?.image?.path || "")}
+          sx={{ width: "70px", height: "70px" }}
+        />{" "}
         <div className="recent-content">
           <Stack
             direction="row"
@@ -43,7 +50,14 @@ const ApplicationCard = ({
             sx={{ mb: 1, ...sx }}
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
-            <div className="recent-research">{subTitle}</div>
+            <div className="recent-research">
+              <span>
+                Applied <strong>{dayjs(details?.createdAt).fromNow()}</strong>{" "}
+                to:{" "}
+              </span>
+              <div>{details?.job?.title}</div>
+            </div>
+            {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
           </Stack>
           <Stack
             direction="row"
@@ -87,7 +101,14 @@ const ApplicationCard = ({
         </Button>
         <Button
           LinkComponent={Link}
-          to={url}
+          to={urlcat(
+            "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+            {
+              applicationId: details?.id || "applicationId",
+              role: USER_ROLES.employer,
+              jobId: jobId || "jobId",
+            }
+          )}
           sx={{
             color: "#274593",
             flexDirection: "column",
