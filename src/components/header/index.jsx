@@ -13,6 +13,7 @@ import { SVG } from "@assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import { USER_ROLES } from "@utils/enum";
 import { useSelector } from "react-redux";
+import styles from "./header.module.css";
 
 const ismenu = true;
 
@@ -57,7 +58,12 @@ function Header() {
             <SVG.KoorLogo />
           </Link>
           <div className="">
-            <SearchCategory direction="row" spacing={1} alignItems="center">
+            <SearchCategory
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              className={styles.search_category}
+            >
               <Link
                 to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
                 className="d-inline-flex"

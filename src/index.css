@@ -78,7 +78,7 @@ textarea {
   color: #121212;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
   .verticalSlider ul.slick-dots {
     transform: rotate(90deg);
     position: relative;

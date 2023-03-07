@@ -216,16 +216,7 @@ header {
 .menu li a:hover {
   color: #eea23d;
 }
-.outline-button {
-  border: 1px solid #274593 !important;
-  border-radius: 73px !important;
-  padding: 10px 30px !important;
-  color: #274593 !important;
-  /* font-size: 16px !important; */
-  letter-spacing: 0.03em !important;
-  font-family: "Bahnschrift" !important;
-  /* font-weight: 600 !important; */
-}
+
 .outline-login {
   background: #eea23d !important;
   border-radius: 73px !important;
@@ -1615,4 +1606,50 @@ input.employersearch {
 
 .iconfooter a {
   color: #274593;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .outline-button {
+    border: 1px solid #274593 !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    color: #274593 !important;
+    /* font-size: 16px !important; */
+    letter-spacing: 0.03em !important;
+    font-family: "Bahnschrift" !important;
+    /* font-weight: 600 !important; */
+  }
+  .outline-login {
+    background: #eea23d !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #121212 !important;
+    font-family: "Bahnschrift" !important;
+    letter-spacing: 0.03em !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .outline-button {
+    border: 1px solid #274593 !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    color: #274593 !important;
+    /* font-size: 16px !important; */
+    letter-spacing: 0.03em !important;
+    font-family: "Bahnschrift" !important;
+    /* font-weight: 600 !important; */
+  }
+  .outline-login {
+    background: #eea23d !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #121212 !important;
+    font-family: "Bahnschrift" !important;
+    letter-spacing: 0.03em !important;
+  }
 }
