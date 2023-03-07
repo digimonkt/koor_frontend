@@ -6,6 +6,7 @@ import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
  * **NOTE**: Vendor is pending.
  */
 const initialState = {
+  isGlobalLoading: false,
   isLoggedIn: false,
   role: "",
   currentUser: {
@@ -218,16 +219,21 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getUserDetails.pending, (state, action) => {
+      state.isGlobalLoading = true;
+    });
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
       if (!action.payload.profileImage) {
         delete action.payload.profileImage;
       }
       state.currentUser = { ...state.currentUser, ...action.payload };
       state.role = action.payload.role;
+      state.isGlobalLoading = false;
       state.isLoggedIn = true;
     });
     builder.addCase(getUserDetails.rejected, (state, action) => {
       console.log({ payload: action.payload, error: action.error, action });
+      state.isGlobalLoading = false;
     });
   },
 });

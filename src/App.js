@@ -20,7 +20,7 @@ import { FallbackLoading } from "@components/loader/fallbackLoader";
 function App() {
   const dispatch = useDispatch();
   const {
-    auth: { isLoggedIn },
+    auth: { isLoggedIn, isGlobalLoading },
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
   const checkLoginStatus = () => {
@@ -42,69 +42,74 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        {ROUTES.map((route) => {
-          return (
-            <Route
-              path={route.path}
-              element={
-                <Suspense fallback={<FallbackLoading />}>
-                  <route.component />
-                </Suspense>
-              }
-              key={route.id}
-            />
-          );
-        })}
-
-        {UNAUTHENTICATED_ROUTES.map((route) => {
-          return (
-            <Route
-              key={route.id}
-              path={route.path}
-              element={
-                <Suspense fallback={<FallbackLoading />}>
-                  <UnauthorizedRoute>
+      {isGlobalLoading ? <FallbackLoading /> : ""}
+      <React.Fragment style={{ display: isGlobalLoading ? "none" : "" }}>
+        <Header />
+        <Routes>
+          {ROUTES.map((route) => {
+            return (
+              <Route
+                path={route.path}
+                element={
+                  <Suspense fallback={<FallbackLoading />}>
                     <route.component />
-                  </UnauthorizedRoute>
+                  </Suspense>
+                }
+                key={route.id}
+              />
+            );
+          })}
+
+          {UNAUTHENTICATED_ROUTES.map((route) => {
+            return (
+              <Route
+                key={route.id}
+                path={route.path}
+                element={
+                  <Suspense fallback={<FallbackLoading />}>
+                    <UnauthorizedRoute>
+                      <route.component />
+                    </UnauthorizedRoute>
+                  </Suspense>
+                }
+              />
+            );
+          })}
+          {AUTHENTICATED_ROUTES.map((route) => (
+            <Route
+              key={route.id}
+              path={route.path}
+              element={
+                <Suspense fallback={<FallbackLoading />}>
+                  <AuthorizedRoute>
+                    <route.component />
+                  </AuthorizedRoute>
                 </Suspense>
               }
             />
-          );
-        })}
-        {AUTHENTICATED_ROUTES.map((route) => (
+          ))}
           <Route
-            key={route.id}
-            path={route.path}
+            path={"/*"}
             element={
-              <AuthorizedRoute>
-                <route.component />
-              </AuthorizedRoute>
+              <>
+                <Layout />
+              </>
             }
           />
-        ))}
-        <Route
-          path={"/*"}
-          element={
-            <>
-              <Layout />
-            </>
-          }
-        />
-      </Routes>
+        </Routes>
 
-      <SuccessToast
-        open={toastType === MESSAGE_TYPE.success}
-        message={toastMessage}
-        handleClose={() => dispatch(resetToast())}
-      />
-      <ErrorToast
-        open={toastType === MESSAGE_TYPE.error}
-        message={toastMessage}
-        handleClose={() => dispatch(resetToast())}
-      />
-      {!isLoggedIn && <Footer />}
+        <SuccessToast
+          open={toastType === MESSAGE_TYPE.success}
+          message={toastMessage}
+          handleClose={() => dispatch(resetToast())}
+        />
+        <ErrorToast
+          open={toastType === MESSAGE_TYPE.error}
+          message={toastMessage}
+          handleClose={() => dispatch(resetToast())}
+        />
+        {!isLoggedIn && <Footer />}
+      </React.Fragment>
     </div>
   );
 }
