@@ -51,9 +51,11 @@ function Layout() {
                 path={`/${USER_ROLES.employer}${route.path}`}
                 key={route.id}
                 element={
-                  <EmployerRoute>
-                    <route.component />
-                  </EmployerRoute>
+                  <Suspense fallback={<FallbackLoading />}>
+                    <EmployerRoute>
+                      <route.component />
+                    </EmployerRoute>
+                  </Suspense>
                 }
               />
             );
@@ -67,9 +69,11 @@ function Layout() {
                 path={`/${USER_ROLES.vendor}${route.path}`}
                 key={route.id}
                 element={
-                  <VendorRoute>
-                    <route.component />
-                  </VendorRoute>
+                  <Suspense fallback={<FallbackLoading />}>
+                    <VendorRoute>
+                      <route.component />
+                    </VendorRoute>
+                  </Suspense>
                 }
               />
             );

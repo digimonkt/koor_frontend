@@ -1,31 +1,11 @@
-import {
-  ManageJobs,
-  MyProfile as EmployerProfile,
-  Dashboard as EmployerDashboard,
-  ManageTenders as EmployerManageTenders,
-} from "@pages/employer";
-import {
-  PostJobs,
-  JobSearch,
-  ApplicantDetails,
-  JobDetails,
-  ApplyForJob,
-} from "@pages/jobs";
-
-import {
-  JobCriteria as JobSeekerCriteria,
-  UpdateProfile as JobSeekerUpdateProfile,
-  AppliedJobs,
-  SavedJobs,
-} from "@pages/jobSeeker";
 import { ChatBox } from "@pages/messages";
-import { PostTender } from "@pages/tenders";
-import { VendorMyProfile, VendorDashboard } from "@pages/vendor";
+import { PostTender } from "@pages/tenders"; // need to relocate to employer folder
 import { lazy } from "react";
-
+// resources
 const Resources = lazy(() =>
   import("@pages/resources").then((module) => ({ default: module.Resources }))
 );
+// auth
 const Logout = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.Logout }))
 );
@@ -35,9 +15,90 @@ const Login = lazy(() =>
 const Registration = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.Registration }))
 );
+
+// job Seeker
 const JobSeekerProfile = lazy(() =>
   import("@pages/jobSeeker").then((module) => ({
     default: module.MyProfile,
+  }))
+);
+const JobSeekerCriteria = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.JobCriteria,
+  }))
+);
+const JobSeekerUpdateProfile = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.UpdateProfile,
+  }))
+);
+const AppliedJobs = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.AppliedJobs,
+  }))
+);
+const SavedJobs = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.SavedJobs,
+  }))
+);
+// employer
+const ManageJobs = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.ManageJobs,
+  }))
+);
+const EmployerProfile = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.MyProfile,
+  }))
+);
+const EmployerDashboard = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.Dashboard,
+  }))
+);
+const EmployerManageTenders = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.ManageTenders,
+  }))
+);
+// vendor
+const VendorMyProfile = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorMyProfile,
+  }))
+);
+const VendorDashboard = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorDashboard,
+  }))
+);
+
+// jobs
+const PostJobs = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.PostJobs,
+  }))
+);
+const JobSearch = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.JobSearch,
+  }))
+);
+const ApplicantDetails = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.ApplicantDetails,
+  }))
+);
+const JobDetails = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.JobDetails,
+  }))
+);
+const ApplyForJob = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.ApplyForJob,
   }))
 );
 
