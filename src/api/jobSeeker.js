@@ -149,3 +149,27 @@ export const getAppliedJobsAPI = async () => {
   }
   return res;
 };
+
+export const saveJobAPI = async (jobId) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/jobs/save/:jobId", { jobId }),
+    method: "POST",
+  });
+  return res;
+};
+
+export const unSaveJobAPI = async (jobId) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/jobs/save/:jobId", { jobId }),
+    method: "DELETE",
+  });
+  return res;
+};
+
+export const getSaveJobAPI = async () => {
+  const res = await api.request({
+    url: urlcat("/v1/users/job-seeker/jobs/save"),
+    method: "GET",
+  });
+  return res;
+};

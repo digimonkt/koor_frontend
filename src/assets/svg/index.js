@@ -82,6 +82,7 @@ import { ReactComponent as CategoryIcon } from "./CategoryIcon.svg";
 import { ReactComponent as SearchIConJob } from "./searchIConJob.svg";
 import { ReactComponent as CalenderChat } from "./calenderchat.svg";
 import { ReactComponent as AppliedJob } from "./appliedJob.svg";
+import { ReactComponent as UnSave } from "./unsave.svg";
 
 export const SVG = {
   ClockIconSmall,
@@ -168,4 +169,5 @@ export const SVG = {
   SearchIConJob,
   CalenderChat,
   AppliedJob,
+  UnSave,
 };

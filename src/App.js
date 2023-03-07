@@ -43,7 +43,7 @@ function App() {
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
-      <React.Fragment style={{ display: isGlobalLoading ? "none" : "" }}>
+      <div style={{ display: isGlobalLoading ? "none" : "" }}>
         <Header />
         <Routes>
           {ROUTES.map((route) => {
@@ -109,7 +109,7 @@ function App() {
           handleClose={() => dispatch(resetToast())}
         />
         {!isLoggedIn && <Footer />}
-      </React.Fragment>
+      </div>
     </div>
   );
 }
