@@ -8,6 +8,8 @@ import {
 import { EmployerRoute, JobSeekerRoute, VendorRoute } from "@utils/routes";
 import Sidebar from "./sidebar";
 import { USER_ROLES } from "@utils/enum";
+import { Suspense } from "react";
+import { FallbackLoading } from "@components/loader/fallbackLoader";
 
 function Layout() {
   return (
@@ -31,9 +33,11 @@ function Layout() {
                 path={`/${USER_ROLES.jobSeeker}${route.path}`}
                 key={route.id}
                 element={
-                  <JobSeekerRoute>
-                    <route.component />
-                  </JobSeekerRoute>
+                  <Suspense fallback={<FallbackLoading />}>
+                    <JobSeekerRoute>
+                      <route.component />
+                    </JobSeekerRoute>
+                  </Suspense>
                 }
               />
             );
