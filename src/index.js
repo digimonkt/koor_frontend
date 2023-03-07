@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import "./index.css";
 import "./assets/css/banhnschrift.css";
 import "./assets/css/style.css";
+import "./assets/css/employer.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
