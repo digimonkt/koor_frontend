@@ -21,9 +21,13 @@ import {
   SavedJobs,
 } from "@pages/jobSeeker";
 import { ChatBox } from "@pages/messages";
-import { Resources } from "@pages/resources";
 import { PostTender } from "@pages/tenders";
 import { VendorMyProfile, VendorDashboard } from "@pages/vendor";
+import { lazy } from "react";
+
+const Resources = lazy(() =>
+  import("@pages/resources").then((module) => ({ default: module.Resources }))
+);
 
 // prefix => `/`
 export const ROUTES = [

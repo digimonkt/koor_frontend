@@ -1,5 +1,5 @@
 import Header from "./components/header";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import Footer from "./components/footer";
 import {
   AUTHENTICATED_ROUTES,
@@ -47,7 +47,11 @@ function App() {
           return (
             <Route
               path={route.path}
-              element={<route.component />}
+              element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <route.component />
+                </Suspense>
+              }
               key={route.id}
             />
           );
@@ -86,6 +90,7 @@ function App() {
           }
         />
       </Routes>
+
       <SuccessToast
         open={toastType === MESSAGE_TYPE.success}
         message={toastMessage}
