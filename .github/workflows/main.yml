@@ -30,4 +30,4 @@ jobs:
             cd /home/user/koor/design_koor/ 
             git pull origin design
             yarn install
-            pm2 restart 58
+            pm2 restart 45
