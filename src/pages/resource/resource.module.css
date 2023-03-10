@@ -1,0 +1,322 @@
+/* Resource css */
+
+.card_btn {
+  font-family: "Bahnschrift", sans-serif !important;
+  background-color: #d5e3f7 !important;
+  padding: 10px 30px 10px 30px !important;
+  border-radius: 73px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 22px !important;
+  letter-spacing: 2px !important;
+  color: #274593 !important;
+  margin-top: 20px !important;
+  gap: 10px !important;
+}
+
+.card_text {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
+  color: #121212 !important;
+  opacity: 70% !important;
+  margin-top: 10px !important;
+}
+
+.card_title {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 30px !important;
+  color: #121212 !important;
+  letter-spacing: 2px !important;
+  margin-top: 25px !important;
+}
+
+.card_img {
+  width: 100%;
+}
+
+.div_card {
+  background-color: #f9f9f9 !important;
+  box-shadow: none !important;
+  border-radius: 16px !important;
+}
+
+.articles_heading {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.articles {
+  border-top-right-radius: 50px;
+  border-top-left-radius: 50px;
+  background-color: #f9f9f9 !important;
+  padding: 80px 0px !important;
+  margin-top: 149px !important;
+}
+
+.text_content {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  line-height: 44px !important;
+  opacity: 90% !important;
+  color: #121212;
+  margin: 0px;
+}
+
+.content_text_span {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 400;
+  line-height: 27px;
+  color: #121212;
+  opacity: 90%;
+  margin: 15px 0px;
+}
+
+.content_sub_head {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 32px !important;
+  font-weight: 600;
+  line-height: 36px;
+  color: #121212;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.content_img {
+  width: 100%;
+}
+
+.content_text_p {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 400;
+  line-height: 27px;
+  color: #121212;
+  opacity: 90%;
+}
+
+.content_heading {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 32px !important;
+  font-weight: 600;
+  line-height: 36px;
+  letter-spacing: 2px;
+  color: #121212;
+}
+
+.content_div {
+  margin-top: 80px;
+  padding-left: 254px;
+  padding-right: 278px;
+}
+
+.content_first_div {
+  background-color: #ffffff !important;
+}
+
+.social_link {
+  opacity: 0.6 !important;
+  margin-right: 20px;
+}
+
+.resource_social_div {
+  display: flex;
+  align-items: center;
+}
+
+.resource_social_box {
+  margin-top: 40px !important;
+}
+
+.resource_share_p {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  line-height: 18px !important;
+  letter-spacing: 2px;
+  opacity: 85%;
+  color: #ffffff !important;
+}
+
+.resource_text {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  line-height: 30px !important;
+  color: #ffffff !important;
+  margin-top: 20px !important;
+}
+
+.resource_heading {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 54px !important;
+  font-weight: 600 !important;
+  line-height: 60px !important;
+  color: #ffffff !important;
+}
+
+.resource_text_box {
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+}
+
+.resource_banner {
+  width: 100%;
+  margin-top: 80px;
+}
+
+.resource_back_box {
+  background-image: url(../../assets/images/resource_back.png);
+  background-repeat: no-repeat;
+  background-size: 100% 17%;
+}
+
+.resource {
+  margin-top: 70px;
+  background-color: #ffffff !important;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .resource_social_box {
+    margin-top: 14px !important;
+  }
+
+  .articles {
+    margin-top: 100px !important;
+  }
+
+  .card_btn {
+    letter-spacing: 1px !important;
+  }
+
+  .card_title {
+    letter-spacing: 0.5px !important;
+  }
+
+  .resource_share_p {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    letter-spacing: 2px;
+    opacity: 85%;
+    color: #ffffff !important;
+  }
+
+  .resource_text {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    color: #ffffff !important;
+    margin-top: 14px !important;
+  }
+
+  .resource_heading {
+    font-family: "Bahnschrift", sans-serif !important;
+    font-size: 40px !important;
+    font-weight: 600 !important;
+    line-height: 38px !important;
+    color: #ffffff !important;
+  }
+
+  .resource_text_box {
+    display: flex;
+    justify-content: center;
+    margin-top: 134px;
+  }
+
+  .resource_banner {
+    width: 100%;
+    margin-top: 80px;
+  }
+
+  .resource_back_box {
+    background-image: url(../../assets/images/resource_back.png);
+    background-repeat: no-repeat;
+    background-size: 100% 13%;
+  }
+
+  .resource {
+    margin-top: 70px;
+    background-color: #ffffff !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .resource_social_box {
+    margin-top: 14px !important;
+  }
+
+  .card_btn {
+    letter-spacing: 1px !important;
+  }
+
+  .articles {
+    margin-top: 100px !important;
+  }
+
+  .card_title {
+    letter-spacing: 0.5px !important;
+  }
+
+  .resource_share_p {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    letter-spacing: 2px;
+    opacity: 85%;
+    color: #ffffff !important;
+  }
+
+  .resource_text {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    color: #ffffff !important;
+    margin-top: 14px !important;
+  }
+
+  .resource_heading {
+    font-family: "Bahnschrift", sans-serif !important;
+    font-size: 40px !important;
+    font-weight: 600 !important;
+    line-height: 38px !important;
+    color: #ffffff !important;
+  }
+
+  .resource_text_box {
+    display: flex;
+    justify-content: center;
+    margin-top: 134px;
+  }
+
+  .resource_banner {
+    width: 100%;
+    margin-top: 80px;
+  }
+
+  .resource_back_box {
+    background-image: url(../../assets/images/resource_back.png);
+    background-repeat: no-repeat;
+    background-size: 100% 13%;
+  }
+
+  .resource {
+    margin-top: 70px;
+    background-color: #ffffff !important;
+  }
+}

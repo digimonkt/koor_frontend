@@ -146,7 +146,7 @@ function Header() {
                 </li>
               )}
               <li>
-                <Link to="/resources">Resources</Link>
+                <Link to="/resource">Resources</Link>
               </li>
               {isLoggedIn ? (
                 <>

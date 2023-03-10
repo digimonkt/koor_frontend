@@ -1,0 +1,45 @@
+/* about content css */
+
+.about_content_menu:before {
+  content: "";
+  width: 136px;
+  height: 5px;
+  background-color: #eea23d;
+  position: absolute;
+  top: 32px;
+  border-top-right-radius: 50px;
+  border-top-left-radius: 50px;
+}
+
+.about_content_menu {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 28px !important;
+  font-weight: 600 !important;
+  line-height: 34px !important;
+  color: #121212;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.about_content_text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stack_box {
+  display: contents;
+  justify-content: center;
+}
+
+.about_content_heading {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 40px !important;
+  font-weight: 600 !important;
+  line-height: 48px !important;
+  color: #121212 !important;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  
+}

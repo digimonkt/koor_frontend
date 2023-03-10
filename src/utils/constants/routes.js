@@ -1,4 +1,5 @@
 import { Login, Logout, Registration } from "@pages/auth";
+import AboutUs from "../../pages/about";
 import {
   ManageJobs,
   MyProfile as EmployerProfile,
@@ -24,6 +25,7 @@ import {
 import { ChatBox } from "@pages/messages";
 import { PostTender } from "@pages/tenders";
 import { VendorMyProfile, VendorDashboard } from "@pages/vendor";
+import Resource from "@pages/resource";
 
 // prefix => `/`
 export const ROUTES = [
@@ -56,14 +58,26 @@ export const UNAUTHENTICATED_ROUTES = [
     component: Home,
   },
   {
-    id: "home",
-    name: "Home",
+    id: "about-us",
+    name: "About Us",
+    path: "/about-us",
+    component: AboutUs,
+  },
+  {
+    id: "resource",
+    name: "Resource",
+    path: "/resource",
+    component: Resource,
+  },
+  {
+    id: "browse-jobs",
+    name: "Browse Jobs",
     path: "/browse-jobs",
     component: Home,
   },
   {
-    id: "home",
-    name: "Home",
+    id: "browse-tenders",
+    name: "Browse Tenders",
     path: "/browse-tenders",
     component: Home,
   },

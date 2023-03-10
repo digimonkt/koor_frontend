@@ -26,8 +26,20 @@ import Useful from "./useful.png";
 import Testi from "./testi.png";
 import Googleplay from "./google_play.png";
 import Appstore from "./app_store.png";
+import AboutBanner from "./about_banner.png";
+import Resource from "./resource.png";
+import ResourceImg from "./resource-img.png";
+import Article1 from "./article1.png";
+import Article2 from "./article2.png";
+import Article3 from "./article3.png";
 
 export const IMAGES = {
+  Article1,
+  Article2,
+  Article3,
+  ResourceImg,
+  Resource,
+  AboutBanner,
   Appstore,
   Googleplay,
   Testi,

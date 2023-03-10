@@ -1,0 +1,98 @@
+/* About Css */
+
+.btn_about:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.btn_about {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+  text-align: center;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding: 15px 36px !important;
+  border-radius: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.btn_about_box {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  margin-left: 50px;
+}
+
+.about_black_box_text p {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 40;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.about_black_box_text h1 {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 32px !important;
+  font-weight: 600;
+  line-height: 38px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.about_stack_box {
+  display: flex;
+  justify-content: center;
+}
+
+.about_black_color {
+  background-image: radial-gradient(#4d4d4d 100%, #323232 100%);
+  padding: 32px 0px;
+}
+
+.about_social {
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+}
+
+.about_text {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #ffffff;
+}
+
+.about_heading {
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 55px;
+  color: #ffffff;
+}
+
+.about_text_box {
+  margin-top: 11%;
+  padding-left: 16px;
+}
+
+.about_banner_img {
+  width: 100%;
+  justify-content: space-between;
+  box-shadow: 15px 15px #feefd3;
+  border-radius: 16px;
+}
+
+.about_back_color {
+  background-color: #eea23d;
+  padding: 107px 0px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.about {
+  margin-top: 70px;
+}
