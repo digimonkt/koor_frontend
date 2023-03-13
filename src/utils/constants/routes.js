@@ -15,6 +15,12 @@ const Login = lazy(() =>
 const Registration = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.Registration }))
 );
+const ForgotPassword = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.ForgotPassword }))
+);
+const VerifyOTP = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.VerifyOTP }))
+);
 
 // job Seeker
 const JobSeekerProfile = lazy(() =>
@@ -131,6 +137,18 @@ export const UNAUTHENTICATED_ROUTES = [
     name: "Register",
     path: "/",
     component: Registration,
+  },
+  {
+    id: "forgot-password",
+    name: "Forgot Password",
+    path: "/forgot-password",
+    component: ForgotPassword,
+  },
+  {
+    id: "verifyOTP",
+    name: "Verify OTP",
+    path: "/verify-otp",
+    component: VerifyOTP,
   },
 ];
 

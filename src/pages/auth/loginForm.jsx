@@ -8,11 +8,14 @@ import { useFormik } from "formik";
 import { ErrorMessage } from "@components/caption";
 import { useState } from "react";
 import Loader from "@components/loader";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import urlcat from "urlcat";
 
-function LoginForm({ role }) {
+function LoginForm() {
   // const navigate = useNavigate();
   const [loading, setIsLoading] = useState(false);
-
+  const { role } = useSelector((state) => state.auth);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -65,9 +68,11 @@ function LoginForm({ role }) {
               <ErrorMessage>{formik.errors.password}</ErrorMessage>
             ) : null}
           </div>
-          <div className="text-end forgots">
-            <span>Forgot password?</span>
-          </div>
+          <Link to={urlcat("/forgot-password", { role })}>
+            <div className="text-end forgots">
+              <span>Forgot password?</span>
+            </div>
+          </Link>
 
           <div className="my-4 text-center">
             <FilledButton

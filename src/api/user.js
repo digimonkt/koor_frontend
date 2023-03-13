@@ -2,21 +2,19 @@ import api from ".";
 import urlcat from "urlcat";
 import { transformGetUserDetails } from "./transform/user";
 export const CreateUserAPI = async (data) => {
-  const response = await api.request({
+  return await api.request({
     url: "/v1/users",
     method: "POST",
     data,
   });
-  return response;
 };
 
 export const LoginUserAPI = async (data) => {
-  const response = await api.request({
+  return await api.request({
     url: "/v1/users/session",
     method: "POST",
     data,
   });
-  return response;
 };
 
 /**
@@ -38,15 +36,14 @@ export const GetUserDetailsAPI = async (data) => {
 };
 
 export const LogoutUserAPI = async () => {
-  const response = await api.request({
+  return await api.request({
     url: urlcat("/v1/users/delete-session"),
     method: "DELETE",
   });
-  return response;
 };
 
 export const UpdateProfileImageAPI = async (data) => {
-  const res = await api.request({
+  return await api.request({
     url: "/v1/users/display-image",
     method: "PATCH",
     data,
@@ -54,5 +51,11 @@ export const UpdateProfileImageAPI = async (data) => {
       "Content-Type": "multipart/form-data",
     },
   });
-  return res;
+};
+
+export const ForgotPasswordAPI = async (data) => {
+  return await api.request({
+    url: urlcat("/v1/users/forget-password", { email: data.email }),
+    method: "GET",
+  });
 };

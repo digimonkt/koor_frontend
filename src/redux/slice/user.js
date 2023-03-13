@@ -82,6 +82,8 @@ const initialState = {
      */
     skills: [],
   },
+  // here that email is come on which mail is sent
+  verifyEmail: "praveen.vaidhya12@digimonk.in",
 };
 
 export const getUserDetails = createAsyncThunk(
@@ -101,6 +103,9 @@ export const authSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    setVerifyEmail: (state, action) => {
+      state.verifyEmail = action.payload;
+    },
     setIsLoggedIn: (state, action) => {
       if (!action.payload) {
         state.role = "";
@@ -238,6 +243,7 @@ export const authSlice = createSlice({
   },
 });
 export const {
+  setVerifyEmail,
   setIsLoggedIn,
   setUserRole,
   setProfilePic,

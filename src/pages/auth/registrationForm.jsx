@@ -8,11 +8,12 @@ import { USER_ROLES } from "@utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
 import { ErrorMessage } from "@components/caption";
+import { useSelector } from "react-redux";
 
-function RegistrationForm({ role }) {
+function RegistrationForm() {
   // navigate
   const navigate = useNavigate();
-
+  const { role } = useSelector((state) => state.auth);
   const formik = useFormik({
     initialValues: {
       email: "",
