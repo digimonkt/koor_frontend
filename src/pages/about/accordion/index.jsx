@@ -1,5 +1,4 @@
 import React from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styles from "./accordion.module.css";
 import {
   Accordion,
@@ -8,16 +7,26 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { Add, Minimize } from "@mui/icons-material";
 
 const Accordian = () => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   return (
     <>
       <div>
         <Grid container spacing={3}>
           <Grid item lg={6}>
-            <Accordion>
+            <Accordion
+              expanded={expanded === "panel1"}
+              onChange={handleChange("panel1")}
+              className={styles.accordion_first}
+            >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={expanded === "panel1" ? <Minimize /> : <Add />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
@@ -38,9 +47,13 @@ const Accordian = () => {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="mt-3">
+            <Accordion
+              className="mt-3"
+              expanded={expanded === "panel2"}
+              onChange={handleChange("panel2")}
+            >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={expanded === "panel2" ? <Minimize /> : <Add />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
@@ -59,9 +72,12 @@ const Accordian = () => {
             </Accordion>
           </Grid>
           <Grid item lg={6}>
-            <Accordion>
+            <Accordion
+              expanded={expanded === "panel3"}
+              onChange={handleChange("panel3")}
+            >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={expanded === "panel3" ? <Minimize /> : <Add />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
@@ -82,9 +98,13 @@ const Accordian = () => {
                 </Typography>
               </AccordionDetails>
             </Accordion>
-            <Accordion className="mt-3">
+            <Accordion
+              className="mt-3"
+              expanded={expanded === "panel4"}
+              onChange={handleChange("panel4")}
+            >
               <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={expanded === "panel4" ? <Minimize /> : <Add />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >

@@ -1,10 +1,9 @@
 import { Box, Container, Stack, Tab } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./about-content.module.css";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
+
 import ScrollTabs from "../scrollTabs";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 const AboutContent = () => {
   const [value, setValue] = useState(2);

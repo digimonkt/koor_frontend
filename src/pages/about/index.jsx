@@ -4,7 +4,7 @@ import styles from "./about.module.css";
 import { IMAGES } from "../../assets/images";
 import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
-import AboutContent from "./about-content/inedx";
+import AboutContent from "./about-content";
 
 const aboutImg = [
   {

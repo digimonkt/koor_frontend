@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Tab } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Accordian from "../accordion";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 // import styles from "./scroll-tabs.module.css";
 
 const ScrollTabs = () => {
@@ -35,13 +35,27 @@ const ScrollTabs = () => {
             <TabPanel value="1">
               <Accordian />
             </TabPanel>
-            <TabPanel value="2">bbbb</TabPanel>
-            <TabPanel value="3">cc</TabPanel>
-            <TabPanel value="4">dd</TabPanel>
-            <TabPanel value="5">ee</TabPanel>
-            <TabPanel value="6">ff</TabPanel>
-            <TabPanel value="7">gg</TabPanel>
-            <TabPanel value="8">hh</TabPanel>
+            <TabPanel value="2">
+              <Accordian />
+            </TabPanel>
+            <TabPanel value="3">
+              <Accordian />
+            </TabPanel>
+            <TabPanel value="4">
+              <Accordian />
+            </TabPanel>
+            <TabPanel value="5">
+              <Accordian />
+            </TabPanel>
+            <TabPanel value="6">
+              <Accordian />
+            </TabPanel>
+            <TabPanel value="7">
+              <Accordian />
+            </TabPanel>
+            <TabPanel value="8">
+              <Accordian />
+            </TabPanel>
           </TabContext>
         </Box>
       </div>
