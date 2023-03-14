@@ -8,6 +8,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
 import { processRoleToDisplay } from "@utils/constants/utility";
+import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
+import { setErrorToast } from "@redux/slice/toast";
+import { SocialLoginAPI } from "@api/user";
+import { loginWithFacebookPopupProvider } from "src/firebaseProvider/auth";
 
 const AuthOptions = [
   {
@@ -45,6 +49,58 @@ function AuthLayout({
     const dispatch = useDispatch();
     const { role, verifyEmail } = useSelector((state) => state.auth);
     const [isLoginPage, setIsLoginPage] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const loginWithGoogle = async () => {
+      if (!role) {
+        dispatch(setErrorToast("Select Role"));
+        return;
+      }
+      setLoading(false);
+      const res = await loginWithGooglePopupProvider();
+      if (res.remote === "success") {
+        const payload = {
+          email: res.data.email,
+          role,
+          name: res.data.displayName,
+          display_image: res.data.photoURL,
+          source: "google",
+        };
+        const result = await SocialLoginAPI(payload);
+        if (result.remote === "success") {
+          console.log({ result });
+        } else {
+          console.log({ result });
+        }
+      }
+      setLoading(true);
+    };
+    const loginWithFacebook = async () => {
+      if (!role) {
+        dispatch(setErrorToast("Select Role"));
+        return;
+      }
+      setLoading(false);
+      const res = await loginWithFacebookPopupProvider();
+      console.log({ FacebooK: res });
+      if (res.remote === "success") {
+        // const payload = {
+        //   email: res.data.email,
+        //   role,
+        //   name: res.data.displayName,
+        //   display_image: res.data.photoURL,
+        //   source: "google",
+        // };
+        // const result = await SocialLoginAPI(payload);
+        // if (result.remote === "success") {
+        //   console.log({ result });
+        // } else {
+        //   console.log({ result });
+        // }
+      }
+      setLoading(true);
+    };
+
     useEffect(() => {
       setIsLoginPage(location.pathname === "/login");
     }, [location.pathname]);
@@ -134,15 +190,18 @@ function AuthLayout({
                               spacing={2}
                               justifyContent="center"
                             >
-                              <Link to="!#">
+                              <div onClick={loginWithGoogle} disabled={loading}>
                                 <SVG.Google />
-                              </Link>
-                              <Link to="!#">
+                              </div>
+                              <div disabled={loading}>
                                 <SVG.Apple />
-                              </Link>
-                              <Link to="!#">
+                              </div>
+                              <div
+                                onClick={loginWithFacebook}
+                                disabled={loading}
+                              >
                                 <SVG.Facebook />
-                              </Link>
+                              </div>
                             </Stack>
                           </div>
                         </>
