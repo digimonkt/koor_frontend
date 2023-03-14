@@ -94,5 +94,32 @@
 }
 
 .about {
-  margin-top: 70px;
+  margin-top: 67px;
+  background-color: #ffffff;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .btn_about {
+    font-size: 12px !important;
+    padding: 10px 20px !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .btn_about {
+    font-size: 12px !important;
+    padding: 10px 20px !important;
+  }
+}
+
+@media screen and (max-width: 480px) and (min-width: 320px) {
+  .btn_about_box {
+    display: contents !important;
+    justify-content: center !important;
+    margin-bottom: 10px !important;
+  }
+
+  .btn_about {
+    margin-top: 10px !important;
+  }
 }

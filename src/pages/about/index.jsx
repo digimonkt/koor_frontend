@@ -19,12 +19,12 @@ const button = [
     text: "Find Tender",
   },
   {
-    icon: <SVG.Reciept />,
+    icon: <SVG.Vector />,
     svg: <SVG.ArrowForward />,
     text: "Find Tender",
   },
   {
-    icon: <SVG.Reciept />,
+    icon: <SVG.Work />,
     svg: <SVG.ArrowForward />,
     text: "Find Tender",
   },

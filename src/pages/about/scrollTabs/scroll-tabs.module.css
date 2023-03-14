@@ -1,0 +1,13 @@
+/* scroll css */
+
+.scroll_tab_tab {
+  border: 1px solid #feefd3;
+  border-radius: 50px !important;
+  /* background-color: #feefd3 !important; */
+}
+
+.scroll_tabs {
+  display: flex !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}

@@ -1,6 +1,6 @@
 /* about content css */
 
-.about_content_menu:before {
+/* .about_content_menu:before {
   content: "";
   width: 136px;
   height: 5px;
@@ -9,9 +9,9 @@
   top: 32px;
   border-top-right-radius: 50px;
   border-top-left-radius: 50px;
-}
+} */
 
-.about_content_menu {
+/* .about_content_menu {
   font-family: "Bahnschrift", sans-serif !important;
   font-size: 28px !important;
   font-weight: 600 !important;
@@ -19,7 +19,7 @@
   color: #121212;
   position: relative;
   margin-bottom: 10px;
-}
+} */
 
 .about_content_text {
   display: flex;
@@ -41,5 +41,20 @@
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
-  
+}
+
+@media screen and (max-width: 768px) and (min-width: 480px) {
+  .about_content_text {
+    display: contents !important;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) and (min-width: 320px) {
+  .about_content_text {
+    display: contents !important;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

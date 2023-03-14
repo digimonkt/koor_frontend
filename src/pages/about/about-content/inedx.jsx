@@ -1,33 +1,10 @@
-import { Box, Container, Stack, Tab, Tabs } from "@mui/material";
+import { Box, Container, Stack, Tab } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import styles from "./about-content.module.css";
-
-const menu = [
-  {
-    path: "#/#",
-    title: "Job Seeker",
-  },
-  {
-    path: "#/#",
-    title: "Employer",
-  },
-  {
-    path: "#/#",
-    title: "Vender",
-  },
-];
-
-// const tabs = [
-//   {
-//     id: "1",
-//     name: "General",
-//   },
-//   {
-//     id: "1",
-//     name: "General",
-//   },
-// ];
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import ScrollTabs from "../scrollTabs";
 
 const AboutContent = () => {
   const [value, setValue] = useState(2);
@@ -41,48 +18,45 @@ const AboutContent = () => {
       <Box>
         <Container>
           <Box className={styles.about_content}>
-            <Box className={styles.about_content_text}>
-              <Box>
-                <h2 className={styles.about_content_heading}>
-                  Frequently Asked Questions
-                </h2>
-              </Box>
-              <Box className={styles.stack_box}>
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  spacing={{ xs: 3, sm: 8, md: 8 }}
-                >
-                  {menu.map((item, index) => (
-                    <Box key={index}>
-                      <Link
-                        to={item.path}
-                        value={value}
-                        onChange={handleChange}
-                        className={styles.about_content_menu}
-                      >
-                        {item.title}
-                      </Link>
+            <TabContext value={value}>
+              <Box className={styles.about_content_text}>
+                <Box>
+                  <h2 className={styles.about_content_heading}>
+                    Frequently Asked Questions
+                  </h2>
+                </Box>
+                <Box className={styles.stack_box}>
+                  <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    spacing={{ xs: 3, sm: 8, md: 8 }}
+                  >
+                    <Box sx={{ width: "100%", typography: "body1" }}>
+                      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                        <TabList
+                          className="newstabs"
+                          onChange={handleChange}
+                          aria-label="lab API tabs example"
+                        >
+                          <Tab label="Job Seeker" value="1" />
+                          <Tab label="Employer" value="2" />
+                          <Tab label="Vender" value="3" />
+                        </TabList>
+                      </Box>
                     </Box>
-                  ))}
-                </Stack>
+                  </Stack>
+                </Box>
               </Box>
-            </Box>
-            <Box>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                aria-label="disabled tabs example"
-              >
-                <Tab label="General" />
-                <Tab label="Payment" />
-                <Tab label="Security" />
-                <Tab label="Returns" />
-                <Tab label="Job Search" />
-                <Tab label="Cooperation" />
-                <Tab label="Work Presentation" />
-                <Tab label="Messages" />
-              </Tabs>
-            </Box>
+
+              <TabPanel value="1">
+                <ScrollTabs />
+              </TabPanel>
+              <TabPanel value="2">
+                <ScrollTabs />
+              </TabPanel>
+              <TabPanel value="3">
+                <ScrollTabs />
+              </TabPanel>
+            </TabContext>
           </Box>
         </Container>
       </Box>

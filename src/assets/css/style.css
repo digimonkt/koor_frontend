@@ -1664,3 +1664,17 @@ input.employersearch {
     letter-spacing: 0.03em !important;
   }
 }
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  .footer .css-ldbyt5-MuiStack-root {
+    display: block !important;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-width: 520px) {
+  .footer .css-ldbyt5-MuiStack-root {
+    display: block !important;
+    justify-content: space-between;
+  }
+}

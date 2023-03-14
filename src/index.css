@@ -1,5 +1,74 @@
 /* Marque */
 
+.newstabs .css-jpln7h-MuiTabs-scroller {
+  white-space: inherit !important;
+}
+
+.newstabs .css-heg063-MuiTabs-flexContainer {
+  display: contents !important;
+  justify-content: center !important;
+}
+
+.newstabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 28px !important;
+  font-weight: 600 !important;
+  line-height: 34px !important;
+  color: #121212 !important;
+  margin-left: 60px !important;
+}
+
+.css-1gsv261 {
+  border-bottom: none !important;
+}
+
+.newstabs .css-1aquho2-MuiTabs-indicator {
+  height: 6px !important;
+  background-color: #eea23d !important;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+}
+
+.newstabs .Mui-selected {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 28px !important;
+  font-weight: 600 !important;
+  line-height: 34px !important;
+  color: #121212 !important;
+}
+
+.scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  border: 1px solid grey !important;
+  opacity: 70% !important;
+  border-radius: 50px !important;
+  padding: 10px 30px !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 21px !important;
+}
+
+.scroll_tabs .css-1aquho2-MuiTabs-indicator {
+  display: none !important;
+}
+
+.scroll_tabs .Mui-selected {
+  background-color: #feefd3 !important;
+  border: 1px solid #eea23d !important;
+  border-radius: 50px !important;
+  padding: 10px 30px !important;
+  color: #ffa500 !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  line-height: 21px !important;
+}
+
+.css-heg063-MuiTabs-flexContainer {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
 .css-ece9u5 {
   min-width: -1px !important;
 }
@@ -78,10 +147,27 @@ textarea {
   color: #121212;
 }
 
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .newstabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+    margin-left: 0px !important;
+  }
+  .scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+    margin-left: 10px !important;
+  }
+}
+
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
   .verticalSlider ul.slick-dots {
     transform: rotate(90deg);
     position: relative;
     bottom: 220px;
+  }
+
+  .scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .newstabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+    margin-left: 0px !important;
   }
 }
