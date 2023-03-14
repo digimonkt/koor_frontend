@@ -27,7 +27,6 @@ const ApplicationCard = ({
   // const handleNavigate = () => {
   //   navigate("/employer/manage-jobs/applicant-details");
   // };
-  console.log({ details });
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}

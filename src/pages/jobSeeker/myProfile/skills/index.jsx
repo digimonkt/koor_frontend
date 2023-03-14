@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import NoItem from "../noItem";
 import { addSkillsDetailsAPI } from "@api/jobSeeker";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import Loader from "@components/loader";
 
 const Skills = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ const Skills = () => {
   const [newSelectedSkills, setNewSelectedSkills] = useState([]);
   const [removedSkills, setRemovedSkills] = useState([]);
   const [allSkills, setAllSkills] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const handleClick = (skill) => {
     setSearchSkill("");
@@ -35,15 +39,18 @@ const Skills = () => {
   };
 
   const updateSkills = async () => {
+    setLoading(true);
     const payload = {
       skill_add: newSelectedSkills.map((skill) => skill.id),
       skill_remove: removedSkills,
     };
-    console.log({ payload });
     const res = await addSkillsDetailsAPI(payload);
     if (res.remote === "success") {
-      console.log(res);
+      dispatch(setSuccessToast("Skills updated successfully"));
+    } else {
+      dispatch(setErrorToast("Something went wrong"));
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -148,10 +155,16 @@ const Skills = () => {
               <OutlinedButton
                 title={
                   <>
-                    <span className="me-2 d-inline-flex">
-                      <SVG.SaveFile />
-                    </span>
-                    Update Skills
+                    {loading ? (
+                      <Loader loading={loading} style={{ color: "#EEA23D" }} />
+                    ) : (
+                      <>
+                        <span className="me-2 d-inline-flex">
+                          <SVG.SaveFile />
+                        </span>
+                        Update Skills
+                      </>
+                    )}
                   </>
                 }
                 onClick={updateSkills}

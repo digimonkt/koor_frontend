@@ -18,7 +18,7 @@ const JobSeekerNavigationOptions = Object.freeze([
   },
   {
     to: "/jobs/saved",
-    icon: SVG.SaveIcon,
+    icon: SVG.UnSave,
     title: "Saved Jobs",
     id: "savedJobs",
     isDisable: false,
@@ -87,7 +87,7 @@ const VendorNavigationOptions = Object.freeze([
   },
   {
     to: "/job/saved",
-    icon: SVG.SaveIcon,
+    icon: SVG.UnSave,
     title: "Saved Jobs",
     id: "savedJobs",
     isDisable: false,

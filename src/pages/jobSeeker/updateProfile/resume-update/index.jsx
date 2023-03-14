@@ -1,5 +1,5 @@
 import { OutlinedButton } from "@components/button";
-import { Divider, IconButton, Stack } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import React from "react";
 import { SVG } from "@assets/svg";
 const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
@@ -50,14 +50,14 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
           />
         </div>
 
-        <Divider />
+        {/* <Divider />
         <div className="text-resume  text-center mt-3 pb-1">
           Don’t have a resume?
         </div>
         <div className="text-worry">
           Don't worry if you don't have one yet,{" "}
           <span>create resume from Jobseeker's</span>
-        </div>
+        </div> */}
       </div>
     </>
   );

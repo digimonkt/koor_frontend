@@ -5,10 +5,9 @@ import { Card, CardContent } from "@components/card";
 import { USER_ROLES } from "@utils/enum";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LoginForm from "./loginForm";
-import RegistrationForm from "./registrationForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
+import { processRoleToDisplay } from "@utils/constants/utility";
 
 const AuthOptions = [
   {
@@ -31,12 +30,20 @@ const AuthOptions = [
   },
 ];
 
-function AuthLayout({ title, subTitle }) {
+function AuthLayout({
+  title,
+  subTitle,
+  btnTitle,
+  selectedRoleTitle,
+  children,
+  isRoleSelection,
+  options,
+}) {
   return function () {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { role } = useSelector((state) => state.auth);
+    const { role, verifyEmail } = useSelector((state) => state.auth);
     const [isLoginPage, setIsLoginPage] = useState(false);
     useEffect(() => {
       setIsLoginPage(location.pathname === "/login");
@@ -46,9 +53,6 @@ function AuthLayout({ title, subTitle }) {
       const role = url.searchParams.get("role");
       if (Object.values(USER_ROLES).includes(role)) {
         dispatch(setUserRole(role));
-      } else {
-        // dispatch(setUserRole(undefined));
-        navigate(location.pathname);
       }
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
@@ -68,7 +72,7 @@ function AuthLayout({ title, subTitle }) {
                     padding: `75px 60px ${!role ? "!important" : ""}`,
                   }}
                 >
-                  {!role ? (
+                  {isRoleSelection && !role ? (
                     <div className="content-box">
                       <h5 data-cy="title">{title}</h5>
                       <p data-cy="subTitle">{subTitle}</p>
@@ -106,16 +110,20 @@ function AuthLayout({ title, subTitle }) {
                   ) : (
                     <>
                       <div className="content-box mb-3">
-                        <h5>
-                          {isLoginPage ? "Log in" : "Register"} as {role}
+                        <h5
+                          style={{
+                            fontSize: selectedRoleTitle.includes("@email")
+                              ? "35px"
+                              : "none",
+                          }}
+                        >
+                          {selectedRoleTitle
+                            .replace("@role", processRoleToDisplay(role))
+                            .replace("@email", verifyEmail)}
                         </h5>
                       </div>
-                      {isLoginPage ? (
-                        <LoginForm role={role} />
-                      ) : (
-                        <RegistrationForm role={role} />
-                      )}
-                      {role === USER_ROLES.employer ? null : (
+                      {children}
+                      {!options || role === USER_ROLES.employer ? null : (
                         <>
                           <div className="spaceor mt-5 mb-4">
                             <span>Or continue with</span>
@@ -140,24 +148,26 @@ function AuthLayout({ title, subTitle }) {
                         </>
                       )}
 
-                      <div className={"bottombar mt-5"}>
-                        <span>Already have an account?</span>
-                        <div
-                          onClick={() => {
-                            dispatch(setUserRole(""));
-                            navigate(isLoginPage ? "/" : "/login");
-                          }}
-                          style={{
-                            color:
-                              role === USER_ROLES.jobSeeker
-                                ? "#EEA23D"
-                                : "#274593",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {isLoginPage ? "Register" : "Login"}
+                      {btnTitle && (
+                        <div className={"bottombar mt-5"}>
+                          <span>Already have an account?</span>
+                          <div
+                            onClick={() => {
+                              dispatch(setUserRole(""));
+                              navigate(isLoginPage ? "/" : "/login");
+                            }}
+                            style={{
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#EEA23D"
+                                  : "#274593",
+                              cursor: "pointer",
+                            }}
+                          >
+                            {isLoginPage ? "Register" : "Login"}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </>
                   )}
                 </CardContent>

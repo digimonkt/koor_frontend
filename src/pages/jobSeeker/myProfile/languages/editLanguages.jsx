@@ -13,7 +13,7 @@ import {
   addLanguageDetailsAPI,
   updateLanguageDetailsAPI,
 } from "@api/jobSeeker";
-import { setSuccessToast } from "@redux/slice/toast";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { addLanguageRecord, updateLanguageRecord } from "@redux/slice/user";
 
 const color = "#EEA23D";
@@ -45,6 +45,8 @@ function EditLanguages({ currentSelected, handleSubmit }) {
               spoken: res.data.data.spoken,
             })
           );
+        } else {
+          dispatch(setErrorToast("Something went wrong"));
         }
         handleSubmit();
       } else {
@@ -53,7 +55,6 @@ function EditLanguages({ currentSelected, handleSubmit }) {
           id: currentSelected.id,
         });
         if (res.remote === "success") {
-          console.log({ res });
           dispatch(setSuccessToast("Language Updated Successfully"));
           dispatch(
             updateLanguageRecord({
@@ -65,6 +66,8 @@ function EditLanguages({ currentSelected, handleSubmit }) {
               spoken: values.spoken,
             })
           );
+        } else {
+          dispatch(setErrorToast("Something went wrong"));
         }
         handleSubmit();
       }

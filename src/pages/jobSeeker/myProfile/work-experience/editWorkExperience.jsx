@@ -51,7 +51,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
       if (!currentSelected) {
         const res = await addWorkExperienceDetailsAPI(payload);
         if (res.remote === "success") {
-          dispatch(setSuccessToast("Added Successfully"));
+          dispatch(setSuccessToast("Added Work Experience Successfully"));
           dispatch(
             addWorkExperienceRecord({
               id: res.data.data.id,
@@ -71,18 +71,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
           id: currentSelected.id,
         });
         if (res.remote === "success") {
-          dispatch(setSuccessToast("Updated Successfully"));
-          console.log({
-            id: currentSelected.id,
-            title: values.title,
-            organization: values.companyName,
-            startDate: dayjs(values.startDate).format(DATE_FORMAT),
-            endDate: values.isPresent
-              ? null
-              : dayjs(values.endDate).format(DATE_FORMAT),
-            present: values.isPresent,
-            description: values.description,
-          });
+          dispatch(setSuccessToast("Updated Work Experience Successfully"));
           dispatch(
             updateWorkExperienceRecord({
               id: currentSelected.id,
@@ -102,7 +91,6 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
       handleSubmit();
     },
   });
-  console.log(formik.errors, formik.values);
   useEffect(() => {
     if (currentSelected) {
       const payload = {
@@ -120,7 +108,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="headding">Education</h1>
+      <h1 className="headding">Work Experience</h1>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
