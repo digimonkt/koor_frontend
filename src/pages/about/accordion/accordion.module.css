@@ -32,3 +32,15 @@
   line-height: 28px !important;
   color: #121212 !important;
 }
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .accordion_heading {
+    font-size: 18px !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .accordion_heading {
+    font-size: 18px !important;
+  }
+}
