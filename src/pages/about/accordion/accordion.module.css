@@ -1,9 +1,12 @@
 /* accordion css */
 
+.accordion_border {
+  border-top: 1px solid #f9f9f9;
+}
+
 .accordion_first {
   border-top: 1px solid #f9f9f9 !important;
   opacity: 70% !important;
-  margin-top: 50px !important;
 }
 
 .accordion_koor_text {

@@ -20,33 +20,35 @@ const Accordian = () => {
       <div>
         <Grid container spacing={3}>
           <Grid item lg={6}>
-            <Accordion
-              expanded={expanded === "panel1"}
-              onChange={handleChange("panel1")}
-              className={styles.accordion_first}
-            >
-              <AccordionSummary
-                expandIcon={expanded === "panel1" ? <Minimize /> : <Add />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+            <div className={styles.accordion_border}>
+              <Accordion
+                expanded={expanded === "panel1"}
+                onChange={handleChange("panel1")}
+                className={styles.accordion_first}
               >
-                <Typography className={styles.accordion_heading}>
-                  What is Koor? Why should I use Koor?
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography className={styles.accordion_text}>
-                  <span className={styles.accordion_koor_text}>Koor</span> is an
-                  award-winning mobile app which connects non-executive job
-                  seekers to reliable employers quickly & easily. With just a
-                  tap, applicants can apply for jobs offered by thousands of
-                  trusted employers in Singapore, across all sectors! Get access
-                  to exciting job openings across full-time, part-time, and
-                  contract roles! New candidates can easily register for an
-                  account and create a professional resume with the app.
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+                <AccordionSummary
+                  expandIcon={expanded === "panel1" ? <Minimize /> : <Add />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography className={styles.accordion_heading}>
+                    What is Koor? Why should I use Koor?
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography className={styles.accordion_text}>
+                    <span className={styles.accordion_koor_text}>Koor</span> is
+                    an award-winning mobile app which connects non-executive job
+                    seekers to reliable employers quickly & easily. With just a
+                    tap, applicants can apply for jobs offered by thousands of
+                    trusted employers in Singapore, across all sectors! Get
+                    access to exciting job openings across full-time, part-time,
+                    and contract roles! New candidates can easily register for
+                    an account and create a professional resume with the app.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </div>
             <Accordion
               className="mt-3"
               expanded={expanded === "panel2"}
