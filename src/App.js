@@ -16,6 +16,7 @@ import { ErrorToast, SuccessToast } from "@components/toast";
 import { MESSAGE_TYPE } from "@utils/enum";
 import { resetToast } from "@redux/slice/toast";
 import { FallbackLoading } from "@components/loader/fallbackLoader";
+import { firebaseInitialize } from "./firebaseProvider";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,10 @@ function App() {
   useEffect(() => {
     window.addEventListener("storage", checkLoginStatus);
     return () => window.removeEventListener("storage", checkLoginStatus);
+  }, []);
+
+  useEffect(() => {
+    firebaseInitialize();
   }, []);
 
   return (

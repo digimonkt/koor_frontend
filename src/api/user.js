@@ -74,3 +74,11 @@ export const ResetPasswordAPI = async (data, token) => {
     data,
   });
 };
+
+export const SocialLoginAPI = async (data) => {
+  return await api.request({
+    url: urlcat("v1/users/social-login"),
+    method: "POST",
+    data,
+  });
+};
