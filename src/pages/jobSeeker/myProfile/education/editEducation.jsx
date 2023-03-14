@@ -98,7 +98,6 @@ function EditEducation({ handleSubmit, currentSelected }) {
         }
       }
       setLoading(false);
-      console.log({ payload });
     },
   });
   useEffect(() => {

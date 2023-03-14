@@ -163,7 +163,6 @@ function PostJobsComponent() {
       } else {
         // update
         res = await updateEmployerJobAPI(jobId, newFormData);
-        console.log({ payload });
         if (res.remote === "success") {
           setSubmitting(SUBMITTING_STATUS_ENUM.updated);
         } else {
@@ -785,7 +784,6 @@ function PostJobsComponent() {
                           ? "UPDATE THE JOB"
                           : "POST THE JOB"
                       }
-                      isBlueButton
                       type="submit"
                       disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                     />

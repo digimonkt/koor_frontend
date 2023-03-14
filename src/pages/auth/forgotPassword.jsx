@@ -1,4 +1,4 @@
-import { ForgotPasswordAPI } from "@api/user";
+import { SendOtpAPI } from "@api/user";
 import { FilledButton } from "@components/button";
 import { ErrorMessage } from "@components/caption";
 import { LabeledInput } from "@components/input";
@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validateForgotPasswordForm } from "./validator";
+import urlcat from "urlcat";
 
 function ForgotPasswordForm() {
   const dispatch = useDispatch();
@@ -25,13 +26,12 @@ function ForgotPasswordForm() {
       const payload = {
         email: values.email,
       };
-      const res = await ForgotPasswordAPI(payload);
+      const res = await SendOtpAPI(payload);
       if (res.remote === "success") {
         setIsLoading(false);
-        console.log({ res: res.data.message });
         dispatch(setSuccessToast(res.data.message));
         dispatch(setVerifyEmail(payload.email));
-        navigate("/verify-otp");
+        navigate(urlcat("/verify-otp", { token: res.data.token }));
       } else {
         setIsLoading(false);
         formik.setErrors({ email: "Email not found" });

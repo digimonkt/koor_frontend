@@ -53,9 +53,6 @@ function AuthLayout({
       const role = url.searchParams.get("role");
       if (Object.values(USER_ROLES).includes(role)) {
         dispatch(setUserRole(role));
-      } else {
-        // dispatch(setUserRole(undefined));
-        navigate(location.pathname);
       }
     }, [dispatch, location.pathname, location.search, navigate]);
     return (

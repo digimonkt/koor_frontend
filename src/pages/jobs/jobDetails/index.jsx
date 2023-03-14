@@ -69,7 +69,6 @@ const JobDetails = () => {
 
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });
-    console.log({ res });
     if (res.remote === "success") {
       setDetails(res.data);
     }

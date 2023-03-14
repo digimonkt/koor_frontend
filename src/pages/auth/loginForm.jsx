@@ -1,6 +1,5 @@
 import { FilledButton } from "@components/button";
 import { LabeledInput } from "@components/input";
-import { USER_ROLES } from "@utils/enum";
 import { LoginUserAPI } from "@api/user";
 // import { useNavigate } from "react-router-dom";
 import { validateLoginForm } from "./validator";
@@ -77,7 +76,6 @@ function LoginForm() {
           <div className="my-4 text-center">
             <FilledButton
               title={loading ? <Loader loading={loading} /> : "Login"}
-              isBlueButton={role !== USER_ROLES.jobSeeker}
               data-cy="login-button"
               type="submit"
               disabled={loading}

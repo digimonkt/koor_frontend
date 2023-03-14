@@ -14,7 +14,6 @@ const Dashboard = () => {
 
   const getRecentApplications = async () => {
     const res = await getRecentApplicationAPI();
-    console.log({ res });
     if (res.remote === "success") {
       setRecentApplication(res.data);
     }

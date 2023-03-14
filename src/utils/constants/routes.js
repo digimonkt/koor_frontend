@@ -21,6 +21,9 @@ const ForgotPassword = lazy(() =>
 const VerifyOTP = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.VerifyOTP }))
 );
+const ResetPassword = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.ResetPassword }))
+);
 
 // job Seeker
 const JobSeekerProfile = lazy(() =>
@@ -149,6 +152,12 @@ export const UNAUTHENTICATED_ROUTES = [
     name: "Verify OTP",
     path: "/verify-otp",
     component: VerifyOTP,
+  },
+  {
+    id: "resetPassword",
+    name: "Reset Password",
+    path: "/reset-password",
+    component: ResetPassword,
   },
 ];
 

@@ -40,7 +40,6 @@ function RegistrationForm() {
         password: values.password,
         role,
       };
-      console.log({ payload });
       const res = await CreateUserAPI(payload);
       if (res.remote === "success") {
         if (role === USER_ROLES.jobSeeker) {
@@ -119,7 +118,6 @@ function RegistrationForm() {
           <div className="my-4 text-center">
             <FilledButton
               title="Register"
-              isBlueButton={role !== USER_ROLES.jobSeeker}
               type="submit"
             />
           </div>

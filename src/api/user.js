@@ -53,9 +53,24 @@ export const UpdateProfileImageAPI = async (data) => {
   });
 };
 
-export const ForgotPasswordAPI = async (data) => {
+export const SendOtpAPI = async (data) => {
   return await api.request({
-    url: urlcat("/v1/users/forget-password", { email: data.email }),
+    url: urlcat("/v1/users/send-otp", { email: data.email }),
     method: "GET",
+  });
+};
+
+export const VerifyOtpAPI = async (data) => {
+  return await api.request({
+    url: urlcat("v1/users/otp-verification/:otp", data),
+    method: "GET",
+  });
+};
+
+export const ResetPasswordAPI = async (data, token) => {
+  return await api.request({
+    url: urlcat("v1/users/change-password", { token }),
+    method: "PUT",
+    data,
   });
 };

@@ -83,7 +83,7 @@ const initialState = {
     skills: [],
   },
   // here that email is come on which mail is sent
-  verifyEmail: "praveen.vaidhya12@digimonk.in",
+  verifyEmail: "",
 };
 
 export const getUserDetails = createAsyncThunk(
@@ -237,7 +237,6 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
     });
     builder.addCase(getUserDetails.rejected, (state, action) => {
-      console.log({ payload: action.payload, error: action.error, action });
       state.isGlobalLoading = false;
     });
   },

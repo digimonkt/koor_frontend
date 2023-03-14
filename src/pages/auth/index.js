@@ -3,6 +3,7 @@ import AuthLayout from "./layout";
 import LoginForm from "./loginForm";
 import LogoutForm from "./logout";
 import RegistrationForm from "./registrationForm";
+import ResetPasswordComponent from "./resetPassword";
 import VerifyOTPForm from "./verifyOTPForm";
 const registration = {
   title: "Register",
@@ -38,8 +39,16 @@ const verifyOTP = {
   isRoleSelection: false,
   options: false,
 };
+const resetPassword = {
+  title: "Reset Password",
+  selectedRoleTitle: "Update Password of @email",
+  children: <ResetPasswordComponent />,
+  isRoleSelection: false,
+  options: false,
+};
 export const Registration = AuthLayout(registration);
 export const Login = AuthLayout(login);
 export const ForgotPassword = AuthLayout(forgotPassword);
 export const VerifyOTP = AuthLayout(verifyOTP);
+export const ResetPassword = AuthLayout(resetPassword);
 export const Logout = LogoutForm;
