@@ -3,10 +3,13 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  OAuthProvider,
 } from "firebase/auth";
 
 const facebookProvider = new FacebookAuthProvider();
 const googleProvider = new GoogleAuthProvider();
+
+const appleProvider = new OAuthProvider("apple.com");
 const auth = getAuth();
 export const loginWithGooglePopupProvider = async () => {
   googleProvider.setCustomParameters({
@@ -44,5 +47,16 @@ export const loginWithFacebookPopupProvider = async () => {
   }
 };
 export const loginWithAppleFacebookPopupProvider = async () => {
-  // TODO: Implement Apple Login
+  try {
+    const res = await signInWithPopup(auth, appleProvider);
+    return {
+      remote: "success",
+      data: res.user,
+    };
+  } catch (error) {
+    return {
+      remote: "failure",
+      errors: error,
+    };
+  }
 };

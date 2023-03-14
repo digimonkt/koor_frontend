@@ -11,7 +11,10 @@ import { processRoleToDisplay } from "@utils/constants/utility";
 import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
 import { setErrorToast } from "@redux/slice/toast";
 import { SocialLoginAPI } from "@api/user";
-import { loginWithFacebookPopupProvider } from "src/firebaseProvider/auth";
+import {
+  loginWithAppleFacebookPopupProvider,
+  loginWithFacebookPopupProvider,
+} from "src/firebaseProvider/auth";
 
 const AuthOptions = [
   {
@@ -75,6 +78,31 @@ function AuthLayout({
       }
       setLoading(true);
     };
+    const loginWithApple = async () => {
+      if (!role) {
+        dispatch(setErrorToast("Select Role"));
+        return;
+      }
+      setLoading(false);
+      const res = await loginWithAppleFacebookPopupProvider();
+      console.log({ apple: res });
+      if (res.remote === "success") {
+        const payload = {
+          email: res.data.email,
+          role,
+          name: res.data.displayName,
+          display_image: res.data.photoURL,
+          source: "apple",
+        };
+        const result = await SocialLoginAPI(payload);
+        if (result.remote === "success") {
+          console.log({ result });
+        } else {
+          console.log({ result });
+        }
+      }
+      setLoading(true);
+    };
     const loginWithFacebook = async () => {
       if (!role) {
         dispatch(setErrorToast("Select Role"));
@@ -89,7 +117,7 @@ function AuthLayout({
         //   role,
         //   name: res.data.displayName,
         //   display_image: res.data.photoURL,
-        //   source: "google",
+        //   source: "facebook",
         // };
         // const result = await SocialLoginAPI(payload);
         // if (result.remote === "success") {
@@ -193,7 +221,7 @@ function AuthLayout({
                               <div onClick={loginWithGoogle} disabled={loading}>
                                 <SVG.Google />
                               </div>
-                              <div disabled={loading}>
+                              <div onClick={loginWithApple} disabled={loading}>
                                 <SVG.Apple />
                               </div>
                               <div
