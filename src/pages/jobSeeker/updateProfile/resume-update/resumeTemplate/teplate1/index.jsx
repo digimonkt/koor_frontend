@@ -46,7 +46,7 @@ function ResumeTemplate() {
 
           <div className="about">
             <span className="position">
-              {currentUser.profile.highestEducation.title}{" "}
+              {currentUser.profile.highestEducation?.title}{" "}
             </span>
             <span className="desc">{currentUser.profile.description}</span>
           </div>
@@ -77,7 +77,7 @@ function ResumeTemplate() {
                     <div className="name_about">
                       Highest Education :{" "}
                       <span className="text">
-                        {currentUser.profile.highestEducation.title}
+                        {currentUser.profile.highestEducation?.title}
                       </span>
                     </div>
                   </div>
