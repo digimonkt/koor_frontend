@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import "./style.css";
 function ResumeTemplate() {
   const { currentUser } = useSelector((state) => state.auth);
-  console.log({ currentUser });
   return (
     <>
       <div className="container" id="div-to-pdf">
