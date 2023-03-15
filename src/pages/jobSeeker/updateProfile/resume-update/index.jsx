@@ -1,8 +1,29 @@
-import { OutlinedButton } from "@components/button";
-import { Divider, IconButton, Stack } from "@mui/material";
-import React from "react";
+import { FilledButton, OutlinedButton } from "@components/button";
+import { IconButton, Stack } from "@mui/material";
+import React, { useState } from "react";
 import { SVG } from "@assets/svg";
+import DialogBox from "@components/dialogBox";
+import ResumeTemplate from "./resumeTemplate/teplate1";
+import html2pdf from "html2pdf.js";
+import { useSelector } from "react-redux";
 const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
+  const [openResume, setOpenResume] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const { currentUser } = useSelector((state) => state.auth);
+
+  const downloadPDF = async () => {
+    setIsDownloading(true);
+    const element = document.getElementById("div-to-pdf");
+    const options = {
+      margin: [10, 10],
+      filename: `${currentUser.name || "Resume"}.pdf`,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    await html2pdf().set(options).from(element).save();
+    setIsDownloading(false);
+  };
   return (
     <>
       <div className="add-content">
@@ -32,6 +53,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 download your resume
               </>
             }
+            onClick={() => setOpenResume(true)}
             sx={{
               "&.MuiButton-outlined": {
                 border: "1px solid #EEA23D !important",
@@ -50,15 +72,37 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
           />
         </div>
 
-        <Divider />
+        {/* <Divider />
         <div className="text-resume  text-center mt-3 pb-1">
           Don’t have a resume?
         </div>
         <div className="text-worry">
           Don't worry if you don't have one yet,{" "}
           <span>create resume from Jobseeker's</span>
-        </div>
+        </div> */}
       </div>
+      <DialogBox
+        open={openResume}
+        handleClose={() => {
+          if (!isDownloading) setOpenResume(false);
+        }}
+        maxWidth="xxl"
+        sx={{
+          "& .MuiPaper-root": {
+            width: "900px",
+          },
+        }}
+      >
+        <>
+          <FilledButton
+            title={isDownloading ? "Downloading..." : "Download"}
+            onClick={downloadPDF}
+            style={{ marginBottom: "10px" }}
+            disabled={isDownloading}
+          />
+          <ResumeTemplate />
+        </>
+      </DialogBox>
     </>
   );
 };

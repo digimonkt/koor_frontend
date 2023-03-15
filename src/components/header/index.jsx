@@ -173,10 +173,7 @@ function Header() {
                   </li>
                   <li>
                     <Link to={`/${role}/my-profile`}>
-                      <FilledButton
-                        title="My Profile"
-                        isBlueButton={role !== USER_ROLES.jobSeeker}
-                      />
+                      <FilledButton title="My Profile" />
                     </Link>
                   </li>
                 </>

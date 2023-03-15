@@ -1,5 +1,11 @@
 import { isValidPhoneNumber } from "react-phone-number-input";
 import * as Yup from "yup";
+const passwordValidation = {
+  password: Yup.string().required("Password is Required"),
+  confirmPassword: Yup.string()
+    .required("Confirm Password is Required")
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+};
 export const validateRegistrationForm = Yup.object().shape({
   email: Yup.string()
     .email("Invalid Email")
@@ -21,13 +27,16 @@ export const validateRegistrationForm = Yup.object().shape({
       return isValidPhoneNumber(value.value);
     }
   ),
-  password: Yup.string().required("Password is Required"),
-  confirmPassword: Yup.string()
-    .required("Confirm Password is Required")
-    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+  ...passwordValidation,
 });
 
 export const validateLoginForm = Yup.object().shape({
   email: Yup.string().email("Invalid Email").required("Email is required"),
   password: Yup.string().required("Password is Required"),
+});
+export const validateForgotPasswordForm = Yup.object().shape({
+  email: Yup.string().email("Invalid Email").required("Email is required"),
+});
+export const validateResetPasswordForm = Yup.object().shape({
+  ...passwordValidation,
 });

@@ -10,12 +10,27 @@ import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const editUrl = urlcat("/employer/jobs/post", { jobId: jobDetails?.id });
 
   const { role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleToggleSave = async () => {
+    setIsSaved(!isSaved);
+    if (!isSaved) {
+      await saveJobAPI(jobDetails.id);
+    } else {
+      await unSaveJobAPI(jobDetails.id);
+    }
+  };
+
+  useEffect(() => {
+    if (jobDetails) setIsSaved(jobDetails.isSaved);
+  }, [jobDetails]);
   useEffect(() => {
     if (logo) {
       setGridProps({
@@ -126,9 +141,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       <Grid item lg={logo ? 2 : 3} xs={12}>
         <div className="text-end">
           <SolidButton
+            style={{ textTransform: "lowercase" }}
             title={
               jobDetails?.expiredInDays > 0
-                ? `${jobDetails?.expiredInDays} Days`
+                ? `${jobDetails?.expiredInDays} days left`
                 : "Expired"
             }
             color={getColorByRemainingDays(
@@ -177,16 +193,25 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               </button>
             </div>
           ) : (
-            <>
+            <React.Fragment>
               {!applied ? (
-                <>
+                <div onClick={handleToggleSave}>
                   <div className="bookmark pe-lg-4">
-                    <SVG.SaveIcon />
-                    <span>Saved</span>
+                    {isSaved ? (
+                      <>
+                        <SVG.SaveIcon />
+                        <span>Saved</span>
+                      </>
+                    ) : (
+                      <>
+                        <SVG.UnSave style={{ color: "#848484" }} />
+                        <span style={{ color: "#848484" }}>Save</span>
+                      </>
+                    )}
                   </div>
-                </>
+                </div>
               ) : null}
-            </>
+            </React.Fragment>
           )}
         </Stack>
       </Grid>

@@ -35,7 +35,6 @@ const ApplicantDetails = () => {
 
   const getApplicantDetails = async () => {
     const res = await getApplicationDetailsAPI(params.applicationId);
-    console.log({ res });
     setApplicantsDetails(res.data);
   };
   useEffect(() => {

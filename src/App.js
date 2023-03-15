@@ -16,6 +16,7 @@ import { ErrorToast, SuccessToast } from "@components/toast";
 import { MESSAGE_TYPE } from "@utils/enum";
 import { resetToast } from "@redux/slice/toast";
 import { FallbackLoading } from "@components/loader/fallbackLoader";
+import { firebaseInitialize } from "./firebaseProvider";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,10 +41,14 @@ function App() {
     return () => window.removeEventListener("storage", checkLoginStatus);
   }, []);
 
+  useEffect(() => {
+    firebaseInitialize();
+  }, []);
+
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
-      <React.Fragment style={{ display: isGlobalLoading ? "none" : "" }}>
+      <div style={{ display: isGlobalLoading ? "none" : "" }}>
         <Header />
         <Routes>
           {ROUTES.map((route) => {
@@ -109,7 +114,7 @@ function App() {
           handleClose={() => dispatch(resetToast())}
         />
         {!isLoggedIn && <Footer />}
-      </React.Fragment>
+      </div>
     </div>
   );
 }

@@ -90,7 +90,6 @@ const ApplyForJob = () => {
     },
     validationSchema: applyJobValidationSchema,
     onSubmit: (values) => {
-      console.log({ values });
       const payload = new FormData();
       for (const key in values) {
         if (values[key].forEach) {
@@ -117,7 +116,6 @@ const ApplyForJob = () => {
 
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });
-    console.log({ res });
     if (res.remote === "success") {
       setDetails(res.data);
     }

@@ -8,11 +8,12 @@ import { USER_ROLES } from "@utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
 import { ErrorMessage } from "@components/caption";
+import { useSelector } from "react-redux";
 
-function RegistrationForm({ role }) {
+function RegistrationForm() {
   // navigate
   const navigate = useNavigate();
-
+  const { role } = useSelector((state) => state.auth);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -39,7 +40,6 @@ function RegistrationForm({ role }) {
         password: values.password,
         role,
       };
-      console.log({ payload });
       const res = await CreateUserAPI(payload);
       if (res.remote === "success") {
         if (role === USER_ROLES.jobSeeker) {
@@ -118,7 +118,6 @@ function RegistrationForm({ role }) {
           <div className="my-4 text-center">
             <FilledButton
               title="Register"
-              isBlueButton={role !== USER_ROLES.jobSeeker}
               type="submit"
             />
           </div>

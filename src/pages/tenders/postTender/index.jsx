@@ -183,7 +183,7 @@ const PostTender = () => {
                         },
                       }}
                     />
-                    <FilledButton title="POST THE TENDER" isBlueButton />
+                    <FilledButton title="POST THE TENDER" />
                   </Stack>
                 </Grid>
               </from>

@@ -1,0 +1,235 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: #eee;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  color: #222;
+  font-size: 14px;
+  line-height: 26px;
+  padding-bottom: 50px;
+}
+
+.container {
+  /* max-width: 700px; */
+  background: #fff;
+  margin: 0px auto 0px;
+  box-shadow: 1px 1px 2px #dad7d7;
+  /* border-radius: 3px; */
+  /* padding: 40px; */
+  /* margin-top: 50px; */
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.avatar_div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header .full-name {
+  font-size: 40px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  margin-left: 20px;
+}
+.header .first-name {
+  font-weight: 700;
+}
+.header .last-name {
+  font-weight: 300;
+}
+.header .contact-info {
+  margin-left: 20px;
+}
+.header .email,
+.header .phone {
+  color: #999;
+  font-weight: 300;
+}
+.header .separator {
+  height: 10px;
+  display: inline-block;
+  border-left: 2px solid #999;
+  margin: 0px 10px;
+}
+.header .position {
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 10px;
+  text-decoration: underline;
+}
+
+.details {
+  line-height: 20px;
+}
+.details .section {
+  margin-bottom: 40px;
+}
+.details .section:last-of-type {
+  margin-bottom: 0px;
+}
+
+.up_work {
+  opacity: 90%;
+}
+
+.skills_p {
+  opacity: 90%;
+  margin-bottom: 8px;
+}
+
+.koor_p {
+  font-size: 12px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  padding: 0px;
+}
+
+.skill_span {
+  margin-top: 14px;
+}
+
+.language_p {
+  opacity: 90%;
+  margin-bottom: 0px;
+  text-transform: capitalize;
+}
+
+.lanpuage_span {
+  opacity: 90%;
+  line-height: 25px;
+}
+
+.work_span {
+  margin-bottom: 10px;
+  opacity: 90%;
+  line-height: 25px;
+}
+
+.right_div {
+  border-left: 2px solid #54afe4;
+  padding-left: 14px;
+  margin-top: -28px;
+}
+
+.education_div {
+  margin-top: -80px;
+}
+
+.work_div {
+  margin-top: 40px;
+}
+
+.date_p {
+  font-size: 14px;
+  opacity: 80%;
+  color: #848484;
+  margin-top: 5px;
+}
+
+.btn_download {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #eea23d;
+  background-color: #fff;
+  color: #ffa500;
+}
+
+.details .section__title {
+  letter-spacing: 2px;
+  color: #54afe4;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.details .section__list-item {
+  margin-bottom: 40px;
+}
+.details .section__list-item:last-of-type {
+  margin-bottom: 0;
+}
+.details .left,
+.details .right {
+  vertical-align: top;
+  display: inline-block;
+}
+.details .left {
+  width: 57%;
+}
+.details .right {
+  text-align: left;
+  width: 42%;
+}
+.details .name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.details .name_about {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.name_about .text {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 80%;
+}
+
+.name .text {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 80%;
+}
+
+.details a {
+  text-decoration: none;
+  color: #000;
+  font-style: italic;
+}
+.details a:hover {
+  text-decoration: underline;
+  color: #000;
+}
+.details .skills__item {
+  margin-bottom: 10px;
+}
+.details .skills__item .right input {
+  display: none;
+}
+.details .skills__item .right label {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: #c3def3;
+  border-radius: 20px;
+  margin-right: 3px;
+}
+.details .skills__item .right input:checked + label {
+  background: #79a9ce;
+}
+
+.language__card {
+  margin-bottom: 8px;
+}
