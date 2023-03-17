@@ -1,16 +1,20 @@
-import { Avatar, Button, Divider } from "@mui/material";
+import { Avatar, Button, Chip, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
+import urlcat from "urlcat";
+import { USER_ROLES } from "@utils/enum";
+import { generateFileUrl } from "@utils/generateFileUrl";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 const ApplicationCard = ({
+  details,
+  jobId,
   image,
-  title,
   subTitle,
-  requirement,
-  chiplabel,
-  description,
   isDisabled,
   isMessagable,
   sx,
@@ -23,7 +27,6 @@ const ApplicationCard = ({
   // const handleNavigate = () => {
   //   navigate("/employer/manage-jobs/applicant-details");
   // };
-
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -33,7 +36,10 @@ const ApplicationCard = ({
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Avatar src={image} sx={{ width: "70px", height: "70px" }} />{" "}
+        <Avatar
+          src={generateFileUrl(details?.user?.image?.path || "")}
+          sx={{ width: "70px", height: "70px" }}
+        />{" "}
         <div className="recent-content">
           <Stack
             direction="row"
@@ -42,8 +48,15 @@ const ApplicationCard = ({
             alignItems="center"
             sx={{ mb: 1, ...sx }}
           >
-            <h4>{title}</h4>
-            <div className="recent-research">{subTitle}</div>
+            <h4>{details?.user?.name || details?.user?.email}</h4>
+            <div className="recent-research">
+              <span>
+                Applied <strong>{dayjs(details?.createdAt).fromNow()}</strong>{" "}
+                to:{" "}
+              </span>
+              <div>{details?.job?.title}</div>
+            </div>
+            {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
           </Stack>
           <Stack
             direction="row"
@@ -51,10 +64,33 @@ const ApplicationCard = ({
             alignItems="center"
             sx={{ mb: 1, ...sx }}
           >
-            <span className="meets">{requirement}</span> {chiplabel}
+            <span className="meets">Meets your requirements with: </span>
+            <>
+              {details?.education && (
+                <Chip
+                  label="Education"
+                  className="chiplabel"
+                  icon={<SVG.SchoolIcon />}
+                />
+              )}
+              {details?.skills && (
+                <Chip
+                  label="Skills"
+                  className="chiplabel"
+                  icon={<SVG.SmallSkillsIcon />}
+                />
+              )}
+              {details?.language && (
+                <Chip
+                  label="Language"
+                  className="chiplabel"
+                  icon={<SVG.SmallLangugeIcon />}
+                />
+              )}
+            </>
           </Stack>
           <div className="recent-descrition">
-            <p>{description}</p>
+            <p>{details?.shortLetter || details?.user?.description}</p>
           </div>
         </div>
       </Stack>
@@ -64,7 +100,14 @@ const ApplicationCard = ({
         </Button>
         <Button
           LinkComponent={Link}
-          to={url}
+          to={urlcat(
+            "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+            {
+              applicationId: details?.id || "applicationId",
+              role: USER_ROLES.employer,
+              jobId: jobId || "jobId",
+            }
+          )}
           sx={{
             color: "#274593",
             flexDirection: "column",

@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import {
   EMPLOYER_ROUTES,
@@ -8,9 +7,11 @@ import {
 } from "@utils/constants/routes";
 import { EmployerRoute, JobSeekerRoute, VendorRoute } from "@utils/routes";
 import Sidebar from "./sidebar";
+import { USER_ROLES } from "@utils/enum";
+import { Suspense } from "react";
+import { FallbackLoading } from "@components/loader/fallbackLoader";
 
 function Layout() {
-  const { role } = useSelector((state) => state.auth);
   return (
     <Box sx={{ display: "flex", marginTop: "81px" }}>
       <Sidebar />
@@ -24,47 +25,63 @@ function Layout() {
           minHeight: "544px",
         }}
       >
+        {/* {role === USER_ROLES.jobSeeker ? ( */}
         <Routes>
           {JOB_SEEKER_ROUTES.map((route) => {
             return (
               <Route
-                path={`/${role}${route.path}`}
+                path={`/${USER_ROLES.jobSeeker}${route.path}`}
                 key={route.id}
                 element={
-                  <JobSeekerRoute>
-                    <route.component />
-                  </JobSeekerRoute>
-                }
-              />
-            );
-          })}
-          {EMPLOYER_ROUTES.map((route) => {
-            return (
-              <Route
-                path={`/${role}${route.path}`}
-                key={route.id}
-                element={
-                  <EmployerRoute>
-                    <route.component />
-                  </EmployerRoute>
-                }
-              />
-            );
-          })}
-          {VENDOR_ROUTES.map((route) => {
-            return (
-              <Route
-                path={`/${role}${route.path}`}
-                key={route.id}
-                element={
-                  <VendorRoute>
-                    <route.component />
-                  </VendorRoute>
+                  <Suspense fallback={<FallbackLoading />}>
+                    <JobSeekerRoute>
+                      <route.component />
+                    </JobSeekerRoute>
+                  </Suspense>
                 }
               />
             );
           })}
         </Routes>
+        {/* ) : role === USER_ROLES.employer ? ( */}
+        <Routes>
+          {EMPLOYER_ROUTES.map((route) => {
+            return (
+              <Route
+                path={`/${USER_ROLES.employer}${route.path}`}
+                key={route.id}
+                element={
+                  <Suspense fallback={<FallbackLoading />}>
+                    <EmployerRoute>
+                      <route.component />
+                    </EmployerRoute>
+                  </Suspense>
+                }
+              />
+            );
+          })}
+        </Routes>
+        {/* ) : role === USER_ROLES.vendor ? ( */}
+        <Routes>
+          {VENDOR_ROUTES.map((route) => {
+            return (
+              <Route
+                path={`/${USER_ROLES.vendor}${route.path}`}
+                key={route.id}
+                element={
+                  <Suspense fallback={<FallbackLoading />}>
+                    <VendorRoute>
+                      <route.component />
+                    </VendorRoute>
+                  </Suspense>
+                }
+              />
+            );
+          })}
+        </Routes>
+        {/* ) : (
+          ""
+        )} */}
       </Box>
     </Box>
   );

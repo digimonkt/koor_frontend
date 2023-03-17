@@ -1,15 +1,23 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { LogoutUserAPI } from "@api/user";
+import { globalLocalStorage } from "@utils/localStorage";
+import { useDispatch } from "react-redux";
 import { setIsLoggedIn } from "@redux/slice/user";
 
 function LogoutForm() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    await LogoutUserAPI();
+  };
   useEffect(() => {
+    globalLocalStorage.removeAccessToken();
+    globalLocalStorage.removeRefreshToken();
     dispatch(setIsLoggedIn(false));
+    handleLogout();
     navigate("/login");
-  }, [dispatch, navigate]);
+  }, []);
   return <div></div>;
 }
 

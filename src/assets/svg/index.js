@@ -31,7 +31,7 @@ import { ReactComponent as UploadIcon } from "./uploadIcon.svg";
 import { ReactComponent as WorkIcon } from "./workIcon.svg";
 import { ReactComponent as PlushIcon } from "./plushIcon.svg";
 import { ReactComponent as SkillsIcon } from "./skillsIcon.svg";
-import { ReactComponent as Savefile } from "./savefile.svg";
+import { ReactComponent as SaveFile } from "./savefile.svg";
 import { ReactComponent as CancelIcon } from "./cancelIcon.svg";
 import { ReactComponent as LanguageIcon } from "./languageIcon.svg";
 import { ReactComponent as EducationIcon } from "./educationIcon.svg";
@@ -96,6 +96,8 @@ import { ReactComponent as SecondInsta } from "./second-insta.svg";
 import { ReactComponent as SecondLink } from "./second-link.svg";
 import { ReactComponent as Face } from "./face.svg";
 import { ReactComponent as ArrowRight } from "./right-arrow.svg";
+import { ReactComponent as AppliedJob } from "./appliedJob.svg";
+import { ReactComponent as UnSave } from "./unsave.svg";
 
 export const SVG = {
   ArrowRight,
@@ -152,7 +154,7 @@ export const SVG = {
   WorkIcon,
   PlushIcon,
   SkillsIcon,
-  Savefile,
+  SaveFile,
   CancelIcon,
   LanguageIcon,
   EducationIcon,
@@ -196,4 +198,6 @@ export const SVG = {
   CategoryIcon,
   SearchIConJob,
   CalenderChat,
+  AppliedJob,
+  UnSave,
 };

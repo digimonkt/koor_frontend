@@ -3,7 +3,6 @@ import React, { useState } from "react";
 // import ModalView from "../updateProfile/modal";
 import DialogBox from "@components/dialogBox";
 import UpdateInfo from "../updateProfile/update-info";
-import AddInfoProfileUpdate from "../updateProfile/AddInfoProfileUpdate";
 import AreaChart from "../myProfile/chart";
 import ResumeUpdate from "../updateProfile/resume-update";
 import JobPreferences from "./job-preferences";
@@ -11,6 +10,7 @@ import Education from "./education";
 import Languages from "./languages";
 import WorkExperience from "./work-experience";
 import Skills from "./skills";
+import AboutMe from "../aboutMe";
 
 const MyProfile = () => {
   const [open, setOpen] = useState(false);
@@ -48,7 +48,9 @@ const MyProfile = () => {
                   </div>
                 </CardContent>
               </Card>
-              <AddInfoProfileUpdate handleClickOpen={handleClickOpen} />
+              <div className="add-content">
+                <AboutMe handleClickOpen={handleClickOpen} />
+              </div>
               <div className="education-card">
                 <Education />
               </div>

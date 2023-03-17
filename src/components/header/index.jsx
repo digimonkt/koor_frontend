@@ -6,14 +6,19 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "@assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import { USER_ROLES } from "@utils/enum";
-import { useSelector } from "react-redux";
-import styles from "./header.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserRole } from "@redux/slice/user";
 
 const ismenu = true;
 
@@ -24,12 +29,16 @@ const searchType = Object.freeze({
 });
 
 function Header() {
+  const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams({});
 
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("talent");
+  const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
     switch (role) {
       case USER_ROLES.jobSeeker:
@@ -45,7 +54,10 @@ function Header() {
         break;
     }
   }, [role]);
-
+  useEffect(() => {
+    const search = searchParams.get("search");
+    setSearchValue(search || "");
+  }, [location.search]);
   return (
     <header>
       <Container>
@@ -57,57 +69,60 @@ function Header() {
           <Link to="/" className="navbar-brand">
             <SVG.KoorLogo />
           </Link>
-          <div className="">
-            <SearchCategory
-              direction="row"
-              spacing={1}
-              alignItems="center"
-              className={styles.search_category}
-            >
-              <Link
-                to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
-                className="d-inline-flex"
-              >
-                <SVG.SearchIcon />
-              </Link>
-              {role === "employer" ? (
-                <FormControl
-                  sx={{
-                    "&.MuiSelect-select": {
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                    },
-                  }}
-                  size="small"
+          {isLoggedIn ? (
+            <div className="">
+              <SearchCategory direction="row" spacing={1} alignItems="center">
+                <Link
+                  to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
+                  className="d-inline-flex"
                 >
-                  <SelectBox
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    inputProps={{ "aria-label": "Without label" }}
-                    displayEmpty
-                    sx={{ width: "100px" }}
+                  <SVG.SearchIcon />
+                </Link>
+                {role === "employer" ? (
+                  <FormControl
+                    sx={{
+                      "&.MuiSelect-select": {
+                        fontFamily: "Poppins",
+                        fontSize: "16px",
+                      },
+                    }}
+                    size="small"
                   >
-                    <MenuItem value={searchType.Talent}>Talent</MenuItem>
-                    <MenuItem value={searchType.Tenders}>Tenders</MenuItem>
-                    <MenuItem value={searchType.Vendors}>Vendors</MenuItem>
-                  </SelectBox>
-                </FormControl>
-              ) : (
-                ""
-              )}
-              <input
-                onKeyDown={(e) => {
-                  if (e.key === "enter" || e.key === "Enter") {
-                    navigate(
-                      role === USER_ROLES.jobSeeker ? "/job-search" : "/"
-                    );
-                  }
-                }}
-                className="employersearch"
-                placeholder={role === "employer" ? "" : searchPlaceholder}
-              />
-            </SearchCategory>
-          </div>
+                    <SelectBox
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      inputProps={{ "aria-label": "Without label" }}
+                      displayEmpty
+                      sx={{ width: "100px" }}
+                    >
+                      <MenuItem value={searchType.Talent}>Talent</MenuItem>
+                      <MenuItem value={searchType.Tenders}>Tenders</MenuItem>
+                      <MenuItem value={searchType.Vendors}>Vendors</MenuItem>
+                    </SelectBox>
+                  </FormControl>
+                ) : (
+                  ""
+                )}
+                <input
+                  onKeyDown={(e) => {
+                    if (e.key === "enter" || e.key === "Enter") {
+                      navigate(
+                        role === USER_ROLES.jobSeeker
+                          ? `/job-search?search=${searchValue}`
+                          : "/"
+                      );
+                    }
+                  }}
+                  className="employersearch"
+                  placeholder={role === "employer" ? "" : searchPlaceholder}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  value={searchValue}
+                />
+              </SearchCategory>
+            </div>
+          ) : (
+            ""
+          )}
 
           <div
             className="ms-auto"
@@ -164,24 +179,32 @@ function Header() {
                   </li>
                   <li>
                     <Link to={`/${role}/my-profile`}>
-                      <FilledButton
-                        title="My Profile"
-                        isBlueButton={role !== USER_ROLES.jobSeeker}
-                      />
+                      <FilledButton title="My Profile" />
                     </Link>
                   </li>
                 </>
               ) : (
                 <>
                   <li>
-                    <Link to="/">
+                    <div
+                      onClick={() => {
+                        dispatch(setUserRole(""));
+                        navigate("/");
+                      }}
+                    >
                       <OutlinedButton title="Register" />
-                    </Link>
+                    </div>
                   </li>
                   <li>
-                    <Link data-cy="login-nav" to="/login">
+                    <div
+                      data-cy="login-nav"
+                      onClick={() => {
+                        dispatch(setUserRole(""));
+                        navigate("/login");
+                      }}
+                    >
                       <FilledButton title="Login" />
-                    </Link>
+                    </div>
                   </li>
                 </>
               )}

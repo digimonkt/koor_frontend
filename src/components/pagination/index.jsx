@@ -1,12 +1,12 @@
 import React from "react";
-import Pagination from "@mui/material/Pagination";
+import { Pagination as MUIPagination } from "@mui/material";
 import Stack from "@mui/material/Stack";
 
-export default function Paginations() {
+export default function Pagination({ ...rest }) {
   return (
     <div>
       <Stack spacing={2}>
-        <Pagination count={21} shape="rounded" />
+        <MUIPagination shape="rounded" {...rest} />
       </Stack>
     </div>
   );

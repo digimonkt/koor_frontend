@@ -49,35 +49,35 @@ const AdvanceFilter = () => {
           <MenuItem>
             <SearchButton
               className={`${styles.btnActive}`}
-              lefticon={<SVG.Notificationactive />}
+              leftIcon={<SVG.Notificationactive />}
               text="Initial search"
             />
           </MenuItem>
           <MenuItem>
             <SearchButton
               className={`${styles.btnActive}`}
-              lefticon={<SVG.Notificationinactive />}
+              leftIcon={<SVG.Notificationinactive />}
               text="France, $3K +"
             />
           </MenuItem>
           <MenuItem>
             <SearchButton
               className={`${styles.btnActive}`}
-              lefticon={<SVG.Notificationactive />}
+              leftIcon={<SVG.Notificationactive />}
               text="Whole Europe, Full-time $5+"
             />
           </MenuItem>
           <MenuItem>
             <SearchButton
               className={`${styles.btninActive}`}
-              lefticon={<SVG.Notificationactive />}
+              leftIcon={<SVG.Notificationactive />}
               text="Part-time, $2K+"
             />
           </MenuItem>
           <MenuItem>
             <SearchButton
               className={`${styles.btnActive}`}
-              lefticon={<SVG.Notificationinactive />}
+              leftIcon={<SVG.Notificationinactive />}
               text="My city"
             />
           </MenuItem>
@@ -196,7 +196,7 @@ const AdvanceFilter = () => {
             <div className={`${styles.savesearch}`}>
               <span>{<SVG.Favorite />} SAVE SEARCH</span>
               <SearchButton
-                lefticon={<SVG.SearchIcon style={{ color: "#EEA23D" }} />}
+                leftIcon={<SVG.SearchIcon style={{ color: "#EEA23D" }} />}
                 text="search"
               />
             </div>

@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { FormControl, MenuItem, Select } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import React from "react";
+import styles from "./input.module.css";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -25,34 +26,65 @@ export const SelectBox = styled(Select)`
     display: none;
   }
 `;
-function SelectInputComponent({ options, className, ...rest }) {
+
+function SelectInputComponent({
+  title,
+  labelWeight,
+  options,
+  className,
+  value,
+  placeholder,
+  style,
+  ...rest
+}) {
   return (
-    <FormControl
-      className={`iconsize-select ${className}`}
-      sx={{
-        "&.MuiSelect-select": {
-          fontFamily: "Poppins",
-          fontSize: "12px",
-        },
-      }}
-      size="small"
-      fullWidth
-    >
-      <SelectBox
-        inputProps={{ "aria-label": "Without label" }}
-        IconComponent={KeyboardArrowDownIcon}
-        displayEmpty
-        {...rest}
+    <>
+      {title ? (
+        <label
+          className="mb-1 d-inline-block"
+          style={{
+            fontWeight: labelWeight,
+          }}
+        >
+          {title}
+        </label>
+      ) : (
+        ""
+      )}
+      <FormControl
+        className={`iconsize-select ${className} `}
+        sx={{
+          "&.MuiSelect-select": {
+            fontFamily: "Poppins",
+            fontSize: "12px",
+          },
+        }}
+        size="small"
+        fullWidth
+        style={style || {}}
       >
-        {options.map((option) => {
-          return (
-            <MenuItem value={option.value} key={option.value}>
-              {option.label}
-            </MenuItem>
-          );
-        })}
-      </SelectBox>
-    </FormControl>
+        <SelectBox
+          inputProps={{ "aria-label": "Without label" }}
+          IconComponent={KeyboardArrowDownIcon}
+          displayEmpty
+          value={value}
+          renderValue={
+            value !== ""
+              ? undefined
+              : () => <div className={styles.placeholder}>{placeholder}</div>
+          }
+          {...rest}
+        >
+          {options.map((option) => {
+            return (
+              <MenuItem value={option.value} key={option.value}>
+                {option.label}
+              </MenuItem>
+            );
+          })}
+        </SelectBox>
+      </FormControl>
+    </>
   );
 }
 

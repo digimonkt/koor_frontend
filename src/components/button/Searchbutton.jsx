@@ -1,16 +1,16 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-export default function Searchbutton({
-  lefticon,
+export default function SearchButtonComponent({
+  leftIcon,
   text,
   className,
-  handleClickOpen,
+  ...rest
 }) {
   return (
     <div>
-      <Button className={className} onClick={handleClickOpen}>
-        <span>{lefticon}</span>
+      <Button className={className} {...rest}>
+        <span>{leftIcon}</span>
         {text}
       </Button>
     </div>

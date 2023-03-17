@@ -1,13 +1,27 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { RECENT_ITEMS } from "./recentHelper";
 import { DonutChart, AreaChart } from "@components/charts";
 import ApplicationCard from "@components/applicationCard";
 import { employerCard } from "./employerCardData";
 import { OutlinedButton } from "@components/button";
-
+import { getRecentApplicationAPI } from "@api/employer";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 const Dashboard = () => {
+  const [recentApplication, setRecentApplication] = useState({ results: [] });
+
+  const getRecentApplications = async () => {
+    const res = await getRecentApplicationAPI();
+    if (res.remote === "success") {
+      setRecentApplication(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getRecentApplications();
+  }, []);
   return (
     <>
       <div className="employer-dashboard">
@@ -110,17 +124,13 @@ const Dashboard = () => {
                     <p>Recent application</p>
                   </Stack>
 
-                  {RECENT_ITEMS.map((item, index) => (
+                  {recentApplication.results.map((item, index) => (
                     <ApplicationCard
-                      image={item.img}
-                      title={item.title}
-                      subTitle={item.subtitle}
-                      description={item.description}
-                      chiplabel={item.chiplabel}
-                      requirement={item.requirement}
+                      jobId={item.jobId}
+                      details={item}
+                      subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
                       isDisabled={item.disabled}
                       key={index}
-                      url="/employer/manage-jobs/applicant-details"
                     />
                   ))}
 

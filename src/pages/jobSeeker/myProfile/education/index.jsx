@@ -5,30 +5,30 @@ import { OutlinedButton } from "@components/button";
 import EducationCard from "@components/educationCard";
 import EditEducation from "./editEducation";
 import DialogBox from "@components/dialogBox";
-
-const educationList = [
-  {
-    title: "Degree",
-    organization: "Cambridge University",
-    startYear: 2001,
-    endYear: null,
-    isPresent: true,
-    description: "THis is the description",
-  },
-];
+import { useSelector } from "react-redux";
+import NoItem from "../noItem";
 
 const Education = () => {
-  const [open, setOpen] = useState(false);
+  const {
+    currentUser: { educationRecord },
+  } = useSelector((state) => state.auth);
 
-  const [educations, setEducations] = useState([...educationList]);
+  const [open, setOpen] = useState(false);
+  const [currentSelected, setCurrentSelected] = useState(null);
 
   const handleToggleModel = () => {
     setOpen(!open);
+    if (open) {
+      setCurrentSelected(null);
+    }
   };
 
-  const handleSubmit = (value) => {
-    console.log(value);
-    setEducations((prevState) => [...prevState, value]);
+  const handleSubmit = () => {
+    handleToggleModel();
+  };
+
+  const handleEdit = (value) => {
+    setCurrentSelected(value);
     handleToggleModel();
   };
 
@@ -51,13 +51,36 @@ const Education = () => {
         >
           <div className="add-content">
             <h2 className="mb-4">Education</h2>
-            <ul className="listitems">
-              {educations.map((item, index) => (
-                <li key={index}>
-                  <EducationCard {...item} />
-                </li>
-              ))}
-            </ul>
+            <>
+              {educationRecord.length ? (
+                <ul className="listitems">
+                  {educationRecord.map((item, index) => (
+                    <li key={index}>
+                      <EducationCard
+                        {...item}
+                        handleEdit={() => handleEdit(item)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <>
+                  <div>
+                    <NoItem
+                      icon={<SVG.EducationIcon />}
+                      description={
+                        <p>
+                          Mentioning your education helps to prove your
+                          proficiency for your future employer. Add it to boost
+                          your job bids. That how we can display empty cards –
+                          icon and some tips to fill up the info.
+                        </p>
+                      }
+                    />
+                  </div>
+                </>
+              )}
+            </>
 
             <div className="text-center mt-4">
               <OutlinedButton
@@ -89,7 +112,10 @@ const Education = () => {
         </CardContent>
       </Card>
       <DialogBox open={open} handleClose={handleToggleModel}>
-        <EditEducation handleSubmit={handleSubmit} />
+        <EditEducation
+          handleSubmit={handleSubmit}
+          currentSelected={currentSelected}
+        />
       </DialogBox>
     </>
   );

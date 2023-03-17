@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "../enum";
 
 function UnauthenticatedRouteComponent({ children, redirectURL }) {
-  const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const location = useLocation();
-  if (isLoggedIn) {
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
+  useEffect(() => {
     const path = role === USER_ROLES.jobSeeker ? "/my-profile" : "/dashboard";
-    return (
-      <Navigate
-        to={location.state?.from || redirectURL || `../${role}${path}`}
-      />
-    );
-  }
+    const fromPath = location.state?.from.includes(role)
+      ? location.state?.from
+      : null;
+    if (role && isLoggedIn) {
+      navigate(fromPath || redirectURL || `../${role}${path}`);
+    }
+  }, [role, isLoggedIn]);
+
   return <div>{children}</div>;
 }
 

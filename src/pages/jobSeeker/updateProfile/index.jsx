@@ -1,19 +1,29 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import UpdateInfo from "./update-info";
-import AddInfoProfileUpdate from "./AddInfoProfileUpdate";
-import UploadFile from "./uploadfile";
 import ResumeUpdate from "./resume-update";
 import { SVG } from "@assets/svg";
 import { useNavigate } from "react-router-dom";
 import DialogBox from "@components/dialogBox";
+import { USER_ROLES } from "@utils/enum";
+import AboutMe from "../aboutMe";
+import { ProfilePicInput } from "@components/input";
+import { useDispatch, useSelector } from "react-redux";
+import { setProfilePic } from "@redux/slice/user";
+import { UpdateProfileImageAPI } from "@api/user";
+import { ErrorToast, SuccessToast } from "@components/toast";
 
 const UpdateProfile = () => {
   // navigate
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.auth);
+
   // state management
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [profilePicLoading, setProfilePicLoading] = useState("");
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -21,13 +31,22 @@ const UpdateProfile = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleProfilePicSave = async (file) => {
+    setProfilePicLoading("loading");
+    const newFormData = new FormData();
+    newFormData.append("profile_image", file);
+    dispatch(setProfilePic(URL.createObjectURL(file)));
+    const res = await UpdateProfileImageAPI(newFormData);
+    if (res.remote === "success") setProfilePicLoading("updated");
+    else setProfilePicLoading("error");
+  };
 
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3">
         <h1 className="headding m-0">Add info to complete your profile</h1>
         <span
-          onClick={() => navigate("/job-seeker/my-profile")}
+          onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)}
           className="later"
         >
           Do it later
@@ -35,7 +54,7 @@ const UpdateProfile = () => {
       </Stack>
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>
-          <AddInfoProfileUpdate handleClickOpen={handleClickOpen} />
+          <AboutMe handleClickOpen={handleClickOpen} />
         </Grid>
         <Grid item lg={6} xs={12}>
           <Stack direction="column" spacing={2}>
@@ -54,11 +73,14 @@ const UpdateProfile = () => {
                   },
                 }}
               >
-                <UploadFile
-                  title="Profile photo"
-                  textcolor="#EEA23D"
-                  color="#EEA23D"
-                  bgcolor="rgba(255, 165, 0, 0.1)"
+                <ProfilePicInput
+                  title="Your Profile Picture"
+                  textColor="#274593"
+                  color="#274593"
+                  bgColor="rgba(40, 71, 146, 0.1)"
+                  handleSave={handleProfilePicSave}
+                  image={currentUser.profileImage}
+                  loading={profilePicLoading === "loading"}
                 />
               </CardContent>
             </Card>
@@ -118,6 +140,14 @@ const UpdateProfile = () => {
           icon={<SVG.AlertCheckICon />}
         />
       </DialogBox>
+      <SuccessToast
+        open={profilePicLoading === "updated"}
+        message="Profile Pic Updated successfully"
+      />
+      <ErrorToast
+        open={profilePicLoading === "error"}
+        message="Something went wrong"
+      />
     </>
   );
 };

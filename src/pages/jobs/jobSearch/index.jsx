@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import {
   Container,
@@ -10,31 +10,82 @@ import {
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { SVG } from "@assets/svg";
-import Paginations from "@components/pagination";
-import Searchinput from "@components/searchInput";
 import JobCard from "@components/jobCard";
 import AdvanceFilter from "./AdvanceFilter";
+import { useLocation, useSearchParams } from "react-router-dom";
+import { getSearchJobsAPI } from "@api/job";
+import Pagination from "@components/pagination";
+import SearchInput from "@components/searchInput";
 
+const LIMIT = 10;
 export default function JobSearch() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const location = useLocation();
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalJobs, setTotalJobs] = useState(0);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [searchedJobs, setSearchedJobs] = useState([]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const handleSearch = (value) => {
+    setSearchParams({ search: value });
+  };
+  const getSearchJobs = async () => {
+    const res = await getSearchJobsAPI({ search, page, limit: LIMIT });
+    if (res.remote === "success") {
+      const totalJobs = res.data.count;
+      setTotalJobs(totalJobs);
+      const pages = Math.ceil(totalJobs / LIMIT);
+      setTotalPages(pages);
+      setSearchedJobs(res.data.results);
+    }
+  };
+  useEffect(() => {
+    // const queryParams = new URLSearchParams(location.search);
+    const search = searchParams.get("search");
+    if (search) {
+      setPage(1);
+      setTotalPages(1);
+      setSearch(search);
+    }
+  }, [location.search]);
+  useEffect(() => {
+    if (totalPages >= page || totalPages === 0) {
+      getSearchJobs();
+    }
+  }, [search, page]);
+  const pagination = () => {
+    return (
+      <Pagination
+        count={totalPages}
+        onChange={(e, page) => {
+          setPage(page);
+        }}
+        page={page}
+      />
+    );
+  };
   return (
     <div className={`${styles.body}`}>
-      <Searchinput svg={<SVG.Buttonsearch />} placeholder="Search jobs" />
+      <SearchInput
+        svg={<SVG.Buttonsearch />}
+        placeholder="Search jobs"
+        handleSearch={handleSearch}
+        value={search}
+      />
       <Container>
         <AdvanceFilter />
       </Container>
       <div className="paginations ">
-        <Container>
-          <Paginations />
-        </Container>
+        <Container>{pagination()}</Container>
       </div>
       <Container>
         <div className={`${styles.jobcards}`}>
@@ -48,7 +99,7 @@ export default function JobSearch() {
               <h2 className="m-0">
                 Job feed
                 <Chip
-                  label="23"
+                  label={totalJobs}
                   className="ms-3"
                   sx={{
                     background: "#FEEFD3",
@@ -114,15 +165,18 @@ export default function JobSearch() {
               </Menu>
             </Stack>
           </div>
-          <JobCard logo />
-          <Divider />
-          <JobCard logo />
+          {searchedJobs.map((job) => {
+            return (
+              <React.Fragment key={job.id}>
+                <JobCard logo jobDetails={job} />
+                <Divider />
+              </React.Fragment>
+            );
+          })}
         </div>
       </Container>
       <div className="paginations pt-4">
-        <Container>
-          <Paginations />
-        </Container>
+        <Container>{pagination()}</Container>
       </div>
     </div>
   );

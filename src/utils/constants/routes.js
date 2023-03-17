@@ -1,31 +1,118 @@
-import { Login, Logout, Registration } from "@pages/auth";
-import AboutUs from "../../pages/about";
-import {
-  ManageJobs,
-  MyProfile as EmployerProfile,
-  Dashboard as EmployerDashboard,
-  ManageTenders as EmployerManageTenders,
-} from "@pages/employer";
-import Home from "@pages/home";
-import {
-  PostJobs,
-  JobSearch,
-  ApplicantDetails,
-  JobDetails,
-  ApplyForJob,
-} from "@pages/jobs";
-
-import {
-  JobCriteria as JobSeekerCriteria,
-  MyProfile as JobSeekerProfile,
-  UpdateProfile as JobSeekerUpdateProfile,
-  AppliedJobs,
-  SavedJobs,
-} from "@pages/jobSeeker";
 import { ChatBox } from "@pages/messages";
-import { PostTender } from "@pages/tenders";
-import { VendorMyProfile, VendorDashboard } from "@pages/vendor";
 import Resource from "@pages/resource";
+import Home from "@pages/home";
+import AboutUs from "../../pages/about";
+import { PostTender } from "@pages/tenders"; // need to relocate to employer folder
+import { lazy } from "react";
+// resources
+const Resources = lazy(() =>
+  import("@pages/resources").then((module) => ({ default: module.Resources }))
+);
+// auth
+const Logout = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.Logout }))
+);
+const Login = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.Login }))
+);
+const Registration = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.Registration }))
+);
+const ForgotPassword = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.ForgotPassword }))
+);
+const VerifyOTP = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.VerifyOTP }))
+);
+const ResetPassword = lazy(() =>
+  import("@pages/auth").then((module) => ({ default: module.ResetPassword }))
+);
+
+// job Seeker
+const JobSeekerProfile = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.MyProfile,
+  }))
+);
+const JobSeekerCriteria = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.JobCriteria,
+  }))
+);
+const JobSeekerUpdateProfile = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.UpdateProfile,
+  }))
+);
+const AppliedJobs = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.AppliedJobs,
+  }))
+);
+const SavedJobs = lazy(() =>
+  import("@pages/jobSeeker").then((module) => ({
+    default: module.SavedJobs,
+  }))
+);
+// employer
+const ManageJobs = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.ManageJobs,
+  }))
+);
+const EmployerProfile = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.MyProfile,
+  }))
+);
+const EmployerDashboard = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.Dashboard,
+  }))
+);
+const EmployerManageTenders = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.ManageTenders,
+  }))
+);
+// vendor
+const VendorMyProfile = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorMyProfile,
+  }))
+);
+const VendorDashboard = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorDashboard,
+  }))
+);
+
+// jobs
+const PostJobs = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.PostJobs,
+  }))
+);
+const JobSearch = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.JobSearch,
+  }))
+);
+const ApplicantDetails = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.ApplicantDetails,
+  }))
+);
+const JobDetails = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.JobDetails,
+  }))
+);
+const ApplyForJob = lazy(() =>
+  import("@pages/jobs").then((module) => ({
+    default: module.ApplyForJob,
+  }))
+);
 
 // prefix => `/`
 export const ROUTES = [
@@ -34,6 +121,38 @@ export const ROUTES = [
     name: "Logout",
     path: "/logout",
     component: Logout,
+  },
+  {
+    id: "resources",
+    name: "Resources",
+    path: "/resources",
+    component: Resources,
+  },
+
+  {
+    id: "resource",
+    name: "Resource",
+    path: "/resource",
+    component: Resource,
+  },
+
+  {
+    id: "about-us",
+    name: "About Us",
+    path: "/about-us",
+    component: AboutUs,
+  },
+  {
+    id: "browse-jobs",
+    name: "Browse Jobs",
+    path: "/browse-jobs",
+    component: Home,
+  },
+  {
+    id: "browse-tenders",
+    name: "Browse Tenders",
+    path: "/browse-tenders",
+    component: Home,
   },
 ];
 
@@ -57,29 +176,24 @@ export const UNAUTHENTICATED_ROUTES = [
     path: "/",
     component: Home,
   },
+
   {
-    id: "about-us",
-    name: "About Us",
-    path: "/about-us",
-    component: AboutUs,
+    id: "forgot-password",
+    name: "Forgot Password",
+    path: "/forgot-password",
+    component: ForgotPassword,
   },
   {
-    id: "resource",
-    name: "Resource",
-    path: "/resource",
-    component: Resource,
+    id: "verifyOTP",
+    name: "Verify OTP",
+    path: "/verify-otp",
+    component: VerifyOTP,
   },
   {
-    id: "browse-jobs",
-    name: "Browse Jobs",
-    path: "/browse-jobs",
-    component: Home,
-  },
-  {
-    id: "browse-tenders",
-    name: "Browse Tenders",
-    path: "/browse-tenders",
-    component: Home,
+    id: "resetPassword",
+    name: "Reset Password",
+    path: "/reset-password",
+    component: ResetPassword,
   },
 ];
 
@@ -97,9 +211,15 @@ export const AUTHENTICATED_ROUTES = [
     path: "/job/apply/:jobId",
     component: ApplyForJob,
   },
+  {
+    id: "jobDetails",
+    name: "Job Details",
+    path: "/jobs/details/:jobId",
+    component: JobDetails,
+  },
 ];
 
-// prefix => `/job-seeker`
+// prefix => `/job_seeker`
 export const JOB_SEEKER_ROUTES = [
   {
     id: "myProfile",
@@ -132,10 +252,10 @@ export const JOB_SEEKER_ROUTES = [
     component: SavedJobs,
   },
   {
-    id: "jobDetails",
-    name: "Job Details",
-    path: "/jobs/details/:jobId",
-    component: JobDetails,
+    id: "chat",
+    name: "chat",
+    path: "/chat",
+    component: ChatBox,
   },
 ];
 
@@ -190,7 +310,7 @@ export const EMPLOYER_ROUTES = [
   {
     id: "applicantDetails",
     name: "Applicant Detials",
-    path: "/manage-jobs/applicant-details",
+    path: "/manage-jobs/:jobId/applicant-details/:applicationId",
     component: ApplicantDetails,
   },
   {

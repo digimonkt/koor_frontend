@@ -2,7 +2,7 @@ name: React
 
 on:
   push:
-    branches: ["design"]
+    branches: ["main"]
 
 jobs:
   React-koor:
@@ -27,7 +27,7 @@ jobs:
           port: 22
 
           script: |
-            cd /home/user/koor/design_koor/ 
-            git pull origin design
-            yarn install
-            pm2 restart 45
+            cd /home/user/koor/frontend_koor/ 
+            git pull origin main
+            yarn build
+            pm2 restart 43

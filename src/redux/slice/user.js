@@ -1,14 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { GetUserDetailsAPI } from "@api/user";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
-import { USER_ROLES } from "./../../utils/enum";
 
 /**
  * **NOTE**: Vendor is pending.
  */
 const initialState = {
+  isGlobalLoading: false,
   isLoggedIn: false,
-  role: USER_ROLES.vendor,
   isHomePage: false,
+  role: "",
   currentUser: {
     id: "",
     email: "",
@@ -23,12 +24,11 @@ const initialState = {
       // job-seeker
       gender: GENDER.male,
       dob: "",
-      employment_status: EMPLOYMENT_STATUS.unEmployed,
-      market_information: false,
-      job_notification: false,
+      employmentStatus: EMPLOYMENT_STATUS.fresher,
+      marketInformationNotification: false,
+      jobNotification: false,
 
       // employer
-      organization_name: "",
       organization_type: ORGANIZATION_TYPE.business,
       license_id: "",
       license_id_file: "",
@@ -37,32 +37,32 @@ const initialState = {
      *  {
         id: "",
         title: "",
-        start_date: "",
-        end_date: "",
+        startDate: "",
+        endDate: "",
         present: false,
         organization: "",
         description: "",
       },
      */
-    education_record: [],
+    educationRecord: [],
     /**
      * {
         id: "",
         title: "",
-        start_date: "",
-        end_date: "",
+        startDate: "",
+        endDate: "",
         present: false,
         organization: "",
         description: "",
       },
      */
-    work_experience: [],
+    workExperiences: [],
     /**
      * {
         id: "",
         title: "",
-        file_path: "",
-        created_at: "",
+        filePath: "",
+        createdAt: "",
       },
      */
     resume: [],
@@ -83,27 +83,183 @@ const initialState = {
      */
     skills: [],
   },
+  // here that email is come on which mail is sent
+  verifyEmail: "",
 };
+
+export const getUserDetails = createAsyncThunk(
+  "users/getUserDetails",
+  async (data, { rejectWithValue }) => {
+    const res = await GetUserDetailsAPI(data);
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    setVerifyEmail: (state, action) => {
+      state.verifyEmail = action.payload;
+    },
     setIsLoggedIn: (state, action) => {
+      if (!action.payload) {
+        state.role = "";
+        state.currentUser = initialState.currentUser;
+      }
       state.isLoggedIn = action.payload;
     },
     setUserRole: (state, action) => {
       state.role = action.payload;
     },
-    setCurrentUser: (state, action) => {
-      state.currentUser = action.payload;
+    setProfilePic: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        profileImage: action.payload,
+      };
+    },
+
+    updateCurrentUser: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        ...action.payload,
+        profile: {
+          ...state.currentUser.profile,
+          ...(action.payload.profile || {}),
+        },
+      };
+    },
+
+    addEducationRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        educationRecord: [...state.currentUser.educationRecord, action.payload],
+      };
+    },
+    updateEducationRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        educationRecord: state.currentUser.educationRecord.map((education) => {
+          if (education.id === action.payload.id) {
+            return {
+              ...education,
+              ...action.payload,
+            };
+          }
+          return education;
+        }),
+      };
+    },
+    deleteEducationRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        educationRecord: state.currentUser.educationRecord.filter(
+          (record) => record.id !== action.payload
+        ),
+      };
+    },
+
+    addLanguageRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        languages: [...state.currentUser.languages, action.payload],
+      };
+    },
+    updateLanguageRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        languages: state.currentUser.languages.map((language) => {
+          if (language.id === action.payload.id) {
+            return {
+              ...language,
+              ...action.payload,
+            };
+          }
+          return language;
+        }),
+      };
+    },
+    deleteLanguageRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        languages: state.currentUser.languages.filter(
+          (record) => record.id !== action.payload
+        ),
+      };
+    },
+
+    addWorkExperienceRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        workExperiences: [...state.currentUser.workExperiences, action.payload],
+      };
+    },
+    updateWorkExperienceRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        workExperiences: state.currentUser.workExperiences.map(
+          (workExperience) => {
+            if (workExperience.id === action.payload.id) {
+              return {
+                ...workExperience,
+                ...action.payload,
+              };
+            }
+            return workExperience;
+          }
+        ),
+      };
+    },
+    deleteWorkExperienceRecord: (state, action) => {
+      state.currentUser = {
+        ...state.currentUser,
+        workExperiences: state.currentUser.workExperiences.filter(
+          (record) => record.id !== action.payload
+        ),
+      };
     },
     setIstHomePage: (state, action) => {
       state.isHomePage = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getUserDetails.pending, (state, action) => {
+      state.isGlobalLoading = true;
+    });
+    builder.addCase(getUserDetails.fulfilled, (state, action) => {
+      if (!action.payload.profileImage) {
+        delete action.payload.profileImage;
+      }
+      state.currentUser = { ...state.currentUser, ...action.payload };
+      state.role = action.payload.role;
+      state.isGlobalLoading = false;
+      state.isLoggedIn = true;
+    });
+    builder.addCase(getUserDetails.rejected, (state, action) => {
+      state.isGlobalLoading = false;
+    });
+  },
 });
-export const { setIsLoggedIn, setUserRole, setCurrentUser, setIstHomePage } =
-  authSlice.actions;
+export const {
+  setIstHomePage,
+  setVerifyEmail,
+  setIsLoggedIn,
+  setUserRole,
+  setProfilePic,
+  updateCurrentUser,
+  addEducationRecord,
+  updateEducationRecord,
+  deleteEducationRecord,
+  addLanguageRecord,
+  updateLanguageRecord,
+  deleteLanguageRecord,
+  addWorkExperienceRecord,
+  updateWorkExperienceRecord,
+  deleteWorkExperienceRecord,
+} = authSlice.actions;
 export default authSlice.reducer;
