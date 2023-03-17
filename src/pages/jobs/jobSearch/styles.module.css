@@ -98,6 +98,7 @@ body {
   font-size: 16px;
   color: #848484;
   margin: 0 16px;
+  cursor: pointer;
 }
 .savesearch span svg {
   position: relative;

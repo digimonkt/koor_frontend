@@ -32,6 +32,20 @@ export const getSearchJobsAPI = async (data) => {
   return response;
 };
 
+export const saveSearchJobsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/jobs/filter"),
+    method: "POST",
+    data
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+    };
+  }
+  return response;
+};
+
 export const applyForJobAPI = async (jobId, data) => {
   const response = await api.request({
     url: urlcat("/v1/users/job-seeker/jobs/apply/:jobId", { jobId }),

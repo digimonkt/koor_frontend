@@ -32,12 +32,14 @@ import { FormControlReminder } from "@components/style";
 import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { updateCurrentUser } from "@redux/slice/user";
+import DialogBox from "@components/dialogBox";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const { educationLevels } = useSelector((state) => state.choices);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -149,7 +151,9 @@ const AboutMe = (props) => {
       formik.setFieldValue(key, newState[key]);
     }
   }, [currentUser]);
-
+  const handleToggleModel = () => {
+    setOpen(!open);
+  };
   return (
     <>
       <Card
@@ -351,6 +355,7 @@ const AboutMe = (props) => {
                     update info
                   </>
                 }
+                onClick={handleToggleModel}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -370,6 +375,9 @@ const AboutMe = (props) => {
           </form>
         </CardContent>
       </Card>
+      <DialogBox open={open} handleClose={handleToggleModel}>
+        Great!
+      </DialogBox>
     </>
   );
 };

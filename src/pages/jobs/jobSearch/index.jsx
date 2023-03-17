@@ -38,8 +38,16 @@ export default function JobSearch() {
   const handleSearch = (value) => {
     setSearchParams({ search: value });
   };
-  const getSearchJobs = async () => {
-    const res = await getSearchJobsAPI({ search, page, limit: LIMIT });
+  const getSearchJobs = async (data) => {
+    if (data) {
+      delete data.jobCategory;
+      for (const key in data) {
+        if (!data[key]) {
+          delete data[key];
+        }
+      }
+    }
+    const res = await getSearchJobsAPI({ search, page, limit: LIMIT, ...data });
     if (res.remote === "success") {
       const totalJobs = res.data.count;
       setTotalJobs(totalJobs);
@@ -82,7 +90,7 @@ export default function JobSearch() {
         value={search}
       />
       <Container>
-        <AdvanceFilter />
+        <AdvanceFilter getSearchJobs={getSearchJobs} totalJobs={totalJobs} searchKeyword={search} />
       </Container>
       <div className="paginations ">
         <Container>{pagination()}</Container>

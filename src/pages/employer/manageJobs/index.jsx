@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 function ManageJobsComponent() {
   const { totalCreatedJobs } = useSelector((state) => state.employer);
+  // const { totalApplications } = useSelector((state) => state.employer);
   const [panel, setPanel] = useState(0);
   const [tabs, setTabs] = useState([
     {
