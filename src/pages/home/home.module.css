@@ -1,5 +1,17 @@
 /* Home Css */
 
+.selectinput:focus {
+  border: none !important;
+}
+
+.selectinput {
+  background-color: #fff;
+  width: 324px;
+  height: 54px;
+  border-radius: 10px !important;
+  padding: 15px 25px 15px 25px !important;
+}
+
 .home_banner_heading_h5 {
   font-family: "Poppins", sans-serif !important;
   font-size: 24px;
@@ -68,11 +80,23 @@
 }
 
 .location_select {
-  margin-right: 26px;
+  background-color: "#ffffff";
+  margin-right: 26px !important;
+  background-color: #fff;
+  width: 324px !important;
+  height: 54px !important;
+  border-radius: 10px !important;
+  padding: 8px 25px 8px 25px !important;
 }
 
 .category_select {
-  margin-right: 26px;
+  background-color: "#ffffff" !important;
+  margin-right: 26px !important;
+  background-color: #fff;
+  width: 324px !important;
+  height: 54px !important;
+  border-radius: 10px !important;
+  padding: 8px 25px 8px 25px !important;
 }
 
 .inputsearch_home {
@@ -329,6 +353,10 @@
     height: 764px;
   }
 
+  .selectinput {
+    width: 320px;
+  }
+
   .home_btn_btn {
     width: 155px;
   }
@@ -397,6 +425,10 @@
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
   .back_img_div {
     height: 764px;
+  }
+
+  .selectinput {
+    width: 300px;
   }
 
   .home_banner_heading_h5 {

@@ -1,6 +1,9 @@
 /* Marque */
-
-.newstabs .css-jpln7h-MuiTabs-scroller {
+.homepage
+  .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  background-color: #fff !important;
+}
+.MuiSelect-select .newstabs .css-jpln7h-MuiTabs-scroller {
   white-space: inherit !important;
 }
 
