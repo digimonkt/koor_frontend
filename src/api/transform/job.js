@@ -90,3 +90,18 @@ export const transformFullJobDetails = (data) => {
       })) || [],
   };
 };
+
+export const transformSavedFilter = (data) => {
+  return {
+    id: data.id,
+    jobCategories: data.job_category.map((category) => category.id),
+    country: data.country?.id ? data.country : null,
+    city: data.city?.id ? data.city : null,
+    isFullTime: data.is_full_time,
+    isPartTime: data.is_part_time,
+    isNotification: data.is_notification,
+    hasContract: data.has_contract,
+    title: data.title,
+    workingDays: data.working_days,
+  };
+};

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SearchButton } from "@components/button";
+import { SearchButton, OutlinedButton } from "@components/button";
 import MenuList from "@mui/material/MenuList";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
@@ -13,26 +13,130 @@ import {
   getJobCategories,
 } from "@redux/slice/choices";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckboxInput, LabeledInput, SelectInput } from "@components/input";
+import { CheckboxInput, SelectInput } from "@components/input";
 import { ErrorMessage } from "@components/caption";
 import { JobFormControl } from "../postJobs/style";
 import DialogBox from "@components/dialogBox";
-import { saveSearchJobsAPI } from "@api/job";
+import {
+  deleteSearchJobsFilterAPI,
+  getSearchJobsFilterAPI,
+  saveSearchJobsFilterAPI,
+} from "@api/job";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import SaveFilter from "./saveFilter";
 
 const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
+  const dispatch = useDispatch();
+  const { countries, cities, jobCategories } = useSelector(
+    (state) => state.choices
+  );
   const [data, setData] = useState(false);
   const [open, setOpen] = useState(false);
-  // const [searchData, setSearchData] = useState(null);
-  const dispatch = useDispatch();
+  const [allFilters, setAllFilters] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("");
+
+  const getSearchJobsFilter = async () => {
+    const data = await getSearchJobsFilterAPI();
+    if (data.remote === "success") {
+      setAllFilters([...data.data]);
+    }
+  };
+
+  const handleToggleModel = () => {
+    setOpen(!open);
+  };
+
+  const handleSaveSearch = (title) => async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    const rawData = formik.values;
+    const data = {
+      title,
+      country: rawData.country,
+      job_category: rawData.jobCategories,
+      is_full_time: rawData.isFullTime,
+      is_part_time: rawData.isPartTime,
+      has_contract: rawData.hasContract,
+      working_days: rawData.workingDays,
+    };
+    if (rawData.country) {
+      const city = cities.data[rawData.country].find(
+        (city) => city.title === rawData.city
+      );
+      data.city = city?.id;
+    }
+    const res = await saveSearchJobsFilterAPI(data);
+    if (res.remote === "success") {
+      setAllFilters((prevState) => [res.data, ...prevState]);
+      setSelectedFilter(res.data.id);
+      dispatch(setSuccessToast("Filter Saved Successfully"));
+      handleToggleModel();
+    } else {
+      // temporarily showing error message
+      dispatch(setErrorToast("Name is required"));
+    }
+  };
+
+  const handleSelectFilter = async (filter) => {
+    console.log({ filter });
+    setSelectedFilter(filter.id);
+    formik.setFieldValue("id", filter.id);
+    formik.setFieldValue("jobCategories", filter.jobCategories);
+    formik.setFieldValue("country", filter.country?.id || "");
+    formik.setFieldValue("city", filter.city?.title || "");
+    formik.setFieldValue("isFullTime", filter.isFullTime);
+    formik.setFieldValue("isPartTime", filter.isPartTime);
+    formik.setFieldValue("hasContract", filter.isPartTime);
+    formik.setFieldValue("workingDays", filter.workingDays);
+    const payload = {
+      country: filter.country?.title || "",
+      city: filter.city?.title || "",
+      jobCategory: filter.jobCategories.map((jobCategory) => {
+        return jobCategories.data.find(
+          (category) => category.id === jobCategory
+        );
+      }),
+      fullTime: filter.isFullTime,
+      partTime: filter.isPartTime,
+      contract: filter.hasContract,
+      timing: filter.workingDays,
+    };
+    if (!payload.timing) {
+      delete payload.timing;
+    }
+    console.log({ payload });
+    await handleSearchJobs(payload);
+  };
+  const handleSearchJobs = async (payload) => {
+    if (searchKeyword) {
+      payload.search = searchKeyword;
+    }
+    await getSearchJobs(payload);
+  };
+  const handleReset = () => {
+    formik.resetForm();
+    setSelectedFilter("");
+    getSearchJobs({});
+  };
+
+  const handleDeleteFilter = async (filterId) => {
+    console.log({ filterId });
+    const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
+    setAllFilters([...newAllFilters]);
+    await deleteSearchJobsFilterAPI(filterId);
+  };
+
   const formik = useFormik({
     initialValues: {
-      name: "",
+      id: "",
       jobCategories: [],
       country: "",
       city: "",
       isFullTime: false,
       isPartTime: false,
       hasContract: false,
+      workingDays: 5,
     },
 
     onSubmit: async (values) => {
@@ -42,19 +146,21 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
       const payload = {
         country: country ? country.title : "",
         city: values.city,
-        jobCategory: values.jobCategories,
+        jobCategory: values.jobCategories.map((jobCategory) => {
+          return jobCategories.data.find(
+            (category) => category.id === jobCategory
+          );
+        }),
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
         contract: values.hasContract,
         timing: values.workingDays,
       };
-      getSearchJobs(payload);
+
+      await handleSearchJobs(payload);
     },
   });
 
-  const { countries, cities, jobCategories } = useSelector(
-    (state) => state.choices
-  );
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -62,91 +168,75 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
     }
+    getSearchJobsFilter();
   }, []);
   useEffect(() => {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {
       dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
-  const handleToggleModel = () => {
-    setOpen(!open);
-  };
-  const handleSaveSearch = () => {
-    const rawData = formik.values;
-    const city = cities.data[rawData.country].find(
-      (city) => city.title === rawData.city
-    );
 
-    const data = {
-      title: rawData.name,
-      country: rawData.country,
-      city: city ? city.id : "",
-      job_category: rawData.jobCategories,
-      is_full_time: rawData.isFullTime,
-      is_part_time: rawData.isPartTime,
-      has_contract: rawData.hasContract,
-      working_days: rawData.workingDays,
-    };
-    console.log(data);
-    saveSearchJobsAPI(data);
-  };
   return (
     <div className={`${styles.searchResult}`}>
-      <div className="lables">
-        <MenuList>
-          <MenuItem>
-            <span>Saved searches:</span>
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationactive />}
-              text="Initial search"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationinactive />}
-              text="France, $3K +"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationactive />}
-              text="Whole Europe, Full-time $5+"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btninActive}`}
-              leftIcon={<SVG.Notificationactive />}
-              text="Part-time, $2K+"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationinactive />}
-              text="My city"
-            />
-          </MenuItem>
-          <MenuItem className="ms-auto">
-            <p onClick={() => setData(!data)}>
-              Advanced filter{" "}
-              {data ? (
-                <>
-                  <span style={{ marginLeft: "10px" }}>
-                    {<SVG.ArrowUpIcon />}
-                  </span>
-                </>
-              ) : (
-                <span style={{ marginLeft: "10px" }}>{<SVG.Downarrow />}</span>
-              )}
-            </p>
-          </MenuItem>
-        </MenuList>
+      <div className={`${styles.label} lables`}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            maxWidth: "90%",
+          }}
+        >
+          <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
+          <MenuList
+            style={{
+              overflow: "auto",
+              marginLeft: "25px",
+            }}
+          >
+            {allFilters.map((filter) => {
+              return (
+                <MenuItem key={filter.id}>
+                  <SearchButton
+                    className={`${
+                      selectedFilter === filter.id
+                        ? styles.btninActive
+                        : styles.btnActive
+                    }`}
+                    leftIcon={
+                      filter.isNotification ? (
+                        <SVG.Notificationactive />
+                      ) : (
+                        <SVG.Notificationinactive />
+                      )
+                    }
+                    text={
+                      <div onClick={() => handleSelectFilter(filter)}>
+                        {filter.title}
+                      </div>
+                    }
+                    handleCross={() => {
+                      handleDeleteFilter(filter.id);
+                    }}
+                  />
+                </MenuItem>
+              );
+            })}
+          </MenuList>
+        </div>
+        <div
+          onClick={() => setData(!data)}
+          style={{ color: "#FFA500", cursor: "pointer" }}
+        >
+          Advanced filter{" "}
+          {data ? (
+            <>
+              <span style={{ marginLeft: "10px" }}>{<SVG.ArrowUpIcon />}</span>
+            </>
+          ) : (
+            <span style={{ marginLeft: "10px" }}>{<SVG.Downarrow />}</span>
+          )}
+        </div>
       </div>
       {data ? (
         <>
@@ -157,6 +247,7 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                   <div>
                     <FormControl sx={{ m: 1, width: 330 }}>
                       <SelectInput
+                        multiple
                         title="Category"
                         defaultValue=""
                         placeholder="Select a Job category"
@@ -164,9 +255,12 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                           value: jobCategory.id,
                           label: jobCategory.title,
                         }))}
-                        name={"jobCategories[0]"}
-                        value={formik.values.jobCategories[0] || ""}
-                        onChange={formik.handleChange}
+                        name={"jobCategories"}
+                        value={formik.values.jobCategories}
+                        onChange={(e) => {
+                          console.log(e);
+                          formik.handleChange(e);
+                        }}
                         onBlur={formik.handleBlur}
                       />
                       {formik.touched.jobCategories &&
@@ -272,8 +366,8 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                 <b>{totalJobs}</b> jobs found
               </h5>
               <div className={`${styles.savesearch}`}>
-                <span style={{ pointer: "cursor" }} onClick={formik.resetForm}>
-                  {<SVG.HalfCircle />} RESET
+                <span style={{ pointer: "cursor" }} onClick={handleReset}>
+                  {<SVG.HalfCircle />} RESET FILTER
                 </span>
                 <span
                   style={{ pointer: "cursor" }}
@@ -283,10 +377,17 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                 >
                   {<SVG.Favorite />} SAVE SEARCH
                 </span>
-                <SearchButton
-                  leftIcon={<SVG.SearchIcon style={{ color: "#EEA23D" }} />}
-                  text="search"
+                <OutlinedButton
+                  title={
+                    <>
+                      <span>
+                        <SVG.SearchIcon style={{ color: "#EEA23D" }} />
+                      </span>
+                      {formik.isSubmitting ? "Searching..." : "Search"}
+                    </>
+                  }
                   type="submit"
+                  disabled={formik.isSubmitting}
                 />
               </div>
             </div>
@@ -294,24 +395,10 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
         </>
       ) : null}
       <DialogBox open={open} handleClose={handleToggleModel}>
-        <LabeledInput
-          placeholder="name"
-          title="Name"
-          subtitle=""
-          type="text"
-          onChange={(e) => {
-            // console.log({ hello: e.target.value });
-            formik.setFieldValue("name", e.target.value);
-          }}
+        <SaveFilter
+          handleSaveSearch={handleSaveSearch}
+          handleCancel={handleToggleModel}
         />
-        <span
-          style={{ pointer: "cursor" }}
-          onClick={() => {
-            handleSaveSearch();
-          }}
-        >
-          SAVE
-        </span>
       </DialogBox>
     </div>
   );

@@ -83,8 +83,10 @@ import { ReactComponent as SearchIConJob } from "./searchIConJob.svg";
 import { ReactComponent as CalenderChat } from "./calenderchat.svg";
 import { ReactComponent as AppliedJob } from "./appliedJob.svg";
 import { ReactComponent as UnSave } from "./unsave.svg";
+import { ReactComponent as CrossCircle } from "./crossCircle.svg";
 
 export const SVG = {
+  CrossCircle,
   ClockIconSmall,
   PauseIcon,
   BriefcaseIcon,
