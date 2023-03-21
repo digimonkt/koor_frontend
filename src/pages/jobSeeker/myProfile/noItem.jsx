@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 
-function NoItem({ icon, description }) {
+function NoItem({ icon, bgColor, color, description }) {
   return (
     <Stack
       direction="row"
@@ -14,10 +14,10 @@ function NoItem({ icon, description }) {
       <IconButton
         sx={{
           "&.MuiIconButton-root": {
-            backgroundColor: "#FEEFD3",
+            backgroundColor: bgColor || "#FEEFD3",
             width: "101px",
             height: "101px",
-            color: { color: "#EEA23D" },
+            color: { color: color || "#EEA23D" },
           },
         }}
       >

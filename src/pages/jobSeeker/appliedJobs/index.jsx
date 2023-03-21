@@ -17,14 +17,17 @@ function AppliedJobsComponent() {
   const open = Boolean(anchorEl);
   const [appliedJobsList, setAppliedJobList] = useState([]);
   const [totalAppliedJobs, setTotalAppliedJobs] = useState(0);
+  const [orderBy, setOrderBy] = useState("ascending");
+  const [searchBy, setSearchBy] = useState("salary");
+  const [sortQuery, setSortQuery] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const getAppliedJobsList = async () => {
-    const res = await getAppliedJobsAPI();
+  const getAppliedJobsList = async (data) => {
+    const res = await getAppliedJobsAPI(data);
     if (res.remote === "success") {
       setTotalAppliedJobs(res.data.count);
       setAppliedJobList(res.data.results);
@@ -32,9 +35,25 @@ function AppliedJobsComponent() {
   };
 
   useEffect(() => {
-    getAppliedJobsList();
+    getAppliedJobsList({});
   }, []);
-
+  const handleSorting = (search) => {
+    setSearchBy(search);
+    if (orderBy === "ascending") {
+      setOrderBy("descending");
+    } else {
+      setOrderBy("ascending");
+    }
+    const sortQueryData = {
+      search_by: searchBy,
+      order_by: orderBy,
+    };
+    setSortQuery(sortQueryData);
+    // console.log("sortQuery", sortQuery);
+  };
+  useEffect(() => {
+    getAppliedJobsList(sortQuery);
+  }, [searchBy]);
   return (
     <Card
       sx={{
@@ -115,14 +134,44 @@ function AppliedJobsComponent() {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
-              <MenuItem onClick={handleClose} className="fillterbox">
-                Salary
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  handleSorting("salary");
+                }}
+                className="fillterbox"
+              >
+                Salary{" "}
+                <span>
+                  {orderBy === "ascending" ? (
+                    <SVG.ArrowDownward />
+                  ) : (
+                    <SVG.ArrowUpward />
+                  )}
+                </span>
               </MenuItem>
-              <MenuItem onClick={handleClose} className="fillterbox">
-                Expiration
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  handleSorting("expiration");
+                }}
+                className="fillterbox"
+              >
+                Expiration<span>{orderBy === "ascending" ? (
+                    <SVG.ArrowDownward />
+                  ) : (
+                    <SVG.ArrowUpward />
+                  )}</span>
               </MenuItem>
-              <MenuItem onClick={handleClose} className="fillterbox">
-                Workload
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  setSearchBy("workload");
+                  handleSorting();
+                }}
+                className="fillterbox"
+              >
+                Workload<span>{<SVG.Downarrow />}</span>
                 {/* <span className="ms-3">{arrow_upward}</span> */}
               </MenuItem>
             </Menu>

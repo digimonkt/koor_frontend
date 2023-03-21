@@ -31,12 +31,16 @@ import { ErrorToast, SuccessToast } from "@components/toast";
 import { setProfilePic, updateCurrentUser } from "@redux/slice/user";
 import { FormControlReminder } from "@components/style";
 import { setSuccessToast } from "@redux/slice/toast";
+import DialogBox from "@components/dialogBox";
+import NoItem from "@pages/jobSeeker/myProfile/noItem";
+import { SVG } from "@assets/svg";
 
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [profilePicLoading, setProfilePicLoading] = useState("");
+  const [open, setOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       organizationName: "",
@@ -153,6 +157,11 @@ function MyProfileComponent() {
     else setProfilePicLoading("error");
   };
 
+  const handleToggleModel = () => {
+    if (Object.keys(formik.errors).length === 0) {
+      setOpen(!open);
+    }
+  };
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
@@ -299,6 +308,7 @@ function MyProfileComponent() {
                       }
                       type="submit"
                       disabled={loading}
+                      onClick={handleToggleModel}
                     />
                   </div>
                 </form>
@@ -343,6 +353,31 @@ function MyProfileComponent() {
         open={profilePicLoading === "error"}
         message="Something went wrong"
       />
+      <DialogBox open={open} handleClose={handleToggleModel}>
+        <div className="add-content">
+          <h2 className="mb-4">Great!</h2>
+          <>
+            <div>
+              <NoItem
+                bgColor="#D9D9D9"
+                color="#274593"
+                icon={<SVG.AlertCheckICon />}
+                description={
+                  <p>
+                    Thank you for adding this important information. Our team
+                    will review it and activate your account within 24 hours.
+                    Psst, it may happen even faster, stay tuned 😉
+                  </p>
+                }
+              />
+            </div>
+          </>
+
+          <div className="text-center mt-4">
+            <OutlinedButton onClick={handleToggleModel} title={<>Got It</>} />
+          </div>
+        </div>
+      </DialogBox>
     </>
   );
 }

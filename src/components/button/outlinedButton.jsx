@@ -1,15 +1,12 @@
 import { Button } from "@mui/material";
+import { USER_ROLES } from "@utils/enum";
 import React from "react";
+import { useSelector } from "react-redux";
 
-function OutlinedButtonComponent({
-  className,
-  title,
-  onClick,
-  jobSeeker,
-  ...rest
-}) {
+function OutlinedButtonComponent({ className, title, onClick, ...rest }) {
   const query = {};
-  if (jobSeeker) {
+  const { role } = useSelector((state) => state.auth);
+  if (role === USER_ROLES.jobSeeker) {
     query.sx = {
       "&.MuiButton-outlined": {
         border: "1px solid #EEA23D !important",

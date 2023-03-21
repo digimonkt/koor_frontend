@@ -122,9 +122,13 @@ export const addSkillsDetailsAPI = async (data) => {
   return res;
 };
 
-export const getAppliedJobsAPI = async () => {
+export const getAppliedJobsAPI = async (sortQuery) => {
+  console.log({
+    sortQuery,
+    urlcat: urlcat("/v1/users/job-seeker/jobs/apply", sortQuery),
+  });
   const res = await api.request({
-    url: urlcat("/v1/users/job-seeker/jobs/apply"),
+    url: urlcat("/v1/users/job-seeker/jobs/apply", sortQuery),
     method: "GET",
   });
   if (res.remote === "success") {

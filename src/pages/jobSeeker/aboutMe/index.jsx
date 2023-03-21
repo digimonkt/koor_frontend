@@ -33,6 +33,7 @@ import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { updateCurrentUser } from "@redux/slice/user";
 import DialogBox from "@components/dialogBox";
+import NoItem from "../myProfile/noItem";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
@@ -152,7 +153,9 @@ const AboutMe = (props) => {
     }
   }, [currentUser]);
   const handleToggleModel = () => {
-    setOpen(!open);
+    if (Object.keys(formik.errors).length === 0) {
+      setOpen(!open);
+    }
   };
   return (
     <>
@@ -376,7 +379,47 @@ const AboutMe = (props) => {
         </CardContent>
       </Card>
       <DialogBox open={open} handleClose={handleToggleModel}>
-        Great!
+        <div className="add-content">
+          <h2 className="mb-4">Great!</h2>
+          <>
+            <div>
+              <NoItem
+                icon={<SVG.AlertCheckICon />}
+                description={
+                  <p>
+                    Thank you for adding this important information. Our team
+                    will review it and activate your account within 24 hours.
+                    Psst, it may happen even faster, stay tuned 😉
+                  </p>
+                }
+              />
+            </div>
+          </>
+
+          <div className="text-center mt-4">
+            <OutlinedButton
+              onClick={handleToggleModel}
+              title={
+                <>
+                  Got It
+                </>
+              }
+              sx={{
+                "&.MuiButtonBase-root": {
+                  border: "1px solid #EEA23D !important",
+                  color: "#EEA23D !important",
+                  fontSize: "16px",
+                  padding: "6px 30px !important",
+                  "&:hover": { background: "#eea23d14" },
+                  "@media (max-width: 992px)": {
+                    padding: "10px 16px",
+                    fontSize: "14px",
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
       </DialogBox>
     </>
   );
