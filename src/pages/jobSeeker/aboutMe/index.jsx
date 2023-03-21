@@ -152,7 +152,8 @@ const AboutMe = (props) => {
     }
   }, [currentUser]);
   const handleToggleModel = () => {
-    setOpen(!open);
+    // setOpen(!open);
+    setOpen(false);
   };
   return (
     <>
