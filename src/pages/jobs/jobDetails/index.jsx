@@ -12,6 +12,7 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
+import { saveJobAPI } from "@api/jobSeeker";
 
 const JobDetails = () => {
   const params = useParams();
@@ -76,6 +77,13 @@ const JobDetails = () => {
   useEffect(() => {
     getJobDetails(params.jobId);
   }, [params.jobId]);
+
+  const handleSaveJob = async (jobId) => {
+    const resp = await saveJobAPI(jobId);
+    if (resp.remote === "success") {
+      console.log("resp", resp);
+    }
+  };
   return (
     <>
       <Container>
@@ -205,6 +213,7 @@ const JobDetails = () => {
                     text="Save job"
                     lefticon={<SVG.BlueFlag />}
                     className={`${styles.outlinebtn}`}
+                    onClick={ () => { handleSaveJob(params.jobId); } }
                   />
                 </div>
               </Grid>

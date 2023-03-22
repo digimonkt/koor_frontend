@@ -30,7 +30,7 @@ import { EMPLOYMENT_STATUS } from "@utils/enum";
 import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
 import { FormControlReminder } from "@components/style";
 import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import { setErrorToast } from "@redux/slice/toast";
 import { updateCurrentUser } from "@redux/slice/user";
 import DialogBox from "@components/dialogBox";
 import NoItem from "../myProfile/noItem";
@@ -90,7 +90,8 @@ const AboutMe = (props) => {
       }
       const res = await updateJobSeekerAboutMeAPI(payload);
       if (res.remote === "success") {
-        dispatch(setSuccessToast("About Me Updated Successfully"));
+        // dispatch(setSuccessToast("About Me Updated Successfully"));
+        handleToggleModel();
         dispatch(
           updateCurrentUser({
             name: values.fullName,
@@ -358,7 +359,6 @@ const AboutMe = (props) => {
                     update info
                   </>
                 }
-                onClick={handleToggleModel}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",

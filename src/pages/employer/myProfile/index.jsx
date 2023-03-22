@@ -30,7 +30,7 @@ import { UpdateProfileImageAPI } from "@api/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import { setProfilePic, updateCurrentUser } from "@redux/slice/user";
 import { FormControlReminder } from "@components/style";
-import { setSuccessToast } from "@redux/slice/toast";
+// import { setSuccessToast } from "@redux/slice/toast";
 import DialogBox from "@components/dialogBox";
 import NoItem from "@pages/jobSeeker/myProfile/noItem";
 import { SVG } from "@assets/svg";
@@ -95,7 +95,8 @@ function MyProfileComponent() {
       }
       const res = await updateEmployerAboutMe(formData);
       if (res.remote === "success") {
-        dispatch(setSuccessToast("Updated Successfully"));
+        // dispatch(setSuccessToast("Updated Successfully"));
+        handleToggleModel();
         dispatch(
           updateCurrentUser({
             name: values.organizationName,
@@ -308,7 +309,6 @@ function MyProfileComponent() {
                       }
                       type="submit"
                       disabled={loading}
-                      onClick={handleToggleModel}
                     />
                   </div>
                 </form>

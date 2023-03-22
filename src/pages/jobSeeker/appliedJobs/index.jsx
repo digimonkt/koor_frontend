@@ -62,6 +62,7 @@ function AppliedJobsComponent() {
           "&.MuiCardContent-root": {
             padding: "30px",
           },
+          totalAppliedJobs,
         }}
       >
         <div className="saved-jobs">
