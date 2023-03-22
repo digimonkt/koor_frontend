@@ -1,10 +1,26 @@
 import { Card, CardContent, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import ApplicationCard from "@components/applicationCard";
-import { RECENT_ITEMS } from "../../dashboard/recentHelper";
-
+import { getRecentApplicationAPI } from "@api/employer";
+import dayjs from "dayjs";
+import { setTotalApplications } from "@redux/slice/employer";
+import { useDispatch } from "react-redux";
 function AllApplication() {
+  const dispatch = useDispatch();
+
+  const [recentApplication, setRecentApplication] = useState({ results: [] });
+
+  const getRecentApplications = async () => {
+    const res = await getRecentApplicationAPI();
+    if (res.remote === "success") {
+      setRecentApplication(res.data);
+      dispatch(setTotalApplications(res.data.count));
+    }
+  };
+  useEffect(() => {
+    getRecentApplications();
+  }, []);
   return (
     <div className="py-3">
       <div className="mb-3">
@@ -29,17 +45,13 @@ function AllApplication() {
             },
           }}
         >
-          {RECENT_ITEMS.map((item, index) => (
+          {recentApplication.results.map((item, index) => (
             <ApplicationCard
-              image={item.img}
-              title={item.title}
-              subTitle={item.subtitle}
-              description={item.description}
-              chiplabel={item.chiplabel}
-              requirement={item.requirement}
+              jobId={item.jobId}
+              details={item}
+              subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
               isDisabled={item.disabled}
               key={index}
-              isMessagable={true}
             />
           ))}
         </CardContent>

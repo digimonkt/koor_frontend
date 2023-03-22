@@ -1,0 +1,559 @@
+/* Home Css */
+
+.selectinput:focus {
+  border: none !important;
+}
+
+.selectinput {
+  background-color: #fff;
+  width: 324px;
+  height: 54px;
+  border-radius: 10px !important;
+  padding: 15px 25px 15px 25px !important;
+}
+
+.home_banner_heading_h5 {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 44px;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  padding-top: 28%;
+  margin-left: 11.5%;
+}
+
+.home_banner_heading {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 64px;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  padding-top: 25%;
+  margin-left: 11.5%;
+}
+
+.rightarrow {
+  margin-left: 10px;
+}
+
+.home_img_contents_h5 {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  color: #121212;
+  opacity: 80%;
+  text-align: center;
+}
+
+.home_img_contents_p {
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #274593;
+  line-height: 22px;
+  margin-left: 30px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.home_img_contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 180px;
+}
+
+.location_select {
+  background-color: "#ffffff";
+  margin-right: 26px !important;
+  background-color: #fff;
+  width: 324px !important;
+  height: 54px !important;
+  border-radius: 10px !important;
+  padding: 8px 25px 8px 25px !important;
+}
+
+.category_select {
+  background-color: "#ffffff" !important;
+  margin-right: 26px !important;
+  background-color: #fff;
+  width: 324px !important;
+  height: 54px !important;
+  border-radius: 10px !important;
+  padding: 8px 25px 8px 25px !important;
+}
+
+.inputsearch_home {
+  margin-right: 26px;
+}
+
+.input_select_btn_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding-top: 36%;
+}
+
+.home_btn_btn {
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  line-height: 22px !important;
+  width: 210px;
+  height: 54px;
+  border-radius: 10px !important;
+  background-color: #eea23d !important;
+}
+
+.stay_text_box p {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  color: #161616;
+}
+
+.stay_text_box h2 {
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 58px;
+  color: #121212;
+  margin: 0;
+  padding: 0;
+}
+
+.stay_text_box h4 {
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 36px;
+  color: #eea23d;
+  margin: 0;
+  padding: 0;
+}
+
+.stay_text_box {
+  padding-top: 25%;
+  width: 500px;
+  margin-left: 100px;
+}
+
+.stay_back_img {
+  background-image: url(../../assets/images/stay_mobile.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  height: 1044px;
+  background-position: 0px 0px;
+  margin-top: -70px;
+  z-index: 99;
+  position: relative;
+}
+
+.stay_social_icon {
+  display: flex;
+  align-items: center;
+  margin-top: 45px;
+}
+
+.stay_box {
+  background-color: #feefd3;
+}
+
+.home_testi_box_testi {
+  margin-top: 18%;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.home_testi_box {
+  margin: 100px 40px 0px 40px;
+  padding-bottom: 100px;
+}
+
+.home_testi_img {
+  width: 524px;
+  height: 433px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.home_powerfull_p {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.home_powerfull_h3 {
+  font-family: "Bahnschrift", sans-serif !important;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 38px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.new_jobs p {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 17px;
+  color: #ffffff;
+}
+
+.new_jobs h2 {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 48px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.new_jobs {
+  background-color: #4d4d4d;
+  border-radius: 20px;
+  padding: 22px 25px;
+  margin-left: 20px;
+  text-align: center;
+}
+
+.home_new_job_box {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.home_powerfull_box {
+  display: flex;
+  align-items: center;
+  background-color: #323232;
+  border-radius: 24px;
+  padding: 20px 20px 20px 40px;
+  margin: 0px 40px 0px 40px;
+}
+
+.home_back {
+  background-color: #f9f9f9;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  padding: 40px 0px 0px 0px;
+  margin-top: 100px;
+}
+
+.see_all_jobs {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  font-family: "Bahnschrift", sans-serif !important;
+  color: #eea23d;
+  line-height: 22px !important;
+}
+
+.popular_job {
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  font-family: "Bahnschrift", sans-serif !important;
+  color: #121212;
+  line-height: 38px !important;
+}
+
+.stack_box {
+  margin-top: 80px;
+}
+
+.divider_line {
+  margin-top: 110px !important;
+  color: #cacaca;
+}
+
+.lingo {
+  width: 168px;
+  height: 43px;
+  margin-top: 28px;
+}
+
+.binance {
+  width: 72px;
+  height: 72px;
+  margin-top: 13px;
+}
+
+.binance {
+  width: 184px;
+  height: 37px;
+  margin-top: 32px;
+}
+
+.dhl {
+  width: 156px;
+  height: 22px;
+  margin-top: 38px;
+}
+
+.amazon {
+  width: 128px;
+  height: 76px;
+  margin-top: 12px;
+}
+
+.mintra {
+  width: 68px;
+  height: 59px;
+}
+
+.social_img {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 80px;
+}
+
+.first_heading {
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  font-family: "Bahnschrift", sans-serif !important;
+  color: #121212;
+  line-height: 38px !important;
+  text-align: center;
+  margin-top: 80px !important;
+}
+
+.back_img_div {
+  background-image: url(../../assets/images/banner.png);
+  background-size: cover;
+  height: 1018px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home_page {
+  background-color: #fff;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .back_img_div {
+    height: 764px;
+  }
+
+  .selectinput {
+    width: 320px;
+  }
+
+  .home_btn_btn {
+    width: 155px;
+  }
+
+  .home_banner_heading_h5 {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 44px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    padding-top: 25%;
+    margin-left: 0%;
+  }
+
+  .home_banner_heading {
+    font-family: "Bahnschrift", sans-serif !important;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 64px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding-top: 21%;
+    margin-left: 0%;
+  }
+
+  .stay_back_img {
+    height: 772px;
+  }
+
+  .new_jobs p {
+    font-size: 13px;
+  }
+
+  .home_img_contents {
+    margin-top: 140px;
+  }
+
+  .location_select {
+    margin-right: 10px;
+  }
+
+  .category_select {
+    margin-right: 10px;
+  }
+
+  .inputsearch_home {
+    margin-right: 10px;
+  }
+
+  .input_select_btn_box {
+    padding-top: 39%;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .back_img_div {
+    height: 764px;
+  }
+
+  .selectinput {
+    width: 300px;
+  }
+
+  .home_banner_heading_h5 {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 44px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    padding-top: 29.5%;
+    margin-left: 0%;
+  }
+
+  .home_banner_heading {
+    font-family: "Bahnschrift", sans-serif !important;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 64px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding-top: 25%;
+    margin-left: 0%;
+  }
+
+  .stay_back_img {
+    height: 772px;
+  }
+
+  .new_jobs p {
+    font-size: 13px;
+  }
+
+  .home_img_contents {
+    margin-top: 140px;
+  }
+
+  .location_select {
+    margin-right: 10px;
+  }
+
+  .category_select {
+    margin-right: 10px;
+  }
+
+  .inputsearch_home {
+    margin-right: 10px;
+  }
+
+  .input_select_btn_box {
+    padding-top: 39%;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 900px) {
+  .back_img_div {
+    height: 764px;
+  }
+
+  .home_banner_heading_h5 {
+    font-family: "Poppins", sans-serif !important;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 44px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    padding-top: 28%;
+    margin-left: 0%;
+  }
+
+  .home_banner_heading {
+    font-family: "Bahnschrift", sans-serif !important;
+    font-size: 54px;
+    font-weight: 700;
+    line-height: 64px;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding-top: 24%;
+    margin-left: 0%;
+  }
+
+  .stay_back_img {
+    height: 772px;
+  }
+
+  .new_jobs p {
+    font-size: 13px;
+  }
+
+  .home_img_contents {
+    margin-top: 140px;
+  }
+
+  .location_select {
+    margin-right: 10px;
+  }
+
+  .category_select {
+    margin-right: 10px;
+  }
+
+  .inputsearch_home {
+    margin-right: 10px;
+  }
+
+  .input_select_btn_box {
+    padding-top: 39%;
+  }
+}

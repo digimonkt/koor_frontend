@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
  */
 const initialState = {
   totalCreatedJobs: 0,
+  totalApplications: 0,
 };
 
 export const employerSlice = createSlice({
@@ -15,7 +16,11 @@ export const employerSlice = createSlice({
     setTotalCreatedJobs: (state, action) => {
       state.totalCreatedJobs = action.payload;
     },
+    setTotalApplications: (state, action) => {
+      state.totalApplications = action.payload;
+    },
   },
 });
-export const { setTotalCreatedJobs } = employerSlice.actions;
+export const { setTotalCreatedJobs, setTotalApplications } =
+  employerSlice.actions;
 export default employerSlice.reducer;

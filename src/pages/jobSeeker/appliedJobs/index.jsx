@@ -11,29 +11,42 @@ import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import JobCard from "@components/jobCard";
 import { getAppliedJobsAPI } from "@api/jobSeeker";
+import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
 
 function AppliedJobsComponent() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [appliedJobsList, setAppliedJobList] = useState([]);
   const [totalAppliedJobs, setTotalAppliedJobs] = useState(0);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
+  const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const getAppliedJobsList = async () => {
-    const res = await getAppliedJobsAPI();
+  const getAppliedJobsList = async (data) => {
+    const res = await getAppliedJobsAPI(data);
     if (res.remote === "success") {
       setTotalAppliedJobs(res.data.count);
       setAppliedJobList(res.data.results);
     }
   };
-
+  const handleSorting = (search) => {
+    setSortBy(search);
+    if (orderBy === "ascending") {
+      setOrderBy("descending");
+    } else {
+      setOrderBy("ascending");
+    }
+  };
   useEffect(() => {
-    getAppliedJobsList();
-  }, []);
+    getAppliedJobsList({
+      search_by: sortBy,
+      order_by: orderBy,
+    });
+  }, [sortBy, orderBy]);
 
   return (
     <Card
@@ -49,6 +62,7 @@ function AppliedJobsComponent() {
           "&.MuiCardContent-root": {
             padding: "30px",
           },
+          totalAppliedJobs,
         }}
       >
         <div className="saved-jobs">
@@ -115,15 +129,49 @@ function AppliedJobsComponent() {
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
-              <MenuItem onClick={handleClose} className="fillterbox">
+              <MenuItem
+                onClick={() => {
+                  // handleClose();
+                  handleSorting(JOB_SORT_BY.salary);
+                }}
+                className="fillterbox"
+              >
                 Salary
+                <span>
+                  {sortBy === JOB_SORT_BY.salary &&
+                    (orderBy === JOB_ORDER_BY.ascending ? (
+                      <SVG.ArrowDownward />
+                    ) : (
+                      <SVG.ArrowUpward />
+                    ))}
+                </span>
               </MenuItem>
-              <MenuItem onClick={handleClose} className="fillterbox">
+              <MenuItem
+                onClick={() => {
+                  // handleClose();
+                  handleSorting(JOB_SORT_BY.expiration);
+                }}
+                className="fillterbox"
+              >
                 Expiration
+                <span>
+                  {sortBy === JOB_SORT_BY.expiration &&
+                    (orderBy === JOB_ORDER_BY.ascending ? (
+                      <SVG.ArrowDownward />
+                    ) : (
+                      <SVG.ArrowUpward />
+                    ))}
+                </span>
               </MenuItem>
-              <MenuItem onClick={handleClose} className="fillterbox">
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  // setSortBy("workload");
+                  // handleSorting();
+                }}
+                className="fillterbox"
+              >
                 Workload
-                {/* <span className="ms-3">{arrow_upward}</span> */}
               </MenuItem>
             </Menu>
           </Stack>

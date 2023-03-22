@@ -30,14 +30,17 @@ import { EMPLOYMENT_STATUS } from "@utils/enum";
 import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
 import { FormControlReminder } from "@components/style";
 import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import { setErrorToast } from "@redux/slice/toast";
 import { updateCurrentUser } from "@redux/slice/user";
+import DialogBox from "@components/dialogBox";
+import NoItem from "../myProfile/noItem";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const { educationLevels } = useSelector((state) => state.choices);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -87,7 +90,8 @@ const AboutMe = (props) => {
       }
       const res = await updateJobSeekerAboutMeAPI(payload);
       if (res.remote === "success") {
-        dispatch(setSuccessToast("About Me Updated Successfully"));
+        // dispatch(setSuccessToast("About Me Updated Successfully"));
+        handleToggleModel();
         dispatch(
           updateCurrentUser({
             name: values.fullName,
@@ -149,7 +153,11 @@ const AboutMe = (props) => {
       formik.setFieldValue(key, newState[key]);
     }
   }, [currentUser]);
-
+  const handleToggleModel = () => {
+    if (Object.keys(formik.errors).length === 0) {
+      setOpen(!open);
+    }
+  };
   return (
     <>
       <Card
@@ -370,6 +378,49 @@ const AboutMe = (props) => {
           </form>
         </CardContent>
       </Card>
+      <DialogBox open={open} handleClose={handleToggleModel}>
+        <div className="add-content">
+          <h2 className="mb-4">Great!</h2>
+          <>
+            <div>
+              <NoItem
+                icon={<SVG.AlertCheckICon />}
+                description={
+                  <p>
+                    Thank you for adding this important information. Our team
+                    will review it and activate your account within 24 hours.
+                    Psst, it may happen even faster, stay tuned 😉
+                  </p>
+                }
+              />
+            </div>
+          </>
+
+          <div className="text-center mt-4">
+            <OutlinedButton
+              onClick={handleToggleModel}
+              title={
+                <>
+                  Got It
+                </>
+              }
+              sx={{
+                "&.MuiButtonBase-root": {
+                  border: "1px solid #EEA23D !important",
+                  color: "#EEA23D !important",
+                  fontSize: "16px",
+                  padding: "6px 30px !important",
+                  "&:hover": { background: "#eea23d14" },
+                  "@media (max-width: 992px)": {
+                    padding: "10px 16px",
+                    fontSize: "14px",
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
+      </DialogBox>
     </>
   );
 };

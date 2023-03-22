@@ -18,8 +18,47 @@ import ResourceTwo from "./resources2.png";
 import ResourceThree from "./resources3.png";
 import ResourceFour from "./resources4.png";
 import Doc from "./doc.png";
+import GoogleStroe from "./google-store.png";
+import appleStroe from "./apple-store.png";
+import Banner from "./banner.png";
+import Amazon from "./amazon.png";
+import Lingo from "./lingo.png";
+import Dominos from "./dominos.png";
+import Mintra from "./mintra.png";
+import Binance from "./binance.png";
+import Dhl from "./dhl.png";
+import Easy from "./easy.png";
+import Friend from "./friend.png";
+import Useful from "./useful.png";
+import Testi from "./testi.png";
+import Googleplay from "./google_play.png";
+import Appstore from "./app_store.png";
+import AboutBanner from "./about_banner.png";
+import Resource from "./resource.png";
+import ResourceImg from "./resource-img.png";
+import Article1 from "./article1.png";
+import Article2 from "./article2.png";
+import Article3 from "./article3.png";
 
 export const IMAGES = {
+  Article1,
+  Article2,
+  Article3,
+  ResourceImg,
+  Resource,
+  AboutBanner,
+  Appstore,
+  Googleplay,
+  Testi,
+  Useful,
+  Friend,
+  Easy,
+  Dhl,
+  Binance,
+  Mintra,
+  Dominos,
+  Lingo,
+  Amazon,
   SearchIcon,
   AppleBoxIcon,
   FacebookBoxIcon,
@@ -40,4 +79,7 @@ export const IMAGES = {
   ResourceThree,
   ResourceFour,
   Doc,
+  appleStroe,
+  GoogleStroe,
+  Banner,
 };

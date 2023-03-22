@@ -98,6 +98,7 @@ body {
   font-size: 16px;
   color: #848484;
   margin: 0 16px;
+  cursor: pointer;
 }
 .savesearch span svg {
   position: relative;
@@ -114,4 +115,22 @@ body {
 }
 .savesearch button span svg {
   right: 0 !important;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.label ul::-webkit-scrollbar {
+  height: 5px;
+  border-radius: 15px;
+}
+
+.label ul::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgb(207, 207, 207);
+  background-color: rgb(207, 207, 207);
+  border-radius: 15px;
 }

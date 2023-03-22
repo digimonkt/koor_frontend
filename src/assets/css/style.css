@@ -216,6 +216,7 @@ header {
 .menu li a:hover {
   color: #eea23d;
 }
+
 .outline-button {
   border: 1px solid #274593 !important;
   border-radius: 73px !important;
@@ -226,6 +227,7 @@ header {
   font-family: "Bahnschrift" !important;
   /* font-weight: 600 !important; */
 }
+
 .outline-login {
   background: #eea23d !important;
   border-radius: 73px !important;
@@ -333,7 +335,7 @@ header {
 }
 .vendor {
   background: url("../images/imgs.png") no-repeat center top !important;
-  margin-top: 81px;
+  margin-top: 68px;
   background-size: 100% 100% !important;
 }
 .content-box h5 {
@@ -1614,6 +1616,74 @@ input.employersearch {
   outline: none;
 }
 
+.iconfooter a {
+  color: #274593;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .outline-button {
+    border: 1px solid #274593 !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    color: #274593 !important;
+    /* font-size: 16px !important; */
+    letter-spacing: 0.03em !important;
+    font-family: "Bahnschrift" !important;
+    /* font-weight: 600 !important; */
+  }
+  .outline-login {
+    background: #eea23d !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #121212 !important;
+    font-family: "Bahnschrift" !important;
+    letter-spacing: 0.03em !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .outline-button {
+    border: 1px solid #274593 !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    color: #274593 !important;
+    /* font-size: 16px !important; */
+    letter-spacing: 0.03em !important;
+    font-family: "Bahnschrift" !important;
+    /* font-weight: 600 !important; */
+  }
+  .outline-login {
+    background: #eea23d !important;
+    border-radius: 73px !important;
+    padding: 6px 20px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #121212 !important;
+    font-family: "Bahnschrift" !important;
+    letter-spacing: 0.03em !important;
+  }
+}
+
+@media screen and (max-width: 991px) and (min-width: 768px) {
+  .footer .css-ldbyt5-MuiStack-root {
+    display: block !important;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-width: 520px) {
+  .footer .css-ldbyt5-MuiStack-root {
+    display: block !important;
+    justify-content: space-between;
+  }
+}
 .job-description {
   white-space: pre-line;
+}
+
+.close_icon_circle svg{
+color: red;
+margin-left: 5px;
 }
