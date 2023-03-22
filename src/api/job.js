@@ -50,6 +50,9 @@ export const applyForJobAPI = async (jobId, data) => {
     url: urlcat("/v1/users/job-seeker/jobs/apply/:jobId", { jobId }),
     method: "POST",
     data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });
   return response;
 };
