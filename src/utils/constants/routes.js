@@ -143,10 +143,16 @@ export const ROUTES = [
     component: AboutUs,
   },
   {
-    id: "browse-jobs",
-    name: "Browse Jobs",
-    path: "/browse-jobs",
-    component: Home,
+    id: "jobSearch",
+    name: "jobSearch",
+    path: "/job-search",
+    component: JobSearch,
+  },
+  {
+    id: "jobDetails",
+    name: "Job Details",
+    path: "/jobs/details/:jobId",
+    component: JobDetails,
   },
   {
     id: "browse-tenders",
@@ -200,22 +206,10 @@ export const UNAUTHENTICATED_ROUTES = [
 //
 export const AUTHENTICATED_ROUTES = [
   {
-    id: "jobSearch",
-    name: "jobSearch",
-    path: "/job-search",
-    component: JobSearch,
-  },
-  {
     id: "applyJob",
     name: "Apply Job",
     path: "/job/apply/:jobId",
     component: ApplyForJob,
-  },
-  {
-    id: "jobDetails",
-    name: "Job Details",
-    path: "/jobs/details/:jobId",
-    component: JobDetails,
   },
 ];
 

@@ -150,7 +150,7 @@ function Header() {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/browse-jobs">Browse Jobs</Link>
+                <Link to="/job-search">Browse Jobs</Link>
               </li>
               <li>
                 <Link to="/browse-tenders">Browse tenders</Link>

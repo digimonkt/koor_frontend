@@ -1,208 +1,405 @@
-import React, { useState } from "react";
-import { SearchButton } from "@components/button";
+import React, { useEffect, useState } from "react";
+import { SearchButton, OutlinedButton } from "@components/button";
 import MenuList from "@mui/material/MenuList";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
-import Checkbox from "@mui/material/Checkbox";
-import { SelectStyled } from "./style";
 import { SVG } from "@assets/svg";
 import styles from "./styles.module.css";
-import { MenuItem } from "@mui/material";
+import { FormGroup, MenuItem, Slider } from "@mui/material";
+import { useFormik } from "formik";
+import {
+  getCities,
+  getCountries,
+  getJobCategories,
+} from "@redux/slice/choices";
+import { useDispatch, useSelector } from "react-redux";
+import { CheckboxInput, SelectInput } from "@components/input";
+import { ErrorMessage } from "@components/caption";
+import { JobFormControl } from "../postJobs/style";
+import DialogBox from "@components/dialogBox";
+import {
+  deleteSearchJobsFilterAPI,
+  getSearchJobsFilterAPI,
+  saveSearchJobsFilterAPI,
+} from "@api/job";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import SaveFilter from "./saveFilter";
 
-const CheckBox = ({ onChange, value }) => {
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  return (
-    <Checkbox
-      icon={<SVG.UncheckIcon />}
-      checkedIcon={<SVG.CheckBoxIcon />}
-      checked={value}
-      onChange={(e) => {
-        if (onChange) {
-          onChange(e);
-        }
-      }}
-      {...label}
-      sx={{
-        color: "#CACACA",
-        transition: "all 0.5s ease-out",
-        padding: "0px",
-        "&.Mui-checked": {
-          color: "#FFA500",
-          transition: "all 0.5s ease-out",
-        },
-      }}
-    />
+const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
+  const dispatch = useDispatch();
+  const { countries, cities, jobCategories } = useSelector(
+    (state) => state.choices
   );
-};
-
-const AdvanceFilter = () => {
   const [data, setData] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [allFilters, setAllFilters] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("");
+
+  const getSearchJobsFilter = async () => {
+    const data = await getSearchJobsFilterAPI();
+    if (data.remote === "success") {
+      setAllFilters([...data.data]);
+    }
+  };
+
+  const handleToggleModel = () => {
+    setOpen(!open);
+  };
+
+  const handleSaveSearch = (title) => async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
+    const rawData = formik.values;
+    const data = {
+      title,
+      country: rawData.country,
+      job_category: rawData.jobCategories,
+      is_full_time: rawData.isFullTime,
+      is_part_time: rawData.isPartTime,
+      has_contract: rawData.hasContract,
+      working_days: rawData.workingDays,
+    };
+    if (rawData.country) {
+      const city = cities.data[rawData.country].find(
+        (city) => city.title === rawData.city
+      );
+      data.city = city?.id;
+    }
+    const res = await saveSearchJobsFilterAPI(data);
+    if (res.remote === "success") {
+      setAllFilters((prevState) => [res.data, ...prevState]);
+      setSelectedFilter(res.data.id);
+      dispatch(setSuccessToast("Filter Saved Successfully"));
+      handleToggleModel();
+    } else {
+      // temporarily showing error message
+      dispatch(setErrorToast("Name is required"));
+    }
+  };
+
+  const handleSelectFilter = async (filter) => {
+    console.log({ filter });
+    setSelectedFilter(filter.id);
+    formik.setFieldValue("id", filter.id);
+    formik.setFieldValue("jobCategories", filter.jobCategories);
+    formik.setFieldValue("country", filter.country?.id || "");
+    formik.setFieldValue("city", filter.city?.title || "");
+    formik.setFieldValue("isFullTime", filter.isFullTime);
+    formik.setFieldValue("isPartTime", filter.isPartTime);
+    formik.setFieldValue("hasContract", filter.isPartTime);
+    formik.setFieldValue("workingDays", filter.workingDays);
+    const payload = {
+      country: filter.country?.title || "",
+      city: filter.city?.title || "",
+      jobCategory: filter.jobCategories.map((jobCategory) => {
+        return jobCategories.data.find(
+          (category) => category.id === jobCategory
+        );
+      }),
+      fullTime: filter.isFullTime,
+      partTime: filter.isPartTime,
+      contract: filter.hasContract,
+      timing: filter.workingDays,
+    };
+    if (!payload.timing) {
+      delete payload.timing;
+    }
+    console.log({ payload });
+    await handleSearchJobs(payload);
+  };
+  const handleSearchJobs = async (payload) => {
+    if (searchKeyword) {
+      payload.search = searchKeyword;
+    }
+    await getSearchJobs(payload);
+  };
+  const handleReset = () => {
+    formik.resetForm();
+    setSelectedFilter("");
+    getSearchJobs({});
+  };
+
+  const handleDeleteFilter = async (filterId) => {
+    console.log({ filterId });
+    const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
+    setAllFilters([...newAllFilters]);
+    await deleteSearchJobsFilterAPI(filterId);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      id: "",
+      jobCategories: [],
+      country: "",
+      city: "",
+      isFullTime: false,
+      isPartTime: false,
+      hasContract: false,
+      workingDays: 5,
+    },
+
+    onSubmit: async (values) => {
+      const country = countries.data.find(
+        (country) => country.id === values.country
+      );
+      const payload = {
+        country: country ? country.title : "",
+        city: values.city,
+        jobCategory: values.jobCategories.map((jobCategory) => {
+          return jobCategories.data.find(
+            (category) => category.id === jobCategory
+          );
+        }),
+        fullTime: values.isFullTime,
+        partTime: values.isPartTime,
+        contract: values.hasContract,
+        timing: values.workingDays,
+      };
+
+      await handleSearchJobs(payload);
+    },
+  });
+
+  useEffect(() => {
+    if (!countries.data.length) {
+      dispatch(getCountries());
+    }
+    if (!jobCategories.data.length) {
+      dispatch(getJobCategories());
+    }
+    getSearchJobsFilter();
+  }, []);
+  useEffect(() => {
+    if (formik.values.country && !cities.data[formik.values.country]?.length) {
+      dispatch(getCities({ countryId: formik.values.country }));
+    }
+  }, [formik.values.country]);
 
   return (
     <div className={`${styles.searchResult}`}>
-      <div className="lables">
-        <MenuList>
-          <MenuItem>
-            <span>Saved searches:</span>
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationactive />}
-              text="Initial search"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationinactive />}
-              text="France, $3K +"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationactive />}
-              text="Whole Europe, Full-time $5+"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btninActive}`}
-              leftIcon={<SVG.Notificationactive />}
-              text="Part-time, $2K+"
-            />
-          </MenuItem>
-          <MenuItem>
-            <SearchButton
-              className={`${styles.btnActive}`}
-              leftIcon={<SVG.Notificationinactive />}
-              text="My city"
-            />
-          </MenuItem>
-          <MenuItem className="ms-auto">
-            <p onClick={() => setData(!data)}>
-              Advanced filter{" "}
-              {data ? (
-                <>
-                  <span style={{ marginLeft: "10px" }}>
-                    {<SVG.ArrowUpIcon />}
-                  </span>
-                </>
-              ) : (
-                <span style={{ marginLeft: "10px" }}>{<SVG.Downarrow />}</span>
-              )}
-            </p>
-          </MenuItem>
-        </MenuList>
+      <div className={`${styles.label} lables`}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "start",
+            maxWidth: "90%",
+          }}
+        >
+          <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
+          <MenuList
+            style={{
+              overflow: "auto",
+              marginLeft: "25px",
+            }}
+          >
+            {allFilters.map((filter) => {
+              return (
+                <MenuItem key={filter.id}>
+                  <SearchButton
+                    className={`${
+                      selectedFilter === filter.id
+                        ? styles.btninActive
+                        : styles.btnActive
+                    }`}
+                    leftIcon={
+                      filter.isNotification ? (
+                        <SVG.Notificationactive />
+                      ) : (
+                        <SVG.Notificationinactive />
+                      )
+                    }
+                    text={
+                      <div onClick={() => handleSelectFilter(filter)}>
+                        {filter.title}
+                      </div>
+                    }
+                    handleCross={() => {
+                      handleDeleteFilter(filter.id);
+                    }}
+                  />
+                </MenuItem>
+              );
+            })}
+          </MenuList>
+        </div>
+        <div
+          onClick={() => setData(!data)}
+          style={{ color: "#FFA500", cursor: "pointer" }}
+        >
+          Advanced filter{" "}
+          {data ? (
+            <>
+              <span style={{ marginLeft: "10px" }}>{<SVG.ArrowUpIcon />}</span>
+            </>
+          ) : (
+            <span style={{ marginLeft: "10px" }}>{<SVG.Downarrow />}</span>
+          )}
+        </div>
       </div>
       {data ? (
         <>
-          <div className="SelectDropdown">
-            <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <div>
-                  <FormControl sx={{ m: 1, width: 330 }}>
-                    <label className="space-bottom">Category</label>
-                    <SelectStyled
-                      id="demo-customized-select-native"
-                      value="10"
-                      onChange={() => {}}
-                      IconComponent={KeyboardArrowDownIcon}
-                    >
-                      <MenuItem value={10}>Graphic Design; UI/UX</MenuItem>
-                      <MenuItem value={20}>Graphic Design; UI/UX</MenuItem>
-                    </SelectStyled>
-                  </FormControl>
-                </div>
-              </Grid>
-              <Grid item xs={4}>
-                <div>
-                  <FormControl sx={{ m: 1, width: 330 }}>
-                    <label className="space-bottom">Country</label>
-                    <SelectStyled
-                      id="demo-customized-select-native"
-                      value="20"
-                      onChange={() => {}}
-                      IconComponent={KeyboardArrowDownIcon}
-                    >
-                      <MenuItem value={10}>Choose Country</MenuItem>
-                      <MenuItem value={20}>Choose Country</MenuItem>
-                      <MenuItem value={30}>Choose Country</MenuItem>
-                    </SelectStyled>
-                  </FormControl>
-                </div>
-              </Grid>
-              <Grid item xs={4}>
-                <div>
-                  <FormControl sx={{ m: 1, width: 330 }}>
-                    <label className="space-bottom">City</label>
-                    <SelectStyled
-                      id="demo-customized-select-native"
-                      value="30"
-                      onChange={() => {}}
-                      IconComponent={KeyboardArrowDownIcon}
-                    >
-                      <MenuItem value={10}>Choose city</MenuItem>
-                      <MenuItem value={20}>Choose city</MenuItem>
-                      <MenuItem value={30}>Choose city</MenuItem>
-                    </SelectStyled>
-                  </FormControl>
-                </div>
-              </Grid>
-              <Grid item xs={4}>
-                <div className="mt-2">
-                  <label>Preffered job type</label>
-                  <div className={`${styles.checkboxDiv}`}>
-                    <div className="mt-2 ">
-                      <CheckBox onChange={() => {}} />
-                      <span className="ms-2">Part Time</span>
-                    </div>
-                    <div className="mt-2 ">
-                      <CheckBox onChange={() => {}} />
-                      <span className="ms-2">Full Time</span>
-                    </div>
-                    <div className="mt-2 ">
-                      <CheckBox onChange={() => {}} />
-                      <span className="ms-2">Contract</span>
-                    </div>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="SelectDropdown">
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <div>
+                    <FormControl sx={{ m: 1, width: 330 }}>
+                      <SelectInput
+                        multiple
+                        title="Category"
+                        defaultValue=""
+                        placeholder="Select a Job category"
+                        options={jobCategories.data.map((jobCategory) => ({
+                          value: jobCategory.id,
+                          label: jobCategory.title,
+                        }))}
+                        name={"jobCategories"}
+                        value={formik.values.jobCategories}
+                        onChange={(e) => {
+                          console.log(e);
+                          formik.handleChange(e);
+                        }}
+                        onBlur={formik.handleBlur}
+                      />
+                      {formik.touched.jobCategories &&
+                      formik.errors.jobCategories ? (
+                        <ErrorMessage>
+                          {formik.errors.jobCategories}
+                        </ErrorMessage>
+                      ) : null}
+                    </FormControl>
                   </div>
-                </div>
+                </Grid>
+                <Grid item xs={4}>
+                  <div>
+                    <FormControl sx={{ m: 1, width: 330 }}>
+                      <SelectInput
+                        title="Country"
+                        placeholder="Country"
+                        defaultValue=""
+                        options={countries.data.map((country) => ({
+                          value: country.id,
+                          label: country.title,
+                        }))}
+                        {...formik.getFieldProps("country")}
+                      />
+                    </FormControl>
+                  </div>
+                </Grid>
+                <Grid item xs={4}>
+                  <div>
+                    <FormControl sx={{ m: 1, width: 330 }}>
+                      <SelectInput
+                        title="City"
+                        placeholder={
+                          formik.values.country
+                            ? "City"
+                            : "Select Country first"
+                        }
+                        disabled={!formik.values.country}
+                        options={(cities.data[formik.values.country] || []).map(
+                          (country) => ({
+                            value: country.title,
+                            label: country.title,
+                          })
+                        )}
+                        {...formik.getFieldProps("city")}
+                      />
+                      {formik.touched.city && formik.errors.city ? (
+                        <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                      ) : null}
+                    </FormControl>
+                  </div>
+                </Grid>
+                <Grid item xs={4}>
+                  <label>Job type</label>
+                  <FormGroup row sx={{ marginLeft: "7px" }}>
+                    <JobFormControl
+                      control={<CheckboxInput />}
+                      label="Part Time"
+                      {...formik.getFieldProps("isPartTime")}
+                      checked={formik.values.isPartTime}
+                    />
+                    <JobFormControl
+                      control={<CheckboxInput />}
+                      label="Full Time"
+                      {...formik.getFieldProps("isFullTime")}
+                      checked={formik.values.isFullTime}
+                    />
+                    <JobFormControl
+                      control={<CheckboxInput />}
+                      label="Contract"
+                      {...formik.getFieldProps("hasContract")}
+                      checked={formik.values.hasContract}
+                    />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={4}>
+                  <div>
+                    <FormControl sx={{ m: 1, width: 330 }}>
+                      <label>
+                        Timing ({formik.values.workingDays} Day week)
+                      </label>
+                      <Slider
+                        defaultValue={5}
+                        step={1}
+                        marks
+                        min={1}
+                        max={7}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={(value) => `${value} Day week`}
+                        {...formik.getFieldProps("workingDays")}
+                        value={formik.getFieldProps("workingDays").value || 5}
+                      />
+                      {formik.touched.timing && formik.errors.timing ? (
+                        <ErrorMessage>{formik.errors.timing}</ErrorMessage>
+                      ) : null}
+                    </FormControl>
+                  </div>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <div>
-                  <FormControl sx={{ m: 1, width: 330 }}>
-                    <label className="space-bottom">Timing</label>
-                    <SelectStyled
-                      id="demo-customized-select-native"
-                      value="30"
-                      onChange={() => {}}
-                      IconComponent={KeyboardArrowDownIcon}
-                    >
-                      <MenuItem value={10}>Choose city</MenuItem>
-                      <MenuItem value={20}>Choose city</MenuItem>
-                      <MenuItem value={30}>Choose city</MenuItem>
-                    </SelectStyled>
-                  </FormControl>
-                </div>
-              </Grid>
-            </Grid>
-          </div>
-          <div className={`${styles.historySearch}`}>
-            <h5>
-              <b>456</b> jobs found
-            </h5>
-            <div className={`${styles.savesearch}`}>
-              <span>{<SVG.Favorite />} SAVE SEARCH</span>
-              <SearchButton
-                leftIcon={<SVG.SearchIcon style={{ color: "#EEA23D" }} />}
-                text="search"
-              />
             </div>
-          </div>
+            <div className={`${styles.historySearch}`}>
+              <h5>
+                <b>{totalJobs}</b> jobs found
+              </h5>
+              <div className={`${styles.savesearch}`}>
+                <span style={{ pointer: "cursor" }} onClick={handleReset}>
+                  {<SVG.HalfCircle />} RESET FILTER
+                </span>
+                <span
+                  style={{ pointer: "cursor" }}
+                  onClick={() => {
+                    handleToggleModel();
+                  }}
+                >
+                  {<SVG.Favorite />} SAVE SEARCH
+                </span>
+                <OutlinedButton
+                  title={
+                    <>
+                      <span>
+                        <SVG.SearchIcon style={{ color: "#EEA23D" }} />
+                      </span>
+                      {formik.isSubmitting ? "Searching..." : "Search"}
+                    </>
+                  }
+                  type="submit"
+                  disabled={formik.isSubmitting}
+                />
+              </div>
+            </div>
+          </form>
         </>
       ) : null}
+      <DialogBox open={open} handleClose={handleToggleModel}>
+        <SaveFilter
+          handleSaveSearch={handleSaveSearch}
+          handleCancel={handleToggleModel}
+        />
+      </DialogBox>
     </div>
   );
 };

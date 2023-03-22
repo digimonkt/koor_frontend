@@ -92,6 +92,7 @@ import { ReactComponent as Reciept } from "./reciept.svg";
 import { ReactComponent as ArrowForward } from "./arrow_forward.svg";
 import { ReactComponent as AppliedJob } from "./appliedJob.svg";
 import { ReactComponent as UnSave } from "./unsave.svg";
+import { ReactComponent as CrossCircle } from "./crossCircle.svg";
 
 export const SVG = {
   ArrowForward,
@@ -103,6 +104,7 @@ export const SVG = {
   Person,
   Market,
   Design,
+  CrossCircle,
   ClockIconSmall,
   PauseIcon,
   BriefcaseIcon,

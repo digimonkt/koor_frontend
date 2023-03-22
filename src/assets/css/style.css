@@ -1682,3 +1682,8 @@ input.employersearch {
 .job-description {
   white-space: pre-line;
 }
+
+.close_icon_circle svg{
+color: red;
+margin-left: 5px;
+}
