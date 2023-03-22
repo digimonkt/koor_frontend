@@ -11,15 +11,15 @@ import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import JobCard from "@components/jobCard";
 import { getAppliedJobsAPI } from "@api/jobSeeker";
+import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
 
 function AppliedJobsComponent() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [appliedJobsList, setAppliedJobList] = useState([]);
   const [totalAppliedJobs, setTotalAppliedJobs] = useState(0);
-  const [orderBy, setOrderBy] = useState("ascending");
-  const [searchBy, setSearchBy] = useState("salary");
-  const [sortQuery, setSortQuery] = useState(null);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
+  const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,27 +33,21 @@ function AppliedJobsComponent() {
       setAppliedJobList(res.data.results);
     }
   };
-
-  useEffect(() => {
-    getAppliedJobsList({});
-  }, []);
   const handleSorting = (search) => {
-    setSearchBy(search);
+    setSortBy(search);
     if (orderBy === "ascending") {
       setOrderBy("descending");
     } else {
       setOrderBy("ascending");
     }
-    const sortQueryData = {
-      search_by: searchBy,
-      order_by: orderBy,
-    };
-    setSortQuery(sortQueryData);
-    // console.log("sortQuery", sortQuery);
   };
   useEffect(() => {
-    getAppliedJobsList(sortQuery);
-  }, [searchBy]);
+    getAppliedJobsList({
+      search_by: sortBy,
+      order_by: orderBy,
+    });
+  }, [sortBy, orderBy]);
+
   return (
     <Card
       sx={{
@@ -136,43 +130,47 @@ function AppliedJobsComponent() {
               <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
               <MenuItem
                 onClick={() => {
-                  handleClose();
-                  handleSorting("salary");
+                  // handleClose();
+                  handleSorting(JOB_SORT_BY.salary);
                 }}
                 className="fillterbox"
               >
-                Salary{" "}
+                Salary
                 <span>
-                  {orderBy === "ascending" ? (
-                    <SVG.ArrowDownward />
-                  ) : (
-                    <SVG.ArrowUpward />
-                  )}
+                  {sortBy === JOB_SORT_BY.salary &&
+                    (orderBy === JOB_ORDER_BY.ascending ? (
+                      <SVG.ArrowDownward />
+                    ) : (
+                      <SVG.ArrowUpward />
+                    ))}
+                </span>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  // handleClose();
+                  handleSorting(JOB_SORT_BY.expiration);
+                }}
+                className="fillterbox"
+              >
+                Expiration
+                <span>
+                  {sortBy === JOB_SORT_BY.expiration &&
+                    (orderBy === JOB_ORDER_BY.ascending ? (
+                      <SVG.ArrowDownward />
+                    ) : (
+                      <SVG.ArrowUpward />
+                    ))}
                 </span>
               </MenuItem>
               <MenuItem
                 onClick={() => {
                   handleClose();
-                  handleSorting("expiration");
+                  // setSortBy("workload");
+                  // handleSorting();
                 }}
                 className="fillterbox"
               >
-                Expiration<span>{orderBy === "ascending" ? (
-                    <SVG.ArrowDownward />
-                  ) : (
-                    <SVG.ArrowUpward />
-                  )}</span>
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  handleClose();
-                  setSearchBy("workload");
-                  handleSorting();
-                }}
-                className="fillterbox"
-              >
-                Workload<span>{<SVG.Downarrow />}</span>
-                {/* <span className="ms-3">{arrow_upward}</span> */}
+                Workload
               </MenuItem>
             </Menu>
           </Stack>
