@@ -189,7 +189,7 @@ function Header() {
                     <div
                       onClick={() => {
                         dispatch(setUserRole(""));
-                        navigate("/");
+                        navigate("/register");
                       }}
                     >
                       <OutlinedButton title="Register" />

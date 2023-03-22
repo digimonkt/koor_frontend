@@ -173,7 +173,7 @@ export const UNAUTHENTICATED_ROUTES = [
   {
     id: "register",
     name: "Register",
-    path: "/Register",
+    path: "/register",
     component: Registration,
   },
   {
