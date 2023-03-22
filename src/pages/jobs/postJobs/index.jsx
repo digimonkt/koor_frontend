@@ -444,16 +444,19 @@ function PostJobsComponent() {
                       <JobFormControl
                         control={<CheckboxInput />}
                         label="Part Time"
+                        checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
                         control={<CheckboxInput />}
                         label="Full Time"
+                        checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
                         control={<CheckboxInput />}
                         label="Contract"
+                        checked={formik.values.hasContract}
                         {...formik.getFieldProps("hasContract")}
                       />
                     </FormGroup>
