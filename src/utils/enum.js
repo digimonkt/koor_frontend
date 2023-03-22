@@ -49,3 +49,13 @@ export const MESSAGE_TYPE = {
   warning: "warning",
   null: "",
 };
+
+export const JOB_ORDER_BY = {
+  ascending: "ascending",
+  descending: "descending",
+};
+export const JOB_SORT_BY = {
+  salary: "salary",
+  expiration: "expiration",
+  workload: "workload",
+};

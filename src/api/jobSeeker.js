@@ -122,9 +122,9 @@ export const addSkillsDetailsAPI = async (data) => {
   return res;
 };
 
-export const getAppliedJobsAPI = async () => {
+export const getAppliedJobsAPI = async (sortQuery) => {
   const res = await api.request({
-    url: urlcat("/v1/users/job-seeker/jobs/apply"),
+    url: urlcat("/v1/users/job-seeker/jobs/apply", sortQuery),
     method: "GET",
   });
   if (res.remote === "success") {
@@ -166,10 +166,30 @@ export const unSaveJobAPI = async (jobId) => {
   return res;
 };
 
-export const getSaveJobAPI = async () => {
+export const getSaveJobAPI = async (data) => {
   const res = await api.request({
-    url: urlcat("/v1/users/job-seeker/jobs/save"),
+    url: urlcat("/v1/users/job-seeker/jobs/save", data),
     method: "GET",
   });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        ...res.data,
+        results: res.data.results.map((result) => {
+          return {
+            attachments: result.attachments,
+            id: result.id,
+            rejectedAt: result.rejected_at,
+            shortLetter: result.short_letter,
+            shortlistedAt: result.shortlisted_at,
+            job: transformJobListResponse({
+              results: [result.job],
+            }).results[0],
+          };
+        }),
+      },
+    };
+  }
   return res;
 };

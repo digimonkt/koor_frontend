@@ -3,19 +3,25 @@ import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { SVG } from "@assets/svg";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getJobDetailsByIdAPI } from "@api/job";
 import dayjs from "dayjs";
-import { SolidButton, SearchButton } from "@components/button";
+import { SolidButton, SearchButton, OutlinedButton } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
+import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
+import { useSelector } from "react-redux";
+import DialogBox from "@components/dialogBox";
+import { USER_ROLES } from "@utils/enum";
 
 const JobDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const [registrationWarning, setRegistrationWarning] = useState(false);
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -36,6 +42,8 @@ const JobDetails = () => {
     deadline: "",
     isFullTime: false,
     isPartTime: false,
+    isSaved: false,
+    isApplied: false,
     hasContract: false,
     contactEmail: "",
     contactPhone: "",
@@ -76,6 +84,28 @@ const JobDetails = () => {
   useEffect(() => {
     getJobDetails(params.jobId);
   }, [params.jobId]);
+
+  const handleSaveJob = async (jobId) => {
+    if (isLoggedIn) {
+      setDetails((prevState) => ({
+        ...prevState,
+        isSaved: !prevState.isSaved,
+      }));
+      if (!details.isSaved) {
+        const resp = await saveJobAPI(jobId);
+        if (resp.remote === "success") {
+          console.log("resp", resp);
+        }
+      } else {
+        const resp = await unSaveJobAPI(jobId);
+        if (resp.remote === "success") {
+          console.log("resp", resp);
+        }
+      }
+    } else {
+      setRegistrationWarning(true);
+    }
+  };
   return (
     <>
       <Container>
@@ -194,17 +224,24 @@ const JobDetails = () => {
                     className={`${styles.enablebtn}`}
                     lefticon={<SVG.Enable />}
                     disabled={details.isApplied}
-                    onClick={() =>
-                      navigate(
-                        urlcat("../job/apply/:jobId", { jobId: params.jobId })
-                      )
-                    }
+                    onClick={() => {
+                      if (isLoggedIn) {
+                        navigate(
+                          urlcat("../job/apply/:jobId", { jobId: params.jobId })
+                        );
+                      } else {
+                        setRegistrationWarning(true);
+                      }
+                    }}
                   />
 
                   <SearchButton
-                    text="Save job"
+                    text={details.isSaved ? "Saved" : "Save job"}
                     lefticon={<SVG.BlueFlag />}
                     className={`${styles.outlinebtn}`}
+                    onClick={() => {
+                      handleSaveJob(params.jobId);
+                    }}
                   />
                 </div>
               </Grid>
@@ -237,6 +274,41 @@ const JobDetails = () => {
                 </div>
               </Grid>
             </Grid>
+            <DialogBox open={registrationWarning} handleClose={() => {}}>
+              <div>
+                <h1 className="headding">Register as jobseeker</h1>
+                <div className="form-content">
+                  <p>
+                    To apply for the job and have many other useful features to
+                    find a job, please register on Koor.
+                  </p>
+                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
+                    <Link to="/register">
+                      <OutlinedButton
+                        title="Register as jobseeker"
+                        jobSeeker
+                        style={{
+                          width: "100%",
+                        }}
+                      />
+                    </Link>
+                    <span>
+                      Already have an account?{" "}
+                      <Link
+                        to={`/login?role=${USER_ROLES.jobSeeker}`}
+                        style={{
+                          textDecoration: "none",
+                          color: "#EEA23D",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Login
+                      </Link>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </DialogBox>
           </div>
           <div className={`${styles.LikeJob}`}>
             <h2>more jobs like this:</h2>

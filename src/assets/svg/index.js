@@ -54,6 +54,7 @@ import { ReactComponent as FilterIcon } from "./filter.svg";
 import { ReactComponent as ActiveJob } from "./activeJob.svg";
 import { ReactComponent as OpenNewIcon } from "./openNewIcon.svg";
 import { ReactComponent as ArrowUpward } from "./arrow_upward.svg";
+import { ReactComponent as ArrowDownward } from "./arrow_downward.svg";
 import { ReactComponent as FillterICon } from "./fillterICon.svg";
 import { ReactComponent as Buttonsearch } from "./buttonsearch.svg";
 import { ReactComponent as Downarrow } from "./downarrow.svg";
@@ -161,6 +162,7 @@ export const SVG = {
   FilterIcon,
   MoonCircle,
   ArrowUpward,
+  ArrowDownward,
   FillterICon,
   Buttonsearch,
   Downarrow,
