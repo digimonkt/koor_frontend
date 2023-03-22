@@ -40,7 +40,6 @@ export default function JobSearch() {
   };
   const getSearchJobs = async (data) => {
     if (data) {
-      delete data.jobCategory;
       for (const key in data) {
         if (!data[key]) {
           delete data[key];
@@ -90,7 +89,11 @@ export default function JobSearch() {
         value={search}
       />
       <Container>
-        <AdvanceFilter getSearchJobs={getSearchJobs} totalJobs={totalJobs} searchKeyword={search} />
+        <AdvanceFilter
+          getSearchJobs={getSearchJobs}
+          totalJobs={totalJobs}
+          searchKeyword={search}
+        />
       </Container>
       <div className="paginations ">
         <Container>{pagination()}</Container>
