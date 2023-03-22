@@ -1,0 +1,11 @@
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .search_category {
+    width: 195px !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .search_category {
+    width: 195px !important;
+  }
+}

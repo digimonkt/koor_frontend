@@ -8,6 +8,7 @@ import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
 const initialState = {
   isGlobalLoading: false,
   isLoggedIn: false,
+  isHomePage: false,
   role: "",
   currentUser: {
     id: "",
@@ -222,6 +223,9 @@ export const authSlice = createSlice({
         ),
       };
     },
+    setIstHomePage: (state, action) => {
+      state.isHomePage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.pending, (state, action) => {
@@ -242,6 +246,7 @@ export const authSlice = createSlice({
   },
 });
 export const {
+  setIstHomePage,
   setVerifyEmail,
   setIsLoggedIn,
   setUserRole,

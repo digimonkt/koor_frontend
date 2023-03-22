@@ -1,4 +1,7 @@
 import { ChatBox } from "@pages/messages";
+import Resource from "@pages/resource";
+import Home from "@pages/home";
+import AboutUs from "../../pages/about";
 import { PostTender } from "@pages/tenders"; // need to relocate to employer folder
 import { lazy } from "react";
 // resources
@@ -125,6 +128,38 @@ export const ROUTES = [
     path: "/resources",
     component: Resources,
   },
+
+  {
+    id: "resource",
+    name: "Resource",
+    path: "/resource",
+    component: Resource,
+  },
+
+  {
+    id: "about-us",
+    name: "About Us",
+    path: "/about-us",
+    component: AboutUs,
+  },
+  {
+    id: "jobSearch",
+    name: "jobSearch",
+    path: "/job-search",
+    component: JobSearch,
+  },
+  {
+    id: "jobDetails",
+    name: "Job Details",
+    path: "/jobs/details/:jobId",
+    component: JobDetails,
+  },
+  {
+    id: "browse-tenders",
+    name: "Browse Tenders",
+    path: "/browse-tenders",
+    component: Home,
+  },
 ];
 
 // prefix => `/`
@@ -138,9 +173,16 @@ export const UNAUTHENTICATED_ROUTES = [
   {
     id: "register",
     name: "Register",
-    path: "/",
+    path: "/register",
     component: Registration,
   },
+  {
+    id: "home",
+    name: "Home",
+    path: "/",
+    component: Home,
+  },
+
   {
     id: "forgot-password",
     name: "Forgot Password",
@@ -164,22 +206,10 @@ export const UNAUTHENTICATED_ROUTES = [
 //
 export const AUTHENTICATED_ROUTES = [
   {
-    id: "jobSearch",
-    name: "jobSearch",
-    path: "/job-search",
-    component: JobSearch,
-  },
-  {
     id: "applyJob",
     name: "Apply Job",
     path: "/job/apply/:jobId",
     component: ApplyForJob,
-  },
-  {
-    id: "jobDetails",
-    name: "Job Details",
-    path: "/jobs/details/:jobId",
-    component: JobDetails,
   },
 ];
 

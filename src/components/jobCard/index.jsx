@@ -73,7 +73,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       >
         <div className="my-jobs">
           <h2>
-            {role === USER_ROLES.jobSeeker ? (
+            {role !== USER_ROLES.employer ? (
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
                 {jobDetails?.title || "RETAIL ASSISTANT CASHIER"}
               </Link>
