@@ -12,7 +12,7 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
-import { saveJobAPI } from "@api/jobSeeker";
+import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 
 const JobDetails = () => {
   const params = useParams();
@@ -37,6 +37,8 @@ const JobDetails = () => {
     deadline: "",
     isFullTime: false,
     isPartTime: false,
+    isSaved: false,
+    isApplied: false,
     hasContract: false,
     contactEmail: "",
     contactPhone: "",
@@ -79,9 +81,17 @@ const JobDetails = () => {
   }, [params.jobId]);
 
   const handleSaveJob = async (jobId) => {
-    const resp = await saveJobAPI(jobId);
-    if (resp.remote === "success") {
-      console.log("resp", resp);
+    setDetails((prevState) => ({ ...prevState, isSaved: !prevState.isSaved }));
+    if (!details.isSaved) {
+      const resp = await saveJobAPI(jobId);
+      if (resp.remote === "success") {
+        console.log("resp", resp);
+      }
+    } else {
+      const resp = await unSaveJobAPI(jobId);
+      if (resp.remote === "success") {
+        console.log("resp", resp);
+      }
     }
   };
   return (
@@ -210,10 +220,12 @@ const JobDetails = () => {
                   />
 
                   <SearchButton
-                    text="Save job"
+                    text={details.isSaved ? "Saved" : "Save job"}
                     lefticon={<SVG.BlueFlag />}
                     className={`${styles.outlinebtn}`}
-                    onClick={ () => { handleSaveJob(params.jobId); } }
+                    onClick={() => {
+                      handleSaveJob(params.jobId);
+                    }}
                   />
                 </div>
               </Grid>
