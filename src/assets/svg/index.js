@@ -81,11 +81,29 @@ import { ReactComponent as SellIcon } from "./sellIcon.svg";
 import { ReactComponent as CategoryIcon } from "./CategoryIcon.svg";
 import { ReactComponent as SearchIConJob } from "./searchIConJob.svg";
 import { ReactComponent as CalenderChat } from "./calenderchat.svg";
+import { ReactComponent as Design } from "./design.svg";
+import { ReactComponent as Market } from "./market.svg";
+import { ReactComponent as Person } from "./person.svg";
+import { ReactComponent as QuestionMark } from "./question_mark.svg";
+import { ReactComponent as Account } from "./account.svg";
+import { ReactComponent as RightArrow } from "./rightArrow.svg";
+import { ReactComponent as Work } from "./work.svg";
+import { ReactComponent as Reciept } from "./reciept.svg";
+import { ReactComponent as ArrowForward } from "./arrow_forward.svg";
 import { ReactComponent as AppliedJob } from "./appliedJob.svg";
 import { ReactComponent as UnSave } from "./unsave.svg";
 import { ReactComponent as CrossCircle } from "./crossCircle.svg";
 
 export const SVG = {
+  ArrowForward,
+  Reciept,
+  Work,
+  RightArrow,
+  Account,
+  QuestionMark,
+  Person,
+  Market,
+  Design,
   CrossCircle,
   ClockIconSmall,
   PauseIcon,

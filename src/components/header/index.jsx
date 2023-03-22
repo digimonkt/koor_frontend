@@ -149,13 +149,19 @@ function Header() {
               <li>
                 <Link to="/">Home</Link>
               </li>
+              <li>
+                <Link to="/job-search">Browse Jobs</Link>
+              </li>
+              <li>
+                <Link to="/browse-tenders">Browse tenders</Link>
+              </li>
               {!isLoggedIn && (
                 <li>
                   <Link to="/about-us">About Us</Link>
                 </li>
               )}
               <li>
-                <Link to="/resources">Resources</Link>
+                <Link to="/resource">Resources</Link>
               </li>
               {isLoggedIn ? (
                 <>
@@ -183,7 +189,7 @@ function Header() {
                     <div
                       onClick={() => {
                         dispatch(setUserRole(""));
-                        navigate("/");
+                        navigate("/register");
                       }}
                     >
                       <OutlinedButton title="Register" />

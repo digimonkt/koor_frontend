@@ -241,7 +241,7 @@ function AuthLayout({
                           <div
                             onClick={() => {
                               dispatch(setUserRole(""));
-                              navigate(isLoginPage ? "/" : "/login");
+                              navigate(isLoginPage ? "/register" : "/login");
                             }}
                             style={{
                               color:
