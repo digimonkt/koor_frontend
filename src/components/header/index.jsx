@@ -149,12 +149,20 @@ function Header() {
               <li>
                 <Link to="/">Home</Link>
               </li>
-              <li>
-                <Link to="/job-search">Browse Jobs</Link>
-              </li>
-              <li>
-                <Link to="/browse-tenders">Browse tenders</Link>
-              </li>
+              {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
+                <li>
+                  <Link to="/job-search">Browse Jobs</Link>
+                </li>
+              ) : (
+                ""
+              )}
+              {!isLoggedIn || role === USER_ROLES.vendor ? (
+                <li>
+                  <Link to="/browse-tenders">Browse tenders</Link>
+                </li>
+              ) : (
+                ""
+              )}
               {!isLoggedIn && (
                 <li>
                   <Link to="/about-us">About Us</Link>
