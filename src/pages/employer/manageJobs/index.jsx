@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 function ManageJobsComponent() {
   const { totalCreatedJobs } = useSelector((state) => state.employer);
-  // const { totalApplications } = useSelector((state) => state.employer);
+  const { totalApplications } = useSelector((state) => state.employer);
   const [panel, setPanel] = useState(0);
   const [tabs, setTabs] = useState([
     {
@@ -38,19 +38,27 @@ function ManageJobsComponent() {
   return (
     <div className="manage-jobs">
       <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
-        {tabs.map((tab, index) => (
-          <AntTab
-            key={index}
-            label={
-              <Stack direction="row" spacing={1} alignItems="center">
-                <span>{tab.title}</span>{" "}
-                <Chip label={tab.count} className="job-count" />
-              </Stack>
-            }
-            id={`simple-tab-${index}`}
-            aria-controls={`simple-tabpanel-${index}`}
-          />
-        ))}
+        <AntTab
+          label={
+            <Stack direction="row" spacing={1} alignItems="center">
+              <span>My Jobs</span>{" "}
+              <Chip label={totalCreatedJobs} className="job-count" />
+            </Stack>
+          }
+          id={`simple-tab-${0}`}
+          aria-controls={`simple-tabpanel-${0}`}
+        />
+        <AntTab
+          label={
+            <Stack direction="row" spacing={1} alignItems="center">
+              <span>All applications</span>{" "}
+              <Chip label={totalApplications} className="job-count" />
+            </Stack>
+          }
+          id={`simple-tab-${1}`}
+          aria-controls={`simple-tabpanel-${1}`}
+        />
+
         <div className="ms-auto">
           <OutlinedButton
             // LinkComponent={Link}
