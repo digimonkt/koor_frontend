@@ -44,16 +44,16 @@ const Resource = () => {
                       <p className={styles.resource_share_p}>Share:</p>
                       <div className={styles.resource_social_div}>
                         <Link className={styles.social_link}>
-                          <SVG.SecondTwit />
+                          <SVG.TwitterIcon className={styles.social_icon} />
                         </Link>
                         <Link className={styles.social_link}>
-                          <SVG.SecondInsta />
+                          <SVG.InstagramIcon className={styles.social_icon} />
                         </Link>
                         <Link className={styles.social_link}>
-                          <SVG.SecondLink />
+                          <SVG.LinkedInIcon className={styles.social_icon} />
                         </Link>
                         <Link className={styles.social_link}>
-                          <SVG.Face />
+                          <SVG.FacebookIcon className={styles.social_icon} />
                         </Link>
                       </div>
                     </Box>

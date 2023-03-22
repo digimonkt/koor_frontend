@@ -89,24 +89,12 @@ import { ReactComponent as Account } from "./account.svg";
 import { ReactComponent as RightArrow } from "./rightArrow.svg";
 import { ReactComponent as Work } from "./work.svg";
 import { ReactComponent as Reciept } from "./reciept.svg";
-import { ReactComponent as Vector } from "./vector.svg";
 import { ReactComponent as ArrowForward } from "./arrow_forward.svg";
-import { ReactComponent as SecondTwit } from "./second-twit.svg";
-import { ReactComponent as SecondInsta } from "./second-insta.svg";
-import { ReactComponent as SecondLink } from "./second-link.svg";
-import { ReactComponent as Face } from "./face.svg";
-import { ReactComponent as ArrowRight } from "./right-arrow.svg";
 import { ReactComponent as AppliedJob } from "./appliedJob.svg";
 import { ReactComponent as UnSave } from "./unsave.svg";
 
 export const SVG = {
-  ArrowRight,
-  Face,
-  SecondLink,
-  SecondInsta,
-  SecondTwit,
   ArrowForward,
-  Vector,
   Reciept,
   Work,
   RightArrow,

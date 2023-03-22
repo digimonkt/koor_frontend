@@ -1,5 +1,9 @@
 /* About Css */
 
+.icon {
+  color: #ffffff !important;
+}
+
 .btn_about:hover {
   background: rgba(255, 255, 255, 0.1) !important;
 }

@@ -1,5 +1,9 @@
 /* Resource css */
 
+.social_icon {
+  color: #f5f5f5 !important;
+}
+
 .card_btn {
   font-family: "Bahnschrift", sans-serif !important;
   background-color: #d5e3f7 !important;

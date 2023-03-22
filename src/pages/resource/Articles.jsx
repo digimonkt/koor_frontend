@@ -57,7 +57,7 @@ const Articles = () => {
                         </CardContent>
                         <CardActions className="px-0">
                           <Button className={styles.card_btn}>
-                            <SVG.ArrowRight />
+                            <SVG.RightArrow />
                             Read More
                           </Button>
                         </CardActions>

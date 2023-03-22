@@ -19,7 +19,7 @@ const button = [
     text: "Find Tender",
   },
   {
-    icon: <SVG.Vector />,
+    icon: <SVG.ProfileIcon />,
     svg: <SVG.ArrowForward />,
     text: "Find Tender",
   },
@@ -104,7 +104,7 @@ const AboutUs = () => {
                             key={index}
                             className={styles.btn_about}
                           >
-                            {item.icon}
+                            <span className={styles.icon}>{item.icon}</span>
                             <span className="mx-2">{item.text}</span>
                             {item.svg}
                           </Button>
