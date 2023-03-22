@@ -15,6 +15,7 @@ import {
   loginWithAppleFacebookPopupProvider,
   loginWithFacebookPopupProvider,
 } from "src/firebaseProvider/auth";
+import Marquee from "react-fast-marquee";
 
 const AuthOptions = [
   {
@@ -149,7 +150,7 @@ function AuthLayout({
       >
         <Container>
           <Grid container>
-            <Grid item md={8}>
+            <Grid item md={5}>
               <Card>
                 <CardContent
                   sx={{
@@ -259,6 +260,22 @@ function AuthLayout({
                   )}
                 </CardContent>
               </Card>
+            </Grid>
+            <Grid md={7}>
+              <div style={{ marginTop: "50%", opacity: "0.2" }}>
+                <Marquee
+                  play={true}
+                  speed={100}
+                  gradient={false}
+                  direction="left"
+                  className="marquee"
+                >
+                  <h1>Register</h1>
+                  <h1>Search</h1>
+                  <h1>Apply</h1>
+                  <h1>Work</h1>
+                </Marquee>
+              </div>
             </Grid>
           </Grid>
         </Container>
