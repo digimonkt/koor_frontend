@@ -4,13 +4,18 @@ import { SVG } from "@assets/svg";
 import ApplicationCard from "@components/applicationCard";
 import { getRecentApplicationAPI } from "@api/employer";
 import dayjs from "dayjs";
+import { setTotalApplications } from "@redux/slice/employer";
+import { useDispatch } from "react-redux";
 function AllApplication() {
+  const dispatch = useDispatch();
+
   const [recentApplication, setRecentApplication] = useState({ results: [] });
 
   const getRecentApplications = async () => {
     const res = await getRecentApplicationAPI();
     if (res.remote === "success") {
       setRecentApplication(res.data);
+      dispatch(setTotalApplications(res.data.count));
     }
   };
   useEffect(() => {
@@ -41,14 +46,14 @@ function AllApplication() {
           }}
         >
           {recentApplication.results.map((item, index) => (
-                    <ApplicationCard
-                      jobId={item.jobId}
-                      details={item}
-                      subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-                      isDisabled={item.disabled}
-                      key={index}
-                    />
-                  ))}
+            <ApplicationCard
+              jobId={item.jobId}
+              details={item}
+              subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
+              isDisabled={item.disabled}
+              key={index}
+            />
+          ))}
         </CardContent>
       </Card>
     </div>
