@@ -123,10 +123,6 @@ export const addSkillsDetailsAPI = async (data) => {
 };
 
 export const getAppliedJobsAPI = async (sortQuery) => {
-  console.log({
-    sortQuery,
-    urlcat: urlcat("/v1/users/job-seeker/jobs/apply", sortQuery),
-  });
   const res = await api.request({
     url: urlcat("/v1/users/job-seeker/jobs/apply", sortQuery),
     method: "GET",
