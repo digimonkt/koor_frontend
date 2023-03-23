@@ -11,7 +11,11 @@ import Layout from "./components/layout";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthorizedRoute, UnauthorizedRoute } from "./utils/routes";
 import { globalLocalStorage } from "@utils/localStorage";
-import { getUserDetails, setIsLoggedIn } from "@redux/slice/user";
+import {
+  getUserDetails,
+  setCurrentLocation,
+  setIsLoggedIn,
+} from "@redux/slice/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import { MESSAGE_TYPE } from "@utils/enum";
 import { resetToast } from "@redux/slice/toast";
@@ -43,6 +47,31 @@ function App() {
 
   useEffect(() => {
     firebaseInitialize();
+  }, []);
+  useEffect(() => {
+    const getPosition = async () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const response = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+          );
+          const data = await response.json();
+          console.log({ data });
+          dispatch(
+            setCurrentLocation({
+              countryCode: data.countryCode,
+              countryName: data.countryName,
+            })
+          );
+        });
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+    };
+
+    getPosition();
   }, []);
 
   return (
