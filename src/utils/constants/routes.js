@@ -155,6 +155,12 @@ export const ROUTES = [
     component: JobDetails,
   },
   {
+    id: "home",
+    name: "Home",
+    path: "/",
+    component: Home,
+  },
+  {
     id: "browse-tenders",
     name: "Browse Tenders",
     path: "/browse-tenders",
@@ -175,12 +181,6 @@ export const UNAUTHENTICATED_ROUTES = [
     name: "Register",
     path: "/register",
     component: Registration,
-  },
-  {
-    id: "home",
-    name: "Home",
-    path: "/",
-    component: Home,
   },
 
   {

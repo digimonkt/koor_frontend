@@ -3,6 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+@font-face {
+  font-family: TimesNewRoman;
+  src: url("./../../../../../../assets/fonts/times_new_roman.ttf");
+}
 
 html {
   height: 100%;
@@ -11,32 +15,28 @@ html {
 body {
   min-height: 100%;
   background: #eee;
-  font-family: "Lato", sans-serif;
+  font-family: TimesNewRoman;
   font-weight: 400;
-  color: #222;
+  color: #000;
   font-size: 14px;
-  line-height: 26px;
+  line-height: 20px;
   padding-bottom: 50px;
 }
 
 .container {
-  /* max-width: 700px; */
+  max-width: 820px;
   background: #fff;
   margin: 0px auto 0px;
   box-shadow: 1px 1px 2px #dad7d7;
-  /* border-radius: 3px; */
-  /* padding: 40px; */
-  /* margin-top: 50px; */
-}
-
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;
+  border-radius: 3px;
+  padding: 40px;
+  margin-top: 50px;
 }
 
 .header {
-  margin-bottom: 30px;
+  text-align: end;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #000;
 }
 
 .avatar_div {
@@ -46,24 +46,29 @@ body {
 }
 
 .header .full-name {
-  font-size: 40px;
+  font-size: 16px;
   text-transform: uppercase;
-  margin-bottom: 5px;
-  margin-left: 20px;
 }
 .header .first-name {
-  font-weight: 700;
+  font-weight: 600;
 }
 .header .last-name {
-  font-weight: 300;
+  font-weight: 600;
 }
-.header .contact-info {
-  margin-left: 20px;
+
+.contact-info {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
+
+.contact-info .email-val {
+  color: blue;
+}
+
 .header .email,
 .header .phone {
-  color: #999;
-  font-weight: 300;
+  font-weight: 600;
 }
 .header .separator {
   height: 10px;
@@ -71,14 +76,227 @@ body {
   border-left: 2px solid #999;
   margin: 0px 10px;
 }
-.header .position {
-  font-weight: bold;
-  display: inline-block;
-  margin-right: 10px;
-  text-decoration: underline;
+
+.about .desc {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
 }
 
-.details {
+.about .position {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.knowledge {
+  margin-top: 20px;
+}
+
+.knowledge .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.knowledge ul {
+  margin-top: 10px;
+  padding-left: 28px;
+}
+
+.knowledge li {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+.education {
+  margin-top: 20px;
+}
+
+.education .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.education ul {
+  margin-top: 10px;
+}
+
+.education li {
+  list-style: none;
+  margin-top: 5px;
+}
+
+.qualification {
+  margin-top: 20px;
+}
+
+.qualification .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.qualification ul {
+  margin-top: 10px;
+  padding-left: 28px;
+}
+
+.qualification li {
+  margin-top: 5px;
+}
+
+.summary {
+  margin-top: 20px;
+}
+
+.summary .title {
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.summary span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.responsibility {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.summary ul {
+  padding-left: 28px;
+  margin-bottom: 15px;
+}
+
+.summary li {
+  margin-top: 5px;
+}
+
+.keys {
+  margin-top: 10px;
+}
+
+.keys .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.keys ul {
+  padding-left: 28px;
+}
+
+.keys li {
+  margin-top: 5px;
+}
+
+.duties {
+  margin-top: 15px;
+}
+
+.duties .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.duties ul {
+  padding-left: 28px;
+}
+
+.duties li {
+  margin-top: 5px;
+}
+
+.financial {
+  margin-top: 15px;
+}
+
+.financial .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.financial ul {
+  padding-left: 28px;
+}
+
+.financial li {
+  margin-top: 5px;
+}
+
+.lecturer {
+  margin-top: 15px;
+}
+
+.lecturer .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lecturer ul {
+  padding-left: 28px;
+}
+
+.lecturer li {
+  margin-top: 5px;
+}
+
+.accountant {
+  margin-top: 15px;
+}
+
+.accountant .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.accountant ul {
+  padding-left: 28px;
+}
+
+.accountant li {
+  margin-top: 5px;
+}
+
+.training {
+  margin-top: 15px;
+}
+
+.training .title {
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 12px;
+}
+
+.training ul {
+  padding-left: 28px;
+}
+
+.training li {
+  margin-top: 5px;
+}
+
+.publication {
+  margin-top: 20px;
+}
+
+.publication .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.referese {
+  margin-top: 20px;
+}
+
+.referese .title {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* .details {
   line-height: 20px;
 }
 .details .section {
@@ -110,8 +328,7 @@ body {
 
 .language_p {
   opacity: 90%;
-  margin-bottom: 0px;
-  text-transform: capitalize;
+  margin-bottom: 8px;
 }
 
 .lanpuage_span {
@@ -228,8 +445,4 @@ body {
 }
 .details .skills__item .right input:checked + label {
   background: #79a9ce;
-}
-
-.language__card {
-  margin-bottom: 8px;
-}
+} */
