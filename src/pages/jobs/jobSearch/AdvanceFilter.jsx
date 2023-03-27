@@ -107,7 +107,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
     if (!payload.timing) {
       delete payload.timing;
     }
-    console.log({ payload });
     await handleSearchJobs(payload);
   };
   const handleSearchJobs = async (payload) => {
@@ -123,7 +122,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
   };
 
   const handleDeleteFilter = async (filterId) => {
-    console.log({ filterId });
     const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
     setAllFilters([...newAllFilters]);
     await deleteSearchJobsFilterAPI(filterId);
@@ -142,8 +140,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
     },
 
     onSubmit: async (values) => {
-      alert("submitting");
-      console.log({ values });
       const country = countries.data.find(
         (country) => country.id === values.country
       );
@@ -182,7 +178,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
   useEffect(() => {
     const categories = searchParams.get("categories");
     const location = searchParams.get("location");
-    console.log({ categories, location });
     if (location) {
       formik.setFieldValue("country", location);
     }
@@ -281,7 +276,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                         name={"jobCategories"}
                         value={formik.values.jobCategories}
                         onChange={(e) => {
-                          console.log(e);
                           formik.handleChange(e);
                         }}
                         onBlur={formik.handleBlur}
