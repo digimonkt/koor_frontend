@@ -323,7 +323,9 @@ const JobDetails = () => {
             {suggestionJobs.map((item, key) => {
               return (
                 <p key={key}>
-                  {item.title}{" "}
+                  <Link to={urlcat("/jobs/details/:jobId", { jobId: item.id })}>
+                    {item.title}
+                  </Link>
                   <span>
                     – {item.city.title}, {item.country.title} $
                     {item.budgetAmount}{" "}
