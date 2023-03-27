@@ -92,3 +92,18 @@ export const deleteSearchJobsFilterAPI = async (filterId) => {
   });
   return response;
 };
+
+export const getJobSuggestionAPI = async (jobId) => {
+  const response = await api.request({
+    url: urlcat("/v1/jobs/:jobId/suggestion", { jobId, limit: 4 }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    console.log("Data ", typeof response.data);
+    return {
+      remote: "success",
+      data: transformJobListResponse(response.data),
+    };
+  }
+  return response;
+};

@@ -30,7 +30,6 @@ function SavedJobsComponent() {
     const res = await getSaveJobAPI(data);
     if (res.remote === "success") {
       setTotalSavedJobs(res.data.count);
-      // console.log(res.data.results);
       setSavedJobList(res.data.results);
     }
   };
