@@ -4,7 +4,7 @@ import styles from "./inputsearch.module.css";
 import { IconButton } from "@mui/material";
 import { SVG } from "@assets/svg";
 
-const InputSearch = ({ placeholder, svg }) => {
+const InputSearch = ({ placeholder, svg, ...rest }) => {
   return (
     <>
       <div className={`${styles.searchInput}`}>
@@ -18,7 +18,11 @@ const InputSearch = ({ placeholder, svg }) => {
         </IconButton>
         <div className="searchmainbox">
           <small className="telentsearchicon">{<SVG.HeaderSearch />}</small>
-          <input className={`${styles.searchbox}`} placeholder={"Search"} />
+          <input
+            className={`${styles.searchbox}`}
+            placeholder={"Search"}
+            {...rest}
+          />
           <span>{svg}</span>
         </div>
       </div>

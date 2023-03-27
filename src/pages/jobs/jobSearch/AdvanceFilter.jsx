@@ -24,12 +24,15 @@ import {
 } from "@api/job";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
+import { useSearchParams } from "react-router-dom";
 
 const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
+  const [searchParams] = useSearchParams({});
   const dispatch = useDispatch();
   const { countries, cities, jobCategories } = useSelector(
     (state) => state.choices
   );
+  const [submitForm, setSubmitForm] = useState(false);
   const [data, setData] = useState(false);
   const [open, setOpen] = useState(false);
   const [allFilters, setAllFilters] = useState([]);
@@ -79,7 +82,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
   };
 
   const handleSelectFilter = async (filter) => {
-    console.log({ filter });
     setSelectedFilter(filter.id);
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories);
@@ -105,7 +107,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
     if (!payload.timing) {
       delete payload.timing;
     }
-    console.log({ payload });
     await handleSearchJobs(payload);
   };
   const handleSearchJobs = async (payload) => {
@@ -121,7 +122,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
   };
 
   const handleDeleteFilter = async (filterId) => {
-    console.log({ filterId });
     const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
     setAllFilters([...newAllFilters]);
     await deleteSearchJobsFilterAPI(filterId);
@@ -175,7 +175,25 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
       dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
+  useEffect(() => {
+    const categories = searchParams.get("categories");
+    const location = searchParams.get("location");
+    if (location) {
+      formik.setFieldValue("country", location);
+    }
+    if (categories) {
+      formik.setFieldValue("jobCategories", [categories]);
+    }
+    if (location || categories) {
+      setSubmitForm(true);
+    }
+  }, [searchParams]);
 
+  useEffect(() => {
+    if (submitForm) {
+      setTimeout(() => formik.submitForm(), 500);
+    }
+  }, [submitForm]);
   return (
     <div className={`${styles.searchResult}`}>
       <div className={`${styles.label} lables`}>
@@ -258,7 +276,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                         name={"jobCategories"}
                         value={formik.values.jobCategories}
                         onChange={(e) => {
-                          console.log(e);
                           formik.handleChange(e);
                         }}
                         onBlur={formik.handleBlur}
