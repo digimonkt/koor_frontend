@@ -1,11 +1,7 @@
-// import { DATE_FORMAT, YEAR_FORMAT } from "@utils/constants/constants";
-// import { generateFileUrl } from "@utils/generateFileUrl";
-// import dayjs from "dayjs";
 import { YEAR_FORMAT } from "@utils/constants/constants";
 import dayjs from "dayjs";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
-// import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { useSelector } from "react-redux";
 import "./style.css";
 function ResumeTemplate() {
