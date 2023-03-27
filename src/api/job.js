@@ -27,11 +27,9 @@ export const getSearchJobsAPI = async (data) => {
     delete newData.jobCategory;
   }
   let url = urlcat("/v1/jobs", newData);
-  console.log({ jobCategories, newData });
   jobCategories.forEach((category) => {
     url += `&jobCategory=${category.title}`;
   });
-  console.log({ url });
   const response = await api.request({
     url,
     method: "GET",
@@ -99,7 +97,6 @@ export const getJobSuggestionAPI = async (jobId) => {
     method: "GET",
   });
   if (response.remote === "success") {
-    console.log("Data ", typeof response.data);
     return {
       remote: "success",
       data: transformJobListResponse(response.data),
