@@ -8,6 +8,7 @@ import { USER_ROLES } from "@utils/enum";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { changeApplicationStatusAPI } from "@api/employer";
 dayjs.extend(relativeTime);
 
 const ApplicationCard = ({
@@ -19,6 +20,7 @@ const ApplicationCard = ({
   isMessagable,
   sx,
   url,
+  isShortlisted,
 }) => {
   // navigate
   // const navigate = useNavigate();
@@ -27,6 +29,19 @@ const ApplicationCard = ({
   // const handleNavigate = () => {
   //   navigate("/employer/manage-jobs/applicant-details");
   // };
+  // const [isShortlisted, setIsShortlisted] = useState(false);
+  // const [isRejected, setIsRejected] = useState(false);
+
+  const handlerChangeApplicationStatus = (action, applicationId) => {
+    changeApplicationStatus(action, applicationId);
+  };
+  const changeApplicationStatus = async (action, applicationId) => {
+    const res = await changeApplicationStatusAPI(action, applicationId);
+    if (res.remote === "success") {
+      // details.shortlistedAt ?? setIsShortlisted(true);
+    }
+  };
+  console.log("isShortlisted", isShortlisted);
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -95,7 +110,13 @@ const ApplicationCard = ({
         </div>
       </Stack>
       <Stack direction="row" spacing={0} className="edit-button">
-        <Button variant="link" disabled={isDisabled}>
+        <Button
+          disabled={isShortlisted}
+          variant="link"
+          onClick={() =>
+            handlerChangeApplicationStatus("shortlisted", details.id)
+          }
+        >
           {<SVG.StarIcon />} <span>Shortlist</span>
         </Button>
         <Button
