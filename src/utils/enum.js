@@ -68,3 +68,9 @@ export const NOTIFICATION_TYPE = {
   advanceFilter: "advance_filter",
   expiredJob: "expired_save_job", // pending from backend
 };
+
+export const JOB_APPLICATION_OPTIONS = {
+  shortlisted: "shortlisted",
+  rejected: "rejected",
+  blacklisted: "blacklisted",
+};

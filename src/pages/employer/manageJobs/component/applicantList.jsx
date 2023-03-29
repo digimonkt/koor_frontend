@@ -102,8 +102,8 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 subTitle={item.subtitle}
                 isDisabled={item.disabled}
                 key={index}
-                isMessagable
-                isShortlisted={gititem.shortlistedAt}
+                allOptions
+                isShortlisted={item.shortlistedAt}
               />
             );
           })}

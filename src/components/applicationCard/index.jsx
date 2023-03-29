@@ -1,27 +1,14 @@
-import { Avatar, Button, Chip, Divider } from "@mui/material";
+import { Avatar, Chip, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
-import urlcat from "urlcat";
-import { USER_ROLES } from "@utils/enum";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { changeApplicationStatusAPI } from "@api/employer";
+import ApplicationOptions from "@components/applicationOptions";
 dayjs.extend(relativeTime);
 
-const ApplicationCard = ({
-  details,
-  jobId,
-  image,
-  subTitle,
-  isDisabled,
-  isMessagable,
-  sx,
-  url,
-  isShortlisted,
-}) => {
+const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
   // navigate
   // const navigate = useNavigate();
 
@@ -32,16 +19,6 @@ const ApplicationCard = ({
   // const [isShortlisted, setIsShortlisted] = useState(false);
   // const [isRejected, setIsRejected] = useState(false);
 
-  const handlerChangeApplicationStatus = (action, applicationId) => {
-    changeApplicationStatus(action, applicationId);
-  };
-  const changeApplicationStatus = async (action, applicationId) => {
-    const res = await changeApplicationStatusAPI(action, applicationId);
-    if (res.remote === "success") {
-      // details.shortlistedAt ?? setIsShortlisted(true);
-    }
-  };
-  console.log("isShortlisted", isShortlisted);
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -110,39 +87,11 @@ const ApplicationCard = ({
         </div>
       </Stack>
       <Stack direction="row" spacing={0} className="edit-button">
-        <Button
-          disabled={isShortlisted}
-          variant="link"
-          onClick={() =>
-            handlerChangeApplicationStatus("shortlisted", details.id)
-          }
-        >
-          {<SVG.StarIcon />} <span>Shortlist</span>
-        </Button>
-        <Button
-          LinkComponent={Link}
-          to={urlcat(
-            "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
-            {
-              applicationId: details?.id || "applicationId",
-              role: USER_ROLES.employer,
-              jobId: jobId || "jobId",
-            }
-          )}
-          sx={{
-            color: "#274593",
-            flexDirection: "column",
-            textTransform: "capitalize",
-          }}
-        >
-          {<SVG.OpenNewIcon />} <span>View</span>
-        </Button>
-        {isMessagable && (
-          <Button variant="link">
-            {<SVG.MessageIcon style={{ color: "#274593" }} />}{" "}
-            <span>Message</span>
-          </Button>
-        )}
+        <ApplicationOptions
+          allOptions={allOptions}
+          applicationId={details.id}
+          isShortlisted={isShortlisted}
+        />
       </Stack>
     </Stack>
   );
