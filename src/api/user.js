@@ -1,6 +1,9 @@
 import api from ".";
 import urlcat from "urlcat";
-import { transformGetUserDetails } from "./transform/user";
+import {
+  transformGetUserDetails,
+  transformNotificationResponse,
+} from "./transform/user";
 export const CreateUserAPI = async (data) => {
   return await api.request({
     url: "/v1/users",
@@ -81,4 +84,23 @@ export const SocialLoginAPI = async (data) => {
     method: "POST",
     data,
   });
+};
+
+export const GetNotificationAPI = async () => {
+  const res = await api.request({
+    url: urlcat("v1/users/notification"),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        ...res.data,
+        results: res.data.results.map((data) =>
+          transformNotificationResponse(data)
+        ),
+      },
+    };
+  }
+  return res;
 };

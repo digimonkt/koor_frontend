@@ -1,0 +1,97 @@
+.duration {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 18px !important;
+  color: #121212 !important;
+  opacity: 45% !important;
+  text-align: end !important;
+  margin: 0;
+}
+
+.title_text_div {
+  margin-left: 20px;
+  width: 100%;
+}
+
+.content_div {
+  display: flex !important;
+  padding: 10px;
+  border-radius: 12px;
+  /* align-items: center !important; */
+}
+
+.text {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+  color: #121212 !important;
+  opacity: 45% !important;
+  margin-top: 3px !important;
+  white-space: normal !important;
+}
+
+.title {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+  color: #121212 !important;
+  white-space: normal !important;
+  margin: 0px !important;
+}
+
+.tabs_btn {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  color: #121212 !important;
+  opacity: 45% !important;
+}
+
+.view_div {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
+  color: #848484 !important;
+  text-align: right;
+}
+
+.view_all {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  color: #eea23d !important;
+}
+
+.notification_card {
+  margin-bottom: 10px;
+}
+.notification_card_user:hover {
+  background-color: #f0f6ff;
+}
+
+.notification_card_job_seeker:hover {
+  background-color: #fff9ed;
+}
+
+.btn_div {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.tabs_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center !important;
+}

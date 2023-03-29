@@ -28,6 +28,9 @@ const ResetPassword = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.ResetPassword }))
 );
 
+// notification
+const Notification = lazy(() => import("@pages/notification"));
+
 // job Seeker
 const JobSeekerProfile = lazy(() =>
   import("@pages/jobSeeker").then((module) => ({
@@ -210,6 +213,12 @@ export const AUTHENTICATED_ROUTES = [
     name: "Apply Job",
     path: "/job/apply/:jobId",
     component: ApplyForJob,
+  },
+  {
+    id: "notification",
+    name: "Notifications",
+    path: "/notification",
+    component: Notification,
   },
 ];
 
