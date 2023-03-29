@@ -40,6 +40,14 @@ function NotificationPopup() {
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
         open={open}
         className="drop_menu"
       >
