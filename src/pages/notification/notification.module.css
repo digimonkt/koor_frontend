@@ -1,0 +1,176 @@
+/* notification content */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.tabs_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center !important;
+}
+
+.duration {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 18px !important;
+  color: #121212 !important;
+  margin: 5px 0px 0px 20px !important;
+  text-align: end !important;
+  opacity: 45% !important;
+}
+
+.texts {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+  color: #121212 !important;
+  margin: 5px 0px 0px 20px !important;
+  opacity: 45% !important;
+}
+
+.title {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  line-height: 30px !important;
+  color: #121212 !important;
+  margin: 0 !important;
+}
+
+.heading_icon_div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0px 0px 0px 20px !important;
+  width: 100% !important;
+}
+
+/* .job_content_div {
+    display: flex !important;
+    align-items: flex-start !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+  } */
+
+.content_div {
+  display: flex !important;
+  align-items: flex-start !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.sub_heading {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  line-height: 30px !important;
+  color: #121212 !important;
+  margin-top: 25px !important;
+}
+
+.clear_btn {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  background-color: #fff !important;
+  margin-left: 28px !important;
+  color: #eea23d !important;
+  z-index: 99 !important;
+}
+
+.date_icon_btn {
+  display: flex !important;
+  align-items: center !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+  color: #848484 !important;
+  border: 1px solid #848484 !important;
+  border-radius: 30px !important;
+  padding: 10px 24px !important;
+}
+
+.btn_div {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.content {
+  border-radius: 20px !important;
+  background-color: #ffffff !important;
+  padding: 0px 30px 30px 30px !important;
+}
+
+.content_heading {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  line-height: 36px !important;
+  color: #121212 !important;
+  padding: 30px 0px 5px 0px !important;
+  margin: 0 !important;
+}
+
+/* notification content */
+
+/* notification css */
+
+.bell_div {
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 7% !important;
+}
+
+.text {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  line-height: 30px !important;
+  color: #cacaca !important;
+  letter-spacing: 2% !important;
+}
+
+.heading {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  line-height: 36px !important;
+  color: #121212 !important;
+  padding: 30px 25px !important;
+}
+
+.contain {
+  height: calc(100vh - 20vh) !important;
+  background-color: #fff !important;
+  border-radius: 20px;
+}
+
+.notification {
+  padding-top: 119px !important;
+  padding-bottom: 80px !important;
+  background-color: #e5e5e5 !important;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .contain {
+    height: calc(100vh - 20vh) !important;
+    background-color: #fff !important;
+    border-radius: 0px;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .contain {
+    height: calc(100vh - 0vh) !important;
+    background-color: #fff !important;
+    border-radius: 20px;
+  }
+}
