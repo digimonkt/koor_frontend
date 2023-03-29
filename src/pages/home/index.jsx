@@ -15,6 +15,7 @@ import TextSlide from "./textSlide";
 import HomeSection from "./homeSection";
 import { SelectInput } from "@components/input";
 import { getCountries, getJobCategories } from "@redux/slice/choices";
+import { USER_ROLES } from "@utils/enum";
 
 // const options = [
 //   {
@@ -36,6 +37,7 @@ const Home = () => {
   // redux dispatch
   const dispatch = useDispatch();
   const { countries, jobCategories } = useSelector((state) => state.choices);
+  const { role } = useSelector((state) => state.auth);
   // state management
   const [categories, setCategories] = useState("");
   const [location, setLocation] = useState("");
@@ -80,7 +82,7 @@ const Home = () => {
                   </Box>
                   <SelectInput
                     value={categories}
-                    onChange={(vl) => setCategories(vl.target.value) }
+                    onChange={(vl) => setCategories(vl.target.value)}
                     options={jobCategories.data.map((jobCategory) => ({
                       value: jobCategory.id,
                       label: jobCategory.title,
@@ -104,21 +106,31 @@ const Home = () => {
                     variant="contained"
                     className={styles.home_btn_btn}
                     onClick={() => {
-                      navigate(`/job-search?search=${searchValue}&categories=${categories}&location=${location}`);
+                      navigate(
+                        `/job-search?search=${searchValue}&categories=${categories}&location=${location}`
+                      );
                     }}
                   >
                     Search
                   </Button>
                 </Box>
-                <Box className={styles.home_img_contents}>
-                  <h5 className={styles.home_img_contents_h5}>
-                    Are you an employer looking for applicants <br /> to fill
-                    your job openings fast?
-                  </h5>
-                  <Link to="/#" className={styles.home_img_contents_p}>
-                    Post a job <SVG.RightArrow className={styles.rightarrow} />
-                  </Link>
-                </Box>
+                {role !== USER_ROLES.jobSeeker && role !== USER_ROLES.vendor ? (
+                  <Box className={styles.home_img_contents}>
+                    <h5 className={styles.home_img_contents_h5}>
+                      Are you an employer looking for applicants <br /> to fill
+                      your job openings fast?
+                    </h5>
+                    <Link
+                      to="/employer/jobs/post"
+                      className={styles.home_img_contents_p}
+                    >
+                      Post a job{" "}
+                      <SVG.RightArrow className={styles.rightarrow} />
+                    </Link>
+                  </Box>
+                ) : (
+                  ""
+                )}
               </Container>
             </Box>
           </Box>

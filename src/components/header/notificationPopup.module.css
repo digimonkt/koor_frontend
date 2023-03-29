@@ -1,0 +1,15 @@
+.notification_heading {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  line-height: 36px !important;
+  color: #121212 !important ;
+  margin: 0px !important;
+}
+
+.notification_heading_div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
