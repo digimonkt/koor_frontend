@@ -1,4 +1,19 @@
-/* Marque */
+.selec .css-1vbbqi7 .MuiSelect-select
+
+.date_input .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+  background-color: #f0f0f0;
+  /* height: 38px; */
+  border-radius: 10px;
+}
+
+.date_input fieldset,
+.date_input label {
+  border-color: #ccc !important;
+  color: black !important;
+  border-radius: 10px !important;
+  /* transform: translate(14px, 10px) scale(1); */
+}
+
 .homepage
   .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   background-color: #fff !important;

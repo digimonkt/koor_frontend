@@ -193,6 +193,7 @@ header {
 }
 
 .menu li {
+  font-family: "Bahnschrift", sans-serif !important;
   list-style: none;
   display: inline-block;
   padding: 0px 8px;
@@ -390,6 +391,7 @@ header {
 .form-content {
   font-family: "Poppins";
   font-weight: 300;
+  margin: 20px 0px 20px 0px !important;
 }
 .text-gray {
   color: #848484;
@@ -458,6 +460,7 @@ header {
 }
 
 .user-details h1 {
+  font-family: "Bahnschrift", sans-serif !important;
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -592,11 +595,33 @@ hr {
   background: #fff url("../images/search.png") no-repeat 14px 8px;
   box-sizing: border-box;
 }
-.headding {
+
+.search-language .css-1oqqzyl-MuiContainer-root {
+  padding: 0px;
+  margin-bottom: 20px;
+}
+
+.search-language {
+  margin-top: -75px;
+  padding: 0px;
+}
+
+.cross-circle {
+  font-size: 24px;
+  color: #848484;
+}
+
+.heading-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.heading {
+  font-family: "Bahnschrift", sans-serif;
   font-weight: 600;
   font-size: 28px;
   color: #121212;
-  margin: 0px 0px 24px;
 }
 
 .step-continer svg.Mui-active,
@@ -703,11 +728,16 @@ hr {
   color: #eea23d;
   cursor: pointer;
 }
+.add-content .css-e53awj-MuiStack-root {
+  display: flex;
+  align-items: center;
+}
 .add-content h2 {
   font-size: 28px;
-  margin: 0;
+  margin-bottom: 20px;
   color: #121212;
   font-weight: 600;
+  margin-bottom: 30px;
 }
 .add-form-control {
   background: #f0f0f0;
@@ -740,7 +770,7 @@ hr {
   font-size: 14px;
   line-height: 21px;
   letter-spacing: 0.02em;
-
+  margin-bottom: 10px;
   color: #848484;
 }
 .form-control-area {
@@ -770,7 +800,7 @@ hr {
 .modal-box .MuiPaper-root {
   border-radius: 10px;
   padding: 30px;
-  width: 470px;
+  width: 500px;
 }
 .dropimg-userprofile {
   border: 2px dashed #cacaca;
@@ -1215,7 +1245,7 @@ span.count {
   .w-70 {
     width: 100% !important;
   }
-  .headding {
+  .heading {
     font-size: 18px;
   }
 
@@ -1332,6 +1362,8 @@ span.count {
   font-size: 10px;
   line-height: 15px;
   letter-spacing: 0.01em;
+  margin-top: 6px;
+  margin-bottom: 25px;
 
   color: #848484;
 }
@@ -1392,7 +1424,7 @@ span.count {
 
   /* Black #121212 */
   color: #121212;
-  margin: 0;
+  margin-bottom: 5px;
 }
 
 .list-content span {
@@ -1403,13 +1435,13 @@ span.count {
   line-height: 16px;
   /* identical to box height, or 133% */
   letter-spacing: 0.02em;
-
+  margin-bottom: 5px;
   /* Dark grey */
   color: #848484;
 }
 
 .list-content h6 {
-  margin: 0;
+  margin-bottom: 5px;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -1456,6 +1488,7 @@ span.count {
   /* Dark grey */
   color: #848484;
   cursor: pointer;
+  margin-right: 15px;
 }
 
 .list-button button span {
@@ -1683,7 +1716,7 @@ input.employersearch {
   white-space: pre-line;
 }
 
-.close_icon_circle svg{
-color: red;
-margin-left: 5px;
+.close_icon_circle svg {
+  color: red;
+  margin-left: 5px;
 }

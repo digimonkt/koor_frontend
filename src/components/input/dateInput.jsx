@@ -16,7 +16,7 @@ function DateInputComponent({ renderInput, ...rest }) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DesktopDatePicker
         className={styles.date_picker_error}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} className="date_input" />}
         {...props}
         {...rest}
       />

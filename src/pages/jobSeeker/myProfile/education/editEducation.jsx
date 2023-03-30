@@ -117,10 +117,13 @@ function EditEducation({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="headding">Education</h1>
+      <div className="heading-div">
+        <h1 className="heading">Education</h1>
+        <SVG.CrossCircle className="cross-circle" />
+      </div>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
-          <div className="form-group mb-3">
+          <div className="form-group mb-4 mt-3 ">
             <SelectInput
               placeholder="Select"
               title="Education Level"
@@ -136,7 +139,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
               <ErrorMessage>{formik.errors.educationLevel}</ErrorMessage>
             ) : null}
           </div>
-          <div className="form-group mb-3">
+          <div className="form-group mb-4">
             <LabeledInput
               placeholder="Ex: Certificate in Electronics"
               title="Diploma / certificate / degree"
@@ -148,7 +151,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
               <ErrorMessage>{formik.errors.title}</ErrorMessage>
             ) : null}
           </div>
-          <div className="form-group mb-3">
+          <div className="form-group mb-4">
             <LabeledInput
               placeholder="Ex: Singapore Polytechnic"
               title="School / institute"
@@ -198,6 +201,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
             </Grid>
           </Grid>
           <FormControlReminder
+            sx={{ mt: 2 }}
             control={
               <CheckboxInput
                 sx={{

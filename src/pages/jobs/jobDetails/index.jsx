@@ -135,6 +135,7 @@ const JobDetails = () => {
                     color={getColorByRemainingDays(
                       details.expiredInDays > 0 ? details.expiredInDays : 0
                     )}
+                    style={{ marginLeft: "20px" }}
                   />
                 </div>
               </Grid>
@@ -276,7 +277,7 @@ const JobDetails = () => {
             </Grid>
             <DialogBox open={registrationWarning} handleClose={() => {}}>
               <div>
-                <h1 className="headding">Register as jobseeker</h1>
+                <h1 className="heading">Register as jobseeker</h1>
                 <div className="form-content">
                   <p>
                     To apply for the job and have many other useful features to

@@ -68,6 +68,7 @@ const Home = () => {
                   <Box className={styles.inputsearch_home}>
                     <InputSearch />
                   </Box>
+                  <div>
                   <SelectInput
                     value={categories}
                     handleChange={(vl) => setCategories(vl)}
@@ -76,6 +77,7 @@ const Home = () => {
                     placeholder="Category"
                     className={`${styles.category_select}`}
                   />
+                  </div>
                   <SelectInput
                     value={location}
                     handleChange={(vl) => setLocation(vl)}

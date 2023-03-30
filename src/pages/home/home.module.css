@@ -82,7 +82,7 @@
 .location_select {
   background-color: "#ffffff";
   margin-right: 26px !important;
-  background-color: #fff;
+  background-color: #fff !important;
   width: 324px !important;
   height: 54px !important;
   border-radius: 10px !important;
@@ -92,7 +92,7 @@
 .category_select {
   background-color: "#ffffff" !important;
   margin-right: 26px !important;
-  background-color: #fff;
+  background-color: #fff !important;
   width: 324px !important;
   height: 54px !important;
   border-radius: 10px !important;
