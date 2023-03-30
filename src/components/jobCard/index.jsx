@@ -83,7 +83,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               </Link>
             )}
           </h2>
-          <p>
+          <p className="my-3">
             {jobDetails?.description ||
               "Role and Responsibilities · Provide good customer service · Maintain store cleanliness. Check and display goods/merchandise · Cashiering duties as and when needed Qualifications and Education Requirements· Minimum SPM and above· No experience needed · Good verbal..."}
           </p>
@@ -139,7 +139,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         </div>
       </Grid>
       <Grid item lg={logo ? 2 : 3} xs={12}>
-        <div className="text-end">
+        <div className="text-end mb-4">
           <SolidButton
             style={{ textTransform: "lowercase" }}
             title={

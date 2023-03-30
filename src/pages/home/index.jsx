@@ -3,47 +3,57 @@ import { Box, Button, Divider, Stack, Typography } from "@mui/material";
 import styles from "./home.module.css";
 import { setIstHomePage } from "@redux/slice/user";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Container } from "@mui/system";
 import SlickSlider from "@pages/slider";
 import InputSearch from "@components/inputSearch";
 // import SelectInput from "./selectinput";
 import { SVG } from "@assets/svg";
 import VerticalSlider from "./verticalSlider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextSlide from "./textSlide";
 import HomeSection from "./homeSection";
 import { SelectInput } from "@components/input";
+import { getCountries, getJobCategories } from "@redux/slice/choices";
+import { USER_ROLES } from "@utils/enum";
 
-const options = [
-  {
-    id: 1,
-    value: "cat 1",
-    title: "category",
-  },
-];
-const locations = [
-  {
-    id: 1,
-    value: "cat 1",
-    title: "Location",
-  },
-];
+// const options = [
+//   {
+//     id: 1,
+//     value: "cat 1",
+//     title: "category",
+//   },
+// ];
+// const locations = [
+//   {
+//     id: 1,
+//     value: "cat 1",
+//     title: "Location",
+//   },
+// ];
 
 const Home = () => {
+  const navigate = useNavigate();
   // redux dispatch
   const dispatch = useDispatch();
-
+  const { countries, jobCategories } = useSelector((state) => state.choices);
+  const { role } = useSelector((state) => state.auth);
   // state management
   const [categories, setCategories] = useState("");
   const [location, setLocation] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   // console.log("categories --- ", categories);
   // console.log("location --- ", location);
 
   useEffect(() => {
     dispatch(setIstHomePage(true));
-
+    if (!countries.data.length) {
+      dispatch(getCountries());
+    }
+    if (!jobCategories.data.length) {
+      dispatch(getJobCategories());
+    }
     return () => {
       dispatch(setIstHomePage(false));
     };
@@ -66,13 +76,18 @@ const Home = () => {
                 </Box>
                 <Box className={styles.input_select_btn_box}>
                   <Box className={styles.inputsearch_home}>
-                    <InputSearch />
+                    <InputSearch
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
                   </Box>
                   <div>
                   <SelectInput
                     value={categories}
-                    handleChange={(vl) => setCategories(vl)}
-                    options={options}
+                    onChange={(vl) => setCategories(vl.target.value)}
+                    options={jobCategories.data.map((jobCategory) => ({
+                      value: jobCategory.id,
+                      label: jobCategory.title,
+                    }))}
                     label="Category"
                     placeholder="Category"
                     className={`${styles.category_select}`}
@@ -80,25 +95,44 @@ const Home = () => {
                   </div>
                   <SelectInput
                     value={location}
-                    handleChange={(vl) => setLocation(vl)}
-                    options={locations}
+                    onChange={(vl) => setLocation(vl.target.value)}
+                    options={countries.data.map((country) => ({
+                      value: country.id,
+                      label: country.title,
+                    }))}
                     label="Location"
                     placeholder={"Location"}
                     className={`${styles.location_select}`}
                   />
-                  <Button variant="contained" className={styles.home_btn_btn}>
+                  <Button
+                    variant="contained"
+                    className={styles.home_btn_btn}
+                    onClick={() => {
+                      navigate(
+                        `/job-search?search=${searchValue}&categories=${categories}&location=${location}`
+                      );
+                    }}
+                  >
                     Search
                   </Button>
                 </Box>
-                <Box className={styles.home_img_contents}>
-                  <h5 className={styles.home_img_contents_h5}>
-                    Are you an employer looking for applicants <br /> to fill
-                    your job openings fast?
-                  </h5>
-                  <Link to="/#" className={styles.home_img_contents_p}>
-                    Post a job <SVG.RightArrow className={styles.rightarrow} />
-                  </Link>
-                </Box>
+                {role !== USER_ROLES.jobSeeker && role !== USER_ROLES.vendor ? (
+                  <Box className={styles.home_img_contents}>
+                    <h5 className={styles.home_img_contents_h5}>
+                      Are you an employer looking for applicants <br /> to fill
+                      your job openings fast?
+                    </h5>
+                    <Link
+                      to="/employer/jobs/post"
+                      className={styles.home_img_contents_p}
+                    >
+                      Post a job{" "}
+                      <SVG.RightArrow className={styles.rightarrow} />
+                    </Link>
+                  </Box>
+                ) : (
+                  ""
+                )}
               </Container>
             </Box>
           </Box>

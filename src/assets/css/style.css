@@ -917,6 +917,7 @@ hr {
 .bookmark {
   text-align: center;
   color: #eea23d;
+  margin-left: 20px;
 }
 
 .bookmark span {

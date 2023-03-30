@@ -27,11 +27,9 @@ export const getSearchJobsAPI = async (data) => {
     delete newData.jobCategory;
   }
   let url = urlcat("/v1/jobs", newData);
-  console.log({ jobCategories, newData });
   jobCategories.forEach((category) => {
     url += `&jobCategory=${category.title}`;
   });
-  console.log({ url });
   const response = await api.request({
     url,
     method: "GET",
@@ -90,5 +88,19 @@ export const deleteSearchJobsFilterAPI = async (filterId) => {
     url: urlcat("/v1/jobs/filter/:filterId", { filterId }),
     method: "DELETE",
   });
+  return response;
+};
+
+export const getJobSuggestionAPI = async (jobId) => {
+  const response = await api.request({
+    url: urlcat("/v1/jobs/:jobId/suggestion", { jobId, limit: 4 }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformJobListResponse(response.data),
+    };
+  }
   return response;
 };

@@ -326,7 +326,8 @@ const ApplyForJob = () => {
         handleClose={() => console.log("close")}
         sx={{
           "& .MuiPaper-root": {
-            width: "730px",
+            maxWidth: "734px",
+            width: "734px",
           },
         }}
       >

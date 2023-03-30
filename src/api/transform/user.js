@@ -63,3 +63,14 @@ export const transformGetUserDetails = (data) => {
     })),
   };
 };
+
+export const transformNotificationResponse = (data) => {
+  return {
+    id: data.id,
+    createdAt: data.created,
+    notificationType: data.notification_type,
+    job: data.job,
+    jobFilter: data.job_filter,
+    seen: data.seen,
+  };
+};
