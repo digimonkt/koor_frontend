@@ -1,0 +1,448 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: TimesNewRoman;
+  src: url("./../../../../../../assets/fonts/times_new_roman.ttf");
+}
+
+html {
+  height: 100%;
+}
+
+.body {
+  min-height: 100%;
+  background: #eee;
+  font-family: "TimesNewRoman";
+  font-weight: 400;
+  color: #000;
+  font-size: 14px;
+  line-height: 20px;
+  padding-bottom: 50px;
+}
+
+.container {
+  max-width: 820px;
+  background: #fff;
+  margin: 0px auto 0px;
+  box-shadow: 1px 1px 2px #dad7d7;
+  border-radius: 3px;
+  padding: 40px;
+  margin-top: 50px;
+}
+
+.header {
+  text-align: end;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #000;
+}
+
+.avatar_div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header .full-name {
+  font-size: 16px;
+  text-transform: uppercase;
+}
+.header .first-name {
+  font-weight: 600;
+}
+.header .last-name {
+  font-weight: 600;
+}
+
+.contact-info {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.contact-info .email-val {
+  color: blue;
+}
+
+.header .email,
+.header .phone {
+  font-weight: 600;
+}
+.header .separator {
+  height: 10px;
+  display: inline-block;
+  border-left: 2px solid #999;
+  margin: 0px 10px;
+}
+
+.about .desc {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+.about .position {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.knowledge {
+  margin-top: 20px;
+}
+
+.knowledge .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.knowledge ul {
+  margin-top: 10px;
+  padding-left: 28px;
+}
+
+.knowledge li {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+.education {
+  margin-top: 20px;
+}
+
+.education .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.education ul {
+  margin-top: 10px;
+}
+
+.education li {
+  list-style: none;
+  margin-top: 5px;
+}
+
+.qualification {
+  margin-top: 20px;
+}
+
+.qualification .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.qualification ul {
+  margin-top: 10px;
+  padding-left: 28px;
+}
+
+.qualification li {
+  margin-top: 5px;
+}
+
+.summary {
+  margin-top: 20px;
+}
+
+.summary .title {
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.summary span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.responsibility {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.summary ul {
+  padding-left: 28px;
+  margin-bottom: 15px;
+}
+
+.summary li {
+  margin-top: 5px;
+}
+
+.keys {
+  margin-top: 10px;
+}
+
+.keys .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.keys ul {
+  padding-left: 28px;
+}
+
+.keys li {
+  margin-top: 5px;
+}
+
+.duties {
+  margin-top: 15px;
+}
+
+.duties .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.duties ul {
+  padding-left: 28px;
+}
+
+.duties li {
+  margin-top: 5px;
+}
+
+.financial {
+  margin-top: 15px;
+}
+
+.financial .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.financial ul {
+  padding-left: 28px;
+}
+
+.financial li {
+  margin-top: 5px;
+}
+
+.lecturer {
+  margin-top: 15px;
+}
+
+.lecturer .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lecturer ul {
+  padding-left: 28px;
+}
+
+.lecturer li {
+  margin-top: 5px;
+}
+
+.accountant {
+  margin-top: 15px;
+}
+
+.accountant .title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.accountant ul {
+  padding-left: 28px;
+}
+
+.accountant li {
+  margin-top: 5px;
+}
+
+.training {
+  margin-top: 15px;
+}
+
+.training .title {
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 12px;
+}
+
+.training ul {
+  padding-left: 28px;
+}
+
+.training li {
+  margin-top: 5px;
+}
+
+.publication {
+  margin-top: 20px;
+}
+
+.publication .title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.referese {
+  margin-top: 20px;
+}
+
+.referese .title {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* .details {
+  line-height: 20px;
+}
+.details .section {
+  margin-bottom: 40px;
+}
+.details .section:last-of-type {
+  margin-bottom: 0px;
+}
+
+.up_work {
+  opacity: 90%;
+}
+
+.skills_p {
+  opacity: 90%;
+  margin-bottom: 8px;
+}
+
+.koor_p {
+  font-size: 12px;
+  font-weight: 300;
+  margin-bottom: 5px;
+  padding: 0px;
+}
+
+.skill_span {
+  margin-top: 14px;
+}
+
+.language_p {
+  opacity: 90%;
+  margin-bottom: 8px;
+}
+
+.lanpuage_span {
+  opacity: 90%;
+  line-height: 25px;
+}
+
+.work_span {
+  margin-bottom: 10px;
+  opacity: 90%;
+  line-height: 25px;
+}
+
+.right_div {
+  border-left: 2px solid #54afe4;
+  padding-left: 14px;
+  margin-top: -28px;
+}
+
+.education_div {
+  margin-top: -80px;
+}
+
+.work_div {
+  margin-top: 40px;
+}
+
+.date_p {
+  font-size: 14px;
+  opacity: 80%;
+  color: #848484;
+  margin-top: 5px;
+}
+
+.btn_download {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #eea23d;
+  background-color: #fff;
+  color: #ffa500;
+}
+
+.details .section__title {
+  letter-spacing: 2px;
+  color: #54afe4;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.details .section__list-item {
+  margin-bottom: 40px;
+}
+.details .section__list-item:last-of-type {
+  margin-bottom: 0;
+}
+.details .left,
+.details .right {
+  vertical-align: top;
+  display: inline-block;
+}
+.details .left {
+  width: 57%;
+}
+.details .right {
+  text-align: left;
+  width: 42%;
+}
+.details .name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.details .name_about {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.name_about .text {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 80%;
+}
+
+.name .text {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 80%;
+}
+
+.details a {
+  text-decoration: none;
+  color: #000;
+  font-style: italic;
+}
+.details a:hover {
+  text-decoration: underline;
+  color: #000;
+}
+.details .skills__item {
+  margin-bottom: 10px;
+}
+.details .skills__item .right input {
+  display: none;
+}
+.details .skills__item .right label {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: #c3def3;
+  border-radius: 20px;
+  margin-right: 3px;
+}
+.details .skills__item .right input:checked + label {
+  background: #79a9ce;
+} */

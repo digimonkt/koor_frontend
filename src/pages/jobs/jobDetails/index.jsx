@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { SVG } from "@assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getJobDetailsByIdAPI } from "@api/job";
+import { getJobDetailsByIdAPI, getJobSuggestionAPI } from "@api/job";
 import dayjs from "dayjs";
 import { SolidButton, SearchButton, OutlinedButton } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
@@ -22,6 +22,7 @@ const JobDetails = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
+  const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -81,10 +82,17 @@ const JobDetails = () => {
       setDetails(res.data);
     }
   };
+  const getJobSuggestions = async (jobId) => {
+    const res = await getJobSuggestionAPI(jobId);
+    if (res.remote === "success") {
+      setSuggestionJobs(res.data.results);
+    }
+  };
   useEffect(() => {
     getJobDetails(params.jobId);
+    getJobSuggestions(params.jobId);
   }, [params.jobId]);
-
+  // console.log("suggestionJobs_page", suggestionJobs);
   const handleSaveJob = async (jobId) => {
     if (isLoggedIn) {
       setDetails((prevState) => ({
@@ -312,7 +320,20 @@ const JobDetails = () => {
           </div>
           <div className={`${styles.LikeJob}`}>
             <h2>more jobs like this:</h2>
-            <p>
+            {suggestionJobs.map((item, key) => {
+              return (
+                <p key={key}>
+                  <Link to={urlcat("/jobs/details/:jobId", { jobId: item.id })}>
+                    {item.title}
+                  </Link>
+                  <span>
+                    – {item.city.title}, {item.country.title} $
+                    {item.budgetAmount}{" "}
+                  </span>
+                </p>
+              );
+            })}
+            {/* <p>
               RETAIL ASSISTANT CASHIER <span>– Dahli, India – 900$</span>
             </p>
             <p>
@@ -326,7 +347,7 @@ const JobDetails = () => {
             <p>
               Executive, Call Centre - (Kerja Office){" "}
               <span>– Kerja, Philippines – 1,400$</span>
-            </p>
+            </p> */}
           </div>
         </div>
       </Container>

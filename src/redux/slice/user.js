@@ -83,6 +83,7 @@ const initialState = {
      */
     skills: [],
   },
+  currentLocation: "",
   // here that email is come on which mail is sent
   verifyEmail: "",
 };
@@ -226,6 +227,9 @@ export const authSlice = createSlice({
     setIstHomePage: (state, action) => {
       state.isHomePage = action.payload;
     },
+    setCurrentLocation: (state, action) => {
+      state.currentLocation = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.pending, (state, action) => {
@@ -261,5 +265,6 @@ export const {
   addWorkExperienceRecord,
   updateWorkExperienceRecord,
   deleteWorkExperienceRecord,
+  setCurrentLocation,
 } = authSlice.actions;
 export default authSlice.reducer;

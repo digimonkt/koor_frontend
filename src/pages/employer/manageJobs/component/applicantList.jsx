@@ -8,6 +8,7 @@ import { getApplicationOnJobAPI } from "@api/employer";
 const ApplicantList = ({ totalApplications, jobId }) => {
   const [isActive, setIsActive] = useState(false);
   const [applicants, setApplicants] = useState([]);
+  // const [isShortlisted, setIsShortlisted] = useState(false);
   const handleActive = () => {
     setIsActive(!isActive);
   };
@@ -101,7 +102,8 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 subTitle={item.subtitle}
                 isDisabled={item.disabled}
                 key={index}
-                isMessagable
+                allOptions
+                isShortlisted={item.shortlistedAt}
               />
             );
           })}

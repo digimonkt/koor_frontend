@@ -19,6 +19,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
+import NotificationPopup from "./notificationPopup";
 
 const ismenu = true;
 
@@ -182,7 +183,7 @@ function Header() {
                         },
                       }}
                     >
-                      <SVG.NotificationIcon />
+                      <NotificationPopup />
                     </IconButton>
                   </li>
                   <li>

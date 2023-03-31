@@ -1,4 +1,59 @@
-/* Marque */
+.date_input .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+  border-radius: 30px !important;
+  padding: 2px 20px 2px 2px !important;
+  height: 44px;
+  width: 163px;
+}
+.date_input label {
+  top: -4px;
+}
+.drop_menu .css-13xfq8m-MuiTabPanel-root {
+  padding: 24px 24px 0px 24px !important;
+}
+.drop_menu .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover {
+  background-color: #fff !important;
+}
+.content_notifi .css-1aquho2-MuiTabs-indicator {
+  display: none !important;
+}
+.content_notifi .css-heg063-MuiTabs-flexContainer {
+  display: block !important;
+  justify-content: inherit !important;
+}
+.content_notifi .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  color: #eea23d !important;
+  background-color: #feefd3 !important;
+  border-radius: 30px !important;
+  opacity: 45% !important;
+}
+.tab_list .css-heg063-MuiTabs-flexContainer {
+  display: block !important;
+  justify-content: inherit !important;
+  margin-bottom: 15px !important;
+}
+.tab_list .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 24px !important;
+  color: #eea23d !important;
+  background-color: #feefd3 !important;
+  border-radius: 30px !important;
+  opacity: 45% !important;
+}
+.tab_list .css-1aquho2-MuiTabs-indicator {
+  display: none !important;
+}
+.drop_menu .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+  width: 480px !important;
+  left: 1050px !important;
+  top: 69px !important;
+}
+
 .homepage
   .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
   background-color: #fff !important;

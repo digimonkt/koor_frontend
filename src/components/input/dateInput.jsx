@@ -13,14 +13,16 @@ function DateInputComponent({ renderInput, ...rest }) {
     props.inputFormat = DATE_FORMAT;
   }
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DesktopDatePicker
-        className={styles.date_picker_error}
-        renderInput={(params) => <TextField {...params} />}
-        {...props}
-        {...rest}
-      />
-    </LocalizationProvider>
+    <div className="date_input">
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DesktopDatePicker
+          className={styles.date_picker_error}
+          renderInput={(params) => <TextField {...params} />}
+          {...props}
+          {...rest}
+        />
+      </LocalizationProvider>
+    </div>
   );
 }
 

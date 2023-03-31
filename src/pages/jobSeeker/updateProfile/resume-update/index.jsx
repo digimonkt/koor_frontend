@@ -3,7 +3,7 @@ import { IconButton, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { SVG } from "@assets/svg";
 import DialogBox from "@components/dialogBox";
-import ResumeTemplate from "./resumeTemplate/teplate1";
+import ResumeTemplate from "./resumeTemplate/template1";
 import html2pdf from "html2pdf.js";
 import { useSelector } from "react-redux";
 const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {

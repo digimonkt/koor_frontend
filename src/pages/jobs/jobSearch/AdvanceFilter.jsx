@@ -21,15 +21,19 @@ import {
   deleteSearchJobsFilterAPI,
   getSearchJobsFilterAPI,
   saveSearchJobsFilterAPI,
+  updateSavedSearchFilterAPI,
 } from "@api/job";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
+import { useSearchParams } from "react-router-dom";
 
 const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
+  const [searchParams] = useSearchParams({});
   const dispatch = useDispatch();
   const { countries, cities, jobCategories } = useSelector(
     (state) => state.choices
   );
+  const [submitForm, setSubmitForm] = useState(false);
   const [data, setData] = useState(false);
   const [open, setOpen] = useState(false);
   const [allFilters, setAllFilters] = useState([]);
@@ -79,7 +83,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
   };
 
   const handleSelectFilter = async (filter) => {
-    console.log({ filter });
     setSelectedFilter(filter.id);
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories);
@@ -105,7 +108,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
     if (!payload.timing) {
       delete payload.timing;
     }
-    console.log({ payload });
     await handleSearchJobs(payload);
   };
   const handleSearchJobs = async (payload) => {
@@ -121,12 +123,29 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
   };
 
   const handleDeleteFilter = async (filterId) => {
-    console.log({ filterId });
     const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
     setAllFilters([...newAllFilters]);
     await deleteSearchJobsFilterAPI(filterId);
   };
-
+  const toggleNotificationStatus = async (filterId) => {
+    let newFilters = [...allFilters];
+    const filter = newFilters.find((filter) => filter.id === filterId);
+    if (filter) {
+      const currentStatus = filter.isNotification;
+      newFilters = newFilters.map((filter) => {
+        if (filter.id === filterId) {
+          return {
+            ...filter,
+            isNotification: !filter.isNotification,
+          };
+        }
+        return filter;
+      });
+      setAllFilters([...newFilters]);
+      const res = await updateSavedSearchFilterAPI(filterId, !currentStatus);
+      console.log({ res });
+    }
+  };
   const formik = useFormik({
     initialValues: {
       id: "",
@@ -175,6 +194,25 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
       dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
+  useEffect(() => {
+    const categories = searchParams.get("categories");
+    const location = searchParams.get("location");
+    if (location) {
+      formik.setFieldValue("country", location);
+    }
+    if (categories) {
+      formik.setFieldValue("jobCategories", [categories]);
+    }
+    if (location || categories) {
+      setSubmitForm(true);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (submitForm) {
+      setTimeout(() => formik.submitForm(), 500);
+    }
+  }, [submitForm]);
 
   return (
     <div className={`${styles.searchResult}`}>
@@ -192,6 +230,8 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
             style={{
               overflow: "auto",
               marginLeft: "25px",
+              display: "flex",
+              alignItems: "center",
             }}
           >
             {allFilters.map((filter) => {
@@ -204,11 +244,13 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                         : styles.btnActive
                     }`}
                     leftIcon={
-                      filter.isNotification ? (
-                        <SVG.Notificationactive />
-                      ) : (
-                        <SVG.Notificationinactive />
-                      )
+                      <div onClick={() => toggleNotificationStatus(filter.id)}>
+                        {filter.isNotification ? (
+                          <SVG.Notificationactive />
+                        ) : (
+                          <SVG.Notificationinactive />
+                        )}
+                      </div>
                     }
                     text={
                       <div onClick={() => handleSelectFilter(filter)}>
@@ -258,7 +300,6 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                         name={"jobCategories"}
                         value={formik.values.jobCategories}
                         onChange={(e) => {
-                          console.log(e);
                           formik.handleChange(e);
                         }}
                         onBlur={formik.handleBlur}

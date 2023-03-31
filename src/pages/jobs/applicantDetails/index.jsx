@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Button,
   Card,
   CardContent,
   Chip,
@@ -20,6 +19,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import EducationCard from "@components/educationCard";
 import WorkExperienceCard from "@components/workExperienceCard";
 import LanguageCard from "@components/languageCard";
+import ApplicationOptions from "@components/applicationOptions";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
@@ -114,18 +114,11 @@ const ApplicantDetails = () => {
                   className="edit-button"
                   alignItems="center"
                 >
-                  <Button variant="link">
-                    {<SVG.EventIcon />} <span>Interview planned</span>
-                  </Button>
-                  <Button variant="link">
-                    {<SVG.StarIcon />} <span>Shortlisted</span>
-                  </Button>
-                  <Button variant="link">
-                    {<SVG.RejectIcon />} <span>Reject</span>
-                  </Button>
-                  <Button variant="link">
-                    {<SVG.BlockedIcon />} <span>Blacklist</span>
-                  </Button>
+                  <ApplicationOptions
+                    applicationId={params.applicationId}
+                    allOptions
+                    isShortlisted={applicantDetails.shortlistedAt}
+                  />
 
                   <OutlinedButton
                     style={{

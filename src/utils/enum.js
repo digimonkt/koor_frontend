@@ -59,3 +59,18 @@ export const JOB_SORT_BY = {
   expiration: "expiration",
   workload: "workload",
 };
+
+export const NOTIFICATION_TYPE = {
+  applied: "applied",
+  passwordUpdate: "password_update",
+  shortlisted: "shortlisted",
+  message: "message",
+  advanceFilter: "advance_filter",
+  expiredJob: "expired_save_job", // pending from backend
+};
+
+export const JOB_APPLICATION_OPTIONS = {
+  shortlisted: "shortlisted",
+  rejected: "rejected",
+  blacklisted: "blacklisted",
+};

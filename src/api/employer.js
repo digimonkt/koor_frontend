@@ -104,3 +104,14 @@ export const getApplicationDetailsAPI = async (applicationId) => {
   }
   return res;
 };
+
+export const changeApplicationStatusAPI = async ({ action, applicationId }) => {
+  const res = await api.request({
+    url: urlcat("/v1/jobs/applications-detail/:applicationId/:action", {
+      applicationId,
+      action,
+    }),
+    method: "PUT",
+  });
+  return res;
+};
