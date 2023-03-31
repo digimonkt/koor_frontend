@@ -106,18 +106,10 @@ export const getJobSuggestionAPI = async (jobId) => {
 };
 
 export const updateSavedSearchFilterAPI = async (filterId, status) => {
-  console.log(filterId, status);
   const data = { is_notification: status };
-  const response = await api.request({
+  return await api.request({
     url: urlcat("/v1/jobs/filter", filterId),
     method: "PATCH",
     data,
   });
-  if (response.remote === "success") {
-    return {
-      remote: "success",
-      data: " ",
-    };
-  }
-  return response;
 };
