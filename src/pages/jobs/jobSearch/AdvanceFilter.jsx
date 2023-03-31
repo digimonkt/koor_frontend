@@ -230,6 +230,8 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
             style={{
               overflow: "auto",
               marginLeft: "25px",
+              display: "flex",
+              alignItems: "center",
             }}
           >
             {allFilters.map((filter) => {
