@@ -12,10 +12,10 @@ html {
   height: 100%;
 }
 
-body {
+.body {
   min-height: 100%;
   background: #eee;
-  font-family: TimesNewRoman;
+  font-family: "TimesNewRoman";
   font-weight: 400;
   color: #000;
   font-size: 14px;
