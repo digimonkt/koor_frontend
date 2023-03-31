@@ -34,12 +34,16 @@ function RegistrationForm() {
         ""
       );
       const payload = {
-        email: values.email,
-        mobile_number: mobileNumber,
-        country_code: countryCode,
         password: values.password,
         role,
       };
+      if (values.email) {
+        payload.email = values.email;
+      }
+      if (mobileNumber) {
+        payload.mobile_number = mobileNumber;
+        payload.country_code = countryCode;
+      }
       const res = await CreateUserAPI(payload);
       if (res.remote === "success") {
         if (role === USER_ROLES.jobSeeker) {
@@ -116,10 +120,7 @@ function RegistrationForm() {
             ) : null}
           </div>
           <div className="my-4 text-center">
-            <FilledButton
-              title="Register"
-              type="submit"
-            />
+            <FilledButton title="Register" type="submit" />
           </div>
         </form>
       </div>
