@@ -8,7 +8,7 @@ function ResumeTemplate() {
   const { currentUser } = useSelector((state) => state.auth);
   return (
     <>
-      <div className="container" id="div-to-pdf">
+      <div className="container body" id="div-to-pdf">
         <div className="header">
           <div className="full-name">
             <h4>CURICULUM VITAE (CV)</h4>
