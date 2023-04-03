@@ -4,6 +4,7 @@ import {
   transformGetUserDetails,
   transformNotificationResponse,
 } from "./transform/user";
+import env from "@utils/validateEnv";
 export const CreateUserAPI = async (data) => {
   return await api.request({
     url: "/v1/users",
@@ -115,7 +116,7 @@ export const getLetLongByAddressAPI = async (address) => {
   const res = await api.request({
     url: urlcat("https://maps.googleapis.com/maps/api/geocode/json", {
       address,
-      key: process.env.REACT_APP_GOOGLE_API_KEY,
+      key: env.REACT_APP_GOOGLE_API_KEY,
     }),
     method: "GET",
   });

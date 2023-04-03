@@ -1,4 +1,5 @@
 import { Loader } from "@googlemaps/js-api-loader";
+import env from "@utils/validateEnv";
 import { useEffect, useState } from "react";
 
 const Status = {
@@ -18,7 +19,7 @@ const Wrapper = ({ children, callback, ...options }) => {
   useEffect(() => {
     const loader = new Loader({
       ...(options || {}),
-      apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+      apiKey: env.REACT_APP_GOOGLE_API_KEY,
     });
 
     const setStatusAndExecuteCallback = (status) => {

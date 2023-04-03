@@ -10,12 +10,11 @@ function Map({ center, zoom }) {
       zoom,
     });
     // eslint-disable-next-line no-new
-    const marker = new window.google.maps.Marker({
+    new window.google.maps.Marker({
       position: center,
       map: newMap,
       title: "Marker Title",
     });
-    console.log({ marker });
   }, []);
 
   return <div ref={ref} id="map" style={{ height: "100%" }} />;
