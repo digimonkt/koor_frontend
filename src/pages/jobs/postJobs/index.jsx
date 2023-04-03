@@ -40,7 +40,9 @@ import { ErrorToast, SuccessToast } from "@components/toast";
 import dayjs from "dayjs";
 import { getJobDetailsByIdAPI } from "@api/job";
 import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
-
+import { useDebounce } from "usehooks-ts";
+import { GetSuggestedAddressAPI } from "@api/user";
+import styles from "./postJobs.module.css";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -175,6 +177,10 @@ function PostJobsComponent() {
     },
   });
 
+  const [suggestedAddress, setSuggestedAddress] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const debouncedSearchValue = useDebounce(searchValue, 500);
+
   const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
     if (response.remote === "success") {
@@ -187,6 +193,7 @@ function PostJobsComponent() {
       formik.setFieldValue("country", data.country.id);
       formik.setFieldValue("city", data.city.id);
       formik.setFieldValue("address", data.address);
+      setSearchValue(data.address);
       formik.setFieldValue(
         "jobCategories",
         data.jobCategories.map
@@ -242,6 +249,22 @@ function PostJobsComponent() {
       formik.setFieldValue("attachments", data.attachments);
     }
   }, []);
+
+  const getSuggestedAddress = async (search) => {
+    const res = await GetSuggestedAddressAPI(search);
+    if (res.remote === "success") {
+      setSuggestedAddress(res.data.predictions);
+    }
+  };
+  useEffect(() => {
+    if (
+      debouncedSearchValue &&
+      debouncedSearchValue !== formik.values.address
+    ) {
+      console.log({ debouncedSearchValue });
+      getSuggestedAddress(debouncedSearchValue);
+    }
+  }, [debouncedSearchValue]);
   useEffect(() => {
     const newJobId = searchParams.get("jobId");
     if (newJobId && jobId !== newJobId) setJobId(newJobId);
@@ -390,11 +413,40 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12}>
                     <label>Working place address</label>
-                    <input
-                      placeholder="Address"
-                      className="add-form-control"
-                      {...formik.getFieldProps("address")}
-                    />
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Address"
+                        className="add-form-control"
+                        name={formik.getFieldProps("address").name}
+                        onBlur={(e) => formik.getFieldProps("address").onBlur}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        value={searchValue}
+                      />
+                      {debouncedSearchValue &&
+                        searchValue !== formik.values.address && (
+                          <div className={styles.search_results_box}>
+                            {suggestedAddress.map((address) => {
+                              return (
+                                <div
+                                  key={address.description}
+                                  className={styles.search_results}
+                                  onClick={() => {
+                                    console.log({ address });
+                                    formik.setFieldValue(
+                                      "address",
+                                      address.description
+                                    );
+                                    setSearchValue(address.description);
+                                  }}
+                                >
+                                  {address.description}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                    </div>
                     {formik.touched.address && formik.errors.address ? (
                       <ErrorMessage>{formik.errors.address}</ErrorMessage>
                     ) : null}
