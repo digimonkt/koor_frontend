@@ -104,3 +104,12 @@ export const getJobSuggestionAPI = async (jobId) => {
   }
   return response;
 };
+
+export const updateSavedSearchFilterAPI = async (filterId, status) => {
+  const data = { is_notification: status };
+  return await api.request({
+    url: urlcat("/v1/jobs/filter", filterId),
+    method: "PATCH",
+    data,
+  });
+};

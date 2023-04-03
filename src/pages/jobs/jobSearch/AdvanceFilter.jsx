@@ -21,6 +21,7 @@ import {
   deleteSearchJobsFilterAPI,
   getSearchJobsFilterAPI,
   saveSearchJobsFilterAPI,
+  updateSavedSearchFilterAPI,
 } from "@api/job";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
@@ -126,7 +127,25 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
     setAllFilters([...newAllFilters]);
     await deleteSearchJobsFilterAPI(filterId);
   };
-
+  const toggleNotificationStatus = async (filterId) => {
+    let newFilters = [...allFilters];
+    const filter = newFilters.find((filter) => filter.id === filterId);
+    if (filter) {
+      const currentStatus = filter.isNotification;
+      newFilters = newFilters.map((filter) => {
+        if (filter.id === filterId) {
+          return {
+            ...filter,
+            isNotification: !filter.isNotification,
+          };
+        }
+        return filter;
+      });
+      setAllFilters([...newFilters]);
+      const res = await updateSavedSearchFilterAPI(filterId, !currentStatus);
+      console.log({ res });
+    }
+  };
   const formik = useFormik({
     initialValues: {
       id: "",
@@ -194,6 +213,7 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
       setTimeout(() => formik.submitForm(), 500);
     }
   }, [submitForm]);
+
   return (
     <div className={`${styles.searchResult}`}>
       <div className={`${styles.label} lables`}>
@@ -224,11 +244,13 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                         : styles.btnActive
                     }`}
                     leftIcon={
-                      filter.isNotification ? (
-                        <SVG.Notificationactive />
-                      ) : (
-                        <SVG.Notificationinactive />
-                      )
+                      <div onClick={() => toggleNotificationStatus(filter.id)}>
+                        {filter.isNotification ? (
+                          <SVG.Notificationactive />
+                        ) : (
+                          <SVG.Notificationinactive />
+                        )}
+                      </div>
                     }
                     text={
                       <div onClick={() => handleSelectFilter(filter)}>
