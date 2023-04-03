@@ -148,7 +148,9 @@ function Header() {
               }`}
             >
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/" className="active">
+                  Home
+                </Link>
               </li>
               {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
                 <li>

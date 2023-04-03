@@ -318,6 +318,7 @@ header {
 }
 .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
   padding-left: 6px !important;
+  padding-right: 16px !important;
 }
 .menu.false svg path {
   fill: #1c1b1f !important;
@@ -935,6 +936,10 @@ hr {
   color: #eea23d;
 }
 
+.job-button-card {
+  margin-left: 0px !important;
+}
+
 .pricebox {
   text-align: center;
 }
@@ -1004,7 +1009,6 @@ hr {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-
   letter-spacing: 0.02em;
 }
 
@@ -1665,6 +1669,11 @@ input.employersearch {
     font-family: "Bahnschrift" !important;
     /* font-weight: 600 !important; */
   }
+
+  .bookmark {
+    margin-left: 0px !important;
+  }
+
   .outline-login {
     background: #eea23d !important;
     border-radius: 73px !important;
@@ -1678,6 +1687,15 @@ input.employersearch {
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .bookmark {
+    margin-left: 0px !important;
+  }
+
+  .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
+    padding-left: 6px !important;
+    padding-right: 0px !important;
+  }
+
   .outline-button {
     border: 1px solid #274593 !important;
     border-radius: 73px !important;
