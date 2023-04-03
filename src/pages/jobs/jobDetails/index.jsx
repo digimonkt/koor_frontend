@@ -16,6 +16,8 @@ import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 import { useSelector } from "react-redux";
 import DialogBox from "@components/dialogBox";
 import { USER_ROLES } from "@utils/enum";
+import { getLetLongByAddressAPI } from "@api/user";
+import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
 
 const JobDetails = () => {
   const params = useParams();
@@ -75,11 +77,15 @@ const JobDetails = () => {
     },
     attachments: [],
   });
-
+  const [addressGeoCode, setAddressGeoCode] = useState({});
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });
     if (res.remote === "success") {
       setDetails(res.data);
+      const geoCode = await getLetLongByAddressAPI(res.data.address);
+      if (geoCode.remote === "success") {
+        setAddressGeoCode(geoCode.data.results[0]?.geometry.location || {});
+      }
     }
   };
   const getJobSuggestions = async (jobId) => {
@@ -268,16 +274,10 @@ const JobDetails = () => {
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location:</h3>
                   <p>{details.address}</p>
-                  <div>
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14310.988719236786!2d78.1676101!3d26.269867549999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1669036707774!5m2!1sen!2sin"
-                      width="100%"
-                      height="255"
-                      allowFullScreen=""
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="googleMap"
-                    ></iframe>
+                  <div style={{ height: "100%" }}>
+                    <GoogleMapWrapper>
+                      <GoogleMap center={addressGeoCode} zoom={15} />
+                    </GoogleMapWrapper>
                   </div>
                 </div>
               </Grid>
@@ -333,21 +333,6 @@ const JobDetails = () => {
                 </p>
               );
             })}
-            {/* <p>
-              RETAIL ASSISTANT CASHIER <span>– Dahli, India – 900$</span>
-            </p>
-            <p>
-              Internship In Tourism & Hospitality{" "}
-              <span>– Amsterdam, Netherlands – 2,700$</span>
-            </p>
-            <p>
-              Online Research Participant (Work From Home/Part Time/Casual)
-              #KerjaTrending. <span>– Berlin, Germany – 4,200$</span>
-            </p>
-            <p>
-              Executive, Call Centre - (Kerja Office){" "}
-              <span>– Kerja, Philippines – 1,400$</span>
-            </p> */}
           </div>
         </div>
       </Container>
