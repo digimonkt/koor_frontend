@@ -4,6 +4,11 @@
 .CardWidth {
   width: 650px !important;
 }
+
+.meets_div {
+  display: flex;
+}
+
 .form-control {
   font-weight: 500;
   font-family: "Poppins";
@@ -1689,6 +1694,10 @@ input.employersearch {
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
   .bookmark {
     margin-left: 0px !important;
+  }
+
+  .meets_div {
+    display: block !important;
   }
 
   .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
