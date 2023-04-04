@@ -306,18 +306,7 @@ const AboutMe = (props) => {
               name="row-radio-buttons-group"
             >
               <FormControlReminder
-                control={
-                  <CheckboxInput
-                    sx={{
-                      color: "#CACACA",
-                      transition: "all 0.5s ease-out",
-                      "&.Mui-checked": {
-                        color: "#EEA23D",
-                        transition: "all 0.5s ease-out",
-                      },
-                    }}
-                  />
-                }
+                control={<CheckboxInput />}
                 onChange={(e) =>
                   formik.setFieldValue("jobNotification", e.target.checked)
                 }
@@ -399,11 +388,7 @@ const AboutMe = (props) => {
           <div className="text-center mt-4">
             <OutlinedButton
               onClick={handleToggleModel}
-              title={
-                <>
-                  Got It
-                </>
-              }
+              title={<>Got It</>}
               sx={{
                 "&.MuiButtonBase-root": {
                   border: "1px solid #EEA23D !important",

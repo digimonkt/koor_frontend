@@ -1,6 +1,7 @@
 import api from ".";
 import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
+import { transformJobSeekerCategoriesResponse } from "./transform/jobSeeker";
 export const updateJobSeekerAboutMeAPI = async (data) => {
   const res = await api.request({
     url: "/v1/users/job-seeker/about-me",
@@ -192,4 +193,34 @@ export const getSaveJobAPI = async (data) => {
     };
   }
   return res;
+};
+
+export const GetJobSeekerCategoriesAPI = async () => {
+  const res = await api.request({
+    url: "v1/users/job-seeker/category",
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: transformJobSeekerCategoriesResponse(res.data),
+    };
+  }
+};
+
+export const UpdateJobSeekerCategoriesAPI = async (data) => {
+  return await api.request({
+    url: "v1/users/job-seeker/category",
+    method: "PUT",
+    headers: { "Content-Type": "multipart/form-data" },
+    data,
+  });
+};
+
+export const UpdateJobSeekerAdditionalParametersAPI = async (data) => {
+  return await api.request({
+    url: "v1/users/job-seeker/additional-parameter",
+    method: "PUT",
+    data,
+  });
 };
