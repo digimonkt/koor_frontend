@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [recentApplication, setRecentApplication] = useState({ results: [] });
 
   const getRecentApplications = async () => {
-    const res = await getRecentApplicationAPI();
+    const res = await getRecentApplicationAPI({ limit: 5 });
     if (res.remote === "success") {
       setRecentApplication(res.data);
     }
