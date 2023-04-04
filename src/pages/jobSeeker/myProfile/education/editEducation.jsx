@@ -25,7 +25,7 @@ import { addEducationRecord, updateEducationRecord } from "@redux/slice/user";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
-function EditEducation({ handleSubmit, currentSelected }) {
+function EditEducation({ handleSubmit, currentSelected, handleClose }) {
   const dispatch = useDispatch();
   const { educationLevels } = useSelector((state) => state.choices);
   const [loading, setLoading] = useState(false);
@@ -119,7 +119,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
     <div>
       <div className="heading-div">
         <h1 className="heading">Education</h1>
-        <SVG.CrossCircle className="cross-circle" />
+        <SVG.CrossCircle className="cross-circle" onClick={handleClose} />
       </div>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>

@@ -58,7 +58,6 @@ function App() {
             `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
           );
           const data = await response.json();
-          console.log({ data });
           dispatch(
             setCurrentLocation({
               countryCode: data.countryCode,

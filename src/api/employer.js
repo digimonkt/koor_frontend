@@ -65,9 +65,9 @@ export const getApplicationOnJobAPI = async (jobId) => {
   return response;
 };
 
-export const getRecentApplicationAPI = async () => {
+export const getRecentApplicationAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/jobs/applications"),
+    url: urlcat("/v1/jobs/applications", data || {}),
     method: "GET",
   });
   if (response.remote === "success") {

@@ -18,7 +18,6 @@ function NotificationContentComponent({ footer, header }) {
   const [notification, setNotification] = useState([]);
   const [section, setSection] = useState("all");
   const handleChangeSection = (event, newValue) => {
-    console.log({ event, newValue });
     setSection(newValue);
   };
   const getNotifications = async () => {

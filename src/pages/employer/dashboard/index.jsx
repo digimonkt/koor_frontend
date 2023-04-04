@@ -11,17 +11,37 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const [recentApplication, setRecentApplication] = useState({ results: [] });
-
+  const [recentApplicationPage, setRecentApplicationPage] = useState(1);
+  const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
+    useState(true);
   const getRecentApplications = async () => {
-    const res = await getRecentApplicationAPI();
+    const res = await getRecentApplicationAPI({
+      limit: 5,
+      page: recentApplicationPage,
+    });
     if (res.remote === "success") {
-      setRecentApplication(res.data);
+      // ! This filter is temporary and need to be optimized, as somehow API is called two time due to this duplicate data is found to remove this `filter` is used, but need to be fix
+      setRecentApplication((prevState) => ({
+        results: [...prevState.results, ...res.data.results].filter(
+          (value, index, self) =>
+            index === self.findIndex((t) => t.id === value.id)
+        ),
+      }));
+      setIsMoreApplicationAvailable(!!res.data.next);
+    } else {
+      if (recentApplicationPage > 0) {
+        setRecentApplicationPage((prevState) => prevState - 1);
+      }
+      setIsMoreApplicationAvailable(false);
     }
   };
 
+  const handleShowMore = () =>
+    setRecentApplicationPage((prevState) => prevState + 1);
+
   useEffect(() => {
     getRecentApplications();
-  }, []);
+  }, [recentApplicationPage]);
   return (
     <>
       <div className="employer-dashboard">
@@ -134,24 +154,28 @@ const Dashboard = () => {
                     />
                   ))}
 
-                  <div className="text-center mt-4">
-                    <OutlinedButton
-                      title="Show more"
-                      sx={{
-                        "&.MuiButton-outlined": {
-                          borderRadius: "73px",
-                          border: "1px solid #274593",
-                          color: "#274593",
-                          fontWeight: "500",
-                          fontSize: "16px",
-                          fontFamily: "Bahnschrift",
-                          padding: "10px 30px",
+                  {isMoreApplicationsAvailable && (
+                    <div className="text-center mt-4">
+                      <OutlinedButton
+                        title="Show more"
+                        sx={{
+                          "&.MuiButton-outlined": {
+                            borderRadius: "73px",
+                            border: "1px solid #274593",
+                            color: "#274593",
+                            fontWeight: "500",
+                            fontSize: "16px",
+                            fontFamily: "Bahnschrift",
+                            padding: "10px 30px",
 
-                          "&:hover": { background: "#1976d20a" },
-                        },
-                      }}
-                    />
-                  </div>
+                            "&:hover": { background: "#1976d20a" },
+                          },
+                        }}
+                        onClick={handleShowMore}
+                        disabled={!isMoreApplicationsAvailable}
+                      />
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -134,7 +134,7 @@ const Skills = () => {
                   onChange={(e) => setSearchSkill(e.target.value)}
                   value={searchSkill}
                 />
-                {debouncedSearchSkillValue && (
+                {debouncedSearchSkillValue && searchSkill && (
                   <div className={styles.search_results_box}>
                     {skills.data.map((skill) => {
                       return (

@@ -230,6 +230,7 @@ h3 {
 }
 .location {
   margin-right: 18px;
+  height: 100%;
 }
 .startDate {
   font-family: "Poppins";

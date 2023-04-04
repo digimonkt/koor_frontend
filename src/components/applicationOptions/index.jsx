@@ -18,7 +18,6 @@ function ApplicationOptions({
   }, [isShortlisted]);
   const handlerChangeApplicationStatus = async (action, applicationId) => {
     const res = await changeApplicationStatusAPI({ action, applicationId });
-    console.log({ res });
     if (res.remote === "success") {
       setShortlist(true);
     }
