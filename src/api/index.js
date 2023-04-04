@@ -42,13 +42,11 @@ export const request = async (config) => {
       config.headers["x-refresh"] = `${refreshToken}`;
     }
     const response = await axiosInstance.request({ ...config });
-    console.log({ config });
     return {
       remote: "success",
       data: response.data,
     };
   } catch (error) {
-    console.log({ error });
     if (error) {
       if (error.response) {
         if (error.response.headers["x-access"]) {

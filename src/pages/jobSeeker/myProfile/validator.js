@@ -21,7 +21,7 @@ export const validateEditEducation = Yup.object({
 });
 
 export const validateEditLanguage = Yup.object({
-  language: Yup.string().required("Language is required"),
+  language: Yup.mixed().required("Language is required"),
   spoken: Yup.string().required("Please Select the Spoken Proficiency"),
   written: Yup.string().required("Please Select the Writing Proficiency"),
 });
