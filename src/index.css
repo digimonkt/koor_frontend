@@ -35,7 +35,7 @@
   justify-content: inherit !important;
   margin-bottom: 15px !important;
 }
-.tab_list .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+.tab_list .Mui-selected {
   font-family: "Poppins", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500 !important;
@@ -54,8 +54,7 @@
   top: 69px !important;
 }
 
-.homepage
-  .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+.homepage .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
   background-color: #fff !important;
 }
 .MuiSelect-select .newstabs .css-jpln7h-MuiTabs-scroller {
@@ -209,6 +208,13 @@ textarea {
   .newstabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
     margin-left: 0px !important;
   }
+
+  .drop_menu .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+    width: 480px !important;
+    left: 590px !important;
+    top: 68px !important;
+  }
+
   .scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
     margin-left: 10px !important;
   }
@@ -219,6 +225,12 @@ textarea {
     transform: rotate(90deg);
     position: relative;
     bottom: 220px;
+  }
+
+  .drop_menu .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+    width: 480px !important;
+    left: 590px !important;
+    top: 68px !important;
   }
 
   .scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
