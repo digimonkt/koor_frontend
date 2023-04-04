@@ -44,7 +44,7 @@ const UpdateProfile = () => {
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3">
-        <h1 className="headding m-0">Add info to complete your profile</h1>
+        <h1 className="heading m-0">Add info to complete your profile</h1>
         <span
           onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)}
           className="later"

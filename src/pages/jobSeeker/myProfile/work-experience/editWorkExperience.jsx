@@ -108,7 +108,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="headding">Work Experience</h1>
+      <h1 className="heading">Work Experience</h1>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>

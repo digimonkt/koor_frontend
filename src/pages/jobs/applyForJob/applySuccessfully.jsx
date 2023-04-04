@@ -10,7 +10,7 @@ function ApplySuccessfully() {
   return (
     <Grid container spacing={2}>
       <Grid item lg={7}>
-        <h1>Done!</h1>
+        <h1 className="mb-3">Done!</h1>
         <p>
           Your application was submitted. The employer will reach out to you if
           they will find you suitable for the job. Stay tuned.
@@ -24,7 +24,7 @@ function ApplySuccessfully() {
         </div>
       </Grid>
       <Grid item lg={5}>
-        <SVG.AppliedJob />
+        <SVG.AppliedJob className="w-100" />
       </Grid>
     </Grid>
   );

@@ -80,6 +80,7 @@ const Home = () => {
                       onChange={(e) => setSearchValue(e.target.value)}
                     />
                   </Box>
+                  <div>
                   <SelectInput
                     value={categories}
                     onChange={(vl) => setCategories(vl.target.value)}
@@ -91,6 +92,7 @@ const Home = () => {
                     placeholder="Category"
                     className={`${styles.category_select}`}
                   />
+                  </div>
                   <SelectInput
                     value={location}
                     onChange={(vl) => setLocation(vl.target.value)}

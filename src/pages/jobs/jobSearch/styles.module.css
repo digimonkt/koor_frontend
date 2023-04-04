@@ -122,6 +122,7 @@ body {
   justify-content: space-between;
   text-align: center;
   align-items: center;
+  height: 54px;
 }
 
 .label ul::-webkit-scrollbar {

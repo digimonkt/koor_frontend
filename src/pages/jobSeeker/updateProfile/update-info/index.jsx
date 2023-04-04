@@ -14,7 +14,7 @@ const UpdateInfo = ({
 }) => {
   return (
     <>
-      <h1 className="headding">{title}</h1>
+      <h1 className="heading">{title}</h1>
       <Stack direction="row" spacing={2}>
         <IconButton
           sx={{

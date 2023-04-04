@@ -121,7 +121,7 @@ const Dashboard = () => {
                     sx={{ mb: 3 }}
                   >
                     <h3>Recent application</h3>
-                    <p>Recent application</p>
+                    <p>Applicants for past 12 hours shown</p>
                   </Stack>
 
                   {recentApplication.results.map((item, index) => (

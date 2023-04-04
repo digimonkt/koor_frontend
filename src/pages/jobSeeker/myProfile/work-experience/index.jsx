@@ -110,6 +110,7 @@ const WorkExperience = () => {
         sx={{
           "& .MuiPaper-root": {
             width: "800px",
+            maxWidth: "857px",
           },
         }}
       >

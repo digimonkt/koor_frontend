@@ -490,30 +490,30 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={3} lg={4} xs={12}>
+                  <Grid item xl={3} lg={4} xs={12} className="mt-2">
                     <label>Job type</label>
                     <FormGroup row sx={{ marginLeft: "7px" }}>
                       <JobFormControl
-                        control={<CheckboxInput />}
+                        control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
                         label="Part Time"
                         checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
-                        control={<CheckboxInput />}
+                        control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
                         label="Full Time"
                         checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
-                        control={<CheckboxInput />}
+                        control={<CheckboxInput sx={{ padding: "9px 6px" }} />}
                         label="Contract"
                         checked={formik.values.hasContract}
                         {...formik.getFieldProps("hasContract")}
                       />
                     </FormGroup>
                   </Grid>
-                  <Grid item xl={3} lg={4} xs={12}>
+                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
                     <label>Timing ({formik.values.workingDays} Day week)</label>
                     <Slider
                       defaultValue={5}
@@ -530,30 +530,36 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.timing}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <DateInput
-                        label="Start Date"
-                        onChange={(e) => formik.setFieldValue("startDate", e)}
-                        value={formik.values.startDate}
-                        onBlur={formik.getFieldProps("startDate").onBlur}
-                      />
-                      {formik.touched.startDate && formik.errors.startDate ? (
-                        <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
-                      ) : null}
-                    </div>
-                  </Grid>
-                  <Grid item xl={3} lg={3} xs={12}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <DateInput
-                        label="Deadline"
-                        onChange={(e) => formik.setFieldValue("deadline", e)}
-                        value={formik.values.deadline}
-                        onBlur={formik.getFieldProps("deadline").onBlur}
-                      />
-                      {formik.touched.deadline && formik.errors.deadline ? (
-                        <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
-                      ) : null}
+                  <Grid item xl={3} lg={5} xs={12} className="mt-2">
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <DateInput
+                          label="Start Date"
+                          onChange={(e) => formik.setFieldValue("startDate", e)}
+                          value={formik.values.startDate}
+                          onBlur={formik.getFieldProps("startDate").onBlur}
+                        />
+                        {formik.touched.startDate && formik.errors.startDate ? (
+                          <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                        ) : null}
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <DateInput
+                          label="Deadline"
+                          onChange={(e) => formik.setFieldValue("deadline", e)}
+                          value={formik.values.deadline}
+                          onBlur={formik.getFieldProps("deadline").onBlur}
+                        />
+                        {formik.touched.deadline && formik.errors.deadline ? (
+                          <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
+                        ) : null}
+                      </div>
                     </div>
                   </Grid>
 

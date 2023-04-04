@@ -41,22 +41,23 @@ export const request = async (config) => {
       config.headers.Authorization = `Bearer ${accessToken}`;
       config.headers["x-refresh"] = `${refreshToken}`;
     }
-
     const response = await axiosInstance.request({ ...config });
+    console.log({ config });
     return {
       remote: "success",
       data: response.data,
     };
   } catch (error) {
-    if (error.response.headers["x-access"]) {
-      globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
-    } else {
-      if (error.response.status === 403 || error.response.status === 401) {
-        localStorage.clear();
-      }
-    }
+    console.log({ error });
     if (error) {
       if (error.response) {
+        if (error.response.headers["x-access"]) {
+          globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
+        } else {
+          if (error.response.status === 403 || error.response.status === 401) {
+            localStorage.clear();
+          }
+        }
         const axiosError = error;
         if (axiosError.response && axiosError.response.data) {
           let errorMessage = axiosError.response.data;

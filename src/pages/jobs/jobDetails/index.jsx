@@ -136,7 +136,7 @@ const JobDetails = () => {
               </Grid>
               <Grid item xs={4}>
                 <div className={`${styles.clocs}`}>
-                  <span>{<SVG.ClockIconSmall />}</span>
+                  {<SVG.ClockIconSmall />}
                   <p className="mb-0 mt-0 me-1">
                     <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
                   </p>
@@ -149,6 +149,7 @@ const JobDetails = () => {
                     color={getColorByRemainingDays(
                       details.expiredInDays > 0 ? details.expiredInDays : 0
                     )}
+                    style={{ marginLeft: "20px" }}
                   />
                 </div>
               </Grid>
@@ -284,7 +285,7 @@ const JobDetails = () => {
             </Grid>
             <DialogBox open={registrationWarning} handleClose={() => {}}>
               <div>
-                <h1 className="headding">Register as jobseeker</h1>
+                <h1 className="heading">Register as jobseeker</h1>
                 <div className="form-content">
                   <p>
                     To apply for the job and have many other useful features to

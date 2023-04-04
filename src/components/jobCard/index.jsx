@@ -83,16 +83,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               </Link>
             )}
           </h2>
-          <p>
+          <p className="my-3">
             {jobDetails?.description ||
               "Role and Responsibilities · Provide good customer service · Maintain store cleanliness. Check and display goods/merchandise · Cashiering duties as and when needed Qualifications and Education Requirements· Minimum SPM and above· No experience needed · Good verbal..."}
           </p>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 1, sm: 1, md: 1 }}
-            sx={{ width: "100%" }}
+            sx={{ width: "100%", flexWrap: "wrap" }}
           >
             <ChipBox
+              sx={{ marginBottom: "10px" }}
               label={jobDetails?.country.title || "Dusseldorf"}
               icon={<>{<SVG.LocationIcon />}</>}
             />
@@ -139,7 +140,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         </div>
       </Grid>
       <Grid item lg={logo ? 2 : 3} xs={12}>
-        <div className="text-end">
+        <div className="text-end mb-4">
           <SolidButton
             style={{ textTransform: "lowercase" }}
             title={
@@ -196,7 +197,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <React.Fragment>
               {!applied ? (
                 <div onClick={handleToggleSave}>
-                  <div className="bookmark pe-lg-4">
+                  <div className="bookmark">
                     {isSaved ? (
                       <>
                         <SVG.SaveIcon />

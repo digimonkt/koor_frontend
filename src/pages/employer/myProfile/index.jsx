@@ -166,7 +166,7 @@ function MyProfileComponent() {
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
-        <h1 className="headding m-0">Add info to complete your profile</h1>
+        <h1 className="heading m-0">Add info to complete your profile</h1>
         {/* <span className="later" style={{ color: "#274593" }}>
           Do it later
         </span> */}

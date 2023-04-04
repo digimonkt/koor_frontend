@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LabeledRadioInput, SelectInput } from "@components/input";
+import { LabeledRadioInput } from "@components/input";
 import { getLanguages } from "@redux/slice/choices";
 import { LANGUAGE_PROFICIENCY } from "@utils/enum";
 import { useFormik } from "formik";
@@ -15,10 +15,16 @@ import {
 } from "@api/jobSeeker";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { addLanguageRecord, updateLanguageRecord } from "@redux/slice/user";
+import SearchInput from "@components/searchInput";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
-function EditLanguages({ currentSelected, handleSubmit }) {
+function EditLanguages({
+  currentSelected,
+  handleSubmit,
+  handleClose,
+  ...rest
+}) {
   const dispatch = useDispatch();
   const { languages } = useSelector((state) => state.choices);
   const [loading, setLoading] = useState(false);
@@ -93,15 +99,17 @@ function EditLanguages({ currentSelected, handleSubmit }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="headding">Language</h1>
+      <div className="heading-div">
+        <h1 className="heading">Language</h1>
+        <SVG.CrossCircle className="cross-circle" onClose={handleClose} />
+      </div>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
-          <div className="form-group mb-3">
-            <SelectInput
+          <div className="mb-3 search-language">
+            <SearchInput
               placeholder="Search Language"
               title="Language"
               labelWeight={500}
-              className="add-form-control"
               options={languages.data.map((language) => ({
                 label: language.title,
                 value: language.id,

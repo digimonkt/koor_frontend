@@ -8,7 +8,7 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
 
   return (
     <div>
-      <h1 className="headding">Give it a name</h1>
+      <h1 className="heading">Give it a name</h1>
       <div
         style={{
           fontWeight: "400",
