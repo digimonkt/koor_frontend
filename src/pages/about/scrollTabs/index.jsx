@@ -53,7 +53,7 @@ const ScrollTabs = () => {
               aria-label="scrollable auto tabs example"
               value={value}
               variant="scrollable"
-              scrollButtons="auto"
+              scrollButtons={true}
               className="scroll_tabs"
             >
               <Tab label="General" {...a11yProps(0)} />
