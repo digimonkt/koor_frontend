@@ -115,6 +115,7 @@ const Education = () => {
         <EditEducation
           handleSubmit={handleSubmit}
           currentSelected={currentSelected}
+          handleClose={handleToggleModel}
         />
       </DialogBox>
     </>
