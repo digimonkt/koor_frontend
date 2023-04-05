@@ -16,6 +16,7 @@ function Map({ center, zoom }) {
     }
   }, [center]);
   useEffect(() => {
+    console.log({ newCenter, zoom });
     if (newCenter.lat && newCenter.lng) {
       const newMap = new window.google.maps.Map(ref.current, {
         center: newCenter,
