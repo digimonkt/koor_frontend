@@ -138,7 +138,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 ) : null}
               </div>
               <label
-                className="mb-1 d-inline-block"
+                className="mb-3 d-inline-block"
                 style={{
                   fontWeight: 500,
                 }}

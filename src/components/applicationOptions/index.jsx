@@ -3,8 +3,9 @@ import { SVG } from "@assets/svg";
 import { Button } from "@mui/material";
 import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
+import "./style.css";
 function ApplicationOptions({
   allOptions,
   applicationId,
@@ -12,6 +13,7 @@ function ApplicationOptions({
   jobId,
   isMessageAble,
 }) {
+  const navigate = useNavigate();
   const [shortlist, setShortlist] = useState(false);
   useEffect(() => {
     setShortlist(!!isShortlisted);
@@ -26,7 +28,8 @@ function ApplicationOptions({
     <>
       {allOptions && (
         <Button variant="link">
-          {<SVG.EventIcon />} <span>Interview planned</span>
+          {<SVG.EventIcon className="application-option-icon" />}{" "}
+          <span>Interview planned</span>
         </Button>
       )}
       <Button
@@ -39,40 +42,47 @@ function ApplicationOptions({
           )
         }
       >
-        {<SVG.StarIcon />}{" "}
+        {<SVG.StarIcon className="application-option-icon" />}{" "}
         <span>{shortlist ? "Shortlisted" : "Shortlist"}</span>
       </Button>
       {allOptions && (
         <>
           <Button variant="link" disabled={shortlist}>
-            {<SVG.RejectIcon />} <span>Reject</span>
+            {<SVG.RejectIcon className="application-option-icon" />}{" "}
+            <span>Reject</span>
           </Button>
           <Button variant="link">
-            {<SVG.BlockedIcon />} <span>Blacklist</span>
+            {<SVG.BlockedIcon className="application-option-icon" />}{" "}
+            <span>Blacklist</span>
           </Button>
         </>
       )}
       <Button
-        LinkComponent={Link}
-        to={urlcat(
-          "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
-          {
-            applicationId: applicationId || "applicationId",
-            role: USER_ROLES.employer,
-            jobId: jobId || "jobId",
-          }
-        )}
-        sx={{
-          color: "#274593",
-          flexDirection: "column",
-          textTransform: "capitalize",
+        variant="link"
+        onClick={() => {
+          navigate(
+            urlcat(
+              "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+              {
+                applicationId: applicationId || "applicationId",
+                role: USER_ROLES.employer,
+                jobId: jobId || "jobId",
+              }
+            )
+          );
         }}
       >
-        {<SVG.OpenNewIcon />} <span>View</span>
+        <SVG.OpenNewIcon className="application-option-icon" />
+        <span>View</span>
       </Button>
       {allOptions && (
         <Button variant="link">
-          {<SVG.MessageIcon style={{ color: "#274593" }} />}{" "}
+          {
+            <SVG.MessageIcon
+              style={{ color: "#274593" }}
+              className="application-option-icon"
+            />
+          }{" "}
           <span>Message</span>
         </Button>
       )}
