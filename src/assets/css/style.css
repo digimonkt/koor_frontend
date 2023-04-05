@@ -53,10 +53,6 @@
   align-items: end !important;
 }
 
-.SelectDropdown .MuiFormControlLabel-root {
-  display: grid !important;
-}
-
 .message {
   text-align: center;
 }
@@ -1700,6 +1696,17 @@ input.employersearch {
   .bookmark {
     margin-left: 0px !important;
     width: 50px;
+  }
+
+  .SelectDropdown .MuiButtonBase-root.MuiCheckbox-root {
+    padding: 0px !important;
+    margin-top: 10px;
+    display: block !important;
+  }
+
+  .SelectDropdown .MuiFormControlLabel-root {
+    display: grid !important;
+    margin-right: 25px;
   }
 
   .meets_div {
