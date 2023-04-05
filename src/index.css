@@ -7,20 +7,20 @@
 .date_input label {
   top: -4px;
 }
-.drop_menu .css-13xfq8m-MuiTabPanel-root {
+.drop_menu .MuiTabPanel-root {
   padding: 24px 24px 0px 24px !important;
 }
-.drop_menu .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover {
+.drop_menu .MuiButtonBase-root.MuiMenuItem-root:hover {
   background-color: #fff !important;
 }
-.content_notifi .css-1aquho2-MuiTabs-indicator {
+.content_notifi .MuiTabs-indicator {
   display: none !important;
 }
-.content_notifi .css-heg063-MuiTabs-flexContainer {
+.content_notifi .MuiTabs-flexContainer {
   display: block !important;
   justify-content: inherit !important;
 }
-.content_notifi .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+.content_notifi .MuiButtonBase-root.MuiTab-root.Mui-selected {
   font-family: "Poppins", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500 !important;
