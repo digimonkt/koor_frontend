@@ -160,7 +160,7 @@
   background-image: url(../../assets/images/stay_mobile.png);
   background-repeat: no-repeat;
   background-size: 100%;
-  height: 1044px;
+  height: 1090px;
   background-position: 0px 0px;
   margin-top: -70px;
   z-index: 99;
@@ -465,7 +465,7 @@
   }
 
   .stay_back_img {
-    height: 772px;
+    height: 726px;
   }
 
   .new_jobs p {

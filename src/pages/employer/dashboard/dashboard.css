@@ -170,6 +170,9 @@ span.blueview {
 .border-recent:last-child {
   border-bottom: 0px;
 }
+.edit-button {
+  align-items: baseline !important;
+}
 .edit-button button {
   background: transparent;
   border: 0px;

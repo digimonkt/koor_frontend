@@ -25,7 +25,7 @@ import { firebaseInitialize } from "./firebaseProvider";
 function App() {
   const dispatch = useDispatch();
   const {
-    auth: { isLoggedIn, isGlobalLoading },
+    auth: { isGlobalLoading },
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
   const checkLoginStatus = () => {
@@ -84,9 +84,12 @@ function App() {
               <Route
                 path={route.path}
                 element={
-                  <Suspense fallback={<FallbackLoading />}>
-                    <route.component />
-                  </Suspense>
+                  <>
+                    <Suspense fallback={<FallbackLoading />}>
+                      <route.component />
+                    </Suspense>
+                    <Footer />
+                  </>
                 }
                 key={route.id}
               />
@@ -99,11 +102,14 @@ function App() {
                 key={route.id}
                 path={route.path}
                 element={
-                  <Suspense fallback={<FallbackLoading />}>
-                    <UnauthorizedRoute>
-                      <route.component />
-                    </UnauthorizedRoute>
-                  </Suspense>
+                  <>
+                    <Suspense fallback={<FallbackLoading />}>
+                      <UnauthorizedRoute>
+                        <route.component />
+                      </UnauthorizedRoute>
+                    </Suspense>
+                    <Footer />
+                  </>
                 }
               />
             );
@@ -141,7 +147,6 @@ function App() {
           message={toastMessage}
           handleClose={() => dispatch(resetToast())}
         />
-        {!isLoggedIn && <Footer />}
       </div>
     </div>
   );

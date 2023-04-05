@@ -164,7 +164,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
             ) : null}
           </div>
           <label
-            className="mb-1 d-inline-block"
+            className=" d-inline-block mb-3"
             style={{
               fontWeight: 500,
             }}
