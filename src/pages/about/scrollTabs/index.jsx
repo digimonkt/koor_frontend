@@ -53,7 +53,7 @@ const ScrollTabs = () => {
               aria-label="scrollable auto tabs example"
               value={value}
               variant="scrollable"
-              scrollButtons="auto"
+              scrollButtons={true}
               className="scroll_tabs"
             >
               <Tab label="General" {...a11yProps(0)} />
@@ -63,7 +63,7 @@ const ScrollTabs = () => {
               <Tab label="Job search" {...a11yProps(4)} />
               <Tab label="Cooperation" {...a11yProps(5)} />
               <Tab label="Work Presentation" {...a11yProps(6)} />
-              <Tab label="Message" {...a11yProps(7)} /> index={0}
+              <Tab label="Message" {...a11yProps(7)} />
             </TabList>
             <TabPanel value={value} index={0}>
               <Accordian />
