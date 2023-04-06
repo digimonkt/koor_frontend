@@ -179,11 +179,9 @@ function AppliedJobsComponent() {
         <div className="savedjobs">
           {appliedJobsList.map((list) => {
             return (
-              <>
-                <div style={{ borderBottom: "1px solid #cacaca" }}>
-                  <JobCard logo applied key={list.id} jobDetails={list.job} />
-                </div>
-              </>
+              <div style={{ borderBottom: "1px solid #cacaca" }} key={list.id}>
+                <JobCard logo applied jobDetails={list.job} />
+              </div>
             );
           })}
         </div>

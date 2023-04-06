@@ -177,11 +177,9 @@ function SavedJobsComponent() {
         <div className="savedjobs">
           {savedJobsList.map((list) => {
             return (
-              <>
-                <div style={{ borderBottom: "1px solid #cacaca" }}>
-                  <JobCard logo key={list.id} jobDetails={list.job} />
-                </div>
-              </>
+              <div style={{ borderBottom: "1px solid #cacaca" }} key={list.id}>
+                <JobCard logo jobDetails={list.job} />
+              </div>
             );
           })}
         </div>
