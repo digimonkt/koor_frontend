@@ -148,29 +148,73 @@ function Header() {
               }`}
             >
               <li>
-                <Link to="/">Home</Link>
+                <Link
+                  to="/"
+                  className="active"
+                  style={{
+                    color: location.pathname === "/" ? "#274593" : "",
+                  }}
+                >
+                  Home
+                </Link>
               </li>
               {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
                 <li>
-                  <Link to="/job-search">Browse Jobs</Link>
+                  <Link
+                    to="/job-search"
+                    style={{
+                      color: location.pathname.includes("/job-search")
+                        ? "#274593"
+                        : "",
+                    }}
+                  >
+                    Browse Jobs
+                  </Link>
                 </li>
               ) : (
                 ""
               )}
               {!isLoggedIn || role === USER_ROLES.vendor ? (
                 <li>
-                  <Link to="/browse-tenders">Browse tenders</Link>
+                  <Link
+                    to="/browse-tenders"
+                    style={{
+                      color: location.pathname.includes("/browse-tenders")
+                        ? "#274593"
+                        : "",
+                    }}
+                  >
+                    Browse tenders
+                  </Link>
                 </li>
               ) : (
                 ""
               )}
               {!isLoggedIn && (
                 <li>
-                  <Link to="/about-us">About Us</Link>
+                  <Link
+                    to="/about-us"
+                    style={{
+                      color: location.pathname.includes("/about")
+                        ? "#274593"
+                        : "",
+                    }}
+                  >
+                    About Us
+                  </Link>
                 </li>
               )}
               <li>
-                <Link to="/resource">Resources</Link>
+                <Link
+                  to="/resource"
+                  style={{
+                    color: location.pathname.includes("/resource")
+                      ? "#274593"
+                      : "",
+                  }}
+                >
+                  Resources
+                </Link>
               </li>
               {isLoggedIn ? (
                 <>

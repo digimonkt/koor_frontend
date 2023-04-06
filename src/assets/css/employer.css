@@ -124,6 +124,8 @@ span.blueview {
   white-space: nowrap;
   color: #848484;
   margin-right: 10px;
+  border-left: 1px solid #848484;
+  padding-left: 10px;
 }
 
 .recent-research {
@@ -138,7 +140,7 @@ span.blueview {
   color: rgb(18 18 18 / 75%);
 }
 
-.recent-research::before {
+/* .recent-research::before {
   position: absolute;
   content: "";
   border-left: 1px solid #848484;
@@ -146,7 +148,7 @@ span.blueview {
   width: 20px;
   left: -15px;
   top: -8px;
-}
+} */
 .chiplabel {
   font-family: "Poppins" !important;
   font-style: normal;
@@ -712,4 +714,27 @@ span.arrowjobs svg {
 .searchmainbox {
   position: relative;
   width: 100%;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .recent-research span {
+    border-left: none !important;
+    padding-left: 0px !important;
+  }
+  .chiplabel {
+    margin-left: -15px !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .recent-research span {
+    border-left: none !important;
+    padding-left: 0px !important;
+  }
+  .edit-button button {
+    font-size: 11px !important;
+  }
+  .chiplabel {
+    margin-left: -15px !important;
+  }
 }

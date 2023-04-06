@@ -25,7 +25,7 @@ import { addEducationRecord, updateEducationRecord } from "@redux/slice/user";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
-function EditEducation({ handleSubmit, currentSelected }) {
+function EditEducation({ handleSubmit, currentSelected, handleClose }) {
   const dispatch = useDispatch();
   const { educationLevels } = useSelector((state) => state.choices);
   const [loading, setLoading] = useState(false);
@@ -117,10 +117,13 @@ function EditEducation({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="headding">Education</h1>
+      <div className="heading-div">
+        <h1 className="heading">Education</h1>
+        <SVG.CrossCircle className="cross-circle" onClick={handleClose} />
+      </div>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
-          <div className="form-group mb-3">
+          <div className="form-group mb-4 mt-3 ">
             <SelectInput
               placeholder="Select"
               title="Education Level"
@@ -136,7 +139,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
               <ErrorMessage>{formik.errors.educationLevel}</ErrorMessage>
             ) : null}
           </div>
-          <div className="form-group mb-3">
+          <div className="form-group mb-4">
             <LabeledInput
               placeholder="Ex: Certificate in Electronics"
               title="Diploma / certificate / degree"
@@ -148,7 +151,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
               <ErrorMessage>{formik.errors.title}</ErrorMessage>
             ) : null}
           </div>
-          <div className="form-group mb-3">
+          <div className="form-group mb-4">
             <LabeledInput
               placeholder="Ex: Singapore Polytechnic"
               title="School / institute"
@@ -161,7 +164,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
             ) : null}
           </div>
           <label
-            className="mb-1 d-inline-block"
+            className=" d-inline-block mb-3"
             style={{
               fontWeight: 500,
             }}
@@ -198,6 +201,7 @@ function EditEducation({ handleSubmit, currentSelected }) {
             </Grid>
           </Grid>
           <FormControlReminder
+            sx={{ mt: 2 }}
             control={
               <CheckboxInput
                 sx={{

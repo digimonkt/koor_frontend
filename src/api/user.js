@@ -4,6 +4,7 @@ import {
   transformGetUserDetails,
   transformNotificationResponse,
 } from "./transform/user";
+import env from "@utils/validateEnv";
 export const CreateUserAPI = async (data) => {
   return await api.request({
     url: "/v1/users",
@@ -102,5 +103,23 @@ export const GetNotificationAPI = async () => {
       },
     };
   }
+  return res;
+};
+
+export const GetSuggestedAddressAPI = async (search) => {
+  return await api.request({
+    url: urlcat("v1/users/get-location", { search }),
+    method: "GET",
+  });
+};
+export const getLetLongByAddressAPI = async (address) => {
+  const res = await api.request({
+    url: urlcat("https://maps.googleapis.com/maps/api/geocode/json", {
+      address,
+      key: env.REACT_APP_GOOGLE_API_KEY,
+    }),
+    method: "GET",
+  });
+  console.log({ res });
   return res;
 };

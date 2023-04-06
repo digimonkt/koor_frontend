@@ -37,11 +37,12 @@ const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
             direction="row"
             divider={<Divider orientation="vertical" flexItem />}
             spacing={2}
+            flexWrap="wrap"
             alignItems="center"
             sx={{ mb: 1, ...sx }}
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
-            <div className="recent-research">
+            <div className="recent-research" style={{ flexWrap: "wrap" }}>
               <span>
                 Applied <strong>{dayjs(details?.createdAt).fromNow()}</strong>{" "}
                 to:{" "}
@@ -55,31 +56,36 @@ const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
             spacing={2}
             alignItems="center"
             sx={{ mb: 1, ...sx }}
+            className="meets_div"
           >
-            <span className="meets">Meets your requirements with: </span>
-            <>
-              {details?.education && (
-                <Chip
-                  label="Education"
-                  className="chiplabel"
-                  icon={<SVG.SchoolIcon />}
-                />
-              )}
-              {details?.skills && (
-                <Chip
-                  label="Skills"
-                  className="chiplabel"
-                  icon={<SVG.SmallSkillsIcon />}
-                />
-              )}
-              {details?.language && (
-                <Chip
-                  label="Language"
-                  className="chiplabel"
-                  icon={<SVG.SmallLangugeIcon />}
-                />
-              )}
-            </>
+            <div>
+              <span className="meets">Meets your requirements with: </span>
+            </div>
+            <div>
+              <>
+                {details?.education && (
+                  <Chip
+                    label="Education"
+                    className="chiplabel"
+                    icon={<SVG.SchoolIcon />}
+                  />
+                )}
+                {details?.skills && (
+                  <Chip
+                    label="Skills"
+                    className="chiplabel"
+                    icon={<SVG.SmallSkillsIcon />}
+                  />
+                )}
+                {details?.language && (
+                  <Chip
+                    label="Language"
+                    className="chiplabel"
+                    icon={<SVG.SmallLangugeIcon />}
+                  />
+                )}
+              </>
+            </div>
           </Stack>
           <div className="recent-descrition">
             <p>{details?.shortLetter || details?.user?.description}</p>

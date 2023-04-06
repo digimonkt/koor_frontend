@@ -111,7 +111,7 @@ span.blueview {
   font-size: 24px;
   line-height: 29px;
   color: #121212;
-  margin: 0px;
+  margin-bottom: 5px;
   white-space: nowrap;
 }
 
@@ -124,6 +124,9 @@ span.blueview {
   white-space: nowrap;
   color: #848484;
   margin-right: 10px;
+  margin-bottom: 5px;
+  border-left: 1px solid #848484;
+  padding-left: 10px;
 }
 
 .recent-research {
@@ -167,6 +170,9 @@ span.blueview {
 .border-recent:last-child {
   border-bottom: 0px;
 }
+.edit-button {
+  align-items: baseline !important;
+}
 .edit-button button {
   background: transparent;
   border: 0px;
@@ -186,9 +192,12 @@ span.blueview {
   display: block;
   white-space: nowrap;
 }
+
 .recent-research {
   display: flex;
+  margin-left: 0px !important;
 }
+
 .job-count {
   font-family: "Bahnschrift" !important;
   font-weight: 600 !important;
@@ -271,7 +280,8 @@ span.blueview {
   line-height: 20px;
   /* identical to box height, or 143% */
   letter-spacing: 0.02em;
-
+  display: flex !important;
+  align-items: center !important;
   color: #274593;
 }
 
@@ -336,13 +346,10 @@ span.arrowjobs svg {
 }
 .chip-cricle {
   font-family: "Poppins" !important;
-
   font-weight: 400 !important;
   font-size: 14px !important;
   line-height: 20px !important;
-
   letter-spacing: 0.02em;
-
   color: #121212 !important;
   padding-left: 10px !important;
 }
@@ -695,4 +702,47 @@ span.arrowjobs svg {
 .searchmainbox {
   position: relative;
   width: 100%;
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .meets_div {
+    display: flex;
+  }
+
+  .chip-cricle {
+    font-size: 12px !important;
+  }
+
+  .recent-research span {
+    border-left: none !important;
+    padding-left: 0px !important;
+  }
+
+  .recent-research {
+    display: block;
+    margin-left: 0px !important;
+  }
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .meets_div {
+    display: flex;
+  }
+
+  .chip-cricle {
+    font-size: 12px !important;
+  }
+
+  .chiplabel {
+    margin-left: -15px !important;
+  }
+
+  .recent-research span {
+    border-left: none !important;
+  }
+
+  .recent-research {
+    display: block;
+    margin-left: 0px !important;
+  }
 }

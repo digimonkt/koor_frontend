@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LabeledRadioInput, SelectInput } from "@components/input";
+import { LabeledInput, LabeledRadioInput } from "@components/input";
 import { getLanguages } from "@redux/slice/choices";
 import { LANGUAGE_PROFICIENCY } from "@utils/enum";
 import { useFormik } from "formik";
@@ -15,13 +15,20 @@ import {
 } from "@api/jobSeeker";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { addLanguageRecord, updateLanguageRecord } from "@redux/slice/user";
+import styles from "./styles.module.css";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
-function EditLanguages({ currentSelected, handleSubmit }) {
+function EditLanguages({
+  currentSelected,
+  handleSubmit,
+  handleClose,
+  ...rest
+}) {
   const dispatch = useDispatch();
   const { languages } = useSelector((state) => state.choices);
   const [loading, setLoading] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const formik = useFormik({
     initialValues: {
       language: "",
@@ -32,7 +39,12 @@ function EditLanguages({ currentSelected, handleSubmit }) {
     onSubmit: async (values) => {
       setLoading(true);
       if (!currentSelected) {
-        const res = await addLanguageDetailsAPI(values);
+        const payload = {
+          language: values.language.id,
+          spoken: values.spoken,
+          written: values.written,
+        };
+        const res = await addLanguageDetailsAPI(payload);
         if (res.remote === "success") {
           dispatch(setSuccessToast("Language Added Successfully"));
           dispatch(
@@ -82,32 +94,59 @@ function EditLanguages({ currentSelected, handleSubmit }) {
   useEffect(() => {
     if (currentSelected) {
       const payload = {
-        language: currentSelected.language.id,
+        language: currentSelected.language,
         written: currentSelected.written,
         spoken: currentSelected.spoken,
       };
       for (const key in payload) {
         formik.setFieldValue(key, payload[key]);
       }
+      setSearchValue(currentSelected.language.title);
     }
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="headding">Language</h1>
+      <div className="heading-div">
+        <h1 className="heading">Language</h1>
+        <SVG.CrossCircle className="cross-circle" onClick={handleClose} />
+      </div>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
-          <div className="form-group mb-3">
-            <SelectInput
+          <div className="mb-3 search-language">
+            <LabeledInput
+              icon={<SVG.HeaderSearch />}
               placeholder="Search Language"
-              title="Language"
               labelWeight={500}
-              className="add-form-control"
-              options={languages.data.map((language) => ({
-                label: language.title,
-                value: language.id,
-              }))}
-              {...formik.getFieldProps("language")}
+              style={{
+                border: "1px solid #cacaca",
+                borderRadius: "30px",
+                padding: "8px 20px",
+              }}
+              onChange={(e) => setSearchValue(e.target.value)}
+              value={searchValue}
             />
+            {searchValue && searchValue !== formik.values.language.title && (
+              <div className={styles.search_results_box}>
+                {languages.data
+                  .filter((lang) =>
+                    lang.title.toLowerCase().includes(searchValue.toLowerCase())
+                  )
+                  .map((lang) => {
+                    return (
+                      <div
+                        key={lang.id}
+                        className={styles.search_results}
+                        onClick={() => {
+                          formik.setFieldValue("language", lang);
+                          setSearchValue(lang.title);
+                        }}
+                      >
+                        {lang.title}
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
             {formik.touched.language && formik.errors.language ? (
               <ErrorMessage>{formik.errors.language}</ErrorMessage>
             ) : null}

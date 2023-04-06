@@ -37,26 +37,25 @@ export const request = async (config) => {
     }
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && !config.url.includes("http")) {
       config.headers.Authorization = `Bearer ${accessToken}`;
       config.headers["x-refresh"] = `${refreshToken}`;
     }
-
     const response = await axiosInstance.request({ ...config });
     return {
       remote: "success",
       data: response.data,
     };
   } catch (error) {
-    if (error.response.headers["x-access"]) {
-      globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
-    } else {
-      if (error.response.status === 403 || error.response.status === 401) {
-        localStorage.clear();
-      }
-    }
     if (error) {
       if (error.response) {
+        if (error.response.headers["x-access"]) {
+          globalLocalStorage.setAccessToken(error.response.headers["x-access"]);
+        } else {
+          if (error.response.status === 403 || error.response.status === 401) {
+            localStorage.clear();
+          }
+        }
         const axiosError = error;
         if (axiosError.response && axiosError.response.data) {
           let errorMessage = axiosError.response.data;

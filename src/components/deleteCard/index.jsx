@@ -6,7 +6,7 @@ import React from "react";
 function DeleteCard({ title, content, handleDelete, handleCancel, loading }) {
   return (
     <div>
-      <h1 className="headding">{title}</h1>
+      <h1 className="heading">{title}</h1>
       <div className="form-content">{content}</div>
       <Grid item xl={12} lg={12} xs={12}>
         <Stack

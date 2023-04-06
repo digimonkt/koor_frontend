@@ -10,7 +10,7 @@ import {
 import { Add, Minimize } from "@mui/icons-material";
 
 const Accordian = () => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState("panel1");
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -56,8 +56,8 @@ const Accordian = () => {
             >
               <AccordionSummary
                 expandIcon={expanded === "panel2" ? <Minimize /> : <Add />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                aria-controls="panel2a-content"
+                id="panel2a-header"
               >
                 <Typography className={styles.accordion_heading}>
                   I can’t apply for an account. What can I do?
@@ -80,8 +80,8 @@ const Accordian = () => {
             >
               <AccordionSummary
                 expandIcon={expanded === "panel3" ? <Minimize /> : <Add />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                aria-controls="panel3a-content"
+                id="panel3a-header"
               >
                 <Typography className={styles.accordion_heading}>
                   Where can I download the App?
@@ -107,8 +107,8 @@ const Accordian = () => {
             >
               <AccordionSummary
                 expandIcon={expanded === "panel4" ? <Minimize /> : <Add />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
+                aria-controls="panel4a-content"
+                id="panel4a-header"
               >
                 <Typography className={styles.accordion_heading}>
                   What benefits/features does the app provide?

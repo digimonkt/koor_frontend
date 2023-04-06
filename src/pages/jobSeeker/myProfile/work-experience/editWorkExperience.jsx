@@ -108,7 +108,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="headding">Work Experience</h1>
+      <h1 className="heading">Work Experience</h1>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
@@ -138,7 +138,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 ) : null}
               </div>
               <label
-                className="mb-1 d-inline-block"
+                className="mb-3 d-inline-block"
                 style={{
                   fontWeight: 500,
                 }}

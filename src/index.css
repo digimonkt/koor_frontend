@@ -1,4 +1,4 @@
-.date_input .css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+.date_input .MuiInputBase-root.MuiOutlinedInput-root {
   border-radius: 30px !important;
   padding: 2px 20px 2px 2px !important;
   height: 44px;
@@ -7,20 +7,20 @@
 .date_input label {
   top: -4px;
 }
-.drop_menu .css-13xfq8m-MuiTabPanel-root {
+.drop_menu .MuiTabPanel-root {
   padding: 24px 24px 0px 24px !important;
 }
-.drop_menu .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover {
+.drop_menu .MuiButtonBase-root.MuiMenuItem-root:hover {
   background-color: #fff !important;
 }
-.content_notifi .css-1aquho2-MuiTabs-indicator {
+.content_notifi .MuiTabs-indicator {
   display: none !important;
 }
-.content_notifi .css-heg063-MuiTabs-flexContainer {
+.content_notifi .MuiTabs-flexContainer {
   display: block !important;
   justify-content: inherit !important;
 }
-.content_notifi .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+.content_notifi .MuiButtonBase-root.MuiTab-root.Mui-selected {
   font-family: "Poppins", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500 !important;
@@ -30,12 +30,12 @@
   border-radius: 30px !important;
   opacity: 45% !important;
 }
-.tab_list .css-heg063-MuiTabs-flexContainer {
+.tab_list .MuiTabs-flexContainer {
   display: block !important;
   justify-content: inherit !important;
   margin-bottom: 15px !important;
 }
-.tab_list .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+.tab_list .Mui-selected {
   font-family: "Poppins", sans-serif !important;
   font-size: 16px !important;
   font-weight: 500 !important;
@@ -45,29 +45,28 @@
   border-radius: 30px !important;
   opacity: 45% !important;
 }
-.tab_list .css-1aquho2-MuiTabs-indicator {
+.tab_list .MuiTabs-indicator {
   display: none !important;
 }
-.drop_menu .css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+.drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
   width: 480px !important;
-  left: 1050px !important;
-  top: 69px !important;
+  left: 1180px !important;
+  top: 70px !important;
 }
 
-.homepage
-  .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+.homepage .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
   background-color: #fff !important;
 }
-.MuiSelect-select .newstabs .css-jpln7h-MuiTabs-scroller {
+.MuiSelect-select .newstabs .MuiTabs.scroller {
   white-space: inherit !important;
 }
 
-.newstabs .css-heg063-MuiTabs-flexContainer {
+.newstabs .MuiTabs-flexContainer {
   display: contents !important;
   justify-content: center !important;
 }
 
-.newstabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+.newstabs .MuiButtonBase-root.MuiTab-root {
   font-family: "Bahnschrift", sans-serif !important;
   font-size: 28px !important;
   font-weight: 600 !important;
@@ -80,7 +79,7 @@
   border-bottom: none !important;
 }
 
-.newstabs .css-1aquho2-MuiTabs-indicator {
+.newstabs .MuiTabs-indicator {
   height: 6px !important;
   background-color: #eea23d !important;
   border-top-left-radius: 50px;
@@ -95,7 +94,7 @@
   color: #121212 !important;
 }
 
-.scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+.scroll_tabs .MuiButtonBase-root.MuiTab-root {
   border: 1px solid grey !important;
   opacity: 70% !important;
   border-radius: 50px !important;
@@ -106,7 +105,7 @@
   line-height: 21px !important;
 }
 
-.scroll_tabs .css-1aquho2-MuiTabs-indicator {
+.scroll_tabs .MuiTabs-indicator {
   display: none !important;
 }
 
@@ -122,13 +121,9 @@
   line-height: 21px !important;
 }
 
-.css-heg063-MuiTabs-flexContainer {
+.scroll_tabs .MuiTabs-flexContainer {
   display: flex !important;
   justify-content: space-between !important;
-}
-
-.css-ece9u5 {
-  min-width: -1px !important;
 }
 
 .marquee {
@@ -205,11 +200,34 @@ textarea {
   color: #121212;
 }
 
-@media screen and (max-width: 1536px) and (min-width: 1440px) {
-  .newstabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
-    margin-left: 0px !important;
+@media screen and (max-width: 1800px) and (min-width: 1536px) {
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
   }
-  .scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 1065px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+}
+
+@media screen and (max-width: 1536px) and (min-width: 1440px) {
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 875px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 10px !important;
   }
 }
@@ -221,11 +239,39 @@ textarea {
     bottom: 220px;
   }
 
-  .scroll_tabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 590px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 10px !important;
   }
 
-  .newstabs .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 0px !important;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+  .verticalSlider ul.slick-dots {
+    transform: rotate(90deg);
+    position: relative;
+    bottom: 220px;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 420px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .newstabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 0px !important;
   }
 }

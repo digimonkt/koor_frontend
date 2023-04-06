@@ -82,11 +82,13 @@ const JobPreferences = () => {
             </FormGroup>
           </div>
         </Stack>
-        <div className="job-text mb-4">
+        <div className="job-text">
           This will automatically turned OFF every week. Remember to turn it ON
           to keep employer informed of your availability.
         </div>
         <Stack
+          ack
+          className="mb-3"
           direction={{ xs: "column", lg: "row" }}
           spacing={{ xs: 2, lg: 2, md: 2 }}
           alignItems={{ xs: "start", lg: "center" }}
@@ -115,6 +117,7 @@ const JobPreferences = () => {
           </div>
         </Stack>
         <Stack
+          className="mb-3"
           direction={{ xs: "column", lg: "row" }}
           spacing={{ xs: 2, lg: 2, md: 2 }}
           alignItems={{ xs: "start", lg: "center" }}
@@ -214,7 +217,7 @@ const JobPreferences = () => {
                 </SelectBox>
               </FormControl>
             </Stack>
-            <div className="mt-4">
+            <div className="mt-4 pt-2">
               <OutlinedButton
                 title={
                   <>

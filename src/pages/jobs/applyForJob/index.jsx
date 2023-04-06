@@ -170,6 +170,7 @@ const ApplyForJob = () => {
                     color={getColorByRemainingDays(
                       details.expiredInDays > 0 ? details.expiredInDays : 0
                     )}
+                    style={{ marginLeft: "20px" }}
                   />
                 </div>
               </Grid>
@@ -325,7 +326,8 @@ const ApplyForJob = () => {
         handleClose={() => console.log("close")}
         sx={{
           "& .MuiPaper-root": {
-            width: "730px",
+            maxWidth: "734px",
+            width: "734px",
           },
         }}
       >

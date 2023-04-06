@@ -43,9 +43,6 @@ const Home = () => {
   const [location, setLocation] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
-  // console.log("categories --- ", categories);
-  // console.log("location --- ", location);
-
   useEffect(() => {
     dispatch(setIstHomePage(true));
     if (!countries.data.length) {
@@ -80,17 +77,19 @@ const Home = () => {
                       onChange={(e) => setSearchValue(e.target.value)}
                     />
                   </Box>
-                  <SelectInput
-                    value={categories}
-                    onChange={(vl) => setCategories(vl.target.value)}
-                    options={jobCategories.data.map((jobCategory) => ({
-                      value: jobCategory.id,
-                      label: jobCategory.title,
-                    }))}
-                    label="Category"
-                    placeholder="Category"
-                    className={`${styles.category_select}`}
-                  />
+                  <div>
+                    <SelectInput
+                      value={categories}
+                      onChange={(vl) => setCategories(vl.target.value)}
+                      options={jobCategories.data.map((jobCategory) => ({
+                        value: jobCategory.id,
+                        label: jobCategory.title,
+                      }))}
+                      label="Category"
+                      placeholder="Category"
+                      className={`${styles.category_select}`}
+                    />
+                  </div>
                   <SelectInput
                     value={location}
                     onChange={(vl) => setLocation(vl.target.value)}

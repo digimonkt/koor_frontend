@@ -7,6 +7,7 @@ function LabeledInputComponent({
   subtitle,
   type,
   labelWeight,
+  icon,
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -61,6 +62,7 @@ function LabeledInputComponent({
             }
             {...rest}
           />
+          {icon && <div>{icon}</div>}
           {type === "password" ? (
             <div onClick={handleChangePasswordVisibility}>
               {!isVisiblePassword ? <SVG.EyeOpen /> : <SVG.EyeOff />}

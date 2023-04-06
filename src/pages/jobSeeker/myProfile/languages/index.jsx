@@ -109,6 +109,7 @@ const Languages = () => {
         <EditLanguages
           handleSubmit={handleSubmit}
           currentSelected={currentSelected}
+          handleClose={handleToggleModel}
         />
       </DialogBox>
     </>

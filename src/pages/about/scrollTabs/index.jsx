@@ -1,8 +1,41 @@
 import React from "react";
-import { Box, Tab } from "@mui/material";
+import { Box, Tab, Typography } from "@mui/material";
 import Accordian from "../accordion";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-// import styles from "./scroll-tabs.module.css";
+import { TabContext, TabList } from "@mui/lab";
+import PropTypes from "prop-types";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const ScrollTabs = () => {
   const [value, setValue] = React.useState(0);
@@ -17,43 +50,43 @@ const ScrollTabs = () => {
           <TabContext value={value}>
             <TabList
               onChange={handleChange}
-              aria-label="lab API tabs example"
+              aria-label="scrollable auto tabs example"
               value={value}
               variant="scrollable"
-              scrollButtons={false}
+              scrollButtons={true}
               className="scroll_tabs"
             >
-              <Tab label="General" value="1" />
-              <Tab label="Payment" value="2" />
-              <Tab label="Security" value="3" />
-              <Tab label="Returns" value="4" />
-              <Tab label="Job search" value="5" />
-              <Tab label="Cooperation" value="6" />
-              <Tab label="Work Presentation" value="7" />
-              <Tab label="Message" value="8" />
+              <Tab label="General" {...a11yProps(0)} />
+              <Tab label="Payment" {...a11yProps(1)} />
+              <Tab label="Security" {...a11yProps(2)} />
+              <Tab label="Returns" {...a11yProps(3)} />
+              <Tab label="Job search" {...a11yProps(4)} />
+              <Tab label="Cooperation" {...a11yProps(5)} />
+              <Tab label="Work Presentation" {...a11yProps(6)} />
+              <Tab label="Message" {...a11yProps(7)} />
             </TabList>
-            <TabPanel value="1">
+            <TabPanel value={value} index={0}>
               <Accordian />
             </TabPanel>
-            <TabPanel value="2">
+            <TabPanel value={value} index={1}>
               <Accordian />
             </TabPanel>
-            <TabPanel value="3">
+            <TabPanel value={value} index={2}>
               <Accordian />
             </TabPanel>
-            <TabPanel value="4">
+            <TabPanel value={value} index={3}>
               <Accordian />
             </TabPanel>
-            <TabPanel value="5">
+            <TabPanel value={value} index={4}>
               <Accordian />
             </TabPanel>
-            <TabPanel value="6">
+            <TabPanel value={value} index={5}>
               <Accordian />
             </TabPanel>
-            <TabPanel value="7">
+            <TabPanel value={value} index={6}>
               <Accordian />
             </TabPanel>
-            <TabPanel value="8">
+            <TabPanel value={value} index={7}>
               <Accordian />
             </TabPanel>
           </TabContext>
