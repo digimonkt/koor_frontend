@@ -178,7 +178,13 @@ function AppliedJobsComponent() {
         </div>
         <div className="savedjobs">
           {appliedJobsList.map((list) => {
-            return <JobCard logo applied key={list.id} jobDetails={list.job} />;
+            return (
+              <>
+                <div style={{ borderBottom: "1px solid #cacaca" }}>
+                  <JobCard logo applied key={list.id} jobDetails={list.job} />
+                </div>
+              </>
+            );
           })}
         </div>
       </CardContent>

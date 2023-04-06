@@ -197,7 +197,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             ) : (
               <React.Fragment>
                 {!applied ? (
-                  <div onClick={handleToggleSave}>
+                  <div onClick={handleToggleSave} style={{ marginLeft: "6px" }}>
                     <div className="bookmark">
                       {isSaved ? (
                         <>

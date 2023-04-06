@@ -73,7 +73,7 @@ function SavedJobsComponent() {
             <h2 className="m-0">
               Saved jobs
               <Chip
-                label = {totalSavedJobs}
+                label={totalSavedJobs}
                 className="ms-3"
                 sx={{
                   background: "#FEEFD3",
@@ -176,7 +176,13 @@ function SavedJobsComponent() {
         </div>
         <div className="savedjobs">
           {savedJobsList.map((list) => {
-            return <JobCard logo key={list.id} jobDetails={list.job} />;
+            return (
+              <>
+                <div style={{ borderBottom: "1px solid #cacaca" }}>
+                  <JobCard logo key={list.id} jobDetails={list.job} />
+                </div>
+              </>
+            );
           })}
         </div>
       </CardContent>
