@@ -316,7 +316,7 @@ function PostJobsComponent() {
         >
           <div className="job-content">
             <h2>
-              Post a new job
+              {jobId ? "Update Job" : "Post a new job"}
               <span className="right-pull">
                 <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
                   <CloseIcon />
