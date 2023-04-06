@@ -51,7 +51,7 @@ function ApplicationOptions({
             {<SVG.RejectIcon className="application-option-icon" />}{" "}
             <span>Reject</span>
           </Button>
-          <Button variant="link">
+          <Button variant="link" className="application-option-btn">
             {<SVG.BlockedIcon className="application-option-icon" />}{" "}
             <span>Blacklist</span>
           </Button>

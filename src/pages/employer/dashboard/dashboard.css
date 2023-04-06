@@ -280,7 +280,8 @@ span.blueview {
   line-height: 20px;
   /* identical to box height, or 143% */
   letter-spacing: 0.02em;
-
+  display: flex !important;
+  align-items: center !important;
   color: #274593;
 }
 
@@ -345,13 +346,10 @@ span.arrowjobs svg {
 }
 .chip-cricle {
   font-family: "Poppins" !important;
-
   font-weight: 400 !important;
   font-size: 14px !important;
   line-height: 20px !important;
-
   letter-spacing: 0.02em;
-
   color: #121212 !important;
   padding-left: 10px !important;
 }
@@ -711,6 +709,10 @@ span.arrowjobs svg {
     display: flex;
   }
 
+  .chip-cricle {
+    font-size: 12px !important;
+  }
+
   .recent-research span {
     border-left: none !important;
     padding-left: 0px !important;
@@ -722,9 +724,13 @@ span.arrowjobs svg {
   }
 }
 
-@media screen and (max-width: 1440px) and (min-width: 1200) {
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
   .meets_div {
     display: flex;
+  }
+
+  .chip-cricle {
+    font-size: 12px !important;
   }
 
   .chiplabel {
