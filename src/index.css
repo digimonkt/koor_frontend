@@ -287,6 +287,17 @@ textarea {
     bottom: 220px;
   }
 
+  .update_checkbox {
+    display: grid !important;
+    margin-right: 25px !important;
+  }
+
+  .update_checkbox .MuiButtonBase-root.MuiCheckbox-root {
+    display: block !important;
+    margin-top: 10px !important;
+    padding: 0px !important;
+  }
+
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
     left: 590px !important;

@@ -492,20 +492,23 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={3} lg={4} xs={12} className="mt-2">
                     <label>Job type</label>
-                    <FormGroup row sx={{ marginLeft: "7px" }}>
+                    <FormGroup row sx={{ marginLeft: "7px", display: "flex" }}>
                       <JobFormControl
+                        className="update_checkbox"
                         control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
                         label="Part Time"
                         checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
+                        className="update_checkbox"
                         control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
                         label="Full Time"
                         checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
+                        className="update_checkbox"
                         control={<CheckboxInput sx={{ padding: "9px 6px" }} />}
                         label="Contract"
                         checked={formik.values.hasContract}
@@ -647,7 +650,7 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <label>
+                    <label className="mb-2">
                       Required languages
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
                     </label>
@@ -657,6 +660,7 @@ function PostJobsComponent() {
                           <Grid item xl={4} lg={4} xs={12} key={i}>
                             <SelectInput
                               placeholder="Select a Language"
+                              className="mb-3"
                               options={languages.data.map((language) => ({
                                 value: language.id,
                                 label: language.title,
@@ -715,13 +719,14 @@ function PostJobsComponent() {
                   </Grid>
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
-                  <label>
-                    Job skills{" "}
+                  <label className="mb-2">
+                    Job skills
                     <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
                   </label>
                   <Grid container spacing={2}>
                     <Grid item xl={4} lg={4} xs={12}>
                       <SelectInput
+                        className="mb-3"
                         defaultValue=""
                         placeholder="Select a Skill"
                         options={skills.data.map((skill) => ({
@@ -771,7 +776,7 @@ function PostJobsComponent() {
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
-                  <h2 className="mt-2 mb-3">Attach files</h2>
+                  <h2 className="mt-3 mb-3">Attach files</h2>
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
                     handleDrop={(file) => {
