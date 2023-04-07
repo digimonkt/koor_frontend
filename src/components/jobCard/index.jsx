@@ -124,7 +124,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
-                    Company: <span>Facebook</span>
+                    Company: <span>{jobDetails.user.name}</span>
                   </div>
                 </Stack>
               )}
