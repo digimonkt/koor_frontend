@@ -21,7 +21,6 @@
 span.blueview {
   width: 16px;
   height: 16px;
-
   border: 4px solid;
   border-radius: 100%;
   display: inline-block;
@@ -56,9 +55,7 @@ span.blueview {
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
-
   letter-spacing: 0.02em;
-
   color: rgb(18 18 18 / 75%);
 }
 
@@ -76,7 +73,6 @@ span.blueview {
   font-weight: 600;
   font-size: 20px;
   line-height: 30px;
-
   color: #121212;
   margin-bottom: 16px;
 }
@@ -506,11 +502,11 @@ span.arrowjobs svg {
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
-
   color: #121212;
   display: inline-block;
   margin-bottom: 5px;
 }
+
 .job-content h2 {
   margin: 0;
   font-family: "Bahnschrift";
