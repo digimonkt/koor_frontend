@@ -21,7 +21,6 @@
 span.blueview {
   width: 16px;
   height: 16px;
-
   border: 4px solid;
   border-radius: 100%;
   display: inline-block;
@@ -56,9 +55,7 @@ span.blueview {
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
-
   letter-spacing: 0.02em;
-
   color: rgb(18 18 18 / 75%);
 }
 
@@ -76,7 +73,6 @@ span.blueview {
   font-weight: 600;
   font-size: 20px;
   line-height: 30px;
-
   color: #121212;
   margin-bottom: 16px;
 }
@@ -169,6 +165,9 @@ span.blueview {
 }
 .border-recent:last-child {
   border-bottom: 0px;
+}
+.edit-button {
+  align-items: baseline !important;
 }
 .edit-button button {
   background: transparent;
@@ -277,7 +276,8 @@ span.blueview {
   line-height: 20px;
   /* identical to box height, or 143% */
   letter-spacing: 0.02em;
-
+  display: flex !important;
+  align-items: center !important;
   color: #274593;
 }
 
@@ -342,13 +342,10 @@ span.arrowjobs svg {
 }
 .chip-cricle {
   font-family: "Poppins" !important;
-
   font-weight: 400 !important;
   font-size: 14px !important;
   line-height: 20px !important;
-
   letter-spacing: 0.02em;
-
   color: #121212 !important;
   padding-left: 10px !important;
 }
@@ -505,11 +502,11 @@ span.arrowjobs svg {
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
-
   color: #121212;
   display: inline-block;
   margin-bottom: 5px;
 }
+
 .job-content h2 {
   margin: 0;
   font-family: "Bahnschrift";
@@ -708,6 +705,10 @@ span.arrowjobs svg {
     display: flex;
   }
 
+  .chip-cricle {
+    font-size: 12px !important;
+  }
+
   .recent-research span {
     border-left: none !important;
     padding-left: 0px !important;
@@ -719,9 +720,13 @@ span.arrowjobs svg {
   }
 }
 
-@media screen and (max-width: 1440px) and (min-width: 1200) {
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
   .meets_div {
     display: flex;
+  }
+
+  .chip-cricle {
+    font-size: 12px !important;
   }
 
   .chiplabel {

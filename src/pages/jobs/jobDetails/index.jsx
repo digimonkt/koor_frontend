@@ -158,7 +158,7 @@ const JobDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} lg={8}>
                 <div className={`${styles.contentJob}`}>
-                  <h4>Details:</h4>
+                  <h4>Details :</h4>
                   <p className="job-description">{details.description}</p>
                 </div>
                 <div className={`${styles.iconbtn}`}>
@@ -264,16 +264,16 @@ const JobDetails = () => {
           </div>
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <JobRequirementCard
                   jobCategories={details.jobCategories}
                   languages={details.languages}
                   skills={details.skills}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <div className={`${styles.location}`}>
-                  <h3 className="mb-0">Location:</h3>
+                  <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
                   <div style={{ height: "100%" }}>
                     <GoogleMapWrapper>

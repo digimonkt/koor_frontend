@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React, { useEffect, useState } from "react";
-import { OutlinedButton } from "@components/button";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SVG } from "@assets/svg";
 import { getApplicationDetailsAPI } from "@api/employer";
@@ -118,25 +117,6 @@ const ApplicantDetails = () => {
                     applicationId={params.applicationId}
                     allOptions
                     isShortlisted={applicantDetails.shortlistedAt}
-                  />
-
-                  <OutlinedButton
-                    style={{
-                      fontWeight: "400",
-                      fontSize: "12px",
-                      display: "flex",
-                      alignItems: "center",
-                      width: "130px",
-                      height: "40px",
-                    }}
-                    title={
-                      <>
-                        <span className="me-2 d-inline-flex">
-                          {<SVG.MessageIcon />}
-                        </span>{" "}
-                        Message
-                      </>
-                    }
                   />
                 </Stack>
               </Grid>

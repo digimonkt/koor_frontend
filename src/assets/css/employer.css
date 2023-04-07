@@ -731,6 +731,9 @@ span.arrowjobs svg {
     border-left: none !important;
     padding-left: 0px !important;
   }
+  .edit-button button {
+    font-size: 11px !important;
+  }
   .chiplabel {
     margin-left: -15px !important;
   }

@@ -1,0 +1,11 @@
+.application-option-icon {
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 20px !important;
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .application-option-btn span {
+    font-size: 11px !important;
+  }
+}
