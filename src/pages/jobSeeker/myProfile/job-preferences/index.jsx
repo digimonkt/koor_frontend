@@ -1,55 +1,80 @@
-import {
-  Checkbox,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  MenuItem,
-  Select,
-  Stack,
-} from "@mui/material";
-import React, { useState } from "react";
-import { SVG } from "@assets/svg";
-import styled from "@emotion/styled";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { FormGroup, Stack } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { FormControlReminder } from "@components/style";
+import { CheckboxInput } from "@components/input";
 import { OutlinedButton } from "@components/button";
+import { SVG } from "@assets/svg";
+import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
+import { useDispatch, useSelector } from "react-redux";
+import { UpdateJobPreferencesAPI } from "@api/jobSeeker";
+import { setSuccessToast } from "@redux/slice/toast";
+import { updateCurrentUser } from "@redux/slice/user";
 
-export const SelectBox = styled(Select)`
-  & .MuiSelect-select {
-    background: #f0f0f0;
-    border-radius: 10px;
-  }
-  &.MuiInputBase-root {
-    border-radius: 0px;
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 22px;
-
-    letter-spacing: 0.02em;
-    opacity: 0.5;
-    color: #121212;
-  }
-  & fieldset {
-    display: none;
-  }
-`;
-export const JobFormControl = styled(FormControlLabel)`
-  & .MuiFormControlLabel-label {
-    font-family: "Poppins";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    letter-spacing: 0.02em;
-    color: #121212;
-  }
-`;
 const JobPreferences = () => {
-  const [isSelect, setIsSelect] = useState("");
-  const handleChange = (event) => {
-    setIsSelect(event.target.value);
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
+  const [jobPreferences, setJobPreferences] = useState({
+    isAvailable: false,
+    displayInSearch: false,
+    isPartTime: false,
+    isFullTime: false,
+    hasContract: false,
+    expectedSalary: 0,
+  });
+
+  const handleChangeCheckbox = (name) => (e) => {
+    setJobPreferences({ ...jobPreferences, [name]: e.target.checked });
   };
+  const handleChangeInput = (name) => (e) => {
+    console.log("e: ", e.target.value, name);
+    setJobPreferences({ ...jobPreferences, [name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    const payload = {
+      is_available: jobPreferences.isAvailable,
+      display_in_search: jobPreferences.displayInSearch,
+      is_part_time: jobPreferences.isPartTime,
+      is_full_time: jobPreferences.isFullTime,
+      has_contract: jobPreferences.hasContract,
+      expected_salary: jobPreferences.expectedSalary,
+    };
+    for (const key in payload) {
+      if (!payload[key]) {
+        delete payload[key];
+      }
+    }
+    const res = await UpdateJobPreferencesAPI(payload);
+    if (res.remote === "success") {
+      dispatch(setSuccessToast("Updated Preferences successfully"));
+      dispatch(
+        updateCurrentUser({
+          jobPreferences: {
+            isAvailable: !!payload.is_available,
+            displayInSearch: !!payload.display_in_search,
+            isPartTime: !!payload.is_part_time,
+            isFullTime: !!payload.is_full_time,
+            hasContract: !!payload.has_contract,
+            expectedSalary: payload.expected_salary,
+          },
+        })
+      );
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    setJobPreferences({
+      isAvailable: currentUser.jobPreferences.isAvailable,
+      displayInSearch: currentUser.jobPreferences.displayInSearch,
+      isPartTime: currentUser.jobPreferences.isPartTime,
+      isFullTime: currentUser.jobPreferences.isFullTime,
+      hasContract: currentUser.jobPreferences.hasContract,
+      expectedSalary: currentUser.jobPreferences.expectedSalary,
+    });
+  }, []);
   return (
     <>
       <div className="add-content">
@@ -62,21 +87,10 @@ const JobPreferences = () => {
           <label className="w-25">Availability:</label>
           <div className="w-75">
             <FormGroup row>
-              <JobFormControl
-                control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
-                    sx={{
-                      color: "#CACACA",
-                      transition: "all 0.5s ease-out",
-                      "&.Mui-checked": {
-                        color: "#EEA23D",
-                        transition: "all 0.5s ease-out",
-                      },
-                    }}
-                  />
-                }
+              <FormControlReminder
+                control={<CheckboxInput />}
+                onChange={handleChangeCheckbox("isAvailable")}
+                checked={jobPreferences.isAvailable}
                 label="I’m available right now"
               />
             </FormGroup>
@@ -87,7 +101,6 @@ const JobPreferences = () => {
           to keep employer informed of your availability.
         </div>
         <Stack
-          ack
           className="mb-3"
           direction={{ xs: "column", lg: "row" }}
           spacing={{ xs: 2, lg: 2, md: 2 }}
@@ -96,21 +109,10 @@ const JobPreferences = () => {
           <label className="w-25">Search visibility:</label>
           <div className="w-75">
             <FormGroup row>
-              <JobFormControl
-                control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
-                    sx={{
-                      color: "#CACACA",
-                      transition: "all 0.5s ease-out",
-                      "&.Mui-checked": {
-                        color: "#EEA23D",
-                        transition: "all 0.5s ease-out",
-                      },
-                    }}
-                  />
-                }
+              <FormControlReminder
+                control={<CheckboxInput />}
+                onChange={handleChangeCheckbox("displayInSearch")}
+                checked={jobPreferences.displayInSearch}
                 label="Display my profile in Talents search"
               />
             </FormGroup>
@@ -125,55 +127,22 @@ const JobPreferences = () => {
           <label className="w-25">Job type:</label>
           <div className="w-75">
             <FormGroup row>
-              <JobFormControl
-                control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
-                    sx={{
-                      color: "#CACACA",
-                      transition: "all 0.5s ease-out",
-                      "&.Mui-checked": {
-                        color: "#EEA23D",
-                        transition: "all 0.5s ease-out",
-                      },
-                    }}
-                  />
-                }
+              <FormControlReminder
+                control={<CheckboxInput />}
+                onChange={handleChangeCheckbox("isPartTime")}
+                checked={jobPreferences.isPartTime}
                 label="Part Time"
               />
-              <JobFormControl
-                control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
-                    sx={{
-                      color: "#CACACA",
-                      transition: "all 0.5s ease-out",
-                      "&.Mui-checked": {
-                        color: "#EEA23D",
-                        transition: "all 0.5s ease-out",
-                      },
-                    }}
-                  />
-                }
+              <FormControlReminder
+                control={<CheckboxInput />}
+                onChange={handleChangeCheckbox("isFullTime")}
+                checked={jobPreferences.isFullTime}
                 label="Full Time"
               />
-              <JobFormControl
-                control={
-                  <Checkbox
-                    icon={<SVG.UncheckIcon />}
-                    checkedIcon={<SVG.CheckBoxIcon />}
-                    sx={{
-                      color: "#CACACA",
-                      transition: "all 0.5s ease-out",
-                      "&.Mui-checked": {
-                        color: "#EEA23D",
-                        transition: "all 0.5s ease-out",
-                      },
-                    }}
-                  />
-                }
+              <FormControlReminder
+                control={<CheckboxInput />}
+                onChange={handleChangeCheckbox("hasContract")}
+                checked={jobPreferences.hasContract}
                 label="Contract"
               />
             </FormGroup>
@@ -187,63 +156,50 @@ const JobPreferences = () => {
           className="mt-3"
         >
           <label className="w-25">Expected salary:</label>
-          <div className="w-75">
-            <Stack
-              direction="row"
-              spacing={0}
-              alignItems="center"
-              className="usd-bg"
-            >
-              <div className="usd">USD</div>
-              <input className="usdinput" />
-              <Divider orientation="vertical" variant="middle" flexItem />
-              <FormControl
-                sx={{
-                  "&.MuiSelect-select": {
-                    fontFamily: "Poppins",
-                    fontSize: "12px",
-                  },
-                }}
-                size="small"
-              >
-                <SelectBox
-                  value={isSelect}
-                  onChange={handleChange}
-                  inputProps={{ "aria-label": "Without label" }}
-                  IconComponent={KeyboardArrowUpIcon}
-                  displayEmpty
-                >
-                  <MenuItem value="">Per month</MenuItem>
-                </SelectBox>
-              </FormControl>
-            </Stack>
-            <div className="mt-4 pt-2">
-              <OutlinedButton
-                title={
-                  <>
-                    <span className="me-2 d-inline-flex">
-                      <SVG.SaveIcon />
-                    </span>
-                    Save preferences
-                  </>
-                }
-                sx={{
-                  "&.MuiButton-outlined": {
-                    border: "1px solid #EEA23D !important",
-                    color: "#EEA23D !important",
-                    fontWeight: "500",
-                    fontSize: "16px",
-                    padding: "6px 30px",
-
-                    "&:hover": { background: "#eea23d14" },
-                    "@media (max-width: 992px)": {
-                      padding: "10px 16px",
-                      fontSize: "14px",
-                    },
-                  },
-                }}
-              />
-            </div>
+          <div className="w-55">
+            <CurrencyInput
+              optionsValues={{
+                currency: { value: "usd" },
+                input: {
+                  value: Number(jobPreferences.expectedSalary || 0),
+                  onChange: handleChangeInput("expectedSalary"),
+                },
+                payPeriod: {},
+              }}
+              errors={{
+                currency: "",
+                input: "",
+                payPeriod: "",
+              }}
+            />
+          </div>
+        </Stack>
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          spacing={{ xs: 2, lg: 2, md: 2 }}
+          alignItems={{ xs: "start", lg: "center" }}
+          justifyContent="center"
+          className="mt-3"
+        >
+          <div className="text-center">
+            <OutlinedButton
+              disabled={loading}
+              onClick={handleSubmit}
+              title={
+                <>
+                  {loading ? (
+                    "Updating..."
+                  ) : (
+                    <>
+                      <span className="me-2 d-inline-flex">
+                        <SVG.SaveIcon />
+                      </span>
+                      Update preferences
+                    </>
+                  )}
+                </>
+              }
+            />
           </div>
         </Stack>
       </div>

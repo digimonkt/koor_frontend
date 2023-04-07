@@ -75,9 +75,6 @@ const UpdateProfile = () => {
               >
                 <ProfilePicInput
                   title="Your Profile Picture"
-                  textColor="#274593"
-                  color="#274593"
-                  bgColor="rgba(40, 71, 146, 0.1)"
                   handleSave={handleProfilePicSave}
                   image={currentUser.profileImage}
                   loading={profilePicLoading === "loading"}

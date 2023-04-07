@@ -224,3 +224,11 @@ export const UpdateJobSeekerAdditionalParametersAPI = async (data) => {
     data,
   });
 };
+
+export const UpdateJobPreferencesAPI = async (data) => {
+  return await api.request({
+    url: "v1/users/job-seeker/job-preferences",
+    method: "PATCH",
+    data,
+  });
+};

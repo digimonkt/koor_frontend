@@ -19,7 +19,11 @@ import {
   HorizontalLabelInput,
   HorizontalPhoneInput,
 } from "@components/input";
-import { getEducationLevels } from "@redux/slice/choices";
+import {
+  getCities,
+  getCountries,
+  getEducationLevels,
+} from "@redux/slice/choices";
 import { validateJobSeekerAboutMe } from "./validator";
 import { ErrorMessage } from "@components/caption";
 import {
@@ -37,8 +41,10 @@ import NoItem from "../myProfile/noItem";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.auth);
-  const { educationLevels } = useSelector((state) => state.choices);
+  const {
+    auth: { currentUser },
+    choices: { educationLevels, countries, cities },
+  } = useSelector((state) => state);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const formik = useFormik({
@@ -50,6 +56,8 @@ const AboutMe = (props) => {
         international: "",
         value: "",
       },
+      country: "",
+      city: "",
       countryCode: "",
       gender: "",
       dob: "",
@@ -80,6 +88,8 @@ const AboutMe = (props) => {
         highest_education: values.highestEducation,
         market_information_notification: values.marketInformationNotification,
         job_notification: values.jobNotification,
+        country: values.country,
+        city: values.city,
       };
       if (payload.mobile_number === currentUser.mobileNumber) {
         delete payload.mobile_number;
@@ -122,7 +132,15 @@ const AboutMe = (props) => {
     if (!educationLevels.data.length) {
       dispatch(getEducationLevels());
     }
+    if (!countries.data.length) {
+      dispatch(getCountries());
+    }
   }, []);
+  useEffect(() => {
+    if (formik.values.country) {
+      dispatch(getCities({ countryId: formik.values.country }));
+    }
+  }, [formik.values.country]);
   useEffect(() => {
     const currentUserMobileNumber =
       currentUser.countryCode && currentUser.mobileNumber
@@ -140,6 +158,8 @@ const AboutMe = (props) => {
           : "",
         value: currentUserMobileNumber,
       },
+      country: currentUser.profile.country?.id || "",
+      city: currentUser.profile.city?.id || "",
       gender: currentUser.profile.gender,
       dob: currentUser.profile.dob ? dayjs(currentUser.profile.dob) : "",
       employmentStatus: currentUser.profile.employmentStatus,
@@ -285,6 +305,31 @@ const AboutMe = (props) => {
               <ErrorMessage>{formik.errors.employmentStatus}</ErrorMessage>
             ) : null}
             <HorizontalLabelInput
+              label="Country"
+              type="select"
+              placeholder="Select Country"
+              options={countries.data.map((country) => ({
+                value: country.id,
+                label: country.title,
+              }))}
+              {...formik.getFieldProps("country")}
+            />
+            <HorizontalLabelInput
+              label="City"
+              type="select"
+              placeholder={
+                formik.values.country ? "City" : "Select Country first"
+              }
+              disabled={!formik.values.country}
+              options={(cities.data[formik.values.country] || []).map(
+                (educationLevel) => ({
+                  value: educationLevel.id,
+                  label: educationLevel.title,
+                })
+              )}
+              {...formik.getFieldProps("city")}
+            />
+            <HorizontalLabelInput
               label="Highest education (optional)"
               type="select"
               placeholder="Select Your highest education"
@@ -342,10 +387,16 @@ const AboutMe = (props) => {
                 type="submit"
                 title={
                   <>
-                    <span className="me-2 d-inline-flex">
-                      <SVG.CheckIcon />
-                    </span>
-                    update info
+                    {loading ? (
+                      "Updating..."
+                    ) : (
+                      <>
+                        <span className="me-2 d-inline-flex">
+                          <SVG.CheckIcon />
+                        </span>
+                        update info
+                      </>
+                    )}
                   </>
                 }
                 sx={{

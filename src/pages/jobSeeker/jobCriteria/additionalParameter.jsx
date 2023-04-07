@@ -9,11 +9,15 @@ import { FormControlReminder } from "@components/style";
 import { UpdateJobSeekerAdditionalParametersAPI } from "@api/jobSeeker";
 import { useNavigate } from "react-router-dom";
 import { USER_ROLES } from "@utils/enum";
+import { updateCurrentUser } from "@redux/slice/user";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { countries, cities } = useSelector((state) => state.choices);
+  const {
+    choices: { countries, cities },
+    auth: { currentUser },
+  } = useSelector((state) => state);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [jobType, setJobType] = useState({
@@ -32,6 +36,23 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
     };
     const res = await UpdateJobSeekerAdditionalParametersAPI(payload);
     if (res.remote === "success") {
+      dispatch(
+        updateCurrentUser({
+          jobPreferences: {
+            isPartTime: payload.is_part_time,
+            isFullTime: payload.is_full_time,
+            hasContract: payload.has_contract,
+          },
+          profile: {
+            country: countries.data.find(
+              (country) => country.id === payload.country
+            ),
+            city: cities.data[payload.country].find(
+              (city) => city.id === payload.city
+            ),
+          },
+        })
+      );
       navigate(`/${USER_ROLES.jobSeeker}/my-profile/update-profile`);
     }
   };
@@ -39,6 +60,17 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
     if (!countries.data.length) {
       dispatch(getCountries());
     }
+    if (currentUser.profile.country?.id) {
+      setSelectedCountry(currentUser.profile.country?.id);
+    }
+    if (currentUser.profile.city?.id) {
+      setSelectedCity(currentUser.profile.city?.id);
+    }
+    setJobType({
+      partTime: currentUser.jobPreferences.isPartTime,
+      fullTime: currentUser.jobPreferences.isFullTime,
+      contract: currentUser.jobPreferences.hasContract,
+    });
   }, []);
   useEffect(() => {
     if (selectedCountry) {

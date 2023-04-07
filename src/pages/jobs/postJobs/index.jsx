@@ -20,7 +20,6 @@ import {
   SelectInput,
 } from "@components/input";
 import CurrencyInput from "./currencyInput";
-import { JobFormControl } from "../../jobSeeker/myProfile/job-preferences";
 import { FilledButton, OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
@@ -43,6 +42,7 @@ import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
 import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "@api/user";
 import styles from "./postJobs.module.css";
+import { JobFormControl } from "./style";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
