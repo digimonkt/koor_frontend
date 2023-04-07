@@ -200,6 +200,54 @@ textarea {
   color: #121212;
 }
 
+@media screen and (max-width: 3000px) and (min-width: 2600px) {
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 1484px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+}
+
+@media screen and (max-width: 2600px) and (min-width: 2200px) {
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 1400px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+}
+
+@media screen and (max-width: 2200px) and (min-width: 2000px) {
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 1280px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+}
+
 @media screen and (max-width: 1800px) and (min-width: 1536px) {
   .newstabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 10px !important;
@@ -255,6 +303,71 @@ textarea {
 }
 
 @media screen and (max-width: 1200px) and (min-width: 992px) {
+  .verticalSlider ul.slick-dots {
+    transform: rotate(90deg);
+    position: relative;
+    bottom: 220px;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 420px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 0px !important;
+  }
+}
+
+@media screen and (max-width: 992px) and (min-width: 765px) {
+  .verticalSlider ul.slick-dots {
+    transform: rotate(90deg);
+    position: relative;
+    bottom: 220px;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 420px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 0px !important;
+  }
+}
+
+@media screen and (max-width: 992px) and (min-width: 765px) {
+  .verticalSlider ul.slick-dots {
+    transform: rotate(90deg);
+    position: relative;
+    bottom: 220px;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    width: 480px !important;
+    left: 420px !important;
+    top: 68px !important;
+  }
+
+  .scroll_tabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 10px !important;
+  }
+
+  .newstabs .MuiButtonBase-root.MuiTab-root {
+    margin-left: 0px !important;
+  }
+}
+@media screen and (max-width: 765px) and (min-width: 560px) {
   .verticalSlider ul.slick-dots {
     transform: rotate(90deg);
     position: relative;
