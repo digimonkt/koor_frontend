@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UpdateJobPreferencesAPI } from "@api/jobSeeker";
 import { setSuccessToast } from "@redux/slice/toast";
 import { updateCurrentUser } from "@redux/slice/user";
+import { Link } from "react-router-dom";
 
 const JobPreferences = () => {
   const dispatch = useDispatch();
@@ -78,7 +79,18 @@ const JobPreferences = () => {
   return (
     <>
       <div className="add-content">
-        <h2>Job preferences</h2>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            paddingRight: "15px",
+          }}
+        >
+          <h2>Job preferences</h2>
+          <Link to="/job_seeker/my-profile/job-criteria">
+            <span>More</span>
+          </Link>
+        </div>
         <Stack
           direction={{ xs: "column", lg: "row" }}
           spacing={{ xs: 2, lg: 2, md: 2 }}
@@ -181,7 +193,10 @@ const JobPreferences = () => {
           justifyContent="center"
           className="mt-3"
         >
-          <div className="text-center">
+          <div
+            className="text-center"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             <OutlinedButton
               disabled={loading}
               onClick={handleSubmit}
