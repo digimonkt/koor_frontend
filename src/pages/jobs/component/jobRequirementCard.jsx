@@ -30,7 +30,7 @@ function JobRequirementCard({ jobCategories, languages, skills }) {
                     className={`${styles.englishtext}`}
                     style={{ textTransform: "capitalize" }}
                   >
-                    <h6 className="mb-0 mt-3">{language.language.title}</h6>
+                    <h6 className="mb-0">{language.language.title}</h6>
                     <span>Spoken: {language.spoken}</span> <br />
                     <span>Written: {language.written}</span>
                   </div>
