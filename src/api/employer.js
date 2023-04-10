@@ -51,11 +51,10 @@ export const updateEmployerJobAPI = async (jobId, data) => {
   return response;
 };
 
-export const updateEmployerJobStatusAPI = async (jobId, data) => {
+export const updateEmployerJobStatusAPI = async (jobId) => {
   const response = await api.request({
     url: urlcat("/v1/users/employer/jobs/:jobId/status", { jobId }),
     method: "PUT",
-    data,
     headers: {
       "Content-Type": "multipart/form-data",
     },

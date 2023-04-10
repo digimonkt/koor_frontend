@@ -35,8 +35,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   };
 
   const updateJob = async (jobId) => {
-    const data = { status: isStart };
-    const res = await updateEmployerJobStatusAPI(jobId, data);
+    const res = await updateEmployerJobStatusAPI(jobId);
     if (res.remote === "success") {
       console.log(res);
     }
