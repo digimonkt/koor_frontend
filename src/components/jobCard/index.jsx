@@ -11,6 +11,7 @@ import urlcat from "urlcat";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
+import { updateEmployerJobStatusAPI } from "@api/employer";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const editUrl = urlcat("/employer/jobs/post", { jobId: jobDetails?.id });
 
@@ -18,7 +19,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
-
+  const [isStart, setIsStart] = useState(jobDetails?.status);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -28,6 +29,18 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     }
   };
 
+  const handleStartPause = async () => {
+    setIsStart(isStart === "active" ? "inactive" : "active");
+    updateJob(jobDetails.id);
+  };
+
+  const updateJob = async (jobId) => {
+    const data = { status: isStart };
+    const res = await updateEmployerJobStatusAPI(jobId, data);
+    if (res.remote === "success") {
+      console.log(res);
+    }
+  };
   useEffect(() => {
     if (jobDetails) setIsSaved(jobDetails.isSaved);
   }, [jobDetails]);
@@ -179,9 +192,22 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </div>
             {selfJob ? (
               <div className="job-button-card">
-                <button>
-                  {<SVG.PauseIcon />}
-                  <span className="d-block">Hold</span>
+                <button
+                  onClick={() => {
+                    handleStartPause();
+                  }}
+                >
+                  {isStart === "active" ? (
+                    <>
+                      <SVG.PauseIcon />
+                      <span className="d-block">Hold</span>
+                    </>
+                  ) : (
+                    <>
+                      <SVG.StartIcon />
+                      <span className="d-block">Start</span>
+                    </>
+                  )}
                 </button>
                 <button
                   onClick={() => {

@@ -51,6 +51,18 @@ export const updateEmployerJobAPI = async (jobId, data) => {
   return response;
 };
 
+export const updateEmployerJobStatusAPI = async (jobId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/jobs/:jobId/status", { jobId }),
+    method: "PUT",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};
+
 export const getApplicationOnJobAPI = async (jobId, status) => {
   const response = await api.request({
     url: urlcat("/v1/jobs/:jobId/applications", { jobId, filter: status }),
