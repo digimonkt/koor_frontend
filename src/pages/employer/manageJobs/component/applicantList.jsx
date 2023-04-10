@@ -4,19 +4,26 @@ import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import ApplicationCard from "@components/applicationCard";
 import { getApplicationOnJobAPI } from "@api/employer";
+import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
 
 const ApplicantList = ({ totalApplications, jobId }) => {
   const [isActive, setIsActive] = useState(false);
   const [applicants, setApplicants] = useState([]);
+  const [currentStatus, setCurrentStatus] = useState([]);
+
   // const [isShortlisted, setIsShortlisted] = useState(false);
   const handleActive = () => {
     setIsActive(!isActive);
   };
-  const getApplicationList = async () => {
-    const res = await getApplicationOnJobAPI(jobId);
+  const getApplicationList = async (status) => {
+    const res = await getApplicationOnJobAPI(jobId, status);
     if (res.remote === "success") {
       setApplicants(res.data.results);
     }
+  };
+  const handleGetApplicationByStatus = (status) => {
+    setCurrentStatus(status);
+    getApplicationList(status);
   };
   useEffect(() => {
     if (isActive) getApplicationList();
@@ -53,7 +60,15 @@ const ApplicantList = ({ totalApplications, jobId }) => {
           <>
             <Stack direction={{ xs: "column", lg: "row" }} spacing={1}>
               <Chip
+              style={{
+                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.shortlisted) && "#d5e3f7"
+                }}
                 className="chip-cricle"
+                onClick={() => {
+                  handleGetApplicationByStatus(
+                    JOB_APPLICATION_OPTIONS.shortlisted
+                  );
+                }}
                 label={
                   <>
                     Shortlisted <span className="cricle">0</span>
@@ -62,7 +77,15 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 icon={<SVG.StarIcon />}
               />
               <Chip
+              style={{
+                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.plannedInterviews) && "#d5e3f7"
+                }}
                 className="chip-cricle"
+                onClick={() => {
+                  handleGetApplicationByStatus(
+                    JOB_APPLICATION_OPTIONS.plannedInterviews
+                  );
+                }}
                 label={
                   <>
                     Planned interviews <span className="cricle">0</span>
@@ -71,7 +94,15 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 icon={<SVG.EventIcon />}
               />
               <Chip
+              style={{
+                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.rejected) && "#d5e3f7"
+                }}
                 className="chip-cricle"
+                onClick={() => {
+                  handleGetApplicationByStatus(
+                    JOB_APPLICATION_OPTIONS.rejected
+                  );
+                }}
                 label={
                   <>
                     Rejected <span className="cricle">0</span>
@@ -80,7 +111,15 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 icon={<SVG.RejectIcon />}
               />
               <Chip
+              style={{
+                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.blacklisted) && "#d5e3f7"
+                }}
                 className="chip-cricle"
+                onClick={() => {
+                  handleGetApplicationByStatus(
+                    JOB_APPLICATION_OPTIONS.blacklisted
+                  );
+                }}
                 label={
                   <>
                     Blacklisted <span className="cricle">0</span>

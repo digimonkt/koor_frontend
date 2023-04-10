@@ -51,9 +51,9 @@ export const updateEmployerJobAPI = async (jobId, data) => {
   return response;
 };
 
-export const getApplicationOnJobAPI = async (jobId) => {
+export const getApplicationOnJobAPI = async (jobId, status) => {
   const response = await api.request({
-    url: urlcat("/v1/jobs/:jobId/applications", { jobId }),
+    url: urlcat("/v1/jobs/:jobId/applications", { jobId, filter: status }),
     method: "GET",
   });
   if (response.remote === "success") {
