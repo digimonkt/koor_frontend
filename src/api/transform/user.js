@@ -14,6 +14,8 @@ export const transformGetUserDetails = (data) => {
       // job-seeker
       gender: data.profile.gender || "",
       dob: data.profile.dob || "",
+      country: data.profile.country || {},
+      city: data.profile.city || {},
       employmentStatus: data.profile.employment_status || "",
       highestEducation: data.profile.highest_education,
       marketInformationNotification:
@@ -24,6 +26,17 @@ export const transformGetUserDetails = (data) => {
       licenseId: data.profile.license_id,
       licenseIdFile: data.profile.license_id_file,
     },
+    jobPreferences: data.job_preferences
+      ? {
+          id: data.job_preferences.id,
+          isAvailable: data.job_preferences.is_available,
+          displayInSearch: data.job_preferences.display_in_search,
+          isPartTime: data.job_preferences.is_part_time,
+          isFullTime: data.job_preferences.is_full_time,
+          hasContract: data.job_preferences.has_contract,
+          expectedSalary: data.job_preferences.expected_salary,
+        }
+      : {},
     educationRecord: (data.education_record || []).map((record) => ({
       id: record.id,
       title: record.title,
