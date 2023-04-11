@@ -10,7 +10,10 @@ const ApplicantList = ({ totalApplications, jobId }) => {
   const [isActive, setIsActive] = useState(false);
   const [applicants, setApplicants] = useState([]);
   const [currentStatus, setCurrentStatus] = useState([]);
-
+  const [totalShortlisted, setTotalShortlisted] = useState(0);
+  const [totalRejected, setTotalRejected] = useState(0);
+  const [totalBlacklisted, setTotalBlacklisted] = useState(0);
+  const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   // const [isShortlisted, setIsShortlisted] = useState(false);
   const handleActive = () => {
     setIsActive(!isActive);
@@ -19,14 +22,23 @@ const ApplicantList = ({ totalApplications, jobId }) => {
     const res = await getApplicationOnJobAPI(jobId, status);
     if (res.remote === "success") {
       setApplicants(res.data.results);
+      setTotalRejected(res.data.rejected_count);
+      setTotalShortlisted(res.data.shortlisted_count);
+      setTotalPlannedInterview(res.data.planned_interview_count);
+      setTotalBlacklisted(res.data.blacklisted_count);
     }
   };
   const handleGetApplicationByStatus = (status) => {
-    setCurrentStatus(status);
-    getApplicationList(status);
+    if (status !== currentStatus) {
+      getApplicationList(status);
+      setCurrentStatus(status);
+    } else {
+      getApplicationList(JOB_APPLICATION_OPTIONS.all);
+      setCurrentStatus(JOB_APPLICATION_OPTIONS.all);
+    }
   };
   useEffect(() => {
-    if (isActive) getApplicationList();
+    if (isActive) getApplicationList(currentStatus);
   }, [isActive]);
   return (
     <>
@@ -60,8 +72,10 @@ const ApplicantList = ({ totalApplications, jobId }) => {
           <>
             <Stack direction={{ xs: "column", lg: "row" }} spacing={1}>
               <Chip
-              style={{
-                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.shortlisted) && "#d5e3f7"
+                style={{
+                  backgroundColor:
+                    currentStatus === JOB_APPLICATION_OPTIONS.shortlisted &&
+                    "#d5e3f7",
                 }}
                 className="chip-cricle"
                 onClick={() => {
@@ -71,14 +85,19 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Shortlisted <span className="cricle">0</span>
+                    Shortlisted
+                    <span className="cricle">
+                      {totalShortlisted}
+                    </span>
                   </>
                 }
                 icon={<SVG.StarIcon />}
               />
               <Chip
-              style={{
-                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.plannedInterviews) && "#d5e3f7"
+                style={{
+                  backgroundColor:
+                    currentStatus ===
+                      JOB_APPLICATION_OPTIONS.plannedInterviews && "#d5e3f7",
                 }}
                 className="chip-cricle"
                 onClick={() => {
@@ -88,14 +107,19 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Planned interviews <span className="cricle">0</span>
+                    Planned interviews{" "}
+                    <span className="cricle">
+                      {totalPlannedInterview}
+                    </span>
                   </>
                 }
                 icon={<SVG.EventIcon />}
               />
               <Chip
-              style={{
-                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.rejected) && "#d5e3f7"
+                style={{
+                  backgroundColor:
+                    currentStatus === JOB_APPLICATION_OPTIONS.rejected &&
+                    "#d5e3f7",
                 }}
                 className="chip-cricle"
                 onClick={() => {
@@ -105,14 +129,19 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Rejected <span className="cricle">0</span>
+                    Rejected{" "}
+                    <span className="cricle">
+                      {totalRejected}
+                    </span>
                   </>
                 }
                 icon={<SVG.RejectIcon />}
               />
               <Chip
-              style={{
-                  backgroundColor: (currentStatus === JOB_APPLICATION_OPTIONS.blacklisted) && "#d5e3f7"
+                style={{
+                  backgroundColor:
+                    currentStatus === JOB_APPLICATION_OPTIONS.blacklisted &&
+                    "#d5e3f7",
                 }}
                 className="chip-cricle"
                 onClick={() => {
@@ -122,7 +151,10 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Blacklisted <span className="cricle">0</span>
+                    Blacklisted{" "}
+                    <span className="cricle">
+                      {totalBlacklisted}
+                    </span>
                   </>
                 }
                 icon={<SVG.RejectIcon />}

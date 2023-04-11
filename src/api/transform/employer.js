@@ -3,6 +3,10 @@ export const transformApplicationOnJobListData = (data) => {
     count: data.count,
     next: data.next,
     previous: data.previous,
+    blacklisted_count: data.blacklisted_count,
+    rejected_count: data.rejected_count,
+    shortlisted_count: data.shortlisted_count,
+    planned_interview_count: data.planned_interview_count,
     results: data.results.map((result) => {
       return {
         id: result.id,
