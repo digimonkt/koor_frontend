@@ -24,7 +24,6 @@ const ApplicationCard = ({
   // };
   // const [isShortlisted, setIsShortlisted] = useState(false);
   // const [isRejected, setIsRejected] = useState(false);
-
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -57,42 +56,46 @@ const ApplicationCard = ({
             </div>
             {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
           </Stack>
-          <Stack
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            sx={{ mb: 1, ...sx }}
-            className="meets_div"
-          >
-            <div>
-              <span className="meets">Meets your requirements with: </span>
-            </div>
-            <div>
-              <>
-                {details?.education && (
-                  <Chip
-                    label="Education"
-                    className="chiplabel"
-                    icon={<SVG.SchoolIcon />}
-                  />
-                )}
-                {details?.skills && (
-                  <Chip
-                    label="Skills"
-                    className="chiplabel"
-                    icon={<SVG.SmallSkillsIcon />}
-                  />
-                )}
-                {details?.language && (
-                  <Chip
-                    label="Language"
-                    className="chiplabel"
-                    icon={<SVG.SmallLangugeIcon />}
-                  />
-                )}
-              </>
-            </div>
-          </Stack>
+          {details?.education || details?.skills || details?.language ? (
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              sx={{ mb: 1, ...sx }}
+              className="meets_div"
+            >
+              <div>
+                <span className="meets">Meets your requirements with: </span>
+              </div>
+              <div>
+                <>
+                  {details?.education && (
+                    <Chip
+                      label="Education"
+                      className="chiplabel"
+                      icon={<SVG.SchoolIcon />}
+                    />
+                  )}
+                  {details?.skills && (
+                    <Chip
+                      label="Skills"
+                      className="chiplabel"
+                      icon={<SVG.SmallSkillsIcon />}
+                    />
+                  )}
+                  {details?.language && (
+                    <Chip
+                      label="Language"
+                      className="chiplabel"
+                      icon={<SVG.SmallLangugeIcon />}
+                    />
+                  )}
+                </>
+              </div>
+            </Stack>
+          ) : (
+            ""
+          )}
           <div className="recent-descrition">
             <p>{details?.shortLetter || details?.user?.description}</p>
           </div>

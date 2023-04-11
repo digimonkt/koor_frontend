@@ -51,6 +51,14 @@ export const updateEmployerJobAPI = async (jobId, data) => {
   return response;
 };
 
+export const updateEmployerJobStatusAPI = async (jobId) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/jobs/:jobId/status", { jobId }),
+    method: "PUT",
+  });
+  return response;
+};
+
 export const getApplicationOnJobAPI = async ({ jobId, filter }) => {
   const response = await api.request({
     url: urlcat("/v1/jobs/:jobId/applications", { jobId, filter }),
@@ -87,7 +95,10 @@ export const getApplicationDetailsAPI = async (applicationId) => {
     method: "GET",
   });
   if (res.remote === "success") {
-    res.data.user.profile = { description: res.data.description };
+    res.data.user.profile = {
+      ...(res.data.user.profile || {}),
+      description: res.data.user.description,
+    };
     return {
       remote: "success",
       data: {

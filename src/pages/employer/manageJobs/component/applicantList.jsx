@@ -10,7 +10,10 @@ const ApplicantList = ({ totalApplications, jobId }) => {
   const [isActive, setIsActive] = useState(false);
   const [applicants, setApplicants] = useState([]);
   const [filter, setFilter] = useState("");
-
+  const [totalShortlisted, setTotalShortlisted] = useState(0);
+  const [totalRejected, setTotalRejected] = useState(0);
+  const [totalBlacklisted, setTotalBlacklisted] = useState(0);
+  const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   // const [isShortlisted, setIsShortlisted] = useState(false);
   const handleActive = () => {
     setIsActive(!isActive);
@@ -19,6 +22,10 @@ const ApplicantList = ({ totalApplications, jobId }) => {
     const res = await getApplicationOnJobAPI({ jobId, filter });
     if (res.remote === "success") {
       setApplicants(res.data.results);
+      setTotalRejected(res.data.rejectedCount);
+      setTotalShortlisted(res.data.shortlistedCount);
+      setTotalPlannedInterview(res.data.plannedInterviewCount);
+      setTotalBlacklisted(res.data.blacklistedCount);
     }
   };
   const handleGetApplicationByStatus = (status) => {
@@ -71,7 +78,8 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Shortlisted <span className="cricle">0</span>
+                    Shortlisted
+                    <span className="cricle">{totalShortlisted}</span>
                   </>
                 }
                 icon={<SVG.StarIcon />}
@@ -90,7 +98,8 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Planned interviews <span className="cricle">0</span>
+                    Planned interviews{" "}
+                    <span className="cricle">{totalPlannedInterview}</span>
                   </>
                 }
                 icon={<SVG.EventIcon />}
@@ -108,7 +117,7 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Rejected <span className="cricle">0</span>
+                    Rejected <span className="cricle">{totalRejected}</span>
                   </>
                 }
                 icon={<SVG.RejectIcon />}
@@ -126,7 +135,8 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                 }}
                 label={
                   <>
-                    Blacklisted <span className="cricle">0</span>
+                    Blacklisted{" "}
+                    <span className="cricle">{totalBlacklisted}</span>
                   </>
                 }
                 icon={<SVG.RejectIcon />}

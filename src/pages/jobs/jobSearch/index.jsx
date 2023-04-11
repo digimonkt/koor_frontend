@@ -170,9 +170,9 @@ export default function JobSearch() {
                 <MenuItem onClick={handleClose} className="fillterbox">
                   Expiration
                 </MenuItem>
-                <MenuItem onClick={handleClose} className="fillterbox">
+                {/* <MenuItem onClick={handleClose} className="fillterbox">
                   Workload <span className="ms-3">{<SVG.ArrowUpward />}</span>
-                </MenuItem>
+                </MenuItem> */}
               </Menu>
             </Stack>
           </div>
