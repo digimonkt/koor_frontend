@@ -19,6 +19,7 @@ import EducationCard from "@components/educationCard";
 import WorkExperienceCard from "@components/workExperienceCard";
 import LanguageCard from "@components/languageCard";
 import ApplicationOptions from "@components/applicationOptions";
+import { generateFileUrl } from "@utils/generateFileUrl";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
@@ -30,6 +31,7 @@ const ApplicantDetails = () => {
       profile: {},
     },
     job: {},
+    attachments: [],
   });
 
   const getApplicantDetails = async () => {
@@ -127,31 +129,33 @@ const ApplicantDetails = () => {
               divider={<Divider orientation="vertical" flexItem />}
             >
               <div className="user-descrition">
-                <p>
-                  {applicantDetails.shortLetter ||
-                    applicantDetails.user.profile.description}
-                </p>
-                <p>Please check out my attached resume.</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      applicantDetails.shortLetter ||
+                      applicantDetails.user.profile.description,
+                  }}
+                />
               </div>
               <div className="attachment-box">
                 <h2>Attachments</h2>
-                <ul>
-                  <li>
-                    <IconButton
-                      sx={{
-                        background: "#D5E3F7",
-                        color: "#274593",
-                        "&:hover": {
-                          background: "#bcd2f1",
-                        },
-                        mr: 2,
-                      }}
-                    >
-                      {<SVG.AttachIcon />}
-                    </IconButton>
-                    Muraua_Birhuneya_resume_2022.pdf
-                  </li>
-                </ul>
+                {applicantDetails.attachments.map((attachment) => {
+                  return (
+                    <div key={attachment.id}>
+                      <span className="d-inline-flex">
+                        {<SVG.OrangeIcon />}
+                      </span>
+                      <a
+                        href={generateFileUrl(attachment.path)}
+                        target="_blank"
+                        className="m-0"
+                        rel="noreferrer"
+                      >
+                        {attachment.title}
+                      </a>
+                    </div>
+                  );
+                })}
               </div>
             </Stack>
 
