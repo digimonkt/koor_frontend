@@ -54,13 +54,12 @@ function RegistrationForm() {
       } else {
         console.log({ res: res.error.errors });
         formik.setErrors({
-          email: res.error.errors.email[0],
+          email: res.error.errors.email,
           mobileNumber: res.error.errors.mobile_number,
         });
       }
     },
   });
-
   return (
     <div>
       <div className="form-content">
