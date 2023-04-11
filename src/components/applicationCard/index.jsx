@@ -8,7 +8,13 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import ApplicationOptions from "@components/applicationOptions";
 dayjs.extend(relativeTime);
 
-const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
+const ApplicationCard = ({
+  details,
+  sx,
+  isShortlisted,
+  allOptions,
+  isRejected,
+}) => {
   // navigate
   // const navigate = useNavigate();
 
@@ -97,6 +103,7 @@ const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
           allOptions={allOptions}
           applicationId={details.id}
           isShortlisted={isShortlisted}
+          isRejected={isRejected}
         />
       </Stack>
     </Stack>
