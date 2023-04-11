@@ -123,6 +123,8 @@ const AboutMe = (props) => {
           })
         );
       } else {
+        console.log({ res });
+        formik.setErrors({ mobileNumber: res.error.errors.mobile_number });
         dispatch(setErrorToast("Something went wrong"));
       }
       setLoading(false);
