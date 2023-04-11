@@ -74,5 +74,4 @@ export const JOB_APPLICATION_OPTIONS = {
   rejected: "rejected",
   blacklisted: "blacklisted",
   plannedInterviews: "planned_interviews",
-  all: "all",
 };

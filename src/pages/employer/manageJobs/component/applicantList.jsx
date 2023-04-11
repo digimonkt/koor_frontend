@@ -22,10 +22,10 @@ const ApplicantList = ({ totalApplications, jobId }) => {
     const res = await getApplicationOnJobAPI({ jobId, filter });
     if (res.remote === "success") {
       setApplicants(res.data.results);
-      setTotalRejected(res.data.rejected_count);
-      setTotalShortlisted(res.data.shortlisted_count);
-      setTotalPlannedInterview(res.data.planned_interview_count);
-      setTotalBlacklisted(res.data.blacklisted_count);
+      setTotalRejected(res.data.rejectedCount);
+      setTotalShortlisted(res.data.shortlistedCount);
+      setTotalPlannedInterview(res.data.plannedInterviewCount);
+      setTotalBlacklisted(res.data.blacklistedCount);
     }
   };
   const handleGetApplicationByStatus = (status) => {

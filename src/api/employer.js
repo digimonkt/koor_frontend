@@ -55,9 +55,6 @@ export const updateEmployerJobStatusAPI = async (jobId) => {
   const response = await api.request({
     url: urlcat("/v1/users/employer/jobs/:jobId/status", { jobId }),
     method: "PUT",
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
   });
   return response;
 };
