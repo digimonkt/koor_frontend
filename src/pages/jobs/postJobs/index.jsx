@@ -43,6 +43,8 @@ import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "@api/user";
 import styles from "./postJobs.module.css";
 import { JobFormControl } from "./style";
+import DialogBox from "@components/dialogBox";
+import { SVG } from "@assets/svg";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -64,6 +66,12 @@ function PostJobsComponent() {
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
+  const handleRedirect = () => {
+    setOpen(close);
+    setIsRedirect(true);
+  };
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -172,11 +180,10 @@ function PostJobsComponent() {
         }
       }
       if (res.remote === "success") {
-        navigate(`/${USER_ROLES.employer}/manage-jobs`);
+        setOpen(true);
       }
     },
   });
-
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
@@ -256,6 +263,15 @@ function PostJobsComponent() {
       setSuggestedAddress(res.data.predictions);
     }
   };
+  const handleClose = () => {
+    setOpen(false);
+    setIsRedirect(true);
+  };
+  useEffect(() => {
+    if (isRedirect) {
+      navigate(`/${USER_ROLES.employer}/manage-jobs`);
+    }
+  }, [isRedirect]);
   useEffect(() => {
     if (
       debouncedSearchValue &&
@@ -875,6 +891,27 @@ function PostJobsComponent() {
         handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
         message="Some thing went wrong!"
       />
+      <DialogBox open={open} handleClose={handleClose}>
+        <Grid container spacing={2}>
+          <Grid item lg={7}>
+            <h1 className="mb-3">Done!</h1>
+            <p>
+              {jobId
+                ? "Your job post just updated. It will be reviewed and available on Koor shortly."
+                : "Your new job post just submitted. It will be reviewed and available on Koor shortly."}
+            </p>
+            <div className={`${styles.cancel_popup}`}>
+              <OutlinedButton
+                title="Go to my jobs"
+                onClick={() => handleRedirect()}
+              />
+            </div>
+          </Grid>
+          <Grid item lg={5}>
+            <SVG.JobPost className="w-100" />
+          </Grid>
+        </Grid>
+      </DialogBox>
     </div>
   );
 }

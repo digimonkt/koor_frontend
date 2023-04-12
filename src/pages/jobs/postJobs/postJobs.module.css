@@ -68,3 +68,23 @@
     left: 80.2%;
   }
 }
+
+.cancel_popup {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.cancel_popup p {
+  display: block;
+  color: #121212;
+  opacity: 0.5;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: Bahnschrift;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+}
