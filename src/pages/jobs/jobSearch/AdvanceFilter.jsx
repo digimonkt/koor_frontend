@@ -33,6 +33,7 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
   const { countries, cities, jobCategories } = useSelector(
     (state) => state.choices
   );
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const [submitForm, setSubmitForm] = useState(false);
   const [data, setData] = useState(false);
   const [open, setOpen] = useState(false);
@@ -410,14 +411,18 @@ const AdvanceFilter = ({ getSearchJobs, totalJobs, searchKeyword }) => {
                 <span style={{ pointer: "cursor" }} onClick={handleReset}>
                   {<SVG.HalfCircle />} RESET FILTER
                 </span>
-                <span
-                  style={{ pointer: "cursor" }}
-                  onClick={() => {
-                    handleToggleModel();
-                  }}
-                >
-                  {<SVG.Favorite />} SAVE SEARCH
-                </span>
+                {isLoggedIn ? (
+                  <span
+                    style={{ pointer: "cursor" }}
+                    onClick={() => {
+                      handleToggleModel();
+                    }}
+                  >
+                    {<SVG.Favorite />} SAVE SEARCH
+                  </span>
+                ) : (
+                  ""
+                )}
                 <OutlinedButton
                   title={
                     <>
