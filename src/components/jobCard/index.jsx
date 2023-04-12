@@ -12,14 +12,16 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "@api/employer";
+import { IMAGES } from "@assets/images";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const editUrl = urlcat("/employer/jobs/post", { jobId: jobDetails?.id });
 
-  const { role } = useSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
+  const [imgError, setImgError] = React.useState(false);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -32,6 +34,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
+  };
+
+  const handleImageError = () => {
+    setImgError(true);
   };
 
   const updateJob = async (jobId) => {
@@ -65,11 +71,20 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             }}
           >
             <div className="squer-width">
-              <img
-                src={generateFileUrl(jobDetails?.user?.image?.path || "")}
-                alt=""
-                style={{ width: "100%", height: "85px" }}
-              />
+              {imgError ? (
+                <img
+                  src={IMAGES.JobPlaceholder}
+                  alt="Placeholder"
+                  style={{ width: "100%" }}
+                />
+              ) : (
+                <img
+                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}
+                  alt="Image"
+                  onError={handleImageError}
+                  style={{ width: "100%", height: "85px" }}
+                />
+              )}
             </div>
           </Grid>
         )}
@@ -219,7 +234,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <span className="d-block">Edit</span>
                 </button>
               </div>
-            ) : (
+            ) : isLoggedIn ? (
               <React.Fragment>
                 {!applied ? (
                   <div onClick={handleToggleSave} style={{ marginLeft: "6px" }}>
@@ -239,6 +254,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </div>
                 ) : null}
               </React.Fragment>
+            ) : (
+              ""
             )}
           </Stack>
         </Grid>
