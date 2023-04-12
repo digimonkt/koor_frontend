@@ -16,6 +16,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { getSearchJobsAPI } from "@api/job";
 import Pagination from "@components/pagination";
 import SearchInput from "@components/searchInput";
+import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
 
 const LIMIT = 10;
 export default function JobSearch() {
@@ -28,6 +29,8 @@ export default function JobSearch() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [searchedJobs, setSearchedJobs] = useState([]);
+  const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,13 +52,27 @@ export default function JobSearch() {
         }
       }
     }
-    const res = await getSearchJobsAPI({ search, page, limit: LIMIT, ...data });
+    const res = await getSearchJobsAPI({
+      search,
+      page,
+      limit: LIMIT,
+      ...data
+    });
     if (res.remote === "success") {
       const totalJobs = res.data.count;
       setTotalJobs(totalJobs);
       const pages = Math.ceil(totalJobs / LIMIT);
       setTotalPages(pages);
       setSearchedJobs(res.data.results);
+    }
+  };
+
+  const handleSorting = (search) => {
+    setSortBy(search);
+    if (orderBy === "ascending") {
+      setOrderBy("descending");
+    } else {
+      setOrderBy("ascending");
     }
   };
   useEffect(() => {
@@ -69,9 +86,12 @@ export default function JobSearch() {
   }, [location.search]);
   useEffect(() => {
     if (totalPages >= page || totalPages === 0) {
-      getSearchJobs();
+      getSearchJobs({
+        search_by: sortBy,
+        order_by: orderBy,
+      });
     }
-  }, [search, page]);
+  }, [search, page, orderBy]);
   const pagination = () => {
     return (
       <Pagination
@@ -167,11 +187,38 @@ export default function JobSearch() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
               >
                 <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
-                <MenuItem onClick={handleClose} className="fillterbox">
+                <MenuItem
+                  onClick={() => {
+                    handleSorting(JOB_SORT_BY.salary);
+                  }}
+                  className="fillterbox"
+                >
                   Salary
+                  <span>
+                    {sortBy === JOB_SORT_BY.salary &&
+                      (orderBy === JOB_ORDER_BY.ascending ? (
+                        <SVG.ArrowDownward />
+                      ) : (
+                        <SVG.ArrowUpward />
+                      ))}
+                  </span>
                 </MenuItem>
-                <MenuItem onClick={handleClose} className="fillterbox">
+                <MenuItem
+                  onClick={() => {
+                    // handleClose();
+                    handleSorting(JOB_SORT_BY.expiration);
+                  }}
+                  className="fillterbox"
+                >
                   Expiration
+                  <span>
+                    {sortBy === JOB_SORT_BY.expiration &&
+                      (orderBy === JOB_ORDER_BY.ascending ? (
+                        <SVG.ArrowDownward />
+                      ) : (
+                        <SVG.ArrowUpward />
+                      ))}
+                  </span>
                 </MenuItem>
                 {/* <MenuItem onClick={handleClose} className="fillterbox">
                   Workload <span className="ms-3">{<SVG.ArrowUpward />}</span>
