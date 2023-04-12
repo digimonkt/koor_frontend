@@ -116,7 +116,7 @@ const ApplyForJob = lazy(() =>
     default: module.ApplyForJob,
   }))
 );
-
+const Search = lazy(() => import("@pages/search"));
 // prefix => `/`
 export const ROUTES = [
   {
@@ -150,6 +150,12 @@ export const ROUTES = [
     name: "jobSearch",
     path: "/job-search",
     component: JobSearch,
+  },
+  {
+    id: "search",
+    name: "Search",
+    path: "/search/:type",
+    component: Search,
   },
   {
     id: "jobDetails",
