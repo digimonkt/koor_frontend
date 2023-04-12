@@ -39,8 +39,10 @@ import ResourceImg from "./resource-img.png";
 import Article1 from "./article1.png";
 import Article2 from "./article2.png";
 import Article3 from "./article3.png";
+import JobPlaceholder from "./job-placeholder.png";
 
 export const IMAGES = {
+  JobPlaceholder,
   Article1,
   Article2,
   Article3,

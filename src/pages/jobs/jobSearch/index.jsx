@@ -40,6 +40,9 @@ export default function JobSearch() {
   const [searchParams, setSearchParams] = useSearchParams({});
   const handleSearch = (value) => {
     setSearchParams({ search: value });
+    if (!value) {
+      setSearch(value);
+    }
   };
   const getSearchJobs = async (data) => {
     if (data) {
