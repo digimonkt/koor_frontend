@@ -163,7 +163,7 @@ function AppliedJobsComponent() {
                     ))}
                 </span>
               </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 onClick={() => {
                   handleClose();
                   // setSortBy("workload");
@@ -172,7 +172,7 @@ function AppliedJobsComponent() {
                 className="fillterbox"
               >
                 Workload
-              </MenuItem>
+              </MenuItem> */}
             </Menu>
           </Stack>
         </div>

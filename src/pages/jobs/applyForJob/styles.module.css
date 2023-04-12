@@ -365,3 +365,9 @@
   line-height: 22px;
   letter-spacing: 0.03em;
 }
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .requirement {
+    padding: 0 8px 0 8px;
+  }
+}

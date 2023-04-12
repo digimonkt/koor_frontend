@@ -8,7 +8,13 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import ApplicationOptions from "@components/applicationOptions";
 dayjs.extend(relativeTime);
 
-const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
+const ApplicationCard = ({
+  details,
+  sx,
+  isShortlisted,
+  allOptions,
+  isRejected,
+}) => {
   // navigate
   // const navigate = useNavigate();
 
@@ -18,7 +24,6 @@ const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
   // };
   // const [isShortlisted, setIsShortlisted] = useState(false);
   // const [isRejected, setIsRejected] = useState(false);
-
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -51,42 +56,46 @@ const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
             </div>
             {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
           </Stack>
-          <Stack
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            sx={{ mb: 1, ...sx }}
-            className="meets_div"
-          >
-            <div>
-              <span className="meets">Meets your requirements with: </span>
-            </div>
-            <div>
-              <>
-                {details?.education && (
-                  <Chip
-                    label="Education"
-                    className="chiplabel"
-                    icon={<SVG.SchoolIcon />}
-                  />
-                )}
-                {details?.skills && (
-                  <Chip
-                    label="Skills"
-                    className="chiplabel"
-                    icon={<SVG.SmallSkillsIcon />}
-                  />
-                )}
-                {details?.language && (
-                  <Chip
-                    label="Language"
-                    className="chiplabel"
-                    icon={<SVG.SmallLangugeIcon />}
-                  />
-                )}
-              </>
-            </div>
-          </Stack>
+          {details?.education || details?.skills || details?.language ? (
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              sx={{ mb: 1, ...sx }}
+              className="meets_div"
+            >
+              <div>
+                <span className="meets">Meets your requirements with: </span>
+              </div>
+              <div>
+                <>
+                  {details?.education && (
+                    <Chip
+                      label="Education"
+                      className="chiplabel"
+                      icon={<SVG.SchoolIcon />}
+                    />
+                  )}
+                  {details?.skills && (
+                    <Chip
+                      label="Skills"
+                      className="chiplabel"
+                      icon={<SVG.SmallSkillsIcon />}
+                    />
+                  )}
+                  {details?.language && (
+                    <Chip
+                      label="Language"
+                      className="chiplabel"
+                      icon={<SVG.SmallLangugeIcon />}
+                    />
+                  )}
+                </>
+              </div>
+            </Stack>
+          ) : (
+            ""
+          )}
           <div className="recent-descrition">
             <p>{details?.shortLetter || details?.user?.description}</p>
           </div>
@@ -97,6 +106,7 @@ const ApplicationCard = ({ details, sx, isShortlisted, allOptions }) => {
           allOptions={allOptions}
           applicationId={details.id}
           isShortlisted={isShortlisted}
+          isRejected={isRejected}
         />
       </Stack>
     </Stack>

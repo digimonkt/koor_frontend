@@ -11,12 +11,14 @@ function ApplicationOptions({
   applicationId,
   isShortlisted,
   jobId,
-  isMessageAble,
+  isRejected,
 }) {
   const navigate = useNavigate();
   const [shortlist, setShortlist] = useState(false);
+  const [rejected, setRejected] = useState(false);
   useEffect(() => {
     setShortlist(!!isShortlisted);
+    setRejected(!!isRejected);
   }, [isShortlisted]);
   const handlerChangeApplicationStatus = async (action, applicationId) => {
     const res = await changeApplicationStatusAPI({ action, applicationId });
@@ -33,7 +35,7 @@ function ApplicationOptions({
         </Button>
       )}
       <Button
-        disabled={shortlist}
+        disabled={shortlist || rejected}
         variant="link"
         onClick={() =>
           handlerChangeApplicationStatus(
@@ -47,9 +49,9 @@ function ApplicationOptions({
       </Button>
       {allOptions && (
         <>
-          <Button variant="link" disabled={shortlist}>
+          <Button variant="link" disabled={shortlist || rejected}>
             {<SVG.RejectIcon className="application-option-icon" />}{" "}
-            <span>Reject</span>
+            <span>{rejected ? "Rejected" : "Reject"}</span>
           </Button>
           <Button variant="link" className="application-option-btn">
             {<SVG.BlockedIcon className="application-option-icon" />}{" "}

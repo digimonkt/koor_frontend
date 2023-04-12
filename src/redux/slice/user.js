@@ -33,6 +33,15 @@ const initialState = {
       license_id: "",
       license_id_file: "",
     },
+    jobPreferences: {
+      id: "",
+      isAvailable: false,
+      displayInSearch: false,
+      isPartTime: false,
+      isFullTime: false,
+      hasContract: false,
+      expectedSalary: 0,
+    },
     /**
      *  {
         id: "",
@@ -132,6 +141,10 @@ export const authSlice = createSlice({
         profile: {
           ...state.currentUser.profile,
           ...(action.payload.profile || {}),
+        },
+        jobPreferences: {
+          ...state.currentUser.jobPreferences,
+          ...(action.payload.jobPreferences || {}),
         },
       };
     },

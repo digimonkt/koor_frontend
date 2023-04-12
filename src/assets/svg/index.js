@@ -95,8 +95,10 @@ import { ReactComponent as AppliedJob } from "./appliedJob.svg";
 import { ReactComponent as UnSave } from "./unsave.svg";
 import { ReactComponent as CrossCircle } from "./crossCircle.svg";
 import { ReactComponent as Bell } from "./bell.svg";
+import { ReactComponent as JobPost } from "./jobPost.svg";
 
 export const SVG = {
+  JobPost,
   Bell,
   ArrowForward,
   Reciept,

@@ -72,6 +72,11 @@
   display: block;
   background: #eea23d;
 }
+
+.language {
+  margin-top: 40px !important;
+}
+
 .language h6 {
   font-size: 18px;
 }

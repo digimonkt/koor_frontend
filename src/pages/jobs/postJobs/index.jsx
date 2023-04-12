@@ -20,7 +20,6 @@ import {
   SelectInput,
 } from "@components/input";
 import CurrencyInput from "./currencyInput";
-import { JobFormControl } from "../../jobSeeker/myProfile/job-preferences";
 import { FilledButton, OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
@@ -43,6 +42,9 @@ import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
 import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "@api/user";
 import styles from "./postJobs.module.css";
+import { JobFormControl } from "./style";
+import DialogBox from "@components/dialogBox";
+import { SVG } from "@assets/svg";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -64,6 +66,12 @@ function PostJobsComponent() {
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
+  const handleRedirect = () => {
+    setOpen(close);
+    setIsRedirect(true);
+  };
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -172,11 +180,10 @@ function PostJobsComponent() {
         }
       }
       if (res.remote === "success") {
-        navigate(`/${USER_ROLES.employer}/manage-jobs`);
+        setOpen(true);
       }
     },
   });
-
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
@@ -256,6 +263,15 @@ function PostJobsComponent() {
       setSuggestedAddress(res.data.predictions);
     }
   };
+  const handleClose = () => {
+    setOpen(false);
+    setIsRedirect(true);
+  };
+  useEffect(() => {
+    if (isRedirect) {
+      navigate(`/${USER_ROLES.employer}/manage-jobs`);
+    }
+  }, [isRedirect]);
   useEffect(() => {
     if (
       debouncedSearchValue &&
@@ -492,20 +508,23 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={3} lg={4} xs={12} className="mt-2">
                     <label>Job type</label>
-                    <FormGroup row sx={{ marginLeft: "7px" }}>
+                    <FormGroup row sx={{ marginLeft: "7px", display: "flex" }}>
                       <JobFormControl
+                        className="update_checkbox"
                         control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
                         label="Part Time"
                         checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
+                        className="update_checkbox"
                         control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
                         label="Full Time"
                         checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
+                        className="update_checkbox"
                         control={<CheckboxInput sx={{ padding: "9px 6px" }} />}
                         label="Contract"
                         checked={formik.values.hasContract}
@@ -647,7 +666,7 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <label>
+                    <label className="mb-2">
                       Required languages
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
                     </label>
@@ -657,6 +676,7 @@ function PostJobsComponent() {
                           <Grid item xl={4} lg={4} xs={12} key={i}>
                             <SelectInput
                               placeholder="Select a Language"
+                              className="mb-3"
                               options={languages.data.map((language) => ({
                                 value: language.id,
                                 label: language.title,
@@ -715,13 +735,14 @@ function PostJobsComponent() {
                   </Grid>
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
-                  <label>
-                    Job skills{" "}
+                  <label className="mb-2">
+                    Job skills
                     <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
                   </label>
                   <Grid container spacing={2}>
                     <Grid item xl={4} lg={4} xs={12}>
                       <SelectInput
+                        className="mb-3"
                         defaultValue=""
                         placeholder="Select a Skill"
                         options={skills.data.map((skill) => ({
@@ -771,7 +792,7 @@ function PostJobsComponent() {
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
-                  <h2 className="mt-2 mb-3">Attach files</h2>
+                  <h2 className="mt-3 mb-3">Attach files</h2>
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
                     handleDrop={(file) => {
@@ -870,6 +891,27 @@ function PostJobsComponent() {
         handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
         message="Some thing went wrong!"
       />
+      <DialogBox open={open} handleClose={handleClose}>
+        <Grid container spacing={2}>
+          <Grid item lg={7}>
+            <h1 className="mb-3">Done!</h1>
+            <p>
+              {jobId
+                ? "Your job post just updated. It will be reviewed and available on Koor shortly."
+                : "Your new job post just submitted. It will be reviewed and available on Koor shortly."}
+            </p>
+            <div className={`${styles.cancel_popup}`}>
+              <OutlinedButton
+                title="Go to my jobs"
+                onClick={() => handleRedirect()}
+              />
+            </div>
+          </Grid>
+          <Grid item lg={5}>
+            <SVG.JobPost className="w-100" />
+          </Grid>
+        </Grid>
+      </DialogBox>
     </div>
   );
 }
