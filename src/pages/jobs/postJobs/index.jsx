@@ -43,6 +43,9 @@ import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "@api/user";
 import styles from "./postJobs.module.css";
 import { JobFormControl } from "./style";
+import DialogBox from "@components/dialogBox";
+import PostedJobInfo from "./postedJobInfo";
+import { SVG } from "@assets/svg";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -64,6 +67,12 @@ function PostJobsComponent() {
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
+  const handleRedirect = () => {
+    setOpen(close);
+    setIsRedirect(true);
+  };
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -172,11 +181,10 @@ function PostJobsComponent() {
         }
       }
       if (res.remote === "success") {
-        navigate(`/${USER_ROLES.employer}/manage-jobs`);
+        setOpen(true);
       }
     },
   });
-
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
@@ -256,6 +264,15 @@ function PostJobsComponent() {
       setSuggestedAddress(res.data.predictions);
     }
   };
+  const handleClose = () => {
+    setOpen(false);
+    setIsRedirect(true);
+  };
+  useEffect(() => {
+    if (isRedirect) {
+      navigate(`/${USER_ROLES.employer}/manage-jobs`);
+    }
+  }, [isRedirect]);
   useEffect(() => {
     if (
       debouncedSearchValue &&
@@ -875,6 +892,26 @@ function PostJobsComponent() {
         handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
         message="Some thing went wrong!"
       />
+      <DialogBox open={open} handleClose={handleClose}>
+        <PostedJobInfo
+          title="Done!"
+          color="#EEA23D"
+          bgcolor="#FEEFD3"
+          description={[
+            <>
+              <p>
+              {jobId ? "Your job post was just updated. It will be reviewed and available on Koor shortly." : "Your new job post was just submitted. It will be reviewed and available on Koor shortly." }
+              </p>
+            </>,
+          ]}
+          buttonHover="rgba(255, 165, 0, 0.1)"
+          handleClose={() => {
+            handleRedirect();
+          }}
+          buttontext="Go to my jobs"
+          icon={<SVG.AlertCheckICon />}
+        />
+      </DialogBox>
     </div>
   );
 }
