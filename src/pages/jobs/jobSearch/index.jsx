@@ -17,6 +17,8 @@ import { getSearchJobsAPI } from "@api/job";
 import Pagination from "@components/pagination";
 import SearchInput from "@components/searchInput";
 import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
+import { NoDataFoundAnimation } from "@components/animations";
+import Loader from "@components/loader";
 
 const LIMIT = 10;
 export default function JobSearch() {
@@ -31,6 +33,7 @@ export default function JobSearch() {
   const [searchedJobs, setSearchedJobs] = useState([]);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
+  const [isSearching, setIsSearching] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,6 +48,7 @@ export default function JobSearch() {
     }
   };
   const getSearchJobs = async (data) => {
+    setIsSearching(true);
     if (data) {
       for (const key in data) {
         if (!data[key]) {
@@ -56,7 +60,7 @@ export default function JobSearch() {
       search,
       page,
       limit: LIMIT,
-      ...data
+      ...data,
     });
     if (res.remote === "success") {
       const totalJobs = res.data.count;
@@ -65,6 +69,7 @@ export default function JobSearch() {
       setTotalPages(pages);
       setSearchedJobs(res.data.results);
     }
+    setIsSearching(true);
   };
 
   const handleSorting = (search) => {
@@ -226,14 +231,20 @@ export default function JobSearch() {
               </Menu>
             </Stack>
           </div>
-          {searchedJobs.map((job) => {
-            return (
-              <React.Fragment key={job.id}>
-                <JobCard logo jobDetails={job} />
-                <Divider />
-              </React.Fragment>
-            );
-          })}
+          {isSearching ? (
+            <Loader loading={isSearching} />
+          ) : !searchedJobs.length ? (
+            <NoDataFoundAnimation title="No Job Found" />
+          ) : (
+            searchedJobs.map((job) => {
+              return (
+                <React.Fragment key={job.id}>
+                  <JobCard logo jobDetails={job} />
+                  <Divider />
+                </React.Fragment>
+              );
+            })
+          )}
         </div>
       </Container>
       <div className="paginations pt-4">

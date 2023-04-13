@@ -23,7 +23,7 @@ const AreaChart = ({ title }) => {
           autoSelected: "pan",
         },
       },
-      colors: ["#002C6A", "#4CAF50"],
+      colors: ["#004C6A", "#4CAF50"],
 
       dataLabels: {
         enabled: false,

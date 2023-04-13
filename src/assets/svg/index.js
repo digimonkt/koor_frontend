@@ -97,8 +97,10 @@ import { ReactComponent as CrossCircle } from "./crossCircle.svg";
 import { ReactComponent as Bell } from "./bell.svg";
 import { ReactComponent as JobPost } from "./jobPost.svg";
 import { ReactComponent as KoorShortLogo } from "./koorShortLogo.svg";
+import { ReactComponent as SuitcaseJob } from "./suitcaseJob.svg";
 
 export const SVG = {
+  SuitcaseJob,
   KoorShortLogo,
   JobPost,
   Bell,
