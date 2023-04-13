@@ -111,10 +111,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </Link>
               )}
             </h2>
-            <p className="my-3">
-              {jobDetails?.description ||
-                "Role and Responsibilities · Provide good customer service · Maintain store cleanliness. Check and display goods/merchandise · Cashiering duties as and when needed Qualifications and Education Requirements· Minimum SPM and above· No experience needed · Good verbal..."}
-            </p>
+            <p className="my-3 job-description card-description">{jobDetails?.description}</p>
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
