@@ -10,7 +10,7 @@ import { setTotalCreatedJobs } from "@redux/slice/employer";
 function MyJobs() {
   const dispatch = useDispatch();
   const [jobs, setJobs] = useState([]);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const getAllJobs = useCallback(async () => {
     const res = await getEmployerJobsAPI({ search });
@@ -20,8 +20,7 @@ function MyJobs() {
     } else {
       console.log(res);
     }
-  }, []);
-
+  }, [search]);
   useEffect(() => {
     getAllJobs();
   }, [isSearching]);
