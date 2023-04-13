@@ -63,7 +63,7 @@ function NotificationPopup() {
             </div>
           </MenuItem>
           <MenuItem className="w-100">
-            <NotificationContent footer />
+            <NotificationContent footer handleClose={handleClose} />
           </MenuItem>
         </div>
       </Menu>

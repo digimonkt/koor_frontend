@@ -96,8 +96,10 @@ import { ReactComponent as UnSave } from "./unsave.svg";
 import { ReactComponent as CrossCircle } from "./crossCircle.svg";
 import { ReactComponent as Bell } from "./bell.svg";
 import { ReactComponent as JobPost } from "./jobPost.svg";
+import { ReactComponent as KoorShortLogo } from "./koorShortLogo.svg";
 
 export const SVG = {
+  KoorShortLogo,
   JobPost,
   Bell,
   ArrowForward,

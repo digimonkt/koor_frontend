@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { DateInput } from "@components/input";
 import { SVG } from "@assets/svg";
 
-function NotificationContentComponent({ footer, header }) {
+function NotificationContentComponent({ footer, header, handleClose }) {
   const { role } = useSelector((state) => state.auth);
 
   const [loading, setLoading] = useState(false);
@@ -91,7 +91,15 @@ function NotificationContentComponent({ footer, header }) {
           )}
           {footer ? (
             <div className={styles.view_div}>
-              <Link to="/notification" className={styles.view_all}>
+              <Link
+                to="/notification"
+                className={styles.view_all}
+                onClick={() => {
+                  if (handleClose) {
+                    handleClose();
+                  }
+                }}
+              >
                 View All Notification
               </Link>
               <Link to="#/" className={styles.settings}>
