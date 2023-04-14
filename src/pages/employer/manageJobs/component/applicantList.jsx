@@ -7,6 +7,7 @@ import { getApplicationOnJobAPI } from "@api/employer";
 import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
 import { NoDataFoundAnimation } from "@components/animations";
 import Loader from "@components/loader";
+import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 
 const ApplicantList = ({ totalApplications, jobId }) => {
   const [isActive, setIsActive] = useState(false);
@@ -151,6 +152,7 @@ const ApplicantList = ({ totalApplications, jobId }) => {
       </Stack>
       {isActive && (
         <div className="recent-box mt-3">
+          <ApplicationCardSkeletonLoading />
           {isLoading ? (
             // skeleton loading need to implement
             <Loader loading={isLoading} />

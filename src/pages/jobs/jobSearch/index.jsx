@@ -18,7 +18,7 @@ import Pagination from "@components/pagination";
 import SearchInput from "@components/searchInput";
 import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
 import { NoDataFoundAnimation } from "@components/animations";
-import Loader from "@components/loader";
+import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
 
 const LIMIT = 10;
 export default function JobSearch() {
@@ -33,7 +33,7 @@ export default function JobSearch() {
   const [searchedJobs, setSearchedJobs] = useState([]);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
-  const [isSearching, setIsSearching] = useState(false);
+  const [isSearching, setIsSearching] = useState(true);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -234,15 +234,14 @@ export default function JobSearch() {
             </Stack>
           </div>
           {isSearching ? (
-            <div
-              style={{
-                marginLeft: "50%",
-                marginTop: "10%",
-                height: "250px",
-              }}
-            >
-              <Loader loading={isSearching} />
-            </div>
+            [1, 2, 3, 4, 5].map((loader) => {
+              return (
+                <React.Fragment key={loader}>
+                  <JobCardSkeletonLoader logo />
+                  <Divider />
+                </React.Fragment>
+              );
+            })
           ) : !searchedJobs.length ? (
             <NoDataFoundAnimation title="No Job Found" />
           ) : (

@@ -1,9 +1,8 @@
-import { SVG } from "@assets/svg";
 import { Divider, Grid, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 
-function JobCardSkeletonLoader({ logo }) {
+function JobCardSkeletonLoader({ logo, selfJob }) {
   const [gridProps, setGridProps] = useState({});
   useEffect(() => {
     if (logo) {
@@ -26,16 +25,18 @@ function JobCardSkeletonLoader({ logo }) {
               },
             }}
           >
-            <div className="squer-width">
-              <Skeleton circle />
-              {/* Skeleton Loader for Avatar */}
+            <div
+              className="squer-width"
+              style={{ height: "150px", width: "150px" }}
+            >
+              <Skeleton circle style={{ height: "100%" }} />
             </div>
           </Grid>
         )}
         <Grid
           item
-          // lg={logo ? 8 : 9}
-          // xs={12}
+          lg={logo ? 8 : 9}
+          xs={12}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "72%",
@@ -44,17 +45,45 @@ function JobCardSkeletonLoader({ logo }) {
           }}
         >
           <div className="my-jobs">
-            <Skeleton />
-            <Skeleton count={3} />
+            <Skeleton height={24} width={500} />
+            <p className="my-3 job-description card-description">
+              <Skeleton count={2} style={{ lineHeight: "9px" }} />
+            </p>
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
             >
-              {/* Skeleton Loader for ChipBox */}
-              {/* Skeleton Loader for ChipBox */}
-              {/* Skeleton Loader for ChipBox */}
-              {/* Skeleton Loader for ChipBox */}
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
             </Stack>
             <Stack
               direction="row"
@@ -62,21 +91,20 @@ function JobCardSkeletonLoader({ logo }) {
               className="mt-3"
               divider={<Divider orientation="vertical" flexItem />}
             >
-              {/* Skeleton Loader for Company Name */}
+              {!selfJob && (
+                <Stack direction="row" spacing={1}>
+                  <Skeleton width={200} style={{ borderRadius: "20px" }} />
+                </Stack>
+              )}
               <Stack direction="row" spacing={1}>
-                <span>
-                  <SVG.ClockIconSmall />
-                </span>{" "}
-                <div className="textdes">
-                  {/* Skeleton Loader for Posted At Date */}
-                </div>
+                <Skeleton width={200} style={{ borderRadius: "20px" }} />
               </Stack>
             </Stack>
           </div>
         </Grid>
         <Grid item lg={logo ? 2 : 3} xs={12}>
           <div className="text-end mb-4">
-            {/* Skeleton Loader for SolidButton */}
+            <Skeleton height={30} width={100} style={{ borderRadius: "5px" }} />
           </div>
           <Stack
             direction="row"
@@ -89,6 +117,27 @@ function JobCardSkeletonLoader({ logo }) {
           >
             <div className="pricebox py-3">
               {/* Skeleton Loader for Budget Amount */}
+              <span className="d-block">
+                <Skeleton
+                  height={30}
+                  width={100}
+                  style={{ borderRadius: "5px" }}
+                />
+              </span>
+              <h4>
+                <Skeleton
+                  height={20}
+                  width={100}
+                  style={{ borderRadius: "5px" }}
+                />
+              </h4>
+              <span>
+                <Skeleton
+                  height={10}
+                  width={100}
+                  style={{ borderRadius: "5px" }}
+                />
+              </span>
             </div>
           </Stack>
         </Grid>

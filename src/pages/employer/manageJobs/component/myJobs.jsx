@@ -7,7 +7,7 @@ import { getEmployerJobsAPI } from "@api/employer";
 import { useDispatch } from "react-redux";
 import { setTotalCreatedJobs } from "@redux/slice/employer";
 import { NoDataFoundAnimation } from "@components/animations";
-import Loader from "@components/loader";
+import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
 
 function MyJobs() {
   const dispatch = useDispatch();
@@ -36,8 +36,31 @@ function MyJobs() {
         </Stack>
       </div>
       {isLoading ? (
-        // implement skeleton loading
-        <Loader loading={isLoading} />
+        [1, 2, 3, 4, 5].map((loader) => {
+          return (
+            <React.Fragment key={loader}>
+              <Card
+                sx={{
+                  "&.MuiCard-root": {
+                    boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                    borderRadius: "10px",
+                    mb: 3,
+                  },
+                }}
+              >
+                <CardContent
+                  sx={{
+                    "&.MuiCardContent-root": {
+                      padding: "25px 25px 25px",
+                    },
+                  }}
+                >
+                  <JobCardSkeletonLoader selfJob />
+                </CardContent>
+              </Card>
+            </React.Fragment>
+          );
+        })
       ) : !jobs.length ? (
         <Card
           sx={{
