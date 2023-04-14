@@ -80,6 +80,7 @@ function ManageJobsComponent() {
           role="tabpanel"
           hidden={index !== panel}
           id={`simple-tabpanel-${index}`}
+          style={{ height: "100%" }}
         >
           <tab.component />
         </div>

@@ -6,11 +6,15 @@ import ApplicantList from "./applicantList";
 import { getEmployerJobsAPI } from "@api/employer";
 import { useDispatch } from "react-redux";
 import { setTotalCreatedJobs } from "@redux/slice/employer";
+import { NoDataFoundAnimation } from "@components/animations";
+import Loader from "@components/loader";
 
 function MyJobs() {
   const dispatch = useDispatch();
   const [jobs, setJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const getAllJobs = useCallback(async () => {
+    setIsLoading(true);
     const res = await getEmployerJobsAPI();
     if (res.remote === "success") {
       setJobs(res.data.results);
@@ -18,6 +22,7 @@ function MyJobs() {
     } else {
       console.log(res);
     }
+    setIsLoading(false);
   }, []);
   useEffect(() => {
     getAllJobs();
@@ -30,34 +35,51 @@ function MyJobs() {
           <button className="jobt-btn-search">{<SVG.SearchIcon />}</button>
         </Stack>
       </div>
-      {jobs.map((job) => {
-        return (
-          <Card
-            key={job.id}
-            sx={{
-              "&.MuiCard-root": {
-                boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-                borderRadius: "10px",
-                mb: 3,
-              },
-            }}
-          >
-            <CardContent
+      {isLoading ? (
+        // implement skeleton loading
+        <Loader loading={isLoading} />
+      ) : !jobs.length ? (
+        <Card
+          sx={{
+            "&.MuiCard-root": {
+              boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+              borderRadius: "10px",
+              mb: 3,
+            },
+          }}
+        >
+          <NoDataFoundAnimation title="It appears that you haven't created any jobs yet." />
+        </Card>
+      ) : (
+        jobs.map((job) => {
+          return (
+            <Card
+              key={job.id}
               sx={{
-                "&.MuiCardContent-root": {
-                  padding: "25px 25px 25px",
+                "&.MuiCard-root": {
+                  boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                  borderRadius: "10px",
+                  mb: 3,
                 },
               }}
             >
-              <JobCard selfJob jobDetails={job} />
-              <ApplicantList
-                jobId={job.id}
-                totalApplications={job.applicantCount}
-              />
-            </CardContent>
-          </Card>
-        );
-      })}
+              <CardContent
+                sx={{
+                  "&.MuiCardContent-root": {
+                    padding: "25px 25px 25px",
+                  },
+                }}
+              >
+                <JobCard selfJob jobDetails={job} />
+                <ApplicantList
+                  jobId={job.id}
+                  totalApplications={job.applicantCount}
+                />
+              </CardContent>
+            </Card>
+          );
+        })
+      )}
     </div>
   );
 }
