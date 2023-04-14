@@ -68,8 +68,10 @@ export default function JobSearch() {
       const pages = Math.ceil(totalJobs / LIMIT);
       setTotalPages(pages);
       setSearchedJobs(res.data.results);
+      setIsSearching(false);
+    } else {
+      setIsSearching(false);
     }
-    setIsSearching(true);
   };
 
   const handleSorting = (search) => {
@@ -232,7 +234,15 @@ export default function JobSearch() {
             </Stack>
           </div>
           {isSearching ? (
-            <Loader loading={isSearching} />
+            <div
+              style={{
+                marginLeft: "50%",
+                marginTop: "10%",
+                height: "250px",
+              }}
+            >
+              <Loader loading={isSearching} />
+            </div>
           ) : !searchedJobs.length ? (
             <NoDataFoundAnimation title="No Job Found" />
           ) : (
