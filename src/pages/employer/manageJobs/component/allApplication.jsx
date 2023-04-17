@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import { setTotalApplications } from "@redux/slice/employer";
 import { useDispatch } from "react-redux";
 import { NoDataFoundAnimation } from "@components/animations";
-import Loader from "@components/loader";
+import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 function AllApplication() {
   const dispatch = useDispatch();
 
@@ -52,7 +52,9 @@ function AllApplication() {
         >
           {isLoading ? (
             // skeleton loading need to be implemented
-            <Loader loading={isLoading} />
+            [1, 2, 3].map((loader) => (
+              <ApplicationCardSkeletonLoading key={loader} />
+            ))
           ) : !recentApplication.length ? (
             <NoDataFoundAnimation title="You haven't received any job applications yet." />
           ) : (

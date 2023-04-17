@@ -26,7 +26,7 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
             sx={{ mb: 1, ...sx }}
           >
             <h4>
-              <Skeleton width={100} />
+              <Skeleton width={720} />
             </h4>
             {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
           </Stack>
@@ -39,8 +39,7 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
           >
             <div>
               <span className="meets">
-                {" "}
-                <Skeleton count={1} style={{ lineHeight: "9px" }} />
+                <Skeleton width={207} style={{ lineHeight: "9px" }} />
               </span>
             </div>
             <div style={{ display: "flex" }}>
@@ -66,13 +65,13 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
           </Stack>
           <div className="recent-descrition">
             <p>
-              <Skeleton count={2} style={{ lineHeight: "9px" }} />
+              <Skeleton width={930} count={2} style={{ lineHeight: "9px" }} />
             </p>
           </div>
         </div>
       </Stack>
       <Stack direction="row" spacing={0} className="edit-button">
-        <Skeleton height={30} />
+        <Skeleton height={30} width={500} />
       </Stack>
     </Stack>
   );

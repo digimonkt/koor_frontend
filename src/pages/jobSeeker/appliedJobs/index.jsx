@@ -2,6 +2,7 @@ import {
   Card,
   CardContent,
   Chip,
+  Divider,
   IconButton,
   Menu,
   MenuItem,
@@ -12,6 +13,8 @@ import { SVG } from "@assets/svg";
 import JobCard from "@components/jobCard";
 import { getAppliedJobsAPI } from "@api/jobSeeker";
 import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
+import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
+import { NoDataFoundAnimation } from "@components/animations";
 
 function AppliedJobsComponent() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -20,6 +23,7 @@ function AppliedJobsComponent() {
   const [totalAppliedJobs, setTotalAppliedJobs] = useState(0);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
+  const [isLoading, setIsLoading] = useState(true);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -27,11 +31,13 @@ function AppliedJobsComponent() {
     setAnchorEl(null);
   };
   const getAppliedJobsList = async (data) => {
+    setIsLoading(true);
     const res = await getAppliedJobsAPI(data);
     if (res.remote === "success") {
       setTotalAppliedJobs(res.data.count);
       setAppliedJobList(res.data.results);
     }
+    setIsLoading(false);
   };
   const handleSorting = (search) => {
     setSortBy(search);
@@ -177,13 +183,27 @@ function AppliedJobsComponent() {
           </Stack>
         </div>
         <div className="savedjobs">
-          {appliedJobsList.map((list) => {
-            return (
-              <div style={{ borderBottom: "1px solid #cacaca" }} key={list.id}>
-                <JobCard logo applied jobDetails={list.job} />
+          {isLoading ? (
+            [1, 2, 3].map((loader) => (
+              <div style={{ borderBottom: "1px solid #cacaca" }} key={loader}>
+                <JobCardSkeletonLoader logo />
               </div>
-            );
-          })}
+            ))
+          ) : !appliedJobsList.length ? (
+            <NoDataFoundAnimation title="It seems like you haven't submitted any job applications yet." />
+          ) : (
+            appliedJobsList.map((list) => {
+              return (
+                <div
+                  style={{ borderBottom: "1px solid #cacaca" }}
+                  key={list.id}
+                >
+                  <JobCard logo applied jobDetails={list.job} />
+                  <Divider />
+                </div>
+              );
+            })
+          )}
         </div>
       </CardContent>
     </Card>

@@ -9,7 +9,7 @@ import { getRecentApplicationAPI } from "@api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { NoDataFoundAnimation } from "@components/animations";
-import Loader from "@components/loader";
+import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const [recentApplication, setRecentApplication] = useState([]);
@@ -151,7 +151,9 @@ const Dashboard = () => {
 
                   {isLoading ? (
                     // skeleton loading need to implement
-                    <Loader loading={isLoading} />
+                    [1, 2, 3, 4, 5].map((loader) => (
+                      <ApplicationCardSkeletonLoading key={loader} />
+                    ))
                   ) : !recentApplication.length ? (
                     <NoDataFoundAnimation title="We could not find any recent job applications." />
                   ) : (

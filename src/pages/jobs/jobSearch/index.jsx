@@ -243,7 +243,7 @@ export default function JobSearch() {
               );
             })
           ) : !searchedJobs.length ? (
-            <NoDataFoundAnimation title="No Job Found" />
+            <NoDataFoundAnimation title="We are sorry, but we couldn't find any jobs that match your search criteria." />
           ) : (
             searchedJobs.map((job) => {
               return (

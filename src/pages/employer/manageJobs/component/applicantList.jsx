@@ -6,7 +6,6 @@ import ApplicationCard from "@components/applicationCard";
 import { getApplicationOnJobAPI } from "@api/employer";
 import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
 import { NoDataFoundAnimation } from "@components/animations";
-import Loader from "@components/loader";
 import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 
 const ApplicantList = ({ totalApplications, jobId }) => {
@@ -152,10 +151,11 @@ const ApplicantList = ({ totalApplications, jobId }) => {
       </Stack>
       {isActive && (
         <div className="recent-box mt-3">
-          <ApplicationCardSkeletonLoading />
           {isLoading ? (
             // skeleton loading need to implement
-            <Loader loading={isLoading} />
+            [1, 2, 3].map((loaders) => {
+              return <ApplicationCardSkeletonLoading key={loaders} />;
+            })
           ) : !applicants.length ? (
             <NoDataFoundAnimation title="There are currently no applications for your job posting." />
           ) : (
