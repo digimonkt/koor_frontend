@@ -50,11 +50,30 @@ function ApplicationOptions({
       </Button>
       {allOptions && (
         <>
-          <Button variant="link" disabled={shortlist || rejected}>
+          <Button
+            variant="link"
+            disabled={shortlist || rejected}
+            onClick={() =>
+              handlerChangeApplicationStatus(
+                JOB_APPLICATION_OPTIONS.rejected,
+                applicationId
+              )
+            }
+          >
             {<SVG.RejectIcon className="application-option-icon" />}{" "}
             <span>{rejected ? "Rejected" : "Reject"}</span>
           </Button>
-          <Button variant="link" className="application-option-btn">
+          <Button
+            variant="link"
+            disabled={shortlist || rejected}
+            className="application-option-btn"
+            onClick={() =>
+              handlerChangeApplicationStatus(
+                JOB_APPLICATION_OPTIONS.blacklisted,
+                applicationId
+              )
+            }
+          >
             {<SVG.BlockedIcon className="application-option-icon" />}{" "}
             <span>Blacklist</span>
           </Button>
