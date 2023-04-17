@@ -12,6 +12,8 @@ import { SVG } from "@assets/svg";
 import JobCard from "@components/jobCard";
 import { getSaveJobAPI } from "@api/jobSeeker";
 import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
+import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
+import { NoDataFoundAnimation } from "@components/animations";
 
 function SavedJobsComponent() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -19,6 +21,7 @@ function SavedJobsComponent() {
   const [totalSavedJobs, setTotalSavedJobs] = useState(0);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
+  const [isLoading, setIsLoading] = useState(true);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,11 +30,13 @@ function SavedJobsComponent() {
     setAnchorEl(null);
   };
   const getSavedJobsList = async (data) => {
+    setIsLoading(true);
     const res = await getSaveJobAPI(data);
     if (res.remote === "success") {
       setTotalSavedJobs(res.data.count);
       setSavedJobList(res.data.results);
     }
+    setIsLoading(false);
   };
   const handleSorting = (search) => {
     setSortBy(search);
@@ -175,13 +180,26 @@ function SavedJobsComponent() {
           </Stack>
         </div>
         <div className="savedjobs">
-          {savedJobsList.map((list) => {
-            return (
-              <div style={{ borderBottom: "1px solid #cacaca" }} key={list.id}>
-                <JobCard logo jobDetails={list.job} />
+          {isLoading ? (
+            [1, 2, 3].map((loader) => (
+              <div style={{ borderBottom: "1px solid #cacaca" }} key={loader}>
+                <JobCardSkeletonLoader logo />
               </div>
-            );
-          })}
+            ))
+          ) : !savedJobsList.length ? (
+            <NoDataFoundAnimation title="You haven't saved any jobs yet." />
+          ) : (
+            savedJobsList.map((list) => {
+              return (
+                <div
+                  style={{ borderBottom: "1px solid #cacaca" }}
+                  key={list.id}
+                >
+                  <JobCard logo jobDetails={list.job} />
+                </div>
+              );
+            })
+          )}
         </div>
       </CardContent>
     </Card>

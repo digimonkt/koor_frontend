@@ -9,7 +9,7 @@ import "./index.css";
 import "./assets/css/banhnschrift.css";
 import "./assets/css/style.css";
 import "./assets/css/employer.css";
-
+import "react-loading-skeleton/dist/skeleton.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>

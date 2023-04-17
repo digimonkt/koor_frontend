@@ -1,5 +1,4 @@
 import { SearchButton } from "@components/button";
-import { Grid } from "@mui/material";
 import React from "react";
 import styles from "./styles.module.css";
 
@@ -18,29 +17,18 @@ function JobRequirementCard({ jobCategories, languages, skills }) {
           );
         })}
       </div>
-      <div className={`${styles.language}`}>
+      <div className={`${styles.required}`}>
         <h6 className="mb-0 mt-3">Languages</h6>
-        <Grid container spacing={2}>
-          {languages.map((language) => {
-            return (
-              <Grid item xs={4} key={language.id}>
-                <div className={`${styles.english}`}>
-                  <span className={`${styles.dots}`}></span>
-                  <div
-                    className={`${styles.englishtext}`}
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    <h6 className="mb-0">{language.language.title}</h6>
-                    <span>Spoken: {language.spoken}</span> <br />
-                    <span>Written: {language.written}</span>
-                  </div>
-                </div>
-              </Grid>
-            );
-          })}
-        </Grid>
+        {languages.map((language) => {
+          return (
+            <div className={`${styles.educations}`} key={language.id}>
+              <span></span>
+              <p className="m-0">{language.language.title}</p>
+            </div>
+          );
+        })}
         <div className={`${styles.skills}`}>
-          <h6 className="mb-1">Skills</h6>
+          <h6 className="mb-1  mt-3">Skills</h6>
           <div className={`${styles.skilssbtn}`}>
             {skills.map((skill) => {
               return (
