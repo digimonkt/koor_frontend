@@ -32,6 +32,9 @@ function MyJobs() {
             className="jobsearch"
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search your jobs"
+            onKeyDown={(e) =>
+              e.key === "Enter" ? setIsSearching(!isSearching) : null
+            }
           />
           <button
             className="jobt-btn-search"
