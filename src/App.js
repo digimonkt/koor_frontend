@@ -56,7 +56,6 @@ function App() {
       if (userIp.remote === "success") {
         const ip = userIp.data.ip;
         const res = await getUserCountryByIpAPI(ip);
-        console.log({ res });
         if (res.remote === "success") {
           dispatch(
             setCurrentLocation({

@@ -1,17 +1,27 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { DonutChart, AreaChart } from "@components/charts";
+import { DonutChart } from "@components/charts";
 import ApplicationCard from "@components/applicationCard";
 import { employerCard } from "./employerCardData";
 import { OutlinedButton } from "@components/button";
-import { getRecentApplicationAPI } from "@api/employer";
+import {
+  getDashboardActivityAPI,
+  getRecentApplicationAPI,
+} from "@api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
+import JobAnalytics from "./jobAnalytics";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
+  const [counts, setCounts] = useState({
+    activeJobs: 0,
+    activeTender: 0,
+    appliedJobs: 0,
+    appliedTender: 0,
+  });
   const [recentApplication, setRecentApplication] = useState([]);
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
@@ -41,17 +51,32 @@ const Dashboard = () => {
     setIsLoading(false);
   };
 
+  const getDashboardActivity = async () => {
+    const res = await getDashboardActivityAPI();
+    if (res.remote === "success") {
+      setCounts({
+        activeJobs: res.data.activeJobs,
+        activeTender: res.data.activeTender,
+        appliedJobs: res.data.appliedJobs,
+        appliedTender: res.data.appliedTender,
+      });
+    }
+  };
+
   const handleShowMore = () =>
     setRecentApplicationPage((prevState) => prevState + 1);
 
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
+  useEffect(() => {
+    getDashboardActivity();
+  }, []);
   return (
     <>
       <div className="employer-dashboard">
-        <Grid container spacing={2} sx={{ mb: 4 }}>
-          {employerCard.map((item, index) => (
+        <Grid item container spacing={2} sx={{ mb: 4 }}>
+          {employerCard(counts).map((item, index) => (
             <Grid item lg={3} xl={3} xs={12} key={index}>
               <Stack
                 direction="row"
@@ -93,7 +118,8 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <AreaChart title="Job posts analytics" />
+                  <JobAnalytics title="Job posts analytics" />
+                  {/* <AreaChart title="Job posts analytics" /> */}
                 </div>
               </CardContent>
             </Card>
