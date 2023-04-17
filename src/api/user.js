@@ -123,3 +123,16 @@ export const getLetLongByAddressAPI = async (address) => {
   console.log({ res });
   return res;
 };
+
+export const getUserIpAPI = async () => {
+  return await api.request({
+    url: "https://api.ipify.org?format=json",
+    method: "GET",
+  });
+};
+export const getUserCountryByIpAPI = async (ip) => {
+  return await api.request({
+    url: urlcat("https://api.iplocation.net/", { ip }),
+    method: "GET",
+  });
+};
