@@ -32,12 +32,15 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
     setIsDownloadingDocs(true);
     const res = await DownloadResumeAPI();
     if (res.remote === "success") {
-      const element = document.createElement("a");
-      element.href = generateFileUrl(res.data.url);
-      element.download = `${currentUser.name || "Resume"}.docx`;
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element); // remove the element from the DOM
+      const response = await fetch(generateFileUrl(res.data.url));
+      const blob = await response.blob();
+      const newFileName = `${currentUser.name || "Resume"}.docx`;
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = newFileName;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
     }
     setIsDownloadingDocs(false);
   };
