@@ -23,7 +23,7 @@ function PhoneNumberInputComponent({
     } else {
       setCountry(defaultCountry);
     }
-  }, [defaultCountry]);
+  }, [defaultCountry, currentLocation]);
   useEffect(() => {
     if (isInvalidNumber) {
       isInvalidNumber(isValidPhoneNumber(rest.value || ""));
