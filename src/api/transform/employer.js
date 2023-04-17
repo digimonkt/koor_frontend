@@ -31,3 +31,12 @@ export const transformApplicationOnJobListData = (data) => {
     }),
   };
 };
+
+export const getDashboardActivityAPIResponseTransform = (data) => {
+  return {
+    activeJobs: data.active_jobs,
+    activeTender: data.active_tender,
+    appliedJobs: data.applied_jobs,
+    appliedTender: data.applied_tender,
+  };
+};

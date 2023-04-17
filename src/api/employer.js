@@ -1,7 +1,10 @@
 import api from ".";
 import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
-import { transformApplicationOnJobListData } from "./transform/employer";
+import {
+  getDashboardActivityAPIResponseTransform,
+  transformApplicationOnJobListData,
+} from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
 export const createJobAPI = async (data) => {
   const res = await api.request({
@@ -124,5 +127,32 @@ export const changeApplicationStatusAPI = async ({ action, applicationId }) => {
     }),
     method: "PUT",
   });
+  return res;
+};
+
+export const getDashboardActivityAPI = async () => {
+  const res = await api.request({
+    url: "v1/users/employer/activity",
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: getDashboardActivityAPIResponseTransform(res.data),
+    };
+  }
+  return res;
+};
+export const getJobAnalyticsAPI = async () => {
+  const res = await api.request({
+    url: "v1/users/employer/job-analysis",
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: { orderCounts: res.data.order_counts },
+    };
+  }
   return res;
 };
