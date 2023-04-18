@@ -6,17 +6,22 @@ import { getRecentApplicationAPI } from "@api/employer";
 import dayjs from "dayjs";
 import { setTotalApplications } from "@redux/slice/employer";
 import { useDispatch } from "react-redux";
+import { NoDataFoundAnimation } from "@components/animations";
+import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 function AllApplication() {
   const dispatch = useDispatch();
 
-  const [recentApplication, setRecentApplication] = useState({ results: [] });
+  const [recentApplication, setRecentApplication] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getRecentApplications = async () => {
+    setIsLoading(true);
     const res = await getRecentApplicationAPI();
     if (res.remote === "success") {
-      setRecentApplication(res.data);
+      setRecentApplication(res.data.results);
       dispatch(setTotalApplications(res.data.count));
     }
+    setIsLoading(false);
   };
   useEffect(() => {
     getRecentApplications();
@@ -45,15 +50,24 @@ function AllApplication() {
             },
           }}
         >
-          {recentApplication.results.map((item, index) => (
-            <ApplicationCard
-              jobId={item.jobId}
-              details={item}
-              subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-              isDisabled={item.disabled}
-              key={index}
-            />
-          ))}
+          {isLoading ? (
+            // skeleton loading need to be implemented
+            [1, 2, 3].map((loader) => (
+              <ApplicationCardSkeletonLoading key={loader} />
+            ))
+          ) : !recentApplication.length ? (
+            <NoDataFoundAnimation title="You haven't received any job applications yet." />
+          ) : (
+            recentApplication.map((item, index) => (
+              <ApplicationCard
+                jobId={item.jobId}
+                details={item}
+                subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
+                isDisabled={item.disabled}
+                key={index}
+              />
+            ))
+          )}
         </CardContent>
       </Card>
     </div>

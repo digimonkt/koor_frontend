@@ -5,6 +5,8 @@ import { SVG } from "@assets/svg";
 import ApplicationCard from "@components/applicationCard";
 import { getApplicationOnJobAPI } from "@api/employer";
 import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
+import { NoDataFoundAnimation } from "@components/animations";
+import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 
 const ApplicantList = ({ totalApplications, jobId }) => {
   const [isActive, setIsActive] = useState(false);
@@ -14,11 +16,12 @@ const ApplicantList = ({ totalApplications, jobId }) => {
   const [totalRejected, setTotalRejected] = useState(0);
   const [totalBlacklisted, setTotalBlacklisted] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
-  // const [isShortlisted, setIsShortlisted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const handleActive = () => {
     setIsActive(!isActive);
   };
   const getApplicationList = async () => {
+    setIsLoading(true);
     const res = await getApplicationOnJobAPI({ jobId, filter });
     if (res.remote === "success") {
       setApplicants(res.data.results);
@@ -27,6 +30,7 @@ const ApplicantList = ({ totalApplications, jobId }) => {
       setTotalPlannedInterview(res.data.plannedInterviewCount);
       setTotalBlacklisted(res.data.blacklistedCount);
     }
+    setIsLoading(false);
   };
   const handleGetApplicationByStatus = (status) => {
     setFilter((prevState) => (prevState === status ? "" : status));
@@ -147,20 +151,29 @@ const ApplicantList = ({ totalApplications, jobId }) => {
       </Stack>
       {isActive && (
         <div className="recent-box mt-3">
-          {applicants.map((item, index) => {
-            return (
-              <ApplicationCard
-                jobId={jobId}
-                details={item}
-                subTitle={item.subtitle}
-                isDisabled={item.disabled}
-                key={index}
-                allOptions
-                isShortlisted={item.shortlistedAt}
-                isRejected={item.rejectedAt}
-              />
-            );
-          })}
+          {isLoading ? (
+            // skeleton loading need to implement
+            [1, 2, 3].map((loaders) => {
+              return <ApplicationCardSkeletonLoading key={loaders} />;
+            })
+          ) : !applicants.length ? (
+            <NoDataFoundAnimation title="There are currently no applications for your job posting." />
+          ) : (
+            applicants.map((item, index) => {
+              return (
+                <ApplicationCard
+                  jobId={jobId}
+                  details={item}
+                  subTitle={item.subtitle}
+                  isDisabled={item.disabled}
+                  key={index}
+                  allOptions
+                  isShortlisted={item.shortlistedAt}
+                  isRejected={item.rejectedAt}
+                />
+              );
+            })
+          )}
         </div>
       )}
     </>

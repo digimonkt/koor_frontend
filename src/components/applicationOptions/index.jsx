@@ -3,7 +3,7 @@ import { SVG } from "@assets/svg";
 import { Button } from "@mui/material";
 import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import "./style.css";
 function ApplicationOptions({
@@ -14,6 +14,7 @@ function ApplicationOptions({
   isRejected,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [shortlist, setShortlist] = useState(false);
   const [rejected, setRejected] = useState(false);
   useEffect(() => {
@@ -49,34 +50,55 @@ function ApplicationOptions({
       </Button>
       {allOptions && (
         <>
-          <Button variant="link" disabled={shortlist || rejected}>
+          <Button
+            variant="link"
+            disabled={shortlist || rejected}
+            onClick={() =>
+              handlerChangeApplicationStatus(
+                JOB_APPLICATION_OPTIONS.rejected,
+                applicationId
+              )
+            }
+          >
             {<SVG.RejectIcon className="application-option-icon" />}{" "}
             <span>{rejected ? "Rejected" : "Reject"}</span>
           </Button>
-          <Button variant="link" className="application-option-btn">
+          <Button
+            variant="link"
+            disabled={shortlist || rejected}
+            className="application-option-btn"
+            onClick={() =>
+              handlerChangeApplicationStatus(
+                JOB_APPLICATION_OPTIONS.blacklisted,
+                applicationId
+              )
+            }
+          >
             {<SVG.BlockedIcon className="application-option-icon" />}{" "}
             <span>Blacklist</span>
           </Button>
         </>
       )}
-      <Button
-        variant="link"
-        onClick={() => {
-          navigate(
-            urlcat(
-              "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
-              {
-                applicationId: applicationId || "applicationId",
-                role: USER_ROLES.employer,
-                jobId: jobId || "jobId",
-              }
-            )
-          );
-        }}
-      >
-        <SVG.OpenNewIcon className="application-option-icon" />
-        <span>View</span>
-      </Button>
+      {location.pathname.includes("applicant") ? null : (
+        <Button
+          variant="link"
+          onClick={() => {
+            navigate(
+              urlcat(
+                "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+                {
+                  applicationId: applicationId || "applicationId",
+                  role: USER_ROLES.employer,
+                  jobId: jobId || "jobId",
+                }
+              )
+            );
+          }}
+        >
+          <SVG.OpenNewIcon className="application-option-icon" />
+          <span>View</span>
+        </Button>
+      )}
       {allOptions && (
         <Button variant="link">
           {

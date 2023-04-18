@@ -20,6 +20,7 @@ import WorkExperienceCard from "@components/workExperienceCard";
 import LanguageCard from "@components/languageCard";
 import ApplicationOptions from "@components/applicationOptions";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import { NoRecordFoundAnimation } from "@components/animations";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
@@ -33,7 +34,6 @@ const ApplicantDetails = () => {
     job: {},
     attachments: [],
   });
-
   const getApplicantDetails = async () => {
     const res = await getApplicationDetailsAPI(params.applicationId);
     setApplicantsDetails(res.data);
@@ -119,6 +119,7 @@ const ApplicantDetails = () => {
                     applicationId={params.applicationId}
                     allOptions
                     isShortlisted={applicantDetails.shortlistedAt}
+                    isRejected={applicantDetails.rejectedAt}
                   />
                 </Stack>
               </Grid>
@@ -138,7 +139,11 @@ const ApplicantDetails = () => {
                 />
               </div>
               <div className="attachment-box">
-                <h2>Attachments</h2>
+                {applicantDetails.attachments.length ? (
+                  <h2>Attachments</h2>
+                ) : (
+                  ""
+                )}
                 {applicantDetails.attachments.map((attachment) => {
                   return (
                     <div key={attachment.id}>
@@ -167,7 +172,9 @@ const ApplicantDetails = () => {
                   <div className="skills-card">
                     <h3>Work experience</h3>
                     <ul>
-                      {applicantDetails.user.workExperiences &&
+                      {!applicantDetails.user.workExperiences?.length ? (
+                        <NoRecordFoundAnimation title="Applicant has no work experience on record." />
+                      ) : (
                         applicantDetails.user.workExperiences.map(
                           (item, index) => (
                             <li key={index}>
@@ -176,7 +183,8 @@ const ApplicantDetails = () => {
                               </div>
                             </li>
                           )
-                        )}
+                        )
+                      )}
                     </ul>
                   </div>
                 </Grid>
@@ -184,7 +192,9 @@ const ApplicantDetails = () => {
                   <div className="skills-card">
                     <h3>Education</h3>
                     <ul>
-                      {applicantDetails.user.educationRecord &&
+                      {!applicantDetails.user.educationRecord?.length ? (
+                        <NoRecordFoundAnimation title="We could not locate any educational history for the applicant." />
+                      ) : (
                         applicantDetails.user.educationRecord.map(
                           (item, index) => (
                             <li key={index}>
@@ -194,7 +204,8 @@ const ApplicantDetails = () => {
                               />
                             </li>
                           )
-                        )}
+                        )
+                      )}
                     </ul>
                   </div>
                 </Grid>
@@ -206,7 +217,9 @@ const ApplicantDetails = () => {
                   <div className="skills-card">
                     <h3>Skills</h3>
                     <Stack direction="row" spacing={0} flexWrap="wrap">
-                      {applicantDetails.user.skills &&
+                      {!applicantDetails.user.skills?.length ? (
+                        <NoRecordFoundAnimation title="No skills have been added by the applicant." />
+                      ) : (
                         applicantDetails.user.skills.map((item, index) => (
                           <Chip
                             key={index}
@@ -220,7 +233,8 @@ const ApplicantDetails = () => {
                               margin: "0px 8px 8px 0px",
                             }}
                           />
-                        ))}
+                        ))
+                      )}
                     </Stack>
                   </div>
                 </Grid>
@@ -228,12 +242,15 @@ const ApplicantDetails = () => {
                   <div className="skills-card">
                     <h3>Languages</h3>
                     <ul className="list-content">
-                      {applicantDetails.user.languages &&
+                      {!applicantDetails.user.languages?.length ? (
+                        <NoRecordFoundAnimation title="There are no languages added by the applicant." />
+                      ) : (
                         applicantDetails.user.languages.map((item, index) => (
                           <li key={index}>
                             <LanguageCard {...item} />
                           </li>
-                        ))}
+                        ))
+                      )}
                     </ul>
                   </div>
                 </Grid>

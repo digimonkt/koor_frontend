@@ -17,6 +17,8 @@ import { getSearchJobsAPI } from "@api/job";
 import Pagination from "@components/pagination";
 import SearchInput from "@components/searchInput";
 import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
+import { NoDataFoundAnimation } from "@components/animations";
+import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
 
 const LIMIT = 10;
 export default function JobSearch() {
@@ -31,6 +33,7 @@ export default function JobSearch() {
   const [searchedJobs, setSearchedJobs] = useState([]);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
+  const [isSearching, setIsSearching] = useState(true);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,6 +48,7 @@ export default function JobSearch() {
     }
   };
   const getSearchJobs = async (data) => {
+    setIsSearching(true);
     if (data) {
       for (const key in data) {
         if (!data[key]) {
@@ -56,7 +60,7 @@ export default function JobSearch() {
       search,
       page,
       limit: LIMIT,
-      ...data
+      ...data,
     });
     if (res.remote === "success") {
       const totalJobs = res.data.count;
@@ -64,6 +68,9 @@ export default function JobSearch() {
       const pages = Math.ceil(totalJobs / LIMIT);
       setTotalPages(pages);
       setSearchedJobs(res.data.results);
+      setIsSearching(false);
+    } else {
+      setIsSearching(false);
     }
   };
 
@@ -226,14 +233,27 @@ export default function JobSearch() {
               </Menu>
             </Stack>
           </div>
-          {searchedJobs.map((job) => {
-            return (
-              <React.Fragment key={job.id}>
-                <JobCard logo jobDetails={job} />
-                <Divider />
-              </React.Fragment>
-            );
-          })}
+          {isSearching ? (
+            [1, 2, 3, 4, 5].map((loader) => {
+              return (
+                <React.Fragment key={loader}>
+                  <JobCardSkeletonLoader logo />
+                  <Divider />
+                </React.Fragment>
+              );
+            })
+          ) : !searchedJobs.length ? (
+            <NoDataFoundAnimation title="We are sorry, but we couldn't find any jobs that match your search criteria." />
+          ) : (
+            searchedJobs.map((job) => {
+              return (
+                <React.Fragment key={job.id}>
+                  <JobCard logo jobDetails={job} />
+                  <Divider />
+                </React.Fragment>
+              );
+            })
+          )}
         </div>
       </Container>
       <div className="paginations pt-4">

@@ -1756,6 +1756,14 @@ input.employersearch {
 .job-description {
   white-space: pre-line;
 }
+.card-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  max-height: 3em;
+}
 
 .close_icon_circle svg {
   color: red;

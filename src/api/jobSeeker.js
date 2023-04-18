@@ -232,3 +232,9 @@ export const UpdateJobPreferencesAPI = async (data) => {
     data,
   });
 };
+export const DownloadResumeAPI = async () => {
+  return await api.request({
+    url: "v1/users/job-seeker/resume",
+    method: "GET",
+  });
+};
