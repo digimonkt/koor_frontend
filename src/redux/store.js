@@ -10,6 +10,6 @@ export const store = configureStore({
     choices: ChoiceReducer,
     employer: EmployerReducer,
     toast: ToastReducer,
-    jobs: JobReducer,
+    search: JobReducer,
   },
 });

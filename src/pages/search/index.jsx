@@ -13,16 +13,17 @@ import {
 } from "@mui/material";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ComponentSelector } from "./helper";
-import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
+import { JOB_ORDER_BY, JOB_SORT_BY, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
-import { searchJobs, setJobPage } from "@redux/slice/search";
-import AdvanceFilter from "./jobSearch/advanceFilter";
+import { searchJobs, searchTalent, setJobPage } from "@redux/slice/search";
+import AdvanceFilter from "./advanceFilter";
 function Search() {
   const params = useParams();
   const dispatch = useDispatch();
-  const { totalJobs, totalPages, page, advanceFilter } = useSelector(
-    (state) => state.jobs
-  );
+  const {
+    auth: { role },
+    search: { totalItems, totalPages, page, advanceFilter },
+  } = useSelector((state) => state);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState();
   const Component = ComponentSelector(searchType);
@@ -31,7 +32,6 @@ function Search() {
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [search, setSearch] = useState("");
-  const [totalItems, setTotalItems] = useState(0);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -56,19 +56,9 @@ function Search() {
   };
 
   const handlePageChange = (page) => {
-    switch (searchType) {
-      case "jobs":
-        dispatch(setJobPage(page));
-        break;
-      default:
-        break;
-    }
+    dispatch(setJobPage(page));
   };
 
-  useEffect(() => {
-    // conditionally set totalJobs or totalTalent or totalVendors or totalTenders
-    setTotalItems(totalJobs);
-  }, [totalJobs]);
   useEffect(() => {
     setSearchType(params.type);
     const search = searchParams.get("search");
@@ -78,14 +68,18 @@ function Search() {
   }, [params]);
 
   useEffect(() => {
+    const payload = { search, order_by: orderBy, search_by: sortBy };
     switch (searchType) {
       case "jobs":
-        dispatch(searchJobs({ search, order_by: orderBy, search_by: sortBy }));
+        dispatch(searchJobs(payload));
+        break;
+      case "talents":
+        dispatch(searchTalent(payload));
         break;
       default:
         break;
     }
-  }, [search, totalPages, advanceFilter, searchType, orderBy, sortBy]);
+  }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
   const pagination = () => {
     return (
       <Pagination
@@ -106,12 +100,7 @@ function Search() {
         value={search}
       />
       <Container>
-        <AdvanceFilter />
-        {/* <AdvanceFilter
-        //   getSearchJobs={getSearchJobs}
-        //   totalJobs={totalJobs}
-        //   searchKeyword={search}
-        /> */}
+        <AdvanceFilter searchType={searchType} />
       </Container>
       <div className="paginations">
         <Container>{pagination()}</Container>
@@ -125,14 +114,16 @@ function Search() {
               justifyContent="space-between"
               alignItems="center"
             >
-              <h2 className="m-0">
-                Title
+              <h2 className="m-0" style={{ textTransform: "capitalize" }}>
+                {searchType}
                 <Chip
                   label={totalItems}
                   className="ms-3"
                   sx={{
-                    background: "#FEEFD3",
-                    color: "#EEA23D",
+                    background:
+                      role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
+                    color:
+                      role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
                     fontFamily: "Bahnschrift",
                     fontSize: "16px",
                   }}

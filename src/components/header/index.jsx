@@ -174,17 +174,33 @@ function Header() {
               ) : (
                 ""
               )}
-              {!isLoggedIn || role === USER_ROLES.vendor ? (
+              {!isLoggedIn || role === USER_ROLES.employer ? (
                 <li>
                   <Link
-                    to="/browse-tenders"
+                    to="/search/talents"
                     style={{
-                      color: location.pathname.includes("/browse-tenders")
+                      color: location.pathname.includes("/search/talents")
                         ? "#274593"
                         : "",
                     }}
                   >
-                    Browse tenders
+                    Browse Talents
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+              {!isLoggedIn || role === USER_ROLES.vendor ? (
+                <li>
+                  <Link
+                    to="/search/tenders"
+                    style={{
+                      color: location.pathname.includes("/search/tenders")
+                        ? "#274593"
+                        : "",
+                    }}
+                  >
+                    Browse Tenders
                   </Link>
                 </li>
               ) : (

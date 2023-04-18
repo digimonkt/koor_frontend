@@ -1,9 +1,8 @@
-import { Divider } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Divider, Stack } from "@mui/material";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
-const ApplicationCardSkeletonLoading = ({ sx }) => {
+function TalentCardSkeletonLoader() {
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -13,9 +12,7 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        {/* profile pic */}
         <Skeleton circle style={{ width: "70px", height: "70px" }} />
-
         <div className="recent-content">
           <Stack
             direction="row"
@@ -23,7 +20,7 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
             spacing={2}
             flexWrap="wrap"
             alignItems="center"
-            sx={{ mb: 1, ...sx }}
+            sx={{ mb: 1 }}
           >
             <h4>
               <Skeleton width={720} />
@@ -33,7 +30,7 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
             direction="row"
             spacing={2}
             alignItems="center"
-            sx={{ mb: 1, ...sx }}
+            sx={{ mb: 1 }}
             className="meets_div"
           >
             <div>
@@ -41,6 +38,19 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
                 <Skeleton width={207} style={{ lineHeight: "9px" }} />
               </span>
             </div>
+          </Stack>
+          <div className="recent-descrition">
+            <p>
+              <Skeleton width={1500} count={2} style={{ lineHeight: "9px" }} />
+            </p>
+          </div>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            sx={{ mb: 1, mt: 2 }}
+            className="meets_div"
+          >
             <div style={{ display: "flex" }}>
               <Skeleton
                 height={30}
@@ -62,18 +72,10 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
               />
             </div>
           </Stack>
-          <div className="recent-descrition">
-            <p>
-              <Skeleton width={930} count={2} style={{ lineHeight: "9px" }} />
-            </p>
-          </div>
         </div>
-      </Stack>
-      <Stack direction="row" spacing={0} className="edit-button">
-        <Skeleton height={30} width={500} />
       </Stack>
     </Stack>
   );
-};
+}
 
-export default ApplicationCardSkeletonLoading;
+export default TalentCardSkeletonLoader;

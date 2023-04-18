@@ -3,6 +3,7 @@ import urlcat from "urlcat";
 import {
   transformGetUserDetails,
   transformNotificationResponse,
+  transformSearchUserByRoleResponse,
 } from "./transform/user";
 import env from "@utils/validateEnv";
 export const CreateUserAPI = async (data) => {
@@ -130,9 +131,28 @@ export const getUserIpAPI = async () => {
     method: "GET",
   });
 };
+
 export const getUserCountryByIpAPI = async (ip) => {
   return await api.request({
     url: urlcat("https://api.iplocation.net/", { ip }),
     method: "GET",
   });
+};
+export const searchUserByRole = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/search/:role", { ...data }),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        ...res.data,
+        results: res.data.results.map((data) =>
+          transformSearchUserByRoleResponse(data)
+        ),
+      },
+    };
+  }
+  return res;
 };

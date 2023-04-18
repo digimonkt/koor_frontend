@@ -1,14 +1,20 @@
+import { ComingSoonAnimation } from "@components/animations";
 import { JobSearch } from "./jobSearch";
+import { TalentSearch } from "./talentSearch";
 
 export const ComponentSelector = (type) => {
   switch (type) {
-    case "job":
+    case "jobs":
       return JobSearch;
-    case "talent":
-      return function TalentSearch() {
-        return <>Talent Search</>;
-      };
+    case "talents":
+      return TalentSearch;
     default:
-      return JobSearch;
+      return function DefaultSearch() {
+        return (
+          <div>
+            <ComingSoonAnimation />
+          </div>
+        );
+      };
   }
 };

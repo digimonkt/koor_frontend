@@ -6,7 +6,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 function JobSearchComponent() {
-  const { jobs, isSearching } = useSelector((state) => state.jobs);
+  const { jobs, isSearching } = useSelector((state) => state.search);
 
   return (
     <div>

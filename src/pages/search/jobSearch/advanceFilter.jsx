@@ -29,14 +29,14 @@ import { SVG } from "@assets/svg";
 import { CheckboxInput, SelectInput } from "@components/input";
 import { ErrorMessage } from "@components/caption";
 import { JobFormControl } from "@pages/jobs/postJobs/style";
-import SaveFilter from "./saveFilter";
+import SaveFilter from "../advanceFilter/saveFilter";
 
-function AdvanceFilter() {
+function AdvanceFilterComponent() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams({});
   const {
     choices: { countries, cities, jobCategories },
-    jobs: { totalJobs },
+    search: { totalItems },
   } = useSelector((state) => state);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [submitForm, setSubmitForm] = useState(false);
@@ -387,7 +387,7 @@ function AdvanceFilter() {
               </div>
               <div className={`${styles.historySearch}`}>
                 <h5>
-                  <b>{totalJobs}</b> jobs found
+                  <b>{totalItems}</b> jobs found
                 </h5>
                 <div className={`${styles.savesearch}`}>
                   <span style={{ pointer: "cursor" }} onClick={handleReset}>
@@ -433,4 +433,4 @@ function AdvanceFilter() {
   );
 }
 
-export default AdvanceFilter;
+export default AdvanceFilterComponent;
