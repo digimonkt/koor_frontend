@@ -74,7 +74,7 @@ function Header() {
             <div className="">
               <SearchCategory direction="row" spacing={1} alignItems="center">
                 <Link
-                  to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
+                  to={role === USER_ROLES.jobSeeker ? "/search/jobs" : "/"}
                   className="d-inline-flex"
                 >
                   <SVG.SearchIcon />
@@ -109,7 +109,7 @@ function Header() {
                     if (e.key === "enter" || e.key === "Enter") {
                       navigate(
                         role === USER_ROLES.jobSeeker
-                          ? `/job-search?search=${searchValue}`
+                          ? `/search/jobs?search=${searchValue}`
                           : "/"
                       );
                     }
@@ -161,9 +161,9 @@ function Header() {
               {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
                 <li>
                   <Link
-                    to="/job-search"
+                    to="/search/jobs"
                     style={{
-                      color: location.pathname.includes("/job-search")
+                      color: location.pathname.includes("/search/jobs")
                         ? "#274593"
                         : "",
                     }}

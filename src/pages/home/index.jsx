@@ -106,7 +106,7 @@ const Home = () => {
                     className={styles.home_btn_btn}
                     onClick={() => {
                       navigate(
-                        `/job-search?search=${searchValue}&categories=${categories}&location=${location}`
+                        `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
                       );
                     }}
                   >
