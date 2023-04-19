@@ -64,6 +64,9 @@ function AllApplication() {
                 details={item}
                 subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
                 isDisabled={item.disabled}
+                isShortlisted={item.shortlistedAt}
+                isRejected={item.rejectedAt}
+                isBlacklisted={item.user.isBlacklisted}
                 key={index}
               />
             ))
