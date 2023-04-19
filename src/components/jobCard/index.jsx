@@ -118,10 +118,14 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 label={jobDetails?.country.title || "Dusseldorf"}
                 icon={<>{<SVG.LocationIcon />}</>}
               />
-              <ChipBox
-                label={`${jobDetails?.workingDays || 2}-Day Week`}
-                icon={<>{<SVG.BegClock />}</>}
-              />
+              {jobDetails?.duration ? (
+                <ChipBox
+                  label={`${jobDetails?.duration} Months`}
+                  icon={<>{<SVG.BegClock />}</>}
+                />
+              ) : (
+                ""
+              )}
               {jobDetails?.isFullTime && (
                 <ChipBox label={"Full Time"} icon={<>{<SVG.MoonCircle />}</>} />
               )}

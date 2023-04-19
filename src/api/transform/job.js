@@ -16,6 +16,8 @@ export const transformJobListResponse = (data) => {
       budgetPayPeriod: res.budget_pay_period,
       country: res.country,
       city: res.city,
+      duration: res.duration,
+      experience: res.experience,
       isFullTime: res.is_full_time,
       isPartTime: res.is_part_time,
       isSaved: res.is_saved,
