@@ -156,7 +156,6 @@ function PostJobsComponent() {
           }
         }
       }
-      console.log({ payload });
       let res;
       if (!jobId) {
         // create
@@ -188,7 +187,6 @@ function PostJobsComponent() {
 
   const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
-    console.log({ response });
     if (response.remote === "success") {
       const { data } = response;
       formik.setFieldValue("title", data.title);
