@@ -194,15 +194,17 @@ const JobDetails = () => {
                     />
                   )}
                 </div>
-                <div className={`${styles.datesatrt}`}>
-                  <span>{<SVG.StartDate />}</span>
-                  <p className="m-0 ms-2">
-                    <span className={`${styles.startDate}`}>Start date:</span>{" "}
-                    <b className={`${styles.startB}`}>
-                      {dayjs(details.startDate).format("ll")}
-                    </b>
-                  </p>
-                </div>
+                {details.startDate && (
+                  <div className={`${styles.datesatrt}`}>
+                    <span>{<SVG.StartDate />}</span>
+                    <p className="m-0 ms-2">
+                      <span className={`${styles.startDate}`}>Start date:</span>{" "}
+                      <b className={`${styles.startB}`}>
+                        {dayjs(details.startDate).format("ll")}
+                      </b>
+                    </p>
+                  </div>
+                )}
                 <div className={`${styles.downloadattachment}`}>
                   <h6>Download attachments</h6>
                   {details.attachments.map((attachment) => {

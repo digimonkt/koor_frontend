@@ -5,7 +5,6 @@ import {
   FormGroup,
   Grid,
   IconButton,
-  Slider,
   Stack,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
@@ -16,7 +15,6 @@ import {
   CheckboxInput,
   DateInput,
   LabeledInput,
-  LabeledRadioInput,
   SelectInput,
 } from "@components/input";
 import CurrencyInput from "./currencyInput";
@@ -24,7 +22,7 @@ import { FilledButton, OutlinedButton } from "@components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD, USER_ROLES, LANGUAGE_PROFICIENCY } from "@utils/enum";
+import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -93,14 +91,11 @@ function PostJobsComponent() {
       isContactPhone: false,
       contactPhone: "",
       isContactWhatsapp: false,
-      workingDays: 5,
+      duration: "",
+      experience: "",
       contactWhatsapp: "",
       highestEducation: "",
-      languages: [
-        { language: "", spoken: "", written: "" },
-        { language: "", spoken: "", written: "" },
-        { language: "", spoken: "", written: "" },
-      ],
+      languages: [{ language: "" }, { language: "" }, { language: "" }],
       skills: [],
       attachments: [],
       attachmentsRemove: [],
@@ -121,11 +116,11 @@ function PostJobsComponent() {
         is_full_time: values.isFullTime,
         is_part_time: values.isPartTime,
         has_contract: values.hasContract,
-        working_days: values.workingDays,
         deadline: dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        start_date: dayjs(values.startDate).format(DATABASE_DATE_FORMAT),
+        start_date: values.startDate
+          ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
+          : "",
         contact_email: values.isContactEmail ? values.contactEmail : "",
-        contact_phone: values.isContactPhone ? values.contactPhone : "",
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
@@ -134,6 +129,8 @@ function PostJobsComponent() {
         skill: values.skills,
         attachments: values.attachments,
         attachments_remove: values.attachmentsRemove,
+        duration: values.duration,
+        experience: values.experience,
       };
       const newFormData = new FormData();
       for (const key in payload) {
@@ -159,6 +156,7 @@ function PostJobsComponent() {
           }
         }
       }
+      console.log({ payload });
       let res;
       if (!jobId) {
         // create
@@ -190,6 +188,7 @@ function PostJobsComponent() {
 
   const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
+    console.log({ response });
     if (response.remote === "success") {
       const { data } = response;
       formik.setFieldValue("title", data.title);
@@ -200,6 +199,8 @@ function PostJobsComponent() {
       formik.setFieldValue("country", data.country.id);
       formik.setFieldValue("city", data.city.id);
       formik.setFieldValue("address", data.address);
+      formik.setFieldValue("duration", data.duration);
+      formik.setFieldValue("experience", data.experience);
       setSearchValue(data.address);
       formik.setFieldValue(
         "jobCategories",
@@ -214,38 +215,26 @@ function PostJobsComponent() {
       formik.setFieldValue("startDate", dayjs(data.startDate));
       formik.setFieldValue("isContactEmail", Boolean(data.contactEmail));
       formik.setFieldValue("contactEmail", data.contactEmail);
-      formik.setFieldValue("isContactPhone", Boolean(data.contactPhone));
-      formik.setFieldValue("contactPhone", data.contactPhone);
       formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
-      formik.setFieldValue("workingDays", data.workingDays);
       formik.setFieldValue("highestEducation", data.highestEducation.id);
-
       // !TEMPORARY SOLUTION
       formik.setFieldValue(
         "languages",
-        data.languages.map
+        data.languages.map && data.languages.length
           ? [
               ...data.languages.map((language) => ({
                 language: language.language.id,
-                spoken: language.spoken,
-                written: language.written,
               })),
               {
                 language: "",
-                spoken: "",
-                written: "",
               },
               {
                 language: "",
-                spoken: "",
-                written: "",
               },
             ]
           : [1, 2, 3].map(() => ({
               language: "",
-              spoken: "",
-              written: "",
             }))
       );
       formik.setFieldValue("highestEducation", data.highestEducation.id);
@@ -342,7 +331,7 @@ function PostJobsComponent() {
             <div className="form-content">
               <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xl={8} lg={8}>
+                  <Grid item xl={6} lg={6}>
                     <LabeledInput
                       title="Title of your job"
                       className="add-form-control"
@@ -351,6 +340,17 @@ function PostJobsComponent() {
                     />
                     {formik.touched.title && formik.errors.title ? (
                       <ErrorMessage>{formik.errors.title}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={2} lg={2}>
+                    <LabeledInput
+                      title="Experience in Months"
+                      className="add-form-control"
+                      placeholder="Experience in Months"
+                      {...formik.getFieldProps("experience")}
+                    />
+                    {formik.touched.experience && formik.errors.experience ? (
+                      <ErrorMessage>{formik.errors.experience}</ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={4} lg={4}>
@@ -533,20 +533,15 @@ function PostJobsComponent() {
                     </FormGroup>
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12} className="mt-2">
-                    <label>Timing ({formik.values.workingDays} Day week)</label>
-                    <Slider
-                      defaultValue={5}
-                      step={1}
-                      marks
-                      min={1}
-                      max={7}
-                      valueLabelDisplay="auto"
-                      valueLabelFormat={(value) => `${value} Day week`}
-                      {...formik.getFieldProps("workingDays")}
-                      value={formik.getFieldProps("workingDays").value || 5}
+                    <LabeledInput
+                      title="Duration in Month"
+                      className="add-form-control"
+                      placeholder="Months"
+                      {...formik.getFieldProps("duration")}
                     />
-                    {formik.touched.timing && formik.errors.timing ? (
-                      <ErrorMessage>{formik.errors.timing}</ErrorMessage>
+
+                    {formik.touched.duration && formik.errors.duration ? (
+                      <ErrorMessage>{formik.errors.duration}</ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={3} lg={5} xs={12} className="mt-2">
@@ -605,33 +600,17 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
+
                   <Grid item xl={4} lg={4} xs={12}>
                     <JobFormControl
                       control={<CheckboxInput />}
-                      label="Apply by call or SMS"
-                      checked={formik.values.isContactPhone}
-                      {...formik.getFieldProps("isContactPhone")}
-                    />
-                    <input
-                      className="add-form-control"
-                      placeholder="Your mobile number"
-                      {...formik.getFieldProps("contactPhone")}
-                    />
-                    {formik.touched.contactPhone &&
-                    formik.errors.contactPhone ? (
-                      <ErrorMessage>{formik.errors.contactPhone}</ErrorMessage>
-                    ) : null}
-                  </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
-                    <JobFormControl
-                      control={<CheckboxInput />}
-                      label="Apply via WhatsApp"
+                      label="Apply via WhatsApp/Telegram"
                       checked={formik.values.isContactWhatsapp}
                       {...formik.getFieldProps("isContactWhatsapp")}
                     />
                     <input
                       className="add-form-control"
-                      placeholder="Your WhatsApp number"
+                      placeholder="Your WhatsApp/Telegram number"
                       {...formik.getFieldProps("contactWhatsapp")}
                     />
                     {formik.touched.contactWhatsapp &&
@@ -686,36 +665,7 @@ function PostJobsComponent() {
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
                             />
-                            <LabeledRadioInput
-                              title="Spoken"
-                              name={`languages[${i}].spoken`}
-                              value={formik.values.languages[i].spoken || ""}
-                              onChange={formik.handleChange}
-                              onBlur={formik.handleBlur}
-                              options={Object.keys(LANGUAGE_PROFICIENCY).map(
-                                (prof) => {
-                                  return {
-                                    value: LANGUAGE_PROFICIENCY[prof],
-                                    label: prof,
-                                  };
-                                }
-                              )}
-                            />
-                            <LabeledRadioInput
-                              title="Written"
-                              name={`languages[${i}].written`}
-                              value={formik.values.languages[i].written || ""}
-                              onChange={formik.handleChange}
-                              onBlur={formik.handleBlur}
-                              options={Object.keys(LANGUAGE_PROFICIENCY).map(
-                                (prof) => {
-                                  return {
-                                    value: LANGUAGE_PROFICIENCY[prof],
-                                    label: prof,
-                                  };
-                                }
-                              )}
-                            />
+
                             {i === 0 ? (
                               <>
                                 {formik.touched.languages &&

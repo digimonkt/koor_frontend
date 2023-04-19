@@ -79,4 +79,6 @@ export const JOB_APPLICATION_OPTIONS = {
 export const SEARCH_TYPE = {
   jobs: "jobs",
   talents: "talents",
+  vendors: "vendors",
+  tenders: "tenders",
 };
