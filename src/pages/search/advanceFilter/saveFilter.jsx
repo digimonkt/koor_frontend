@@ -22,7 +22,7 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
         too much space but is informative for you.
       </div>
       <div className="form-content">
-        <form onSubmit={handleSaveSearch(name)}>
+        <form onSubmit={(e) => handleSaveSearch(e, name)}>
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Name"

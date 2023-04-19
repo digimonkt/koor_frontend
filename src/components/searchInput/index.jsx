@@ -3,6 +3,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
 import { Container, IconButton } from "@mui/material";
 import { SVG } from "@assets/svg";
+import { useSelector } from "react-redux";
+import { USER_ROLES } from "@utils/enum";
 
 export default function SearchInput({
   handleSearch,
@@ -11,6 +13,7 @@ export default function SearchInput({
   value,
   ...rest
 }) {
+  const { role } = useSelector((state) => state.auth);
   const [fieldValue, setFieldValue] = useState("");
   useEffect(() => {
     if (value) {
@@ -43,7 +46,16 @@ export default function SearchInput({
                 }
               }}
             />
-            <span onClick={() => handleSearch(fieldValue)}>{svg}</span>
+            <span
+              onClick={() => handleSearch(fieldValue)}
+              style={{
+                background:
+                  role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
+                borderRadius: "20px",
+              }}
+            >
+              {svg}
+            </span>
           </div>
         </div>
       </Container>

@@ -19,7 +19,7 @@ function ApplySuccessfully() {
           <OutlinedButton
             title="Back to jobs search"
             jobSeeker
-            onClick={() => navigate("/job-search")}
+            onClick={() => navigate("/search/jobs")}
           />
         </div>
       </Grid>
