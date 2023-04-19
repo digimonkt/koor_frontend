@@ -77,8 +77,8 @@ export const searchTalent = createAsyncThunk(
   }
 );
 
-const jobsSlice = createSlice({
-  name: "jobs",
+const searchSlice = createSlice({
+  name: "search",
   initialState,
   reducers: {
     setJobPage: (state, action) => {
@@ -119,5 +119,5 @@ const jobsSlice = createSlice({
     });
   },
 });
-export const { setJobPage, setAdvanceFilter } = jobsSlice.actions;
-export default jobsSlice.reducer;
+export const { setJobPage, setAdvanceFilter } = searchSlice.actions;
+export default searchSlice.reducer;

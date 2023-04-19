@@ -174,7 +174,7 @@ function Header() {
               ) : (
                 ""
               )}
-              {!isLoggedIn || role === USER_ROLES.employer ? (
+              {isLoggedIn && role === USER_ROLES.employer ? (
                 <li>
                   <Link
                     to="/search/talents"
@@ -185,6 +185,22 @@ function Header() {
                     }}
                   >
                     Browse Talents
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+              {isLoggedIn && role === USER_ROLES.employer ? (
+                <li>
+                  <Link
+                    to="/search/vendors"
+                    style={{
+                      color: location.pathname.includes("/search/vendors")
+                        ? "#274593"
+                        : "",
+                    }}
+                  >
+                    Browse Vendors
                   </Link>
                 </li>
               ) : (

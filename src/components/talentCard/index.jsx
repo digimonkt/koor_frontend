@@ -24,7 +24,7 @@ function TalentCard({ talentDetails }) {
           >
             <h4>{talentDetails.name || talentDetails.email}</h4>
             <div className="recent-research" style={{ flexWrap: "wrap" }}>
-              <span>Sales Increasing Expert</span>
+              <span>{talentDetails.highestEducation}</span>
             </div>
           </Stack>
           <Stack
@@ -34,24 +34,25 @@ function TalentCard({ talentDetails }) {
             sx={{ mb: 1 }}
             className="meets_div"
           >
-            <div>
-              <span className="meets">
-                <SVG.LocationIcon />
-              </span>
-            </div>
-            <div>
-              <span className="meets">France, Paris</span>
-            </div>
+            {talentDetails.country ? (
+              <>
+                <div>
+                  <span className="meets">
+                    <SVG.LocationIcon />
+                  </span>
+                </div>
+                <div>
+                  <span className="meets">
+                    {talentDetails.country}, {talentDetails.city}
+                  </span>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
           </Stack>
           <div className="recent-descrition">
-            <p>
-              Ut cursus mattis aliquam maecenas quis eget pellentesque id
-              pellentesque. Netus sit hac at etiam. Ut amet arcu, massa
-              suspendisse arcu, neque est. Volutpat a nulla ut amet, pretium,
-              vitae duis. Quisque enim volutpat id pellentesque. Sed mattis vel
-              morbi vitae, est ac Netus sit hac at etiam. Ut amet arcu, massa
-              suspendisse arcu…
-            </p>
+            <p>{talentDetails.description}</p>
           </div>
           <Stack
             direction="row"
@@ -61,11 +62,14 @@ function TalentCard({ talentDetails }) {
             className="meets_div"
           >
             <div>
-              <Chip
-                label="Education"
-                className="chiplabel"
-                icon={<SVG.SchoolIcon />}
-              />{" "}
+              {talentDetails.skills.map((skill) => (
+                <Chip
+                  key={skill.id}
+                  label={skill.skill.title}
+                  className="chiplabel"
+                  icon={<SVG.SchoolIcon />}
+                />
+              ))}
             </div>
           </Stack>
         </div>

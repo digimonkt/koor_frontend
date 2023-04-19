@@ -97,10 +97,14 @@ export const transformNotificationResponse = (data) => {
 export const transformSearchUserByRoleResponse = (data) => {
   return {
     id: data.id,
+    role: data.role,
     name: data.name,
     email: data.email,
-    mobileNumber: data.mobile_number,
-    countryCode: data.country_code,
-    role: data.role,
+    profilePicture: data.image || {},
+    description: data.description,
+    skills: data.skills || [],
+    country: data.country || "",
+    city: data.city || "",
+    highestEducation: data.highest_education || "",
   };
 };

@@ -13,7 +13,12 @@ import {
 } from "@mui/material";
 import { useParams, useSearchParams } from "react-router-dom";
 import { ComponentSelector } from "./helper";
-import { JOB_ORDER_BY, JOB_SORT_BY, USER_ROLES } from "@utils/enum";
+import {
+  JOB_ORDER_BY,
+  JOB_SORT_BY,
+  SEARCH_TYPE,
+  USER_ROLES,
+} from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { searchJobs, searchTalent, setJobPage } from "@redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
@@ -70,10 +75,10 @@ function Search() {
   useEffect(() => {
     const payload = { search, order_by: orderBy, search_by: sortBy };
     switch (searchType) {
-      case "jobs":
+      case SEARCH_TYPE.jobs:
         dispatch(searchJobs(payload));
         break;
-      case "talents":
+      case SEARCH_TYPE.talents:
         dispatch(searchTalent(payload));
         break;
       default:
@@ -94,7 +99,11 @@ function Search() {
   return (
     <div className={`${styles.body}`}>
       <SearchInput
-        svg={<SVG.Buttonsearch />}
+        svg={
+          <SVG.Buttonsearch
+            color={role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593"}
+          />
+        }
         placeholder="Search jobs"
         handleSearch={handleSearch}
         value={search}
@@ -129,85 +138,91 @@ function Search() {
                   }}
                 />
               </h2>
-              <IconButton
-                sx={{ width: "50px", height: "50px" }}
-                onClick={handleClick}
-              >
-                {<SVG.FillterICon />}
-              </IconButton>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  "aria-labelledby": "basic-button",
-                }}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&:before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                  },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              >
-                <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    handleSorting(JOB_SORT_BY.salary);
-                  }}
-                  className="fillterbox"
-                >
-                  Salary
-                  <span>
-                    {sortBy === JOB_SORT_BY.salary &&
-                      (orderBy === JOB_ORDER_BY.ascending ? (
-                        <SVG.ArrowDownward />
-                      ) : (
-                        <SVG.ArrowUpward />
-                      ))}
-                  </span>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    handleClose();
-                    handleSorting(JOB_SORT_BY.expiration);
-                  }}
-                  className="fillterbox"
-                >
-                  Expiration
-                  <span>
-                    {sortBy === JOB_SORT_BY.expiration &&
-                      (orderBy === JOB_ORDER_BY.ascending ? (
-                        <SVG.ArrowDownward />
-                      ) : (
-                        <SVG.ArrowUpward />
-                      ))}
-                  </span>
-                </MenuItem>
-              </Menu>
+              {searchType === SEARCH_TYPE.jobs ? (
+                <>
+                  <IconButton
+                    sx={{ width: "50px", height: "50px" }}
+                    onClick={handleClick}
+                  >
+                    {<SVG.FillterICon />}
+                  </IconButton>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        overflow: "visible",
+                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                        mt: 1.5,
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        "&:before": {
+                          content: '""',
+                          display: "block",
+                          position: "absolute",
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: "background.paper",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          zIndex: 0,
+                        },
+                      },
+                    }}
+                    transformOrigin={{ horizontal: "right", vertical: "top" }}
+                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                  >
+                    <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        handleSorting(JOB_SORT_BY.salary);
+                      }}
+                      className="fillterbox"
+                    >
+                      Salary
+                      <span>
+                        {sortBy === JOB_SORT_BY.salary &&
+                          (orderBy === JOB_ORDER_BY.ascending ? (
+                            <SVG.ArrowDownward />
+                          ) : (
+                            <SVG.ArrowUpward />
+                          ))}
+                      </span>
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose();
+                        handleSorting(JOB_SORT_BY.expiration);
+                      }}
+                      className="fillterbox"
+                    >
+                      Expiration
+                      <span>
+                        {sortBy === JOB_SORT_BY.expiration &&
+                          (orderBy === JOB_ORDER_BY.ascending ? (
+                            <SVG.ArrowDownward />
+                          ) : (
+                            <SVG.ArrowUpward />
+                          ))}
+                      </span>
+                    </MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                ""
+              )}
             </Stack>
           </div>
           <Component />

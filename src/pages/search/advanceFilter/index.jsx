@@ -21,10 +21,11 @@ import DialogBox from "@components/dialogBox";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
+import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
-    auth: { isLoggedIn },
+    auth: { isLoggedIn, role },
     choices: { countries, jobCategories, cities },
   } = useSelector((state) => state);
   const [allFilters, setAllFilters] = useState([]);
@@ -68,9 +69,9 @@ function AdvanceFilter({ searchType }) {
 
   const searchFilter = () => {
     switch (searchType) {
-      case "jobs":
+      case SEARCH_TYPE.jobs:
         return <JobSeekerFilter formik={formik} footer={footer()} />;
-      case "talents":
+      case SEARCH_TYPE.talents:
         return <TalentFilter formik={formik} footer={footer()} />;
       default:
         return <></>;
@@ -120,7 +121,7 @@ function AdvanceFilter({ searchType }) {
     const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
     setAllFilters([...newAllFilters]);
     switch (searchType) {
-      case "jobs":
+      case SEARCH_TYPE.jobs:
         await deleteSearchJobsFilterAPI(filterId);
         break;
       default:
@@ -180,7 +181,7 @@ function AdvanceFilter({ searchType }) {
   }, []);
   useEffect(() => {
     switch (searchType) {
-      case "jobs":
+      case SEARCH_TYPE.jobs:
         getSearchJobsFilter();
         break;
       default:
@@ -284,17 +285,33 @@ function AdvanceFilter({ searchType }) {
           </div>
           <div
             onClick={() => setData(!data)}
-            style={{ color: "#FFA500", cursor: "pointer" }}
+            style={{
+              color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+              cursor: "pointer",
+            }}
           >
             Advance filter{" "}
             {data ? (
               <>
-                <span style={{ marginLeft: "10px" }}>
+                <span
+                  style={{
+                    marginLeft: "10px",
+                    color:
+                      role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                  }}
+                >
                   {<SVG.ArrowUpIcon />}
                 </span>
               </>
             ) : (
-              <span style={{ marginLeft: "10px" }}>{<SVG.Downarrow />}</span>
+              <span
+                style={{
+                  marginLeft: "10px",
+                  color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                }}
+              >
+                {<SVG.Downarrow />}
+              </span>
             )}
           </div>
         </div>
@@ -306,7 +323,7 @@ function AdvanceFilter({ searchType }) {
                 e.preventDefault();
               }
               switch (searchType) {
-                case "jobs":
+                case SEARCH_TYPE.jobs:
                   handleSaveJobSearch(title);
                   break;
                 default:
