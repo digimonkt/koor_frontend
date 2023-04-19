@@ -14,6 +14,7 @@ const ApplicationCard = ({
   isShortlisted,
   allOptions,
   isRejected,
+  isBlacklisted,
 }) => {
   // navigate
   // const navigate = useNavigate();
@@ -107,6 +108,7 @@ const ApplicationCard = ({
           applicationId={details.id}
           isShortlisted={isShortlisted}
           isRejected={isRejected}
+          isBlacklisted={isBlacklisted}
         />
       </Stack>
     </Stack>

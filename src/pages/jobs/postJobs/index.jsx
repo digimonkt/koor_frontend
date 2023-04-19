@@ -15,6 +15,7 @@ import {
   CheckboxInput,
   DateInput,
   LabeledInput,
+  LabeledPhoneInput,
   SelectInput,
 } from "@components/input";
 import CurrencyInput from "./currencyInput";
@@ -88,11 +89,10 @@ function PostJobsComponent() {
       startDate: "",
       isContactEmail: false,
       contactEmail: "",
-      isContactPhone: false,
-      contactPhone: "",
       isContactWhatsapp: false,
-      duration: "",
+      duration: 0,
       experience: "",
+      countryCodeContactWhatsapp: "",
       contactWhatsapp: "",
       highestEducation: "",
       languages: [{ language: "" }, { language: "" }, { language: "" }],
@@ -606,10 +606,25 @@ function PostJobsComponent() {
                       checked={formik.values.isContactWhatsapp}
                       {...formik.getFieldProps("isContactWhatsapp")}
                     />
-                    <input
-                      className="add-form-control"
+                    <LabeledPhoneInput
                       placeholder="Your WhatsApp/Telegram number"
-                      {...formik.getFieldProps("contactWhatsapp")}
+                      value={formik.values.contactWhatsapp}
+                      onChange={(e) =>
+                        formik.setFieldValue("contactWhatsapp", e.value)
+                      }
+                      onCountryChange={(e) =>
+                        formik.setFieldValue("countryCodeContactWhatsapp", e)
+                      }
+                      isInvalidNumber={(isValid) => {
+                        if (!isValid) {
+                          formik.setFieldError(
+                            "contactWhatsapp",
+                            "Invalid Whatsapp/Telegram Number"
+                          );
+                        }
+                      }}
+                      onBlur={formik.getFieldProps("contactWhatsapp").onBlur}
+                      name="contactWhatsapp"
                     />
                     {formik.touched.contactWhatsapp &&
                     formik.errors.contactWhatsapp ? (

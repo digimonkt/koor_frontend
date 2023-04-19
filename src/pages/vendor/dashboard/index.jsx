@@ -113,6 +113,9 @@ function Dashboard() {
                     description={item.description}
                     isDisabled={item.disabled}
                     key={index}
+                    isShortlisted={item.shortlistedAt}
+                    isRejected={item.rejectedAt}
+                    isBlacklisted={item.user.isBlacklisted}
                     sx={{ mb: 0 }}
                     url="#!"
                   />
