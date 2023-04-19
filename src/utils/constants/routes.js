@@ -96,11 +96,7 @@ const PostJobs = lazy(() =>
     default: module.PostJobs,
   }))
 );
-const JobSearch = lazy(() =>
-  import("@pages/jobs").then((module) => ({
-    default: module.JobSearch,
-  }))
-);
+
 const ApplicantDetails = lazy(() =>
   import("@pages/jobs").then((module) => ({
     default: module.ApplicantDetails,
@@ -116,7 +112,7 @@ const ApplyForJob = lazy(() =>
     default: module.ApplyForJob,
   }))
 );
-
+const Search = lazy(() => import("@pages/search"));
 // prefix => `/`
 export const ROUTES = [
   {
@@ -145,11 +141,12 @@ export const ROUTES = [
     path: "/about-us",
     component: AboutUs,
   },
+
   {
-    id: "jobSearch",
-    name: "jobSearch",
-    path: "/job-search",
-    component: JobSearch,
+    id: "search",
+    name: "Search",
+    path: "/search/:type",
+    component: Search,
   },
   {
     id: "jobDetails",

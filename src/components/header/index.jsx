@@ -16,18 +16,12 @@ import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "@assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
-import { USER_ROLES } from "@utils/enum";
+import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
 import NotificationPopup from "./notificationPopup";
 
 const ismenu = true;
-
-const searchType = Object.freeze({
-  Talent: "talent",
-  Tenders: "tenders",
-  Vendors: "vendors",
-});
 
 function Header() {
   const dispatch = useDispatch();
@@ -38,18 +32,21 @@ function Header() {
 
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
-  const [search, setSearch] = useState("talent");
+  const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
     switch (role) {
       case USER_ROLES.jobSeeker:
         setSearchPlaceholder("Jobs");
+        setSearch(SEARCH_TYPE.jobs);
         break;
       case USER_ROLES.employer:
         setSearchPlaceholder("Vendors");
+        setSearch(SEARCH_TYPE.talents);
         break;
       case USER_ROLES.vendor:
         setSearchPlaceholder("Tenders");
+        setSearch(SEARCH_TYPE.tenders);
         break;
       default:
         break;
@@ -74,7 +71,7 @@ function Header() {
             <div className="">
               <SearchCategory direction="row" spacing={1} alignItems="center">
                 <Link
-                  to={role === USER_ROLES.jobSeeker ? "/job-search" : "/"}
+                  to={role === USER_ROLES.jobSeeker ? "/search/jobs" : "/"}
                   className="d-inline-flex"
                 >
                   <SVG.SearchIcon />
@@ -96,9 +93,8 @@ function Header() {
                       displayEmpty
                       sx={{ width: "100px" }}
                     >
-                      <MenuItem value={searchType.Talent}>Talent</MenuItem>
-                      <MenuItem value={searchType.Tenders}>Tenders</MenuItem>
-                      <MenuItem value={searchType.Vendors}>Vendors</MenuItem>
+                      <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
+                      <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
                     </SelectBox>
                   </FormControl>
                 ) : (
@@ -107,15 +103,44 @@ function Header() {
                 <input
                   onKeyDown={(e) => {
                     if (e.key === "enter" || e.key === "Enter") {
-                      navigate(
-                        role === USER_ROLES.jobSeeker
-                          ? `/job-search?search=${searchValue}`
-                          : "/"
-                      );
+                      switch (search) {
+                        case SEARCH_TYPE.jobs:
+                          navigate(
+                            role === USER_ROLES.jobSeeker
+                              ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
+                              : "/"
+                          );
+                          break;
+                        case SEARCH_TYPE.talents:
+                          navigate(
+                            role === USER_ROLES.employer
+                              ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
+                              : "/"
+                          );
+                          break;
+                        case SEARCH_TYPE.vendors:
+                          navigate(
+                            role === USER_ROLES.employer
+                              ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
+                              : "/"
+                          );
+                          break;
+                        case SEARCH_TYPE.tenders:
+                          navigate(
+                            role === USER_ROLES.vendors
+                              ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
+                              : "/"
+                          );
+                          break;
+                        default:
+                          break;
+                      }
                     }
                   }}
                   className="employersearch"
-                  placeholder={role === "employer" ? "" : searchPlaceholder}
+                  placeholder={
+                    role === USER_ROLES.employer ? "" : searchPlaceholder
+                  }
                   onChange={(e) => setSearchValue(e.target.value)}
                   value={searchValue}
                 />
@@ -161,9 +186,9 @@ function Header() {
               {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
                 <li>
                   <Link
-                    to="/job-search"
+                    to="/search/jobs"
                     style={{
-                      color: location.pathname.includes("/job-search")
+                      color: location.pathname.includes("/search/jobs")
                         ? "#274593"
                         : "",
                     }}
@@ -174,17 +199,49 @@ function Header() {
               ) : (
                 ""
               )}
-              {!isLoggedIn || role === USER_ROLES.vendor ? (
+              {isLoggedIn && role === USER_ROLES.employer ? (
                 <li>
                   <Link
-                    to="/browse-tenders"
+                    to="/search/talents"
                     style={{
-                      color: location.pathname.includes("/browse-tenders")
+                      color: location.pathname.includes("/search/talents")
                         ? "#274593"
                         : "",
                     }}
                   >
-                    Browse tenders
+                    Browse Talents
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+              {isLoggedIn && role === USER_ROLES.employer ? (
+                <li>
+                  <Link
+                    to="/search/vendors"
+                    style={{
+                      color: location.pathname.includes("/search/vendors")
+                        ? "#274593"
+                        : "",
+                    }}
+                  >
+                    Browse Vendors
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+              {!isLoggedIn || role === USER_ROLES.vendor ? (
+                <li>
+                  <Link
+                    to="/search/tenders"
+                    style={{
+                      color: location.pathname.includes("/search/tenders")
+                        ? "#274593"
+                        : "",
+                    }}
+                  >
+                    Browse Tenders
                   </Link>
                 </li>
               ) : (

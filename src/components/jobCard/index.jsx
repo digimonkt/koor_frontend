@@ -1,4 +1,4 @@
-import { Divider, Grid, Stack } from "@mui/material";
+import { Avatar, Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
@@ -12,7 +12,6 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "@api/employer";
-import { IMAGES } from "@assets/images";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const editUrl = urlcat("/employer/jobs/post", { jobId: jobDetails?.id });
 
@@ -21,7 +20,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
-  const [imgError, setImgError] = React.useState(false);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -34,10 +32,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
-  };
-
-  const handleImageError = () => {
-    setImgError(true);
   };
 
   const updateJob = async (jobId) => {
@@ -71,20 +65,20 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             }}
           >
             <div className="squer-width">
-              {imgError ? (
-                <img
-                  src={IMAGES.JobPlaceholder}
-                  alt="Placeholder"
-                  style={{ width: "100%" }}
-                />
-              ) : (
-                <img
-                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}
-                  alt="Image"
-                  onError={handleImageError}
-                  style={{ width: "100%", height: "85px" }}
-                />
-              )}
+              <Avatar
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  margin: "auto",
+                  color: "#CACACA",
+                  "&.MuiAvatar-colorDefault": {
+                    background: "#F0F0F0",
+                  },
+                }}
+                src={generateFileUrl(jobDetails?.user?.image?.path || "")}
+              >
+                <SVG.SuitcaseJob height="156" />
+              </Avatar>
             </div>
           </Grid>
         )}
@@ -111,9 +105,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </Link>
               )}
             </h2>
-            <p className="my-3">
-              {jobDetails?.description ||
-                "Role and Responsibilities · Provide good customer service · Maintain store cleanliness. Check and display goods/merchandise · Cashiering duties as and when needed Qualifications and Education Requirements· Minimum SPM and above· No experience needed · Good verbal..."}
+            <p className="my-3 job-description card-description">
+              {jobDetails?.description}
             </p>
             <Stack
               direction={{ xs: "column", sm: "row" }}
@@ -125,10 +118,14 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 label={jobDetails?.country.title || "Dusseldorf"}
                 icon={<>{<SVG.LocationIcon />}</>}
               />
-              <ChipBox
-                label={`${jobDetails?.workingDays || 2}-Day Week`}
-                icon={<>{<SVG.BegClock />}</>}
-              />
+              {jobDetails?.duration ? (
+                <ChipBox
+                  label={`${jobDetails?.duration} Months`}
+                  icon={<>{<SVG.BegClock />}</>}
+                />
+              ) : (
+                ""
+              )}
               {jobDetails?.isFullTime && (
                 <ChipBox label={"Full Time"} icon={<>{<SVG.MoonCircle />}</>} />
               )}

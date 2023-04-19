@@ -85,5 +85,26 @@ export const transformNotificationResponse = (data) => {
     job: data.job,
     jobFilter: data.job_filter,
     seen: data.seen,
+    application: {
+      id: data.application?.id,
+      attachments: data.application ? data.application.attachments[0] : {},
+      job: data.application?.job,
+      user: data.application?.user,
+    },
+  };
+};
+
+export const transformSearchUserByRoleResponse = (data) => {
+  return {
+    id: data.id,
+    role: data.role,
+    name: data.name,
+    email: data.email,
+    profilePicture: data.image || {},
+    description: data.description,
+    skills: data.skills || [],
+    country: data.country || "",
+    city: data.city || "",
+    highestEducation: data.highest_education || "",
   };
 };

@@ -92,7 +92,10 @@ const initialState = {
      */
     skills: [],
   },
-  currentLocation: "",
+  currentLocation: {
+    countryCode: "",
+    countryName: "",
+  },
   // here that email is come on which mail is sent
   verifyEmail: "",
 };

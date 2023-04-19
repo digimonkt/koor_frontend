@@ -6,13 +6,16 @@ import DialogBox from "@components/dialogBox";
 import ResumeTemplate from "./resumeTemplate/template1";
 import html2pdf from "html2pdf.js";
 import { useSelector } from "react-redux";
+import { DownloadResumeAPI } from "@api/jobSeeker";
+import { generateFileUrl } from "@utils/generateFileUrl";
 const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
   const [openResume, setOpenResume] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
+  const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
 
   const downloadPDF = async () => {
-    setIsDownloading(true);
+    setIsDownloadingPDF(true);
     const element = document.getElementById("div-to-pdf");
     const options = {
       margin: [10, 10],
@@ -22,7 +25,24 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
     await html2pdf().set(options).from(element).save();
-    setIsDownloading(false);
+    setIsDownloadingPDF(false);
+  };
+
+  const downloadDocs = async () => {
+    setIsDownloadingDocs(true);
+    const res = await DownloadResumeAPI();
+    if (res.remote === "success") {
+      const response = await fetch(generateFileUrl(res.data.url));
+      const blob = await response.blob();
+      const newFileName = `${currentUser.name || "Resume"}.docx`;
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = newFileName;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+    setIsDownloadingDocs(false);
   };
   return (
     <>
@@ -84,7 +104,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
       <DialogBox
         open={openResume}
         handleClose={() => {
-          if (!isDownloading) setOpenResume(false);
+          if (!isDownloadingPDF) setOpenResume(false);
         }}
         maxWidth="xxl"
         sx={{
@@ -95,10 +115,16 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
       >
         <>
           <FilledButton
-            title={isDownloading ? "Downloading..." : "Download"}
+            title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
             onClick={downloadPDF}
             style={{ marginBottom: "10px" }}
-            disabled={isDownloading}
+            disabled={isDownloadingPDF || isDownloadingDocs}
+          />
+          <FilledButton
+            title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
+            onClick={downloadDocs}
+            style={{ marginBottom: "10px" }}
+            disabled={isDownloadingPDF || isDownloadingDocs}
           />
           <ResumeTemplate />
         </>

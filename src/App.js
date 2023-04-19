@@ -21,6 +21,8 @@ import { MESSAGE_TYPE } from "@utils/enum";
 import { resetToast } from "@redux/slice/toast";
 import { FallbackLoading } from "@components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
+// eslint-disable-next-line no-unused-vars
+import { getUserCountryByIpAPI, getUserIpAPI } from "@api/user";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,23 +52,18 @@ function App() {
   }, []);
   useEffect(() => {
     const getPosition = async () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          const response = await fetch(
-            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-          );
-          const data = await response.json();
+      const userIp = await getUserIpAPI();
+      if (userIp.remote === "success") {
+        const ip = userIp.data.ip;
+        const res = await getUserCountryByIpAPI(ip);
+        if (res.remote === "success") {
           dispatch(
             setCurrentLocation({
-              countryCode: data.countryCode,
-              countryName: data.countryName,
+              countryCode: res.data.country_code2,
+              countryName: res.data.country_name,
             })
           );
-        });
-      } else {
-        console.log("Geolocation is not supported by this browser.");
+        }
       }
     };
 

@@ -23,11 +23,21 @@ export const transformApplicationOnJobListData = (data) => {
           mobileNumber: result.user.mobile_number,
           image: result.user.image,
           description: result.user.description,
+          isBlacklisted: result.user.is_blacklisted,
         },
         education: result.education,
         language: result.language,
         skills: result.skill,
       };
     }),
+  };
+};
+
+export const getDashboardActivityAPIResponseTransform = (data) => {
+  return {
+    activeJobs: data.active_jobs,
+    activeTender: data.active_tender,
+    appliedJobs: data.applied_jobs,
+    appliedTender: data.applied_tender,
   };
 };

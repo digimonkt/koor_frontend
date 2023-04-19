@@ -1,38 +1,65 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { DonutChart, AreaChart } from "@components/charts";
+import { DonutChart } from "@components/charts";
 import ApplicationCard from "@components/applicationCard";
 import { employerCard } from "./employerCardData";
 import { OutlinedButton } from "@components/button";
-import { getRecentApplicationAPI } from "@api/employer";
+import {
+  getDashboardActivityAPI,
+  getRecentApplicationAPI,
+} from "@api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { NoDataFoundAnimation } from "@components/animations";
+import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
+import JobAnalytics from "./jobAnalytics";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
-  const [recentApplication, setRecentApplication] = useState({ results: [] });
+  const [counts, setCounts] = useState({
+    activeJobs: 0,
+    activeTender: 0,
+    appliedJobs: 0,
+    appliedTender: 0,
+  });
+  const [recentApplication, setRecentApplication] = useState([]);
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const getRecentApplications = async () => {
+    setIsLoading(true);
     const res = await getRecentApplicationAPI({
       limit: 5,
       page: recentApplicationPage,
     });
     if (res.remote === "success") {
       // ! This filter is temporary and need to be optimized, as somehow API is called two time due to this duplicate data is found to remove this `filter` is used, but need to be fix
-      setRecentApplication((prevState) => ({
-        results: [...prevState.results, ...res.data.results].filter(
+      setRecentApplication((prevState) =>
+        [...prevState, ...res.data.results].filter(
           (value, index, self) =>
             index === self.findIndex((t) => t.id === value.id)
-        ),
-      }));
+        )
+      );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
       if (recentApplicationPage > 0) {
         setRecentApplicationPage((prevState) => prevState - 1);
       }
       setIsMoreApplicationAvailable(false);
+    }
+    setIsLoading(false);
+  };
+
+  const getDashboardActivity = async () => {
+    const res = await getDashboardActivityAPI();
+    if (res.remote === "success") {
+      setCounts({
+        activeJobs: res.data.activeJobs,
+        activeTender: res.data.activeTender,
+        appliedJobs: res.data.appliedJobs,
+        appliedTender: res.data.appliedTender,
+      });
     }
   };
 
@@ -42,11 +69,14 @@ const Dashboard = () => {
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
+  useEffect(() => {
+    getDashboardActivity();
+  }, []);
   return (
     <>
       <div className="employer-dashboard">
-        <Grid container spacing={2} sx={{ mb: 4 }}>
-          {employerCard.map((item, index) => (
+        <Grid item container spacing={2} sx={{ mb: 4 }}>
+          {employerCard(counts).map((item, index) => (
             <Grid item lg={3} xl={3} xs={12} key={index}>
               <Stack
                 direction="row"
@@ -88,7 +118,8 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <AreaChart title="Job posts analytics" />
+                  <JobAnalytics title="Job posts analytics" />
+                  {/* <AreaChart title="Job posts analytics" /> */}
                 </div>
               </CardContent>
             </Card>
@@ -144,15 +175,27 @@ const Dashboard = () => {
                     {/* <p>Applicants for past 12 hours shown</p> */}
                   </Stack>
 
-                  {recentApplication.results.map((item, index) => (
-                    <ApplicationCard
-                      jobId={item.jobId}
-                      details={item}
-                      subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-                      isDisabled={item.disabled}
-                      key={index}
-                    />
-                  ))}
+                  {isLoading ? (
+                    // skeleton loading need to implement
+                    [1, 2, 3, 4, 5].map((loader) => (
+                      <ApplicationCardSkeletonLoading key={loader} />
+                    ))
+                  ) : !recentApplication.length ? (
+                    <NoDataFoundAnimation title="We could not find any recent job applications." />
+                  ) : (
+                    recentApplication.map((item, index) => (
+                      <ApplicationCard
+                        jobId={item.jobId}
+                        details={item}
+                        subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
+                        isDisabled={item.disabled}
+                        isShortlisted={item.shortlistedAt}
+                        isRejected={item.rejectedAt}
+                        isBlacklisted={item.user.isBlacklisted}
+                        key={index}
+                      />
+                    ))
+                  )}
 
                   {isMoreApplicationsAvailable && (
                     <div className="text-center mt-4">
