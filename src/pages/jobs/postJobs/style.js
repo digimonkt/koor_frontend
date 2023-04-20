@@ -10,5 +10,6 @@ export const JobFormControl = styled(FormControlLabel)`
     letter-spacing: 0.02em;
     color: #121212;
     marginleft: "0px";
+
   }
 `;

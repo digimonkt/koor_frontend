@@ -17,7 +17,7 @@ function JobSeekerFilter({ formik, footer }) {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, marginLeft: 0, width: 330 }}>
                 <SelectInput
                   multiple
                   title="Category"
@@ -80,10 +80,10 @@ function JobSeekerFilter({ formik, footer }) {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <label>Job type</label>
+            <label style={{ marginBottom: "25px" }}>Job type</label>
             <FormGroup row sx={{ marginLeft: "7px" }}>
               <JobFormControl
-                control={<CheckboxInput />}
+                control={<CheckboxInput sx={{ paddingLeft: "5px" }} />}
                 label="Part Time"
                 {...formik.getFieldProps("isPartTime")}
                 checked={formik.values.isPartTime}
@@ -105,7 +105,7 @@ function JobSeekerFilter({ formik, footer }) {
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>
-        <h5>
+        <h5 style={{ margin: "0px" }}>
           <b>{totalItems}</b> jobs found
         </h5>
         <div className={`${styles.savesearch}`}>{footer}</div>

@@ -296,6 +296,8 @@ function AdvanceFilter({ searchType }) {
                 <span
                   style={{
                     marginLeft: "10px",
+                    width: "18px",
+                    display: "inline-block",
                     color:
                       role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                   }}
@@ -307,6 +309,8 @@ function AdvanceFilter({ searchType }) {
               <span
                 style={{
                   marginLeft: "10px",
+                  width: "18px",
+                  display: "inline-block",
                   color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                 }}
               >
