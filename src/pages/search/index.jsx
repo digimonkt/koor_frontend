@@ -96,7 +96,7 @@ function Search() {
             fontSize: "16px",
           },
           "& .Mui-selected": {
-            color: "#000",
+            color: "#000 !important",
             background: "#fff !important",
             boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.15)",
             "&:hover": {
@@ -104,6 +104,10 @@ function Search() {
                 role === USER_ROLES.jobSeeker
                   ? "#eea23d !important"
                   : "#274593 !important",
+              color:
+                role === USER_ROLES.jobSeeker
+                  ? "#fff !important"
+                  : "#fff !important",
             },
           },
         }}
