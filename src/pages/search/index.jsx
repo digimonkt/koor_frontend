@@ -3,6 +3,7 @@ import styles from "./style.module.css";
 import SearchInput from "@components/searchInput";
 import { SVG } from "@assets/svg";
 import {
+  Box,
   Chip,
   Container,
   IconButton,
@@ -88,6 +89,29 @@ function Search() {
   const pagination = () => {
     return (
       <Pagination
+        shape="rounded"
+        sx={{
+          "& .MuiPaginationItem-root": {
+            fontFamily: "Bahnschrift",
+            fontSize: "16px",
+          },
+          "& .Mui-selected": {
+            color: "#000 !important",
+            background: "#fff !important",
+            boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.15)",
+            "&:hover": {
+              background:
+                role === USER_ROLES.jobSeeker
+                  ? "#eea23d !important"
+                  : "#274593 !important",
+              color:
+                role === USER_ROLES.jobSeeker
+                  ? "#fff !important"
+                  : "#fff !important",
+            },
+          },
+        }}
+        color="primary"
         count={totalPages}
         onChange={(e, page) => {
           handlePageChange(page);
@@ -115,7 +139,7 @@ function Search() {
         <Container>{pagination()}</Container>
       </div>
       <Container>
-        <div className={`${styles.jobcards}`}>
+        <Box className={`${styles.jobcards}`} sx={{ minHeight: "450px" }}>
           <div className="saved-jobs">
             <Stack
               direction="row"
@@ -226,7 +250,7 @@ function Search() {
             </Stack>
           </div>
           <Component />
-        </div>
+        </Box>
       </Container>
       <div className="paginations pt-4">
         <Container>{pagination()}</Container>

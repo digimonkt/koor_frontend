@@ -77,7 +77,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 }}
                 src={generateFileUrl(jobDetails?.user?.image?.path || "")}
               >
-                <SVG.SuitcaseJob height="156" />
+                <SVG.SuitcaseJob />
               </Avatar>
             </div>
           </Grid>
@@ -105,7 +105,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </Link>
               )}
             </h2>
-            <p className="my-3 job-description card-description">
+            <p className="job-description card-description mt-1 mb-3">
               {jobDetails?.description}
             </p>
             <Stack
