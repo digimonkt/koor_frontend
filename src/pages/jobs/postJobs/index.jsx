@@ -342,9 +342,9 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={2} lg={2}>
                     <LabeledInput
-                      title="Experience in Months"
+                      title="Experience in Years"
                       className="add-form-control"
-                      placeholder="Experience in Months"
+                      placeholder="Experience in Years"
                       {...formik.getFieldProps("experience")}
                     />
                     {formik.touched.experience && formik.errors.experience ? (
