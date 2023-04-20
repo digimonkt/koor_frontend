@@ -77,7 +77,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 }}
                 src={generateFileUrl(jobDetails?.user?.image?.path || "")}
               >
-                <SVG.SuitcaseJob height="156" />
+                <SVG.SuitcaseJob />
               </Avatar>
             </div>
           </Grid>
