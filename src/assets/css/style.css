@@ -1679,17 +1679,6 @@ input.employersearch {
     margin-left: 0px !important;
     width: 50px;
   }
-
-  .outline-login {
-    background: #eea23d !important;
-    border-radius: 73px !important;
-    padding: 6px 20px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #121212 !important;
-    font-family: "Bahnschrift" !important;
-    letter-spacing: 0.03em !important;
-  }
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
@@ -1727,16 +1716,6 @@ input.employersearch {
     letter-spacing: 0.03em !important;
     font-family: "Bahnschrift" !important;
     /* font-weight: 600 !important; */
-  }
-  .outline-login {
-    background: #eea23d !important;
-    border-radius: 73px !important;
-    padding: 6px 20px !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: #121212 !important;
-    font-family: "Bahnschrift" !important;
-    letter-spacing: 0.03em !important;
   }
 }
 

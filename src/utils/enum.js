@@ -75,3 +75,10 @@ export const JOB_APPLICATION_OPTIONS = {
   blacklisted: "blacklisted",
   plannedInterviews: "planned_interviews",
 };
+
+export const SEARCH_TYPE = {
+  jobs: "jobs",
+  talents: "talents",
+  vendors: "vendors",
+  tenders: "tenders",
+};

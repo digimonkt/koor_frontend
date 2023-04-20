@@ -12,14 +12,17 @@ function ApplicationOptions({
   isShortlisted,
   jobId,
   isRejected,
+  isBlacklisted,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [shortlist, setShortlist] = useState(false);
   const [rejected, setRejected] = useState(false);
+  const [blacklisted, setBlacklisted] = useState(false);
   useEffect(() => {
     setShortlist(!!isShortlisted);
     setRejected(!!isRejected);
+    setBlacklisted(!!isBlacklisted);
   }, [isShortlisted]);
   const handlerChangeApplicationStatus = async (action, applicationId) => {
     const res = await changeApplicationStatusAPI({ action, applicationId });
@@ -36,7 +39,7 @@ function ApplicationOptions({
         </Button>
       )}
       <Button
-        disabled={shortlist || rejected}
+        disabled={shortlist || rejected || blacklisted}
         variant="link"
         onClick={() =>
           handlerChangeApplicationStatus(
@@ -52,7 +55,7 @@ function ApplicationOptions({
         <>
           <Button
             variant="link"
-            disabled={shortlist || rejected}
+            disabled={shortlist || rejected || blacklisted}
             onClick={() =>
               handlerChangeApplicationStatus(
                 JOB_APPLICATION_OPTIONS.rejected,
@@ -65,7 +68,7 @@ function ApplicationOptions({
           </Button>
           <Button
             variant="link"
-            disabled={shortlist || rejected}
+            disabled={shortlist || rejected || blacklisted}
             className="application-option-btn"
             onClick={() =>
               handlerChangeApplicationStatus(
@@ -75,7 +78,7 @@ function ApplicationOptions({
             }
           >
             {<SVG.BlockedIcon className="application-option-icon" />}{" "}
-            <span>Blacklist</span>
+            <span>{blacklisted ? "Blacklisted" : "Blacklist"}</span>
           </Button>
         </>
       )}

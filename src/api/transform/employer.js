@@ -23,6 +23,7 @@ export const transformApplicationOnJobListData = (data) => {
           mobileNumber: result.user.mobile_number,
           image: result.user.image,
           description: result.user.description,
+          isBlacklisted: result.user.is_blacklisted,
         },
         education: result.education,
         language: result.language,
