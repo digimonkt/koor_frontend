@@ -61,15 +61,15 @@ function ManageJobsComponent() {
 
         <div className="ms-auto">
           <OutlinedButton
-            // LinkComponent={Link}
-            // to="/manage-jobs/post-a-new-job"
+            LinkComponent={Link}
+            to="/employer/jobs/post"
             title={
-              <Link to="/employer/jobs/post">
-                <span className="me-3">
+              <>
+                <span className="me-3 d-inline-flex">
                   <SVG.EditIcon />
                 </span>
                 Post new job
-              </Link>
+              </>
             }
           />
         </div>

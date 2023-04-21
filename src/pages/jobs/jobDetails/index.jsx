@@ -129,7 +129,12 @@ const JobDetails = () => {
               <Grid item xs={8}>
                 <div className={`${styles.postJob}`}>
                   {/* <Link to="/saved-jobs"> */}
-                  <span onClick={() => navigate(-1)}>{<SVG.LeftArrow />}</span>
+                  <span
+                    style={{ paddingTop: "5px" }}
+                    onClick={() => navigate(-1)}
+                  >
+                    {<SVG.LeftArrow />}
+                  </span>
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -156,8 +161,8 @@ const JobDetails = () => {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={8}>
-                <div className={`${styles.contentJob}`}>
+              <Grid item xs={12} lg={9}>
+                <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <p className="job-description">{details.description}</p>
                 </div>
@@ -229,7 +234,7 @@ const JobDetails = () => {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={4}>
+              <Grid item xs={12} lg={3}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
@@ -277,7 +282,13 @@ const JobDetails = () => {
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
-                  <div style={{ height: "100%" }}>
+                  <div
+                    style={{
+                      height: "75%",
+                      overflow: "hidden",
+                      borderRadius: "5px",
+                    }}
+                  >
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
