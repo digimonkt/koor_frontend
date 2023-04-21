@@ -334,6 +334,7 @@ function PostJobsComponent() {
                       title="Title of your job"
                       className="add-form-control"
                       placeholder="Online Research Participant (Work From Home/Part Time/Casual)…"
+                      requiredField={true}
                       {...formik.getFieldProps("title")}
                     />
                     {formik.touched.title && formik.errors.title ? (
@@ -345,6 +346,7 @@ function PostJobsComponent() {
                       title="Experience in Years"
                       className="add-form-control"
                       placeholder="Experience in Years"
+                      required
                       {...formik.getFieldProps("experience")}
                     />
                     {formik.touched.experience && formik.errors.experience ? (
@@ -375,7 +377,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <div>
-                      <label>Description</label>
+                      <label>Description <span className="required-field">*</span></label>
                       <textarea
                         className="form-control-area"
                         placeholder="Write more details to attract the right candidates."
@@ -387,7 +389,7 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={9} lg={9} xs={12}>
-                    <label>Location</label>
+                    <label>Location <span className="required-field">*</span></label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
@@ -466,7 +468,7 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <label>Job Category (Maximum 2)</label>
+                    <label>Job Category (Maximum 2) <span className="required-field">*</span></label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
@@ -640,7 +642,7 @@ function PostJobsComponent() {
                     <h2 className="mt-2">Preferences</h2>
                   </Grid>
                   <Grid item xl={4} lg={4} xs={12}>
-                    <label>Education level</label>
+                    <label>Education level <span className="required-field">*</span></label>
                     <SelectInput
                       defaultValue=""
                       placeholder="Choose an education level"
