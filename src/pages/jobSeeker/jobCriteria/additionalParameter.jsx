@@ -115,7 +115,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             </FormControl>
           </Grid>
           <Grid item md={12} xs={12}>
-            <Divider className="my-3" />
+            <Divider className="mb-3" />
             <label className="d-block" style={{ marginBottom: "0.5rem" }}>
               Job type
             </label>

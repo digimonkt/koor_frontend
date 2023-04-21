@@ -35,13 +35,14 @@ function CategoryCard({ item, handleSelectedCategories }) {
   }, [item]);
   return (
     <div className="according-content-box border-top py-3">
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack direction="row" spacing={1} alignItems="center">
         <CheckboxInput
           onChange={(e) => handleSelectAll(e.target.checked)}
           checked={isAllSubCategoriesSelected}
         />
         <h2 className="mb-0">{item.title}</h2>
         <span
+          style={{ cursor: "pointer" }}
           className={`ms-auto arrow-color ${showOptions ? "active" : null}`}
           onClick={handleShowOptions}
         >

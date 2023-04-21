@@ -31,6 +31,6 @@ function Map({ center, zoom }) {
     }
   }, [newCenter, zoom]);
 
-  return <div ref={ref} id="map" style={{ height: "80%" }} />;
+  return <div ref={ref} id="map" style={{ height: "100%" }} />;
 }
 export default Map;

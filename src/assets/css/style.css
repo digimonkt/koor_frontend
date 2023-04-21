@@ -593,7 +593,7 @@ hr {
   border-radius: 50px;
   padding: 10px 10px 10px 40px;
   outline: none;
-  width: 365px;
+  width: 320px;
   background: #fff url("../images/search.png") no-repeat 14px 8px;
   box-sizing: border-box;
 }
@@ -1376,7 +1376,7 @@ span.count {
 
 .usd {
   padding: 8px;
-  width: 100px !important;
+  width: 80px !important;
   background: #cacaca40;
   border-radius: 10px;
   font-family: "Poppins";
@@ -1407,7 +1407,7 @@ span.count {
   margin-right: 5px;
   color: #121212;
   opacity: 0.5;
-  width: calc(100% - 190px);
+  width: calc(100% - 160px);
 }
 .usd-bg {
   background: #f0f0f0;

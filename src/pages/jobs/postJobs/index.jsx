@@ -340,7 +340,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.title}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={2} lg={2}>
+                  <Grid item xl={3} lg={3}>
                     <LabeledInput
                       title="Experience in Years"
                       className="add-form-control"
@@ -351,7 +351,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.experience}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4}>
+                  <Grid item xl={3} lg={3}>
                     <CurrencyInput
                       currency="USD"
                       title="Budget"
@@ -427,7 +427,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12}>
                     <label>Working place address</label>
-                    <div>
+                    <div className={styles.positionReltive}>
                       <input
                         type="text"
                         placeholder="Address"
@@ -504,33 +504,36 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={3} lg={4} xs={12} className="mt-2">
+                  <Grid item xl={4} lg={4} xs={12} className="mt-2">
                     <label>Job type</label>
-                    <FormGroup row sx={{ marginLeft: "7px", display: "flex" }}>
+                    <FormGroup
+                      row
+                      sx={{ marginLeft: "7px", display: "flex", mt: 1 }}
+                    >
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
+                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
                         label="Part Time"
                         checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
+                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
                         label="Full Time"
                         checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 6px" }} />}
+                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
                         label="Contract"
                         checked={formik.values.hasContract}
                         {...formik.getFieldProps("hasContract")}
                       />
                     </FormGroup>
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
                     <LabeledInput
                       title="Duration in Month"
                       className="add-form-control"
@@ -542,39 +545,48 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.duration}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={5} xs={12} className="mt-2">
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <DateInput
-                          label="Start Date"
-                          onChange={(e) => formik.setFieldValue("startDate", e)}
-                          value={formik.values.startDate}
-                          onBlur={formik.getFieldProps("startDate").onBlur}
-                        />
-                        {formik.touched.startDate && formik.errors.startDate ? (
-                          <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
-                        ) : null}
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <DateInput
-                          label="Deadline"
-                          onChange={(e) => formik.setFieldValue("deadline", e)}
-                          value={formik.values.deadline}
-                          onBlur={formik.getFieldProps("deadline").onBlur}
-                        />
-                        {formik.touched.deadline && formik.errors.deadline ? (
-                          <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
-                        ) : null}
-                      </div>
+                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        className="mb-2"
+                      >
+                        <label className="mb-1 d-inline-block">
+                          Start Date
+                        </label>
+                      </Stack>
+                      <DateInput
+                        onChange={(e) => formik.setFieldValue("startDate", e)}
+                        value={formik.values.startDate}
+                        onBlur={formik.getFieldProps("startDate").onBlur}
+                      />
+                      {formik.touched.startDate && formik.errors.startDate ? (
+                        <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                      ) : null}
                     </div>
                   </Grid>
-
+                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        className="mb-2"
+                      >
+                        <label className="mb-1 d-inline-block">Deadline</label>
+                      </Stack>
+                      <DateInput
+                        onChange={(e) => formik.setFieldValue("deadline", e)}
+                        value={formik.values.deadline}
+                        onBlur={formik.getFieldProps("deadline").onBlur}
+                      />
+                      {formik.touched.deadline && formik.errors.deadline ? (
+                        <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
+                      ) : null}
+                    </div>
+                  </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                   </Grid>
