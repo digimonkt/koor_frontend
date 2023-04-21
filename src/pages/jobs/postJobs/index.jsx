@@ -334,7 +334,7 @@ function PostJobsComponent() {
                       title="Title of your job"
                       className="add-form-control"
                       placeholder="Online Research Participant (Work From Home/Part Time/Casual)…"
-                      requiredField={true}
+                      required={true}
                       {...formik.getFieldProps("title")}
                     />
                     {formik.touched.title && formik.errors.title ? (
@@ -377,7 +377,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <div>
-                      <label>Description <span className="required-field">*</span></label>
+                      <label>Description<span className="required-field">*</span></label>
                       <textarea
                         className="form-control-area"
                         placeholder="Write more details to attract the right candidates."
@@ -389,7 +389,7 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={9} lg={9} xs={12}>
-                    <label>Location <span className="required-field">*</span></label>
+                    <label>Location<span className="required-field">*</span></label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
@@ -468,7 +468,7 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <label>Job Category (Maximum 2) <span className="required-field">*</span></label>
+                    <label>Job Category (Maximum 2)<span className="required-field">*</span></label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
@@ -577,7 +577,7 @@ function PostJobsComponent() {
                         justifyContent="space-between"
                         className="mb-2"
                       >
-                        <label className="mb-1 d-inline-block">Deadline</label>
+                        <label className="mb-1 d-inline-block">Deadline<span className="required-field">*</span> </label>
                       </Stack>
                       <DateInput
                         onChange={(e) => formik.setFieldValue("deadline", e)}
