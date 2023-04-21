@@ -29,6 +29,11 @@ function CurrencyInput({ title, optionsValues, errors, ...rest }) {
         <Divider orientation="vertical" variant="middle" flexItem />
 
         <SelectInput
+          sx={{
+            "& .MuiSelect-select": {
+              paddingLeft: "0px",
+            },
+          }}
           options={Object.keys(PAY_PERIOD).map((period) => ({
             value: PAY_PERIOD[period],
             label: `per ${period}`,

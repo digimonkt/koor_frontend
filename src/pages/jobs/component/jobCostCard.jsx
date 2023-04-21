@@ -37,7 +37,7 @@ function JobCostCard({ amount, payPeriod, user }) {
           </Avatar>
           <h3>{user.name}</h3>
         </div>
-        <div className={`${styles.Numbers}`}>
+        <div className={`mt-4 text-break text-wrap ps-lg-5 ${styles.Numbers}`}>
           <span>{user.website}</span>
           <span>
             {user.countryCode && user.mobileNumber

@@ -13,7 +13,7 @@ import { FallbackLoading } from "@components/loader/fallbackLoader";
 
 function Layout() {
   return (
-    <Box sx={{ display: "flex", marginTop: "60px", height: "93vh" }}>
+    <Box sx={{ display: "flex", marginTop: "60px", minHeight: "93vh" }}>
       <Sidebar />
       <Box
         component="main"
