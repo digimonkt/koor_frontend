@@ -117,6 +117,7 @@
   color: #121212 !important;
   padding: 30px 0px 5px 0px !important;
   margin: 0 !important;
+  text-transform: capitalize;
 }
 
 /* notification content */
