@@ -36,7 +36,9 @@ const ApplicantDetails = () => {
   });
   const getApplicantDetails = async () => {
     const res = await getApplicationDetailsAPI(params.applicationId);
-    setApplicantsDetails(res.data);
+    if (res.remote === "success") {
+      setApplicantsDetails(res.data);
+    }
   };
   useEffect(() => {
     getApplicantDetails();
