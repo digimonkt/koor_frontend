@@ -6,6 +6,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import "./style.css";
+import DialogBox from "@components/dialogBox";
+import { LabeledInput } from "@components/input";
+import { FilledButton } from "@components/button";
 function ApplicationOptions({
   allOptions,
   applicationId,
@@ -19,6 +22,8 @@ function ApplicationOptions({
   const [shortlist, setShortlist] = useState(false);
   const [rejected, setRejected] = useState(false);
   const [blacklisted, setBlacklisted] = useState(false);
+  const [isBlacklisting, setIsBlacklisting] = useState(false);
+  const [blackListReason, setBlackListReason] = useState("");
   useEffect(() => {
     setShortlist(!!isShortlisted);
     setRejected(!!isRejected);
@@ -70,12 +75,13 @@ function ApplicationOptions({
             variant="link"
             disabled={shortlist || rejected || blacklisted}
             className="application-option-btn"
-            onClick={() =>
-              handlerChangeApplicationStatus(
-                JOB_APPLICATION_OPTIONS.blacklisted,
-                applicationId
-              )
-            }
+            onClick={() => {
+              setIsBlacklisting(true);
+              // handlerChangeApplicationStatus(
+              //   JOB_APPLICATION_OPTIONS.blacklisted,
+              //   applicationId
+              // );
+            }}
           >
             {<SVG.BlockedIcon className="application-option-icon" />}{" "}
             <span>{blacklisted ? "Blacklisted" : "Blacklist"}</span>
@@ -113,6 +119,26 @@ function ApplicationOptions({
           <span>Message</span>
         </Button>
       )}
+      <DialogBox
+        open={isBlacklisting}
+        handleClose={() => setIsBlacklisting(false)}
+      >
+        <div>
+          <h3>Are you sure you want to blacklist this applicant?</h3>
+          <div className="dialog-reason">
+            <LabeledInput
+              type="textarea"
+              placeholder="Enter your reason"
+              limit={250}
+              onChange={(e) => setBlackListReason(e.target.value)}
+              value={blackListReason}
+            />
+          </div>
+          <div className="dialog-reverse">
+            <FilledButton title="Blacklist" />
+          </div>
+        </div>
+      </DialogBox>
     </>
   );
 }

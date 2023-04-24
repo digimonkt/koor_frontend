@@ -9,6 +9,7 @@ function LabeledInputComponent({
   labelWeight,
   icon,
   required,
+  limit,
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -54,7 +55,30 @@ function LabeledInputComponent({
         )}
       </Stack>
       {type === "textarea" ? (
-        <textarea className="form-control-area" {...rest}></textarea>
+        <>
+          <textarea
+            className="form-control-area"
+            {...rest}
+            onChange={(e) => {
+              if (rest.onChange) {
+                if (limit) {
+                  if (e.target.value.length <= limit) {
+                    rest.onChange(e);
+                  }
+                } else {
+                  rest.onChange(e);
+                }
+              }
+            }}
+          ></textarea>
+          {limit ? (
+            <span>
+              {rest.value?.length || 0}/{limit}
+            </span>
+          ) : (
+            ""
+          )}
+        </>
       ) : (
         <div className="showpassword">
           <input
