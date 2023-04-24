@@ -1683,7 +1683,6 @@ input.employersearch {
     width: 50px;
   }
 
-
   .meets_div {
     display: block !important;
   }
@@ -1727,7 +1726,6 @@ input.employersearch {
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
-
 }
 
 .close_icon_circle svg {
