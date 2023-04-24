@@ -22,7 +22,7 @@ function ApplicationOptions({
   const [shortlist, setShortlist] = useState(false);
   const [rejected, setRejected] = useState(false);
   const [blacklisted, setBlacklisted] = useState(false);
-  const [isBlacklisting, setIsBlacklisting] = useState(true);
+  const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [blackListReason, setBlackListReason] = useState("");
   useEffect(() => {
     setShortlist(!!isShortlisted);
@@ -119,7 +119,10 @@ function ApplicationOptions({
           <span>Message</span>
         </Button>
       )}
-      <DialogBox open={isBlacklisting} handleClose={() => console.log("close")}>
+      <DialogBox
+        open={isBlacklisting}
+        handleClose={() => setIsBlacklisting(false)}
+      >
         <div>
           <h3>Are you sure you want to blacklist this applicant?</h3>
           <div className="dialog-reason">
