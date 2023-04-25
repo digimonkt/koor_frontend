@@ -442,7 +442,10 @@ function PostJobsComponent() {
                     </Grid>
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12}>
-                    <label>Working place address</label>
+                    <label>
+                      Working place address{" "}
+                      <span className="required-field">*</span>
+                    </label>
                     <div className={styles.positionReltive}>
                       <input
                         type="text"
@@ -684,9 +687,7 @@ function PostJobsComponent() {
                     <h2 className="mt-2">Preferences</h2>
                   </Grid>
                   <Grid item xl={4} lg={4} xs={12}>
-                    <label>
-                      Education level <span className="required-field">*</span>
-                    </label>
+                    <label>Education level</label>
                     <SelectInput
                       defaultValue=""
                       placeholder="Choose an education level"
@@ -707,6 +708,7 @@ function PostJobsComponent() {
                     <label className="mb-2">
                       Required languages
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                      <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
                       {[0, 1, 2].map((i) => {
@@ -747,6 +749,7 @@ function PostJobsComponent() {
                   <label className="mb-2">
                     Job skills
                     <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                    <span className="required-field">*</span>
                   </label>
                   <Grid container spacing={2}>
                     <Grid item xl={4} lg={4} xs={12}>
