@@ -2,17 +2,20 @@ import { SearchButton } from "@components/button";
 import React from "react";
 import styles from "./styles.module.css";
 
-function JobRequirementCard({ jobCategories, languages, skills }) {
+function JobRequirementCard({ highestEducation, languages, skills }) {
   return (
     <div className={`${styles.requirement}`}>
       <h5>Requirements:</h5>
-      <div className={`${styles.required}`}>
-        <h6>Education</h6>
-            <div className={`${styles.educations}`} key={jobCategories.id}>
-              <span></span>
-              <p className="m-0">{jobCategories.title}</p>
-            </div>
-      </div>
+
+      {highestEducation.id && (
+        <div className={`${styles.required}`}>
+          <h6>Education</h6>
+          <div className={`${styles.educations}`}>
+            <span></span>
+            <p className="m-0">{highestEducation.title}</p>
+          </div>
+        </div>
+      )}
       <div className={`${styles.required}`}>
         <h6 className="mb-0 mt-3">Languages</h6>
         {languages.map((language) => {

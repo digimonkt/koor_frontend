@@ -53,6 +53,7 @@ export const transformFullJobDetails = (data) => {
     city: data.city,
     address: data.address,
     jobCategories: data.job_category,
+    jobSubCategory: data.job_sub_category,
     duration: data.duration,
     experience: data.experience,
     deadline: data.deadline,
