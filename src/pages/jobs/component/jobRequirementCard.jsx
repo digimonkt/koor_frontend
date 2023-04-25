@@ -6,6 +6,7 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
   return (
     <div className={`${styles.requirement}`}>
       <h5>Requirements:</h5>
+
       {highestEducation.id && (
         <div className={`${styles.required}`}>
           <h6>Education</h6>

@@ -119,13 +119,14 @@ export const getApplicationDetailsAPI = async (applicationId) => {
   return res;
 };
 
-export const changeApplicationStatusAPI = async ({ action, applicationId }) => {
+export const changeApplicationStatusAPI = async ({ action, applicationId, data }) => {
   const res = await api.request({
     url: urlcat("/v1/jobs/applications-detail/:applicationId/:action", {
       applicationId,
       action,
     }),
     method: "PUT",
+    data
   });
   return res;
 };
