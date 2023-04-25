@@ -113,3 +113,9 @@ export const updateSavedSearchFilterAPI = async (filterId, status) => {
     data,
   });
 };
+export const updateJobShareCountAPI = async ({ jobId, platform }) => {
+  return await api.request({
+    url: urlcat("v1/jobs/:jobId/share/:platform", { jobId, platform }),
+    method: "PUT",
+  });
+};
