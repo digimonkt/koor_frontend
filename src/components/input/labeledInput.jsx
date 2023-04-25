@@ -8,6 +8,7 @@ function LabeledInputComponent({
   type,
   labelWeight,
   icon,
+  required,
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -35,6 +36,11 @@ function LabeledInputComponent({
             }}
           >
             {title}
+            {required ? (
+              <span className="required-field">*</span>
+            ) : (
+              ""
+            )}
           </label>
         ) : (
           ""

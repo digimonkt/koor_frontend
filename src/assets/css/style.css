@@ -1739,3 +1739,6 @@ input.employersearch {
   width: 100px;
   height: 100px;
 }
+.required-field{
+  color: red;
+}
