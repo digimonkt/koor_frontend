@@ -9,6 +9,7 @@ function LabeledInputComponent({
   labelWeight,
   icon,
   limit,
+  width,
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -22,32 +23,36 @@ function LabeledInputComponent({
   }, [rest.type]);
   return (
     <>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        className="mb-2"
-      >
-        {title ? (
-          <label
-            className="mb-1 d-inline-block"
-            style={{
-              fontWeight: labelWeight,
-            }}
-          >
-            {title}
-          </label>
-        ) : (
-          ""
-        )}
-        {subtitle ? (
-          <Stack direction="row" spacing={1} alignItems="center">
-            <span className="text-gray">{subtitle}</span>
-          </Stack>
-        ) : (
-          ""
-        )}
-      </Stack>
+      {title || subtitle ? (
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          className="mb-2"
+        >
+          {title ? (
+            <label
+              className="mb-1 d-inline-block"
+              style={{
+                fontWeight: labelWeight,
+              }}
+            >
+              {title}
+            </label>
+          ) : (
+            ""
+          )}
+          {subtitle ? (
+            <Stack direction="row" spacing={1} alignItems="center">
+              <span className="text-gray">{subtitle}</span>
+            </Stack>
+          ) : (
+            ""
+          )}
+        </Stack>
+      ) : (
+        ""
+      )}
       {type === "textarea" ? (
         <>
           <textarea
@@ -74,7 +79,7 @@ function LabeledInputComponent({
           )}
         </>
       ) : (
-        <div className="showpassword">
+        <div className="showpassword" style={{ width }}>
           <input
             className="form-control"
             type={

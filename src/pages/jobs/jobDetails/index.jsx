@@ -18,6 +18,8 @@ import DialogBox from "@components/dialogBox";
 import { USER_ROLES } from "@utils/enum";
 import { getLetLongByAddressAPI } from "@api/user";
 import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
+import { Stack } from "@mui/material";
+import ShareJob from "../shareJob";
 
 const JobDetails = () => {
   const params = useParams();
@@ -25,6 +27,7 @@ const JobDetails = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
+  const [isSharing, setIsSharing] = useState(false);
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -244,7 +247,6 @@ const JobDetails = () => {
                   <SearchButton
                     text={details.isApplied ? "Applied" : "Apply for this job"}
                     className={`${styles.enablebtn}`}
-                    lefticon={<SVG.Enable />}
                     disabled={details.isApplied}
                     onClick={() => {
                       if (isLoggedIn) {
@@ -256,15 +258,35 @@ const JobDetails = () => {
                       }
                     }}
                   />
-
-                  <SearchButton
-                    text={details.isSaved ? "Saved" : "Save job"}
-                    lefticon={<SVG.BlueFlag />}
-                    className={`${styles.outlinebtn}`}
-                    onClick={() => {
-                      handleSaveJob(params.jobId);
+                  {/* <div className={styles.btnGroup}> */}
+                  <Stack
+                    direction="row"
+                    spacing={{
+                      xs: 1,
+                      sm: 2,
+                      lg: 2,
                     }}
-                  />
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <OutlinedButton
+                      title={details.isSaved ? "Saved" : "Save job"}
+                      style={{ height: "44px" }}
+                      jobSeeker
+                      onClick={() => {
+                        handleSaveJob(params.jobId);
+                      }}
+                    />
+                    <OutlinedButton
+                      title={<SVG.ShareIcon />}
+                      jobSeeker
+                      style={{ height: "44px" }}
+                      onClick={() => {
+                        setIsSharing(true);
+                      }}
+                    />
+                  </Stack>
+                  {/* </div> */}
                 </div>
               </Grid>
             </Grid>
@@ -273,7 +295,7 @@ const JobDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={7}>
                 <JobRequirementCard
-                  jobCategories={details.jobCategories}
+                  jobCategories={[]}
                   languages={details.languages}
                   skills={details.skills}
                 />
@@ -350,6 +372,19 @@ const JobDetails = () => {
           </div>
         </div>
       </Container>
+      <DialogBox
+        open={isSharing}
+        handleClose={() => setIsSharing(false)}
+        title="Share"
+        sx={{
+          "& .MuiPaper-root": {
+            width: "700px",
+            maxWidth: "857px",
+          },
+        }}
+      >
+        <ShareJob />
+      </DialogBox>
     </>
   );
 };

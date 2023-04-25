@@ -1,5 +1,5 @@
 import React from "react";
-import Dialog from "@mui/material/Dialog";
+import { Dialog } from "@mui/material";
 
 const DialogBox = ({ open, handleClose, className, children, ...rest }) => {
   return (

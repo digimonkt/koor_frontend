@@ -82,3 +82,11 @@ export const SEARCH_TYPE = {
   vendors: "vendors",
   tenders: "tenders",
 };
+export const SHARE_PLATFORM = {
+  facebook: "facebook",
+  whatsapp: "whatsapp",
+  telegram: "telegram",
+  mail: "mail",
+  linkedin: "linked_in",
+  directLink: "direct_link",
+};
