@@ -41,7 +41,19 @@ export const getJobCategoriesAPI = async (data) => {
   }
   return response;
 };
-
+export const getJobSubCategoriesAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/job-sub-category", data),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
 export const getEducationLevelsAPI = async (data) => {
   const response = await api.request({
     url: urlcat("/v1/admin/education-level", data || {}),

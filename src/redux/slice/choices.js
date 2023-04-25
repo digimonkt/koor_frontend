@@ -3,6 +3,7 @@ import {
   getCountriesAPI,
   getEducationLevelsAPI,
   getJobCategoriesAPI,
+  getJobSubCategoriesAPI,
   getLanguagesAPI,
   getSkillsAPI,
 } from "@api/choices";
@@ -42,6 +43,10 @@ const initialState = {
     }]
    */
   jobCategories: {
+    loading: false,
+    data: [],
+  },
+  jobSubCategories: {
     loading: false,
     data: [],
   },
@@ -110,6 +115,21 @@ export const getJobCategories = createAsyncThunk(
     const res = await getJobCategoriesAPI();
     if (res.remote === "success") {
       return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+
+export const getJobSubCategories = createAsyncThunk(
+  "choices/getJobSubCategories",
+  async (data, { rejectWithValue }) => {
+    const res = await getJobSubCategoriesAPI(data);
+    if (res.remote === "success") {
+      return {
+        categoryId: data.categoryId,
+        data: res.data,
+      };
     } else {
       return rejectWithValue(res.error);
     }
@@ -192,7 +212,7 @@ export const choiceSlice = createSlice({
       };
     });
     builder.addCase(getCities.rejected, (state) => {
-      state.countries = {
+      state.cities = {
         ...state.cities,
         loading: false,
       };
@@ -212,6 +232,24 @@ export const choiceSlice = createSlice({
     builder.addCase(getJobCategories.rejected, (state) => {
       state.jobCategories = {
         ...state.jobCategories,
+        loading: false,
+      };
+    });
+    builder.addCase(getJobSubCategories.fulfilled, (state, action) => {
+      state.jobSubCategories = {
+        loading: false,
+        data: { [action.payload.categoryId]: action.payload.data },
+      };
+    });
+    builder.addCase(getJobSubCategories.pending, (state) => {
+      state.jobSubCategories = {
+        ...state.jobSubCategories,
+        loading: true,
+      };
+    });
+    builder.addCase(getJobSubCategories.rejected, (state) => {
+      state.jobSubCategories = {
+        ...state.jobSubCategories,
         loading: false,
       };
     });

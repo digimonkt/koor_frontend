@@ -11,9 +11,8 @@ export const validateCreateJobInput = Yup.object().shape({
   country: Yup.string().required("Country is required"),
   // city: Yup.string().required("City is required"),
   address: Yup.string().required("Address is required"),
-  jobCategories: Yup.array()
-    .of(Yup.string())
-    .min(1, "One Job Category is required"),
+  jobCategories: Yup.string().required("Job Category is required"),
+  jobSubCategory: Yup.string().required("Job Sub Category is required"),
   isFullTime: Yup.boolean(),
   isPartTime: Yup.boolean(),
   hasContract: Yup.boolean(),
