@@ -1,6 +1,6 @@
 import { GetNotificationAPI } from "@api/user";
 import { TabContext, TabList } from "@mui/lab";
-import { Box, Button, Tab } from "@mui/material";
+import { Box, Button, Stack, Tab } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Loader from "@components/loader";
 import { Link } from "react-router-dom";
@@ -37,7 +37,7 @@ function NotificationContentComponent({ footer, header, handleClose }) {
         <TabContext value={section}>
           <Box
             sx={{ borderBottom: 1, borderColor: "divider" }}
-            className={styles.tabs_box}
+            className={`pe-4 ${styles.tabs_box}`}
           >
             <TabList className="tab_list" onChange={handleChangeSection}>
               <Tab label="All" className={styles.tabs_btn} value="all" />
@@ -49,48 +49,56 @@ function NotificationContentComponent({ footer, header, handleClose }) {
               />
             </TabList>
             {header && (
-              <div className={styles.btn_div}>
+              <Stack direction={"row"} spacing={2} className={styles.btn_div}>
                 <DateInput onChange={() => {}} />
 
                 <Button
+                  sx={{ color: "#EEA23D", textTransform: "capitalize" }}
                   onClick={() => setNotification([])}
                   className={styles.clear_btn}
                 >
                   Clear All
                 </Button>
-              </div>
+              </Stack>
             )}
           </Box>
-          {loading ? (
-            <Loader loading={loading} />
-          ) : (
-            <div style={{ marginBottom: "16px" }}>
-              {notification.length ? (
-                notification.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`${styles.notification_card} ${
-                      role === USER_ROLES.jobSeeker
-                        ? styles.notification_card_job_seeker
-                        : styles.notification_card_user
-                    }`}
-                  >
-                    {getNotificationCardByType(item)}
-                    <hr className="p-0 mb-3" />
+          <div className={footer ? `pe-3 ${styles.scrollbarNotification}` : ""}>
+            {loading ? (
+              <Loader loading={loading} />
+            ) : (
+              <div style={{ marginBottom: "16px" }}>
+                {notification.length ? (
+                  notification.map((item, index) => (
+                    <>
+                      <hr
+                        style={{ borderColor: "#F0F0F0 !important" }}
+                        className="p-0 mb-2"
+                      />
+                      <div
+                        key={index}
+                        className={`${styles.notification_card} ${
+                          role === USER_ROLES.jobSeeker
+                            ? styles.notification_card_job_seeker
+                            : styles.notification_card_user
+                        }`}
+                      >
+                        {getNotificationCardByType(item)}
+                      </div>
+                    </>
+                  ))
+                ) : (
+                  <div className="text-center">
+                    <SVG.Bell />
+                    <p className={styles.text}>
+                      You don’t have any notifications yet
+                    </p>
                   </div>
-                ))
-              ) : (
-                <div className="text-center">
-                  <SVG.Bell />
-                  <p className={styles.text}>
-                    You don’t have any notifications yet
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )}
+          </div>
           {footer ? (
-            <div className={styles.view_div}>
+            <div className={`pe-4 border-top pt-3 ${styles.view_div}`}>
               <Link
                 to="/notification"
                 className={styles.view_all}

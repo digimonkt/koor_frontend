@@ -44,7 +44,14 @@ const JobDetails = () => {
       title: "",
     },
     address: "",
-    jobCategories: [],
+    jobCategories: {
+      id: "",
+      title: "",
+    },
+    jobSubCategory: {
+      id: "",
+      title: "",
+    },
     deadline: "",
     isFullTime: false,
     isPartTime: false,
@@ -295,7 +302,7 @@ const JobDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={7}>
                 <JobRequirementCard
-                  jobCategories={[]}
+                  highestEducation={details.highestEducation}
                   languages={details.languages}
                   skills={details.skills}
                 />

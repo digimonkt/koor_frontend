@@ -8,6 +8,7 @@ function LabeledInputComponent({
   type,
   labelWeight,
   icon,
+  required,
   limit,
   width,
   ...rest
@@ -38,6 +39,7 @@ function LabeledInputComponent({
               }}
             >
               {title}
+              {required ? <span className="required-field">*</span> : ""}
             </label>
           ) : (
             ""
