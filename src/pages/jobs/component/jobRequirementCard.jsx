@@ -8,14 +8,10 @@ function JobRequirementCard({ jobCategories, languages, skills }) {
       <h5>Requirements:</h5>
       <div className={`${styles.required}`}>
         <h6>Education</h6>
-        {jobCategories.map((category) => {
-          return (
-            <div className={`${styles.educations}`} key={category.id}>
+            <div className={`${styles.educations}`} key={jobCategories.id}>
               <span></span>
-              <p className="m-0">{category.title}</p>
+              <p className="m-0">{jobCategories.title}</p>
             </div>
-          );
-        })}
       </div>
       <div className={`${styles.required}`}>
         <h6 className="mb-0 mt-3">Languages</h6>

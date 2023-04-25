@@ -30,15 +30,25 @@ function ApplicationOptions({
     setBlacklisted(!!isBlacklisted);
   }, [isShortlisted]);
   const handlerChangeApplicationStatus = async (action, applicationId) => {
-    const res = await changeApplicationStatusAPI({ action, applicationId });
+    const data = { reason: blackListReason };
+    const res = await changeApplicationStatusAPI({
+      action,
+      applicationId,
+      data,
+    });
     if (res.remote === "success") {
       setShortlist(true);
+      if (action === "blacklisted") {
+        setIsBlacklisting(false);
+      }
     }
   };
   return (
     <>
       {allOptions && (
-        <Button variant="link">
+        <Button variant="link"
+        disabled={rejected || blacklisted}
+        >
           {<SVG.EventIcon className="application-option-icon" />}{" "}
           <span>Interview planned</span>
         </Button>
@@ -135,7 +145,15 @@ function ApplicationOptions({
             />
           </div>
           <div className="dialog-reverse">
-            <FilledButton title="Blacklist" />
+            <FilledButton
+              title="Blacklist"
+              onClick={() =>
+                handlerChangeApplicationStatus(
+                  JOB_APPLICATION_OPTIONS.blacklisted,
+                  applicationId
+                )
+              }
+            />
           </div>
         </div>
       </DialogBox>
