@@ -9,6 +9,7 @@ import "./style.css";
 import DialogBox from "@components/dialogBox";
 import { LabeledInput } from "@components/input";
 import { FilledButton } from "@components/button";
+import { SuccessToast } from "@components/toast";
 function ApplicationOptions({
   allOptions,
   applicationId,
@@ -16,35 +17,54 @@ function ApplicationOptions({
   jobId,
   isRejected,
   isBlacklisted,
+  isInterviewPlanned,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [shortlist, setShortlist] = useState(false);
   const [rejected, setRejected] = useState(false);
   const [blacklisted, setBlacklisted] = useState(false);
+  const [interviewPlanned, setInterviewPlanned] = useState(false);
   const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [blackListReason, setBlackListReason] = useState("");
+  const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
+  const [interviewTime, setInterviewTime] = useState("");
+  const [successToastMessage, setSuccessToastMessage] = useState(false);
   useEffect(() => {
     setShortlist(!!isShortlisted);
     setRejected(!!isRejected);
     setBlacklisted(!!isBlacklisted);
+    setInterviewPlanned(!!isInterviewPlanned);
   }, [isShortlisted]);
   const handlerChangeApplicationStatus = async (action, applicationId) => {
-    const res = await changeApplicationStatusAPI({ action, applicationId });
+    const data = { interview_at: interviewTime };
+    const res = await changeApplicationStatusAPI({
+      action,
+      applicationId,
+      data,
+    });
     if (res.remote === "success") {
+      setSuccessToastMessage(true);
       setShortlist(true);
+      setIsInterviewPlanning(false);
     }
   };
   return (
     <>
       {allOptions && (
-        <Button variant="link">
+        <Button
+          disabled={shortlist || rejected || blacklisted || interviewPlanned}
+          variant="link"
+          onClick={() => {
+            setIsInterviewPlanning(true);
+          }}
+        >
           {<SVG.EventIcon className="application-option-icon" />}{" "}
           <span>Interview planned</span>
         </Button>
       )}
       <Button
-        disabled={shortlist || rejected || blacklisted}
+        disabled={shortlist || rejected || blacklisted || interviewPlanned}
         variant="link"
         onClick={() =>
           handlerChangeApplicationStatus(
@@ -60,7 +80,7 @@ function ApplicationOptions({
         <>
           <Button
             variant="link"
-            disabled={shortlist || rejected || blacklisted}
+            disabled={shortlist || rejected || blacklisted || interviewPlanned}
             onClick={() =>
               handlerChangeApplicationStatus(
                 JOB_APPLICATION_OPTIONS.rejected,
@@ -73,7 +93,7 @@ function ApplicationOptions({
           </Button>
           <Button
             variant="link"
-            disabled={shortlist || rejected || blacklisted}
+            disabled={shortlist || rejected || blacklisted || interviewPlanned}
             className="application-option-btn"
             onClick={() => {
               setIsBlacklisting(true);
@@ -139,6 +159,37 @@ function ApplicationOptions({
           </div>
         </div>
       </DialogBox>
+      <DialogBox
+        open={isInterviewPlanning}
+        handleClose={() => setIsInterviewPlanning(false)}
+      >
+        <div>
+          <h3>Plan this Interview</h3>
+          <div className="dialog-reason">
+            <LabeledInput
+              type="datetime-local"
+              onChange={(e) => setInterviewTime(e.target.value)}
+              value={interviewTime}
+            />
+          </div>
+          <div className="dialog-reverse">
+            <FilledButton
+              title="submit"
+              onClick={() =>
+                handlerChangeApplicationStatus(
+                  JOB_APPLICATION_OPTIONS.plannedInterviews,
+                  applicationId
+                )
+              }
+            />
+          </div>
+        </div>
+      </DialogBox>
+      <SuccessToast
+        open={successToastMessage}
+        message="Status updated successfully"
+        handleClose={() => setSuccessToastMessage(false)}
+      />
     </>
   );
 }
