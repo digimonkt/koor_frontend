@@ -44,6 +44,8 @@ export const validateCreateJobInput = Yup.object().shape({
         return true;
       }
     }),
+  cc1: Yup.string().email("Invalid Email"),
+  cc2: Yup.string().email("Invalid Email"),
   isContactWhatsapp: Yup.boolean(),
   contactWhatsapp: Yup.string().test(
     "ifPresent",
