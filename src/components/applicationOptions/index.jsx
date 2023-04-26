@@ -9,7 +9,8 @@ import "./style.css";
 import DialogBox from "@components/dialogBox";
 import { LabeledInput } from "@components/input";
 import { FilledButton } from "@components/button";
-import { SuccessToast } from "@components/toast";
+import { setSuccessToast } from "@redux/slice/toast";
+import { useDispatch } from "react-redux";
 function ApplicationOptions({
   allOptions,
   applicationId,
@@ -19,6 +20,7 @@ function ApplicationOptions({
   isBlacklisted,
   isInterviewPlanned,
 }) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [shortlist, setShortlist] = useState(false);
@@ -29,7 +31,6 @@ function ApplicationOptions({
   const [blackListReason, setBlackListReason] = useState("");
   const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
   const [interviewTime, setInterviewTime] = useState("");
-  const [successToastMessage, setSuccessToastMessage] = useState(false);
   useEffect(() => {
     setShortlist(!!isShortlisted);
     setRejected(!!isRejected);
@@ -37,16 +38,24 @@ function ApplicationOptions({
     setInterviewPlanned(!!isInterviewPlanned);
   }, [isShortlisted]);
   const handlerChangeApplicationStatus = async (action, applicationId) => {
-    const data = { interview_at: interviewTime };
+    const data = { reason: blackListReason, interview_at: interviewTime };
+    for (const key in data) {
+      if (!data[key]) {
+        delete data[key];
+      }
+    }
     const res = await changeApplicationStatusAPI({
       action,
       applicationId,
       data,
     });
     if (res.remote === "success") {
-      setSuccessToastMessage(true);
+      dispatch(setSuccessToast("Status updated successfully"));
       setShortlist(true);
       setIsInterviewPlanning(false);
+      if (action === "blacklisted") {
+        setIsBlacklisting(false);
+      }
     }
   };
   return (
@@ -155,7 +164,15 @@ function ApplicationOptions({
             />
           </div>
           <div className="dialog-reverse">
-            <FilledButton title="Blacklist" />
+            <FilledButton
+              title="Blacklist"
+              onClick={() =>
+                handlerChangeApplicationStatus(
+                  JOB_APPLICATION_OPTIONS.blacklisted,
+                  applicationId
+                )
+              }
+            />
           </div>
         </div>
       </DialogBox>
@@ -185,11 +202,6 @@ function ApplicationOptions({
           </div>
         </div>
       </DialogBox>
-      <SuccessToast
-        open={successToastMessage}
-        message="Status updated successfully"
-        handleClose={() => setSuccessToastMessage(false)}
-      />
     </>
   );
 }
