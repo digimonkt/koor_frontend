@@ -64,6 +64,8 @@ export const transformFullJobDetails = (data) => {
     isPartTime: data.is_part_time,
     hasContract: data.has_contract,
     contactEmail: data.contact_email || "",
+    cc1: data.cc1 || "",
+    cc2: data.cc2 || "",
     contactPhone: data.contact_phone || "",
     contactWhatsapp: data.contact_whatsapp || "",
     highestEducation: data.highest_education,

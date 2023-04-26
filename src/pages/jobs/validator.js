@@ -44,19 +44,8 @@ export const validateCreateJobInput = Yup.object().shape({
         return true;
       }
     }),
-  isContactPhone: Yup.boolean(),
-  contactPhone: Yup.string().test(
-    "ifPresent",
-    "Contact Number is required",
-    (value, context) => {
-      const { parent } = context;
-      if (parent.isContactPhone) {
-        return parent.contactPhone;
-      } else {
-        return true;
-      }
-    }
-  ),
+  cc1: Yup.string().email("Invalid Email"),
+  cc2: Yup.string().email("Invalid Email"),
   isContactWhatsapp: Yup.boolean(),
   contactWhatsapp: Yup.string().test(
     "ifPresent",
@@ -70,11 +59,25 @@ export const validateCreateJobInput = Yup.object().shape({
       }
     }
   ),
-  highestEducation: Yup.string().required("Education Level is required"),
-  languages: Yup.array().of(
-    Yup.object().shape({
-      id: Yup.string(),
-    })
-  ),
-  skills: Yup.array().of(Yup.string()),
+  highestEducation: Yup.string(),
+  languages: Yup.array()
+    .of(
+      Yup.object().shape({
+        id: Yup.string(),
+      })
+    )
+    .test(
+      "atLeastOneLanguage",
+      "At Least one Language required",
+      (value, context) => {
+        let isPresent = false;
+        value.forEach((val) => {
+          if (val.language) {
+            isPresent = true;
+          }
+        });
+        return isPresent;
+      }
+    ),
+  skills: Yup.array().of(Yup.string()).min(1, "At Least one Skill is required"),
 });
