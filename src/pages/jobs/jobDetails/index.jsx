@@ -6,7 +6,12 @@ import { SVG } from "@assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getJobDetailsByIdAPI, getJobSuggestionAPI } from "@api/job";
 import dayjs from "dayjs";
-import { SolidButton, SearchButton, OutlinedButton } from "@components/button";
+import {
+  SolidButton,
+  SearchButton,
+  OutlinedButton,
+  FilledButton,
+} from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
@@ -251,8 +256,8 @@ const JobDetails = () => {
                   user={details.user}
                 />
                 <div className={`${styles.jobpostbtn}`}>
-                  <SearchButton
-                    text={details.isApplied ? "Applied" : "Apply for this job"}
+                  <FilledButton
+                    title={details.isApplied ? "Applied" : "Apply for this job"}
                     className={`${styles.enablebtn}`}
                     disabled={details.isApplied}
                     onClick={() => {
@@ -265,6 +270,24 @@ const JobDetails = () => {
                       }
                     }}
                   />
+                  {details.isApplied && (
+                    <FilledButton
+                      title="Withdraw"
+                      className={`${styles.enablebtn}`}
+                      disabled={details.isApplied}
+                      onClick={() => {
+                        if (isLoggedIn) {
+                          navigate(
+                            urlcat("../job/apply/:jobId", {
+                              jobId: params.jobId,
+                            })
+                          );
+                        } else {
+                          setRegistrationWarning(true);
+                        }
+                      }}
+                    />
+                  )}
                   {/* <div className={styles.btnGroup}> */}
                   <Stack
                     direction="row"

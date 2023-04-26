@@ -236,7 +236,7 @@ const ApplyForJob = () => {
               <Grid item xs={5}>
                 <div className={`${styles.requirement}`}>
                   <JobRequirementCard
-                    jobCategories={details.jobCategories}
+                    highestEducation={details.highestEducation}
                     languages={details.languages}
                     skills={details.skills}
                   />
