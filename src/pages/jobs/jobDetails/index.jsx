@@ -4,7 +4,11 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { SVG } from "@assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getJobDetailsByIdAPI, getJobSuggestionAPI } from "@api/job";
+import {
+  getJobDetailsByIdAPI,
+  getJobSuggestionAPI,
+  withdrawJobApplicationAPI,
+} from "@api/job";
 import dayjs from "dayjs";
 import {
   SolidButton,
@@ -18,17 +22,19 @@ import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DialogBox from "@components/dialogBox";
 import { USER_ROLES } from "@utils/enum";
 import { getLetLongByAddressAPI } from "@api/user";
 import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
 import { Stack } from "@mui/material";
 import ShareJob from "../shareJob";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 
 const JobDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
@@ -107,6 +113,21 @@ const JobDetails = () => {
     const res = await getJobSuggestionAPI(jobId);
     if (res.remote === "success") {
       setSuggestionJobs(res.data.results);
+    }
+  };
+  const handleWithdrawJobApplication = async () => {
+    console.log(details.isEditable);
+    if (details.isEditable) {
+      const res = await withdrawJobApplicationAPI({ jobId: params.jobId });
+      if (res.remote === "success") {
+        setDetails({
+          ...details,
+          isApplied: false,
+        });
+        dispatch(setSuccessToast("Withdraw successfully"));
+      }
+    } else {
+      dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
   useEffect(() => {
@@ -270,21 +291,13 @@ const JobDetails = () => {
                       }
                     }}
                   />
-                  {details.isApplied && (
+                  {details.isApplied && isLoggedIn && (
                     <FilledButton
                       title="Withdraw"
                       className={`${styles.enablebtn}`}
-                      disabled={details.isApplied}
+                      disabled={!details.isEditable}
                       onClick={() => {
-                        if (isLoggedIn) {
-                          navigate(
-                            urlcat("../job/apply/:jobId", {
-                              jobId: params.jobId,
-                            })
-                          );
-                        } else {
-                          setRegistrationWarning(true);
-                        }
+                        handleWithdrawJobApplication();
                       }}
                     />
                   )}
