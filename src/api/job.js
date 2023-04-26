@@ -119,3 +119,9 @@ export const updateJobShareCountAPI = async ({ jobId, platform }) => {
     method: "PUT",
   });
 };
+export const withdrawJobApplicationAPI = async ({ jobId }) => {
+  return await api.request({
+    url: urlcat("v1/users/job-seeker/jobs/apply/:jobId", { jobId }),
+    method: "DELETE",
+  });
+};

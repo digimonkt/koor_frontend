@@ -45,6 +45,7 @@ export const transformFullJobDetails = (data) => {
   return {
     id: data.id,
     title: data.title,
+    application: data.application || {},
     description: data.description,
     budgetCurrency: data.budget_currency,
     budgetAmount: Number(data.budget_amount).toLocaleString(),
@@ -60,6 +61,7 @@ export const transformFullJobDetails = (data) => {
     startDate: data.start_date,
     isFullTime: data.is_full_time,
     isApplied: data.is_applied,
+    isEditable: data.is_editable,
     isSaved: data.is_saved,
     isPartTime: data.is_part_time,
     hasContract: data.has_contract,
