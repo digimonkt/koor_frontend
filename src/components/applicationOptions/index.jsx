@@ -11,6 +11,7 @@ import { LabeledInput } from "@components/input";
 import { FilledButton } from "@components/button";
 import { setSuccessToast } from "@redux/slice/toast";
 import { useDispatch } from "react-redux";
+import Loader from "@components/loader";
 function ApplicationOptions({
   allOptions,
   applicationId,
@@ -31,6 +32,7 @@ function ApplicationOptions({
   const [blackListReason, setBlackListReason] = useState("");
   const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
   const [interviewTime, setInterviewTime] = useState("");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setShortlist(!!isShortlisted);
     setRejected(!!isRejected);
@@ -44,6 +46,7 @@ function ApplicationOptions({
         delete data[key];
       }
     }
+    setLoading(true);
     const res = await changeApplicationStatusAPI({
       action,
       applicationId,
@@ -52,6 +55,7 @@ function ApplicationOptions({
     if (res.remote === "success") {
       dispatch(setSuccessToast("Status updated successfully"));
       setShortlist(true);
+      setLoading(false);
       setIsInterviewPlanning(false);
       if (action === "blacklisted") {
         setIsBlacklisting(false);
@@ -191,7 +195,8 @@ function ApplicationOptions({
           </div>
           <div className="dialog-reverse">
             <FilledButton
-              title="submit"
+              title={loading ? <Loader loading={loading} /> : "submit"}
+              disabled={loading}
               onClick={() =>
                 handlerChangeApplicationStatus(
                   JOB_APPLICATION_OPTIONS.plannedInterviews,
