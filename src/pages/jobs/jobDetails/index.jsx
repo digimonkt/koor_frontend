@@ -278,20 +278,37 @@ const JobDetails = () => {
                 />
                 <div className={`${styles.jobpostbtn}`}>
                   <FilledButton
-                    title={details.isApplied ? "Applied" : "Apply for this job"}
+                    title={
+                      details.isApplied
+                        ? details.isEditable
+                          ? "Edit"
+                          : "Applied"
+                        : "Apply for this job"
+                    }
                     className={`${styles.enablebtn}`}
-                    disabled={details.isApplied}
+                    disabled={details.isApplied && !details.isEditable}
                     onClick={() => {
                       if (isLoggedIn) {
-                        navigate(
-                          urlcat("../job/apply/:jobId", { jobId: params.jobId })
-                        );
+                        if (details.isEditable) {
+                          navigate(
+                            urlcat("../job/apply/:jobId", {
+                              jobId: params.jobId,
+                              applicationId: details.application.id,
+                            })
+                          );
+                        } else {
+                          navigate(
+                            urlcat("../job/apply/:jobId", {
+                              jobId: params.jobId,
+                            })
+                          );
+                        }
                       } else {
                         setRegistrationWarning(true);
                       }
                     }}
                   />
-                  {details.isApplied && isLoggedIn && (
+                  {details.isEditable && details.isApplied && isLoggedIn && (
                     <FilledButton
                       title="Withdraw"
                       className={`${styles.enablebtn}`}
