@@ -54,6 +54,24 @@ export const applyForJobAPI = async (jobId, data) => {
   });
   return response;
 };
+export const updateAppliedJobAPI = async (jobId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/job-seeker/jobs/apply/:jobId", { jobId }),
+    method: "PUT",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};
+
+export const withdrawJobApplicationAPI = async ({ jobId }) => {
+  return await api.request({
+    url: urlcat("v1/users/job-seeker/jobs/apply/:jobId", { jobId }),
+    method: "DELETE",
+  });
+};
 
 export const saveSearchJobsFilterAPI = async (data) => {
   const response = await api.request({
@@ -117,11 +135,5 @@ export const updateJobShareCountAPI = async ({ jobId, platform }) => {
   return await api.request({
     url: urlcat("v1/jobs/:jobId/share/:platform", { jobId, platform }),
     method: "PUT",
-  });
-};
-export const withdrawJobApplicationAPI = async ({ jobId }) => {
-  return await api.request({
-    url: urlcat("v1/users/job-seeker/jobs/apply/:jobId", { jobId }),
-    method: "DELETE",
   });
 };

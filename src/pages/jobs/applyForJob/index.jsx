@@ -11,7 +11,11 @@ import { useFormik } from "formik";
 import { applyJobValidationSchema } from "./validator";
 import { AttachmentDragNDropInput, LabeledInput } from "@components/input";
 import { ErrorMessage } from "@components/caption";
-import { applyForJobAPI, getJobDetailsByIdAPI } from "@api/job";
+import {
+  applyForJobAPI,
+  getJobDetailsByIdAPI,
+  updateAppliedJobAPI,
+} from "@api/job";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -29,14 +33,6 @@ const ApplyForJob = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [searchParams] = useSearchParams();
-  const applicationId = searchParams.get("applicationId");
-  const getApplicantDetails = async () => {
-    const res = await getApplicationDetailsAPI(applicationId);
-    if (res.remote === "success") {
-      formik.setFieldValue("shortLetter", res.data.shortLetter);
-      formik.setFieldValue("attachments", res.data.attachments);
-    }
-  };
   // state management
   const [details, setDetails] = useState({
     id: "",
@@ -91,18 +87,31 @@ const ApplyForJob = () => {
   const [isCanceling, setIsCanceling] = useState(false);
   const [hide, setHide] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
       attachments: [],
+      attachmentsRemove: [],
     },
     validationSchema: applyJobValidationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      setIsSubmitting(true);
       const payload = new FormData();
       const newValues = {
         short_letter: values.shortLetter,
         attachments: values.attachments,
       };
+      if (
+        searchParams.get("applicationId") &&
+        values.attachmentsRemove.length
+      ) {
+        newValues.attachments_remove = values.attachmentsRemove;
+      }
+      newValues.attachments = newValues.attachments.filter(
+        (attachment) => !attachment.id
+      );
+      console.log({ newValues });
       for (const key in newValues) {
         if (newValues[key].forEach) {
           newValues[key].forEach((val) => {
@@ -112,12 +121,35 @@ const ApplyForJob = () => {
           payload.append(key, newValues[key]);
         }
       }
-      applyForJob(payload);
+      if (searchParams.get("applicationId")) {
+        await updateAppliedJob(payload);
+      } else {
+        await applyForJob(payload);
+      }
+      setIsSubmitting(false);
     },
   });
 
+  const getApplicantDetails = async () => {
+    const applicationId = searchParams.get("applicationId");
+    const res = await getApplicationDetailsAPI(applicationId);
+    if (res.remote === "success") {
+      formik.setFieldValue("shortLetter", res.data.shortLetter);
+      formik.setFieldValue("attachments", res.data.attachments);
+    }
+  };
+
   const applyForJob = async (data) => {
     const res = await applyForJobAPI(params.jobId, data);
+    if (res.remote === "success") {
+      dispatch(setSuccessToast("Applied successfully"));
+      setIsApplied(true);
+    } else {
+      dispatch(setErrorToast("Something went wrong"));
+    }
+  };
+  const updateAppliedJob = async (data) => {
+    const res = await updateAppliedJobAPI(params.jobId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
@@ -138,7 +170,7 @@ const ApplyForJob = () => {
   }, [params.jobId]);
   useEffect(() => {
     getApplicantDetails();
-  }, [applicationId]);
+  }, [searchParams.get("applicationId")]);
   return (
     <div>
       <Container>
@@ -292,10 +324,16 @@ const ApplyForJob = () => {
                     });
                   }}
                   deleteFile={(file) => {
+                    console.log({ file });
                     if (file.id) {
                       formik.setFieldValue("attachmentsRemove", [
                         ...formik.values.attachmentsRemove,
                         file.id,
+                      ]);
+                      formik.setFieldValue("attachments", [
+                        ...formik.values.attachments.filter(
+                          (attachment) => attachment.id !== file.id
+                        ),
                       ]);
                     } else {
                       formik.setValues({
@@ -321,11 +359,19 @@ const ApplyForJob = () => {
                   text="Cancel"
                   className={`${styles.cancelbtn}`}
                   onClick={() => setIsCanceling(true)}
+                  disabled={isSubmitting}
                 />
                 <SearchButton
-                  text="Apply"
+                  text={
+                    isSubmitting
+                      ? "Submitting..."
+                      : searchParams.get("applicationId")
+                      ? "Update"
+                      : "Apply"
+                  }
                   className={`${styles.applybtn}`}
                   type="submit"
+                  disabled={isSubmitting}
                 />
               </Stack>
             </form>

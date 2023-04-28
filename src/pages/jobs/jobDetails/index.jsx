@@ -76,6 +76,7 @@ const JobDetails = () => {
       id: "",
       title: "",
     },
+    application: {},
     languages: [],
     skills: [],
     workingDays: "5",
