@@ -111,7 +111,6 @@ const ApplyForJob = () => {
       newValues.attachments = newValues.attachments.filter(
         (attachment) => !attachment.id
       );
-      console.log({ newValues });
       for (const key in newValues) {
         if (newValues[key].forEach) {
           newValues[key].forEach((val) => {
@@ -324,7 +323,6 @@ const ApplyForJob = () => {
                     });
                   }}
                   deleteFile={(file) => {
-                    console.log({ file });
                     if (file.id) {
                       formik.setFieldValue("attachmentsRemove", [
                         ...formik.values.attachmentsRemove,
