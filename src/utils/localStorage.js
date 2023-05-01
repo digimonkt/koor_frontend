@@ -17,4 +17,5 @@ export const globalLocalStorage = {
     window.dispatchEvent(new Event("storage"));
   },
   getRefreshToken: () => localStorage.getItem("x-refresh"),
+  cleanLocalStorage: () => localStorage.clear(),
 };

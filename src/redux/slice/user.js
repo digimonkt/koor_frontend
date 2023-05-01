@@ -102,7 +102,13 @@ const initialState = {
 
 export const getUserDetails = createAsyncThunk(
   "users/getUserDetails",
-  async (data, { rejectWithValue }) => {
+  async (data, { getState, rejectWithValue }) => {
+    const {
+      auth: { currentUser },
+    } = getState();
+    if (currentUser.id) {
+      return currentUser;
+    }
     const res = await GetUserDetailsAPI(data);
     if (res.remote === "success") {
       return res.data;
