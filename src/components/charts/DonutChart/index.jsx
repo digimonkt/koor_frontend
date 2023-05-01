@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { styled } from "@mui/material/styles";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { FormControl, Grid, MenuItem, Select, Stack } from "@mui/material";
+// import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { FormControl, Grid, Select, Stack } from "@mui/material";
+import { getShareCountDataAPI } from "@api/employer";
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: rgba(202, 202, 202, 0.25);
@@ -27,11 +28,12 @@ export const SelectBox = styled(Select)`
   }
 `;
 const DonutChart = ({ totalShare }) => {
-  const [isSelect, setIsSelect] = useState("");
+  // const [isSelect, setIsSelect] = useState("");
+  const [shareCount, setShareCount] = useState("");
 
-  const handleChange = (event) => {
-    setIsSelect(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setIsSelect(event.target.value);
+  // };
   const [state] = React.useState({
     series: [10, 70, 30, 10],
     options: {
@@ -84,6 +86,19 @@ const DonutChart = ({ totalShare }) => {
       ],
     },
   });
+
+  const getShareCountData = async () => {
+    const res = await getShareCountDataAPI();
+    if (res.remote === "success") {
+      console.log(res.data);
+      setShareCount(res.data);
+      console.log(shareCount);
+    }
+  };
+
+  useEffect(() => {
+    getShareCountData();
+  }, []);
   return (
     <>
       <Stack
@@ -104,7 +119,7 @@ const DonutChart = ({ totalShare }) => {
           }}
           size="small"
         >
-          <SelectBox
+          {/* <SelectBox
             value={isSelect}
             onChange={handleChange}
             inputProps={{ "aria-label": "Without label" }}
@@ -114,7 +129,7 @@ const DonutChart = ({ totalShare }) => {
             <MenuItem value="">This Week</MenuItem>
             <MenuItem value={20}>Last Month</MenuItem>
             <MenuItem value={30}>Whole Year</MenuItem>
-          </SelectBox>
+          </SelectBox> */}
         </FormControl>
       </Stack>
 
