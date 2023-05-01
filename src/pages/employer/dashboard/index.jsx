@@ -8,6 +8,7 @@ import { OutlinedButton } from "@components/button";
 import {
   getDashboardActivityAPI,
   getRecentApplicationAPI,
+  getShareCountDataAPI,
 } from "@api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -27,6 +28,11 @@ const Dashboard = () => {
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [shareCount, setShareCount] = useState({
+    series: [],
+    sites: [],
+    total: 0
+  });
   const getRecentApplications = async () => {
     setIsLoading(true);
     const res = await getRecentApplicationAPI({
@@ -62,7 +68,30 @@ const Dashboard = () => {
       });
     }
   };
-
+  const getShareCountData = async () => {
+    const res = await getShareCountDataAPI();
+    if (res.remote === "success") {
+      setShareCount({
+        series: [
+          res.data.facebook,
+          res.data.whatsapp,
+          res.data.telegram,
+          res.data.linked_in,
+          res.data.mail,
+          res.data.direct_link,
+        ],
+        sites: [
+          { name: "Facebook", count: res.data.facebook },
+          { name: "Whatsapp", count: res.data.whatsapp },
+          { name: "Telegram", count: res.data.telegram },
+          { name: "Linked In", count: res.data.linked_in },
+          { name: "Mail", count: res.data.mail },
+          { name: "Direct Link", count: res.data.direct_link },
+        ].sort((a, b) => b.count - a.count),
+        total: res.data.total,
+      });
+    }
+  };
   const handleShowMore = () =>
     setRecentApplicationPage((prevState) => prevState + 1);
 
@@ -71,6 +100,9 @@ const Dashboard = () => {
   }, [recentApplicationPage]);
   useEffect(() => {
     getDashboardActivity();
+  }, []);
+  useEffect(() => {
+    getShareCountData();
   }, []);
   return (
     <>
@@ -142,7 +174,7 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <DonutChart totalShare={"48 total shares:"} />
+                  <DonutChart shareCountData={shareCount} />
                 </div>
               </CardContent>
             </Card>

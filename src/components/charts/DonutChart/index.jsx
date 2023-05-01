@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { styled } from "@mui/material/styles";
 // import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { FormControl, Grid, Select, Stack } from "@mui/material";
-import { getShareCountDataAPI } from "@api/employer";
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: rgba(202, 202, 202, 0.25);
@@ -27,15 +26,14 @@ export const SelectBox = styled(Select)`
     display: none;
   }
 `;
-const DonutChart = ({ totalShare }) => {
+const DonutChart = ({ shareCountData }) => {
   // const [isSelect, setIsSelect] = useState("");
-  const [shareCount, setShareCount] = useState("");
-
   // const handleChange = (event) => {
   //   setIsSelect(event.target.value);
   // };
+  console.log("shareCountData sites", shareCountData.sites);
   const [state] = React.useState({
-    series: [10, 70, 30, 10],
+    series: shareCountData.series,
     options: {
       chart: {
         type: "donut",
@@ -43,7 +41,14 @@ const DonutChart = ({ totalShare }) => {
       dataLabels: {
         enabled: false,
       },
-      //   labels: ["Apple", "Orange", "Mango"],
+      labels: [
+        "Facebook",
+        "WhatsApp",
+        "Telegram",
+        "Linked In",
+        "Mail",
+        "Direct Link",
+      ],
       plotOptions: {
         pie: {
           donut: {
@@ -67,7 +72,14 @@ const DonutChart = ({ totalShare }) => {
         width: 0,
       },
       fill: {
-        colors: ["#CACACA", "#4CAF50", "#FFA500", "#4267B2"],
+        colors: [
+          "#CACACA",
+          "#4CAF50",
+          "#FFA500",
+          "#4267B2",
+          "#ff7f50",
+          "#80004e",
+        ],
       },
 
       responsive: [
@@ -87,18 +99,10 @@ const DonutChart = ({ totalShare }) => {
     },
   });
 
-  const getShareCountData = async () => {
-    const res = await getShareCountDataAPI();
-    if (res.remote === "success") {
-      console.log(res.data);
-      setShareCount(res.data);
-      console.log(shareCount);
-    }
+  const getCountPercent = (totalCount, count) => {
+    const res = (count / totalCount) * 100;
+    return res;
   };
-
-  useEffect(() => {
-    getShareCountData();
-  }, []);
   return (
     <>
       <Stack
@@ -106,7 +110,7 @@ const DonutChart = ({ totalShare }) => {
         spacing={2}
         justifyContent="space-between"
         alignItems="center"
-        sx={{ marginBottom: "30px" }}
+        sx={{ marginBottom: "0px" }}
       >
         <h2>Number of shares</h2>
         <FormControl
@@ -142,22 +146,19 @@ const DonutChart = ({ totalShare }) => {
             height={200}
           />
         </Grid>
-        <Grid item xl={7} lg={7}>
+        <Grid item xl={7} lg={7} style={{ paddingTop: "0px" }}>
           <div className="series-box">
-            <h2>{totalShare}</h2>
+            <h2>{shareCountData?.total} Total shares:</h2>
             <ul>
-              <li>
-                <b>22</b> – Direct link share (65%)
-              </li>
-              <li>
-                <b>8</b> – Telegram (22%)
-              </li>
-              <li>
-                <b>3</b> – WhatsApp (12%)
-              </li>
-              <li>
-                <b>1</b> – LinkedIn (1%)
-              </li>
+            {shareCountData?.sites.map((site, i) => {
+              return (
+                <li key={i}>
+                  <b>{site.count}</b> – {site.name}
+                   ({getCountPercent(shareCountData?.total, site.count)}
+                  %)
+                </li>
+              );
+            })}
             </ul>
           </div>
         </Grid>
