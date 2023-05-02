@@ -119,14 +119,18 @@ export const getApplicationDetailsAPI = async (applicationId) => {
   return res;
 };
 
-export const changeApplicationStatusAPI = async ({ action, applicationId, data }) => {
+export const changeApplicationStatusAPI = async ({
+  action,
+  applicationId,
+  data,
+}) => {
   const res = await api.request({
     url: urlcat("/v1/jobs/applications-detail/:applicationId/:action", {
       applicationId,
       action,
     }),
     method: "PUT",
-    data
+    data,
   });
   return res;
 };
@@ -153,6 +157,20 @@ export const getJobAnalyticsAPI = async () => {
     return {
       remote: "success",
       data: { orderCounts: res.data.order_counts },
+    };
+  }
+  return res;
+};
+
+export const getShareCountDataAPI = async () => {
+  const res = await api.request({
+    url: "v1/users/employer/share-count",
+    method: "GET",
+  });
+  if (res.method === "success") {
+    return {
+      remote: "success",
+      data: res.data,
     };
   }
   return res;
