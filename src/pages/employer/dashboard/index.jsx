@@ -28,10 +28,11 @@ const Dashboard = () => {
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDonutShow, setIsDonutShow] = useState(false);
   const [shareCount, setShareCount] = useState({
     series: [],
     sites: [],
-    total: 0
+    total: 0,
   });
   const getRecentApplications = async () => {
     setIsLoading(true);
@@ -90,6 +91,7 @@ const Dashboard = () => {
         ].sort((a, b) => b.count - a.count),
         total: res.data.total,
       });
+      setIsDonutShow(true);
     }
   };
   const handleShowMore = () =>
@@ -174,7 +176,7 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <DonutChart shareCountData={shareCount} />
+                  {isDonutShow && <DonutChart shareCountData={shareCount} />}
                 </div>
               </CardContent>
             </Card>
