@@ -27,10 +27,6 @@ export const SelectBox = styled(Select)`
   }
 `;
 const DonutChart = ({ shareCountData }) => {
-  // const [isSelect, setIsSelect] = useState("");
-  // const handleChange = (event) => {
-  //   setIsSelect(event.target.value);
-  // };
   const [state] = React.useState({
     series: shareCountData.series,
     options: {
@@ -122,17 +118,6 @@ const DonutChart = ({ shareCountData }) => {
           }}
           size="small"
         >
-          {/* <SelectBox
-            value={isSelect}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "Without label" }}
-            IconComponent={KeyboardArrowUpIcon}
-            displayEmpty
-          >
-            <MenuItem value="">This Week</MenuItem>
-            <MenuItem value={20}>Last Month</MenuItem>
-            <MenuItem value={30}>Whole Year</MenuItem>
-          </SelectBox> */}
         </FormControl>
       </Stack>
 
