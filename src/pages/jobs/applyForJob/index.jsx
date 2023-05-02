@@ -1,17 +1,21 @@
 import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+// import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { SearchButton, SolidButton } from "@components/button";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { useFormik } from "formik";
 import { applyJobValidationSchema } from "./validator";
-import { AttachmentDragNDropInput } from "@components/input";
+import { AttachmentDragNDropInput, LabeledInput } from "@components/input";
 import { ErrorMessage } from "@components/caption";
-import { applyForJobAPI, getJobDetailsByIdAPI } from "@api/job";
+import {
+  applyForJobAPI,
+  getJobDetailsByIdAPI,
+  updateAppliedJobAPI,
+} from "@api/job";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -22,13 +26,13 @@ import JobCostCard from "../component/jobCostCard";
 import DialogBox from "@components/dialogBox";
 import CancelApply from "./cancelApply";
 import ApplySuccessfully from "./applySuccessfully";
-
+import { getApplicationDetailsAPI } from "@api/employer";
 const ApplyForJob = () => {
   const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
   const params = useParams();
-
+  const [searchParams] = useSearchParams();
   // state management
   const [details, setDetails] = useState({
     id: "",
@@ -83,29 +87,68 @@ const ApplyForJob = () => {
   const [isCanceling, setIsCanceling] = useState(false);
   const [hide, setHide] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
       attachments: [],
+      attachmentsRemove: [],
     },
     validationSchema: applyJobValidationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      setIsSubmitting(true);
       const payload = new FormData();
-      for (const key in values) {
-        if (values[key].forEach) {
-          values[key].forEach((val) => {
+      const newValues = {
+        short_letter: values.shortLetter,
+        attachments: values.attachments,
+      };
+      if (
+        searchParams.get("applicationId") &&
+        values.attachmentsRemove.length
+      ) {
+        newValues.attachments_remove = values.attachmentsRemove;
+      }
+      newValues.attachments = newValues.attachments.filter(
+        (attachment) => !attachment.id
+      );
+      for (const key in newValues) {
+        if (newValues[key].forEach) {
+          newValues[key].forEach((val) => {
             payload.append(key, val);
           });
         } else {
-          payload.append(key, values[key]);
+          payload.append(key, newValues[key]);
         }
       }
-      applyForJob(payload);
+      if (searchParams.get("applicationId")) {
+        await updateAppliedJob(payload);
+      } else {
+        await applyForJob(payload);
+      }
+      setIsSubmitting(false);
     },
   });
 
+  const getApplicantDetails = async () => {
+    const applicationId = searchParams.get("applicationId");
+    const res = await getApplicationDetailsAPI(applicationId);
+    if (res.remote === "success") {
+      formik.setFieldValue("shortLetter", res.data.shortLetter);
+      formik.setFieldValue("attachments", res.data.attachments);
+    }
+  };
+
   const applyForJob = async (data) => {
     const res = await applyForJobAPI(params.jobId, data);
+    if (res.remote === "success") {
+      dispatch(setSuccessToast("Applied successfully"));
+      setIsApplied(true);
+    } else {
+      dispatch(setErrorToast("Something went wrong"));
+    }
+  };
+  const updateAppliedJob = async (data) => {
+    const res = await updateAppliedJobAPI(params.jobId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
@@ -124,7 +167,9 @@ const ApplyForJob = () => {
   useEffect(() => {
     getJobDetails(params.jobId);
   }, [params.jobId]);
-
+  useEffect(() => {
+    getApplicantDetails();
+  }, [searchParams.get("applicationId")]);
   return (
     <div>
       <Container>
@@ -236,7 +281,7 @@ const ApplyForJob = () => {
               <Grid item xs={5}>
                 <div className={`${styles.requirement}`}>
                   <JobRequirementCard
-                    jobCategories={details.jobCategories}
+                    highestEducation={details.highestEducation}
                     languages={details.languages}
                     skills={details.skills}
                   />
@@ -253,11 +298,11 @@ const ApplyForJob = () => {
             <form onSubmit={formik.handleSubmit}>
               <div className={`${styles.shortLetter}`}>
                 <h1 className="m-0 mb-3">Your short-letter</h1>
-                <TextareaAutosize
-                  aria-label="minimum height"
+                <LabeledInput
+                  type="textarea"
                   className={`${styles.textarea}`}
-                  minRows={3}
                   placeholder="Write a few words about yourself and why you think that you are a good fit for this particular job."
+                  value={formik.values.shortLetter}
                   {...formik.getFieldProps("shortLetter")}
                 />
                 {formik.touched.shortLetter && formik.errors.shortLetter && (
@@ -283,6 +328,11 @@ const ApplyForJob = () => {
                         ...formik.values.attachmentsRemove,
                         file.id,
                       ]);
+                      formik.setFieldValue("attachments", [
+                        ...formik.values.attachments.filter(
+                          (attachment) => attachment.id !== file.id
+                        ),
+                      ]);
                     } else {
                       formik.setValues({
                         ...formik.values,
@@ -307,11 +357,19 @@ const ApplyForJob = () => {
                   text="Cancel"
                   className={`${styles.cancelbtn}`}
                   onClick={() => setIsCanceling(true)}
+                  disabled={isSubmitting}
                 />
                 <SearchButton
-                  text="Apply"
+                  text={
+                    isSubmitting
+                      ? "Submitting..."
+                      : searchParams.get("applicationId")
+                      ? "Update"
+                      : "Apply"
+                  }
                   className={`${styles.applybtn}`}
                   type="submit"
+                  disabled={isSubmitting}
                 />
               </Stack>
             </form>
@@ -336,5 +394,4 @@ const ApplyForJob = () => {
     </div>
   );
 };
-
 export default ApplyForJob;

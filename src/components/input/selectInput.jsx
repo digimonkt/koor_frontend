@@ -66,8 +66,8 @@ function SelectInputComponent({
         <SelectBox
           inputProps={{ "aria-label": "Without label" }}
           IconComponent={KeyboardArrowDownIcon}
-          displayEmpty
           value={value}
+          displayEmpty
           renderValue={
             value !== ""
               ? undefined

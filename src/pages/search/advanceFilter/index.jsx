@@ -7,6 +7,7 @@ import {
   deleteSearchJobsFilterAPI,
   getSearchJobsFilterAPI,
   saveSearchJobsFilterAPI,
+  updateSavedSearchFilterAPI,
 } from "@api/job";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,6 +23,7 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
 import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
+import { SALARY_MAX, SALARY_MIN } from "@utils/constants/constants";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
@@ -90,15 +92,16 @@ function AdvanceFilter({ searchType }) {
   };
   const handleSelectFilter = async (filter) => {
     setSelectedFilter(filter.id);
-
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories);
     formik.setFieldValue("country", filter.country?.id || "");
     formik.setFieldValue("city", filter.city?.title || "");
     formik.setFieldValue("isFullTime", filter.isFullTime);
     formik.setFieldValue("isPartTime", filter.isPartTime);
-    formik.setFieldValue("hasContract", filter.isPartTime);
+    formik.setFieldValue("hasContract", filter.hasContract);
     formik.setFieldValue("available", filter.isAvailable);
+    formik.setFieldValue("salaryMin", filter.salaryMin);
+    formik.setFieldValue("salaryMax", filter.salaryMax);
     const payload = {
       country: filter.country?.title || "",
       city: filter.city?.title || "",
@@ -111,6 +114,8 @@ function AdvanceFilter({ searchType }) {
       partTime: filter.isPartTime,
       contract: filter.hasContract,
       isAvailable: filter.isAvailable,
+      salaryMin: filter.salaryMin,
+      salaryMax: filter.salaryMax,
     };
     if (!payload.timing) {
       delete payload.timing;
@@ -122,6 +127,9 @@ function AdvanceFilter({ searchType }) {
     setAllFilters([...newAllFilters]);
     switch (searchType) {
       case SEARCH_TYPE.jobs:
+        await deleteSearchJobsFilterAPI(filterId);
+        break;
+      case SEARCH_TYPE.talents:
         await deleteSearchJobsFilterAPI(filterId);
         break;
       default:
@@ -141,6 +149,8 @@ function AdvanceFilter({ searchType }) {
         contract: false,
         timing: "",
         isAvailable: false,
+        salaryMin: SALARY_MIN,
+        salaryMax: SALARY_MAX,
       })
     );
   };
@@ -153,6 +163,8 @@ function AdvanceFilter({ searchType }) {
       is_full_time: rawData.isFullTime,
       is_part_time: rawData.isPartTime,
       has_contract: rawData.hasContract,
+      salary_min: rawData.salaryMin,
+      salary_max: rawData.salaryMax,
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -171,6 +183,34 @@ function AdvanceFilter({ searchType }) {
       dispatch(setErrorToast("Name is required"));
     }
   };
+
+  const toggleNotificationStatus = async (filterId) => {
+    let newFilters = [...allFilters];
+    const filter = newFilters.find((filter) => filter.id === filterId);
+    if (filter) {
+      const currentStatus = filter.isNotification;
+      newFilters = newFilters.map((filter) => {
+        if (filter.id === filterId) {
+          return {
+            ...filter,
+            isNotification: !filter.isNotification,
+          };
+        }
+        return filter;
+      });
+      setAllFilters([...newFilters]);
+      switch (searchType) {
+        case SEARCH_TYPE.jobs:
+          await updateSavedSearchFilterAPI(filterId, !currentStatus);
+          break;
+        case SEARCH_TYPE.talents:
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -182,6 +222,9 @@ function AdvanceFilter({ searchType }) {
   useEffect(() => {
     switch (searchType) {
       case SEARCH_TYPE.jobs:
+        getSearchJobsFilter();
+        break;
+      case SEARCH_TYPE.talents:
         getSearchJobsFilter();
         break;
       default:
@@ -201,6 +244,8 @@ function AdvanceFilter({ searchType }) {
 
       // talent
       available: false,
+      salaryMin: SALARY_MIN,
+      salaryMax: SALARY_MAX,
     },
 
     onSubmit: async (values) => {
@@ -219,6 +264,8 @@ function AdvanceFilter({ searchType }) {
         partTime: values.isPartTime,
         contract: values.hasContract,
         isAvailable: values.available,
+        salary_min: values.salaryMin,
+        salary_max: values.salaryMax,
       };
       dispatch(setAdvanceFilter(payload));
     },
@@ -260,7 +307,7 @@ function AdvanceFilter({ searchType }) {
                       }`}
                       leftIcon={
                         <div
-                        //   onClick={() => toggleNotificationStatus(filter.id)}
+                          onClick={() => toggleNotificationStatus(filter.id)}
                         >
                           {filter.isNotification ? (
                             <SVG.Notificationactive />
@@ -296,6 +343,8 @@ function AdvanceFilter({ searchType }) {
                 <span
                   style={{
                     marginLeft: "10px",
+                    width: "18px",
+                    display: "inline-block",
                     color:
                       role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                   }}
@@ -307,6 +356,8 @@ function AdvanceFilter({ searchType }) {
               <span
                 style={{
                   marginLeft: "10px",
+                  width: "18px",
+                  display: "inline-block",
                   color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                 }}
               >
@@ -324,6 +375,9 @@ function AdvanceFilter({ searchType }) {
               }
               switch (searchType) {
                 case SEARCH_TYPE.jobs:
+                  handleSaveJobSearch(title);
+                  break;
+                case SEARCH_TYPE.talents:
                   handleSaveJobSearch(title);
                   break;
                 default:

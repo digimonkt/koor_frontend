@@ -8,8 +8,8 @@ function Notification() {
     <div className={styles.notification}>
       <Container>
         <div className={styles.content}>
-          <h3 className={styles.content_heading}>Notifications</h3>
-          <div className={styles.content_tabs}>
+          <h3 className={`${styles.content_heading}`}>Notifications</h3>
+          <div className={styles.content_tabs} style={{ marginTop: "15px" }}>
             <div className="content_notifi">
               <NotificationContent header />
             </div>

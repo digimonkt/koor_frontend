@@ -5,6 +5,9 @@
   line-height: 36px !important;
   color: #121212 !important ;
   margin: 0px !important;
+  text-transform: capitalize;
+
+
 }
 
 .notification_heading_div {

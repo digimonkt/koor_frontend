@@ -1,6 +1,7 @@
 import { getSearchJobsAPI } from "@api/job";
 import { searchUserByRole } from "@api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { SALARY_MAX, SALARY_MIN } from "@utils/constants/constants";
 import { USER_ROLES } from "@utils/enum";
 
 const initialState = {
@@ -20,6 +21,8 @@ const initialState = {
     contract: false,
     // talent
     isAvailable: false,
+    salaryMin: SALARY_MIN,
+    salaryMax: SALARY_MAX,
   },
 };
 

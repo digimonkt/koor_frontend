@@ -8,6 +8,9 @@ function LabeledInputComponent({
   type,
   labelWeight,
   icon,
+  required,
+  limit,
+  width,
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -21,36 +24,64 @@ function LabeledInputComponent({
   }, [rest.type]);
   return (
     <>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
-        className="mb-2"
-      >
-        {title ? (
-          <label
-            className="mb-1 d-inline-block"
-            style={{
-              fontWeight: labelWeight,
-            }}
-          >
-            {title}
-          </label>
-        ) : (
-          ""
-        )}
-        {subtitle ? (
-          <Stack direction="row" spacing={1} alignItems="center">
-            <span className="text-gray">{subtitle}</span>
-          </Stack>
-        ) : (
-          ""
-        )}
-      </Stack>
-      {type === "textarea" ? (
-        <textarea className="form-control-area" {...rest}></textarea>
+      {title || subtitle ? (
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          className="mb-2"
+        >
+          {title ? (
+            <label
+              className="mb-1 d-inline-block"
+              style={{
+                fontWeight: labelWeight,
+              }}
+            >
+              {title}
+              {required ? <span className="required-field">*</span> : ""}
+            </label>
+          ) : (
+            ""
+          )}
+          {subtitle ? (
+            <Stack direction="row" spacing={1} alignItems="center">
+              <span className="text-gray">{subtitle}</span>
+            </Stack>
+          ) : (
+            ""
+          )}
+        </Stack>
       ) : (
-        <div className="showpassword">
+        ""
+      )}
+      {type === "textarea" ? (
+        <>
+          <textarea
+            className="form-control-area"
+            {...rest}
+            onChange={(e) => {
+              if (rest.onChange) {
+                if (limit) {
+                  if (e.target.value.length <= limit) {
+                    rest.onChange(e);
+                  }
+                } else {
+                  rest.onChange(e);
+                }
+              }
+            }}
+          ></textarea>
+          {limit ? (
+            <span>
+              {rest.value?.length || 0}/{limit}
+            </span>
+          ) : (
+            ""
+          )}
+        </>
+      ) : (
+        <div className="showpassword" style={{ width }}>
           <input
             className="form-control"
             type={

@@ -10,10 +10,9 @@ function LogoutForm() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
   };
   useEffect(() => {
-    globalLocalStorage.removeAccessToken();
-    globalLocalStorage.removeRefreshToken();
     dispatch(setIsLoggedIn(false));
     handleLogout();
     navigate("/login");

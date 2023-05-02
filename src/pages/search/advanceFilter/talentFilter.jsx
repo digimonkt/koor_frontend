@@ -105,8 +105,14 @@ function TalentFilter({ formik, footer }) {
           <Grid item xs={4}>
             <label>Expected salary</label>
             <FormGroup row sx={{ marginLeft: "7px" }}>
-              <LabeledInput title="From" />
-              <LabeledInput title="To" />
+              <LabeledInput
+                title="From"
+                {...formik.getFieldProps("salaryMin")}
+              />
+              <LabeledInput
+                title="To"
+                {...formik.getFieldProps("salaryMax")}
+              />
             </FormGroup>
           </Grid>
           <Grid item xs={4}>

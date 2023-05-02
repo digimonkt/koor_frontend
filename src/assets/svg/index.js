@@ -98,8 +98,21 @@ import { ReactComponent as Bell } from "./bell.svg";
 import { ReactComponent as JobPost } from "./jobPost.svg";
 import { ReactComponent as KoorShortLogo } from "./koorShortLogo.svg";
 import { ReactComponent as SuitcaseJob } from "./suitcaseJob.svg";
-
+import { ReactComponent as Phone } from "./phone_in_talk.svg";
+import { ReactComponent as Mail } from "./mail.svg";
+import { ReactComponent as ShareIcon } from "./share.svg";
+import { ReactComponent as WhatsappIcon } from "./whatsappIcon.svg";
+import { ReactComponent as TelegramIcon } from "./telegram.svg";
+import { ReactComponent as LinkedIn } from "./linkedinIcon.svg";
+import { ReactComponent as MailIcon } from "./mailIcon.svg";
 export const SVG = {
+  MailIcon,
+  LinkedIn,
+  TelegramIcon,
+  WhatsappIcon,
+  ShareIcon,
+  Mail,
+  Phone,
   SuitcaseJob,
   KoorShortLogo,
   JobPost,

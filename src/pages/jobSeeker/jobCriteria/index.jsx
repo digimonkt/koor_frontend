@@ -66,7 +66,7 @@ const JobCriteria = () => {
   return (
     <>
       <div>
-        <h1 className="heading">Select your desired job criterias</h1>
+        <h1 className="heading my-4">Select your desired job criterias</h1>
         <Card
           sx={{
             "&.MuiCard-root": {
