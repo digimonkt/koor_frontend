@@ -7,6 +7,7 @@ import {
   deleteSearchJobsFilterAPI,
   getSearchJobsFilterAPI,
   saveSearchJobsFilterAPI,
+  updateSavedSearchFilterAPI,
 } from "@api/job";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -128,9 +129,9 @@ function AdvanceFilter({ searchType }) {
       case SEARCH_TYPE.jobs:
         await deleteSearchJobsFilterAPI(filterId);
         break;
-        case SEARCH_TYPE.talents:
-          await deleteSearchJobsFilterAPI(filterId);
-          break;
+      case SEARCH_TYPE.talents:
+        await deleteSearchJobsFilterAPI(filterId);
+        break;
       default:
         break;
     }
@@ -182,6 +183,34 @@ function AdvanceFilter({ searchType }) {
       dispatch(setErrorToast("Name is required"));
     }
   };
+
+  const toggleNotificationStatus = async (filterId) => {
+    let newFilters = [...allFilters];
+    const filter = newFilters.find((filter) => filter.id === filterId);
+    if (filter) {
+      const currentStatus = filter.isNotification;
+      newFilters = newFilters.map((filter) => {
+        if (filter.id === filterId) {
+          return {
+            ...filter,
+            isNotification: !filter.isNotification,
+          };
+        }
+        return filter;
+      });
+      setAllFilters([...newFilters]);
+      switch (searchType) {
+        case SEARCH_TYPE.jobs:
+          await updateSavedSearchFilterAPI(filterId, !currentStatus);
+          break;
+        case SEARCH_TYPE.talents:
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -278,7 +307,7 @@ function AdvanceFilter({ searchType }) {
                       }`}
                       leftIcon={
                         <div
-                        //   onClick={() => toggleNotificationStatus(filter.id)}
+                          onClick={() => toggleNotificationStatus(filter.id)}
                         >
                           {filter.isNotification ? (
                             <SVG.Notificationactive />
