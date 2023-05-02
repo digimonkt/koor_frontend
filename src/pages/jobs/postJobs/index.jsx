@@ -143,7 +143,7 @@ function PostJobsComponent() {
       for (const key in payload) {
         if (key === "language") {
           payload.language.forEach((language) => {
-            if (language.language && language.spoken && language.written) {
+            if (language.language) {
               newFormData.append("language", JSON.stringify(language));
             }
           });
