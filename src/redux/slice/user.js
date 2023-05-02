@@ -107,7 +107,7 @@ export const getUserDetails = createAsyncThunk(
       auth: { currentUser },
     } = getState();
     if (currentUser.id) {
-      return currentUser;
+      return { ...currentUser };
     }
     const res = await GetUserDetailsAPI(data);
     if (res.remote === "success") {
@@ -258,12 +258,12 @@ export const authSlice = createSlice({
       state.isGlobalLoading = true;
     });
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
+      state.isGlobalLoading = false;
       if (!action.payload.profileImage) {
         delete action.payload.profileImage;
       }
       state.currentUser = { ...state.currentUser, ...action.payload };
       state.role = action.payload.role;
-      state.isGlobalLoading = false;
       state.isLoggedIn = true;
     });
     builder.addCase(getUserDetails.rejected, (state, action) => {

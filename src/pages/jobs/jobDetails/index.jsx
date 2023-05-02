@@ -131,6 +131,30 @@ const JobDetails = () => {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
+
+  function handleSendEmail() {
+    const email = details.contactEmail;
+    const ccEmail1 = details.cc1;
+    const ccEmail2 = details.cc2;
+    const subject = `Job Application for ${details.title}`;
+    const body = `Here is the my job application for this job \n ${window.location.href}`;
+    let link = `mailto:${email}?&subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    if (ccEmail1) {
+      link += `&cc=${ccEmail1}`;
+    }
+    if (ccEmail1 && ccEmail2) {
+      link += `,${ccEmail2}`;
+    }
+    const tag = document.createElement("a");
+    tag.href = link;
+    tag.target = "_blank";
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
+  }
+
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
@@ -316,6 +340,15 @@ const JobDetails = () => {
                       disabled={!details.isEditable}
                       onClick={() => {
                         handleWithdrawJobApplication();
+                      }}
+                    />
+                  )}
+                  {!details.isApplied && details.contactEmail && (
+                    <FilledButton
+                      title="Apply via Mail"
+                      className={`${styles.enablebtn}`}
+                      onClick={() => {
+                        handleSendEmail();
                       }}
                     />
                   )}
