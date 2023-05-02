@@ -177,7 +177,15 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  {isDonutShow ? <DonutChart shareCountData={shareCount} /> : <Loader loading={true} /> }
+                  {isDonutShow ? (
+                    <DonutChart shareCountData={shareCount} />
+                  ) : (
+                    <div style={{ display: "flex", paddingTop: "32%", justifyContent: "center", alignSelf: "center" }}>
+                    <Loader style={{ width: "44px", height: "44px" }}
+                      loading={true}
+                    />
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
