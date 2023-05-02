@@ -15,6 +15,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 import JobAnalytics from "./jobAnalytics";
+import Loader from "@components/loader";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const [counts, setCounts] = useState({
@@ -176,7 +177,7 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  {isDonutShow && <DonutChart shareCountData={shareCount} />}
+                  {isDonutShow ? <DonutChart shareCountData={shareCount} /> : <Loader loading={true} /> }
                 </div>
               </CardContent>
             </Card>
