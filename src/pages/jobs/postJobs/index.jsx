@@ -269,7 +269,6 @@ function PostJobsComponent() {
       debouncedSearchValue &&
       debouncedSearchValue !== formik.values.address
     ) {
-      console.log({ debouncedSearchValue });
       getSuggestedAddress(debouncedSearchValue);
     }
   }, [debouncedSearchValue]);
@@ -470,7 +469,6 @@ function PostJobsComponent() {
                                   key={address.description}
                                   className={styles.search_results}
                                   onClick={() => {
-                                    console.log({ address });
                                     formik.setFieldValue(
                                       "address",
                                       address.description

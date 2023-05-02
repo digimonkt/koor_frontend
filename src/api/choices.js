@@ -95,3 +95,31 @@ export const getSkillsAPI = async (data) => {
   }
   return response;
 };
+
+export const getSectorsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/sector", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+
+export const getTagsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/tag", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};

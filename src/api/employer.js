@@ -6,6 +6,7 @@ import {
   transformApplicationOnJobListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
+
 export const createJobAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs"),
@@ -17,6 +18,7 @@ export const createJobAPI = async (data) => {
   });
   return res;
 };
+
 export const getEmployerJobsAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs", data || {}),
@@ -119,14 +121,18 @@ export const getApplicationDetailsAPI = async (applicationId) => {
   return res;
 };
 
-export const changeApplicationStatusAPI = async ({ action, applicationId, data }) => {
+export const changeApplicationStatusAPI = async ({
+  action,
+  applicationId,
+  data,
+}) => {
   const res = await api.request({
     url: urlcat("/v1/jobs/applications-detail/:applicationId/:action", {
       applicationId,
       action,
     }),
     method: "PUT",
-    data
+    data,
   });
   return res;
 };
@@ -155,5 +161,18 @@ export const getJobAnalyticsAPI = async () => {
       data: { orderCounts: res.data.order_counts },
     };
   }
+  return res;
+};
+
+export const createTenderAPI = async (data) => {
+  console.log({ data });
+  const res = await api.request({
+    url: urlcat("/v1/users/employer/tenders"),
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data,
+  });
   return res;
 };

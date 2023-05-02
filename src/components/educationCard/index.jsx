@@ -6,7 +6,7 @@ import { USER_ROLES } from "@utils/enum";
 import dayjs from "dayjs";
 import { YEAR_FORMAT } from "@utils/constants/constants";
 import { deleteEducationDetailsAPI } from "@api/jobSeeker";
-import { setSuccessToast } from "@redux/slice/toast";
+import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
 import { deleteEducationRecord } from "@redux/slice/user";
 import DialogBox from "@components/dialogBox";
 import DeleteCard from "@components/deleteCard";
@@ -33,7 +33,7 @@ function EducationCard({
       dispatch(deleteEducationRecord(id));
       dispatch(setSuccessToast("Education Deleted Successfully"));
     } else {
-      dispatch(setSuccessToast("Something went wrong"));
+      dispatch(setErrorToast("Something went wrong"));
     }
     setLoading(false);
     setDeleting(false);

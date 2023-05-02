@@ -6,6 +6,8 @@ import {
   getJobSubCategoriesAPI,
   getLanguagesAPI,
   getSkillsAPI,
+  getSectorsAPI,
+  getTagsAPI,
 } from "@api/choices";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -50,6 +52,30 @@ const initialState = {
     loading: false,
     data: [],
   },
+
+  /**
+    sectors : [{
+      id: string,
+      title: string,
+    }]
+   */
+
+  sectors: {
+    loading: false,
+    data: [],
+  },
+
+  /**
+    tags : [{
+      id: string,
+      title: string,
+    }]
+   */
+
+  tags: {
+    loading: false,
+    data: [],
+  },
   /**
     educationLevels: [{
       id: string,
@@ -86,6 +112,18 @@ export const getCountries = createAsyncThunk(
   "choices/getCountries",
   async (_, { rejectWithValue }) => {
     const res = await getCountriesAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+
+export const getTags = createAsyncThunk(
+  "choices/getTags",
+  async (_, { rejectWithValue }) => {
+    const res = await getTagsAPI();
     if (res.remote === "success") {
       return res.data;
     } else {
@@ -164,6 +202,18 @@ export const getSkills = createAsyncThunk(
   "choices/skills",
   async (data, { rejectWithValue }) => {
     const res = await getSkillsAPI(data);
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+
+export const getSectors = createAsyncThunk(
+  "choices/getSectors",
+  async (data, { rejectWithValue }) => {
+    const res = await getSectorsAPI(data);
     if (res.remote === "success") {
       return res.data;
     } else {
@@ -305,6 +355,48 @@ export const choiceSlice = createSlice({
     builder.addCase(getSkills.rejected, (state) => {
       state.skills = {
         ...state.skills,
+        loading: false,
+      };
+    });
+
+    builder.addCase(getSectors.fulfilled, (state, action) => {
+      state.sectors = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+
+    builder.addCase(getSectors.pending, (state) => {
+      state.sectors = {
+        ...state.sectors,
+        loading: true,
+      };
+    });
+
+    builder.addCase(getSectors.rejected, (state) => {
+      state.sectors = {
+        ...state.sectors,
+        loading: false,
+      };
+    });
+
+    builder.addCase(getTags.fulfilled, (state, action) => {
+      state.tags = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+
+    builder.addCase(getTags.pending, (state) => {
+      state.tags = {
+        ...state.sectors,
+        loading: true,
+      };
+    });
+
+    builder.addCase(getTags.rejected, (state) => {
+      state.tags = {
+        ...state.sectors,
         loading: false,
       };
     });
