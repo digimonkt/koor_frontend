@@ -31,7 +31,6 @@ const DonutChart = ({ shareCountData }) => {
   // const handleChange = (event) => {
   //   setIsSelect(event.target.value);
   // };
-  console.log("shareCountData sites", shareCountData.sites);
   const [state] = React.useState({
     series: shareCountData.series,
     options: {
