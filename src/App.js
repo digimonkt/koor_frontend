@@ -33,7 +33,6 @@ function App() {
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
-    console.log({ currentUser });
     if (accessToken && refreshToken && !currentUser.id) {
       dispatch(getUserDetails());
     } else {
