@@ -21,6 +21,7 @@ import LanguageCard from "@components/languageCard";
 import ApplicationOptions from "@components/applicationOptions";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { NoRecordFoundAnimation } from "@components/animations";
+import urlcat from "urlcat";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
@@ -100,7 +101,13 @@ const ApplicantDetails = () => {
                     sx={{ width: "70px", height: "70px" }}
                   />
                   <div className="user-application">
-                    <h4>{applicantDetails.user.name}</h4>
+                    <Link
+                      to={urlcat("/job-seeker/:userId/profile", {
+                        userId: applicantDetails.user.id || "a",
+                      })}
+                    >
+                      <h4>{applicantDetails.user.name}</h4>
+                    </Link>
                     {applicantDetails.user.profile?.country?.title ? (
                       <Stack direction="row" spacing={1} alignItems="center">
                         <span>{<SVG.LocationIcon />}</span>{" "}
