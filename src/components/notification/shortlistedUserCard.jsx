@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "@assets/svg";
+import { timeAgoFromNow } from "@utils/timeAgo";
 
 function ShortlistedUserCard(props) {
   return (
@@ -27,6 +28,9 @@ function ShortlistedUserCard(props) {
           Congratulations! You've Been Shortlisted for the Job
           <strong>"{props.application.job?.title}"</strong>
         </h2>
+        <p style={{ marginTop: "5px" }} className={styles.duration}>
+          {timeAgoFromNow(props.createdAt)}
+        </p>
       </div>
     </div>
   );

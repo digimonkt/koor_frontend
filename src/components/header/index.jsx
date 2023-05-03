@@ -58,7 +58,15 @@ function Header() {
   }, [location.search]);
   return (
     <header>
-      <Container>
+      <Container
+        maxWidth={false}
+        sx={{
+          "@media(min-width:600px)": {
+            paddingLeft: "110px",
+            paddingRight: "110px",
+          },
+        }}
+      >
         <Stack
           direction="row"
           spacing="3"

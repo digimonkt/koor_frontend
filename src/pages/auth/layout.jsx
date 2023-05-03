@@ -70,6 +70,11 @@ function AuthLayout({
           display_image: res.data.photoURL,
           source: "google",
         };
+        for (const key in payload) {
+          if (!payload[key]) {
+            delete payload[key];
+          }
+        }
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           console.log({ result });
