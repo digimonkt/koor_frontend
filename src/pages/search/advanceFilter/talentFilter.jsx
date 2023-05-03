@@ -8,7 +8,7 @@ import styles from "./advanceFilter.module.css";
 
 function TalentFilter({ formik, footer }) {
   const {
-    choices: { countries, cities, jobCategories },
+    choices: { countries, cities, jobSeekerCategories },
     search: { totalItems },
   } = useSelector((state) => state);
   return (
@@ -23,7 +23,7 @@ function TalentFilter({ formik, footer }) {
                   title="Category"
                   defaultValue=""
                   placeholder="Select a Job category"
-                  options={jobCategories.data.map((jobCategory) => ({
+                  options={jobSeekerCategories.data.map((jobCategory) => ({
                     value: jobCategory.id,
                     label: jobCategory.title,
                   }))}
@@ -109,10 +109,7 @@ function TalentFilter({ formik, footer }) {
                 title="From"
                 {...formik.getFieldProps("salaryMin")}
               />
-              <LabeledInput
-                title="To"
-                {...formik.getFieldProps("salaryMax")}
-              />
+              <LabeledInput title="To" {...formik.getFieldProps("salaryMax")} />
             </FormGroup>
           </Grid>
           <Grid item xs={4}>

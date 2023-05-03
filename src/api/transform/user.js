@@ -115,7 +115,7 @@ export const transformSearchUserFilterResponse = (data) => {
     title: data.title,
     country: data.country,
     city: data.city,
-    jobCategories: data.category,
+    jobCategories: data.category.map((category) => category.id),
     isFullTime: data.is_full_time,
     isPartTime: data.is_part_time,
     hasContract: data.has_contract,

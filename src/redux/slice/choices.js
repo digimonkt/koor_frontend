@@ -7,6 +7,7 @@ import {
   getLanguagesAPI,
   getSkillsAPI,
 } from "@api/choices";
+import { getJobSeekerCategoriesAPI } from "@api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -43,6 +44,10 @@ const initialState = {
     }]
    */
   jobCategories: {
+    loading: false,
+    data: [],
+  },
+  jobSeekerCategories: {
     loading: false,
     data: [],
   },
@@ -166,6 +171,17 @@ export const getSkills = createAsyncThunk(
     const res = await getSkillsAPI(data);
     if (res.remote === "success") {
       return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+export const getJobSeekerCategories = createAsyncThunk(
+  "choices/jobSeeker",
+  async (_, { rejectWithValue }) => {
+    const res = await getJobSeekerCategoriesAPI();
+    if (res.remote === "success") {
+      return res.data.results;
     } else {
       return rejectWithValue(res.error);
     }
@@ -305,6 +321,25 @@ export const choiceSlice = createSlice({
     builder.addCase(getSkills.rejected, (state) => {
       state.skills = {
         ...state.skills,
+        loading: false,
+      };
+    });
+    builder.addCase(getJobSeekerCategories.fulfilled, (state, action) => {
+      state.jobSeekerCategories = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getJobSeekerCategories.pending, (state) => {
+      state.jobSeekerCategories = {
+        ...state.jobSeekerCategories,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getJobSeekerCategories.rejected, (state) => {
+      state.jobSeekerCategories = {
+        ...state.jobSeekerCategories,
         loading: false,
       };
     });

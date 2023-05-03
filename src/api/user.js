@@ -195,3 +195,11 @@ export const searchUserByRole = async (data) => {
   }
   return res;
 };
+
+export const getJobSeekerCategoriesAPI = async () => {
+  const res = await api.request({
+    url: urlcat("/v1/admin/job-seeker-category"),
+    method: "GET",
+  });
+  return res;
+};
