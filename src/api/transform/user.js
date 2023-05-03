@@ -108,3 +108,20 @@ export const transformSearchUserByRoleResponse = (data) => {
     highestEducation: data.highest_education || "",
   };
 };
+
+export const transformSearchUserFilterResponse = (data) => {
+  return {
+    id: data.id,
+    title: data.title,
+    country: data.country,
+    city: data.city,
+    jobCategories: data.category,
+    isFullTime: data.is_full_time,
+    isPartTime: data.is_part_time,
+    hasContract: data.has_contract,
+    isAvailable: data.availability,
+    isNotification: data.is_notification,
+    salaryMin: data.salary_min,
+    salaryMax: data.salary_max,
+  };
+};

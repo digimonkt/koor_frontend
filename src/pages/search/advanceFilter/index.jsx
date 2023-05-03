@@ -24,6 +24,12 @@ import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
 import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import { SALARY_MAX, SALARY_MIN } from "@utils/constants/constants";
+import {
+  deleteSearchUserFilterAPI,
+  getSearchUserFilterAPI,
+  saveSearchUserFilterAPI,
+  updateSavedSearchUserFilterAPI,
+} from "@api/user";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
@@ -90,6 +96,12 @@ function AdvanceFilter({ searchType }) {
       setAllFilters([...data.data]);
     }
   };
+  const getSearchUserFilter = async () => {
+    const data = await getSearchUserFilterAPI();
+    if (data.remote === "success") {
+      setAllFilters([...data.data]);
+    }
+  };
   const handleSelectFilter = async (filter) => {
     setSelectedFilter(filter.id);
     formik.setFieldValue("id", filter.id);
@@ -130,7 +142,7 @@ function AdvanceFilter({ searchType }) {
         await deleteSearchJobsFilterAPI(filterId);
         break;
       case SEARCH_TYPE.talents:
-        await deleteSearchJobsFilterAPI(filterId);
+        await deleteSearchUserFilterAPI(filterId);
         break;
       default:
         break;
@@ -183,6 +195,39 @@ function AdvanceFilter({ searchType }) {
       dispatch(setErrorToast("Name is required"));
     }
   };
+  const handleSaveUserSearch = async (title) => {
+    const rawData = formik.values;
+    const data = {
+      title,
+      country: rawData.country,
+      category: rawData.jobCategories,
+      is_full_time: rawData.isFullTime,
+      is_part_time: rawData.isPartTime,
+      has_contract: rawData.hasContract,
+      availability: rawData.available,
+      salary_min: rawData.salaryMin,
+      salary_max: rawData.salaryMax,
+    };
+    if (rawData.country) {
+      const city = cities.data[rawData.country].find(
+        (city) => city.title === rawData.city
+      );
+      if (city && city.id) {
+        data.city = city?.id;
+      }
+    }
+
+    const res = await saveSearchUserFilterAPI(data);
+    if (res.remote === "success") {
+      setAllFilters((prevState) => [res.data, ...prevState]);
+      setSelectedFilter(res.data.id);
+      dispatch(setSuccessToast("Filter Saved Successfully"));
+      handleToggleModel();
+    } else {
+      // temporarily showing error message
+      dispatch(setErrorToast("Name is required"));
+    }
+  };
 
   const toggleNotificationStatus = async (filterId) => {
     let newFilters = [...allFilters];
@@ -204,6 +249,7 @@ function AdvanceFilter({ searchType }) {
           await updateSavedSearchFilterAPI(filterId, !currentStatus);
           break;
         case SEARCH_TYPE.talents:
+          await updateSavedSearchUserFilterAPI(filterId, !currentStatus);
           break;
         default:
           break;
@@ -225,7 +271,7 @@ function AdvanceFilter({ searchType }) {
         getSearchJobsFilter();
         break;
       case SEARCH_TYPE.talents:
-        getSearchJobsFilter();
+        getSearchUserFilter();
         break;
       default:
         break;
@@ -317,7 +363,10 @@ function AdvanceFilter({ searchType }) {
                         </div>
                       }
                       text={
-                        <div onClick={() => handleSelectFilter(filter)}>
+                        <div
+                          onClick={() => handleSelectFilter(filter)}
+                          style={{ minWidth: "20px" }}
+                        >
                           {filter.title}
                         </div>
                       }
@@ -378,7 +427,7 @@ function AdvanceFilter({ searchType }) {
                   handleSaveJobSearch(title);
                   break;
                 case SEARCH_TYPE.talents:
-                  handleSaveJobSearch(title);
+                  handleSaveUserSearch(title);
                   break;
                 default:
                   break;
