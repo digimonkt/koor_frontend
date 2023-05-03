@@ -55,7 +55,15 @@ const Education = () => {
               {educationRecord.length ? (
                 <ul className="listitems">
                   {educationRecord.map((item, index) => (
-                    <li key={index}>
+                    <li
+                      key={index}
+                      style={{
+                        borderBottom:
+                          index !== educationRecord.length - 1
+                            ? "1px solid #cacaca"
+                            : "",
+                      }}
+                    >
                       <EducationCard
                         {...item}
                         handleEdit={() => handleEdit(item)}
