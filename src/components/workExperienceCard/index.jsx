@@ -20,6 +20,7 @@ function WorkExperienceCard({
   organization,
   description,
   handleEdit,
+  noOptions,
 }) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
@@ -66,7 +67,7 @@ function WorkExperienceCard({
             {present ? "Present" : dayjs(endDate).format(YEAR_FORMAT)}
           </span>
         </div>
-        {role === USER_ROLES.jobSeeker && (
+        {role === USER_ROLES.jobSeeker && !noOptions ? (
           <Stack direction="row" spacing={1} className="list-button">
             <button onClick={handleEdit}>
               <SVG.EditIcon />
@@ -77,7 +78,7 @@ function WorkExperienceCard({
               <span>Delete</span>
             </button>
           </Stack>
-        )}
+        ) : null}
       </Stack>
       <DialogBox open={deleting} handleClose={() => setDeleting(false)}>
         <DeleteCard

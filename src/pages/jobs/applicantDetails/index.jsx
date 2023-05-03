@@ -231,7 +231,6 @@ const ApplicantDetails = () => {
                               fontFamily: "Poppins",
                               color: "#121212",
                               fontWeight: "400",
-                              padding: "5px 10px 5px 20px",
                               margin: "0px 8px 8px 0px",
                             }}
                           />
