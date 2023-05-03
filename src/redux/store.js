@@ -4,7 +4,7 @@ import ChoiceReducer from "./slice/choices";
 import EmployerReducer from "./slice/employer";
 import ToastReducer from "./slice/toast";
 import JobReducer from "./slice/search";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 const isProd = process.env.NODE_ENV === "production";
 export const store = configureStore({
   reducer: {
@@ -15,11 +15,11 @@ export const store = configureStore({
     search: JobReducer,
   },
   devTools: !isProd,
-  middleware: (getDefaultMiddleware) => {
-    if (!isProd) {
-      return getDefaultMiddleware().concat(logger);
-    } else {
-      return getDefaultMiddleware();
-    }
-  },
+  // middleware: (getDefaultMiddleware) => {
+  //   if (!isProd) {
+  //     return getDefaultMiddleware().concat(logger);
+  //   } else {
+  //     return getDefaultMiddleware();
+  //   }
+  // },
 });

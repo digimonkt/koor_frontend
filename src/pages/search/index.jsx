@@ -21,7 +21,7 @@ import {
   USER_ROLES,
 } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
-import { searchJobs, searchTalent, setJobPage } from "@redux/slice/search";
+import { searchJobs, searchTalent, searchTender, setJobPage } from "@redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 function Search() {
   const params = useParams();
@@ -81,6 +81,9 @@ function Search() {
         break;
       case SEARCH_TYPE.talents:
         dispatch(searchTalent(payload));
+        break;
+        case SEARCH_TYPE.tenders:
+        dispatch(searchTender(payload));
         break;
       default:
         break;
