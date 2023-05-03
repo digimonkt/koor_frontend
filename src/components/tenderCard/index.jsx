@@ -13,7 +13,6 @@ import { SolidButton } from "@components/button";
 import { capitalizeFirst } from "@utils/constants/utility";
 
 function TenderCard({ tenderDetails, selfTender, applied }) {
-  console.log("tenderDetails new", tenderDetails);
   const editUrl = urlcat("/employer/jobs/post", {
     tenderId: tenderDetails?.id,
   });
@@ -45,34 +44,33 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
   return (
     <div className="job_card">
       <Grid container spacing={1.875} {...gridProps}>
-        {tenderDetails.user.image && (
-          <Grid
-            item
-            sx={{
-              "@media (min-width: 1200px)": {
-                maxWidth: "10.555%",
-                flexBasis: "10.555%",
-              },
-            }}
-          >
-            <div className="squer-width">
-              <Avatar
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  margin: "auto",
-                  color: "#CACACA",
-                  "&.MuiAvatar-colorDefault": {
-                    background: "#F0F0F0",
-                  },
-                }}
-                src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
-              >
-                <SVG.SuitcaseJob />
-              </Avatar>
-            </div>
-          </Grid>
-        )}
+        <Grid
+          item
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "10.555%",
+              flexBasis: "10.555%",
+            },
+          }}
+        >
+          <div className="squer-width">
+            <Avatar
+              sx={{
+                width: "100%",
+                height: "100%",
+                margin: "auto",
+                color: "#CACACA",
+                "&.MuiAvatar-colorDefault": {
+                  background: "#F0F0F0",
+                },
+              }}
+              src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
+            >
+              <SVG.SuitcaseJob />
+            </Avatar>
+          </div>
+        </Grid>
+
         <Grid
           item
           // lg={logo ? 8 : 9}
@@ -108,15 +106,15 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
                   icon={<>{<SVG.SellIcon />}</>}
                 />
               )}
-              {(tenderDetails?.tenderCategory || []).map((category, i) => {
+              {/* {(tenderDetails?.tenderCategory || []).map((category, k) => {
                 return (
                   <ChipBox
-                    key={i}
+                    key={k}
                     label={category.title}
                     icon={<>{<SVG.SellIcon />}</>}
                   />
                 );
-              })}
+              })} */}
             </Stack>
             <Stack
               direction="row"

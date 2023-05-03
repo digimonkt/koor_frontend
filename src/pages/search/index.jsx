@@ -21,7 +21,12 @@ import {
   USER_ROLES,
 } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
-import { searchJobs, searchTalent, searchTender, setJobPage } from "@redux/slice/search";
+import {
+  searchJobs,
+  searchTalent,
+  searchTender,
+  setJobPage,
+} from "@redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 function Search() {
   const params = useParams();
@@ -32,6 +37,7 @@ function Search() {
   } = useSelector((state) => state);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState();
+  const [searchPlaceHolder, setSearchPlaceHolder] = useState("Jobs");
   const Component = ComponentSelector(searchType);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -77,12 +83,15 @@ function Search() {
     const payload = { search, order_by: orderBy, search_by: sortBy };
     switch (searchType) {
       case SEARCH_TYPE.jobs:
+        setSearchPlaceHolder("Jobs");
         dispatch(searchJobs(payload));
         break;
       case SEARCH_TYPE.talents:
+        setSearchPlaceHolder("Talents");
         dispatch(searchTalent(payload));
         break;
-        case SEARCH_TYPE.tenders:
+      case SEARCH_TYPE.tenders:
+        setSearchPlaceHolder("Tenders");
         dispatch(searchTender(payload));
         break;
       default:
@@ -131,7 +140,7 @@ function Search() {
             color={role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593"}
           />
         }
-        placeholder="Search jobs"
+        placeholder={`Search ${searchPlaceHolder}`}
         handleSearch={handleSearch}
         value={search}
       />
@@ -165,7 +174,8 @@ function Search() {
                   }}
                 />
               </h2>
-              {searchType === SEARCH_TYPE.jobs ? (
+              {searchType === SEARCH_TYPE.jobs ||
+              searchType === SEARCH_TYPE.tenders ? (
                 <>
                   <IconButton
                     sx={{ width: "50px", height: "50px" }}

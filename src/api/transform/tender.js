@@ -20,10 +20,12 @@ export const transformTenderResponse = (data) => {
         "day",
         true
       ),
-      tenderCategory: res?.tender_category || [].map((data) => ({
-        id: data.id,
-        title: data.title,
-      })),
+      tenderCategory:
+        res.tender_category ||
+        [].map((category) => ({
+          id: category.id,
+          title: category.title,
+        })),
       user: {
         id: res.user.id,
         name: res.user.name,

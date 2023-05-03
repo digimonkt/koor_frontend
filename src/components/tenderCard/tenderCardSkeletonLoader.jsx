@@ -1,80 +1,148 @@
-import { Divider, Stack } from "@mui/material";
-import React from "react";
+import { Divider, Grid, Stack } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
-function TenderCardSkeletonLoader() {
+function TenderCardSkeletonLoader(logo, selfJob) {
+  const [gridProps, setGridProps] = useState({});
+  useEffect(() => {
+    if (logo) {
+      setGridProps({
+        alignItems: "center",
+        sx: { my: 3 },
+      });
+    }
+  }, [logo]);
   return (
-    <Stack
-      direction={{ xs: "column", lg: "row" }}
-      spacing={{ xs: "2", lg: "2" }}
-      alignItems={{ xs: "start", lg: "center" }}
-      justifyContent={{ xs: "center", lg: "space-between" }}
-      className="border-recent"
-    >
-      <Stack direction="row" spacing={2} alignItems="center">
-        <Skeleton circle style={{ width: "70px", height: "70px" }} />
-        <div className="recent-content">
-          <Stack
-            direction="row"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-            flexWrap="wrap"
-            alignItems="center"
-            sx={{ mb: 1 }}
+    <div className="job_card">
+      <Grid container spacing={1.875} {...gridProps}>
+        {logo && (
+          <Grid
+            item
+            sx={{
+              "@media (min-width: 1200px)": {
+                maxWidth: "10.555%",
+                flexBasis: "10.555%",
+              },
+            }}
           >
-            <h4>
-              <Skeleton width={720} />
-            </h4>
-          </Stack>
-          <Stack
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            sx={{ mb: 1 }}
-            className="meets_div"
-          >
-            <div>
-              <span className="meets">
-                <Skeleton width={207} style={{ lineHeight: "9px" }} />
-              </span>
+            <div
+              className="squer-width"
+              style={{ height: "150px", width: "150px" }}
+            >
+              <Skeleton circle style={{ height: "100%" }} />
             </div>
-          </Stack>
-          <div className="recent-descrition">
-            <p>
-              <Skeleton width={1500} count={2} style={{ lineHeight: "9px" }} />
+          </Grid>
+        )}
+        <Grid
+          item
+          lg={logo ? 8 : 9}
+          xs={12}
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "72%",
+              flexBasis: "72%",
+            },
+          }}
+        >
+          <div className="my-jobs">
+            <Skeleton height={24} width={500} />
+            <p className="my-3 job-description card-description">
+              <Skeleton count={2} style={{ lineHeight: "9px" }} />
             </p>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 1, sm: 1, md: 1 }}
+              sx={{ width: "100%", flexWrap: "wrap" }}
+            >
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+            </Stack>
+            <Stack
+              direction="row"
+              spacing={2}
+              className="mt-3"
+              divider={<Divider orientation="vertical" flexItem />}
+            >
+              {!selfJob && (
+                <Stack direction="row" spacing={1}>
+                  <Skeleton width={200} style={{ borderRadius: "20px" }} />
+                </Stack>
+              )}
+              <Stack direction="row" spacing={1}>
+                <Skeleton width={200} style={{ borderRadius: "20px" }} />
+              </Stack>
+            </Stack>
+          </div>
+        </Grid>
+        <Grid item lg={logo ? 2 : 3} xs={12}>
+          <div className="text-end mb-4">
+            <Skeleton height={30} width={100} style={{ borderRadius: "5px" }} />
           </div>
           <Stack
             direction="row"
             spacing={2}
+            justifyContent="end"
             alignItems="center"
-            sx={{ mb: 1, mt: 2 }}
-            className="meets_div"
+            divider={<Divider orientation="vertical" flexItem />}
+            className="py-2"
+            sx={{ minHeight: "87%" }}
           >
-            <div style={{ display: "flex" }}>
-              <Skeleton
-                height={30}
-                width={100}
-                style={{ borderRadius: "20px" }}
-                className="chiplabel"
-              />
-              <Skeleton
-                height={30}
-                width={100}
-                style={{ borderRadius: "20px" }}
-                className="chiplabel"
-              />
-              <Skeleton
-                height={30}
-                width={100}
-                style={{ borderRadius: "20px" }}
-                className="chiplabel"
-              />
+            <div className="pricebox py-3">
+              {/* Skeleton Loader for Budget Amount */}
+              <span className="d-block">
+                <Skeleton
+                  height={30}
+                  width={100}
+                  style={{ borderRadius: "5px" }}
+                />
+              </span>
+              <h4>
+                <Skeleton
+                  height={20}
+                  width={100}
+                  style={{ borderRadius: "5px" }}
+                />
+              </h4>
+              <span>
+                <Skeleton
+                  height={10}
+                  width={100}
+                  style={{ borderRadius: "5px" }}
+                />
+              </span>
             </div>
           </Stack>
-        </div>
-      </Stack>
-    </Stack>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
 
