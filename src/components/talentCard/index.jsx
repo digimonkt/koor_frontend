@@ -1,5 +1,6 @@
 import { SVG } from "@assets/svg";
 import { Avatar, Button, Chip, Divider, Stack } from "@mui/material";
+import { generateFileUrl } from "@utils/generateFileUrl";
 import React from "react";
 
 function TalentCard({ talentDetails }) {
@@ -12,7 +13,10 @@ function TalentCard({ talentDetails }) {
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Avatar src={""} sx={{ width: "70px", height: "70px" }} />
+        <Avatar
+          src={generateFileUrl(talentDetails.profilePicture?.path || "")}
+          sx={{ width: "70px", height: "70px" }}
+        />
         <div className="recent-content">
           <Stack
             direction="row"

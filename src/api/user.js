@@ -4,6 +4,7 @@ import {
   transformGetUserDetails,
   transformNotificationResponse,
   transformSearchUserByRoleResponse,
+  transformSearchUserFilterResponse,
 } from "./transform/user";
 import env from "@utils/validateEnv";
 export const CreateUserAPI = async (data) => {
@@ -138,6 +139,44 @@ export const getUserCountryByIpAPI = async (ip) => {
     method: "GET",
   });
 };
+export const getSearchUserFilterAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/filter"),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.map((data) => transformSearchUserFilterResponse(data)),
+    };
+  }
+  return res;
+};
+export const saveSearchUserFilterAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/filter"),
+    method: "POST",
+    data,
+  });
+  if (res.remote === "success") {
+    console.log({ res });
+  }
+  return res;
+};
+export const updateSavedSearchUserFilterAPI = async (filterId, status) => {
+  const data = { is_notification: status };
+  return await api.request({
+    url: urlcat("/v1/users/filter/:filterId", { filterId }),
+    method: "PUT",
+    data,
+  });
+};
+export const deleteSearchUserFilterAPI = async (filterId) => {
+  return await api.request({
+    url: urlcat("/v1/users/filter/:filterId", { filterId }),
+    method: "DELETE",
+  });
+};
 export const searchUserByRole = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/search/:role", { ...data }),
@@ -154,5 +193,13 @@ export const searchUserByRole = async (data) => {
       },
     };
   }
+  return res;
+};
+
+export const getJobSeekerCategoriesAPI = async () => {
+  const res = await api.request({
+    url: urlcat("/v1/admin/job-seeker-category"),
+    method: "GET",
+  });
   return res;
 };

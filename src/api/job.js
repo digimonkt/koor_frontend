@@ -126,7 +126,7 @@ export const getJobSuggestionAPI = async (jobId) => {
 export const updateSavedSearchFilterAPI = async (filterId, status) => {
   const data = { is_notification: status };
   return await api.request({
-    url: urlcat("/v1/jobs/filter", filterId),
+    url: urlcat("/v1/jobs/filter/:filterId", { filterId }),
     method: "PATCH",
     data,
   });
