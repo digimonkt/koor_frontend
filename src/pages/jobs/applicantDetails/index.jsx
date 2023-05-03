@@ -43,6 +43,7 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getApplicantDetails();
   }, []);
+  console.log({ applicantDetails });
   return (
     <>
       <div className="job-application">
@@ -100,13 +101,17 @@ const ApplicantDetails = () => {
                   />
                   <div className="user-application">
                     <h4>{applicantDetails.user.name}</h4>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <span>{<SVG.LocationIcon />}</span>{" "}
-                      <span>
-                        Paris, France (Form where we can get this: Saral
-                        Shrivastava)
-                      </span>
-                    </Stack>
+                    {applicantDetails.user.profile?.country?.title ? (
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <span>{<SVG.LocationIcon />}</span>{" "}
+                        <span>
+                          {applicantDetails.user.profile?.country?.title},
+                          {applicantDetails.user.profile?.city?.title}
+                        </span>
+                      </Stack>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </Stack>
               </Grid>

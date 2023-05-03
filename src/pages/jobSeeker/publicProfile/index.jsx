@@ -67,6 +67,7 @@ export default function PublicProfileComponent() {
     const userId = params.userId;
     getUserDetails(userId);
   }, []);
+  console.log({ userDetails });
   return (
     <Box sx={{ marginTop: "67px", py: 3 }}>
       {isLoading ? (
@@ -135,25 +136,29 @@ export default function PublicProfileComponent() {
                               fontFamily: "Poppins",
                             }}
                           >
-                            {userDetails.profile.highestEducation.title}
+                            {userDetails.profile.highestEducation?.title}
                           </Typography>
-                          <Stack
-                            direction={"row"}
-                            spacing={1}
-                            alignItems={"center"}
-                          >
-                            <SVG.LocationIcon />
-                            <Box
-                              component={"span"}
-                              sx={{
-                                color: "rgb(18 18 18 / 50%)",
-                                fontFamily: "Poppins",
-                              }}
+                          {userDetails.profile.country?.title ? (
+                            <Stack
+                              direction={"row"}
+                              spacing={1}
+                              alignItems={"center"}
                             >
-                              {userDetails.profile.city.title},{" "}
-                              {userDetails.profile.country.title}
-                            </Box>
-                          </Stack>
+                              <SVG.LocationIcon />
+                              <Box
+                                component={"span"}
+                                sx={{
+                                  color: "rgb(18 18 18 / 50%)",
+                                  fontFamily: "Poppins",
+                                }}
+                              >
+                                {userDetails.profile.city?.title},{" "}
+                                {userDetails.profile.country?.title}
+                              </Box>
+                            </Stack>
+                          ) : (
+                            ""
+                          )}
                         </Box>
                       </Stack>
                       <Stack
@@ -326,27 +331,27 @@ export default function PublicProfileComponent() {
                       >
                         Contact info
                       </Typography>
-                      <Stack
-                        direction={"row"}
-                        spacing={2}
-                        alignItems={"center"}
-                      >
-                        <Box
-                          sx={{
-                            background: "#FEEFD3",
-                            borderRadius: "5px",
-                            p: 1,
-                            color: "#EEA23D",
-                            width: "40px",
-                            height: "40px",
-                            display: "inline-flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
+                      {userDetails.countryCode && userDetails.mobileNumber ? (
+                        <Stack
+                          direction={"row"}
+                          spacing={2}
+                          alignItems={"center"}
                         >
-                          <SVG.Phone />
-                        </Box>
-                        {userDetails.countryCode && userDetails.mobileNumber ? (
+                          <Box
+                            sx={{
+                              background: "#FEEFD3",
+                              borderRadius: "5px",
+                              p: 1,
+                              color: "#EEA23D",
+                              width: "40px",
+                              height: "40px",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <SVG.Phone />
+                          </Box>
                           <Box>
                             <Typography
                               variant="h6"
@@ -371,8 +376,8 @@ export default function PublicProfileComponent() {
                               Mobile
                             </Typography>
                           </Box>
-                        ) : null}
-                      </Stack>
+                        </Stack>
+                      ) : null}
                       <Stack
                         direction={"row"}
                         spacing={2}
