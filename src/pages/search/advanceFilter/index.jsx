@@ -14,6 +14,7 @@ import {
   getCities,
   getCountries,
   getJobCategories,
+  getJobSeekerCategories,
 } from "@redux/slice/choices";
 import { setAdvanceFilter } from "@redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
@@ -24,12 +25,20 @@ import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
 import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import { SALARY_MAX, SALARY_MIN } from "@utils/constants/constants";
+import {
+  deleteSearchUserFilterAPI,
+  getSearchUserFilterAPI,
+  saveSearchUserFilterAPI,
+  updateSavedSearchUserFilterAPI,
+} from "@api/user";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
     auth: { isLoggedIn, role },
-    choices: { countries, jobCategories, cities },
+    choices: { countries, jobCategories, cities, jobSeekerCategories },
   } = useSelector((state) => state);
+  const category =
+    searchType === SEARCH_TYPE.jobs ? jobCategories : jobSeekerCategories;
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
@@ -90,6 +99,12 @@ function AdvanceFilter({ searchType }) {
       setAllFilters([...data.data]);
     }
   };
+  const getSearchUserFilter = async () => {
+    const data = await getSearchUserFilterAPI();
+    if (data.remote === "success") {
+      setAllFilters([...data.data]);
+    }
+  };
   const handleSelectFilter = async (filter) => {
     setSelectedFilter(filter.id);
     formik.setFieldValue("id", filter.id);
@@ -106,9 +121,7 @@ function AdvanceFilter({ searchType }) {
       country: filter.country?.title || "",
       city: filter.city?.title || "",
       jobCategory: filter.jobCategories.map((jobCategory) => {
-        return jobCategories.data.find(
-          (category) => category.id === jobCategory
-        );
+        return category.data.find((category) => category.id === jobCategory);
       }),
       fullTime: filter.isFullTime,
       partTime: filter.isPartTime,
@@ -130,7 +143,7 @@ function AdvanceFilter({ searchType }) {
         await deleteSearchJobsFilterAPI(filterId);
         break;
       case SEARCH_TYPE.talents:
-        await deleteSearchJobsFilterAPI(filterId);
+        await deleteSearchUserFilterAPI(filterId);
         break;
       default:
         break;
@@ -183,6 +196,39 @@ function AdvanceFilter({ searchType }) {
       dispatch(setErrorToast("Name is required"));
     }
   };
+  const handleSaveUserSearch = async (title) => {
+    const rawData = formik.values;
+    const data = {
+      title,
+      country: rawData.country,
+      category: rawData.jobCategories,
+      is_full_time: rawData.isFullTime,
+      is_part_time: rawData.isPartTime,
+      has_contract: rawData.hasContract,
+      availability: rawData.available,
+      salary_min: rawData.salaryMin,
+      salary_max: rawData.salaryMax,
+    };
+    if (rawData.country) {
+      const city = cities.data[rawData.country].find(
+        (city) => city.title === rawData.city
+      );
+      if (city && city.id) {
+        data.city = city?.id;
+      }
+    }
+
+    const res = await saveSearchUserFilterAPI(data);
+    if (res.remote === "success") {
+      setAllFilters((prevState) => [res.data, ...prevState]);
+      setSelectedFilter(res.data.id);
+      dispatch(setSuccessToast("Filter Saved Successfully"));
+      handleToggleModel();
+    } else {
+      // temporarily showing error message
+      dispatch(setErrorToast("Name is required"));
+    }
+  };
 
   const toggleNotificationStatus = async (filterId) => {
     let newFilters = [...allFilters];
@@ -204,6 +250,7 @@ function AdvanceFilter({ searchType }) {
           await updateSavedSearchFilterAPI(filterId, !currentStatus);
           break;
         case SEARCH_TYPE.talents:
+          await updateSavedSearchUserFilterAPI(filterId, !currentStatus);
           break;
         default:
           break;
@@ -218,6 +265,9 @@ function AdvanceFilter({ searchType }) {
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
     }
+    if (!jobSeekerCategories.data.length) {
+      dispatch(getJobSeekerCategories());
+    }
   }, []);
   useEffect(() => {
     switch (searchType) {
@@ -225,7 +275,7 @@ function AdvanceFilter({ searchType }) {
         getSearchJobsFilter();
         break;
       case SEARCH_TYPE.talents:
-        getSearchJobsFilter();
+        getSearchUserFilter();
         break;
       default:
         break;
@@ -256,9 +306,7 @@ function AdvanceFilter({ searchType }) {
         country: country ? country.title : "",
         city: values.city,
         jobCategory: values.jobCategories.map((jobCategory) => {
-          return jobCategories.data.find(
-            (category) => category.id === jobCategory
-          );
+          return category.data.find((category) => category.id === jobCategory);
         }),
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
@@ -317,7 +365,10 @@ function AdvanceFilter({ searchType }) {
                         </div>
                       }
                       text={
-                        <div onClick={() => handleSelectFilter(filter)}>
+                        <div
+                          onClick={() => handleSelectFilter(filter)}
+                          style={{ minWidth: "20px" }}
+                        >
                           {filter.title}
                         </div>
                       }
@@ -378,7 +429,7 @@ function AdvanceFilter({ searchType }) {
                   handleSaveJobSearch(title);
                   break;
                 case SEARCH_TYPE.talents:
-                  handleSaveJobSearch(title);
+                  handleSaveUserSearch(title);
                   break;
                 default:
                   break;

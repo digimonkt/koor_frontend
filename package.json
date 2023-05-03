@@ -2,6 +2,7 @@
   "name": "koor-frontend",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": false,
   "dependencies": {
     "@craco/craco": "^7.0.0",
     "@emotion/react": "^11.10.5",
@@ -87,7 +88,6 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.32.1",
-    "redux-logger": "^3.0.6"
+    "eslint-plugin-react": "^7.32.1"
   }
 }
