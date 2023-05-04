@@ -106,7 +106,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
                   icon={<>{<SVG.SellIcon />}</>}
                 />
               )}
-              {/* {(tenderDetails?.tenderCategory || []).map((category, k) => {
+              {(tenderDetails?.tenderCategory || []).map((category, k) => {
                 return (
                   <ChipBox
                     key={k}
@@ -114,7 +114,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
                     icon={<>{<SVG.SellIcon />}</>}
                   />
                 );
-              })} */}
+              })}
             </Stack>
             <Stack
               direction="row"

@@ -21,8 +21,8 @@ export const transformTenderResponse = (data) => {
         true
       ),
       tenderCategory:
-        res.tender_category ||
-        [].map((category) => ({
+        (res.tender_category ||
+        []).map((category) => ({
           id: category.id,
           title: category.title,
         })),
