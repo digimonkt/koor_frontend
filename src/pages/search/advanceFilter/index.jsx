@@ -38,7 +38,9 @@ function AdvanceFilter({ searchType }) {
     choices: { countries, jobCategories, cities, jobSeekerCategories },
   } = useSelector((state) => state);
   const category =
-    searchType === SEARCH_TYPE.jobs ? jobCategories : jobSeekerCategories;
+    searchType === (SEARCH_TYPE.jobs || SEARCH_TYPE.tenders)
+      ? jobCategories
+      : jobSeekerCategories;
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
@@ -83,6 +85,8 @@ function AdvanceFilter({ searchType }) {
       case SEARCH_TYPE.jobs:
         return <JobSeekerFilter formik={formik} footer={footer()} />;
       case SEARCH_TYPE.talents:
+        return <TalentFilter formik={formik} footer={footer()} />;
+      case SEARCH_TYPE.tenders:
         return <TalentFilter formik={formik} footer={footer()} />;
       default:
         return <></>;
@@ -143,6 +147,9 @@ function AdvanceFilter({ searchType }) {
         await deleteSearchJobsFilterAPI(filterId);
         break;
       case SEARCH_TYPE.talents:
+        await deleteSearchUserFilterAPI(filterId);
+        break;
+      case SEARCH_TYPE.tenders:
         await deleteSearchUserFilterAPI(filterId);
         break;
       default:
@@ -252,6 +259,9 @@ function AdvanceFilter({ searchType }) {
         case SEARCH_TYPE.talents:
           await updateSavedSearchUserFilterAPI(filterId, !currentStatus);
           break;
+        case SEARCH_TYPE.tenders:
+          await updateSavedSearchUserFilterAPI(filterId, !currentStatus);
+          break;
         default:
           break;
       }
@@ -275,6 +285,9 @@ function AdvanceFilter({ searchType }) {
         getSearchJobsFilter();
         break;
       case SEARCH_TYPE.talents:
+        getSearchUserFilter();
+        break;
+      case SEARCH_TYPE.tenders:
         getSearchUserFilter();
         break;
       default:
@@ -429,6 +442,9 @@ function AdvanceFilter({ searchType }) {
                   handleSaveJobSearch(title);
                   break;
                 case SEARCH_TYPE.talents:
+                  handleSaveUserSearch(title);
+                  break;
+                case SEARCH_TYPE.tenders:
                   handleSaveUserSearch(title);
                   break;
                 default:

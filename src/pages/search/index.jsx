@@ -174,8 +174,7 @@ function Search() {
                   }}
                 />
               </h2>
-              {searchType === SEARCH_TYPE.jobs ||
-              searchType === SEARCH_TYPE.tenders ? (
+              {searchType === SEARCH_TYPE.jobs ? (
                 <>
                   <IconButton
                     sx={{ width: "50px", height: "50px" }}
