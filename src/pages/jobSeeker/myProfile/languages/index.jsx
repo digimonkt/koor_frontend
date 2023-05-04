@@ -52,7 +52,15 @@ const Languages = () => {
             <ul className="listitems">
               {languages.length ? (
                 languages.map((item, index) => (
-                  <li key={index}>
+                  <li
+                    key={index}
+                    style={{
+                      borderBottom:
+                        index !== languages.length - 1
+                          ? "1px solid #cacaca"
+                          : "",
+                    }}
+                  >
                     <LanguageCard
                       {...item}
                       handleEdit={() => handleEdit(item)}

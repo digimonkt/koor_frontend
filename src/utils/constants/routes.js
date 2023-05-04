@@ -57,9 +57,9 @@ const SavedJobs = lazy(() =>
     default: module.SavedJobs,
   }))
 );
-const JobseekerPublicProfile = lazy(() =>
+const JobSeekerPublicProfile = lazy(() =>
   import("@pages/jobSeeker").then((module) => ({
-    default: module.JobseekerPublicProfile,
+    default: module.JobSeekerPublicProfile,
   }))
 );
 // employer
@@ -172,10 +172,10 @@ export const ROUTES = [
     component: Home,
   },
   {
-    id: "jobseeker-public-profile",
-    name: "Jobseeker Public Profile",
-    path: "/jobseeker/profile",
-    component: JobseekerPublicProfile,
+    id: "job-seeker-public-profile",
+    name: "Job Seeker Public Profile",
+    path: "/job-seeker/:userId/profile",
+    component: JobSeekerPublicProfile,
   },
 ];
 

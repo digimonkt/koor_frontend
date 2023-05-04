@@ -51,7 +51,15 @@ const WorkExperience = () => {
             <ul className="listitems">
               {workExperiences.length ? (
                 workExperiences.map((item, index) => (
-                  <li key={index}>
+                  <li
+                    key={index}
+                    style={{
+                      borderBottom:
+                        index !== workExperiences.length - 1
+                          ? "1px solid #cacaca"
+                          : "",
+                    }}
+                  >
                     <WorkExperienceCard
                       {...item}
                       handleEdit={() => handleEdit(item)}
