@@ -1,11 +1,10 @@
-import { Avatar, Divider, Grid, Stack } from "@mui/material";
+import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
 import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { getColorByRemainingDays } from "@utils/generateColor";
@@ -13,9 +12,7 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "@api/employer";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
-  const editUrl = urlcat("/employer/jobs/post", { jobId: jobDetails?.id });
-
-  const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
@@ -95,15 +92,20 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         >
           <div className="my-jobs">
             <h2>
-              {role !== USER_ROLES.employer ? (
-                <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
-                  {jobDetails?.title || "RETAIL ASSISTANT CASHIER"}
-                </Link>
-              ) : (
-                <Link to={editUrl}>
-                  {jobDetails?.title || "RETAIL ASSISTANT CASHIER"}
-                </Link>
-              )}
+              <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
+                {jobDetails?.title}
+              </Link>
+              {jobDetails.isApplied ? (
+                <Chip
+                  // variant="outlined"
+                  color="success"
+                  size="small"
+                  label="Applied"
+                  sx={{
+                    marginLeft: "5px",
+                  }}
+                />
+              ) : null}
             </h2>
             <p className="job-description card-description mt-1 mb-3">
               {jobDetails?.description}
@@ -223,7 +225,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <button
                   onClick={() => {
                     if (jobDetails?.id) {
-                      navigate(editUrl);
+                      navigate(
+                        urlcat("/employer/jobs/post", { jobId: jobDetails?.id })
+                      );
                     }
                   }}
                 >
