@@ -14,7 +14,6 @@ import {
   getCities,
   getCountries,
   getJobCategories,
-  getJobSeekerCategories,
 } from "@redux/slice/choices";
 import { setAdvanceFilter } from "@redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
@@ -35,10 +34,9 @@ function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
     auth: { isLoggedIn, role },
-    choices: { countries, jobCategories, cities, jobSeekerCategories },
+    choices: { countries, jobCategories, cities, jobSubCategories },
   } = useSelector((state) => state);
-  const category =
-    searchType === SEARCH_TYPE.jobs ? jobCategories : jobSeekerCategories;
+  const category = jobCategories;
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
@@ -265,9 +263,6 @@ function AdvanceFilter({ searchType }) {
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
     }
-    if (!jobSeekerCategories.data.length) {
-      dispatch(getJobSeekerCategories());
-    }
   }, []);
   useEffect(() => {
     switch (searchType) {
@@ -285,7 +280,8 @@ function AdvanceFilter({ searchType }) {
   const formik = useFormik({
     initialValues: {
       id: "",
-      jobCategories: [],
+      jobCategories: "",
+      jobSubCategories: [],
       country: "",
       city: "",
       isFullTime: false,
@@ -296,6 +292,7 @@ function AdvanceFilter({ searchType }) {
       available: false,
       salaryMin: SALARY_MIN,
       salaryMax: SALARY_MAX,
+      experience: "",
     },
 
     onSubmit: async (values) => {
@@ -305,9 +302,13 @@ function AdvanceFilter({ searchType }) {
       const payload = {
         country: country ? country.title : "",
         city: values.city,
-        jobCategory: values.jobCategories.map((jobCategory) => {
-          return category.data.find((category) => category.id === jobCategory);
+        jobCategory: values.jobCategories,
+        jobSubCategories: values.jobSubCategories.map((subCategories) => {
+          return jobSubCategories.data[values.jobCategories].find(
+            (subCategory) => subCategory.id === subCategories
+          );
         }),
+        experience: values.experience,
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
         contract: values.hasContract,

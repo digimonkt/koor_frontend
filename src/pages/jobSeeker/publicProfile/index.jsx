@@ -161,38 +161,40 @@ export default function PublicProfileComponent() {
                           )}
                         </Box>
                       </Stack>
-                      <Stack
-                        direction={"row"}
-                        spacing={1}
-                        alignItems={"center"}
-                        sx={{
-                          border: "1px solid #CACACA",
-                          borderRadius: "5px",
-                          p: 1,
-                        }}
-                      >
-                        <SVG.ClockIconSmall />{" "}
-                        <Box>
-                          <Typography
-                            variant="h6"
-                            sx={{
-                              fontWeight: "500",
-                              mb: 0,
-                              fontSize: "14px",
-                              fontFamily: "Poppins",
-                              lineHeight: "12px",
-                            }}
-                          >
-                            3+ Years
-                          </Typography>
-                          <Box
-                            component={"span"}
-                            sx={{ fontSize: "10px", color: "#848484" }}
-                          >
-                            Experience
+                      {userDetails.profile.experience ? (
+                        <Stack
+                          direction={"row"}
+                          spacing={1}
+                          alignItems={"center"}
+                          sx={{
+                            border: "1px solid #CACACA",
+                            borderRadius: "5px",
+                            p: 1,
+                          }}
+                        >
+                          <SVG.ClockIconSmall />{" "}
+                          <Box>
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                fontWeight: "500",
+                                mb: 0,
+                                fontSize: "14px",
+                                fontFamily: "Poppins",
+                                lineHeight: "12px",
+                              }}
+                            >
+                              {userDetails.profile.experience} Years
+                            </Typography>
+                            <Box
+                              component={"span"}
+                              sx={{ fontSize: "10px", color: "#848484" }}
+                            >
+                              Experience
+                            </Box>
                           </Box>
-                        </Box>
-                      </Stack>
+                        </Stack>
+                      ) : null}
                     </Stack>
                     <Box sx={{ mt: 3 }}>
                       <Typography

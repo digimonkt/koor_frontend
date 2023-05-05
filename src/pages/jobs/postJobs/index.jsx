@@ -491,7 +491,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <label>
-                      Job Category (Maximum 2)
+                      Job Category
                       <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
