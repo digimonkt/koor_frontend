@@ -105,7 +105,6 @@ export const searchTender = createAsyncThunk(
         delete payload[key];
       }
     }
-    console.log({ payload });
     const res = await getTenderSearchAPI({
       ...payload,
     });

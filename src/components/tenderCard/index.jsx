@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
 import { capitalizeFirst } from "@utils/constants/utility";
+import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 
 function TenderCard({ tenderDetails, selfTender, applied }) {
   const editUrl = urlcat("/employer/jobs/post", {
@@ -22,11 +23,11 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
   const [isSaved, setIsSaved] = useState(false);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
-    // if (!isSaved) {
-    //   await saveJobAPI(tenderDetails.id);
-    // } else {
-    //   await unSaveJobAPI(tenderDetails.id);
-    // }
+    if (!isSaved) {
+      await saveTenderAPI(tenderDetails.id);
+    } else {
+      await unSaveTenderAPI(tenderDetails.id);
+    }
   };
 
   useEffect(() => {
