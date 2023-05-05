@@ -15,6 +15,9 @@ import {
   getCountries,
   getJobCategories,
   getJobSeekerCategories,
+  getTenderOpportunityType,
+  getTenderSector,
+  getTenderTags,
 } from "@redux/slice/choices";
 import { setAdvanceFilter } from "@redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
@@ -24,23 +27,38 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
 import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
-import { SALARY_MAX, SALARY_MIN } from "@utils/constants/constants";
+import {
+  DATABASE_DATE_FORMAT,
+  SALARY_MAX,
+  SALARY_MIN,
+} from "@utils/constants/constants";
 import {
   deleteSearchUserFilterAPI,
   getSearchUserFilterAPI,
   saveSearchUserFilterAPI,
   updateSavedSearchUserFilterAPI,
 } from "@api/user";
+import TenderFilter from "./tenderFilter";
+import dayjs from "dayjs";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
     auth: { isLoggedIn, role },
-    choices: { countries, jobCategories, cities, jobSeekerCategories },
+    choices: {
+      countries,
+      jobCategories,
+      cities,
+      jobSeekerCategories,
+      sectors,
+      opportunityTypes,
+      tags,
+    },
   } = useSelector((state) => state);
   const category =
     searchType === (SEARCH_TYPE.jobs || SEARCH_TYPE.tenders)
       ? jobCategories
       : jobSeekerCategories;
+  const sectorData = sectors;
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
@@ -87,7 +105,7 @@ function AdvanceFilter({ searchType }) {
       case SEARCH_TYPE.talents:
         return <TalentFilter formik={formik} footer={footer()} />;
       case SEARCH_TYPE.tenders:
-        return <TalentFilter formik={formik} footer={footer()} />;
+        return <TenderFilter formik={formik} footer={footer()} />;
       default:
         return <></>;
     }
@@ -171,6 +189,13 @@ function AdvanceFilter({ searchType }) {
         isAvailable: false,
         salaryMin: SALARY_MIN,
         salaryMax: SALARY_MAX,
+        // tender
+        budgetMin: "",
+        budgetMax: "",
+        deadline: "",
+        sector: "",
+        opportunityType: "",
+        tag: "",
       })
     );
   };
@@ -278,6 +303,15 @@ function AdvanceFilter({ searchType }) {
     if (!jobSeekerCategories.data.length) {
       dispatch(getJobSeekerCategories());
     }
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
+    if (!opportunityTypes.data.length) {
+      dispatch(getTenderOpportunityType());
+    }
+    if (!tags.data.length) {
+      dispatch(getTenderTags());
+    }
   }, []);
   useEffect(() => {
     switch (searchType) {
@@ -309,6 +343,14 @@ function AdvanceFilter({ searchType }) {
       available: false,
       salaryMin: SALARY_MIN,
       salaryMax: SALARY_MAX,
+
+      // tender
+      budgetMin: "",
+      budgetMax: "",
+      sector: [],
+      deadline: null,
+      opportunityType: [],
+      tag: [],
     },
 
     onSubmit: async (values) => {
@@ -327,6 +369,17 @@ function AdvanceFilter({ searchType }) {
         isAvailable: values.available,
         salary_min: values.salaryMin,
         salary_max: values.salaryMax,
+        // tender
+        deadline:
+          values.deadline &&
+          dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
+        sector: values.sector.map((sector) => {
+          return sectorData.data.find((sectorData) => sectorData.id === sector);
+        }),
+        budget_min: values.budgetMin,
+        budget_max: values.budgetMax,
+        opportunityType: values.opportunityType,
+        tag: values.tag,
       };
       dispatch(setAdvanceFilter(payload));
     },
@@ -340,60 +393,61 @@ function AdvanceFilter({ searchType }) {
     <div>
       <div className={`${styles.searchResult}`}>
         <div className={`${styles.label} lables`}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "start",
-              maxWidth: "90%",
-            }}
-          >
-            <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
-            <MenuList
+          {isLoggedIn ? (
+            <div
               style={{
-                overflow: "auto",
-                marginLeft: "25px",
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "start",
+                maxWidth: "90%",
               }}
             >
-              {allFilters.map((filter) => {
-                return (
-                  <MenuItem key={filter.id}>
-                    <SearchButton
-                      className={`${
-                        selectedFilter === filter.id
-                          ? styles.btninActive
-                          : styles.btnActive
-                      }`}
-                      leftIcon={
-                        <div
-                          onClick={() => toggleNotificationStatus(filter.id)}
-                        >
-                          {filter.isNotification ? (
-                            <SVG.Notificationactive />
-                          ) : (
-                            <SVG.Notificationinactive />
-                          )}
-                        </div>
-                      }
-                      text={
-                        <div
-                          onClick={() => handleSelectFilter(filter)}
-                          style={{ minWidth: "20px" }}
-                        >
-                          {filter.title}
-                        </div>
-                      }
-                      handleCross={() => {
-                        handleDeleteFilter(filter.id);
-                      }}
-                    />
-                  </MenuItem>
-                );
-              })}
-            </MenuList>
-          </div>
+              <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
+              <MenuList
+                style={{
+                  overflow: "auto",
+                  marginLeft: "25px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {allFilters.map((filter) => {
+                  return (
+                    <MenuItem key={filter.id}>
+                      <SearchButton
+                        className={`${
+                          selectedFilter === filter.id
+                            ? styles.btninActive
+                            : styles.btnActive
+                        }`}
+                        leftIcon={
+                          <div
+                            onClick={() => toggleNotificationStatus(filter.id)}
+                          >
+                            {filter.isNotification ? (
+                              <SVG.Notificationactive />
+                            ) : (
+                              <SVG.Notificationinactive />
+                            )}
+                          </div>
+                        }
+                        text={
+                          <div onClick={() => handleSelectFilter(filter)}>
+                            {filter.title}
+                          </div>
+                        }
+                        handleCross={() => {
+                          handleDeleteFilter(filter.id);
+                        }}
+                      />
+                    </MenuItem>
+                  );
+                })}
+              </MenuList>
+            </div>
+          ) : (
+            ""
+          )}
           <div
             onClick={() => setData(!data)}
             style={{

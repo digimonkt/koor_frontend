@@ -95,3 +95,44 @@ export const getSkillsAPI = async (data) => {
   }
   return response;
 };
+export const getTenderSectorAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/sector", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+// pending  opportunity type
+export const getTenderOpportunityTypeAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/sector", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+// pending  tag
+export const getTenderTagsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/sector", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};

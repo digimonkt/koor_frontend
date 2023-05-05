@@ -6,6 +6,9 @@ import {
   getJobSubCategoriesAPI,
   getLanguagesAPI,
   getSkillsAPI,
+  getTenderOpportunityTypeAPI,
+  getTenderSectorAPI,
+  getTenderTagsAPI,
 } from "@api/choices";
 import { getJobSeekerCategoriesAPI } from "@api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -84,6 +87,21 @@ const initialState = {
   skills: {
     loading: false,
     data: [],
+  },
+  sectors: {
+    loading: false,
+    data: [],
+  },
+  opportunityTypes: {
+    loading: false,
+    data: [],
+  },
+  tags: {
+    loading: false,
+    data: [
+      // { id: "598df58564848489sd48655", title: "Tag 1" },
+      // { id: "5sd7f8945s4dd8559f89745", title: "Tag 2" },
+    ],
   },
 };
 
@@ -187,7 +205,39 @@ export const getJobSeekerCategories = createAsyncThunk(
     }
   }
 );
-
+export const getTenderSector = createAsyncThunk(
+  "choices/sectors",
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderSectorAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+export const getTenderOpportunityType = createAsyncThunk(
+  "choices/opportunityTypes",
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderOpportunityTypeAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+export const getTenderTags = createAsyncThunk(
+  "choices/tags",
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderTagsAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
 export const choiceSlice = createSlice({
   name: "choice",
   initialState,
@@ -340,6 +390,63 @@ export const choiceSlice = createSlice({
     builder.addCase(getJobSeekerCategories.rejected, (state) => {
       state.jobSeekerCategories = {
         ...state.jobSeekerCategories,
+        loading: false,
+      };
+    });
+    builder.addCase(getTenderSector.fulfilled, (state, action) => {
+      state.sectors = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getTenderSector.pending, (state) => {
+      state.sectors = {
+        ...state.sectors,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getTenderSector.rejected, (state) => {
+      state.sectors = {
+        ...state.sectors,
+        loading: false,
+      };
+    });
+    builder.addCase(getTenderOpportunityType.fulfilled, (state, action) => {
+      state.opportunityTypes = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getTenderOpportunityType.pending, (state) => {
+      state.opportunityTypes = {
+        ...state.opportunityTypes,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getTenderOpportunityType.rejected, (state) => {
+      state.opportunityTypes = {
+        ...state.opportunityTypes,
+        loading: false,
+      };
+    });
+    builder.addCase(getTenderTags.fulfilled, (state, action) => {
+      state.tags = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getTenderTags.pending, (state) => {
+      state.tags = {
+        ...state.tags,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getTenderTags.rejected, (state) => {
+      state.tags = {
+        ...state.tags,
         loading: false,
       };
     });

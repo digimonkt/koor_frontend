@@ -78,7 +78,6 @@ function Search() {
       setSearch(search);
     }
   }, [params]);
-
   useEffect(() => {
     const payload = { search, order_by: orderBy, search_by: sortBy };
     switch (searchType) {
@@ -98,6 +97,8 @@ function Search() {
         break;
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
+  // console.log(search, page, totalPages, advanceFilter, searchType, orderBy, sortBy);
+
   const pagination = () => {
     return (
       <Pagination

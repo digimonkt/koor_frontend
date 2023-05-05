@@ -66,7 +66,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
               }}
               src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
             >
-              <SVG.SuitcaseJob />
+            <SVG.SuitcaseJob />
             </Avatar>
           </div>
         </Grid>

@@ -25,6 +25,13 @@ const initialState = {
     isAvailable: false,
     salaryMin: SALARY_MIN,
     salaryMax: SALARY_MAX,
+    // tender
+    deadline: null,
+    budgetMin: "",
+    budgetMax: "",
+    sectors: [],
+    opportunityTypes: [],
+    tags: [],
   },
 };
 
@@ -82,7 +89,7 @@ export const searchTalent = createAsyncThunk(
   }
 );
 export const searchTender = createAsyncThunk(
-  "search/searchTender",
+  "search/tenders",
   async (data, { getState, rejectWithValue }) => {
     const {
       search: { page, limit, advanceFilter },
@@ -98,12 +105,11 @@ export const searchTender = createAsyncThunk(
         delete payload[key];
       }
     }
+    console.log({ payload });
     const res = await getTenderSearchAPI({
       ...payload,
     });
-    console.log("search res", res);
     if (res.remote === "success") {
-      console.log("search", res.data);
       return res.data;
     } else {
       return rejectWithValue(res.error);
