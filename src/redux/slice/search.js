@@ -29,9 +29,9 @@ const initialState = {
     deadline: null,
     budgetMin: "",
     budgetMax: "",
-    sectors: [],
-    opportunityTypes: [],
-    tags: [],
+    sector: [],
+    opportunityType: [],
+    tag: [],
   },
 };
 

@@ -122,10 +122,24 @@ export const getTenderOpportunityTypeAPI = async (data) => {
   }
   return response;
 };
-// pending  tag
+
 export const getTenderTagsAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/admin/sector", data || {}),
+    url: urlcat("/v1/admin/tag", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+
+export const getTenderCategoryAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/tender-category", data || {}),
     method: "GET",
   });
   if (response.remote === "success") {
