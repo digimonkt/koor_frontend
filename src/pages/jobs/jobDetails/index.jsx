@@ -35,7 +35,7 @@ const JobDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
@@ -131,6 +131,30 @@ const JobDetails = () => {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
+
+  function handleSendEmail() {
+    const email = details.contactEmail;
+    const ccEmail1 = details.cc1;
+    const ccEmail2 = details.cc2;
+    const subject = `Job Application for ${details.title}`;
+    const body = `Here is the my job application for this job \n ${window.location.href}`;
+    let link = `mailto:${email}?&subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    if (ccEmail1) {
+      link += `&cc=${ccEmail1}`;
+    }
+    if (ccEmail1 && ccEmail2) {
+      link += `,${ccEmail2}`;
+    }
+    const tag = document.createElement("a");
+    tag.href = link;
+    tag.target = "_blank";
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
+  }
+
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
@@ -277,78 +301,89 @@ const JobDetails = () => {
                   payPeriod={details.budgetPayPeriod}
                   user={details.user}
                 />
-                <div className={`${styles.jobpostbtn}`}>
-                  <FilledButton
-                    title={
-                      details.isApplied
-                        ? details.isEditable
-                          ? "Edit"
-                          : "Applied"
-                        : "Apply for this job"
-                    }
-                    className={`${styles.enablebtn}`}
-                    disabled={details.isApplied && !details.isEditable}
-                    onClick={() => {
-                      if (isLoggedIn) {
-                        if (details.isEditable) {
-                          navigate(
-                            urlcat("../job/apply/:jobId", {
-                              jobId: params.jobId,
-                              applicationId: details.application.id,
-                            })
-                          );
-                        } else {
-                          navigate(
-                            urlcat("../job/apply/:jobId", {
-                              jobId: params.jobId,
-                            })
-                          );
-                        }
-                      } else {
-                        setRegistrationWarning(true);
-                      }
-                    }}
-                  />
-                  {details.isEditable && details.isApplied && isLoggedIn && (
+                {role === USER_ROLES.jobSeeker ? (
+                  <div className={`${styles.jobpostbtn}`}>
                     <FilledButton
-                      title="Withdraw"
+                      title={
+                        details.isApplied
+                          ? details.isEditable
+                            ? "Edit"
+                            : "Applied"
+                          : "Apply for this job"
+                      }
                       className={`${styles.enablebtn}`}
-                      disabled={!details.isEditable}
+                      disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
-                        handleWithdrawJobApplication();
+                        if (isLoggedIn) {
+                          if (details.isEditable) {
+                            navigate(
+                              urlcat("../job/apply/:jobId", {
+                                jobId: params.jobId,
+                                applicationId: details.application.id,
+                              })
+                            );
+                          } else {
+                            navigate(
+                              urlcat("../job/apply/:jobId", {
+                                jobId: params.jobId,
+                              })
+                            );
+                          }
+                        } else {
+                          setRegistrationWarning(true);
+                        }
                       }}
                     />
-                  )}
-                  {/* <div className={styles.btnGroup}> */}
-                  <Stack
-                    direction="row"
-                    spacing={{
-                      xs: 1,
-                      sm: 2,
-                      lg: 2,
-                    }}
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <OutlinedButton
-                      title={details.isSaved ? "Saved" : "Save job"}
-                      style={{ height: "44px" }}
-                      jobSeeker
-                      onClick={() => {
-                        handleSaveJob(params.jobId);
+                    {details.isEditable && details.isApplied && isLoggedIn && (
+                      <FilledButton
+                        title="Withdraw"
+                        className={`${styles.enablebtn}`}
+                        disabled={!details.isEditable}
+                        onClick={() => {
+                          handleWithdrawJobApplication();
+                        }}
+                      />
+                    )}
+                    {!details.isApplied && details.contactEmail && (
+                      <FilledButton
+                        title="Apply via Mail"
+                        className={`${styles.enablebtn}`}
+                        onClick={() => {
+                          handleSendEmail();
+                        }}
+                      />
+                    )}
+                    {/* <div className={styles.btnGroup}> */}
+                    <Stack
+                      direction="row"
+                      spacing={{
+                        xs: 1,
+                        sm: 2,
+                        lg: 2,
                       }}
-                    />
-                    <OutlinedButton
-                      title={<SVG.ShareIcon />}
-                      jobSeeker
-                      style={{ height: "44px" }}
-                      onClick={() => {
-                        setIsSharing(true);
-                      }}
-                    />
-                  </Stack>
-                  {/* </div> */}
-                </div>
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <OutlinedButton
+                        title={details.isSaved ? "Saved" : "Save job"}
+                        style={{ height: "44px" }}
+                        jobSeeker
+                        onClick={() => {
+                          handleSaveJob(params.jobId);
+                        }}
+                      />
+                      <OutlinedButton
+                        title={<SVG.ShareIcon />}
+                        jobSeeker
+                        style={{ height: "44px" }}
+                        onClick={() => {
+                          setIsSharing(true);
+                        }}
+                      />
+                    </Stack>
+                    {/* </div> */}
+                  </div>
+                ) : null}
               </Grid>
             </Grid>
           </div>

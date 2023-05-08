@@ -1,6 +1,9 @@
 import { SVG } from "@assets/svg";
 import { Avatar, Button, Chip, Divider, Stack } from "@mui/material";
+import { generateFileUrl } from "@utils/generateFileUrl";
 import React from "react";
+import urlcat from "urlcat";
+import { Link } from "react-router-dom";
 
 function TalentCard({ talentDetails }) {
   return (
@@ -12,7 +15,10 @@ function TalentCard({ talentDetails }) {
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Avatar src={""} sx={{ width: "70px", height: "70px" }} />
+        <Avatar
+          src={generateFileUrl(talentDetails.profilePicture?.path || "")}
+          sx={{ width: "70px", height: "70px" }}
+        />
         <div className="recent-content">
           <Stack
             direction="row"
@@ -22,7 +28,15 @@ function TalentCard({ talentDetails }) {
             alignItems="center"
             sx={{ mb: 1 }}
           >
-            <h4>{talentDetails.name || talentDetails.email}</h4>
+            <h4>
+              <Link
+                to={urlcat("/job-seeker/:userId/profile", {
+                  userId: talentDetails.id,
+                })}
+              >
+                {talentDetails.name || talentDetails.email}
+              </Link>
+            </h4>
             <div className="recent-research" style={{ flexWrap: "wrap" }}>
               <span>{talentDetails.highestEducation}</span>
             </div>
