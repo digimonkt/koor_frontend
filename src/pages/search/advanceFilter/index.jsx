@@ -59,10 +59,6 @@ function AdvanceFilter({ searchType }) {
       tenderCategories,
     },
   } = useSelector((state) => state);
-  // const category =
-  //   searchType === (SEARCH_TYPE.jobs || SEARCH_TYPE.tenders)
-  //     ? jobCategories?
-  //     : jobSeekerCategories;
   let category = [];
   switch (searchType) {
     case SEARCH_TYPE.jobs:
