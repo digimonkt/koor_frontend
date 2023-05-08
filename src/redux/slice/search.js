@@ -1,3 +1,4 @@
+import { getTenderSearchAPI } from "@api/tender";
 import { getSearchJobsAPI } from "@api/job";
 import { searchUserByRole } from "@api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -7,6 +8,7 @@ import { USER_ROLES } from "@utils/enum";
 const initialState = {
   jobs: [],
   talents: [],
+  tenders: [],
   isSearching: true,
   totalItems: 0,
   totalPages: 1,
@@ -23,6 +25,13 @@ const initialState = {
     isAvailable: false,
     salaryMin: SALARY_MIN,
     salaryMax: SALARY_MAX,
+    // tender
+    deadline: null,
+    budgetMin: "",
+    budgetMax: "",
+    sector: [],
+    opportunityType: [],
+    tag: [],
   },
 };
 
@@ -79,7 +88,33 @@ export const searchTalent = createAsyncThunk(
     }
   }
 );
-
+export const searchTender = createAsyncThunk(
+  "search/tenders",
+  async (data, { getState, rejectWithValue }) => {
+    const {
+      search: { page, limit, advanceFilter },
+    } = getState();
+    const payload = {
+      page,
+      limit,
+      ...advanceFilter,
+      ...data,
+    };
+    for (const key in payload) {
+      if (!payload[key]) {
+        delete payload[key];
+      }
+    }
+    const res = await getTenderSearchAPI({
+      ...payload,
+    });
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
 const searchSlice = createSlice({
   name: "search",
   initialState,
@@ -118,6 +153,20 @@ const searchSlice = createSlice({
       state.totalPages = pages;
     });
     builder.addCase(searchTalent.rejected, (state, action) => {
+      state.isSearching = false;
+    });
+    // Tender
+    builder.addCase(searchTender.pending, (state, action) => {
+      state.isSearching = true;
+    });
+    builder.addCase(searchTender.fulfilled, (state, action) => {
+      state.isSearching = false;
+      state.tenders = action.payload.results;
+      state.totalItems = action.payload.count;
+      const pages = Math.ceil(action.payload.count / state.limit);
+      state.totalPages = pages;
+    });
+    builder.addCase(searchTender.rejected, (state, action) => {
       state.isSearching = false;
     });
   },

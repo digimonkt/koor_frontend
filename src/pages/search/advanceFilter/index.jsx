@@ -14,6 +14,9 @@ import {
   getCities,
   getCountries,
   getJobCategories,
+  getTenderOpportunityType,
+  getTenderTags,
+  getTenderCategories,
 } from "@redux/slice/choices";
 import { setAdvanceFilter } from "@redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
@@ -22,21 +25,54 @@ import DialogBox from "@components/dialogBox";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
-import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
-import { SALARY_MAX, SALARY_MIN } from "@utils/constants/constants";
+import { ORGANIZATION_TYPE, SEARCH_TYPE, USER_ROLES } from "@utils/enum";
+import {
+  DATABASE_DATE_FORMAT,
+  SALARY_MAX,
+  SALARY_MIN,
+} from "@utils/constants/constants";
 import {
   deleteSearchUserFilterAPI,
   getSearchUserFilterAPI,
   saveSearchUserFilterAPI,
   updateSavedSearchUserFilterAPI,
 } from "@api/user";
+import TenderFilter from "./tenderFilter";
+import dayjs from "dayjs";
+import {
+  deleteSearchTenderFilterAPI,
+  getSearchTenderFilterAPI,
+  saveSearchTenderFilterAPI,
+  updateSavedSearchTenderFilterAPI,
+} from "@api/vendor";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
     auth: { isLoggedIn, role },
-    choices: { countries, jobCategories, cities, jobSubCategories },
+    choices: {
+      countries,
+      jobCategories,
+      cities,
+      jobSubCategories,
+      opportunityTypes,
+      tags,
+      tenderCategories,
+    },
   } = useSelector((state) => state);
-  const category = jobCategories;
+  let category = [];
+  switch (searchType) {
+    case SEARCH_TYPE.jobs:
+      category = jobCategories;
+      break;
+    case SEARCH_TYPE.talents:
+      category = jobCategories;
+      break;
+    case SEARCH_TYPE.tenders:
+      category = tenderCategories;
+      break;
+    default:
+      category = jobCategories;
+  }
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
@@ -82,6 +118,8 @@ function AdvanceFilter({ searchType }) {
         return <JobSeekerFilter formik={formik} footer={footer()} />;
       case SEARCH_TYPE.talents:
         return <TalentFilter formik={formik} footer={footer()} />;
+      case SEARCH_TYPE.tenders:
+        return <TenderFilter formik={formik} footer={footer()} />;
       default:
         return <></>;
     }
@@ -103,6 +141,13 @@ function AdvanceFilter({ searchType }) {
       setAllFilters([...data.data]);
     }
   };
+  const getSearchTenderFilter = async () => {
+    const data = await getSearchTenderFilterAPI();
+    if (data.remote === "success") {
+      setAllFilters([...data.data]);
+    }
+  };
+
   const handleSelectFilter = async (filter) => {
     setSelectedFilter(filter.id);
     formik.setFieldValue("id", filter.id);
@@ -115,10 +160,17 @@ function AdvanceFilter({ searchType }) {
     formik.setFieldValue("available", filter.isAvailable);
     formik.setFieldValue("salaryMin", filter.salaryMin);
     formik.setFieldValue("salaryMax", filter.salaryMax);
+    // tenders
+    formik.setFieldValue("budgetMin", filter.budgetMin);
+    formik.setFieldValue("budgetMax", filter.budgetMax);
+    formik.setFieldValue("sector", filter.sector);
+    formik.setFieldValue("tenderCategory", filter.tenderCategory);
+    formik.setFieldValue("tag", filter.tag);
+    formik.setFieldValue("deadline", filter.deadline);
     const payload = {
       country: filter.country?.title || "",
       city: filter.city?.title || "",
-      jobCategory: filter.jobCategories.map((jobCategory) => {
+      jobCategory: (filter.jobCategories || []).map((jobCategory) => {
         return category.data.find((category) => category.id === jobCategory);
       }),
       fullTime: filter.isFullTime,
@@ -143,6 +195,9 @@ function AdvanceFilter({ searchType }) {
       case SEARCH_TYPE.talents:
         await deleteSearchUserFilterAPI(filterId);
         break;
+      case SEARCH_TYPE.tenders:
+        await deleteSearchTenderFilterAPI(filterId);
+        break;
       default:
         break;
     }
@@ -162,6 +217,13 @@ function AdvanceFilter({ searchType }) {
         isAvailable: false,
         salaryMin: SALARY_MIN,
         salaryMax: SALARY_MAX,
+        // tender
+        budgetMin: "",
+        budgetMax: "",
+        deadline: "",
+        sector: "",
+        opportunityType: "",
+        tag: "",
       })
     );
   };
@@ -228,6 +290,39 @@ function AdvanceFilter({ searchType }) {
     }
   };
 
+  const handleSaveTenderSearch = async (title) => {
+    const rawData = formik.values;
+    const data = {
+      title,
+      country: rawData.country,
+      category: rawData.jobCategories,
+      sector: rawData.sector,
+      opportunityType: rawData.isPartTime,
+      tag: rawData.tag,
+      budget_min: rawData.budgetMin,
+      budget_max: rawData.budgetMax,
+    };
+    if (rawData.country) {
+      const city = cities.data[rawData.country].find(
+        (city) => city.title === rawData.city
+      );
+      if (city && city.id) {
+        data.city = city?.id;
+      }
+    }
+
+    const res = await saveSearchTenderFilterAPI(data);
+    if (res.remote === "success") {
+      setAllFilters((prevState) => [res.data, ...prevState]);
+      setSelectedFilter(res.data.id);
+      dispatch(setSuccessToast("Filter Saved Successfully"));
+      handleToggleModel();
+    } else {
+      // temporarily showing error message
+      dispatch(setErrorToast("Name is required"));
+    }
+  };
+
   const toggleNotificationStatus = async (filterId) => {
     let newFilters = [...allFilters];
     const filter = newFilters.find((filter) => filter.id === filterId);
@@ -250,6 +345,9 @@ function AdvanceFilter({ searchType }) {
         case SEARCH_TYPE.talents:
           await updateSavedSearchUserFilterAPI(filterId, !currentStatus);
           break;
+        case SEARCH_TYPE.tenders:
+          await updateSavedSearchTenderFilterAPI(filterId, !currentStatus);
+          break;
         default:
           break;
       }
@@ -263,6 +361,16 @@ function AdvanceFilter({ searchType }) {
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
     }
+
+    if (!tenderCategories.data.length) {
+      dispatch(getTenderCategories());
+    }
+    if (!opportunityTypes.data.length) {
+      dispatch(getTenderOpportunityType());
+    }
+    if (!tags.data.length) {
+      dispatch(getTenderTags());
+    }
   }, []);
   useEffect(() => {
     switch (searchType) {
@@ -271,6 +379,9 @@ function AdvanceFilter({ searchType }) {
         break;
       case SEARCH_TYPE.talents:
         getSearchUserFilter();
+        break;
+      case SEARCH_TYPE.tenders:
+        getSearchTenderFilter();
         break;
       default:
         break;
@@ -293,6 +404,14 @@ function AdvanceFilter({ searchType }) {
       salaryMin: SALARY_MIN,
       salaryMax: SALARY_MAX,
       experience: "",
+
+      // tender
+      budgetMin: "",
+      budgetMax: "",
+      sector: [],
+      deadline: null,
+      opportunityType: [],
+      tag: [],
     },
 
     onSubmit: async (values) => {
@@ -315,7 +434,19 @@ function AdvanceFilter({ searchType }) {
         isAvailable: values.available,
         salary_min: values.salaryMin,
         salary_max: values.salaryMax,
+        // tender
+        deadline:
+          values.deadline &&
+          dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
+        sector: values.sector.map((sector) => {
+          return ORGANIZATION_TYPE.find((sectorData) => sectorData === sector);
+        }),
+        budget_min: values.budgetMin,
+        budget_max: values.budgetMax,
+        opportunityType: values.opportunityType,
+        tag: values.tag,
       };
+      console.log({ payload });
       dispatch(setAdvanceFilter(payload));
     },
   });
@@ -328,60 +459,61 @@ function AdvanceFilter({ searchType }) {
     <div>
       <div className={`${styles.searchResult}`}>
         <div className={`${styles.label} lables`}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "start",
-              maxWidth: "90%",
-            }}
-          >
-            <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
-            <MenuList
+          {isLoggedIn ? (
+            <div
               style={{
-                overflow: "auto",
-                marginLeft: "25px",
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "start",
+                maxWidth: "90%",
               }}
             >
-              {allFilters.map((filter) => {
-                return (
-                  <MenuItem key={filter.id}>
-                    <SearchButton
-                      className={`${
-                        selectedFilter === filter.id
-                          ? styles.btninActive
-                          : styles.btnActive
-                      }`}
-                      leftIcon={
-                        <div
-                          onClick={() => toggleNotificationStatus(filter.id)}
-                        >
-                          {filter.isNotification ? (
-                            <SVG.Notificationactive />
-                          ) : (
-                            <SVG.Notificationinactive />
-                          )}
-                        </div>
-                      }
-                      text={
-                        <div
-                          onClick={() => handleSelectFilter(filter)}
-                          style={{ minWidth: "20px" }}
-                        >
-                          {filter.title}
-                        </div>
-                      }
-                      handleCross={() => {
-                        handleDeleteFilter(filter.id);
-                      }}
-                    />
-                  </MenuItem>
-                );
-              })}
-            </MenuList>
-          </div>
+              <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
+              <MenuList
+                style={{
+                  overflow: "auto",
+                  marginLeft: "25px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {allFilters.map((filter) => {
+                  return (
+                    <MenuItem key={filter.id}>
+                      <SearchButton
+                        className={`${
+                          selectedFilter === filter.id
+                            ? styles.btninActive
+                            : styles.btnActive
+                        }`}
+                        leftIcon={
+                          <div
+                            onClick={() => toggleNotificationStatus(filter.id)}
+                          >
+                            {filter.isNotification ? (
+                              <SVG.Notificationactive />
+                            ) : (
+                              <SVG.Notificationinactive />
+                            )}
+                          </div>
+                        }
+                        text={
+                          <div onClick={() => handleSelectFilter(filter)}>
+                            {filter.title}
+                          </div>
+                        }
+                        handleCross={() => {
+                          handleDeleteFilter(filter.id);
+                        }}
+                      />
+                    </MenuItem>
+                  );
+                })}
+              </MenuList>
+            </div>
+          ) : (
+            ""
+          )}
           <div
             onClick={() => setData(!data)}
             style={{
@@ -431,6 +563,9 @@ function AdvanceFilter({ searchType }) {
                   break;
                 case SEARCH_TYPE.talents:
                   handleSaveUserSearch(title);
+                  break;
+                case SEARCH_TYPE.tenders:
+                  handleSaveTenderSearch(title);
                   break;
                 default:
                   break;

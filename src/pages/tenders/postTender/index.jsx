@@ -16,9 +16,9 @@ import {
 import {
   getCountries,
   getJobCategories,
-  getTags,
   getCities,
   getJobSubCategories,
+  getTenderTags,
 } from "@redux/slice/choices";
 import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { FilledButton, OutlinedButton } from "@components/button";
@@ -99,7 +99,7 @@ const PostTender = () => {
     }
 
     if (!tags.data.length) {
-      dispatch(getTags());
+      dispatch(getTenderTags());
     }
   }, []);
 

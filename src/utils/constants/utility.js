@@ -6,3 +6,8 @@ export const processRoleToDisplay = (role) => {
   }
   return newRole.join(" ");
 };
+
+// 👇️ if you only need to capitalize the first letter
+export const capitalizeFirst = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
