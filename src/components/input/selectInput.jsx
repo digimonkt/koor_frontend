@@ -69,7 +69,7 @@ function SelectInputComponent({
           value={value}
           displayEmpty
           renderValue={
-            value.length !== 0
+            value && value.length !== 0
               ? undefined
               : () => <div className={styles.placeholder}>{placeholder}</div>
           }
