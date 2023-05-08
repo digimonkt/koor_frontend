@@ -178,8 +178,18 @@ export const deleteSearchUserFilterAPI = async (filterId) => {
   });
 };
 export const searchUserByRole = async (data) => {
+  let jobSubCategories = [];
+  const newData = { ...data };
+  if (newData.jobSubCategories) {
+    jobSubCategories = newData.jobSubCategories;
+    delete newData.jobSubCategories;
+  }
+  let url = urlcat("/v1/users/search/:role", { ...newData });
+  jobSubCategories.forEach((subCategory) => {
+    url += `&jobSubCategory=${subCategory.title}`;
+  });
   const res = await api.request({
-    url: urlcat("/v1/users/search/:role", { ...data }),
+    url,
     method: "GET",
   });
   if (res.remote === "success") {
