@@ -81,7 +81,7 @@ const PostTender = () => {
       };
       const response = await createTenderAPI(payload);
       if (response.remote === "success") {
-        dispatch(setSuccessToast("Education Deleted Successfully"));
+        dispatch(setSuccessToast("tender post  Successfully"));
         resetForm();
       } else {
         dispatch(setErrorToast("Something went wrong"));

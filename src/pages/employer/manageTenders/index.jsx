@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Chip, Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import ApplicationsJobs from "./components/tenderAllApplications";
@@ -7,22 +7,48 @@ import Tenders from "./components/tendersjob";
 import { useNavigate } from "react-router-dom";
 import { OutlinedButton } from "@components/button";
 import { AntTab, AntTabs } from "./style";
-
-// tab data
-const tabsData = [
-  {
-    title: "My Tenders",
-    count: 3,
-    component: Tenders,
-  },
-  {
-    title: "All applications",
-    count: 107,
-    component: ApplicationsJobs,
-  },
-];
+import { useSelector } from "react-redux";
 
 const ManageTenders = () => {
+  const { totalTender } = useSelector((state) => state.employer);
+
+  // tab data
+  // const tabsData = [
+  //   {
+  //     title: "My Tenders",
+  //     count: 3,
+  //     component: Tenders,
+  //   },
+  //   {
+  //     title: "All applications",
+  //     count: 107,
+  //     component: ApplicationsJobs,
+  //   },
+  // ];
+
+  const [tabs, setTabs] = useState([
+    {
+      title: "My Tenders",
+      count: 1,
+      component: Tenders,
+    },
+    {
+      title: "All applications",
+      count: 107,
+      component: ApplicationsJobs,
+    },
+  ]);
+  useEffect(() => {
+    setTabs((prevState) => {
+      const newTabs = prevState.map((tab) => {
+        if (tab.title === "My Tenders") {
+          tab.count = totalTender;
+        }
+        return tab;
+      });
+      return newTabs;
+    });
+  }, [totalTender]);
   // navigate
   const navigate = useNavigate();
 
@@ -33,7 +59,7 @@ const ManageTenders = () => {
     <>
       <div className="manage-jobs">
         <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
-          {tabsData.map((tab, index) => (
+          {tabs.map((tab, index) => (
             <AntTab
               key={index}
               label={
@@ -71,7 +97,7 @@ const ManageTenders = () => {
             />
           </div>
         </AntTabs>
-        {tabsData.map((tab, index) => (
+        {tabs.map((tab, index) => (
           <div
             key={index}
             role="tabpanel"

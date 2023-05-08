@@ -3,6 +3,7 @@ import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
 import {
   getDashboardActivityAPIResponseTransform,
+  getTenderDetailsAPIResponseTransform,
   transformApplicationOnJobListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
@@ -165,7 +166,6 @@ export const getJobAnalyticsAPI = async () => {
 };
 
 export const createTenderAPI = async (data) => {
-  console.log({ data });
   const res = await api.request({
     url: urlcat("/v1/users/employer/tenders"),
     method: "POST",
@@ -175,4 +175,18 @@ export const createTenderAPI = async (data) => {
     data,
   });
   return res;
+};
+
+export const getTenderAPI = async () => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders"),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: getTenderDetailsAPIResponseTransform(response.data),
+    };
+  }
+  return response;
 };

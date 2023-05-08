@@ -1,5 +1,5 @@
-import { Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Chip, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
 import { OutlinedButton } from "@components/button";
@@ -12,6 +12,7 @@ function ManageJobsComponent() {
   const { totalCreatedJobs } = useSelector((state) => state.employer);
   const { totalApplications } = useSelector((state) => state.employer);
   const [panel, setPanel] = useState(0);
+
   const [tabs, setTabs] = useState([
     {
       title: "My jobs",
@@ -24,6 +25,7 @@ function ManageJobsComponent() {
       component: AllApplication,
     },
   ]);
+
   useEffect(() => {
     setTabs((prevState) => {
       const newTabs = prevState.map((tab) => {
