@@ -25,7 +25,7 @@ export const transformGetUserDetails = (data) => {
       organizationType: data.profile.organization_type,
       licenseId: data.profile.license_id,
       licenseIdFile: data.profile.license_id_file,
-      experience: data.profile.exprience,
+      experience: data.profile.experience,
     },
     jobPreferences: data.job_preferences
       ? {
