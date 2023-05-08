@@ -10,7 +10,6 @@ import {
   getTenderSectorAPI,
   getTenderTagsAPI,
 } from "@api/choices";
-import { getJobSeekerCategoriesAPI } from "@api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -47,10 +46,6 @@ const initialState = {
     }]
    */
   jobCategories: {
-    loading: false,
-    data: [],
-  },
-  jobSeekerCategories: {
     loading: false,
     data: [],
   },
@@ -194,17 +189,7 @@ export const getSkills = createAsyncThunk(
     }
   }
 );
-export const getJobSeekerCategories = createAsyncThunk(
-  "choices/jobSeeker",
-  async (_, { rejectWithValue }) => {
-    const res = await getJobSeekerCategoriesAPI();
-    if (res.remote === "success") {
-      return res.data.results;
-    } else {
-      return rejectWithValue(res.error);
-    }
-  }
-);
+
 export const getTenderSector = createAsyncThunk(
   "choices/sectors",
   async (data, { rejectWithValue }) => {
@@ -268,7 +253,10 @@ export const choiceSlice = createSlice({
     builder.addCase(getCities.fulfilled, (state, action) => {
       state.cities = {
         loading: false,
-        data: { [action.payload.countryId]: action.payload.data },
+        data: {
+          ...(state.cities.data || {}),
+          [action.payload.countryId]: action.payload.data,
+        },
       };
     });
     builder.addCase(getCities.pending, (state) => {
@@ -304,7 +292,10 @@ export const choiceSlice = createSlice({
     builder.addCase(getJobSubCategories.fulfilled, (state, action) => {
       state.jobSubCategories = {
         loading: false,
-        data: { [action.payload.categoryId]: action.payload.data },
+        data: {
+          ...(state.jobSubCategories.data || {}),
+          [action.payload.categoryId]: action.payload.data,
+        },
       };
     });
     builder.addCase(getJobSubCategories.pending, (state) => {
@@ -374,25 +365,7 @@ export const choiceSlice = createSlice({
         loading: false,
       };
     });
-    builder.addCase(getJobSeekerCategories.fulfilled, (state, action) => {
-      state.jobSeekerCategories = {
-        loading: false,
-        data: action.payload,
-      };
-    });
-    builder.addCase(getJobSeekerCategories.pending, (state) => {
-      state.jobSeekerCategories = {
-        ...state.jobSeekerCategories,
-        loading: true,
-        data: [],
-      };
-    });
-    builder.addCase(getJobSeekerCategories.rejected, (state) => {
-      state.jobSeekerCategories = {
-        ...state.jobSeekerCategories,
-        loading: false,
-      };
-    });
+
     builder.addCase(getTenderSector.fulfilled, (state, action) => {
       state.sectors = {
         loading: false,

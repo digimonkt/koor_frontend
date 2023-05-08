@@ -14,7 +14,6 @@ import {
   getCities,
   getCountries,
   getJobCategories,
-  getJobSeekerCategories,
   getTenderOpportunityType,
   getTenderSector,
   getTenderTags,
@@ -48,16 +47,13 @@ function AdvanceFilter({ searchType }) {
       countries,
       jobCategories,
       cities,
-      jobSeekerCategories,
+      jobSubCategories,
       sectors,
       opportunityTypes,
       tags,
     },
   } = useSelector((state) => state);
-  const category =
-    searchType === (SEARCH_TYPE.jobs || SEARCH_TYPE.tenders)
-      ? jobCategories
-      : jobSeekerCategories;
+  const category = jobCategories;
   const sectorData = sectors;
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
@@ -300,9 +296,7 @@ function AdvanceFilter({ searchType }) {
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
     }
-    if (!jobSeekerCategories.data.length) {
-      dispatch(getJobSeekerCategories());
-    }
+
     if (!sectors.data.length) {
       dispatch(getTenderSector());
     }
@@ -332,7 +326,8 @@ function AdvanceFilter({ searchType }) {
   const formik = useFormik({
     initialValues: {
       id: "",
-      jobCategories: [],
+      jobCategories: "",
+      jobSubCategories: [],
       country: "",
       city: "",
       isFullTime: false,
@@ -343,6 +338,7 @@ function AdvanceFilter({ searchType }) {
       available: false,
       salaryMin: SALARY_MIN,
       salaryMax: SALARY_MAX,
+      experience: "",
 
       // tender
       budgetMin: "",
@@ -360,9 +356,13 @@ function AdvanceFilter({ searchType }) {
       const payload = {
         country: country ? country.title : "",
         city: values.city,
-        jobCategory: values.jobCategories.map((jobCategory) => {
-          return category.data.find((category) => category.id === jobCategory);
+        jobCategory: values.jobCategories,
+        jobSubCategories: values.jobSubCategories.map((subCategories) => {
+          return jobSubCategories.data[values.jobCategories].find(
+            (subCategory) => subCategory.id === subCategories
+          );
         }),
+        experience: values.experience,
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
         contract: values.hasContract,
