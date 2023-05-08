@@ -20,15 +20,15 @@ export const getJobDetailsByIdAPI = async (data) => {
 };
 
 export const getSearchJobsAPI = async (data) => {
-  let jobCategories = [];
+  let jobSubCategories = [];
   const newData = { ...data };
   if (newData.jobCategory) {
-    jobCategories = newData.jobCategory;
-    delete newData.jobCategory;
+    jobSubCategories = newData.jobSubCategories;
+    delete newData.jobSubCategories;
   }
   let url = urlcat("/v1/jobs", newData);
-  jobCategories.forEach((category) => {
-    url += `&jobCategory=${category.title}`;
+  jobSubCategories.forEach((category) => {
+    url += `&jobSubCategories=${category.title}`;
   });
   const response = await api.request({
     url,
@@ -126,7 +126,7 @@ export const getJobSuggestionAPI = async (jobId) => {
 export const updateSavedSearchFilterAPI = async (filterId, status) => {
   const data = { is_notification: status };
   return await api.request({
-    url: urlcat("/v1/jobs/filter", filterId),
+    url: urlcat("/v1/jobs/filter/:filterId", { filterId }),
     method: "PATCH",
     data,
   });

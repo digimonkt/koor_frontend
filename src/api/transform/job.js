@@ -21,6 +21,7 @@ export const transformJobListResponse = (data) => {
       isFullTime: res.is_full_time,
       isPartTime: res.is_part_time,
       isSaved: res.is_saved,
+      isApplied: res.is_applied,
       hasContract: res.has_contract,
       workingDays: res.working_days,
       deadline: res.deadline,

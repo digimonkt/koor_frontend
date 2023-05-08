@@ -2,6 +2,7 @@
   "name": "koor-frontend",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": false,
   "dependencies": {
     "@craco/craco": "^7.0.0",
     "@emotion/react": "^11.10.5",

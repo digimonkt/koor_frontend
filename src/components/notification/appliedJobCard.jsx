@@ -3,6 +3,7 @@ import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import { timeAgoFromNow } from "@utils/timeAgo";
 
 function AppliedJobCard(props) {
   return (
@@ -31,6 +32,9 @@ function AppliedJobCard(props) {
           applied to your job post{" "}
           <strong>"{props.application.job?.title}"</strong>
         </h2>
+        <p style={{ marginTop: "5px" }} className={styles.duration}>
+          {timeAgoFromNow(props.createdAt)}
+        </p>
       </div>
     </div>
   );

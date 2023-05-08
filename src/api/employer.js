@@ -190,3 +190,16 @@ export const getTenderAPI = async () => {
   }
   return response;
 };
+export const getShareCountDataAPI = async () => {
+  const res = await api.request({
+    url: "v1/users/employer/share-count",
+    method: "GET",
+  });
+  if (res.method === "success") {
+    return {
+      remote: "success",
+      data: res.data,
+    };
+  }
+  return res;
+};

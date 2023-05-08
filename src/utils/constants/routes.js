@@ -57,12 +57,17 @@ const SavedJobs = lazy(() =>
     default: module.SavedJobs,
   }))
 );
-const JobseekerPublicProfile = lazy(() =>
+const JobSeekerPublicProfile = lazy(() =>
   import("@pages/jobSeeker").then((module) => ({
-    default: module.JobseekerPublicProfile,
+    default: module.JobSeekerPublicProfile,
   }))
 );
 // employer
+const EmployerPublicProfile = lazy(() =>
+  import("@pages/employer").then((module) => ({
+    default: module.EmployerPublicProfile,
+  }))
+);
 const ManageJobs = lazy(() =>
   import("@pages/employer").then((module) => ({
     default: module.ManageJobs,
@@ -172,10 +177,16 @@ export const ROUTES = [
     component: Home,
   },
   {
-    id: "jobseeker-public-profile",
-    name: "Jobseeker Public Profile",
-    path: "/jobseeker/profile",
-    component: JobseekerPublicProfile,
+    id: "job-seeker-public-profile",
+    name: "Job Seeker Public Profile",
+    path: "/job-seeker/:userId/profile",
+    component: JobSeekerPublicProfile,
+  },
+  {
+    id: "employer-public-profile",
+    name: "Employer Public Profile",
+    path: "/employer/:userId/profile",
+    component: EmployerPublicProfile,
   },
 ];
 

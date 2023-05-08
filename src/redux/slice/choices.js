@@ -252,7 +252,10 @@ export const choiceSlice = createSlice({
     builder.addCase(getCities.fulfilled, (state, action) => {
       state.cities = {
         loading: false,
-        data: { [action.payload.countryId]: action.payload.data },
+        data: {
+          ...(state.cities.data || {}),
+          [action.payload.countryId]: action.payload.data,
+        },
       };
     });
     builder.addCase(getCities.pending, (state) => {
@@ -288,7 +291,10 @@ export const choiceSlice = createSlice({
     builder.addCase(getJobSubCategories.fulfilled, (state, action) => {
       state.jobSubCategories = {
         loading: false,
-        data: { [action.payload.categoryId]: action.payload.data },
+        data: {
+          ...(state.jobSubCategories.data || {}),
+          [action.payload.categoryId]: action.payload.data,
+        },
       };
     });
     builder.addCase(getJobSubCategories.pending, (state) => {

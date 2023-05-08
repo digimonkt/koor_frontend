@@ -22,4 +22,5 @@ export const validateJobSeekerAboutMe = Yup.object().shape({
       return dayjs(value).isBefore(dayjs("2006-01-01"));
     }),
   employmentStatus: Yup.string().required("Employment Status is required"),
+  experience: Yup.number(),
 });

@@ -70,6 +70,11 @@ function AuthLayout({
           display_image: res.data.photoURL,
           source: "google",
         };
+        for (const key in payload) {
+          if (!payload[key]) {
+            delete payload[key];
+          }
+        }
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           console.log({ result });
@@ -219,15 +224,24 @@ function AuthLayout({
                               spacing={2}
                               justifyContent="center"
                             >
-                              <div onClick={loginWithGoogle} disabled={loading}>
+                              <div
+                                onClick={loginWithGoogle}
+                                disabled={loading}
+                                style={{ cursor: "pointer" }}
+                              >
                                 <SVG.Google />
                               </div>
-                              <div onClick={loginWithApple} disabled={loading}>
+                              <div
+                                onClick={loginWithApple}
+                                disabled={loading}
+                                style={{ cursor: "pointer" }}
+                              >
                                 <SVG.Apple />
                               </div>
                               <div
                                 onClick={loginWithFacebook}
                                 disabled={loading}
+                                style={{ cursor: "pointer" }}
                               >
                                 <SVG.Facebook />
                               </div>

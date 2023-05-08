@@ -143,7 +143,7 @@ function PostJobsComponent() {
       for (const key in payload) {
         if (key === "language") {
           payload.language.forEach((language) => {
-            if (language.language && language.spoken && language.written) {
+            if (language.language) {
               newFormData.append("language", JSON.stringify(language));
             }
           });
@@ -489,7 +489,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <label>
-                      Job Category (Maximum 2)
+                      Job Category
                       <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
