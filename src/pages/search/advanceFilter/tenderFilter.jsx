@@ -5,17 +5,12 @@ import { FormControl, FormGroup, Grid, Stack } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
+import { ORGANIZATION_TYPE } from "@utils/enum";
+import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 
 function TenderFilter({ formik, footer }) {
   const {
-    choices: {
-      countries,
-      cities,
-      jobSeekerCategories,
-      sectors,
-      tags,
-      opportunityTypes,
-    },
+    choices: { countries, cities, tenderCategories, tags, opportunityTypes },
     search: { totalItems },
   } = useSelector((state) => state);
   return (
@@ -30,7 +25,7 @@ function TenderFilter({ formik, footer }) {
                   title="Category"
                   defaultValue=""
                   placeholder="Select a Job category"
-                  options={jobSeekerCategories.data.map((jobCategory) => ({
+                  options={(tenderCategories.data || []).map((jobCategory) => ({
                     value: jobCategory.id,
                     label: jobCategory.title,
                   }))}
@@ -55,10 +50,28 @@ function TenderFilter({ formik, footer }) {
                   title="Sector"
                   defaultValue=""
                   placeholder="Select Sector"
-                  options={(sectors.data || []).map((sector) => ({
-                    value: sector.id,
-                    label: sector.title,
-                  }))}
+                  options={[
+                    {
+                      value: ORGANIZATION_TYPE.business,
+                      label: "Business",
+                    },
+                    {
+                      value: ORGANIZATION_TYPE.ngo,
+                      label: "NGO",
+                    },
+                    {
+                      value: ORGANIZATION_TYPE.government,
+                      label: "Government",
+                    },
+                    {
+                      value: ORGANIZATION_TYPE.private,
+                      label: "Private",
+                    },
+                    {
+                      value: ORGANIZATION_TYPE.public,
+                      label: "Public",
+                    },
+                  ]}
                   name={"sector"}
                   value={formik.values.sector}
                   onChange={(e) => {
@@ -108,13 +121,10 @@ function TenderFilter({ formik, footer }) {
                   title="Tag"
                   defaultValue=""
                   placeholder="Select Tag"
-                  options={
-                    (tags.data ||
-                    []).map((tag) => ({
-                      value: tag.id,
-                      label: tag.title,
-                    }))
-                  }
+                  options={(tags.data || []).map((tag) => ({
+                    value: tag.id,
+                    label: tag.title,
+                  }))}
                   name={"tag"}
                   value={formik.values.tag}
                   onChange={(e) => {
@@ -187,13 +197,23 @@ function TenderFilter({ formik, footer }) {
               ) : null}
             </div>
           </Grid>
-          <Grid item xs={8}>
-            <label>Budget</label>
+
+          <Grid item xs={4} lg={3}>
+            <CurrencyInput
+              currency="USD"
+              title="Budget"
+              optionsValues={{
+                currency: "USD",
+                input: formik.getFieldProps("budgetMin"),
+              }}
+              errors={{
+                currency: "USD",
+                input: formik.touched.budgetMin ? formik.errors.budgetMin : "",
+              }}
+            />
+          </Grid>
+          <Grid item xs={4} sx={{ marginTop: "7px" }}>
             <FormGroup row sx={{ marginLeft: "7px" }}>
-              <LabeledInput
-                placeholder="USD"
-                {...formik.getFieldProps("budgetMin")}
-              />
               <LabeledInput
                 placeholder="To"
                 {...formik.getFieldProps("budgetMax")}

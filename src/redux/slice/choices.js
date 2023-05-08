@@ -6,6 +6,7 @@ import {
   getJobSubCategoriesAPI,
   getLanguagesAPI,
   getSkillsAPI,
+  getTenderCategoryAPI,
   getTenderOpportunityTypeAPI,
   getTenderSectorAPI,
   getTenderTagsAPI,
@@ -85,7 +86,7 @@ const initialState = {
   },
   sectors: {
     loading: false,
-    data: [],
+    data: [{ private: "Private" }, { ngo: "NGO" }, { public: "Public " }],
   },
   opportunityTypes: {
     loading: false,
@@ -93,10 +94,11 @@ const initialState = {
   },
   tags: {
     loading: false,
-    data: [
-      // { id: "598df58564848489sd48655", title: "Tag 1" },
-      // { id: "5sd7f8945s4dd8559f89745", title: "Tag 2" },
-    ],
+    data: [],
+  },
+  tenderCategories: {
+    loading: false,
+    data: [],
   },
 };
 
@@ -216,6 +218,17 @@ export const getTenderTags = createAsyncThunk(
   "choices/tags",
   async (data, { rejectWithValue }) => {
     const res = await getTenderTagsAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+export const getTenderCategories = createAsyncThunk(
+  "choices/tenderCategories",
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderCategoryAPI();
     if (res.remote === "success") {
       return res.data;
     } else {
@@ -420,6 +433,25 @@ export const choiceSlice = createSlice({
     builder.addCase(getTenderTags.rejected, (state) => {
       state.tags = {
         ...state.tags,
+        loading: false,
+      };
+    });
+    builder.addCase(getTenderCategories.fulfilled, (state, action) => {
+      state.tenderCategories = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getTenderCategories.pending, (state) => {
+      state.tenderCategories = {
+        ...state.tenderCategories,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getTenderCategories.rejected, (state) => {
+      state.tenderCategories = {
+        ...state.tenderCategories,
         loading: false,
       };
     });

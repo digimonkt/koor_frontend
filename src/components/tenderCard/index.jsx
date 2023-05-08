@@ -145,7 +145,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={tenderDetails.user.image ? 2 : 3} xs={12}>
+        <Grid item lg={tenderDetails.user.image ? 2 : 2} xs={12}>
           <div className="text-end mb-4">
             <SolidButton
               style={{ textTransform: "lowercase" }}

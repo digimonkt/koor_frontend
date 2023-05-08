@@ -21,6 +21,8 @@ export const ORGANIZATION_TYPE = Object.freeze({
   business: "business",
   ngo: "ngo",
   government: "government",
+  public: "public",
+  private: "private"
 });
 
 export const GENDER = {
