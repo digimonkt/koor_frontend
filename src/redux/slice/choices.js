@@ -113,10 +113,8 @@ const initialState = {
     data: [],
   },
   tenderCategories: {
-    sectors: {
-      loading: false,
-      data: [],
-    },
+    loading: false,
+    data: [],
   },
 };
 
@@ -212,7 +210,7 @@ export const getSkills = createAsyncThunk(
 
 export const getTenderSector = createAsyncThunk(
   "choices/getTenderSector",
-  async (data, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     const res = await getTenderSectorAPI();
     if (res.remote === "success") {
       return res.data;
@@ -396,18 +394,16 @@ export const choiceSlice = createSlice({
         loading: false,
       };
     });
-
-    builder.addCase(getTenderSector.fulfilled, (state, action) => {
-      state.sectors = {
-        loading: false,
-        data: action.payload,
-      };
-    });
     builder.addCase(getTenderSector.pending, (state) => {
       state.sectors = {
         ...state.sectors,
         loading: true,
-        data: [],
+      };
+    });
+    builder.addCase(getTenderSector.fulfilled, (state, action) => {
+      state.sectors = {
+        loading: false,
+        data: action.payload,
       };
     });
     builder.addCase(getTenderSector.rejected, (state) => {

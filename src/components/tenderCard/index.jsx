@@ -104,7 +104,9 @@ function TenderCard({ tenderDetails, applied }) {
             >
               {tenderDetails.sector && (
                 <ChipBox
-                  label={`Sector: ${capitalizeFirst(tenderDetails?.sector)}`}
+                  label={`Sector: ${capitalizeFirst(
+                    tenderDetails?.sector?.title || ""
+                  )}`}
                   icon={<>{<SVG.SellIcon />}</>}
                 />
               )}

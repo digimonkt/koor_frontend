@@ -23,14 +23,13 @@ function TenderFilter({ formik, footer }) {
                 <SelectInput
                   multiple
                   title="Category"
-                  defaultValue=""
-                  placeholder="Select a Job category"
+                  placeholder="Select a Tender category"
                   options={(tenderCategories.data || []).map((jobCategory) => ({
                     value: jobCategory.id,
                     label: jobCategory.title,
                   }))}
-                  name={"jobCategories"}
-                  value={formik.values.jobCategories}
+                  name={"tenderCategories"}
+                  value={formik.values.tenderCategories}
                   onChange={(e) => {
                     formik.handleChange(e);
                   }}
