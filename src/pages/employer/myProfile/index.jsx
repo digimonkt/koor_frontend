@@ -21,12 +21,13 @@ import { validateEmployerAboutMe } from "../validator";
 import { ErrorMessage } from "@components/caption";
 import { updateEmployerAboutMe } from "@api/employer";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
 import Loader from "@components/loader";
-import { UpdateProfileImageAPI } from "@api/user";
+import { GetSuggestedAddressAPI, UpdateProfileImageAPI } from "@api/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import { setProfilePic, updateCurrentUser } from "@redux/slice/user";
 import { FormControlReminder } from "@components/style";
@@ -34,13 +35,19 @@ import { FormControlReminder } from "@components/style";
 import DialogBox from "@components/dialogBox";
 import NoItem from "@pages/jobSeeker/myProfile/noItem";
 import { SVG } from "@assets/svg";
-
+import { getCities, getCountries } from "@redux/slice/choices";
+import { useDebounce } from "usehooks-ts";
+import styles from "./myProfile.module.css";
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [profilePicLoading, setProfilePicLoading] = useState("");
   const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [suggestedAddress, setSuggestedAddress] = useState([]);
+  const { countries, cities } = useSelector((state) => state.choices);
+  const debouncedSearchValue = useDebounce(searchValue, 500);
   const formik = useFormik({
     initialValues: {
       organizationName: "",
@@ -55,6 +62,10 @@ function MyProfileComponent() {
       license: [],
       marketingInformationNotification: false,
       otherNotification: false,
+      country: "",
+      city: "",
+      address: "",
+      description: "",
     },
     validationSchema: validateEmployerAboutMe,
     onSubmit: async (values) => {
@@ -71,6 +82,10 @@ function MyProfileComponent() {
         market_information_notification:
           values.marketingInformationNotification,
         other_notification: values.otherNotification,
+        country: values.country,
+        city: values.city,
+        address: values.address,
+        description: values.description,
         license_id: values.licenseId,
         license: values.license[0],
         mobile_number: mobileNumber,
@@ -119,6 +134,31 @@ function MyProfileComponent() {
       }
     },
   });
+  const getSuggestedAddress = async (search) => {
+    const res = await GetSuggestedAddressAPI(search);
+    if (res.remote === "success") {
+      setSuggestedAddress(res.data.predictions);
+    }
+  };
+  useEffect(() => {
+    if (formik.values.country && !cities.data[formik.values.country]?.length) {
+      dispatch(getCities({ countryId: formik.values.country }));
+    }
+  }, [formik.values.country]);
+  useEffect(() => {
+    if (!countries.data.length) {
+      dispatch(getCountries());
+    }
+  }, []);
+  useEffect(() => {
+    if (
+      debouncedSearchValue &&
+      debouncedSearchValue !== formik.values.address
+    ) {
+      console.log({ debouncedSearchValue });
+      getSuggestedAddress(debouncedSearchValue);
+    }
+  }, [debouncedSearchValue]);
   useEffect(() => {
     if (currentUser) {
       const currentUserMobileNumber =
@@ -163,6 +203,7 @@ function MyProfileComponent() {
       setOpen(!open);
     }
   };
+  console.log(searchValue);
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
@@ -245,6 +286,66 @@ function MyProfileComponent() {
                   {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
                     <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
                   ) : null}
+                  <HorizontalLabelInput
+                    placeholder="Country"
+                    label="Country"
+                    type="select"
+                    options={countries.data.map((country) => ({
+                      value: country.id,
+                      label: country.title,
+                    }))}
+                    {...formik.getFieldProps("country")}
+                  />
+                  <HorizontalLabelInput
+                    placeholder="City"
+                    label="City"
+                    type="select"
+                    options={(cities.data[formik.values.country] || []).map(
+                      (country) => ({
+                        value: country.id,
+                        label: country.title,
+                      })
+                    )}
+                    {...formik.getFieldProps("city")}
+                  />
+                  <HorizontalLabelInput
+                    type="text"
+                    placeholder="Address"
+                    className="add-form-control"
+                    name={formik.getFieldProps("address").name}
+                    onBlur={(e) => formik.getFieldProps("address").onBlur}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    value={searchValue}
+                  />
+                  {debouncedSearchValue &&
+                    searchValue !== formik.values.address && (
+                      <div className={styles.search_results_box}>
+                        {suggestedAddress.map((address) => {
+                          return (
+                            <div
+                              key={address.description}
+                              className={styles.search_results}
+                              onClick={() => {
+                                console.log({ address });
+                                formik.setFieldValue(
+                                  "address",
+                                  address.description
+                                );
+                                setSearchValue(address.description);
+                              }}
+                            >
+                              {address.description}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  <HorizontalLabelInput
+                    placeholder="Description"
+                    label="Description"
+                    type="textarea"
+                    {...formik.getFieldProps("description")}
+                  />
                   <HorizontalLabelInput
                     placeholder="License ID"
                     label="License ID"
