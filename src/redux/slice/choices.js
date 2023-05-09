@@ -113,8 +113,10 @@ const initialState = {
     data: [],
   },
   tenderCategories: {
-    loading: false,
-    data: [],
+    sectors: {
+      loading: false,
+      data: [],
+    },
   },
 };
 
