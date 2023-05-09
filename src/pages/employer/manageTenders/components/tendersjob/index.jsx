@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import {
   Box,
+  Card,
+  CardContent,
   // Card,
   // CardContent,
   // Chip,
@@ -106,9 +108,26 @@ const Tenders = () => {
           </Stack>
         </div>
         {manageTenderList.map((items, index) => (
-          <>
-            <TenderCard tenderDetails={items} />
-          </>
+          <Card
+            key={index}
+            sx={{
+              "&.MuiCard-root": {
+                boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                borderRadius: "10px",
+                mb: 3,
+              },
+            }}
+          >
+            <CardContent
+              sx={{
+                "&.MuiCardContent-root": {
+                  padding: "25px 25px 25px",
+                },
+              }}
+            >
+              <TenderCard tenderDetails={items} selfTender />
+            </CardContent>
+          </Card>
         ))}
         {/* {manageTenderList.map((items, index) => (
           <Card

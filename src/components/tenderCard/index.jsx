@@ -13,7 +13,7 @@ import { SolidButton } from "@components/button";
 import { capitalizeFirst } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 
-function TenderCard({ tenderDetails, applied }) {
+function TenderCard({ tenderDetails, selfTender, applied }) {
   console.log({ tenderDetails });
   const editUrl = urlcat("/employer/jobs/post", {
     tenderId: tenderDetails?.id,
