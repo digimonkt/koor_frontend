@@ -6,7 +6,6 @@ import {
   HorizontalPhoneInput,
   ProfilePicInput,
 } from "@components/input";
-import { ORGANIZATION_TYPE } from "@utils/enum";
 import {
   Card,
   CardContent,
@@ -35,7 +34,7 @@ import { FormControlReminder } from "@components/style";
 import DialogBox from "@components/dialogBox";
 import NoItem from "@pages/jobSeeker/myProfile/noItem";
 import { SVG } from "@assets/svg";
-import { getCities, getCountries } from "@redux/slice/choices";
+import { getCities, getCountries, getTenderSector } from "@redux/slice/choices";
 import { useDebounce } from "usehooks-ts";
 import styles from "./myProfile.module.css";
 function MyProfileComponent() {
@@ -46,12 +45,12 @@ function MyProfileComponent() {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
-  const { countries, cities } = useSelector((state) => state.choices);
+  const { countries, cities, sectors } = useSelector((state) => state.choices);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const formik = useFormik({
     initialValues: {
       organizationName: "",
-      organizationType: ORGANIZATION_TYPE.business,
+      organizationType: "",
       mobileNumber: {
         national: "",
         international: "",
@@ -149,13 +148,15 @@ function MyProfileComponent() {
     if (!countries.data.length) {
       dispatch(getCountries());
     }
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
   }, []);
   useEffect(() => {
     if (
       debouncedSearchValue &&
       debouncedSearchValue !== formik.values.address
     ) {
-      console.log({ debouncedSearchValue });
       getSuggestedAddress(debouncedSearchValue);
     }
   }, [debouncedSearchValue]);
@@ -246,21 +247,12 @@ function MyProfileComponent() {
                   ) : null}
                   <HorizontalLabelInput
                     label="Type of the organization"
+                    placeholder="Type of the organization"
                     type="select"
-                    options={[
-                      {
-                        value: ORGANIZATION_TYPE.business,
-                        label: "Business",
-                      },
-                      {
-                        value: ORGANIZATION_TYPE.ngo,
-                        label: "NGO",
-                      },
-                      {
-                        value: ORGANIZATION_TYPE.government,
-                        label: "Government",
-                      },
-                    ]}
+                    options={sectors.data.map((sector) => ({
+                      value: sector.id,
+                      label: sector.title,
+                    }))}
                     {...formik.getFieldProps("organizationType")}
                   />
 
