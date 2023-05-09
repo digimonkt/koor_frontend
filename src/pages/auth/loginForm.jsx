@@ -67,7 +67,10 @@ function LoginForm() {
               <ErrorMessage>{formik.errors.password}</ErrorMessage>
             ) : null}
           </div>
-          <Link to={urlcat("/forgot-password", { role })}>
+          <Link
+            to={urlcat("/forgot-password", { role })}
+            style={{ position: "relative", zIndex: 5 }}
+          >
             <div className="text-end forgots">
               <span>Forgot password?</span>
             </div>
