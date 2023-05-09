@@ -447,7 +447,6 @@ function AdvanceFilter({ searchType }) {
         opportunityType: values.opportunityType,
         tag: values.tag,
       };
-      console.log({ payload });
       dispatch(setAdvanceFilter(payload));
     },
   });

@@ -204,7 +204,6 @@ function MyProfileComponent() {
       setOpen(!open);
     }
   };
-  console.log(searchValue);
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
@@ -318,7 +317,6 @@ function MyProfileComponent() {
                               key={address.description}
                               className={styles.search_results}
                               onClick={() => {
-                                console.log({ address });
                                 formik.setFieldValue(
                                   "address",
                                   address.description
