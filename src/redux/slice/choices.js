@@ -6,6 +6,7 @@ import {
   getJobSubCategoriesAPI,
   getLanguagesAPI,
   getSkillsAPI,
+  getTenderSectorAPI,
 } from "@api/choices";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -77,6 +78,10 @@ const initialState = {
     }]
    */
   skills: {
+    loading: false,
+    data: [],
+  },
+  sectors: {
     loading: false,
     data: [],
   },
@@ -164,6 +169,18 @@ export const getSkills = createAsyncThunk(
   "choices/skills",
   async (data, { rejectWithValue }) => {
     const res = await getSkillsAPI(data);
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+
+export const getTenderSector = createAsyncThunk(
+  "choices/getGenderSector",
+  async (_, { rejectWithValue }) => {
+    const res = await getTenderSectorAPI();
     if (res.remote === "success") {
       return res.data;
     } else {
@@ -311,6 +328,24 @@ export const choiceSlice = createSlice({
     builder.addCase(getSkills.rejected, (state) => {
       state.skills = {
         ...state.skills,
+        loading: false,
+      };
+    });
+    builder.addCase(getTenderSector.pending, (state) => {
+      state.sectors = {
+        ...state.sectors,
+        loading: true,
+      };
+    });
+    builder.addCase(getTenderSector.fulfilled, (state, action) => {
+      state.sectors = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getTenderSector.rejected, (state) => {
+      state.sectors = {
+        ...state.sectors,
         loading: false,
       };
     });
