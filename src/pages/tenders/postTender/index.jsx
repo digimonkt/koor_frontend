@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
@@ -37,7 +37,7 @@ import { validateCreateTenderInput } from "@pages/jobs/validator";
 const PostTender = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [tenderId, setTenderId] = useState(null);
+  const [tenderId, setTenderId] = useState(null);
   const [searchParams] = useSearchParams();
   console.log(searchParams);
   const { countries, jobCategories, tags, cities, jobSubCategories, sectors } =
@@ -155,6 +155,11 @@ const PostTender = () => {
       dispatch(getJobSubCategories({ sectorId: formik.values.sectors }));
     }
   }, [formik.values.sectors]);
+
+  useEffect(() => {
+    const newJobId = searchParams.get("tenderId");
+    if (newJobId && tenderId !== newJobId) setTenderId(newJobId);
+  }, [searchParams.get("tenderId")]);
 
   return (
     <div className="job-application">
