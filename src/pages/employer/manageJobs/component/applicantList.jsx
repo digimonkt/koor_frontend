@@ -170,6 +170,7 @@ const ApplicantList = ({ totalApplications, jobId }) => {
                   allOptions
                   isShortlisted={item.shortlistedAt}
                   isRejected={item.rejectedAt}
+                  isInterviewPlanned={item.interviewAt}
                   isBlacklisted={item.user.isBlacklisted}
                 />
               );

@@ -21,6 +21,7 @@ import LanguageCard from "@components/languageCard";
 import ApplicationOptions from "@components/applicationOptions";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { NoRecordFoundAnimation } from "@components/animations";
+import urlcat from "urlcat";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
@@ -36,11 +37,14 @@ const ApplicantDetails = () => {
   });
   const getApplicantDetails = async () => {
     const res = await getApplicationDetailsAPI(params.applicationId);
-    setApplicantsDetails(res.data);
+    if (res.remote === "success") {
+      setApplicantsDetails(res.data);
+    }
   };
   useEffect(() => {
     getApplicantDetails();
   }, []);
+  console.log({ applicantDetails });
   return (
     <>
       <div className="job-application">
@@ -97,14 +101,24 @@ const ApplicantDetails = () => {
                     sx={{ width: "70px", height: "70px" }}
                   />
                   <div className="user-application">
-                    <h4>{applicantDetails.user.name}</h4>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <span>{<SVG.LocationIcon />}</span>{" "}
-                      <span>
-                        Paris, France (Form where we can get this: Saral
-                        Shrivastava)
-                      </span>
-                    </Stack>
+                    <Link
+                      to={urlcat("/job-seeker/:userId/profile", {
+                        userId: applicantDetails.user.id || "a",
+                      })}
+                    >
+                      <h4>{applicantDetails.user.name}</h4>
+                    </Link>
+                    {applicantDetails.user.profile?.country?.title ? (
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <span>{<SVG.LocationIcon />}</span>{" "}
+                        <span>
+                          {applicantDetails.user.profile?.country?.title},
+                          {applicantDetails.user.profile?.city?.title}
+                        </span>
+                      </Stack>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </Stack>
               </Grid>
@@ -229,7 +243,6 @@ const ApplicantDetails = () => {
                               fontFamily: "Poppins",
                               color: "#121212",
                               fontWeight: "400",
-                              padding: "5px 10px 5px 20px",
                               margin: "0px 8px 8px 0px",
                             }}
                           />

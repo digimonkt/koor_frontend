@@ -66,6 +66,7 @@ const AboutMe = (props) => {
       highestEducation: "",
       marketInformationNotification: false,
       jobNotification: false,
+      experience: "",
     },
     validationSchema: validateJobSeekerAboutMe,
     onSubmit: async (values) => {
@@ -90,6 +91,7 @@ const AboutMe = (props) => {
         job_notification: values.jobNotification,
         country: values.country,
         city: values.city,
+        experience: Number(values.experience) || 0,
       };
       if (payload.mobile_number === currentUser.mobileNumber) {
         delete payload.mobile_number;
@@ -119,6 +121,7 @@ const AboutMe = (props) => {
               marketInformationNotification:
                 values.marketInformationNotification,
               jobNotification: values.jobNotification,
+              experience: values.experience,
             },
           })
         );
@@ -170,6 +173,7 @@ const AboutMe = (props) => {
       marketInformationNotification:
         currentUser.profile.marketInformationNotification,
       jobNotification: currentUser.profile.jobNotification,
+      experience: currentUser.profile.experience,
     };
     for (const key in newState) {
       formik.setFieldValue(key, newState[key]);
@@ -334,6 +338,12 @@ const AboutMe = (props) => {
                   })
                 )}
                 {...formik.getFieldProps("city")}
+              />
+              <HorizontalLabelInput
+                type="number"
+                placeholder="Experience"
+                label="No of Experience (Years)"
+                {...formik.getFieldProps("experience")}
               />
               <HorizontalLabelInput
                 label="Highest education (optional)"
