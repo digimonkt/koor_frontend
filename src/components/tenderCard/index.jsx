@@ -1,26 +1,26 @@
 import { SVG } from "@assets/svg";
 import { ChipBox } from "@components/jobCard/style";
-import { Avatar, Divider, Grid, Stack } from "@mui/material";
-import { USER_ROLES } from "@utils/enum";
+import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
 import { capitalizeFirst } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 
-function TenderCard({ tenderDetails, selfTender, applied }) {
+function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const editUrl = urlcat("/employer/jobs/post", {
     tenderId: tenderDetails?.id,
   });
-  const { role, isLoggedIn } = useSelector((state) => state.auth);
-  // const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
+  const [isStart, setIsStart] = useState(tenderDetails?.status);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -28,6 +28,11 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
     } else {
       await unSaveTenderAPI(tenderDetails.id);
     }
+  };
+
+  const handleStartPause = async () => {
+    setIsStart(isStart === "active" ? "inactive" : "active");
+    // updateJob(jobDetails.id);
   };
 
   useEffect(() => {
@@ -45,32 +50,34 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
   return (
     <div className="job_card">
       <Grid container spacing={1.875} {...gridProps}>
-        <Grid
-          item
-          sx={{
-            "@media (min-width: 1200px)": {
-              maxWidth: "10.555%",
-              flexBasis: "10.555%",
-            },
-          }}
-        >
-          <div className="squer-width">
-            <Avatar
-              sx={{
-                width: "100%",
-                height: "100%",
-                margin: "auto",
-                color: "#CACACA",
-                "&.MuiAvatar-colorDefault": {
-                  background: "#F0F0F0",
-                },
-              }}
-              src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
-            >
-              <SVG.SuitcaseJob />
-            </Avatar>
-          </div>
-        </Grid>
+        {logo && (
+          <Grid
+            item
+            sx={{
+              "@media (min-width: 1200px)": {
+                maxWidth: "10.555%",
+                flexBasis: "10.555%",
+              },
+            }}
+          >
+            <div className="squer-width">
+              <Avatar
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  margin: "auto",
+                  color: "#CACACA",
+                  "&.MuiAvatar-colorDefault": {
+                    background: "#F0F0F0",
+                  },
+                }}
+                src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
+              >
+                <SVG.SuitcaseJob />
+              </Avatar>
+            </div>
+          </Grid>
+        )}
 
         <Grid
           item
@@ -85,13 +92,18 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
         >
           <div className="my-jobs">
             <h2>
-              {role !== USER_ROLES.employer ? (
-                <Link to={`/jobs/details/${tenderDetails?.id || "jobId"}`}>
-                  {tenderDetails?.title || ""}
-                </Link>
-              ) : (
-                <Link to={editUrl}>{tenderDetails?.title || ""}</Link>
-              )}
+              <Link to={editUrl}>{tenderDetails?.title || ""}</Link>
+              {tenderDetails.isApplied ? (
+                <Chip
+                  // variant="outlined"
+                  color="success"
+                  size="small"
+                  label="Applied"
+                  sx={{
+                    marginLeft: "5px",
+                  }}
+                />
+              ) : null}
             </h2>
             <p className="job-description card-description mt-1 mb-3">
               {tenderDetails?.description}
@@ -125,7 +137,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
               className="mt-3"
               divider={<Divider orientation="vertical" flexItem />}
             >
-              {
+              {!selfTender && (
                 <Stack direction="row" spacing={1}>
                   <span>
                     <SVG.BriefcaseIcon />
@@ -134,7 +146,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
                     Company: <span>{tenderDetails.user.name}</span>
                   </div>
                 </Stack>
-              }
+              )}
               <Stack direction="row" spacing={1}>
                 <span>
                   <SVG.ClockIconSmall />
@@ -147,7 +159,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={tenderDetails.user.image ? 2 : 2} xs={12}>
+        <Grid item lg={logo ? 2 : 3} xs={12}>
           <div className="text-end mb-4">
             <SolidButton
               style={{ textTransform: "lowercase" }}
@@ -172,7 +184,41 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
             className="py-2"
             sx={{ minHeight: "87%" }}
           >
-            {isLoggedIn ? (
+            {selfTender ? (
+              <div className="job-button-card">
+                <button
+                  onClick={() => {
+                    handleStartPause();
+                  }}
+                >
+                  {isStart === "active" ? (
+                    <>
+                      <SVG.PauseIcon />
+                      <span className="d-block">Hold</span>
+                    </>
+                  ) : (
+                    <>
+                      <SVG.StartIcon />
+                      <span className="d-block">Start</span>
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    if (tenderDetails?.id) {
+                      navigate(
+                        urlcat("/employer/tender/post", {
+                          jobId: tenderDetails?.id,
+                        })
+                      );
+                    }
+                  }}
+                >
+                  {<SVG.EditIcon />}
+                  <span className="d-block">Edit</span>
+                </button>
+              </div>
+            ) : isLoggedIn ? (
               <React.Fragment>
                 {!applied ? (
                   <div onClick={handleToggleSave} style={{ marginLeft: "6px" }}>
