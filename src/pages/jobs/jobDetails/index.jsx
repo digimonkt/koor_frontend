@@ -117,7 +117,6 @@ const JobDetails = () => {
     }
   };
   const handleWithdrawJobApplication = async () => {
-    console.log(details.isEditable);
     if (details.isEditable) {
       const res = await withdrawJobApplicationAPI({ jobId: params.jobId });
       if (res.remote === "success") {
@@ -159,7 +158,6 @@ const JobDetails = () => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
   }, [params.jobId]);
-  // console.log("suggestionJobs_page", suggestionJobs);
   const handleSaveJob = async (jobId) => {
     if (isLoggedIn) {
       setDetails((prevState) => ({

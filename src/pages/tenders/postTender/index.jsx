@@ -93,7 +93,6 @@ const PostTender = () => {
         }
       }
       // Create tender
-      const tenderId = null;
       let response;
       if (!tenderId) {
         response = await createTenderAPI(payload);
@@ -106,7 +105,6 @@ const PostTender = () => {
         }
       } else {
         // Update tender
-
         response = await updateTenderAPI(tenderId, newFormData);
         if (response.remote === "success") {
           console.log(response.data);

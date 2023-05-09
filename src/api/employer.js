@@ -166,7 +166,6 @@ export const getJobAnalyticsAPI = async () => {
 };
 
 export const createTenderAPI = async (data) => {
-  console.log({ data });
   const res = await api.request({
     url: urlcat("/v1/users/employer/tenders"),
     method: "POST",
