@@ -151,7 +151,7 @@ function TalentFilter({ formik, footer }) {
             </FormGroup>
           </Grid>
           <Grid item xs={3}>
-            <label>Experience (In years)</label>
+            <label>Min Experience (In years)</label>
             <LabeledInput
               // title="Duration in Month"
               className="add-form-control"

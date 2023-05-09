@@ -5,7 +5,7 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
@@ -13,9 +13,6 @@ import { capitalizeFirst } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
-  const editUrl = urlcat("/employer/jobs/post", {
-    tenderId: tenderDetails?.id,
-  });
   const { isLoggedIn } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
@@ -92,7 +89,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         >
           <div className="my-jobs">
             <h2>
-              <Link to={editUrl}>{tenderDetails?.title || ""}</Link>
+              {tenderDetails?.title || ""}
               {tenderDetails.isApplied ? (
                 <Chip
                   // variant="outlined"
@@ -208,7 +205,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     if (tenderDetails?.id) {
                       navigate(
                         urlcat("/employer/tender/post", {
-                          jobId: tenderDetails?.id,
+                          tenderId: tenderDetails?.id,
                         })
                       );
                     }

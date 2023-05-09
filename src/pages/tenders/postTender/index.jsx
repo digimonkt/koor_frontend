@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { createTenderAPI, updateTenderAPI } from "@api/employer";
 import dayjs from "dayjs";
@@ -15,15 +15,15 @@ import {
 } from "@components/input";
 import {
   getCountries,
-  getJobCategories,
   getCities,
   getJobSubCategories,
   getTenderTags,
   getTenderSector,
+  getTenderCategories,
 } from "@redux/slice/choices";
 import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { FilledButton, OutlinedButton } from "@components/button";
-import { PAY_PERIOD, ORGANIZATION_TYPE } from "@utils/enum";
+import { PAY_PERIOD, ORGANIZATION_TYPE, USER_ROLES } from "@utils/enum";
 import {
   Card,
   CardContent,
@@ -34,14 +34,29 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { validateCreateTenderInput } from "@pages/jobs/validator";
+import { getTenderDetailsByIdAPI } from "@api/tender";
+import DialogBox from "@components/dialogBox";
+import { SVG } from "@assets/svg";
+import styles from "./postTender.moudle.css";
 const PostTender = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [tenderId, setTenderId] = useState(null);
   const [searchParams] = useSearchParams();
-  console.log(searchParams);
-  const { countries, jobCategories, tags, cities, jobSubCategories, sectors } =
-    useSelector((state) => state.choices);
+  const { countries, tenderCategories, tags, cities, sectors } = useSelector(
+    (state) => state.choices
+  );
+  const [tenderId, setTenderId] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
+
+  const handleRedirect = () => {
+    setOpen(close);
+    setIsRedirect(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    setIsRedirect(true);
+  };
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -51,8 +66,7 @@ const PostTender = () => {
       description: "",
       country: "",
       city: "",
-      jobCategories: "",
-      jobSubCategory: "",
+      categories: [],
       sectors: "",
       jobType: "",
       tag: "",
@@ -73,14 +87,14 @@ const PostTender = () => {
         sector: values.sectors,
         tender_type: values.jobType,
         city: values.city,
-        job_category: values.jobCategories,
-        job_sub_category: values.jobSubCategory,
+        tender_category: values.categories,
         deadline: dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
         start_date: values.startDate
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
         attachments: values.attachments,
         attachments_remove: values.attachmentsRemove,
+        tag: values.tag,
       };
       const newFormData = new FormData();
       for (const key in payload) {
@@ -90,14 +104,18 @@ const PostTender = () => {
               newFormData.append(key, attachment);
             }
           });
+        } else if (payload[key].forEach) {
+          payload[key].forEach((data) => newFormData.append(key, data));
+        } else {
+          newFormData.append(key, payload[key]);
         }
       }
       // Create tender
       let response;
       if (!tenderId) {
-        response = await createTenderAPI(payload);
+        response = await createTenderAPI(newFormData);
         if (response.remote === "success") {
-          dispatch(setSuccessToast("Tender Deleted Successfully"));
+          dispatch(setSuccessToast("Tender Created Successfully"));
           resetForm();
         } else {
           dispatch(setErrorToast("Something went wrong"));
@@ -107,20 +125,52 @@ const PostTender = () => {
         // Update tender
         response = await updateTenderAPI(tenderId, newFormData);
         if (response.remote === "success") {
+          dispatch(setSuccessToast("Tender Updated Successfully"));
           console.log(response.data);
         } else {
+          dispatch(setErrorToast("Something went wrong"));
           console.log(response.error);
         }
       }
+      if (response.remote === "success") {
+        setOpen(true);
+      }
     },
   });
+  const getTenderDetailsById = useCallback(async (tenderId) => {
+    const response = await getTenderDetailsByIdAPI({ tenderId });
+    if (response.remote === "success") {
+      const { data } = response;
+      console.log({ data });
+      const payloadFormik = {
+        title: data.title,
+        budgetCurrency: data.budgetCurrency || "usd",
+        budgetAmount: data.budgetAmount || 0,
+        // budgetPayPeriod: data.budget,
+        description: data.description || "",
+        country: data.country.id,
+        city: data.city.id,
+        categories: data.categories.map((category) => category.id),
+        sectors: data.sector.id,
+        jobType: data.type,
+        // ! Check
+        tag: data.tag[0]?.id || "",
+        startDate: data.startDate,
+        deadline: data.deadline,
+        attachments: data.attachments,
+      };
+      for (const key in payloadFormik) {
+        formik.setFieldValue(key, payloadFormik[key]);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
     }
-    if (!jobCategories.data.length) {
-      dispatch(getJobCategories());
+    if (!tenderCategories.data.length) {
+      dispatch(getTenderCategories());
     }
 
     if (!tags.data.length) {
@@ -132,21 +182,22 @@ const PostTender = () => {
   }, []);
 
   useEffect(() => {
+    if (tenderId) {
+      getTenderDetailsById(tenderId);
+    }
+  }, [tenderId]);
+
+  useEffect(() => {
+    if (isRedirect) {
+      navigate(`/${USER_ROLES.employer}/manage-tenders`);
+    }
+  }, [isRedirect]);
+
+  useEffect(() => {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {
       dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
-
-  useEffect(() => {
-    if (
-      formik.values.jobCategories &&
-      !jobSubCategories.data[formik.values.jobCategories]?.length
-    ) {
-      dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories })
-      );
-    }
-  }, [formik.values.jobCategories]);
 
   useEffect(() => {
     if (formik.values.sectors && !sectors.data[formik.values.sectors]?.length) {
@@ -155,8 +206,8 @@ const PostTender = () => {
   }, [formik.values.sectors]);
 
   useEffect(() => {
-    const newJobId = searchParams.get("tenderId");
-    if (newJobId && tenderId !== newJobId) setTenderId(newJobId);
+    const newTenderId = searchParams.get("tenderId");
+    if (newTenderId && tenderId !== newTenderId) setTenderId(newTenderId);
   }, [searchParams.get("tenderId")]);
 
   return (
@@ -179,9 +230,9 @@ const PostTender = () => {
         >
           <div className="job-content">
             <h2>
-              Post a new tender
+              {tenderId ? "Update tender" : "Post a new tender"}
               <span className="right-pull">
-                <IconButton onClick={() => navigate(-1)}>
+                <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
                   <CloseIcon />
                 </IconButton>
               </span>
@@ -194,7 +245,7 @@ const PostTender = () => {
                       title="Title of your tender"
                       className="add-form-control"
                       placeholder="Bed And Breakfast Temporary Accommodation"
-                      required={true}
+                      required
                       {...formik.getFieldProps("title")}
                     />
                     {formik.touched.title && formik.errors.title ? (
@@ -225,7 +276,9 @@ const PostTender = () => {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <div>
-                      <label>Description</label>
+                      <label>
+                        Description <span className="required-field">*</span>
+                      </label>
                       <textarea
                         className="form-control-area"
                         placeholder="Write more details to attract the right candidates."
@@ -237,7 +290,9 @@ const PostTender = () => {
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <label>Location</label>
+                    <label>
+                      Location <span className="required-field">*</span>
+                    </label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} sx={12}>
                         <SelectInput
@@ -283,39 +338,34 @@ const PostTender = () => {
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Job category"
-                          options={jobCategories.data.map((jobCategory) => ({
-                            value: jobCategory.id,
-                            label: jobCategory.title,
+                          options={tenderCategories.data.map((category) => ({
+                            value: category.id,
+                            label: category.title,
                           }))}
-                          name={"jobCategories"}
-                          value={formik.values.jobCategories || ""}
+                          name={"categories[0]"}
+                          value={formik.values.categories[0] || ""}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
-                        {formik.touched.jobCategories &&
-                        formik.errors.jobCategories ? (
+                        {formik.touched.categories &&
+                        formik.errors.categories ? (
                           <ErrorMessage>
-                            {formik.errors.jobCategories}
+                            {formik.errors.categories}
                           </ErrorMessage>
                         ) : null}
                       </Grid>
                       <Grid item xl={6} lg={6} sx={12}>
                         <SelectInput
                           defaultValue=""
-                          placeholder={
-                            formik.values.jobCategories
-                              ? "Job Sub Category"
-                              : "Select Category first"
-                          }
-                          options={(
-                            jobSubCategories.data[
-                              formik.values.jobCategories
-                            ] || []
-                          ).map((subCategory) => ({
-                            value: subCategory.id,
-                            label: subCategory.title,
+                          placeholder="Select a Job category"
+                          options={tenderCategories.data.map((category) => ({
+                            value: category.id,
+                            label: category.title,
                           }))}
-                          {...formik.getFieldProps("jobSubCategory")}
+                          name={"categories[1]"}
+                          value={formik.values.categories[1] || ""}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobSubCategory &&
                         formik.errors.jobSubCategory ? (
@@ -514,8 +564,21 @@ const PostTender = () => {
                           },
                         },
                       }}
+                      disabled={formik.isSubmitting}
                     />
-                    <FilledButton title="POST THE TENDER" type="submit" />
+                    <FilledButton
+                      title={
+                        formik.isSubmitting
+                          ? tenderId
+                            ? "Updating..."
+                            : "Posting..."
+                          : tenderId
+                          ? "Update the tender"
+                          : "POST THE TENDER"
+                      }
+                      type="submit"
+                      disabled={formik.isSubmitting}
+                    />
                   </Stack>
                 </Grid>
               </form>
@@ -523,6 +586,27 @@ const PostTender = () => {
           </div>
         </CardContent>
       </Card>
+      <DialogBox open={open} handleClose={handleClose}>
+        <Grid container spacing={2}>
+          <Grid item lg={7}>
+            <h1 className="mb-3">Done!</h1>
+            <p>
+              {tenderId
+                ? "Your tender post just updated. It will be reviewed and available on Koor shortly."
+                : "Your new tender post just submitted. It will be reviewed and available on Koor shortly."}
+            </p>
+            <div className={`${styles.cancel_popup}`}>
+              <OutlinedButton
+                title="Go to my tenders"
+                onClick={() => handleRedirect()}
+              />
+            </div>
+          </Grid>
+          <Grid item lg={5}>
+            <SVG.JobPost className="w-100" />
+          </Grid>
+        </Grid>
+      </DialogBox>
     </div>
   );
 };

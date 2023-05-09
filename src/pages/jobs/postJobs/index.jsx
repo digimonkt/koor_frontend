@@ -348,7 +348,7 @@ function PostJobsComponent() {
                       title="Title of your job"
                       className="add-form-control"
                       placeholder="Online Research Participant (Work From Home/Part Time/Casual)…"
-                      required={true}
+                      required
                       {...formik.getFieldProps("title")}
                     />
                     {formik.touched.title && formik.errors.title ? (
