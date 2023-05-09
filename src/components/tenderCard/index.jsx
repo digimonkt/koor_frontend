@@ -13,7 +13,8 @@ import { SolidButton } from "@components/button";
 import { capitalizeFirst } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 
-function TenderCard({ tenderDetails, selfTender, applied }) {
+function TenderCard({ tenderDetails, applied }) {
+  console.log({ tenderDetails });
   const editUrl = urlcat("/employer/jobs/post", {
     tenderId: tenderDetails?.id,
   });
@@ -67,7 +68,7 @@ function TenderCard({ tenderDetails, selfTender, applied }) {
               }}
               src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
             >
-            <SVG.SuitcaseJob />
+              <SVG.SuitcaseJob />
             </Avatar>
           </div>
         </Grid>

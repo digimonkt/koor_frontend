@@ -1,44 +1,61 @@
+import React, { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 import {
   Box,
-  Card,
-  CardContent,
-  Chip,
-  Divider,
-  Grid,
+  // Card,
+  // CardContent,
+  // Chip,
+  // Divider,
+  // Grid,
   Stack,
 } from "@mui/material";
-import React from "react";
-import { styled } from "@mui/material/styles";
+// import { styled } from "@mui/material/styles";
 import { SVG } from "@assets/svg";
-import { SolidButton } from "@components/button";
-import TenderApplicationCard from "./components/tenderApplicationCard";
-import { ChipBox } from "./style";
+// import { SolidButton } from "@components/button";
+// import TenderApplicationCard from "./components/tenderApplicationCard";
+// import { ChipBox } from "./style";
+import { getTenderAPI } from "@api/employer";
+import { useDispatch } from "react-redux";
+import { setTotalTenders } from "@redux/slice/employer";
+import TenderCard from "@components/tenderCard";
 
-const ListItem = styled("li")(({ theme }) => ({
-  margin: theme.spacing(0.5),
-}));
+// const ListItem = styled("li")(({ theme }) => ({
+//   margin: theme.spacing(0.5),
+// }));
 
 const Tenders = () => {
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: "Shortlisted" },
-    { key: 1, label: "Planned interviews" },
-    { key: 2, label: "Rejected" },
-    { key: 3, label: "Blacklisted" },
-  ]);
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    );
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const [chipData, setChipData] = React.useState([
+  //   { key: 0, label: "Shortlisted" },
+  //   { key: 1, label: "Planned interviews" },
+  //   { key: 2, label: "Rejected" },
+  //   { key: 3, label: "Blacklisted" },
+  // ]);
+  // const handleDelete = (chipToDelete) => () => {
+  //   setChipData((chips) =>
+  //     chips.filter((chip) => chip.key !== chipToDelete.key)
+  //   );
+  // };
+
+  const [manageTenderList, setManageTenderList] = useState([]);
+  // console.log(manageTenderList);
+  const getTenderList = async () => {
+    const response = await getTenderAPI();
+    if (response.remote === "success") {
+      setManageTenderList(response.data.result);
+      dispatch(setTotalTenders(response.data.count));
+    } else {
+      console.log(response.error);
+    }
   };
-  const managetenderlist = [
-    {
-      title: "Request for quotation for aluminium asset tags",
-    },
-    {
-      title:
-        "Invitation to tenders and registration of suppliers for good.services and works. ",
-    },
-  ];
+  useEffect(() => {
+    getTenderList();
+  }, []);
+  console.log({ manageTenderList });
+  // const editUrl = urlcat("/employer/jobs/post", {
+  //   tenderId: manageTenderList?.id,
+  // });
 
   return (
     <>
@@ -54,7 +71,7 @@ const Tenders = () => {
           }}
           component="ul"
         >
-          {chipData.map((data) => {
+          {/* {chipData.map((data) => {
             return (
               <ListItem key={data.key}>
                 <Chip
@@ -65,7 +82,7 @@ const Tenders = () => {
                 />
               </ListItem>
             );
-          })}
+          })} */}
         </Box>
         <div className="mb-3">
           <Stack direction="row" spacing={0} className="searchjob-box">
@@ -75,7 +92,12 @@ const Tenders = () => {
             </button>
           </Stack>
         </div>
-        {managetenderlist.map((items, index) => (
+        {manageTenderList.map((items, index) => (
+          <>
+            <TenderCard tenderDetails={items} />
+          </>
+        ))}
+        {/* {manageTenderList.map((items, index) => (
           <Card
             key={index}
             sx={{
@@ -97,14 +119,7 @@ const Tenders = () => {
                 <Grid item xl={9} lg={9} xs={12}>
                   <div className="my-jobs">
                     <h2>{items.title}</h2>
-                    <p>
-                      Urna nibh non non consequat massa malesuada interdum. Est
-                      ipsum, donec montes, gravida nisi maecenas rhoncus et.
-                      Vestibulum diam eget non non, duis. Ipsum, dolor erat ut a
-                      a molestie blandit aliquam et. Vulputate viverra facilisis
-                      morbi sed quis amet, vulputate sed. Viverra viverra nec
-                      quis commodo arcu…
-                    </p>
+                    <p>{items.description}</p>
                     <Stack
                       direction={{ xs: "column", sm: "row" }}
                       spacing={{ xs: 1, sm: 1, md: 1 }}
@@ -113,7 +128,7 @@ const Tenders = () => {
                       <ChipBox
                         label={[
                           <>
-                            Sector: <b className="font-w">Public</b>
+                            Sector: <b className="font-w">{items.sector}</b>
                           </>,
                         ]}
                         icon={<SVG.SellIcon />}
@@ -136,7 +151,7 @@ const Tenders = () => {
                       <Stack direction="row" spacing={1}>
                         <span>{<SVG.BriefcaseIcon />}</span>{" "}
                         <div className="textdes">
-                          Company: <span>August 28, 2022</span>
+                          Company: <span>{items.user.tenderName}</span>
                         </div>
                       </Stack>
                     </Stack>
@@ -161,7 +176,15 @@ const Tenders = () => {
                         {<SVG.PauseIcon />}
                         <span className="d-block">Hold</span>
                       </button>
-                      <button>
+                      <button
+                      // onClick={() => {
+                      //   if (items?.id) {
+                      //     navigate(
+                      //       `/employer/jobs/post?tenderId=${items.id}`
+                      //     );
+                      //   }
+                      // }}
+                      >
                         {<SVG.EditIcon />}
                         <span className="d-block">Edit</span>
                       </button>
@@ -172,7 +195,7 @@ const Tenders = () => {
               <TenderApplicationCard />
             </CardContent>
           </Card>
-        ))}
+        ))} */}
       </div>
     </>
   );

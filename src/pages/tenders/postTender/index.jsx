@@ -19,6 +19,7 @@ import {
   getCities,
   getJobSubCategories,
   getTenderTags,
+  getTenderSector,
 } from "@redux/slice/choices";
 import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { FilledButton, OutlinedButton } from "@components/button";
@@ -36,9 +37,8 @@ import { validateCreateTenderInput } from "@pages/jobs/validator";
 const PostTender = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { countries, jobCategories, tags, cities, jobSubCategories } =
+  const { countries, jobCategories, tags, cities, jobSubCategories, sectors } =
     useSelector((state) => state.choices);
-
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -101,7 +101,11 @@ const PostTender = () => {
     if (!tags.data.length) {
       dispatch(getTenderTags());
     }
+    // if (!sector.data.length) {
+    dispatch(getTenderSector());
+    // }
   }, []);
+  console.log({ sectors });
 
   useEffect(() => {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {

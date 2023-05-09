@@ -3,6 +3,7 @@ import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
 import {
   getDashboardActivityAPIResponseTransform,
+  getTenderDetailsAPIResponseTransform,
   transformApplicationOnJobListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
@@ -188,4 +189,18 @@ export const getShareCountDataAPI = async () => {
     };
   }
   return res;
+};
+
+export const getTenderAPI = async () => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders"),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: getTenderDetailsAPIResponseTransform(response.data),
+    };
+  }
+  return response;
 };
