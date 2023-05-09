@@ -412,6 +412,7 @@ function AdvanceFilter({ searchType }) {
       deadline: null,
       opportunityType: [],
       tag: [],
+      tenderCategories: [],
     },
 
     onSubmit: async (values) => {
