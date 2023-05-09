@@ -95,6 +95,7 @@ export const getSkillsAPI = async (data) => {
   }
   return response;
 };
+
 export const getTenderSectorAPI = async (data) => {
   const response = await api.request({
     url: urlcat("/v1/admin/sector", data || {}),

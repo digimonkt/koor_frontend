@@ -86,7 +86,7 @@ const initialState = {
   },
   sectors: {
     loading: false,
-    data: [{ private: "Private" }, { ngo: "NGO" }, { public: "Public " }],
+    data: [],
   },
   opportunityTypes: {
     loading: false,
@@ -193,8 +193,8 @@ export const getSkills = createAsyncThunk(
 );
 
 export const getTenderSector = createAsyncThunk(
-  "choices/sectors",
-  async (data, { rejectWithValue }) => {
+  "choices/getGenderSector",
+  async (_, { rejectWithValue }) => {
     const res = await getTenderSectorAPI();
     if (res.remote === "success") {
       return res.data;
@@ -378,18 +378,16 @@ export const choiceSlice = createSlice({
         loading: false,
       };
     });
-
-    builder.addCase(getTenderSector.fulfilled, (state, action) => {
-      state.sectors = {
-        loading: false,
-        data: action.payload,
-      };
-    });
     builder.addCase(getTenderSector.pending, (state) => {
       state.sectors = {
         ...state.sectors,
         loading: true,
-        data: [],
+      };
+    });
+    builder.addCase(getTenderSector.fulfilled, (state, action) => {
+      state.sectors = {
+        loading: false,
+        data: action.payload,
       };
     });
     builder.addCase(getTenderSector.rejected, (state) => {
