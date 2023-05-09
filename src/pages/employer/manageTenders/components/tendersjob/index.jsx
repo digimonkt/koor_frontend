@@ -49,7 +49,7 @@ const Tenders = () => {
     const response = await getTenderAPI({ search });
     if (response.remote === "success") {
       console.log(response.data);
-      setManageTenderList(response.data.result);
+      setManageTenderList(response.data.results);
       dispatch(setTotalTenders(response.data.count));
     } else {
       console.log(response.error);

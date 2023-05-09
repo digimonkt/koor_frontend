@@ -3,10 +3,10 @@ import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
 import {
   getDashboardActivityAPIResponseTransform,
-  getTenderDetailsAPIResponseTransform,
   transformApplicationOnJobListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
+import { transformTenderResponse } from "./transform/tender";
 
 export const createJobAPI = async (data) => {
   const res = await api.request({
@@ -200,7 +200,7 @@ export const getTenderAPI = async (data) => {
   if (response.remote === "success") {
     return {
       remote: "success",
-      data: getTenderDetailsAPIResponseTransform(response.data),
+      data: transformTenderResponse(response.data),
     };
   }
   return response;

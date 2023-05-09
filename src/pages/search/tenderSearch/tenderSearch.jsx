@@ -1,6 +1,7 @@
 import { NoDataFoundAnimation } from "@components/animations";
 import TenderCard from "@components/tenderCard";
 import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
+import { Divider } from "@mui/material";
 
 import React from "react";
 import { useSelector } from "react-redux";
@@ -14,6 +15,7 @@ function TenderSearchComponent() {
           return (
             <React.Fragment key={loader}>
               <TenderCardSkeletonLoader logo />
+              <Divider />
             </React.Fragment>
           );
         })
@@ -24,6 +26,7 @@ function TenderSearchComponent() {
           return (
             <React.Fragment key={tender.id}>
               <TenderCard logo selfTender tenderDetails={tender} />
+              <Divider />
             </React.Fragment>
           );
         })
