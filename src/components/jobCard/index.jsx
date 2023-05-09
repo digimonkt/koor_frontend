@@ -117,10 +117,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             >
               <ChipBox
                 sx={{ marginBottom: "10px" }}
-<<<<<<< HEAD
-                useState
-=======
->>>>>>> 24305e3457e9ced45666dff969f27f51bd8ced79
                 label={jobDetails?.country.title || "Dusseldorf"}
                 icon={<>{<SVG.LocationIcon />}</>}
               />
