@@ -6,6 +6,7 @@ import { getTenderAPI } from "@api/employer";
 import { useDispatch } from "react-redux";
 import { setTotalTenders } from "@redux/slice/employer";
 import TenderCard from "@components/tenderCard";
+import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
 
 const Tenders = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const Tenders = () => {
             </button>
           </Stack>
         </div>
-        {manageTenderList.map((items, index) => (
+        {manageTenderList.map((tender, index) => (
           <Card
             key={index}
             sx={{
@@ -76,7 +77,11 @@ const Tenders = () => {
                 },
               }}
             >
-              <TenderCard tenderDetails={items} selfTender />
+              <TenderCard tenderDetails={tender} selfTender />
+              <ApplicantList
+                tenderId={tender.id}
+                totalApplications={tender.vendor}
+              />
             </CardContent>
           </Card>
         ))}
