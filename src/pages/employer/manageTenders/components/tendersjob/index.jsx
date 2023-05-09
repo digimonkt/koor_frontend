@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -26,6 +26,9 @@ import TenderCard from "@components/tenderCard";
 const Tenders = () => {
   // const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
   // const [chipData, setChipData] = React.useState([
   //   { key: 0, label: "Shortlisted" },
   //   { key: 1, label: "Planned interviews" },
@@ -39,20 +42,20 @@ const Tenders = () => {
   // };
 
   const [manageTenderList, setManageTenderList] = useState([]);
-  // console.log(manageTenderList);
-  const getTenderList = async () => {
-    const response = await getTenderAPI();
+  console.log(manageTenderList);
+  const getTenderList = useCallback(async () => {
+    const response = await getTenderAPI({ search });
     if (response.remote === "success") {
+      console.log(response.data);
       setManageTenderList(response.data.result);
       dispatch(setTotalTenders(response.data.count));
     } else {
       console.log(response.error);
     }
-  };
+  }, [search]);
   useEffect(() => {
     getTenderList();
-  }, []);
-  console.log({ manageTenderList });
+  }, [isSearching]);
   // const editUrl = urlcat("/employer/jobs/post", {
   //   tenderId: manageTenderList?.id,
   // });
@@ -86,8 +89,18 @@ const Tenders = () => {
         </Box>
         <div className="mb-3">
           <Stack direction="row" spacing={0} className="searchjob-box">
-            <input className="jobsearch" placeholder="Search Tenders" />
-            <button className="jobt-btn-search">
+            <input
+              className="jobsearch"
+              placeholder="Search Tenders"
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) =>
+                e.key === "Enter" ? setIsSearching(!isSearching) : null
+              }
+            />
+            <button
+              className="jobt-btn-search"
+              onClick={() => setIsSearching(!isSearching)}
+            >
               <SVG.SearchIConJob />
             </button>
           </Stack>

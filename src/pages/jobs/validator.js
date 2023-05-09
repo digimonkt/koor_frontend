@@ -91,7 +91,7 @@ export const validateCreateTenderInput = Yup.object().shape({
   description: Yup.string().required("Description is required"),
   country: Yup.string().required("Country is required"),
   jobCategories: Yup.string().required("Category is required"),
-  sector: Yup.string().required(" Sector is required"),
+  sectors: Yup.string().required(" Sector is required"),
   tag: Yup.string().required(" Tag is required"),
   deadline: Yup.string()
     .required("Deadline is required")

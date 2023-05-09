@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { createTenderAPI } from "@api/employer";
+import { createTenderAPI, updateTenderAPI } from "@api/employer";
 import dayjs from "dayjs";
 import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
 import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
@@ -37,6 +37,9 @@ import { validateCreateTenderInput } from "@pages/jobs/validator";
 const PostTender = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const [tenderId, setTenderId] = useState(null);
+  const [searchParams] = useSearchParams();
+  console.log(searchParams);
   const { countries, jobCategories, tags, cities, jobSubCategories, sectors } =
     useSelector((state) => state.choices);
   const formik = useFormik({
@@ -50,7 +53,7 @@ const PostTender = () => {
       city: "",
       jobCategories: "",
       jobSubCategory: "",
-      sector: "",
+      sectors: "",
       jobType: "",
       tag: "",
       startDate: "",
@@ -67,7 +70,7 @@ const PostTender = () => {
         budget_pay_period: values.budgetPayPeriod,
         description: values.description,
         country: values.country,
-        sector: values.sector,
+        sector: values.sectors,
         tender_type: values.jobType,
         city: values.city,
         job_category: values.jobCategories,
@@ -79,13 +82,37 @@ const PostTender = () => {
         attachments: values.attachments,
         attachments_remove: values.attachmentsRemove,
       };
-      const response = await createTenderAPI(payload);
-      if (response.remote === "success") {
-        dispatch(setSuccessToast("Education Deleted Successfully"));
-        resetForm();
+      const newFormData = new FormData();
+      for (const key in payload) {
+        if (key === "attachments") {
+          payload.attachments.forEach((attachment) => {
+            if (!attachment.id) {
+              newFormData.append(key, attachment);
+            }
+          });
+        }
+      }
+      // Create tender
+      const tenderId = null;
+      let response;
+      if (!tenderId) {
+        response = await createTenderAPI(payload);
+        if (response.remote === "success") {
+          dispatch(setSuccessToast("Tender Deleted Successfully"));
+          resetForm();
+        } else {
+          dispatch(setErrorToast("Something went wrong"));
+          console.log(response.error);
+        }
       } else {
-        dispatch(setErrorToast("Something went wrong"));
-        console.log(response.error);
+        // Update tender
+
+        response = await updateTenderAPI(tenderId, newFormData);
+        if (response.remote === "success") {
+          console.log(response.data);
+        } else {
+          console.log(response.error);
+        }
       }
     },
   });
@@ -101,11 +128,10 @@ const PostTender = () => {
     if (!tags.data.length) {
       dispatch(getTenderTags());
     }
-    // if (!sector.data.length) {
-    dispatch(getTenderSector());
-    // }
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
   }, []);
-  console.log({ sectors });
 
   useEffect(() => {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {
@@ -123,6 +149,12 @@ const PostTender = () => {
       );
     }
   }, [formik.values.jobCategories]);
+
+  useEffect(() => {
+    if (formik.values.sectors && !sectors.data[formik.values.sectors]?.length) {
+      dispatch(getJobSubCategories({ sectorId: formik.values.sectors }));
+    }
+  }, [formik.values.sectors]);
 
   return (
     <div className="job-application">
@@ -298,27 +330,17 @@ const PostTender = () => {
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Sector"
-                          options={[
-                            {
-                              value: ORGANIZATION_TYPE.business,
-                              label: "Business",
-                            },
-                            {
-                              value: ORGANIZATION_TYPE.ngo,
-                              label: "NGO",
-                            },
-                            {
-                              value: ORGANIZATION_TYPE.government,
-                              label: "Government",
-                            },
-                          ]}
-                          name="sector"
-                          value={formik.values.sector || ""}
+                          options={sectors.data.map((sector) => ({
+                            value: sector.id,
+                            label: sector.title,
+                          }))}
+                          name="sectors"
+                          value={formik.values.sectors || ""}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
-                        {formik.touched.sector && formik.errors.sector ? (
-                          <ErrorMessage>{formik.errors.sector}</ErrorMessage>
+                        {formik.touched.sectors && formik.errors.sectors ? (
+                          <ErrorMessage>{formik.errors.sectors}</ErrorMessage>
                         ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>

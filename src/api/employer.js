@@ -177,6 +177,7 @@ export const createTenderAPI = async (data) => {
   });
   return res;
 };
+
 export const getShareCountDataAPI = async () => {
   const res = await api.request({
     url: "v1/users/employer/share-count",
@@ -191,9 +192,9 @@ export const getShareCountDataAPI = async () => {
   return res;
 };
 
-export const getTenderAPI = async () => {
+export const getTenderAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/users/employer/tenders"),
+    url: urlcat("/v1/users/employer/tenders", data || {}),
     method: "GET",
   });
   if (response.remote === "success") {
@@ -202,5 +203,17 @@ export const getTenderAPI = async () => {
       data: getTenderDetailsAPIResponseTransform(response.data),
     };
   }
+  return response;
+};
+
+export const updateTenderAPI = async (tendersId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders/:tendersId", { tendersId }),
+    method: "PUT",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response;
 };
