@@ -259,7 +259,8 @@ function AdvanceFilter({ searchType }) {
     const data = {
       title,
       country: rawData.country,
-      category: rawData.jobCategories,
+      category: [rawData.jobCategories],
+      sub_category: rawData.jobSubCategories,
       is_full_time: rawData.isFullTime,
       is_part_time: rawData.isPartTime,
       has_contract: rawData.hasContract,
