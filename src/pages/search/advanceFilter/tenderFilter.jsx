@@ -1,11 +1,11 @@
 import { ErrorMessage } from "@components/caption";
-import { DateInput, LabeledInput, SelectInput } from "@components/input";
-import { FormControl, FormGroup, Grid, Stack } from "@mui/material";
+import { DateInput, SelectInput } from "@components/input";
+import { FormControl, Grid, Stack } from "@mui/material";
 // import { JobFormControl } from "@pages/jobs/postJobs/style";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
-import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
+// import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { getTenderSector } from "@redux/slice/choices";
 
 function TenderFilter({ formik, footer }) {
@@ -192,7 +192,7 @@ function TenderFilter({ formik, footer }) {
             </div>
           </Grid>
 
-          <Grid item xs={4} lg={3}>
+          {/* <Grid item xs={4} lg={3}>
             <CurrencyInput
               currency="USD"
               title="Budget"
@@ -213,7 +213,7 @@ function TenderFilter({ formik, footer }) {
                 {...formik.getFieldProps("budgetMax")}
               />
             </FormGroup>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>

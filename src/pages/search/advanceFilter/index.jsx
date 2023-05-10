@@ -49,7 +49,7 @@ import {
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
-    auth: { isLoggedIn, role },
+    auth: { role },
     choices: {
       countries,
       jobCategories,
@@ -86,18 +86,14 @@ function AdvanceFilter({ searchType }) {
         <span style={{ pointer: "cursor" }} onClick={handleReset}>
           {<SVG.HalfCircle />} RESET FILTER
         </span>
-        {isLoggedIn ? (
-          <span
-            style={{ pointer: "cursor" }}
-            onClick={() => {
-              handleToggleModel();
-            }}
-          >
-            {<SVG.Favorite />} SAVE SEARCH
-          </span>
-        ) : (
-          ""
-        )}
+        <span
+          style={{ pointer: "cursor" }}
+          onClick={() => {
+            handleToggleModel();
+          }}
+        >
+          {<SVG.Favorite />} SAVE SEARCH
+        </span>
         <OutlinedButton
           title={
             <>
@@ -444,8 +440,8 @@ function AdvanceFilter({ searchType }) {
         deadline:
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        sector: values.sector.map((sector) =>
-          sectors.data.find((i) => i.id === sector)?.title
+        sector: values.sector.map(
+          (sector) => sectors.data.find((i) => i.id === sector)?.title
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
@@ -464,61 +460,58 @@ function AdvanceFilter({ searchType }) {
     <div>
       <div className={`${styles.searchResult}`}>
         <div className={`${styles.label} lables`}>
-          {isLoggedIn ? (
-            <div
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "start",
+              maxWidth: "90%",
+            }}
+          >
+            <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
+            <MenuList
               style={{
+                overflow: "auto",
+                marginLeft: "25px",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "start",
-                maxWidth: "90%",
               }}
             >
-              <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
-              <MenuList
-                style={{
-                  overflow: "auto",
-                  marginLeft: "25px",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                {allFilters.map((filter) => {
-                  return (
-                    <MenuItem key={filter.id}>
-                      <SearchButton
-                        className={`${
-                          selectedFilter === filter.id
-                            ? styles.btninActive
-                            : styles.btnActive
-                        }`}
-                        leftIcon={
-                          <div
-                            onClick={() => toggleNotificationStatus(filter.id)}
-                          >
-                            {filter.isNotification ? (
-                              <SVG.Notificationactive />
-                            ) : (
-                              <SVG.Notificationinactive />
-                            )}
-                          </div>
-                        }
-                        text={
-                          <div onClick={() => handleSelectFilter(filter)}>
-                            {filter.title}
-                          </div>
-                        }
-                        handleCross={() => {
-                          handleDeleteFilter(filter.id);
-                        }}
-                      />
-                    </MenuItem>
-                  );
-                })}
-              </MenuList>
-            </div>
-          ) : (
-            ""
-          )}
+              {allFilters.map((filter) => {
+                return (
+                  <MenuItem key={filter.id}>
+                    <SearchButton
+                      className={`${
+                        selectedFilter === filter.id
+                          ? styles.btninActive
+                          : styles.btnActive
+                      }`}
+                      leftIcon={
+                        <div
+                          onClick={() => toggleNotificationStatus(filter.id)}
+                        >
+                          {filter.isNotification ? (
+                            <SVG.Notificationactive />
+                          ) : (
+                            <SVG.Notificationinactive />
+                          )}
+                        </div>
+                      }
+                      text={
+                        <div onClick={() => handleSelectFilter(filter)}>
+                          {filter.title}
+                        </div>
+                      }
+                      handleCross={() => {
+                        handleDeleteFilter(filter.id);
+                      }}
+                    />
+                  </MenuItem>
+                );
+              })}
+            </MenuList>
+          </div>
+
           <div
             onClick={() => setData(!data)}
             style={{
