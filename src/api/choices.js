@@ -112,7 +112,7 @@ export const getTenderSectorAPI = async (data) => {
 // pending  opportunity type
 export const getTenderOpportunityTypeAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/admin/sector", data || {}),
+    url: urlcat("/v1/admin/opportunity-type", data || {}),
     method: "GET",
   });
   if (response.remote === "success") {
