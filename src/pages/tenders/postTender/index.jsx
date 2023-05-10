@@ -345,7 +345,7 @@ const PostTender = () => {
                             label: category.title,
                           }))}
                           name={"categories"}
-                          value={formik.values.categories || ""}
+                          value={formik.values.categories || [] }
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
