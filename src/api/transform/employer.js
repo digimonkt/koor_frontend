@@ -42,3 +42,32 @@ export const getDashboardActivityAPIResponseTransform = (data) => {
     appliedTender: data.applied_tender,
   };
 };
+
+export const getTenderDetailsAPIResponseTransform = (data) => {
+  return {
+    count: data.count,
+    result: data.results.map((result) => {
+      return {
+        id: result.id,
+        created: result.created,
+        deadline: result.deadline,
+        description: result.description,
+        isApplied: result.is_applied,
+        isSave: result.is_saved,
+        sector: result.sector,
+        status: result.status,
+        tenderCategory: result.tender_category,
+        user: {
+          countryCode: result.user.country_code,
+          description: result.user.description,
+          email: result.user.email,
+          id: result.user.id,
+          image: result.user.image,
+          isBlackListed: result.user.is_blacklisted,
+          mobileNumber: result.user.mobile_number,
+          tenderName: result.user.name,
+        },
+      };
+    }),
+  };
+};

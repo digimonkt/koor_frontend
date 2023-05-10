@@ -8,7 +8,7 @@ import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
 import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 
-const ApplicantList = ({ totalApplications, jobId }) => {
+const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   const [isActive, setIsActive] = useState(false);
   const [applicants, setApplicants] = useState([]);
   const [filter, setFilter] = useState("");
@@ -36,7 +36,12 @@ const ApplicantList = ({ totalApplications, jobId }) => {
     setFilter((prevState) => (prevState === status ? "" : status));
   };
   useEffect(() => {
-    if (isActive) getApplicationList();
+    if (jobId) {
+      if (isActive) getApplicationList();
+    } else if (tenderId) {
+      // !TODO: Implement Tender application
+      setIsLoading(false);
+    }
   }, [isActive, filter]);
   return (
     <>
@@ -157,7 +162,11 @@ const ApplicantList = ({ totalApplications, jobId }) => {
               return <ApplicationCardSkeletonLoading key={loaders} />;
             })
           ) : !applicants.length ? (
-            <NoDataFoundAnimation title="There are currently no applications for your job posting." />
+            <NoDataFoundAnimation
+              title={`There are currently no applications for your ${
+                jobId ? "job" : "tender"
+              } posting.`}
+            />
           ) : (
             applicants.map((item, index) => {
               return (

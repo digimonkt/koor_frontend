@@ -67,7 +67,6 @@ export default function PublicProfileComponent() {
     const userId = params.userId;
     getUserDetails(userId);
   }, []);
-  console.log({ userDetails });
   return (
     <Box sx={{ marginTop: "67px", py: 3 }}>
       {isLoading ? (

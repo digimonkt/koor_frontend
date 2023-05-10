@@ -44,7 +44,6 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getApplicantDetails();
   }, []);
-  console.log({ applicantDetails });
   return (
     <>
       <div className="job-application">

@@ -326,7 +326,7 @@ export const EMPLOYER_ROUTES = [
   {
     id: "manageTenders",
     name: "Manage Tenders",
-    path: "/employer-manage-tenders",
+    path: "/manage-tenders",
     component: EmployerManageTenders,
   },
   {

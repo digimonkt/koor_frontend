@@ -95,10 +95,24 @@ export const getSkillsAPI = async (data) => {
   }
   return response;
 };
-// This API is used for sector and organization type
-export const getChoiceAPI = async (data) => {
+
+export const getTenderSectorAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/admin/skills", data || {}),
+    url: urlcat("/v1/admin/sector", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+// pending  opportunity type
+export const getTenderOpportunityTypeAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/sector", data || {}),
     method: "GET",
   });
   if (response.remote === "success") {
@@ -110,9 +124,23 @@ export const getChoiceAPI = async (data) => {
   return response;
 };
 
-export const getTenderSectorAPI = async (data) => {
+export const getTenderTagsAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/admin/sector", data || {}),
+    url: urlcat("/v1/admin/tag", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+
+export const getTenderCategoryAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/tender-category", data || {}),
     method: "GET",
   });
   if (response.remote === "success") {

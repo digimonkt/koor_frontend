@@ -48,7 +48,7 @@ const EmployerNavigationOptions = Object.freeze([
     isDisable: false,
   },
   {
-    to: "/employer-manage-tenders",
+    to: "/manage-tenders",
     icon: SVG.TendersIcon,
     title: "Manage tenders",
     id: "manageTenders",
