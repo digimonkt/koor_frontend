@@ -2,14 +2,28 @@ import { ErrorMessage } from "@components/caption";
 import { DateInput, LabeledInput, SelectInput } from "@components/input";
 import { FormControl, FormGroup, Grid, Stack } from "@mui/material";
 // import { JobFormControl } from "@pages/jobs/postJobs/style";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
+import { getTenderSector } from "@redux/slice/choices";
 
 function TenderFilter({ formik, footer }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
+  }, []);
   const {
-    choices: { countries, cities, tenderCategories, tags, opportunityTypes, sectors },
+    choices: {
+      countries,
+      cities,
+      tenderCategories,
+      tags,
+      opportunityTypes,
+      sectors,
+    },
     search: { totalItems },
   } = useSelector((state) => state);
   return (
@@ -49,9 +63,9 @@ function TenderFilter({ formik, footer }) {
                   defaultValue=""
                   placeholder="Select Sector"
                   options={sectors.data.map((sector) => ({
-                            value: sector.id,
-                            label: sector.title,
-                          }))}
+                    value: sector.id,
+                    label: sector.title,
+                  }))}
                   name={"sector"}
                   value={formik.values.sector}
                   onChange={(e) => {
