@@ -16,14 +16,14 @@ import {
 import {
   getCountries,
   getCities,
-  getJobSubCategories,
   getTenderTags,
   getTenderSector,
   getTenderCategories,
+  getTenderOpportunityType,
 } from "@redux/slice/choices";
 import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { FilledButton, OutlinedButton } from "@components/button";
-import { PAY_PERIOD, ORGANIZATION_TYPE, USER_ROLES } from "@utils/enum";
+import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
 import {
   Card,
   CardContent,
@@ -42,9 +42,14 @@ const PostTender = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const { countries, tenderCategories, tags, cities, sectors } = useSelector(
-    (state) => state.choices
-  );
+  const {
+    countries,
+    tenderCategories,
+    tags,
+    cities,
+    sectors,
+    opportunityTypes,
+  } = useSelector((state) => state.choices);
   const [tenderId, setTenderId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
@@ -68,6 +73,7 @@ const PostTender = () => {
       city: "",
       categories: [],
       sectors: "",
+      opportunityType: "",
       jobType: "",
       tag: "",
       startDate: "",
@@ -85,7 +91,7 @@ const PostTender = () => {
         description: values.description,
         country: values.country,
         sector: values.sectors,
-        tender_type: values.jobType,
+        tender_type: values.opportunityType,
         city: values.city,
         tender_category: values.categories,
         deadline: dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
@@ -106,7 +112,7 @@ const PostTender = () => {
           });
         } else if (payload[key].forEach) {
           payload[key].forEach((data) => newFormData.append(key, data));
-        } else {
+        } else if (payload[key]) {
           newFormData.append(key, payload[key]);
         }
       }
@@ -179,6 +185,9 @@ const PostTender = () => {
     if (!sectors.data.length) {
       dispatch(getTenderSector());
     }
+    if (!opportunityTypes.data.length) {
+      dispatch(getTenderOpportunityType());
+    }
   }, []);
 
   useEffect(() => {
@@ -198,18 +207,10 @@ const PostTender = () => {
       dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
-
-  useEffect(() => {
-    if (formik.values.sectors && !sectors.data[formik.values.sectors]?.length) {
-      dispatch(getJobSubCategories({ sectorId: formik.values.sectors }));
-    }
-  }, [formik.values.sectors]);
-
   useEffect(() => {
     const newTenderId = searchParams.get("tenderId");
     if (newTenderId && tenderId !== newTenderId) setTenderId(newTenderId);
   }, [searchParams.get("tenderId")]);
-
   return (
     <div className="job-application">
       <Card
@@ -332,18 +333,19 @@ const PostTender = () => {
                   </Grid>
 
                   <Grid item xl={12} lg={12} xs={12}>
-                    <label>Category (Maximum 2)</label>
+                    <label>Category</label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
+                          multiple
                           defaultValue=""
                           placeholder="Select a Job category"
                           options={tenderCategories.data.map((category) => ({
                             value: category.id,
                             label: category.title,
                           }))}
-                          name={"categories[0]"}
-                          value={formik.values.categories[0] || ""}
+                          name={"categories"}
+                          value={formik.values.categories || [] }
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
@@ -351,26 +353,6 @@ const PostTender = () => {
                         formik.errors.categories ? (
                           <ErrorMessage>
                             {formik.errors.categories}
-                          </ErrorMessage>
-                        ) : null}
-                      </Grid>
-                      <Grid item xl={6} lg={6} sx={12}>
-                        <SelectInput
-                          defaultValue=""
-                          placeholder="Select a Job category"
-                          options={tenderCategories.data.map((category) => ({
-                            value: category.id,
-                            label: category.title,
-                          }))}
-                          name={"categories[1]"}
-                          value={formik.values.categories[1] || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        {formik.touched.jobSubCategory &&
-                        formik.errors.jobSubCategory ? (
-                          <ErrorMessage>
-                            {formik.errors.jobSubCategory}
                           </ErrorMessage>
                         ) : null}
                       </Grid>
@@ -397,25 +379,17 @@ const PostTender = () => {
                         ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>
-                        <label>Type</label>
+                        <label>Opportunity Type</label>
                         <SelectInput
                           placeholder="Select Type"
                           defaultValue=""
-                          options={[
-                            {
-                              value: ORGANIZATION_TYPE.business,
-                              label: "Business",
-                            },
-                            {
-                              value: ORGANIZATION_TYPE.ngo,
-                              label: "NGO",
-                            },
-                            {
-                              value: ORGANIZATION_TYPE.government,
-                              label: "Government",
-                            },
-                          ]}
-                          {...formik.getFieldProps("jobType")}
+                          options={opportunityTypes.data.map(
+                            (opportunityType) => ({
+                              value: opportunityType.id,
+                              label: opportunityType.title,
+                            })
+                          )}
+                          {...formik.getFieldProps("opportunityType")}
                         />
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>

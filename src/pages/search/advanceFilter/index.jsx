@@ -17,6 +17,7 @@ import {
   getTenderOpportunityType,
   getTenderTags,
   getTenderCategories,
+  getTenderSector,
 } from "@redux/slice/choices";
 import { setAdvanceFilter } from "@redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
@@ -25,7 +26,7 @@ import DialogBox from "@components/dialogBox";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
-import { ORGANIZATION_TYPE, SEARCH_TYPE, USER_ROLES } from "@utils/enum";
+import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import {
   DATABASE_DATE_FORMAT,
   SALARY_MAX,
@@ -57,6 +58,7 @@ function AdvanceFilter({ searchType }) {
       opportunityTypes,
       tags,
       tenderCategories,
+      sectors,
     },
   } = useSelector((state) => state);
   let category = [];
@@ -368,6 +370,9 @@ function AdvanceFilter({ searchType }) {
     if (!opportunityTypes.data.length) {
       dispatch(getTenderOpportunityType());
     }
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
     if (!tags.data.length) {
       dispatch(getTenderTags());
     }
@@ -439,9 +444,9 @@ function AdvanceFilter({ searchType }) {
         deadline:
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        sector: values.sector.map((sector) => {
-          return ORGANIZATION_TYPE.find((sectorData) => sectorData === sector);
-        }),
+        sector: values.sector.map((sector) =>
+          sectors.data.find((i) => i.id === sector)?.title
+        ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
         opportunityType: values.opportunityType,

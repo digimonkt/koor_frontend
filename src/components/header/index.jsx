@@ -78,12 +78,7 @@ function Header() {
           {isLoggedIn ? (
             <div className="">
               <SearchCategory direction="row" spacing={1} alignItems="center">
-                <Link
-                  to={role === USER_ROLES.jobSeeker ? "/search/jobs" : "/"}
-                  className="d-inline-flex"
-                >
-                  <SVG.SearchIcon />
-                </Link>
+                <SVG.SearchIcon />
                 {role === "employer" ? (
                   <FormControl
                     sx={{

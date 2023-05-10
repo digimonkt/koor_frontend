@@ -25,7 +25,7 @@ function TenderSearchComponent() {
         tenders.map((tender) => {
           return (
             <React.Fragment key={tender.id}>
-              <TenderCard logo selfTender tenderDetails={tender} />
+              <TenderCard logo tenderDetails={tender} />
               <Divider />
             </React.Fragment>
           );

@@ -2,15 +2,28 @@ import { ErrorMessage } from "@components/caption";
 import { DateInput, LabeledInput, SelectInput } from "@components/input";
 import { FormControl, FormGroup, Grid, Stack } from "@mui/material";
 // import { JobFormControl } from "@pages/jobs/postJobs/style";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
-import { ORGANIZATION_TYPE } from "@utils/enum";
 import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
+import { getTenderSector } from "@redux/slice/choices";
 
 function TenderFilter({ formik, footer }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
+  }, []);
   const {
-    choices: { countries, cities, tenderCategories, tags, opportunityTypes },
+    choices: {
+      countries,
+      cities,
+      tenderCategories,
+      tags,
+      opportunityTypes,
+      sectors,
+    },
     search: { totalItems },
   } = useSelector((state) => state);
   return (
@@ -49,28 +62,10 @@ function TenderFilter({ formik, footer }) {
                   title="Sector"
                   defaultValue=""
                   placeholder="Select Sector"
-                  options={[
-                    {
-                      value: ORGANIZATION_TYPE.business,
-                      label: "Business",
-                    },
-                    {
-                      value: ORGANIZATION_TYPE.ngo,
-                      label: "NGO",
-                    },
-                    {
-                      value: ORGANIZATION_TYPE.government,
-                      label: "Government",
-                    },
-                    {
-                      value: ORGANIZATION_TYPE.private,
-                      label: "Private",
-                    },
-                    {
-                      value: ORGANIZATION_TYPE.public,
-                      label: "Public",
-                    },
-                  ]}
+                  options={sectors.data.map((sector) => ({
+                    value: sector.id,
+                    label: sector.title,
+                  }))}
                   name={"sector"}
                   value={formik.values.sector}
                   onChange={(e) => {

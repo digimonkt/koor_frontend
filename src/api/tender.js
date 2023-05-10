@@ -5,8 +5,16 @@ import {
   transformTenderResponse,
 } from "./transform/tender";
 export const getTenderSearchAPI = async (data) => {
+  const newData = { ...data };
+  delete newData.sector;
+  let url = urlcat("v1/tenders", { ...newData });
+  if (data.sector) {
+    data.sector.forEach((sector) => {
+      url += `&sector=${sector}`;
+    });
+  }
   const response = await api.request({
-    url: urlcat("v1/tenders", { ...data }),
+    url,
     method: "GET",
   });
 
