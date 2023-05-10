@@ -11,6 +11,7 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
 import { capitalizeFirst } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
+import { updateEmployerTenderStatusAPI } from "@api/employer";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -26,10 +27,15 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
       await unSaveTenderAPI(tenderDetails.id);
     }
   };
-
+  const updateTender = async (tenderId) => {
+    const res = await updateEmployerTenderStatusAPI(tenderId);
+    if (res.remote === "success") {
+      console.log(res);
+    }
+  };
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
-    // updateJob(jobDetails.id);
+    updateTender(tenderDetails.id);
   };
 
   useEffect(() => {

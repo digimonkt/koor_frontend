@@ -64,6 +64,13 @@ export const updateEmployerJobStatusAPI = async (jobId) => {
   });
   return response;
 };
+export const updateEmployerTenderStatusAPI = async (tendersId) => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/tenders/:tendersId/status", { tendersId }),
+    method: "PUT",
+  });
+  return response;
+};
 
 export const getApplicationOnJobAPI = async ({ jobId, filter }) => {
   const response = await api.request({
