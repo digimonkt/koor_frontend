@@ -12,7 +12,7 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "@api/employer";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
@@ -48,6 +48,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       });
     }
   }, [logo]);
+
   return (
     <div className="job_card">
       <Grid container spacing={1.875} {...gridProps}>
@@ -235,7 +236,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <span className="d-block">Edit</span>
                 </button>
               </div>
-            ) : isLoggedIn ? (
+            ) : isLoggedIn && currentUser.role === "job_seeker" ? (
               <React.Fragment>
                 {!applied ? (
                   <div onClick={handleToggleSave} style={{ marginLeft: "6px" }}>
