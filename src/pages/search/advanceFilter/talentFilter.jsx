@@ -34,7 +34,7 @@ function TalentFilter({ formik, footer }) {
         <Grid container spacing={2}>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="Category"
                   defaultValue=""
@@ -58,7 +58,7 @@ function TalentFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="SubCategory"
@@ -90,7 +90,7 @@ function TalentFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="Country"
                   placeholder="Country"
@@ -106,7 +106,7 @@ function TalentFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="City"
                   placeholder={
@@ -129,7 +129,7 @@ function TalentFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <label>Preferred job type</label>
-            <FormGroup row sx={{ marginLeft: "7px" }}>
+            <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
               <JobFormControl
                 control={<CheckboxInput />}
                 label="Part Time"
@@ -172,7 +172,7 @@ function TalentFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <label>Availability</label>
-            <FormGroup row sx={{ marginLeft: "7px" }}>
+            <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
               <JobFormControl
                 control={<CheckboxInput />}
                 label="Available right now"

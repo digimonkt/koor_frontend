@@ -139,7 +139,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   border-top: 1px solid #cacaca;
   margin-top: 15px;
 }
-.SelectDropdown .MuiFormControl-root.css-ptt77l-MuiFormControl-root {
+.SelectDropdown .filter_input {
   width: 100% !important;
 }
 .Tenderinput .MuiFormControl-root.MuiTextField-root {

@@ -32,7 +32,7 @@ function TenderFilter({ formik, footer }) {
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Category"
@@ -56,7 +56,7 @@ function TenderFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Sector"
@@ -81,7 +81,7 @@ function TenderFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Opportunity Type"
@@ -109,7 +109,7 @@ function TenderFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Tag"
@@ -134,7 +134,7 @@ function TenderFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="Country"
                   placeholder="Country"
@@ -150,7 +150,7 @@ function TenderFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="City"
                   placeholder={
@@ -172,7 +172,10 @@ function TenderFilter({ formik, footer }) {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column" }}
+              className="filter_input"
+            >
               <Stack
                 direction="row"
                 alignItems="center"
