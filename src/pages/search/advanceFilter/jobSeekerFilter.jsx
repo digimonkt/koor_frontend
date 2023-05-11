@@ -29,7 +29,10 @@ function JobSeekerFilter({ formik, footer }) {
         <Grid container spacing={2}>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, marginLeft: 0, width: 330 }}>
+              <FormControl
+                sx={{ m: 1, marginLeft: 0, width: 330 }}
+                className="filter_input"
+              >
                 <SelectInput
                   title="Category"
                   defaultValue=""
@@ -53,7 +56,10 @@ function JobSeekerFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, marginLeft: 0, width: 330 }}>
+              <FormControl
+                sx={{ m: 1, marginLeft: 0, width: 330 }}
+                className="filter_input"
+              >
                 <SelectInput
                   multiple
                   title="SubCategory"
@@ -85,7 +91,7 @@ function JobSeekerFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="Country"
                   placeholder="Country"
@@ -101,7 +107,7 @@ function JobSeekerFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={3}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }}>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="City"
                   placeholder={
@@ -124,7 +130,7 @@ function JobSeekerFilter({ formik, footer }) {
           </Grid>
           <Grid item xs={4}>
             <label style={{ marginBottom: "25px" }}>Job type</label>
-            <FormGroup row sx={{ marginLeft: "7px" }}>
+            <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
               <JobFormControl
                 control={<CheckboxInput sx={{ paddingLeft: "5px" }} />}
                 label="Part Time"
