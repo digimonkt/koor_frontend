@@ -223,3 +223,18 @@ export const updateTenderAPI = async (tendersId, data) => {
   });
   return response;
 };
+
+export const getBlacklistAPI = async () => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/blacklisted-user"),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    console.log({ response });
+    return {
+      remote: "success",
+      data: response.data,
+    };
+  }
+  return response;
+};
