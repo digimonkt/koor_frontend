@@ -59,7 +59,7 @@ export const JOB_ORDER_BY = {
 export const JOB_SORT_BY = {
   salary: "salary",
   expiration: "expiration",
-  workload: "workload",
+  created: "created",
 };
 
 export const NOTIFICATION_TYPE = {

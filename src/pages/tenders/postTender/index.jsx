@@ -74,7 +74,6 @@ const PostTender = () => {
       categories: [],
       sectors: "",
       opportunityType: "",
-      jobType: "",
       tag: "",
       startDate: "",
       deadline: "",
@@ -151,15 +150,14 @@ const PostTender = () => {
       const payloadFormik = {
         title: data.title,
         budgetCurrency: data.budgetCurrency || "usd",
-        budgetAmount: data.budgetAmount || 0,
+        budgetAmount: Number(data.budgetAmount) || 0,
         // budgetPayPeriod: data.budget,
         description: data.description || "",
         country: data.country.id,
         city: data.city.id,
         categories: data.categories.map((category) => category.id),
         sectors: data.sector.id,
-        jobType: data.type,
-        // ! Check
+        opportunityType: data.type.id,
         tag: data.tag[0]?.id || "",
         startDate: data.startDate,
         deadline: data.deadline,
@@ -345,7 +343,7 @@ const PostTender = () => {
                             label: category.title,
                           }))}
                           name={"categories"}
-                          value={formik.values.categories || [] }
+                          value={formik.values.categories || []}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
@@ -391,6 +389,12 @@ const PostTender = () => {
                           )}
                           {...formik.getFieldProps("opportunityType")}
                         />
+                        {formik.touched.opportunityType &&
+                        formik.errors.opportunityType ? (
+                          <ErrorMessage>
+                            {formik.errors.opportunityType}
+                          </ErrorMessage>
+                        ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>
                         <label>Tag</label>

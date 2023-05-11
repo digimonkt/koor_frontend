@@ -100,4 +100,14 @@ export const validateCreateTenderInput = Yup.object().shape({
     .test("isFuture", "Date Must be of Future", (value, context) => {
       return dayjs(value).isSameOrAfter(dayjs());
     }),
+  startDate: Yup.string().test(
+    "isFuture",
+    "Date Must be of Future",
+    (value, context) => {
+      if (!value) {
+        return true;
+      }
+      return dayjs(value).isSameOrAfter(dayjs());
+    }
+  ),
 });

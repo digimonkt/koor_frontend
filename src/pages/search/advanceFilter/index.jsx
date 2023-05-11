@@ -147,6 +147,7 @@ function AdvanceFilter({ searchType }) {
   };
 
   const handleSelectFilter = async (filter) => {
+    console.log({ filter });
     setSelectedFilter(filter.id);
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories);
@@ -159,11 +160,12 @@ function AdvanceFilter({ searchType }) {
     formik.setFieldValue("salaryMin", filter.salaryMin);
     formik.setFieldValue("salaryMax", filter.salaryMax);
     // tenders
+    formik.setFieldValue("opportunityType", filter.opportunityType);
+    formik.setFieldValue("sector", filter.sector);
+    formik.setFieldValue("tag", filter.tag);
+    formik.setFieldValue("tenderCategories", filter.tenderCategories);
     formik.setFieldValue("budgetMin", filter.budgetMin);
     formik.setFieldValue("budgetMax", filter.budgetMax);
-    formik.setFieldValue("sector", filter.sector);
-    formik.setFieldValue("tenderCategory", filter.tenderCategory);
-    formik.setFieldValue("tag", filter.tag);
     formik.setFieldValue("deadline", filter.deadline);
     const payload = {
       country: filter.country?.title || "",
@@ -294,9 +296,9 @@ function AdvanceFilter({ searchType }) {
     const data = {
       title,
       country: rawData.country,
-      category: rawData.jobCategories,
+      tender_category: rawData.tenderCategories,
       sector: rawData.sector,
-      opportunityType: rawData.isPartTime,
+      opportunity_type: rawData.opportunityType,
       tag: rawData.tag,
       budget_min: rawData.budgetMin,
       budget_max: rawData.budgetMax,
@@ -446,8 +448,14 @@ function AdvanceFilter({ searchType }) {
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
-        opportunityType: values.opportunityType,
+        opportunityType: values.opportunityType.map(
+          (type) => opportunityTypes.data.find((i) => i.id === type)?.title
+        ),
         tag: values.tag,
+        tenderCategories: values.tenderCategories.map(
+          (tenderCategory) =>
+            tenderCategories.data.find((i) => i.id === tenderCategory)?.title
+        ),
       };
       dispatch(setAdvanceFilter(payload));
     },
