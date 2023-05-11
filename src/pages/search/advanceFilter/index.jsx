@@ -49,7 +49,7 @@ import {
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
-    auth: { role },
+    auth: { role, isLoggedIn },
     choices: {
       countries,
       jobCategories,
@@ -86,14 +86,16 @@ function AdvanceFilter({ searchType }) {
         <span style={{ pointer: "cursor" }} onClick={handleReset}>
           {<SVG.HalfCircle />} RESET FILTER
         </span>
-        <span
-          style={{ pointer: "cursor" }}
-          onClick={() => {
-            handleToggleModel();
-          }}
-        >
-          {<SVG.Favorite />} SAVE SEARCH
-        </span>
+        {isLoggedIn && (
+          <span
+            style={{ pointer: "cursor" }}
+            onClick={() => {
+              handleToggleModel();
+            }}
+          >
+            {<SVG.Favorite />} SAVE SEARCH
+          </span>
+        )}
         <OutlinedButton
           title={
             <>
