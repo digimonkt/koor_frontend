@@ -41,8 +41,8 @@ function Search() {
   const Component = ComponentSelector(searchType);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
-  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
+  const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
   const [search, setSearch] = useState("");
 
   const open = Boolean(anchorEl);
@@ -52,13 +52,9 @@ function Search() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleSorting = (shortBy) => {
-    const newOrderBy =
-      orderBy === JOB_ORDER_BY.ascending
-        ? JOB_ORDER_BY.descending
-        : JOB_ORDER_BY.ascending;
+  const handleSorting = (shortBy, orderBy) => {
     setSortBy(shortBy);
-    setOrderBy(newOrderBy);
+    setOrderBy(orderBy);
   };
   const handleSearch = (value) => {
     setSearchParams({ search: value });
@@ -221,40 +217,49 @@ function Search() {
                     anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                   >
                     <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        handleSorting(JOB_SORT_BY.salary);
-                      }}
-                      className="fillterbox"
-                    >
-                      Salary
-                      <span>
-                        {sortBy === JOB_SORT_BY.salary &&
-                          (orderBy === JOB_ORDER_BY.ascending ? (
-                            <SVG.ArrowDownward />
-                          ) : (
-                            <SVG.ArrowUpward />
-                          ))}
-                      </span>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        handleSorting(JOB_SORT_BY.expiration);
-                      }}
-                      className="fillterbox"
-                    >
-                      Expiration
-                      <span>
-                        {sortBy === JOB_SORT_BY.expiration &&
-                          (orderBy === JOB_ORDER_BY.ascending ? (
-                            <SVG.ArrowDownward />
-                          ) : (
-                            <SVG.ArrowUpward />
-                          ))}
-                      </span>
-                    </MenuItem>
+                    {[
+                      {
+                        label: "Newest",
+                        sortBy: JOB_SORT_BY.created,
+                        orderBy: JOB_ORDER_BY.ascending,
+                      },
+                      {
+                        label: "Oldest",
+                        sortBy: JOB_SORT_BY.created,
+                        orderBy: JOB_ORDER_BY.descending,
+                      },
+                      {
+                        label: "Salary: Low to High",
+                        sortBy: JOB_SORT_BY.salary,
+                        orderBy: JOB_ORDER_BY.ascending,
+                      },
+                      {
+                        label: "Salary: High to Low",
+                        sortBy: JOB_SORT_BY.salary,
+                        orderBy: JOB_ORDER_BY.descending,
+                      },
+                    ].map((data) => {
+                      return (
+                        <MenuItem
+                          key={data.label}
+                          onClick={() => {
+                            handleClose();
+                            handleSorting(data.sortBy, data.orderBy);
+                          }}
+                          className="fillterbox"
+                          sx={{
+                            backgroundColor:
+                              sortBy === data.sortBy && orderBy === data.orderBy
+                                ? role === USER_ROLES.jobSeeker
+                                  ? "#FEEFD3"
+                                  : "#D5E3F7"
+                                : "",
+                          }}
+                        >
+                          {data.label}
+                        </MenuItem>
+                      );
+                    })}
                   </Menu>
                 </>
               ) : (
