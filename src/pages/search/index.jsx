@@ -221,12 +221,12 @@ function Search() {
                       {
                         label: "Newest",
                         sortBy: JOB_SORT_BY.created,
-                        orderBy: JOB_ORDER_BY.ascending,
+                        orderBy: JOB_ORDER_BY.descending,
                       },
                       {
                         label: "Oldest",
                         sortBy: JOB_SORT_BY.created,
-                        orderBy: JOB_ORDER_BY.descending,
+                        orderBy: JOB_ORDER_BY.ascending,
                       },
                       {
                         label: "Salary: Low to High",
