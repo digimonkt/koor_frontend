@@ -296,7 +296,7 @@ function AdvanceFilter({ searchType }) {
       country: rawData.country,
       category: rawData.jobCategories,
       sector: rawData.sector,
-      opportunityType: rawData.isPartTime,
+      opportunity_type: rawData.isPartTime,
       tag: rawData.tag,
       budget_min: rawData.budgetMin,
       budget_max: rawData.budgetMax,
@@ -446,8 +446,14 @@ function AdvanceFilter({ searchType }) {
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
-        opportunityType: values.opportunityType,
+        opportunityType: values.opportunityType.map(
+          (type) => opportunityTypes.data.find((i) => i.id === type)?.title
+        ),
         tag: values.tag,
+        tenderCategories: values.tenderCategories.map(
+          (tenderCategory) =>
+            tenderCategories.data.find((i) => i.id === tenderCategory)?.title
+        ),
       };
       dispatch(setAdvanceFilter(payload));
     },

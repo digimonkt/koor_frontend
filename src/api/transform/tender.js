@@ -37,15 +37,15 @@ export const transformFullTenderDetails = (data) => {
   return {
     id: data.id,
     title: data.title,
-    tenderId: data.tenderId,
-    budgetCurrency: data.budgetCurrency,
-    budgetAmount: data.budgetAmount,
+    tenderId: data.tender_id,
+    budgetCurrency: data.budget_currency,
+    budgetAmount: data.budget_amount,
     description: data.description,
     country: data.country || {},
     city: data.city || {},
     tag: data.tag || [],
     categories: data.tender_category || [],
-    type: data.tender_type,
+    type: data.tender_type || {},
     sector: data.sector,
     deadline: data.deadline,
     startDate: data.start_date,
@@ -62,8 +62,8 @@ export const transformFullTenderDetails = (data) => {
     attachments: data.attachments,
     createdAt: data.created,
     vendor: data.vendor,
-    isApplied: data.isApplied,
-    isSaved: data.isSaved,
+    isApplied: data.is_applied,
+    isSaved: data.is_saved,
   };
 };
 

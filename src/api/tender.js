@@ -13,6 +13,17 @@ export const getTenderSearchAPI = async (data) => {
       url += `&sector=${sector}`;
     });
   }
+  if (data.tenderCategories) {
+    data.tenderCategories.forEach((category) => {
+      url += `&tenderCategory=${category}`;
+    });
+  }
+  if (data.opportunityType) {
+    data.opportunityType.forEach((category) => {
+      url += `&opportunityType=${category}`;
+    });
+  }
+
   const response = await api.request({
     url,
     method: "GET",
