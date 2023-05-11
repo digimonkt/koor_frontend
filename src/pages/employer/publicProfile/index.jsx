@@ -1,5 +1,6 @@
 import { GetUserDetailsAPI } from "@api/user";
 import { SVG } from "@assets/svg";
+import { NoRecordFoundAnimation } from "@components/animations";
 import {
   Box,
   CardContent,
@@ -10,25 +11,15 @@ import {
   Avatar,
   Typography,
   Divider,
-  Chip,
 } from "@mui/material";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import WorkExperienceCard from "@components/workExperienceCard";
-import { NoRecordFoundAnimation } from "@components/animations";
-import EducationCard from "@components/educationCard";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
-import LanguageCard from "@components/languageCard";
-import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
-import { FilledButton } from "@components/button";
-import html2pdf from "html2pdf.js";
-import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
+import { useParams } from "react-router-dom";
 
-export default function PublicProfileComponent() {
+function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
     jobPreferences: {},
@@ -42,19 +33,6 @@ export default function PublicProfileComponent() {
     skills: [],
     workExperiences: [],
   });
-  const downloadPDF = async () => {
-    setIsDownloadingPDF(true);
-    const element = document.getElementById("div-to-pdf");
-    const options = {
-      margin: [10, 10],
-      filename: `${userDetails.name || "Resume"}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-    await html2pdf().set(options).from(element).save();
-    setIsDownloadingPDF(false);
-  };
   const getUserDetails = async (userId) => {
     setIsLoading(true);
     const res = await GetUserDetailsAPI({ userId });
@@ -70,7 +48,7 @@ export default function PublicProfileComponent() {
   return (
     <Box sx={{ marginTop: "67px", py: 3 }}>
       {isLoading ? (
-        <PublicProfileSkeletonLoading />
+        "<PublicProfileSkeletonLoading />"
       ) : (
         <Container>
           <Card
@@ -160,40 +138,6 @@ export default function PublicProfileComponent() {
                           )}
                         </Box>
                       </Stack>
-                      {userDetails.profile.experience ? (
-                        <Stack
-                          direction={"row"}
-                          spacing={1}
-                          alignItems={"center"}
-                          sx={{
-                            border: "1px solid #CACACA",
-                            borderRadius: "5px",
-                            p: 1,
-                          }}
-                        >
-                          <SVG.ClockIconSmall />{" "}
-                          <Box>
-                            <Typography
-                              variant="h6"
-                              sx={{
-                                fontWeight: "500",
-                                mb: 0,
-                                fontSize: "14px",
-                                fontFamily: "Poppins",
-                                lineHeight: "12px",
-                              }}
-                            >
-                              {userDetails.profile.experience} Years
-                            </Typography>
-                            <Box
-                              component={"span"}
-                              sx={{ fontSize: "10px", color: "#848484" }}
-                            >
-                              Experience
-                            </Box>
-                          </Box>
-                        </Stack>
-                      ) : null}
                     </Stack>
                     <Box sx={{ mt: 3 }}>
                       <Typography
@@ -225,7 +169,7 @@ export default function PublicProfileComponent() {
                             fontWeight: "600",
                           }}
                         >
-                          Work experience
+                          Active Jobs
                         </Typography>
                         <ul className="listitems">
                           {userDetails.workExperiences.length ? (
@@ -240,7 +184,8 @@ export default function PublicProfileComponent() {
                                       : "",
                                 }}
                               >
-                                <WorkExperienceCard {...item} noOptions />
+                                data
+                                {/* <WorkExperienceCard {...item} noOptions /> */}
                               </li>
                             ))
                           ) : (
@@ -249,71 +194,6 @@ export default function PublicProfileComponent() {
                             </div>
                           )}
                         </ul>
-                      </Box>
-                      <Divider sx={{ borderColor: "#ccc", my: 2 }} />
-                      <Box>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontSize: "26px",
-                            fontFamily: "Bahnschrift",
-                            fontWeight: "600",
-                          }}
-                        >
-                          Education
-                        </Typography>
-                        {userDetails.educationRecord.length ? (
-                          <ul className="listitems">
-                            {userDetails.educationRecord.map((item, index) => (
-                              <li
-                                key={index}
-                                style={{
-                                  borderBottom:
-                                    index !==
-                                    userDetails.educationRecord.length - 1
-                                      ? "1px solid #cacaca"
-                                      : "",
-                                }}
-                              >
-                                <EducationCard {...item} noOptions />
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <>
-                            <div>
-                              <NoRecordFoundAnimation title="No Education have been added by the user." />
-                            </div>
-                          </>
-                        )}
-                      </Box>
-                      <Divider sx={{ borderColor: "#ccc", my: 2 }} />
-                      <Box>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontSize: "26px",
-                            fontFamily: "Bahnschrift",
-                            fontWeight: "600",
-                          }}
-                        >
-                          Download resume
-                        </Typography>
-                        <Typography>
-                          <FilledButton
-                            title={
-                              isDownloadingPDF
-                                ? "Downloading PDF..."
-                                : "Download PDF"
-                            }
-                            onClick={downloadPDF}
-                            style={{ marginBottom: "10px" }}
-                            disabled={isDownloadingPDF}
-                          />
-                          <div style={{ display: "none" }}>
-                            <ResumeTemplate user={userDetails} />
-                          </div>
-                        </Typography>
                       </Box>
                     </Box>
                   </Box>
@@ -422,76 +302,6 @@ export default function PublicProfileComponent() {
                         </Box>
                       </Stack>
                       <Divider sx={{ borderColor: "#cacaca" }} />
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontSize: "26px",
-                          fontFamily: "Bahnschrift",
-                          fontWeight: "600",
-                          mb: 2,
-                        }}
-                      >
-                        Skills
-                      </Typography>
-                      <Box>
-                        <Stack direction="row" spacing={0} flexWrap="wrap">
-                          {userDetails.skills.length ? (
-                            userDetails.skills.map((item, index) => (
-                              <Chip
-                                key={index}
-                                label={item.skill.title}
-                                sx={{
-                                  fontSize: "12px",
-                                  fontFamily: "Poppins",
-                                  color: "#121212",
-                                  fontWeight: "400",
-                                  // padding: "5px 10px 5px 20px",
-                                  margin: "0px 8px 8px 0px",
-                                }}
-                              />
-                            ))
-                          ) : (
-                            <div>
-                              <NoRecordFoundAnimation title="No Skill have been added by the user." />
-                            </div>
-                          )}
-                        </Stack>
-                      </Box>
-                      <Divider sx={{ borderColor: "#cacaca" }} />
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontSize: "26px",
-                          fontFamily: "Bahnschrift",
-                          fontWeight: "600",
-                          mb: 2,
-                        }}
-                      >
-                        Languages
-                      </Typography>
-                      <Box>
-                        <ul className="listitems">
-                          {userDetails.languages.length ? (
-                            userDetails.languages.map((item, index) => (
-                              <li
-                                key={index}
-                                style={{
-                                  borderBottom:
-                                    index !== userDetails.languages.length - 1
-                                      ? "1px solid #cacaca"
-                                      : "",
-                                }}
-                              >
-                                <LanguageCard {...item} />
-                              </li>
-                            ))
-                          ) : (
-                            <div>
-                              <NoRecordFoundAnimation title="No Language have been added by the user." />
-                            </div>
-                          )}
-                        </ul>
-                      </Box>
                       <Box
                         sx={{
                           background: "#F2F2F2",
@@ -501,7 +311,7 @@ export default function PublicProfileComponent() {
                           alignItems: "center",
                         }}
                       >
-                        ADVETRISEMENT
+                        ADVERTISEMENT
                       </Box>
                     </Stack>
                   </Box>
@@ -514,3 +324,5 @@ export default function PublicProfileComponent() {
     </Box>
   );
 }
+
+export default PublicProfileComponent;

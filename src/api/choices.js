@@ -95,3 +95,59 @@ export const getSkillsAPI = async (data) => {
   }
   return response;
 };
+
+export const getTenderSectorAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/sector", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+// pending  opportunity type
+export const getTenderOpportunityTypeAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/opportunity-type", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+
+export const getTenderTagsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/tag", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+
+export const getTenderCategoryAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/tender-category", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};

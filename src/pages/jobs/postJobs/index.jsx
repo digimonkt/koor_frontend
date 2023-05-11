@@ -269,7 +269,6 @@ function PostJobsComponent() {
       debouncedSearchValue &&
       debouncedSearchValue !== formik.values.address
     ) {
-      console.log({ debouncedSearchValue });
       getSuggestedAddress(debouncedSearchValue);
     }
   }, [debouncedSearchValue]);
@@ -349,7 +348,7 @@ function PostJobsComponent() {
                       title="Title of your job"
                       className="add-form-control"
                       placeholder="Online Research Participant (Work From Home/Part Time/Casual)…"
-                      required={true}
+                      required
                       {...formik.getFieldProps("title")}
                     />
                     {formik.touched.title && formik.errors.title ? (
@@ -470,7 +469,6 @@ function PostJobsComponent() {
                                   key={address.description}
                                   className={styles.search_results}
                                   onClick={() => {
-                                    console.log({ address });
                                     formik.setFieldValue(
                                       "address",
                                       address.description
@@ -491,7 +489,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <label>
-                      Job Category (Maximum 2)
+                      Job Category
                       <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>

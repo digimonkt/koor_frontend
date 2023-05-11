@@ -42,11 +42,6 @@ const JobPreferences = () => {
       has_contract: jobPreferences.hasContract,
       expected_salary: jobPreferences.expectedSalary,
     };
-    for (const key in payload) {
-      if (!payload[key]) {
-        delete payload[key];
-      }
-    }
     const res = await UpdateJobPreferencesAPI(payload);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Updated Preferences successfully"));

@@ -6,6 +6,8 @@ import {
   transformApplicationOnJobListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
+import { transformTenderResponse } from "./transform/tender";
+
 export const createJobAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs"),
@@ -17,6 +19,7 @@ export const createJobAPI = async (data) => {
   });
   return res;
 };
+
 export const getEmployerJobsAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs", data || {}),
@@ -57,6 +60,13 @@ export const updateEmployerJobAPI = async (jobId, data) => {
 export const updateEmployerJobStatusAPI = async (jobId) => {
   const response = await api.request({
     url: urlcat("/v1/users/employer/jobs/:jobId/status", { jobId }),
+    method: "PUT",
+  });
+  return response;
+};
+export const updateEmployerTenderStatusAPI = async (tendersId) => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/tenders/:tendersId/status", { tendersId }),
     method: "PUT",
   });
   return response;
@@ -162,6 +172,18 @@ export const getJobAnalyticsAPI = async () => {
   return res;
 };
 
+export const createTenderAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/employer/tenders"),
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data,
+  });
+  return res;
+};
+
 export const getShareCountDataAPI = async () => {
   const res = await api.request({
     url: "v1/users/employer/share-count",
@@ -174,4 +196,30 @@ export const getShareCountDataAPI = async () => {
     };
   }
   return res;
+};
+
+export const getTenderAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformTenderResponse(response.data),
+    };
+  }
+  return response;
+};
+
+export const updateTenderAPI = async (tendersId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders/:tendersId", { tendersId }),
+    method: "PUT",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
 };

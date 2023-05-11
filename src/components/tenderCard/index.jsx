@@ -1,54 +1,55 @@
-import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
-import { SolidButton } from "../button";
-import { ChipBox } from "./style";
-import { useSelector } from "react-redux";
-import dayjs from "dayjs";
-import urlcat from "urlcat";
-import { getColorByRemainingDays } from "@utils/generateColor";
+import { ChipBox } from "@components/jobCard/style";
+import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
-import { updateEmployerJobStatusAPI } from "@api/employer";
-function JobCard({ logo, selfJob, applied, jobDetails }) {
-  const { isLoggedIn, role } = useSelector((state) => state.auth);
+import React, { useEffect, useState } from "react";
+import urlcat from "urlcat";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import { getColorByRemainingDays } from "@utils/generateColor";
+import { SolidButton } from "@components/button";
+import { capitalizeFirst } from "@utils/constants/utility";
+import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
+import { updateEmployerTenderStatusAPI } from "@api/employer";
+
+function TenderCard({ tenderDetails, selfTender, applied, logo }) {
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
-  const [isStart, setIsStart] = useState(jobDetails?.status);
+  const [isStart, setIsStart] = useState(tenderDetails?.status);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
-      await saveJobAPI(jobDetails.id);
+      await saveTenderAPI(tenderDetails.id);
     } else {
-      await unSaveJobAPI(jobDetails.id);
+      await unSaveTenderAPI(tenderDetails.id);
     }
   };
-
-  const handleStartPause = async () => {
-    setIsStart(isStart === "active" ? "inactive" : "active");
-    updateJob(jobDetails.id);
-  };
-
-  const updateJob = async (jobId) => {
-    const res = await updateEmployerJobStatusAPI(jobId);
+  const updateTender = async (tenderId) => {
+    const res = await updateEmployerTenderStatusAPI(tenderId);
     if (res.remote === "success") {
       console.log(res);
     }
   };
+  const handleStartPause = async () => {
+    setIsStart(isStart === "active" ? "inactive" : "active");
+    updateTender(tenderDetails.id);
+  };
+
   useEffect(() => {
-    if (jobDetails) setIsSaved(jobDetails.isSaved);
-  }, [jobDetails]);
+    if (tenderDetails) setIsSaved(tenderDetails.isSaved);
+  }, [tenderDetails]);
+
   useEffect(() => {
-    if (logo) {
+    if (tenderDetails.user.image) {
       setGridProps({
         alignItems: "center",
         sx: { my: 3 },
       });
     }
-  }, [logo]);
-
+  }, [tenderDetails.user.image]);
   return (
     <div className="job_card">
       <Grid container spacing={1.875} {...gridProps}>
@@ -73,13 +74,14 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     background: "#F0F0F0",
                   },
                 }}
-                src={generateFileUrl(jobDetails?.user?.image?.path || "")}
+                src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
               >
                 <SVG.SuitcaseJob />
               </Avatar>
             </div>
           </Grid>
         )}
+
         <Grid
           item
           // lg={logo ? 8 : 9}
@@ -93,10 +95,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         >
           <div className="my-jobs">
             <h2>
-              <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
-                {jobDetails?.title}
-              </Link>
-              {jobDetails.isApplied ? (
+              {tenderDetails?.title || ""}
+              {tenderDetails.isApplied ? (
                 <Chip
                   // variant="outlined"
                   color="success"
@@ -109,35 +109,30 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               ) : null}
             </h2>
             <p className="job-description card-description mt-1 mb-3">
-              {jobDetails?.description}
+              {tenderDetails?.description}
             </p>
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
             >
-              <ChipBox
-                sx={{ marginBottom: "10px" }}
-                label={jobDetails?.country.title || "Dusseldorf"}
-                icon={<>{<SVG.LocationIcon />}</>}
-              />
-              {jobDetails?.duration ? (
+              {tenderDetails.sector && (
                 <ChipBox
-                  label={`${jobDetails?.duration} Months`}
-                  icon={<>{<SVG.BegClock />}</>}
+                  label={`Sector: ${capitalizeFirst(
+                    tenderDetails?.sector?.title || ""
+                  )}`}
+                  icon={<>{<SVG.SellIcon />}</>}
                 />
-              ) : (
-                ""
               )}
-              {jobDetails?.isFullTime && (
-                <ChipBox label={"Full Time"} icon={<>{<SVG.MoonCircle />}</>} />
-              )}
-              {jobDetails?.isPartTime && (
-                <ChipBox label={"Part time"} icon={<>{<SVG.MoonCircle />}</>} />
-              )}
-              {jobDetails?.hasContract && (
-                <ChipBox label={"Contract"} icon={<>{<SVG.MoonCircle />}</>} />
-              )}
+              {(tenderDetails?.tenderCategory || []).map((category, k) => {
+                return (
+                  <ChipBox
+                    key={k}
+                    label={category.title}
+                    icon={<>{<SVG.SellIcon />}</>}
+                  />
+                );
+              })}
             </Stack>
             <Stack
               direction="row"
@@ -145,13 +140,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               className="mt-3"
               divider={<Divider orientation="vertical" flexItem />}
             >
-              {!selfJob && (
+              {!selfTender && (
                 <Stack direction="row" spacing={1}>
                   <span>
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
-                    Company: <span>{jobDetails.user.name}</span>
+                    Company: <span>{tenderDetails.user.name}</span>
                   </div>
                 </Stack>
               )}
@@ -161,7 +156,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </span>{" "}
                 <div className="textdes">
                   Posted At:{" "}
-                  <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
+                  <span>{dayjs(tenderDetails?.createdAt).format("ll")}</span>
                 </div>
               </Stack>
             </Stack>
@@ -172,12 +167,14 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <SolidButton
               style={{ textTransform: "lowercase" }}
               title={
-                jobDetails?.expiredInDays > 0
-                  ? `${jobDetails?.expiredInDays} days left`
+                tenderDetails?.expiredInDays > 0
+                  ? `${tenderDetails?.expiredInDays} days left`
                   : "Expired"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                tenderDetails?.expiredInDays > 0
+                  ? tenderDetails?.expiredInDays
+                  : 0
               )}
             />
           </div>
@@ -190,21 +187,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             className="py-2"
             sx={{ minHeight: "87%" }}
           >
-            <div className="pricebox py-3">
-              {jobDetails?.budgetAmount ? (
-                <>
-                  <span className="d-block">UP TO</span>
-                  <h4>
-                    <small>{"$"}</small>
-                    {jobDetails?.budgetAmount || "3,500"}
-                  </h4>
-                  <span>{jobDetails?.budgetPayPeriod}</span>
-                </>
-              ) : (
-                <h3>-</h3>
-              )}
-            </div>
-            {selfJob ? (
+            {selfTender ? (
               <div className="job-button-card">
                 <button
                   onClick={() => {
@@ -225,9 +208,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </button>
                 <button
                   onClick={() => {
-                    if (jobDetails?.id) {
+                    if (tenderDetails?.id) {
                       navigate(
-                        urlcat("/employer/jobs/post", { jobId: jobDetails?.id })
+                        urlcat("/employer/tender/post", {
+                          tenderId: tenderDetails?.id,
+                        })
                       );
                     }
                   }}
@@ -236,7 +221,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <span className="d-block">Edit</span>
                 </button>
               </div>
-            ) : isLoggedIn && role === "job_seeker" ? (
+            ) : isLoggedIn ? (
               <React.Fragment>
                 {!applied ? (
                   <div onClick={handleToggleSave} style={{ marginLeft: "6px" }}>
@@ -266,4 +251,4 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   );
 }
 
-export default JobCard;
+export default TenderCard;

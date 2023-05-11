@@ -105,7 +105,9 @@ import { ReactComponent as WhatsappIcon } from "./whatsappIcon.svg";
 import { ReactComponent as TelegramIcon } from "./telegram.svg";
 import { ReactComponent as LinkedIn } from "./linkedinIcon.svg";
 import { ReactComponent as MailIcon } from "./mailIcon.svg";
+import { ReactComponent as BackArrow } from "./arrow_back.svg";
 export const SVG = {
+  BackArrow,
   MailIcon,
   LinkedIn,
   TelegramIcon,

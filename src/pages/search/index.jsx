@@ -21,7 +21,12 @@ import {
   USER_ROLES,
 } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
-import { searchJobs, searchTalent, setJobPage } from "@redux/slice/search";
+import {
+  searchJobs,
+  searchTalent,
+  searchTender,
+  setJobPage,
+} from "@redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 function Search() {
   const params = useParams();
@@ -32,11 +37,12 @@ function Search() {
   } = useSelector((state) => state);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState();
+  const [searchPlaceHolder, setSearchPlaceHolder] = useState("Jobs");
   const Component = ComponentSelector(searchType);
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
-  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
+  const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
   const [search, setSearch] = useState("");
 
   const open = Boolean(anchorEl);
@@ -46,13 +52,9 @@ function Search() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleSorting = (shortBy) => {
-    const newOrderBy =
-      orderBy === JOB_ORDER_BY.ascending
-        ? JOB_ORDER_BY.descending
-        : JOB_ORDER_BY.ascending;
+  const handleSorting = (shortBy, orderBy) => {
     setSortBy(shortBy);
-    setOrderBy(newOrderBy);
+    setOrderBy(orderBy);
   };
   const handleSearch = (value) => {
     setSearchParams({ search: value });
@@ -72,20 +74,27 @@ function Search() {
       setSearch(search);
     }
   }, [params]);
-
   useEffect(() => {
     const payload = { search, order_by: orderBy, search_by: sortBy };
     switch (searchType) {
       case SEARCH_TYPE.jobs:
+        setSearchPlaceHolder("Jobs");
         dispatch(searchJobs(payload));
         break;
       case SEARCH_TYPE.talents:
+        setSearchPlaceHolder("Talents");
         dispatch(searchTalent(payload));
+        break;
+      case SEARCH_TYPE.tenders:
+        setSearchPlaceHolder("Tenders");
+        dispatch(searchTender(payload));
         break;
       default:
         break;
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
+  // console.log(search, page, totalPages, advanceFilter, searchType, orderBy, sortBy);
+
   const pagination = () => {
     return (
       <Pagination
@@ -128,7 +137,7 @@ function Search() {
             color={role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593"}
           />
         }
-        placeholder="Search jobs"
+        placeholder={`Search ${searchPlaceHolder}`}
         handleSearch={handleSearch}
         value={search}
       />
@@ -208,40 +217,49 @@ function Search() {
                     anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                   >
                     <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        handleSorting(JOB_SORT_BY.salary);
-                      }}
-                      className="fillterbox"
-                    >
-                      Salary
-                      <span>
-                        {sortBy === JOB_SORT_BY.salary &&
-                          (orderBy === JOB_ORDER_BY.ascending ? (
-                            <SVG.ArrowDownward />
-                          ) : (
-                            <SVG.ArrowUpward />
-                          ))}
-                      </span>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleClose();
-                        handleSorting(JOB_SORT_BY.expiration);
-                      }}
-                      className="fillterbox"
-                    >
-                      Expiration
-                      <span>
-                        {sortBy === JOB_SORT_BY.expiration &&
-                          (orderBy === JOB_ORDER_BY.ascending ? (
-                            <SVG.ArrowDownward />
-                          ) : (
-                            <SVG.ArrowUpward />
-                          ))}
-                      </span>
-                    </MenuItem>
+                    {[
+                      {
+                        label: "Newest",
+                        sortBy: JOB_SORT_BY.created,
+                        orderBy: JOB_ORDER_BY.descending,
+                      },
+                      {
+                        label: "Oldest",
+                        sortBy: JOB_SORT_BY.created,
+                        orderBy: JOB_ORDER_BY.ascending,
+                      },
+                      {
+                        label: "Salary: Low to High",
+                        sortBy: JOB_SORT_BY.salary,
+                        orderBy: JOB_ORDER_BY.ascending,
+                      },
+                      {
+                        label: "Salary: High to Low",
+                        sortBy: JOB_SORT_BY.salary,
+                        orderBy: JOB_ORDER_BY.descending,
+                      },
+                    ].map((data) => {
+                      return (
+                        <MenuItem
+                          key={data.label}
+                          onClick={() => {
+                            handleClose();
+                            handleSorting(data.sortBy, data.orderBy);
+                          }}
+                          className="fillterbox"
+                          sx={{
+                            backgroundColor:
+                              sortBy === data.sortBy && orderBy === data.orderBy
+                                ? role === USER_ROLES.jobSeeker
+                                  ? "#FEEFD3"
+                                  : "#D5E3F7"
+                                : "",
+                          }}
+                        >
+                          {data.label}
+                        </MenuItem>
+                      );
+                    })}
                   </Menu>
                 </>
               ) : (
