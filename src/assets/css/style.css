@@ -10,7 +10,7 @@ body {
 }
 
 .CardWidth {
-  width: 650px !important;
+  width: 650px;
 }
 
 .meets_div {
@@ -1742,4 +1742,31 @@ input.employersearch {
 }
 .required-field {
   color: red;
+}
+
+
+@media only screen and (max-width: 992px) {
+  .CardWidth{
+    width:100%
+  }
+  .footer, header{
+    display: none;
+  }
+  .register{margin-top: 0px; background: url("../images/intro.png");}
+  .register-des > a{
+    padding: 12px 15px;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+}
+.marquee h1 {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.vendor{
+  background: url("../images/register.png") center top !important;
+}
+  
 }

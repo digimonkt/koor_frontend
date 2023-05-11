@@ -21,9 +21,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
 import NotificationPopup from "./notificationPopup";
 
-const ismenu = true;
+// const ismenu = false;
 
 function Header() {
+  const [ismenu, setIsmenu] = useState(false);
   const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
@@ -158,7 +159,7 @@ function Header() {
             // ref={menu}
           >
             <IconButton
-              // onClick={() => setIsmenu(!ismenu)}
+              onClick={() => setIsmenu(!ismenu)}
               color="inherit"
               aria-label="open drawer"
               edge="start"
