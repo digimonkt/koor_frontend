@@ -1,5 +1,12 @@
 import { IMAGES } from "@assets/images";
-import { Box, Button, Divider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import styles from "./home.module.css";
 import { setIstHomePage } from "@redux/slice/user";
 import React, { useEffect, useState } from "react";
@@ -16,6 +23,7 @@ import HomeSection from "./homeSection";
 import { SelectInput } from "@components/input";
 import { getCountries, getJobCategories } from "@redux/slice/choices";
 import { USER_ROLES } from "@utils/enum";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 // const options = [
 //   {
@@ -174,7 +182,10 @@ const Home = () => {
                   Popular job categories
                 </Typography>
                 <Typography className={`ms-auto ${styles.see_all_jobs}`}>
-                  See all 4590 jobs
+                  See all 4590 jobs{" "}
+                  <IconButton>
+                    <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                  </IconButton>
                 </Typography>
               </Stack>
             </Box>
