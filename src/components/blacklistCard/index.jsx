@@ -29,7 +29,7 @@ const BlacklistCard = ({ details, sx }) => {
         sx={{ width: "100%", flexWrap: "wrap" }}
       >
         <ChipBox
-          sx={{ marginBottom: "10px", backgroundColor: "#d5e3f7" }}
+          sx={{ marginBottom: "10px", backgroundColor: "#d5e3f7 !important" }}
           label={`Blacklist Reason: ${details?.reason || ""}`}
           icon={<>{<SVG.BlockedIcon />}</>}
         />
