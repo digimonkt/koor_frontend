@@ -1,8 +1,7 @@
 import { Card, CardContent, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import { getBlacklistAPI } from "@api/employer";
-import dayjs from "dayjs";
 import { setTotalBlacklist } from "@redux/slice/employer";
 import { useDispatch } from "react-redux";
 import { NoDataFoundAnimation } from "@components/animations";
@@ -10,28 +9,43 @@ import BlacklistCardSkeletonLoading from "@components/blacklistCard/blacklistCar
 import BlacklistCard from "@components/blacklistCard";
 function Blacklist() {
   const dispatch = useDispatch();
-
-  const [recentApplication, setRecentApplication] = useState([]);
+  const [blacklistData, setBlacklistData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
-  const getRecentApplications = async () => {
+  const getBlacklistData = useCallback(async () => {
     setIsLoading(true);
-    const res = await getBlacklistAPI();
+    const res = await getBlacklistAPI({ search });
     if (res.remote === "success") {
-      setRecentApplication(res.data.results);
+      setBlacklistData(res.data.results);
       dispatch(setTotalBlacklist(res.data.count));
     }
     setIsLoading(false);
-  };
+  }, [search]);
+
   useEffect(() => {
-    getRecentApplications();
-  }, []);
+    getBlacklistData();
+  }, [isSearching]);
+
   return (
     <div className="py-3">
       <div className="mb-3">
         <Stack direction="row" spacing={0} className="searchjob-box">
-          <input className="jobsearch" placeholder="Search your jobs" />
-          <button className="jobt-btn-search">{<SVG.SearchIcon />}</button>
+          <input
+            className="jobsearch"
+            placeholder="Search Blacklist Candidate"
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) =>
+              e.key === "Enter" ? setIsSearching(!isSearching) : null
+            }
+          />
+          <button
+            className="jobt-btn-search"
+            onClick={() => setIsSearching(!isSearching)}
+          >
+            {<SVG.SearchIcon />}
+          </button>
         </Stack>
       </div>
       <Card
@@ -55,18 +69,18 @@ function Blacklist() {
             [1, 2, 3].map((loader) => (
               <BlacklistCardSkeletonLoading key={loader} />
             ))
-          ) : !recentApplication.length ? (
-            <NoDataFoundAnimation title="You haven't received any job applications yet." />
+          ) : !blacklistData.length ? (
+            <NoDataFoundAnimation title="You haven't added any users to your blacklist yet" />
           ) : (
-            recentApplication.map((item, index) => (
+            blacklistData.map((item, index) => (
               <BlacklistCard
-                jobId={item.jobId}
+                // jobId={item.jobId}
                 details={item}
-                subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-                isDisabled={item.disabled}
-                isShortlisted={item.shortlistedAt}
-                isRejected={item.rejectedAt}
-                isBlacklisted={item.user.isBlacklisted}
+                // subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
+                // isDisabled={item.disabled}
+                // isShortlisted={item.shortlistedAt}
+                // isRejected={item.rejectedAt}
+                // isBlacklisted={item.user.isBlacklisted}
                 key={index}
               />
             ))

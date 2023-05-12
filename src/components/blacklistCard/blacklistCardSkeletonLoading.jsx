@@ -29,39 +29,6 @@ const BlacklistCardSkeletonLoading = ({ sx }) => {
               <Skeleton width={720} />
             </h4>
           </Stack>
-          <Stack
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            sx={{ mb: 1, ...sx }}
-            className="meets_div"
-          >
-            <div>
-              <span className="meets">
-                <Skeleton width={207} style={{ lineHeight: "9px" }} />
-              </span>
-            </div>
-            <div style={{ display: "flex" }}>
-              <Skeleton
-                height={30}
-                width={100}
-                style={{ borderRadius: "20px" }}
-                className="chiplabel"
-              />
-              <Skeleton
-                height={30}
-                width={100}
-                style={{ borderRadius: "20px" }}
-                className="chiplabel"
-              />
-              <Skeleton
-                height={30}
-                width={100}
-                style={{ borderRadius: "20px" }}
-                className="chiplabel"
-              />
-            </div>
-          </Stack>
           <div className="recent-descrition">
             <p>
               <Skeleton width={930} count={2} style={{ lineHeight: "9px" }} />
