@@ -37,7 +37,7 @@ const VerticalSlider = () => {
     dots: true,
     infinite: true,
     arrows: false,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 1500,
     speed: 500,
     vertical: true,

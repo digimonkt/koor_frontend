@@ -177,10 +177,19 @@ const Home = () => {
                   See all 4590 jobs
                 </Typography>
               </Stack>
-              <Box>
-                <SlickSlider />
-              </Box>
             </Box>
+          </Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media (min-width:992px)": {
+                paddingLeft: "81px",
+                paddingRight: "0px",
+                overflow: "hidden",
+              },
+            }}
+          >
+            <SlickSlider />
           </Container>
           <Box>
             <HomeSection />
