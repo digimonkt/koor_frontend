@@ -6,6 +6,7 @@ const OPTIONS = {
   chart: {
     height: 185,
     type: "area",
+    width: "100%",
     toolbar: {
       show: false,
       autoSelected: "pan",
