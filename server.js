@@ -1,7 +1,8 @@
 const express = require("express");
 const compression = require("compression");
 const path = require("path");
-
+const dotEnv = require("dotenv");
+dotEnv.config();
 const app = express();
 app.use(compression());
 app.use(express.static("build"));
