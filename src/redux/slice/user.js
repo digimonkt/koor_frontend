@@ -1,6 +1,6 @@
 import { GetUserDetailsAPI } from "@api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { EMPLOYMENT_STATUS, GENDER, ORGANIZATION_TYPE } from "@utils/enum";
+import { EMPLOYMENT_STATUS, GENDER } from "@utils/enum";
 
 /**
  * **NOTE**: Vendor is pending.
@@ -29,9 +29,9 @@ const initialState = {
       jobNotification: false,
 
       // employer
-      organization_type: ORGANIZATION_TYPE.business,
-      license_id: "",
-      license_id_file: "",
+      organizationType: {},
+      licenseId: "",
+      licenseIdFile: "",
     },
     jobPreferences: {
       id: "",
