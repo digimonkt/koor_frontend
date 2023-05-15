@@ -8,6 +8,8 @@ import utcPlugin from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
 import { ChipBox } from "@components/jobCard/style";
 import { SVG } from "@assets/svg";
+import { Link } from "react-router-dom";
+import urlcat from "urlcat";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -55,7 +57,13 @@ const BlacklistCard = ({ details, sx }) => {
               alignItems="center"
               sx={{ mb: 1, ...sx }}
             >
-              <h4>{details?.name || details?.email}</h4>
+              <Link
+                to={urlcat("/job-seeker/:userId/profile", {
+                  userId: details?.id,
+                })}
+              >
+                <h4>{details?.name || details?.email}</h4>
+              </Link>
               {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
             </Stack>
             <div className="recent-descrition">
