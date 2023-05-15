@@ -14,15 +14,7 @@ dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
 
-const BlacklistCard = ({ details, sx }) => {
-  // navigate
-  // const navigate = useNavigate();
-
-  // handle navigation
-  // const handleNavigate = () => {
-  //   navigate("/employer/manage-jobs/applicant-details");
-  // };
-
+const BlacklistCard = ({ details, reason, sx }) => {
   return (
     <>
       <Stack
@@ -32,7 +24,7 @@ const BlacklistCard = ({ details, sx }) => {
       >
         <ChipBox
           sx={{ marginBottom: "10px", backgroundColor: "#d5e3f7 !important" }}
-          label={`Blacklist Reason: ${details?.reason || ""}`}
+          label={`Blacklist Reason: ${reason || ""}`}
           icon={<>{<SVG.BlockedIcon />}</>}
         />
       </Stack>
@@ -64,7 +56,6 @@ const BlacklistCard = ({ details, sx }) => {
               >
                 <h4>{details?.name || details?.email}</h4>
               </Link>
-              {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
             </Stack>
             <div className="recent-descrition">
               <p>{details?.description}</p>

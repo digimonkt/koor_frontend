@@ -10,8 +10,8 @@ export const transformBlacklistUser = (data) => {
         image: res.blacklisted_user.image?.path || "",
         name: res.blacklisted_user.name,
         email: res.blacklisted_user.email,
-        reason: res.reason,
       },
+      reason: res.reason,
     })),
   };
 };

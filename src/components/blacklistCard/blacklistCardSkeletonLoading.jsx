@@ -13,7 +13,6 @@ const BlacklistCardSkeletonLoading = ({ sx }) => {
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        {/* profile pic */}
         <Skeleton circle style={{ width: "70px", height: "70px" }} />
 
         <div className="recent-content">

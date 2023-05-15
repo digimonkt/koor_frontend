@@ -65,7 +65,6 @@ function Blacklist() {
           }}
         >
           {isLoading ? (
-            // skeleton loading need to be implemented
             [1, 2, 3].map((loader) => (
               <BlacklistCardSkeletonLoading key={loader} />
             ))
@@ -74,13 +73,8 @@ function Blacklist() {
           ) : (
             blacklistData.map((item, index) => (
               <BlacklistCard
-                // jobId={item.jobId}
                 details={item.user}
-                // subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-                // isDisabled={item.disabled}
-                // isShortlisted={item.shortlistedAt}
-                // isRejected={item.rejectedAt}
-                // isBlacklisted={item.user.isBlacklisted}
+                reason = {item.reason}
                 key={index}
               />
             ))
