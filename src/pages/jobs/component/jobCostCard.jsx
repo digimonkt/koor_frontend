@@ -4,6 +4,8 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import styles from "./styles.module.css";
+import { Link } from "react-router-dom";
+import urlcat from "urlcat";
 function JobCostCard({ amount, payPeriod, user }) {
   return (
     <>
@@ -35,7 +37,19 @@ function JobCostCard({ amount, payPeriod, user }) {
           >
             <SVG.UserIcon />
           </Avatar>
-          <h3>{user.name}</h3>
+          <h3>
+            <Link
+              to={urlcat("/employer/:userId/profile", {
+                userId: user.id || "null",
+              })}
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+            >
+              {user.name}
+            </Link>
+          </h3>
         </div>
         <div className={`mt-4 text-break text-wrap ps-lg-5 ${styles.Numbers}`}>
           <span>{user.website}</span>

@@ -1,6 +1,9 @@
 import api from ".";
 import urlcat from "urlcat";
-import { transformJobListResponse } from "./transform/job";
+import {
+  transformFullJobDetails,
+  transformJobListResponse,
+} from "./transform/job";
 import {
   getDashboardActivityAPIResponseTransform,
   transformApplicationOnJobListData,
@@ -221,5 +224,26 @@ export const updateTenderAPI = async (tendersId, data) => {
       "Content-Type": "multipart/form-data",
     },
   });
+  return response;
+};
+
+export const getEmployerActiveJobsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/active-jobs/:employerId", data),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        count: response.data.count,
+        next: response.data.next,
+        previous: response.data.previous,
+        results: response.data.results.map((data) =>
+          transformFullJobDetails(data)
+        ),
+      },
+    };
+  }
   return response;
 };
