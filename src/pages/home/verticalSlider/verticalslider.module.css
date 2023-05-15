@@ -27,6 +27,8 @@
   font-weight: 400;
   line-height: 24px;
   color: #121212;
+  text-align: justify;
+  opacity: 0.7;
 }
 
 .testi_heading {

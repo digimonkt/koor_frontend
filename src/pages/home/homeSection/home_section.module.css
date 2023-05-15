@@ -1,7 +1,7 @@
 /* home_section css */
 
 .home_section_grid {
-  border-right: 1px solid #474646;
+  border-right: 1px solid #47464675;
 }
 
 .home_section_text_p {
@@ -10,6 +10,8 @@
   font-weight: 400;
   line-height: 27px;
   color: #121212;
+  text-align: justify;
+  opacity: 0.7;
 }
 
 .home_section_text_h3 {

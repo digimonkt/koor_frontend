@@ -160,14 +160,15 @@
   height: 13px;
   content: "•";
   text-align: center;
-  opacity: 0.3;
-  color: #274593 !important;
+opacity: 1;
+  color: #EFEFEF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .slick-dots li.slick-active button:before {
   opacity: 1 !important ;
+  color: #274593;
 }
 
 body {
@@ -285,6 +286,7 @@ textarea {
     transform: rotate(90deg);
     position: relative;
     bottom: 220px;
+    left:-20px;
   }
 
 

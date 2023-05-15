@@ -3,7 +3,7 @@ import urlcat from "urlcat";
 import { transformGetCountriesAPIResponse } from "./transform/choices";
 export const getCountriesAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/admin/country", data || {}),
+    url: urlcat("/v1/admin/country", { limit: 100, ...(data || {}) }),
     method: "GET",
   });
   if (response.remote === "success") {
