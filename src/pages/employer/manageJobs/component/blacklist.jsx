@@ -75,7 +75,7 @@ function Blacklist() {
             blacklistData.map((item, index) => (
               <BlacklistCard
                 // jobId={item.jobId}
-                details={item}
+                details={item.user}
                 // subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
                 // isDisabled={item.disabled}
                 // isShortlisted={item.shortlistedAt}
