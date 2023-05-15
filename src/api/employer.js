@@ -10,6 +10,7 @@ import {
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
 import { transformTenderResponse } from "./transform/tender";
+import { transformBlacklistUser } from "./transform/blacklist";
 
 export const createJobAPI = async (data) => {
   const res = await api.request({
@@ -227,6 +228,19 @@ export const updateTenderAPI = async (tendersId, data) => {
   return response;
 };
 
+export const getBlacklistAPI = async (search) => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/blacklisted-user", search),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformBlacklistUser(response.data),
+    };
+  }
+  return response;
+};
 export const getEmployerActiveJobsAPI = async (data) => {
   const response = await api.request({
     url: urlcat("/v1/users/employer/active-jobs/:employerId", data),
