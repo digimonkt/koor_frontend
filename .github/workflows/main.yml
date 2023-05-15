@@ -30,4 +30,4 @@ jobs:
             cd /home/user/koor/frontend_koor/ 
             git pull origin main
             yarn build
-            pm2 restart 43
+            pm2 restart 40
