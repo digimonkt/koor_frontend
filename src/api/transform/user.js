@@ -27,6 +27,14 @@ export const transformGetUserDetails = (data) => {
       licenseIdFile: data.profile.license_id_file,
       experience: data.profile.experience,
       address: data.profile.address,
+
+      // vendor
+      registrationNumber: data.profile.registration_number,
+      registrationCertificate: data.profile.registration_certificate,
+      operatingYears: data.profile.operating_years,
+      jobsExperience: data.profile.jobs_experience,
+      website: data.profile.website,
+      otherNotification: data.profile.other_notification || false,
     },
     jobPreferences: data.job_preferences
       ? {

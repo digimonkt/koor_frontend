@@ -76,17 +76,17 @@ const VendorNavigationOptions = Object.freeze([
     icon: SVG.DashboardIcon,
     title: "Dashboard",
     id: "dashboard",
-    to: "/dashboard-2",
+    to: "/dashboard",
   },
   {
-    to: "/my-profile-2",
+    to: "/my-profile",
     icon: SVG.ProfileIcon,
     title: "My Profile",
     id: "myProfile",
     isDisable: false,
   },
   {
-    to: "/job/saved",
+    to: "/tender/saved",
     icon: SVG.UnSave,
     title: "Saved Jobs",
     id: "savedJobs",
@@ -104,7 +104,7 @@ const VendorNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
-    to: "/chat-2",
+    to: "/chat",
   },
 ]);
 
