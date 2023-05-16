@@ -31,6 +31,7 @@ function ManageJobsComponent() {
       component: Blacklist,
     },
   ]);
+
   useEffect(() => {
     setTabs((prevState) => {
       const newTabs = prevState.map((tab) => {

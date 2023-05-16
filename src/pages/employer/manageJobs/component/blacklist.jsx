@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import { getBlacklistAPI } from "@api/employer";
 import { setTotalBlacklist } from "@redux/slice/employer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NoDataFoundAnimation } from "@components/animations";
 import BlacklistCardSkeletonLoading from "@components/blacklistCard/blacklistCardSkeletonLoading";
 import BlacklistCard from "@components/blacklistCard";
@@ -13,7 +13,7 @@ function Blacklist() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-
+  const { totalBlacklist } = useSelector((state) => state.employer);
   const getBlacklistData = useCallback(async () => {
     setIsLoading(true);
     const res = await getBlacklistAPI({ search });
@@ -26,7 +26,7 @@ function Blacklist() {
 
   useEffect(() => {
     getBlacklistData();
-  }, [isSearching]);
+  }, [isSearching, totalBlacklist]);
 
   return (
     <div className="py-3">
@@ -74,7 +74,7 @@ function Blacklist() {
             blacklistData.map((item, index) => (
               <BlacklistCard
                 details={item.user}
-                reason = {item.reason}
+                reason={item.reason}
                 key={index}
               />
             ))

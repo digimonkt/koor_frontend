@@ -20,7 +20,7 @@ const BlacklistCard = ({ details, reason, sx }) => {
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={{ xs: 1, sm: 1, md: 1 }}
-        sx={{ width: "100%", flexWrap: "wrap" }}
+        sx={{ width: "100%", flexWrap: "wrap", mt: 2 }}
       >
         <ChipBox
           sx={{ marginBottom: "10px", backgroundColor: "#d5e3f7 !important" }}
