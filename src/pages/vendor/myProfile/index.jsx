@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  FormControl,
   FormGroup,
   Grid,
   Select,
@@ -9,17 +8,29 @@ import {
 } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 
-import { useDropzone } from "react-dropzone";
 import { styled } from "@mui/material/styles";
 
 import { OutlinedButton } from "@components/button";
-import UploadFile from "@pages/jobSeeker/updateProfile/uploadfile";
-import UpdateInfo from "@pages/jobSeeker/updateProfile/update-info";
 import DialogBox from "@components/dialogBox";
-import { IMAGES } from "@assets/images";
-import { CheckboxInput, LabeledInput, SelectInput } from "@components/input";
+import {
+  AttachmentDragNDropInput,
+  CheckboxInput,
+  HorizontalLabelInput,
+  HorizontalPhoneInput,
+  ProfilePicInput,
+} from "@components/input";
 import { SVG } from "@assets/svg";
 import { FormControlReminder } from "@components/style";
+import { useDispatch, useSelector } from "react-redux";
+import { getCities, getCountries, getTenderSector } from "@redux/slice/choices";
+import NoItem from "@pages/jobSeeker/myProfile/noItem";
+import { useFormik } from "formik";
+import { useDebounce } from "usehooks-ts";
+import { GetSuggestedAddressAPI } from "@api/user";
+import styles from "./myProfile.module.css";
+import { ErrorMessage } from "@components/caption";
+import { validateVendorAboutMe } from "../validate";
+
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: #f0f0f0;
@@ -43,56 +54,81 @@ export const SelectBox = styled(Select)`
 `;
 
 function MyProfile() {
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { countries, cities, sectors } = useSelector((state) => state.choices);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [suggestedAddress, setSuggestedAddress] = useState([]);
+  const debouncedSearchValue = useDebounce(searchValue, 500);
+  const getSuggestedAddress = async (search) => {
+    const res = await GetSuggestedAddressAPI(search);
+    if (res.remote === "success") {
+      setSuggestedAddress(res.data.predictions);
+    }
   };
+  const formik = useFormik({
+    initialValues: {
+      organizationName: "",
+      organizationType: "",
+      mobileNumber: {
+        nation: "",
+        international: "",
+        value: "",
+      },
+      countryCode: "",
+      country: "",
+      city: "",
+      address: "",
+      website: "",
+      description: "",
+      businessLicenseId: "",
+      businessLicense: [],
+      certificationNumber: "",
+      certification: [],
+      yearsOfOperating: "",
+      noOfJobsAsExperience: "",
+      marketingInformationNotification: false,
+      otherNotification: false,
+    },
+    validationSchema: validateVendorAboutMe,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const [files, setFiles] = useState([]);
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "image/*": [],
-    },
-    onDrop: (acceptedFiles) => {
-      setFiles(
-        acceptedFiles.map((file) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
-    },
-  });
-
-  const thumbs = files.map((file) => (
-    <div key={file.name} className="uploadimg">
-      <img
-        alt=""
-        src={file.preview}
-        // Revoke data uri after image is loaded
-        onLoad={() => {
-          URL.revokeObjectURL(file.preview);
-        }}
-      />
-    </div>
-  ));
-
   useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
+    if (!countries.data.length) {
+      dispatch(getCountries());
+    }
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
   }, []);
+  useEffect(() => {
+    if (formik.values.country && !cities.data[formik.values.country]?.length) {
+      dispatch(getCities({ countryId: formik.values.country }));
+    }
+  }, [formik.values.country]);
+  useEffect(() => {
+    if (
+      debouncedSearchValue &&
+      debouncedSearchValue !== formik.values.address
+    ) {
+      getSuggestedAddress(debouncedSearchValue);
+    }
+  }, [debouncedSearchValue]);
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
         <h1 className="heading m-0">Add info to complete your profile</h1>
-        <span className="later" style={{ color: "#274593" }}>
+        {/* <span className="later" style={{ color: "#274593" }}>
           Do it later
-        </span>
+        </span> */}
       </Stack>
 
       <Grid container spacing={2}>
@@ -114,206 +150,235 @@ function MyProfile() {
             >
               <div className="add-content">
                 <h2 className="mb-4">About</h2>
-                <form>
-                  <Stack
-                    direction={{ xs: "column", lg: "row" }}
-                    spacing={{ xs: 2, lg: 2 }}
-                    alignItems={{ xs: "start", lg: "center" }}
-                    className="mb-3"
-                  >
-                    <label className="w-30">Organization name</label>
-                    <div className="w-70">
-                      <LabeledInput
-                        className="add-form-control"
-                        type="text"
-                        placeholder="Lotus's Employment Group LLC"
-                      />
-                    </div>
-                  </Stack>
-                  <Stack
-                    direction={{ xs: "column", lg: "row" }}
-                    spacing={{ xs: 2, lg: 2 }}
-                    alignItems={{ xs: "start", lg: "center" }}
-                    className="mb-3"
-                  >
-                    <label className="w-30">Type of the organization</label>
-                    <div className="w-70">
-                      <FormControl fullWidth size="small">
-                        <SelectInput
-                          value=""
-                          options={[
-                            {
-                              value: "",
-                              label: (
-                                <em
-                                  style={{
-                                    color: "#848484",
-                                    fontStyle: "normal",
-                                    fontWeight: 400,
-                                  }}
-                                >
-                                  Select a type of your company
-                                </em>
-                              ),
-                            },
-                            { value: "1", label: "Business" },
-                            { value: "2", label: "NGO" },
-                            { value: "3", label: "Government" },
-                          ]}
-                          displayEmpty
-                        />
-                      </FormControl>
-                    </div>
-                  </Stack>
-                  <Stack
-                    direction={{ xs: "column", lg: "row" }}
-                    spacing={{ xs: 2, lg: 2 }}
-                    alignItems={{ xs: "start", lg: "center" }}
-                    className="mb-3"
-                  >
-                    <label className="w-30">Website domain </label>
-                    <div className="w-70">
-                      <LabeledInput
-                        className="add-form-control"
-                        type="text"
-                        placeholder="https://"
-                      />
-                    </div>
-                  </Stack>
-
-                  <Stack
-                    direction={{ xs: "column", lg: "row" }}
-                    spacing={{ xs: 2, lg: 2 }}
-                    alignItems={{ xs: "start", lg: "center" }}
-                    className="mb-3"
-                  >
-                    <label className="w-30">Business license</label>
-                    <div className="w-70">
-                      <LabeledInput
-                        className="add-form-control"
-                        type="text"
-                        placeholder="138-DAI-82J-HA7"
-                        readOnly
-                      />
-                    </div>
-                  </Stack>
+                <form onSubmit={formik.handleSubmit}>
+                  <HorizontalLabelInput
+                    placeholder="Organization Name"
+                    label="Organization Name"
+                    {...formik.getFieldProps("organizationName")}
+                  />
+                  {formik.touched.organizationName &&
+                  formik.errors.organizationName ? (
+                    <ErrorMessage>
+                      {formik.errors.organizationName}
+                    </ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    label="Type of the organization"
+                    placeholder="Type of the organization"
+                    type="select"
+                    options={sectors.data.map((sector) => ({
+                      value: sector.id,
+                      label: sector.title,
+                    }))}
+                    {...formik.getFieldProps("organizationType")}
+                  />
+                  {formik.touched.organizationType &&
+                  formik.errors.organizationType ? (
+                    <ErrorMessage>
+                      {formik.errors.organizationType}
+                    </ErrorMessage>
+                  ) : null}
+                  <HorizontalPhoneInput
+                    label="Mobile Number (optional)"
+                    value={formik.values.mobileNumber.value}
+                    onChange={(e) => formik.setFieldValue("mobileNumber", e)}
+                    defaultCountry={formik.values.countryCode}
+                    international
+                    onCountryChange={(e) =>
+                      formik.setFieldValue("countryCode", e)
+                    }
+                    isInvalidNumber={(isValid) => {
+                      if (!isValid) {
+                        formik.setFieldError(
+                          "mobileNumber",
+                          "Invalid Mobile Number"
+                        );
+                      }
+                    }}
+                    onBlur={formik.getFieldProps("mobileNumber").onBlur}
+                  />
+                  {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
+                    <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="Country"
+                    label="Country"
+                    type="select"
+                    options={countries.data.map((country) => ({
+                      value: country.id,
+                      label: country.title,
+                    }))}
+                    {...formik.getFieldProps("country")}
+                  />
+                  {formik.touched.country && formik.errors.country ? (
+                    <ErrorMessage>{formik.errors.country}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="City"
+                    label="City"
+                    type="select"
+                    options={(cities.data[formik.values.country] || []).map(
+                      (country) => ({
+                        value: country.id,
+                        label: country.title,
+                      })
+                    )}
+                    {...formik.getFieldProps("city")}
+                  />
+                  {formik.touched.city && formik.errors.city ? (
+                    <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    label="Address"
+                    type="text"
+                    placeholder="Address"
+                    className="add-form-control"
+                    name={formik.getFieldProps("address").name}
+                    onBlur={(e) => formik.getFieldProps("address").onBlur}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    value={searchValue}
+                  />
+                  {debouncedSearchValue &&
+                    searchValue !== formik.values.address && (
+                      <div className={styles.search_results_box}>
+                        {suggestedAddress.map((address) => {
+                          return (
+                            <div
+                              key={address.description}
+                              className={styles.search_results}
+                              onClick={() => {
+                                formik.setFieldValue(
+                                  "address",
+                                  address.description
+                                );
+                                setSearchValue(address.description);
+                              }}
+                            >
+                              {address.description}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  {formik.touched.address && formik.errors.address ? (
+                    <ErrorMessage>{formik.errors.address}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="Website"
+                    label="Website"
+                    {...formik.getFieldProps("website")}
+                  />
+                  {formik.touched.website && formik.errors.website ? (
+                    <ErrorMessage>{formik.errors.website}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="Description"
+                    label="Description"
+                    type="textarea"
+                    {...formik.getFieldProps("description")}
+                  />
+                  {formik.touched.description && formik.errors.description ? (
+                    <ErrorMessage>{formik.errors.description}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="Business license"
+                    label="Business license"
+                    {...formik.getFieldProps("businessLicenseId")}
+                  />
+                  {formik.touched.businessLicenseId &&
+                  formik.errors.businessLicenseId ? (
+                    <ErrorMessage>
+                      {formik.errors.businessLicenseId}
+                    </ErrorMessage>
+                  ) : null}
                   <Stack
                     direction="row"
                     spacing={2}
-                    className="dashedborder mb-3"
                     alignItems="center"
+                    className="dashedborder mb-3"
                   >
-                    <div className="img-view">{thumbs}</div>
-                    <div
-                      {...getRootProps({ className: "dropzone" })}
-                      className="w-100 py-2"
-                    >
-                      <input {...getInputProps()} />
-                      <p className="mb-0 p-0">
-                        Drag here or{" "}
-                        <strong className="color-blue">
-                          upload a license photo
-                        </strong>
-                      </p>
-                    </div>
+                    <AttachmentDragNDropInput
+                      handleDrop={(e) =>
+                        formik.setFieldValue("businessLicense", e)
+                      }
+                      single
+                      files={formik.values.businessLicense}
+                      deleteFile={(e) =>
+                        formik.setFieldValue("businessLicense", [])
+                      }
+                    />
                   </Stack>
-                  <Stack
-                    direction={{ xs: "column", lg: "row" }}
-                    spacing={{ xs: 2, lg: 2 }}
-                    alignItems={{ xs: "start", lg: "center" }}
-                    className="mb-3"
-                  >
-                    <label className="w-30">Registration certificate</label>
-                    <div className="w-70">
-                      <FormControl fullWidth size="small">
-                        <SelectInput
-                          value=""
-                          options={[
-                            {
-                              value: "",
-                              label: (
-                                <em
-                                  style={{
-                                    color: "#848484",
-                                    fontStyle: "normal",
-                                    fontWeight: 400,
-                                  }}
-                                >
-                                  Certificate number
-                                </em>
-                              ),
-                            },
-                            { value: "1", label: "Certificate" },
-                          ]}
-                          displayEmpty
-                        />
-                      </FormControl>
-                    </div>
-                  </Stack>
+                  {formik.touched.businessLicense &&
+                  formik.errors.businessLicense ? (
+                    <ErrorMessage>{formik.errors.businessLicense}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="Certificate number"
+                    label="Registration certificate"
+                    {...formik.getFieldProps("certificationNumber")}
+                  />
+                  {formik.touched.certificationNumber &&
+                  formik.errors.certificationNumber ? (
+                    <ErrorMessage>
+                      {formik.errors.certificationNumber}
+                    </ErrorMessage>
+                  ) : null}
                   <Stack
                     direction="row"
                     spacing={2}
-                    className="dashedborder mb-3"
                     alignItems="center"
+                    className="dashedborder mb-3"
                   >
-                    <div className="docpreveiw">
-                      {!files.length ? (
-                        <img src={IMAGES.Doc} alt="" />
-                      ) : (
-                        <>{thumbs}</>
-                      )}
-                    </div>
-
-                    <div
-                      {...getRootProps({ className: "dropzone" })}
-                      className="w-100"
-                    >
-                      <input {...getInputProps()} />
-                      <p>
-                        Drag here or{" "}
-                        <strong className="color-blue">
-                          upload another a certificate photo
-                        </strong>
-                      </p>
-                    </div>
+                    <AttachmentDragNDropInput
+                      handleDrop={(e) =>
+                        formik.setFieldValue("certification", e)
+                      }
+                      single
+                      files={formik.values.certification}
+                      deleteFile={(e) =>
+                        formik.setFieldValue("certification", [])
+                      }
+                    />
                   </Stack>
-                  <Stack
-                    direction={{ xs: "column", lg: "row" }}
-                    spacing={{ xs: 2, lg: 2 }}
-                    alignItems={{ xs: "start", lg: "center" }}
-                    className="mb-3"
-                  >
-                    <label className="w-30">Years of operating</label>
-                    <div className="w-70">
-                      <LabeledInput
-                        className="add-form-control"
-                        type="text"
-                        placeholder="5"
-                      />
-                    </div>
-                  </Stack>
-                  <Stack
-                    direction={{ xs: "column", lg: "row" }}
-                    spacing={{ xs: 2, lg: 2 }}
-                    alignItems={{ xs: "start", lg: "center" }}
-                    className="mb-3"
-                  >
-                    <label className="w-30">No. of jobs as experience</label>
-                    <div className="w-70">
-                      <LabeledInput
-                        className="add-form-control"
-                        type="text"
-                        placeholder="15"
-                      />
-                    </div>
-                  </Stack>
+                  {formik.touched.certification &&
+                  formik.errors.certification ? (
+                    <ErrorMessage>{formik.errors.certification}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="Years of operating"
+                    label="Years of operating"
+                    {...formik.getFieldProps("yearsOfOperating")}
+                  />
+                  {formik.touched.yearsOfOperating &&
+                  formik.errors.yearsOfOperating ? (
+                    <ErrorMessage>
+                      {formik.errors.yearsOfOperating}
+                    </ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
+                    placeholder="No. of jobs as experience"
+                    label="No. of jobs as experience"
+                    {...formik.getFieldProps("noOfJobsAsExperience")}
+                  />
+                  {formik.touched.noOfJobsAsExperience &&
+                  formik.errors.noOfJobsAsExperience ? (
+                    <ErrorMessage>
+                      {formik.errors.noOfJobsAsExperience}
+                    </ErrorMessage>
+                  ) : null}
                   <FormGroup
                     row
                     aria-labelledby="demo-row-radio-buttons-group-label"
                     name="row-radio-buttons-group"
                   >
                     <FormControlReminder
-                      value="wish"
+                      onChange={(e) =>
+                        formik.setFieldValue(
+                          "otherNotification",
+                          e.target.checked
+                        )
+                      }
+                      checked={formik.values.otherNotification}
                       control={<CheckboxInput />}
                       label=" I wish to receive notifications and other related information from Koor"
                     />
@@ -324,14 +389,20 @@ function MyProfile() {
                     name="row-radio-buttons-group"
                   >
                     <FormControlReminder
-                      value="wish"
+                      onChange={(e) =>
+                        formik.setFieldValue(
+                          "marketingInformationNotification",
+                          e.target.checked
+                        )
+                      }
+                      checked={formik.values.marketingInformationNotification}
                       control={<CheckboxInput />}
-                      label=" I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
+                      label="I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
                     />
                   </FormGroup>
                   <div className="text-center mt-3">
                     <OutlinedButton
-                      onClick={handleClickOpen}
+                      type="submit"
                       variant="outlined"
                       title="update info"
                     />
@@ -357,35 +428,44 @@ function MyProfile() {
                 },
               }}
             >
-              <UploadFile
+              <ProfilePicInput
                 title="Your organization logo"
-                textcolor="#274593"
+                textColor="#274593"
                 color="#274593"
-                bgcolor="rgba(40, 71, 146, 0.1)"
+                bgColor="rgba(40, 71, 146, 0.1)"
+                // handleSave={handleProfilePicSave}
+                // image={currentUser.profileImage}
+                // loading={profilePicLoading === "loading"}
               />
             </CardContent>
           </Card>
         </Grid>
       </Grid>
       <DialogBox open={open} handleClose={handleClose}>
-        <UpdateInfo
-          title="Great!"
-          color="#274593"
-          bgcolor="#D5E3F6"
-          description={[
-            <>
-              <p>
-                Thank you for adding this important information. Our team will
-                review it and activate your account within 24 hours.{" "}
-              </p>
-              <p>Psst, it may happen even faster, stay tuned 😉</p>
-            </>,
-          ]}
-          buttonHover="rgba(40, 71, 146, 0.1)"
-          handleClose={handleClose}
-          buttontext="Got it"
-          icon={<SVG.AlertCheckICon />}
-        />
+        <div className="add-content">
+          <h2 className="mb-4">Great!</h2>
+          <>
+            <div>
+              <NoItem
+                bgColor="#D9D9D9"
+                color="#274593"
+                icon={<SVG.AlertCheckICon />}
+                description={
+                  <p>
+                    Thank you for adding this important information. Our team
+                    will review it and activate your account within 24 hours.{" "}
+                    <br />
+                    Psst, it may happen even faster, stay tuned 😉
+                  </p>
+                }
+              />
+            </div>
+          </>
+
+          <div className="text-center mt-4">
+            <OutlinedButton onClick={handleClose} title={<>Got It</>} />
+          </div>
+        </div>
       </DialogBox>
     </>
   );

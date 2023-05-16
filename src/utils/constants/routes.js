@@ -286,25 +286,31 @@ export const VENDOR_ROUTES = [
   {
     id: "myProfile",
     name: "My Profile",
-    path: "/my-profile-2",
+    path: "/my-profile",
     component: VendorMyProfile,
   },
   {
     id: "dashboard",
     name: "Dashboard",
-    path: "/dashboard-2",
+    path: "/dashboard",
     component: VendorDashboard,
   },
+  // {
+  //   id: "vendorAppliedTender",
+  //   name: "vendor saved Jobs",
+  //   path: "/tender/applied",
+  //   component: SavedJobs,
+  // },
   {
-    id: "vendorsavedJobs",
+    id: "vendorSavedJobs",
     name: "vendor saved Jobs",
-    path: "/job/saved",
+    path: "/tender/saved",
     component: SavedJobs,
   },
   {
     id: "chat",
     name: "chat",
-    path: "/chat-2",
+    path: "/chat",
     component: ChatBox,
   },
 ];
