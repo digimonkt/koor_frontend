@@ -25,6 +25,7 @@ import {
   searchJobs,
   searchTalent,
   searchTender,
+  searchVendor,
   setJobPage,
 } from "@redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
@@ -39,7 +40,6 @@ function Search() {
   const [searchType, setSearchType] = useState();
   const [searchPlaceHolder, setSearchPlaceHolder] = useState("Jobs");
   const Component = ComponentSelector(searchType);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
@@ -89,11 +89,14 @@ function Search() {
         setSearchPlaceHolder("Tenders");
         dispatch(searchTender(payload));
         break;
+      case SEARCH_TYPE.vendors:
+        setSearchPlaceHolder("Talents");
+        dispatch(searchVendor(payload));
+        break;
       default:
         break;
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
-  // console.log(search, page, totalPages, advanceFilter, searchType, orderBy, sortBy);
 
   const pagination = () => {
     return (

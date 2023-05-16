@@ -9,6 +9,7 @@ const initialState = {
   jobs: [],
   talents: [],
   tenders: [],
+  vendors: [],
   isSearching: true,
   totalItems: 0,
   totalPages: 1,
@@ -115,6 +116,34 @@ export const searchTender = createAsyncThunk(
     }
   }
 );
+export const searchVendor = createAsyncThunk(
+  "search/searchVendor",
+  async (data, { getState, rejectWithValue }) => {
+    const {
+      search: { page, limit, advanceFilter },
+    } = getState();
+    const payload = {
+      page,
+      limit,
+      ...advanceFilter,
+      ...data,
+    };
+    for (const key in payload) {
+      if (!payload[key]) {
+        delete payload[key];
+      }
+    }
+    const res = await searchUserByRole({
+      ...payload,
+      role: USER_ROLES.vendor,
+    });
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
 const searchSlice = createSlice({
   name: "search",
   initialState,
@@ -167,6 +196,20 @@ const searchSlice = createSlice({
       state.totalPages = pages;
     });
     builder.addCase(searchTender.rejected, (state, action) => {
+      state.isSearching = false;
+    });
+    // Vendor
+    builder.addCase(searchVendor.pending, (state, action) => {
+      state.isSearching = true;
+    });
+    builder.addCase(searchVendor.fulfilled, (state, action) => {
+      state.isSearching = false;
+      state.vendors = action.payload.results;
+      state.totalItems = action.payload.count;
+      const pages = Math.ceil(action.payload.count / state.limit);
+      state.totalPages = pages;
+    });
+    builder.addCase(searchVendor.rejected, (state, action) => {
       state.isSearching = false;
     });
   },
