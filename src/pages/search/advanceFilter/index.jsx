@@ -148,6 +148,14 @@ function AdvanceFilter({ searchType }) {
     }
   };
 
+  const getSearchVendorFilter = async () => {
+    // const data = await getSearchTenderFilterAPI();
+    // if (data.remote === "success") {
+      // setAllFilters([...data.data]);
+    // }
+     setAllFilters([...[]]);
+  };
+
   const handleSelectFilter = async (filter) => {
     console.log({ filter });
     setSelectedFilter(filter.id);
@@ -388,6 +396,9 @@ function AdvanceFilter({ searchType }) {
         break;
       case SEARCH_TYPE.tenders:
         getSearchTenderFilter();
+        break;
+      case SEARCH_TYPE.vendors:
+        getSearchVendorFilter();
         break;
       default:
         break;
