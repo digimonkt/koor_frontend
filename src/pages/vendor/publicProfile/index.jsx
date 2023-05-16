@@ -204,7 +204,7 @@ function PublicProfileComponent() {
                             contractsExperience.map((item, index) => "")
                           ) : (
                             <div>
-                              <NoRecordFoundAnimation title="No Work Experiences have been added by the user." />
+                              <NoRecordFoundAnimation title="No Contract Experiences have been added by the user." />
                             </div>
                           )}
                         </ul>
