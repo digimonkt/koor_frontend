@@ -454,7 +454,7 @@ function PublicProfileComponent() {
                         </Stack>
                       ) : (
                         <div>
-                          <NoRecordFoundAnimation title="No Work Experiences have been added by the user." />
+                          <NoRecordFoundAnimation title="No Sectors have been added by the user." />
                         </div>
                       )}
 
@@ -509,7 +509,7 @@ function PublicProfileComponent() {
                         </Stack>
                       ) : (
                         <div>
-                          <NoRecordFoundAnimation title="No Work Experiences have been added by the user." />
+                          <NoRecordFoundAnimation title="No Tags have been added by the user." />
                         </div>
                       )}
 
