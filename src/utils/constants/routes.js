@@ -68,6 +68,12 @@ const EmployerPublicProfile = lazy(() =>
     default: module.EmployerPublicProfile,
   }))
 );
+// employer
+const VendorPublicProfile = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorPublicProfile,
+  }))
+);
 const ManageJobs = lazy(() =>
   import("@pages/employer").then((module) => ({
     default: module.ManageJobs,
@@ -192,6 +198,12 @@ export const ROUTES = [
     name: "Employer Public Profile",
     path: "/employer/:userId/profile",
     component: EmployerPublicProfile,
+  },
+  {
+    id: "vendor-public-profile",
+    name: "Vendor Public Profile",
+    path: "/vendor/:userId/profile",
+    component: VendorPublicProfile,
   },
 ];
 

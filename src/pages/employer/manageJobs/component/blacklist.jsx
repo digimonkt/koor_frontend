@@ -1,48 +1,48 @@
 import { Card, CardContent, Stack } from "@mui/material";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
-import ApplicationCard from "@components/applicationCard";
-import { getRecentApplicationAPI } from "@api/employer";
-import dayjs from "dayjs";
-import { setTotalApplications } from "@redux/slice/employer";
+import { getBlacklistAPI } from "@api/employer";
+import { setTotalBlacklist } from "@redux/slice/employer";
 import { useDispatch } from "react-redux";
 import { NoDataFoundAnimation } from "@components/animations";
-import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
-function AllApplication() {
+import BlacklistCardSkeletonLoading from "@components/blacklistCard/blacklistCardSkeletonLoading";
+import BlacklistCard from "@components/blacklistCard";
+function Blacklist() {
   const dispatch = useDispatch();
-
-  const [recentApplication, setRecentApplication] = useState([]);
+  const [blacklistData, setBlacklistData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
-  const getRecentApplications = useCallback(async () => {
+  const getBlacklistData = useCallback(async () => {
     setIsLoading(true);
-    const res = await getRecentApplicationAPI({ search });
+    const res = await getBlacklistAPI({ search });
     if (res.remote === "success") {
-      setRecentApplication(res.data.results);
-      dispatch(setTotalApplications(res.data.count));
+      setBlacklistData(res.data.results);
+      dispatch(setTotalBlacklist(res.data.count));
     }
     setIsLoading(false);
   }, [search]);
+
   useEffect(() => {
-    getRecentApplications();
+    getBlacklistData();
   }, [isSearching]);
+
   return (
     <div className="py-3">
       <div className="mb-3">
         <Stack direction="row" spacing={0} className="searchjob-box">
           <input
             className="jobsearch"
-            placeholder="Search your jobs"
+            placeholder="Search Blacklist Candidate"
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) =>
               e.key === "Enter" ? setIsSearching(!isSearching) : null
             }
           />
           <button
-            onClick={() => setIsSearching(!isSearching)}
             className="jobt-btn-search"
+            onClick={() => setIsSearching(!isSearching)}
           >
             {<SVG.SearchIcon />}
           </button>
@@ -65,22 +65,16 @@ function AllApplication() {
           }}
         >
           {isLoading ? (
-            // skeleton loading need to be implemented
             [1, 2, 3].map((loader) => (
-              <ApplicationCardSkeletonLoading key={loader} />
+              <BlacklistCardSkeletonLoading key={loader} />
             ))
-          ) : !recentApplication.length ? (
-            <NoDataFoundAnimation title="You haven't received any job applications yet." />
+          ) : !blacklistData.length ? (
+            <NoDataFoundAnimation title="You haven't added any users to your blacklist yet" />
           ) : (
-            recentApplication.map((item, index) => (
-              <ApplicationCard
-                jobId={item.jobId}
-                details={item}
-                subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-                isDisabled={item.disabled}
-                isShortlisted={item.shortlistedAt}
-                isRejected={item.rejectedAt}
-                isBlacklisted={item.user.isBlacklisted}
+            blacklistData.map((item, index) => (
+              <BlacklistCard
+                details={item.user}
+                reason = {item.reason}
                 key={index}
               />
             ))
@@ -91,4 +85,4 @@ function AllApplication() {
   );
 }
 
-export default AllApplication;
+export default Blacklist;
