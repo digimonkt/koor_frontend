@@ -169,7 +169,7 @@ function MyProfileComponent() {
       formik.setFieldValue("organizationName", currentUser.name);
       formik.setFieldValue(
         "organizationType",
-        currentUser.profile.organizationType.id
+        currentUser.profile.organizationType?.id
       );
       formik.setFieldValue("country", currentUser.profile.country.id || "");
       formik.setFieldValue("city", currentUser.profile.city.id || "");

@@ -99,6 +99,11 @@ const VendorDashboard = lazy(() =>
     default: module.VendorDashboard,
   }))
 );
+const VendorSavedTenders = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorSavedTenders,
+  }))
+);
 
 // jobs
 const PostJobs = lazy(() =>
@@ -305,7 +310,7 @@ export const VENDOR_ROUTES = [
     id: "vendorSavedJobs",
     name: "vendor saved Jobs",
     path: "/tender/saved",
-    component: SavedJobs,
+    component: VendorSavedTenders,
   },
   {
     id: "chat",

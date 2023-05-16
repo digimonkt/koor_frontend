@@ -27,4 +27,7 @@ export const validateVendorAboutMe = Yup.object().shape({
     "Certification is required",
     (value) => !!value.length
   ),
+  website: Yup.string().url(
+    "Please enter a valid URL, e.g. https://www.example.com"
+  ),
 });

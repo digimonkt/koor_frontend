@@ -26,10 +26,16 @@ import { getCities, getCountries, getTenderSector } from "@redux/slice/choices";
 import NoItem from "@pages/jobSeeker/myProfile/noItem";
 import { useFormik } from "formik";
 import { useDebounce } from "usehooks-ts";
-import { GetSuggestedAddressAPI } from "@api/user";
+import { GetSuggestedAddressAPI, UpdateProfileImageAPI } from "@api/user";
 import styles from "./myProfile.module.css";
 import { ErrorMessage } from "@components/caption";
 import { validateVendorAboutMe } from "../validate";
+import { updateVendorAboutMeAPI } from "@api/vendor";
+import {
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+} from "react-phone-number-input";
+import { updateCurrentUser, setProfilePic } from "@redux/slice/user";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -55,8 +61,11 @@ export const SelectBox = styled(Select)`
 
 function MyProfile() {
   const dispatch = useDispatch();
-  const { countries, cities, sectors } = useSelector((state) => state.choices);
-
+  const {
+    auth: { currentUser },
+    choices: { countries, cities, sectors },
+  } = useSelector((state) => state);
+  const [profilePicLoading, setProfilePicLoading] = useState("");
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
@@ -67,6 +76,16 @@ function MyProfile() {
       setSuggestedAddress(res.data.predictions);
     }
   };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleToggleModel = () => {
+    if (Object.keys(formik.errors).length === 0) {
+      setOpen(!open);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       organizationName: "",
@@ -92,15 +111,114 @@ function MyProfile() {
       otherNotification: false,
     },
     validationSchema: validateVendorAboutMe,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const countryCode = values.mobileNumber.international.split(" ")[0];
+      const mobileNumber = (values.mobileNumber.value || "").replace(
+        countryCode,
+        ""
+      );
+      const payload = {
+        organization_name: values.organizationName,
+        organization_type: values.organizationType,
+        license_id: values.businessLicenseId,
+        license: values.businessLicense,
+        registration_number: values.certificationNumber,
+        certificate: values.certification,
+        market_information_notification:
+          values.marketingInformationNotification,
+        other_notification: values.otherNotification,
+        operating_years: values.yearsOfOperating,
+        jobs_experience: values.noOfJobsAsExperience,
+        description: values.description,
+        website: values.website,
+        address: values.address,
+        country: values.country,
+        city: values.city,
+        mobile_number: mobileNumber,
+        country_code: countryCode,
+      };
+      console.log({ payload, values });
+      const newFormData = new FormData();
+      for (const keys in payload) {
+        // using only for files only !
+        if (payload[keys].forEach) {
+          payload[keys].forEach((data) => {
+            if (payload[keys] instanceof File) {
+              newFormData.append(keys, data);
+            }
+          });
+        } else {
+          newFormData.append(keys, payload[keys]);
+        }
+      }
+
+      const response = await updateVendorAboutMeAPI(newFormData);
+      if (response.remote === "success") {
+        handleToggleModel();
+        dispatch(
+          updateCurrentUser({
+            name: values.organizationName,
+            mobileNumber,
+            countryCode,
+          })
+        );
+      }
     },
   });
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleProfilePicSave = async (file) => {
+    setProfilePicLoading("loading");
+    const newFormData = new FormData();
+    newFormData.append("profile_image", file);
+    dispatch(setProfilePic(URL.createObjectURL(file)));
+    const res = await UpdateProfileImageAPI(newFormData);
+    if (res.remote === "success") setProfilePicLoading("updated");
+    else setProfilePicLoading("error");
   };
 
+  useEffect(() => {
+    if (currentUser) {
+      const currentUserMobileNumber =
+        currentUser.countryCode && currentUser.mobileNumber
+          ? currentUser.countryCode + currentUser.mobileNumber
+          : "";
+      const newFormikState = {
+        organizationName: currentUser.name,
+        organizationType: currentUser.profile.organizationType?.id || "",
+        mobileNumber: {
+          national: currentUserMobileNumber
+            ? formatPhoneNumber(currentUserMobileNumber)
+            : "",
+          international: currentUserMobileNumber
+            ? formatPhoneNumberIntl(currentUserMobileNumber)
+            : "",
+          value: currentUserMobileNumber,
+        },
+        website: currentUser.profile.website,
+        country: currentUser.profile.country?.id || "",
+        city: currentUser.profile.city?.id || "",
+        address: currentUser.profile.address,
+        description: currentUser.profile.description,
+        businessLicenseId: currentUser.profile.licenseId,
+        businessLicense: currentUser.profile.licenseIdFile
+          ? [currentUser.profile.licenseIdFile]
+          : [],
+        certificationNumber: currentUser.profile.registrationNumber,
+        certification: currentUser.profile.registrationCertificate
+          ? [currentUser.profile.registrationCertificate]
+          : [],
+        yearsOfOperating: currentUser.profile.operatingYears,
+        noOfJobsAsExperience: currentUser.profile.jobsExperience,
+        marketingInformationNotification:
+          currentUser.profile.marketInformationNotification,
+        otherNotification: !!currentUser.profile.other_notification,
+      };
+      setSearchValue(currentUser.profile.address);
+      for (const key in newFormikState) {
+        formik.setFieldValue(key, newFormikState[key]);
+      }
+    }
+  }, [currentUser]);
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -433,9 +551,9 @@ function MyProfile() {
                 textColor="#274593"
                 color="#274593"
                 bgColor="rgba(40, 71, 146, 0.1)"
-                // handleSave={handleProfilePicSave}
-                // image={currentUser.profileImage}
-                // loading={profilePicLoading === "loading"}
+                handleSave={handleProfilePicSave}
+                image={currentUser.profileImage}
+                loading={profilePicLoading === "loading"}
               />
             </CardContent>
           </Card>

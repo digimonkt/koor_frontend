@@ -3,10 +3,15 @@ import { OutlinedButton } from "@components/button";
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 // import { RECENT_ITEMS } from "@pages/employer/dashboard/recentHelper";
 // import ApplicationCard from "@components/applicationCard";
-import React from "react";
+import React, { useEffect } from "react";
 import { vendorCardData } from "./vendorCardData";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/vendor/my-profile");
+  });
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2} sx={{ mb: 4 }}>
