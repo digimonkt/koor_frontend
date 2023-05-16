@@ -31,6 +31,10 @@ function ManageJobsComponent() {
       component: Blacklist,
     },
   ]);
+  const handleBlackList = () => {
+    console.log("ok");
+  };
+
   useEffect(() => {
     setTabs((prevState) => {
       const newTabs = prevState.map((tab) => {
@@ -74,6 +78,9 @@ function ManageJobsComponent() {
           }
           id={`simple-tab-${1}`}
           aria-controls={`simple-tabpanel-${1}`}
+          onClick={() => {
+            handleBlackList();
+          }}
         />
 
         <div className="ms-auto">

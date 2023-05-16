@@ -1,6 +1,6 @@
 import { changeApplicationStatusAPI } from "@api/employer";
 import { SVG } from "@assets/svg";
-import { Button } from "@mui/material";
+import { Avatar, Box, Button } from "@mui/material";
 import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -10,8 +10,13 @@ import DialogBox from "@components/dialogBox";
 import { LabeledInput } from "@components/input";
 import { FilledButton } from "@components/button";
 import { setSuccessToast } from "@redux/slice/toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "@components/loader";
+import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
+import { generateFileUrl } from "@utils/generateFileUrl";
+import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
+import { setTotalBlacklist } from "@redux/slice/employer";
+
 function ApplicationOptions({
   allOptions,
   applicationId,
@@ -20,6 +25,8 @@ function ApplicationOptions({
   isRejected,
   isBlacklisted,
   isInterviewPlanned,
+  userImage,
+  userName,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,6 +40,7 @@ function ApplicationOptions({
   const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
   const [interviewTime, setInterviewTime] = useState("");
   const [loading, setLoading] = useState(false);
+  const { totalBlacklist } = useSelector((state) => state.employer);
   useEffect(() => {
     setShortlist(!!isShortlisted);
     setRejected(!!isRejected);
@@ -58,6 +66,7 @@ function ApplicationOptions({
       setLoading(false);
       setIsInterviewPlanning(false);
       if (action === "blacklisted") {
+        dispatch(setTotalBlacklist(totalBlacklist + 1));
         setIsBlacklisting(false);
       }
     }
@@ -157,12 +166,32 @@ function ApplicationOptions({
         handleClose={() => setIsBlacklisting(false)}
       >
         <div>
-          <h3>Are you sure you want to blacklist this applicant?</h3>
+          <Box sx={{ display: "flex", width: "39%", margin: "auto" }}>
+            <div>Blacklist </div>
+            <div>
+              {" "}
+              <Avatar
+                src={generateFileUrl(userImage)}
+                sx={{
+                  width: "40px",
+                  height: "40px",
+                  position: "relative",
+                  top: "-10px",
+                  padding: "5px",
+                }}
+              />{" "}
+            </div>
+            <div>{userName}</div>
+          </Box>
+
+          <p>
+            Are you sure you want to blacklist {userName}? They will not be able
+            to apply for your jobs anymore until you un-blacklist them.
+          </p>
           <div className="dialog-reason">
-            <LabeledInput
-              type="textarea"
-              placeholder="Enter your reason"
-              limit={250}
+            <LabeledRadioInputComponent
+              title="Select Reason"
+              options={BLACKLIST_REASON_LIST}
               onChange={(e) => setBlackListReason(e.target.value)}
               value={blackListReason}
             />

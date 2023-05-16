@@ -118,6 +118,8 @@ const ApplicationCard = ({
           isRejected={isRejected}
           isBlacklisted={isBlacklisted}
           isInterviewPlanned={isInterviewPlanned}
+          userImage={details?.user?.image?.path || ""}
+          userName={details?.user?.name || details?.user?.email}
         />
       </Stack>
     </Stack>
