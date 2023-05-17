@@ -17,7 +17,7 @@ function VendorSearchComponent() {
           );
         })
       ) : !vendors.length ? (
-        <NoDataFoundAnimation title="We apologize, but there doesn't seem to be any available talent matching your search criteria." />
+        <NoDataFoundAnimation title="We apologize, but there doesn't seem to be any available vendor  matching your search criteria." />
       ) : (
         vendors.map((vendor) => {
           return (

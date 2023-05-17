@@ -1,2 +1,2 @@
 import VendorSearchComponent from "./vendorSearch";
-export const vendorSearch = VendorSearchComponent;
+export const VendorSearch = VendorSearchComponent;
