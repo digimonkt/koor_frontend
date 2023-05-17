@@ -52,7 +52,7 @@ function Sidebar() {
           <SVG.UserIcon />
         </Avatar>
         <h1>{currentUser.name}</h1>
-        <p>{mobileNumber}</p>
+        <p style={{ marginBottom: "5px" }}>{mobileNumber}</p>
         <p>{currentUser.email}</p>
       </div>
       <div className="sidebar-scroll">
