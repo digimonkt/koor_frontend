@@ -98,7 +98,7 @@ function MyProfile() {
       countryCode: "",
       country: "",
       city: "",
-      address: "",
+      address: "https://",
       website: "",
       description: "",
       businessLicenseId: "",
@@ -121,9 +121,9 @@ function MyProfile() {
         organization_name: values.organizationName,
         organization_type: values.organizationType,
         license_id: values.businessLicenseId,
-        license: values.businessLicense,
+        license: values.businessLicense[0],
         registration_number: values.certificationNumber,
-        certificate: values.certification,
+        certificate: values.certification[0],
         market_information_notification:
           values.marketingInformationNotification,
         other_notification: values.otherNotification,
@@ -153,7 +153,7 @@ function MyProfile() {
               newFormData.append(keys, data);
             }
           });
-        } else {
+        } else if (!payload[keys].id) {
           newFormData.append(keys, payload[keys]);
         }
       }
@@ -166,6 +166,16 @@ function MyProfile() {
             name: values.organizationName,
             mobileNumber,
             countryCode,
+            profile: {
+              website: values.website,
+              licenseId: values.businessLicenseId,
+              licenseIdFile: values.businessLicense[0],
+              registrationNumber: values.certificationNumber,
+              registrationCertificate: values.certification[0],
+              marketingInformationNotification:
+                values.marketingInformationNotification,
+              otherNotification: values.otherNotification,
+            },
           })
         );
       }
@@ -217,7 +227,7 @@ function MyProfile() {
         noOfJobsAsExperience: currentUser.profile.jobsExperience,
         marketingInformationNotification:
           currentUser.profile.marketInformationNotification,
-        otherNotification: !!currentUser.profile.other_notification,
+        otherNotification: !!currentUser.profile.otherNotification,
       };
       setSearchValue(currentUser.profile.address);
       for (const key in newFormikState) {
