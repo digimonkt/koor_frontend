@@ -90,7 +90,7 @@ function Search() {
         dispatch(searchTender(payload));
         break;
       case SEARCH_TYPE.vendors:
-        setSearchPlaceHolder("Talents");
+        setSearchPlaceHolder("Vendors");
         dispatch(searchVendor(payload));
         break;
       default:

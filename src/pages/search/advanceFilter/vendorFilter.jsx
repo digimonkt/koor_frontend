@@ -1,14 +1,12 @@
 import { ErrorMessage } from "@components/caption";
-import { DateInput, SelectInput } from "@components/input";
-import { FormControl, Grid, Stack } from "@mui/material";
-// import { JobFormControl } from "@pages/jobs/postJobs/style";
+import { LabeledInput, SelectInput } from "@components/input";
+import { FormControl, Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
-// import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { getTenderSector } from "@redux/slice/choices";
 
-function TenderFilter({ formik, footer }) {
+function VendorFilter({ formik, footer }) {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!sectors.data.length) {
@@ -36,7 +34,7 @@ function TenderFilter({ formik, footer }) {
                 <SelectInput
                   multiple
                   title="Category"
-                  placeholder="Select a Tender category"
+                  placeholder="Select Category"
                   options={(tenderCategories.data || []).map((jobCategory) => ({
                     value: jobCategory.id,
                     label: jobCategory.title,
@@ -84,7 +82,7 @@ function TenderFilter({ formik, footer }) {
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   multiple
-                  title="Opportunity Type"
+                  title="Type"
                   defaultValue=""
                   placeholder="Opportunity Type"
                   options={(opportunityTypes.data || []).map(
@@ -172,56 +170,22 @@ function TenderFilter({ formik, footer }) {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <div
-              style={{ display: "flex", flexDirection: "column" }}
-              className="filter_input"
-            >
-              <Stack
-                direction="row"
-                alignItems="center"
-                justifyContent="space-between"
-                className="mb-2"
-              >
-                <label className="mb-1 d-inline-block">Deadline</label>
-              </Stack>
-              <DateInput
-                onChange={(e) => formik.setFieldValue("deadline", e)}
-                value={formik.values.deadline}
-                onBlur={formik.getFieldProps("deadline").onBlur}
-              />
-              {formik.touched.deadline && formik.errors.deadline ? (
-                <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
-              ) : null}
-            </div>
-          </Grid>
-
-          {/* <Grid item xs={4} lg={3}>
-            <CurrencyInput
-              currency="USD"
-              title="Budget"
-              optionsValues={{
-                currency: "USD",
-                input: formik.getFieldProps("budgetMin"),
-              }}
-              errors={{
-                currency: "USD",
-                input: formik.touched.budgetMin ? formik.errors.budgetMin : "",
-              }}
+            <LabeledInput
+              title="Years in market"
+              className="add-form-control"
+              placeholder="Numbers of years"
+              {...formik.getFieldProps("yearsInMarket")}
             />
+
+            {formik.touched.yearsInMarket && formik.errors.yearsInMarket ? (
+              <ErrorMessage>{formik.errors.yearsInMarket}</ErrorMessage>
+            ) : null}
           </Grid>
-          <Grid item xs={4} sx={{ marginTop: "7px" }}>
-            <FormGroup row sx={{ marginLeft: "7px" }}>
-              <LabeledInput
-                placeholder="To"
-                {...formik.getFieldProps("budgetMax")}
-              />
-            </FormGroup>
-          </Grid> */}
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>
         <h5>
-          <b>{totalItems}</b> tenders found
+          <b>{totalItems}</b> Vendors found
         </h5>
         <div className={`${styles.savesearch}`}>{footer}</div>
       </div>
@@ -229,4 +193,4 @@ function TenderFilter({ formik, footer }) {
   );
 }
 
-export default TenderFilter;
+export default VendorFilter;
