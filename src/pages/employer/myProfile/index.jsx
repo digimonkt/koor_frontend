@@ -169,8 +169,13 @@ function MyProfileComponent() {
       formik.setFieldValue("organizationName", currentUser.name);
       formik.setFieldValue(
         "organizationType",
-        currentUser.profile.organizationType
+        currentUser.profile.organizationType?.id
       );
+      formik.setFieldValue("country", currentUser.profile.country.id || "");
+      formik.setFieldValue("city", currentUser.profile.city.id || "");
+      formik.setFieldValue("address", currentUser.profile.address);
+      setSearchValue(currentUser.profile.address);
+      formik.setFieldValue("description", currentUser.profile.description);
       formik.setFieldValue("licenseId", currentUser.profile.licenseId);
       formik.setFieldValue(
         "license",
@@ -300,6 +305,7 @@ function MyProfileComponent() {
                     {...formik.getFieldProps("city")}
                   />
                   <HorizontalLabelInput
+                    label="Address"
                     type="text"
                     placeholder="Address"
                     className="add-form-control"

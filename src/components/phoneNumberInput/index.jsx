@@ -40,7 +40,7 @@ function PhoneNumberInputComponent({
           onChange({
             national: formatPhoneNumber(e),
             international: formatPhoneNumberIntl(e),
-            value: e,
+            value: e || "",
           })
         }
       />

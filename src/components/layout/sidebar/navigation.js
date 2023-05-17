@@ -76,20 +76,21 @@ const VendorNavigationOptions = Object.freeze([
     icon: SVG.DashboardIcon,
     title: "Dashboard",
     id: "dashboard",
-    to: "/dashboard-2",
+    to: "/dashboard",
+    isDisable: true,
   },
   {
-    to: "/my-profile-2",
+    to: "/my-profile",
     icon: SVG.ProfileIcon,
     title: "My Profile",
     id: "myProfile",
     isDisable: false,
   },
   {
-    to: "/job/saved",
+    to: "/tender/saved",
     icon: SVG.UnSave,
-    title: "Saved Jobs",
-    id: "savedJobs",
+    title: "Saved Tenders",
+    id: "savedTenders",
     isDisable: false,
   },
 
@@ -104,7 +105,7 @@ const VendorNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
-    to: "/chat-2",
+    to: "/chat",
   },
 ]);
 
@@ -125,12 +126,10 @@ export const navigationOptions = (role) => {
         })
       );
     case USER_ROLES.vendor:
-      return VendorNavigationOptions.filter((item) => !item.isDisable).map(
-        (option) => ({
-          ...option,
-          to: `/vendor${option.to}`,
-        })
-      );
+      return VendorNavigationOptions.map((option) => ({
+        ...option,
+        to: `/vendor${option.to}`,
+      }));
     default:
       return [];
   }

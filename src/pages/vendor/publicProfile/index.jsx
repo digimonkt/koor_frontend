@@ -1,8 +1,6 @@
-import { getEmployerActiveJobsAPI } from "@api/employer";
 import { GetUserDetailsAPI } from "@api/user";
 import { SVG } from "@assets/svg";
-import { NoRecordFoundAnimation } from "@components/animations";
-import JobCard from "@components/jobCard";
+
 import {
   Box,
   CardContent,
@@ -19,10 +17,14 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
+import { NoRecordFoundAnimation } from "@components/animations";
 
 function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const contractsExperience = [];
+  const vendorSectors = [];
+  const vendorTags = [];
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
     jobPreferences: {},
@@ -36,7 +38,7 @@ function PublicProfileComponent() {
     skills: [],
     workExperiences: [],
   });
-  const [jobList, setJobList] = useState([]);
+
   const getUserDetails = async (userId) => {
     setIsLoading(true);
     const res = await GetUserDetailsAPI({ userId });
@@ -45,19 +47,10 @@ function PublicProfileComponent() {
     }
     setIsLoading(false);
   };
-  const getEmployersJob = async (userId) => {
-    const res = await getEmployerActiveJobsAPI({
-      employerId: userId,
-      limit: 3,
-    });
-    if (res.remote === "success") {
-      setJobList(res.data.results);
-    }
-  };
+
   useEffect(() => {
     const userId = params.userId;
     getUserDetails(userId);
-    getEmployersJob(userId);
   }, []);
   return (
     <Box sx={{ marginTop: "67px", py: 3 }}>
@@ -190,7 +183,7 @@ function PublicProfileComponent() {
                               fontWeight: "600",
                             }}
                           >
-                            Active Jobs
+                            Contracts Experience
                           </Typography>
                           <Typography
                             variant="string"
@@ -207,24 +200,11 @@ function PublicProfileComponent() {
                           </Typography>
                         </div>
                         <ul className="listitems">
-                          {jobList.length ? (
-                            jobList.map((item, index) => (
-                              <li
-                                key={index}
-                                style={{
-                                  borderBottom:
-                                    index !==
-                                    userDetails.workExperiences.length - 1
-                                      ? "1px solid #cacaca"
-                                      : "",
-                                }}
-                              >
-                                <JobCard jobDetails={item} />
-                              </li>
-                            ))
+                          {contractsExperience.length ? (
+                            contractsExperience.map((item, index) => "")
                           ) : (
                             <div>
-                              <NoRecordFoundAnimation title="No Work Experiences have been added by the user." />
+                              <NoRecordFoundAnimation title="No Contract Experiences have been added by the user." />
                             </div>
                           )}
                         </ul>
@@ -424,17 +404,116 @@ function PublicProfileComponent() {
                         </Stack>
                       ) : null}
                       <Divider sx={{ borderColor: "#cacaca" }} />
-                      <Box
+                    </Stack>
+                  </Box>
+                  <Box sx={{ mt: 3 }}>
+                    <Stack direction={"column"} spacing={2}>
+                      <Typography
+                        variant="h6"
                         sx={{
-                          background: "#F2F2F2",
-                          height: "300px",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
+                          fontSize: "26px",
+                          fontFamily: "Bahnschrift",
+                          fontWeight: "600",
+                          mb: 2,
                         }}
                       >
-                        ADVERTISEMENT
-                      </Box>
+                        Sectors
+                      </Typography>
+                      {vendorSectors.length ? (
+                        <Stack
+                          direction={"row"}
+                          spacing={2}
+                          alignItems={"center"}
+                        >
+                          <Box
+                            sx={{
+                              background: "#FEEFD3",
+                              borderRadius: "5px",
+                              p: 1,
+                              color: "#EEA23D",
+                              width: "40px",
+                              height: "40px",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <SVG.Phone />
+                          </Box>
+                          <Box>
+                            <Typography
+                              sx={{
+                                color: "#848484",
+                                fontFamily: "Poppins",
+                                fontSize: "12px",
+                              }}
+                            >
+                              Mobile
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      ) : (
+                        <div>
+                          <NoRecordFoundAnimation title="No Sectors have been added by the user." />
+                        </div>
+                      )}
+
+                      <Divider sx={{ borderColor: "#cacaca" }} />
+                    </Stack>
+                  </Box>
+                  <Box sx={{ mt: 3 }}>
+                    <Stack direction={"column"} spacing={2}>
+                      <Typography
+                        variant="h6"
+                        sx={{
+                          fontSize: "26px",
+                          fontFamily: "Bahnschrift",
+                          fontWeight: "600",
+                          mb: 2,
+                        }}
+                      >
+                        Tags
+                      </Typography>
+                      {vendorTags.length ? (
+                        <Stack
+                          direction={"row"}
+                          spacing={2}
+                          alignItems={"center"}
+                        >
+                          <Box
+                            sx={{
+                              background: "#FEEFD3",
+                              borderRadius: "5px",
+                              p: 1,
+                              color: "#EEA23D",
+                              width: "40px",
+                              height: "40px",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <SVG.Phone />
+                          </Box>
+                          <Box>
+                            <Typography
+                              sx={{
+                                color: "#848484",
+                                fontFamily: "Poppins",
+                                fontSize: "12px",
+                              }}
+                            >
+                              Mobile
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      ) : (
+                        <div>
+                          <NoRecordFoundAnimation title="No Tags have been added by the user." />
+                        </div>
+                      )}
+
+                      <Divider sx={{ borderColor: "#cacaca" }} />
                     </Stack>
                   </Box>
                 </Grid>

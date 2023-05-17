@@ -219,13 +219,7 @@ function AuthLayout({
                 },
               }}
             >
-              <Card
-                sx={{
-                  "@media(max-width:992px)": {
-                    borderRadius: "20px 20px 0px 0px !important",
-                  },
-                }}
-              >
+              <Card>
                 <CardContent
                   sx={{
                     padding: `75px 60px ${!role ? "!important" : ""}`,

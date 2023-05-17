@@ -1,12 +1,17 @@
 import { OutlinedButton } from "@components/button";
-import { AreaChart, DonutChart } from "@components/charts";
+// import { AreaChart, DonutChart } from "@components/charts";
 import { Card, CardContent, Grid, Stack } from "@mui/material";
-import { RECENT_ITEMS } from "@pages/employer/dashboard/recentHelper";
-import ApplicationCard from "@components/applicationCard";
-import React from "react";
+// import { RECENT_ITEMS } from "@pages/employer/dashboard/recentHelper";
+// import ApplicationCard from "@components/applicationCard";
+import React, { useEffect } from "react";
 import { vendorCardData } from "./vendorCardData";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/vendor/my-profile");
+  });
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2} sx={{ mb: 4 }}>
@@ -52,7 +57,7 @@ function Dashboard() {
               }}
             >
               <div className="add-content">
-                <AreaChart title="Job posts analytics" />
+                {/* <AreaChart title="Job posts analytics" /> */}
               </div>
             </CardContent>
           </Card>
@@ -74,9 +79,7 @@ function Dashboard() {
                 },
               }}
             >
-              <div className="add-content">
-                <DonutChart />
-              </div>
+              <div className="add-content">{/* <DonutChart /> */}</div>
             </CardContent>
           </Card>
         </Grid>
@@ -106,7 +109,7 @@ function Dashboard() {
                 >
                   <h3>Vendor Recent </h3>
                 </Stack>
-                {RECENT_ITEMS.map((item, index) => (
+                {/* {RECENT_ITEMS.map((item, index) => (
                   <ApplicationCard
                     image={item.img}
                     title={item.title}
@@ -119,7 +122,7 @@ function Dashboard() {
                     sx={{ mb: 0 }}
                     url="#!"
                   />
-                ))}
+                ))} */}
 
                 <div className="text-center mt-4">
                   <OutlinedButton

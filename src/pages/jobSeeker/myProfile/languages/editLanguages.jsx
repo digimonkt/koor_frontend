@@ -38,12 +38,12 @@ function EditLanguages({
     validationSchema: validateEditLanguage,
     onSubmit: async (values) => {
       setLoading(true);
+      const payload = {
+        language: values.language.id,
+        spoken: values.spoken,
+        written: values.written,
+      };
       if (!currentSelected) {
-        const payload = {
-          language: values.language.id,
-          spoken: values.spoken,
-          written: values.written,
-        };
         const res = await addLanguageDetailsAPI(payload);
         if (res.remote === "success") {
           dispatch(setSuccessToast("Language Added Successfully"));
@@ -63,19 +63,15 @@ function EditLanguages({
         handleSubmit();
       } else {
         const res = await updateLanguageDetailsAPI({
-          ...values,
+          ...payload,
           id: currentSelected.id,
         });
         if (res.remote === "success") {
           dispatch(setSuccessToast("Language Updated Successfully"));
           dispatch(
             updateLanguageRecord({
+              ...values,
               id: currentSelected.id,
-              language: languages.data.find(
-                (language) => language.id === values.language
-              ),
-              written: values.written,
-              spoken: values.spoken,
             })
           );
         } else {

@@ -68,6 +68,12 @@ const EmployerPublicProfile = lazy(() =>
     default: module.EmployerPublicProfile,
   }))
 );
+// employer
+const VendorPublicProfile = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorPublicProfile,
+  }))
+);
 const ManageJobs = lazy(() =>
   import("@pages/employer").then((module) => ({
     default: module.ManageJobs,
@@ -97,6 +103,11 @@ const VendorMyProfile = lazy(() =>
 const VendorDashboard = lazy(() =>
   import("@pages/vendor").then((module) => ({
     default: module.VendorDashboard,
+  }))
+);
+const VendorSavedTenders = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorSavedTenders,
   }))
 );
 
@@ -187,6 +198,12 @@ export const ROUTES = [
     name: "Employer Public Profile",
     path: "/employer/:userId/profile",
     component: EmployerPublicProfile,
+  },
+  {
+    id: "vendor-public-profile",
+    name: "Vendor Public Profile",
+    path: "/vendor/:userId/profile",
+    component: VendorPublicProfile,
   },
 ];
 
@@ -286,25 +303,31 @@ export const VENDOR_ROUTES = [
   {
     id: "myProfile",
     name: "My Profile",
-    path: "/my-profile-2",
+    path: "/my-profile",
     component: VendorMyProfile,
   },
   {
     id: "dashboard",
     name: "Dashboard",
-    path: "/dashboard-2",
+    path: "/dashboard",
     component: VendorDashboard,
   },
+  // {
+  //   id: "vendorAppliedTender",
+  //   name: "vendor saved Jobs",
+  //   path: "/tender/applied",
+  //   component: SavedJobs,
+  // },
   {
-    id: "vendorsavedJobs",
+    id: "vendorSavedJobs",
     name: "vendor saved Jobs",
-    path: "/job/saved",
-    component: SavedJobs,
+    path: "/tender/saved",
+    component: VendorSavedTenders,
   },
   {
     id: "chat",
     name: "chat",
-    path: "/chat-2",
+    path: "/chat",
     component: ChatBox,
   },
 ];

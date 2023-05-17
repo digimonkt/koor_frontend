@@ -1,6 +1,7 @@
 import api from ".";
 import urlcat from "urlcat";
 import { transformTenderSavedFilter } from "./transform/vendor";
+import { transformTenderResponse } from "./transform/tender";
 export const saveTenderAPI = async (tenderId) => {
   const response = await api.request({
     url: urlcat("v1/users/vendor/tender/save/:tenderId", { tenderId }),
@@ -73,10 +74,46 @@ export const deleteSearchTenderFilterAPI = async (filterId) => {
 };
 
 export const updateSavedSearchTenderFilterAPI = async (filterId, status) => {
-    const data = { is_notification: status };
-    return await api.request({
-      url: urlcat("/v1/tenders/filter/:filterId", { filterId }),
-      method: "PUT",
-      data,
-    });
-  };
+  const data = { is_notification: status };
+  return await api.request({
+    url: urlcat("/v1/tenders/filter/:filterId", { filterId }),
+    method: "PUT",
+    data,
+  });
+};
+
+export const updateVendorAboutMeAPI = async (data) => {
+  const response = await api.request({
+    url: "/v1/users/vendor/about-me",
+    method: "PATCH",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data,
+  });
+  return response;
+};
+
+export const getSaveTenderAPI = async () => {
+  const response = await api.request({
+    url: "/v1/users/vendor/tender/save",
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        ...response.data,
+        results: response.data.results.map((result) => {
+          return {
+            id: result.id,
+            tender: transformTenderResponse({
+              results: [result.tender],
+            }).results[0],
+          };
+        }),
+      },
+    };
+  }
+  return response;
+};

@@ -11,21 +11,30 @@ export const transformGetUserDetails = (data) => {
     role: data.role,
     profile: {
       description: data.profile.description || "",
+      country: data.profile.country || {},
+      city: data.profile.city || {},
       // job-seeker
       gender: data.profile.gender || "",
       dob: data.profile.dob || "",
-      country: data.profile.country || {},
-      city: data.profile.city || {},
       employmentStatus: data.profile.employment_status || "",
       highestEducation: data.profile.highest_education,
       marketInformationNotification:
         data.profile.market_information_notification || false,
       jobNotification: data.profile.job_notification,
       // employer
-      organizationType: data.profile.organization_type,
+      organizationType: data.profile.organization_type || {},
       licenseId: data.profile.license_id,
       licenseIdFile: data.profile.license_id_file,
       experience: data.profile.experience,
+      address: data.profile.address || "",
+
+      // vendor
+      registrationNumber: data.profile.registration_number || "",
+      registrationCertificate: data.profile.registration_certificate,
+      operatingYears: data.profile.operating_years || "",
+      jobsExperience: data.profile.jobs_experience || false,
+      website: data.profile.website || "",
+      otherNotification: data.profile.other_notification || false,
     },
     jobPreferences: data.job_preferences
       ? {

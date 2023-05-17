@@ -195,6 +195,9 @@ header {
 .menu {
   margin: 0px;
   padding: 0px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .menu li {
@@ -965,7 +968,6 @@ hr {
 
 .pricebox h4 small {
   display: inline-block;
-  margin-right: 3px;
 }
 
 .pricebox span {
