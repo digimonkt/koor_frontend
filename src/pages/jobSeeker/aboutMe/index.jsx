@@ -93,7 +93,10 @@ const AboutMe = (props) => {
         city: values.city,
         experience: Number(values.experience) || 0,
       };
-      if (payload.mobile_number === currentUser.mobileNumber) {
+      if (
+        payload.mobile_number === currentUser.mobileNumber ||
+        !payload.mobile_number
+      ) {
         delete payload.mobile_number;
         delete payload.country_code;
       }
@@ -173,7 +176,7 @@ const AboutMe = (props) => {
       marketInformationNotification:
         currentUser.profile.marketInformationNotification,
       jobNotification: currentUser.profile.jobNotification,
-      experience: currentUser.profile.experience,
+      experience: currentUser.profile.experience || "",
     };
     for (const key in newState) {
       formik.setFieldValue(key, newState[key]);
@@ -324,6 +327,9 @@ const AboutMe = (props) => {
                 }))}
                 {...formik.getFieldProps("country")}
               />
+              {formik.touched.country && formik.errors.country ? (
+                <ErrorMessage>{formik.errors.country}</ErrorMessage>
+              ) : null}
               <HorizontalLabelInput
                 label="City"
                 type="select"
@@ -339,12 +345,18 @@ const AboutMe = (props) => {
                 )}
                 {...formik.getFieldProps("city")}
               />
+              {formik.touched.city && formik.errors.city ? (
+                <ErrorMessage>{formik.errors.city}</ErrorMessage>
+              ) : null}
               <HorizontalLabelInput
                 type="number"
                 placeholder="Experience"
                 label="No of Experience (Years)"
                 {...formik.getFieldProps("experience")}
               />
+              {formik.touched.experience && formik.errors.experience ? (
+                <ErrorMessage>{formik.errors.experience}</ErrorMessage>
+              ) : null}
               <HorizontalLabelInput
                 label="Highest education (optional)"
                 type="select"
@@ -355,12 +367,19 @@ const AboutMe = (props) => {
                 }))}
                 {...formik.getFieldProps("highestEducation")}
               />
+              {formik.touched.highestEducation &&
+              formik.errors.highestEducation ? (
+                <ErrorMessage>{formik.errors.highestEducation}</ErrorMessage>
+              ) : null}
               <HorizontalLabelInput
                 label="Introduce yourself (optional)"
                 type="textarea"
                 placeholder="Write a few words about yourself"
                 {...formik.getFieldProps("description")}
               />
+              {formik.touched.description && formik.errors.description ? (
+                <ErrorMessage>{formik.errors.description}</ErrorMessage>
+              ) : null}
               <FormGroup
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"

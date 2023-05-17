@@ -52,7 +52,7 @@ function Sidebar() {
           <SVG.UserIcon />
         </Avatar>
         <h1>{currentUser.name}</h1>
-        <p>{mobileNumber}</p>
+        <p style={{ marginBottom: "5px" }}>{mobileNumber}</p>
         <p>{currentUser.email}</p>
       </div>
       <div className="sidebar-scroll">
@@ -69,6 +69,7 @@ function Sidebar() {
                     pointerEvents: option.isDisable && "none",
                     backgroundColor: option.isDisable && "#F2F3F4",
                     borderRadius: option.isDisable && "27px 0px 0px 27px",
+                    marginTop: "10px",
                   }}
                   to={option.to}
                   key={option.id}
