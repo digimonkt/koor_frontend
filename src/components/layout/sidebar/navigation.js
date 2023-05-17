@@ -77,6 +77,7 @@ const VendorNavigationOptions = Object.freeze([
     title: "Dashboard",
     id: "dashboard",
     to: "/dashboard",
+    isDisable: true,
   },
   {
     to: "/my-profile",
@@ -125,12 +126,10 @@ export const navigationOptions = (role) => {
         })
       );
     case USER_ROLES.vendor:
-      return VendorNavigationOptions.filter((item) => !item.isDisable).map(
-        (option) => ({
-          ...option,
-          to: `/vendor${option.to}`,
-        })
-      );
+      return VendorNavigationOptions.map((option) => ({
+        ...option,
+        to: `/vendor${option.to}`,
+      }));
     default:
       return [];
   }
