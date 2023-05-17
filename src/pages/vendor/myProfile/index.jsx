@@ -137,7 +137,13 @@ function MyProfile() {
         mobile_number: mobileNumber,
         country_code: countryCode,
       };
-      console.log({ payload, values });
+      if (
+        payload.mobile_number === currentUser.mobileNumber ||
+        !payload.mobile_number
+      ) {
+        delete payload.mobile_number;
+        delete payload.country_code;
+      }
       const newFormData = new FormData();
       for (const keys in payload) {
         // using only for files only !
