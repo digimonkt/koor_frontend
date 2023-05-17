@@ -8,7 +8,7 @@ import urlcat from "urlcat";
 import "./style.css";
 import DialogBox from "@components/dialogBox";
 import { LabeledInput } from "@components/input";
-import { FilledButton } from "@components/button";
+import { FilledButton, OutlinedButton } from "@components/button";
 import { setSuccessToast } from "@redux/slice/toast";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "@components/loader";
@@ -166,22 +166,40 @@ function ApplicationOptions({
         handleClose={() => setIsBlacklisting(false)}
       >
         <div>
-          <Box sx={{ display: "flex", width: "39%", margin: "auto" }}>
-            <div>Blacklist </div>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "28px",
+              fontWeight: 700,
+            }}
+          >
+            <div
+              style={{
+                marginRight: "15px",
+              }}
+            >
+              Blacklist{" "}
+            </div>
             <div>
-              {" "}
               <Avatar
                 src={generateFileUrl(userImage)}
                 sx={{
                   width: "40px",
                   height: "40px",
                   position: "relative",
-                  top: "-10px",
-                  padding: "5px",
+                  background: "white",
                 }}
               />{" "}
             </div>
-            <div>{userName}</div>
+            <div
+              style={{
+                marginLeft: "15px",
+              }}
+            >
+              {userName}
+            </div>
           </Box>
 
           <p>
@@ -190,14 +208,25 @@ function ApplicationOptions({
           </p>
           <div className="dialog-reason">
             <LabeledRadioInputComponent
-              title="Select Reason"
+              title="Select Reason: "
               options={BLACKLIST_REASON_LIST}
               onChange={(e) => setBlackListReason(e.target.value)}
               value={blackListReason}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                color: "black",
+                fontWeight: "500",
+              }}
             />
           </div>
-          <div className="dialog-reverse">
-            <FilledButton
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <OutlinedButton
               title="Blacklist"
               onClick={() =>
                 handlerChangeApplicationStatus(

@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
+import { USER_ROLES } from "@utils/enum";
 import React from "react";
+import { useSelector } from "react-redux";
 const FormLabelBox = styled(FormControlLabel)`
   & .MuiFormControlLabel-label {
     font-family: "Poppins";
@@ -12,6 +14,7 @@ const FormLabelBox = styled(FormControlLabel)`
   }
 `;
 function LabeledRadioInputComponent({ title, options, labelWeight, ...rest }) {
+  const { role } = useSelector((state) => state.auth);
   return (
     <Stack
       direction={{ xs: "column", lg: "column" }}
@@ -44,7 +47,8 @@ function LabeledRadioInputComponent({ title, options, labelWeight, ...rest }) {
                     sx={{
                       color: "#CACACA",
                       "&.Mui-checked": {
-                        color: "#EEA23D",
+                        color:
+                          role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
                       },
                     }}
                   />
