@@ -175,6 +175,18 @@ function MyProfile() {
               marketingInformationNotification:
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
+              description: values.description,
+              operatingYears: values.operatingYears,
+              noOfJobsAsExperience: values.noOfJobsAsExperience,
+              organizationType: sectors.data.find(
+                (sector) => sector.id === values.organizationType
+              ),
+
+              address: values.address,
+              country: countries.data.find(
+                (country) => country.id === values.country
+              ),
+              city: cities.data.find((city) => city.id === values.city),
             },
           })
         );
