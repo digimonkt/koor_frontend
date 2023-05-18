@@ -35,26 +35,26 @@ const ManageTenders = () => {
     <>
       <div className="manage-jobs">
         <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
-        <AntTab
-          label={
-            <Stack direction="row" spacing={1} alignItems="center">
-              <span>My Tenders</span>{" "}
-              <Chip label={totalTender} className="job-count" />
-            </Stack>
-          }
-          id={`simple-tab-${0}`}
-          aria-controls={`simple-tabpanel-${0}`}
-        />
-        <AntTab
-          label={
-            <Stack direction="row" spacing={1} alignItems="center">
-              <span>All Applications</span>{" "}
-              <Chip label={totalApplications} className="job-count" />
-            </Stack>
-          }
-          id={`simple-tab-${1}`}
-          aria-controls={`simple-tabpanel-${1}`}
-        />
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>My Tenders</span>{" "}
+                <Chip label={totalTender} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${0}`}
+            aria-controls={`simple-tabpanel-${0}`}
+          />
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>All Applications</span>{" "}
+                <Chip label={totalApplications} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${1}`}
+            aria-controls={`simple-tabpanel-${1}`}
+          />
           <div className="ms-auto">
             <OutlinedButton
               onClick={() => navigate("/employer/tender/post")}
