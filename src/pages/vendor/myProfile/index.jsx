@@ -160,6 +160,7 @@ function MyProfile() {
 
       const response = await updateVendorAboutMeAPI(newFormData);
       if (response.remote === "success") {
+        console.log({ values });
         handleToggleModel();
         dispatch(
           updateCurrentUser({
@@ -268,6 +269,7 @@ function MyProfile() {
       getSuggestedAddress(debouncedSearchValue);
     }
   }, [debouncedSearchValue]);
+  console.log({ currentUser });
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
