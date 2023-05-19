@@ -27,6 +27,9 @@ const VerifyOTP = lazy(() =>
 const ResetPassword = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.ResetPassword }))
 );
+const TenderDetails = lazy(() =>
+  import("@pages/tenders").then((module) => ({ default: module.TenderDetails }))
+);
 
 // notification
 const Notification = lazy(() => import("@pages/notification"));
@@ -174,6 +177,12 @@ export const ROUTES = [
     name: "Job Details",
     path: "/jobs/details/:jobId",
     component: JobDetails,
+  },
+  {
+    id: "tenderDetails",
+    name: "Tender Details",
+    path: "/tender/details/:tenderId",
+    component: TenderDetails,
   },
   {
     id: "home",
