@@ -32,7 +32,7 @@ export const transformGetUserDetails = (data) => {
       registrationNumber: data.profile.registration_number || "",
       registrationCertificate: data.profile.registration_certificate,
       operatingYears: data.profile.operating_years || "",
-      jobsExperience: data.profile.jobs_experience || false,
+      jobsExperience: data.profile.jobs_experience || "",
       website: data.profile.website || "",
       otherNotification: data.profile.other_notification || false,
     },
