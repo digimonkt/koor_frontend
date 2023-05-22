@@ -136,6 +136,11 @@ const ApplyForJob = lazy(() =>
     default: module.ApplyForJob,
   }))
 );
+const ApplyForTender = lazy(() =>
+  import("@pages/tenders").then((module) => ({
+    default: module.ApplyForTender,
+  }))
+);
 const Search = lazy(() => import("@pages/search"));
 // prefix => `/`
 export const ROUTES = [
@@ -258,6 +263,12 @@ export const AUTHENTICATED_ROUTES = [
     name: "Apply Job",
     path: "/job/apply/:jobId",
     component: ApplyForJob,
+  },
+  {
+    id: "applyTender",
+    name: "Apply Tender",
+    path: "/tender/apply/:tenderId",
+    component: ApplyForTender,
   },
   {
     id: "notification",
