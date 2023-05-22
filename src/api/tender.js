@@ -69,7 +69,7 @@ export const getTenderSuggestionAPI = async (tenderId) => {
 
 export const applyForTenderAPI = async (tenderId, data) => {
   const response = await api.request({
-    url: urlcat("/v1/users/vendor/tender/apply/:tender", { tenderId }),
+    url: urlcat("/v1/users/vendor/tender/apply/:tenderId", { tenderId }),
     method: "POST",
     data,
     headers: {

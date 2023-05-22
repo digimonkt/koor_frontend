@@ -18,6 +18,8 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import DialogBox from "@components/dialogBox";
 import ApplySuccessfully from "./applySuccessfully";
 import { useDispatch } from "react-redux";
+import CancelApply from "@pages/jobs/applyForJob/cancelApply";
+import { applyTenderValidationSchema } from "./validator";
 function ApplyForTender() {
   const navigate = useNavigate();
   const params = useParams();
@@ -51,11 +53,11 @@ function ApplyForTender() {
     isApplied: false,
     isSaved: false,
   });
+  const [isCanceling, setIsCanceling] = useState(false);
   const [hide, setHide] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
-    console.log({ res });
     if (res.remote === "success") {
       setDetails(res.data);
     }
@@ -67,17 +69,15 @@ function ApplyForTender() {
       attachments: [],
       attachmentsRemove: [],
     },
-    // validationSchema: applyJobValidationSchema,
+    validationSchema: applyTenderValidationSchema,
     onSubmit: async (values) => {
+      setIsSubmitting(true);
       const payload = new FormData();
       const newValues = {
         short_letter: values.shortLetter,
         attachments: values.attachments,
       };
-      if (
-        searchParams.get("applicationId") &&
-        values.attachmentsRemove.length
-      ) {
+      if (searchParams.get("tenderId") && values.attachmentsRemove.length) {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
@@ -92,15 +92,17 @@ function ApplyForTender() {
           payload.append(key, newValues[key]);
         }
       }
-      if (searchParams.get("applicationId")) {
-        // await updateAppliedJob(payload);
+
+      if (searchParams.get("tenderId")) {
+        // await updateAppliedTender(payload);
       } else {
         await applyForTender(payload);
       }
+      setIsSubmitting(false);
     },
   });
   const applyForTender = async (data) => {
-    const res = await applyForTenderAPI(params.jobId, data);
+    const res = await applyForTenderAPI(params.tenderId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
@@ -314,7 +316,12 @@ function ApplyForTender() {
                 spacing={2}
                 className={`${styles.applybtns}`}
               >
-                <SearchButton text="Cancel" className={`${styles.cancelbtn}`} />
+                <SearchButton
+                  text="Cancel"
+                  className={`${styles.cancelbtn}`}
+                  onClick={() => setIsCanceling(true)}
+                  disabled={isSubmitting}
+                />
                 <FilledButton
                   title={"Apply"}
                   className={`${styles.applybtn}`}
@@ -325,6 +332,9 @@ function ApplyForTender() {
           </div>
         </div>
       </Container>
+      <DialogBox open={isCanceling} handleClose={() => console.log("close")}>
+        <CancelApply handleClose={() => setIsCanceling(false)} />
+      </DialogBox>
       <DialogBox
         open={isApplied}
         handleClose={() => console.log("close")}
