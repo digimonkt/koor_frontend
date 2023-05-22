@@ -10,7 +10,7 @@ import {
 } from "@components/button";
 import JobCostCard from "@pages/jobs/component/jobCostCard";
 import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getTenderDetailsByIdAPI, getTenderSuggestionAPI } from "@api/tender";
 import dayjs from "dayjs";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -18,6 +18,7 @@ import urlcat from "urlcat";
 
 function TenderDetailsComponent() {
   const params = useParams();
+  const navigate = useNavigate();
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -204,6 +205,13 @@ function TenderDetailsComponent() {
                   <FilledButton
                     title={"Apply for this Tender"}
                     className={`${styles.enablebtn}`}
+                    onClick={() => {
+                      navigate(
+                        urlcat("../tender/apply/:tenderId", {
+                          tenderId: params.tenderId,
+                        })
+                      );
+                    }}
                   />
                   <Stack
                     direction="row"
@@ -253,7 +261,11 @@ function TenderDetailsComponent() {
               console.log(item);
               return (
                 <p key={key}>
-                  <Link to={urlcat("/tender/details/:tenderId", { tenderId: item.id })}>
+                  <Link
+                    to={urlcat("/tender/details/:tenderId", {
+                      tenderId: item.id,
+                    })}
+                  >
                     {item?.title}
                   </Link>
                   <span>

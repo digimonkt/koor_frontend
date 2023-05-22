@@ -65,3 +65,15 @@ export const getTenderSuggestionAPI = async (tenderId) => {
   }
   return response;
 };
+
+export const applyForTenderAPI = async (tenderId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/vendor/tender/apply/:tender", { tenderId }),
+    method: "POST",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};
