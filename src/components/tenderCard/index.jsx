@@ -5,7 +5,7 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
@@ -94,20 +94,22 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
           }}
         >
           <div className="my-jobs">
-            <h2>
-              {tenderDetails?.title || ""}
-              {tenderDetails.isApplied ? (
-                <Chip
-                  // variant="outlined"
-                  color="success"
-                  size="small"
-                  label="Applied"
-                  sx={{
-                    marginLeft: "5px",
-                  }}
-                />
-              ) : null}
-            </h2>
+            <Link to={`/tender/details/${tenderDetails?.id || "tenderId"}`}>
+              <h2>
+                {tenderDetails?.title || ""}
+                {tenderDetails.isApplied ? (
+                  <Chip
+                    // variant="outlined"
+                    color="success"
+                    size="small"
+                    label="Applied"
+                    sx={{
+                      marginLeft: "5px",
+                    }}
+                  />
+                ) : null}
+              </h2>
+            </Link>
             <p className="job-description card-description mt-1 mb-3">
               {tenderDetails?.description}
             </p>

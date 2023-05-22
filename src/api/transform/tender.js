@@ -47,7 +47,11 @@ export const transformFullTenderDetails = (data) => {
     categories: data.tender_category || [],
     type: data.tender_type || {},
     sector: data.sector,
-    deadline: data.deadline,
+    expiredInDays: dayjs(data.deadline).diff(
+      dayjs(new Date().toISOString().split("T")[0]),
+      "day",
+      true
+    ),
     startDate: data.start_date,
     user: {
       id: data.user.id,

@@ -51,3 +51,17 @@ export const getTenderDetailsByIdAPI = async (data) => {
   }
   return response;
 };
+
+export const getTenderSuggestionAPI = async (tenderId) => {
+  const response = await api.request({
+    url: urlcat("v1/tenders/:tenderId/suggestion", { tenderId }),
+    method: "GET",
+  });
+  if (response.status === "success") {
+    return {
+      remote: "success",
+      data: transformTenderResponse(response.data),
+    };
+  }
+  return response;
+};

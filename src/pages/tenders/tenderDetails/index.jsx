@@ -1,5 +1,5 @@
 import { Container, Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
 import { SVG } from "@assets/svg";
 import {
@@ -10,8 +10,94 @@ import {
 } from "@components/button";
 import JobCostCard from "@pages/jobs/component/jobCostCard";
 import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
+import { Link, useParams } from "react-router-dom";
+import { getTenderDetailsByIdAPI, getTenderSuggestionAPI } from "@api/tender";
+import dayjs from "dayjs";
+import { generateFileUrl } from "@utils/generateFileUrl";
+import urlcat from "urlcat";
 
 function TenderDetailsComponent() {
+  const params = useParams();
+  const [details, setDetails] = useState({
+    id: "",
+    title: "",
+    description: "",
+    budgetCurrency: "",
+    budgetAmount: "",
+    budgetPayPeriod: "",
+    country: {
+      id: "",
+      title: "",
+    },
+    city: {
+      id: "",
+      title: "",
+    },
+    address: "",
+    jobCategories: {
+      id: "",
+      title: "",
+    },
+    jobSubCategory: {
+      id: "",
+      title: "",
+    },
+    deadline: "",
+    isFullTime: false,
+    isPartTime: false,
+    isSaved: false,
+    isApplied: false,
+    hasContract: false,
+    contactEmail: "",
+    contactPhone: "",
+    contactWhatsapp: "",
+    highestEducation: {
+      id: "",
+      title: "",
+    },
+    application: {},
+    languages: [],
+    skills: [],
+    workingDays: "5",
+    status: "active",
+    applicant: 0,
+    createdAt: "2023-02-23T05:44:36",
+    expiredInDays: 37,
+    user: {
+      id: "",
+      name: "",
+      email: "",
+      countryCode: "",
+      mobileNumber: "",
+      image: {
+        id: "",
+        title: "",
+        path: "",
+        type: "image",
+      },
+    },
+    attachments: [],
+  });
+  const [tenderSuggestion, setTenderSuggestion] = useState([]);
+  const getTenderDetails = async (tenderId) => {
+    const res = await getTenderDetailsByIdAPI({ tenderId });
+    if (res.remote === "success") {
+      setDetails(res.data);
+    }
+  };
+
+  const getTenderSuggestion = async (tenderId) => {
+    const res = await getTenderSuggestionAPI(tenderId);
+    if (res.remote === "success") {
+      console.log(res.data.results);
+      setTenderSuggestion(res.data.results);
+    }
+  };
+  useEffect(() => {
+    getTenderDetails(params.tenderId);
+    getTenderSuggestion(params.tenderId);
+  }, [params.tenderId]);
+  console.log({ tenderSuggestion });
   return (
     <>
       <Container>
@@ -21,17 +107,21 @@ function TenderDetailsComponent() {
               <Grid item xs={8}>
                 <div className={`${styles.postJob}`}>
                   <span style={{ paddingTop: "5px" }}>{<SVG.LeftArrow />}</span>
-                  <p className="mb-0">Title</p>
+                  <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
               <Grid item xs={4}>
                 <div className={`${styles.clocs}`}>
                   <SVG.ClockIconSmall />
                   <p className="mb-0 mt-0 me-1">
-                    <span>Posted:</span> date
+                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
                   </p>
                   <SolidButton
-                    title="12 Days"
+                    title={
+                      details.expiredInDays > 0
+                        ? `${details.expiredInDays} Days`
+                        : "Expired"
+                    }
                     style={{ marginLeft: "20px" }}
                     color="green"
                   />
@@ -43,73 +133,73 @@ function TenderDetailsComponent() {
               <Grid item xs={12} lg={9}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <p className="job-description">
-                    Hi there! 👋 Though I don’t have an education mentioned in
-                    your job post, I have 8 years of experience in the job
-                    described. Please check out my resume, I’m sure you’ll like
-                    it. Looking forward to talking in person! Information about
-                    the person that they attach as a plain text to grab
-                    employer’s attention. We can fit two rows here to be able to
-                    showcase yourself before a potential employer even opens
-                    your resume. Like “Hi, I’m Maraua and I’m the perfect fit
-                    for your job”. Please check out my attachements below.. I
-                    don’t have an education mentioned in your job post, I have 8
-                    years of experience in the job described. Please check out
-                    my resume, I’m sure you’ll like it. Looking forward to
-                    talking in person! Information about the person that they
-                    attach as a plain text to grab employer’s attention. We can
-                    fit two rows here to be able to showcase yourself before a
-                    potential employer even opens your resume. Like “Hi, I’m
-                    Maraua and I’m the perfect fit for your job”.I don’t have an
-                    education mentioned in your job post, I have 8 years of
-                    experience in the job described. Please check out my resume,
-                    I’m sure you’ll like it. Looking forward to talking in
-                    person! Information about the person that they attach as a
-                    plain text to grab employer’s attention. We can fit two rows
-                    here to be able to showcase yourself before a potential
-                    employer even opens your resume. Like “Hi, I’m Maraua and
-                    I’m the perfect fit for your jobI don’t have an education
-                    mentioned in your job post, I have 8 years of experience in
-                    the job described. Please check out my resume, I’m sure
-                    you’ll like it.{" "}
-                  </p>
+                  <p className="job-description">{details.description}. </p>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
-                    text={"India"}
+                    text={details?.country?.title}
                     leftIcon={<SVG.LocationIcon />}
                     className={`${styles.iconbutton}`}
                   />
                   <SearchButton
-                    text={"2-Day Week"}
-                    leftIcon={<SVG.BagClock />}
+                    text={details?.sector?.title}
+                    leftIcon={<SVG.CategoryIcon />}
                     className={`${styles.iconbutton}`}
                   />
+                  <SearchButton
+                    text={details?.type?.title}
+                    leftIcon={<SVG.CategoryIcon />}
+                    className={`${styles.iconbutton}`}
+                  />
+                  {(details.tag || []).map((tag, i) => {
+                    return (
+                      <SearchButton
+                        key={i}
+                        text={tag.title}
+                        leftIcon={<SVG.SellIcon />}
+                        className={`${styles.iconbutton}`}
+                      />
+                    );
+                  })}
                 </div>
                 <div className={`${styles.datesatrt}`}>
                   <span>{<SVG.StartDate />}</span>
                   <p className="m-0 ms-2">
                     <span className={`${styles.startDate}`}>Start date:</span>{" "}
-                    <b className={`${styles.startB}`}>{"September 12"}</b>
+                    <b className={`${styles.startB}`}>
+                      {details?.startDate
+                        ? dayjs(details.startDate).format("ll")
+                        : ""}
+                    </b>
                   </p>
                 </div>
                 <div className={`${styles.downloadattachment}`}>
                   <h6>Download attachments</h6>
-                  <div className={`${styles.downloadtext}`}>
-                    <span className="d-inline-flex">{<SVG.OrangeIcon />}</span>
-                    <a
-                      href={"#"}
-                      target="_blank"
-                      className="m-0"
-                      rel="noreferrer"
-                    >
-                      title
-                    </a>
-                  </div>
+                  {details.attachments.map((attachment, i) => {
+                    return (
+                      <div key={i} className={`${styles.downloadtext}`}>
+                        <span className="d-inline-flex">
+                          {<SVG.OrangeIcon />}
+                        </span>
+                        <a
+                          href={generateFileUrl(attachment.path)}
+                          target="_blank"
+                          className="m-0"
+                          rel="noreferrer"
+                        >
+                          {attachment.title}
+                        </a>
+                      </div>
+                    );
+                  })}
                 </div>
               </Grid>
               <Grid item xs={12} lg={3}>
-                <JobCostCard amount={2000} payPeriod={"month"} user={{}} />
+                <JobCostCard
+                  amount={details.budgetAmount}
+                  payPeriod={"month"}
+                  user={details?.user}
+                />
                 <div className={`${styles.jobpostbtn}`}>
                   <FilledButton
                     title={"Apply for this Tender"}
@@ -139,7 +229,9 @@ function TenderDetailsComponent() {
               <Grid item xs={7}>
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
-                  <p>{"details.address"}</p>
+                  <p>
+                    {"Germany, Dusseldorf. Menara Suruhanjaya Syakinat Str. 7"}
+                  </p>
                   <div
                     style={{
                       height: "75%",
@@ -156,13 +248,16 @@ function TenderDetailsComponent() {
             </Grid>
           </div>
           <div className={`${styles.LikeJob}`}>
-            <h2>more jobs like this:</h2>
-            {[1, 2, 3, 4].map((item, key) => {
+            <h2>more tenders like this:</h2>
+            {tenderSuggestion.map((item, key) => {
+              console.log(item);
               return (
                 <p key={key}>
-                  {"item.title"}
+                  <Link to={urlcat("/tender/details/:tenderId", { tenderId: item.id })}>
+                    {item?.title}
+                  </Link>
                   <span>
-                    – {"item.city.title"}, {"item.country.title"} $
+                    – {"item?.city.title"}, {"item?.country.title"} $
                     {"item.budgetAmount"}{" "}
                   </span>
                 </p>
