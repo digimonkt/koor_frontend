@@ -34,6 +34,12 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
       country: selectedCountry,
       city: selectedCity,
     };
+    if (!payload.country) {
+      delete payload.country;
+    }
+    if (!payload.city) {
+      delete payload.city;
+    }
     const res = await UpdateJobSeekerAdditionalParametersAPI(payload);
     if (res.remote === "success") {
       dispatch(
