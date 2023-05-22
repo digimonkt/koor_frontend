@@ -15,6 +15,8 @@ import { getTenderDetailsByIdAPI, getTenderSuggestionAPI } from "@api/tender";
 import dayjs from "dayjs";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
+import { useSelector } from "react-redux";
+import { USER_ROLES } from "@utils/enum";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -79,6 +81,7 @@ function TenderDetailsComponent() {
     },
     attachments: [],
   });
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
@@ -199,34 +202,38 @@ function TenderDetailsComponent() {
                   payPeriod={"month"}
                   user={details?.user}
                 />
-                <div className={`${styles.jobpostbtn}`}>
-                  <FilledButton
-                    title={"Apply for this Tender"}
-                    className={`${styles.enablebtn}`}
-                    onClick={() => {
-                      navigate(
-                        urlcat("../tender/apply/:tenderId", {
-                          tenderId: params.tenderId,
-                        })
-                      );
-                    }}
-                  />
-                  <Stack
-                    direction="row"
-                    spacing={{
-                      xs: 1,
-                      sm: 1,
-                      lg: 1,
-                    }}
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <OutlinedButton
-                      title={"Saved"}
-                      style={{ height: "44px" }}
+                {isLoggedIn && role === USER_ROLES.vendor ? (
+                  <div className={`${styles.jobpostbtn}`}>
+                    <FilledButton
+                      title={"Apply for this Tender"}
+                      className={`${styles.enablebtn}`}
+                      onClick={() => {
+                        navigate(
+                          urlcat("../tender/apply/:tenderId", {
+                            tenderId: params.tenderId,
+                          })
+                        );
+                      }}
                     />
-                  </Stack>
-                </div>
+                    <Stack
+                      direction="row"
+                      spacing={{
+                        xs: 1,
+                        sm: 1,
+                        lg: 1,
+                      }}
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <OutlinedButton
+                        title={"Saved"}
+                        style={{ height: "44px" }}
+                      />
+                    </Stack>
+                  </div>
+                ) : (
+                  console.log()
+                )}
               </Grid>
             </Grid>
           </div>
@@ -266,8 +273,7 @@ function TenderDetailsComponent() {
                     {item?.title}
                   </Link>
                   <span>
-                    – {item?.city}, {item?.country} $
-                    {item.budgetAmount}{" "}
+                    – {item?.city}, {item?.country} ${item.budgetAmount}{" "}
                   </span>
                 </p>
               );
