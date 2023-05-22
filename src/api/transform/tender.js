@@ -85,3 +85,18 @@ export const transformSavedFilter = (data) => {
     workingDays: data.working_days,
   };
 };
+export const transformTenderSuggestion = (data) => {
+  return {
+    count: data.count,
+    next: data.next,
+    previous: data.previous,
+    results: data.results.map((res) => ({
+      id: res.id,
+      title: res.title,
+      country: res.country.title,
+      city: res.city.title,
+      budgetAmount: res.budget_amount,
+      budgetCurrency: res.budget_currency,
+    })),
+  };
+};

@@ -3,6 +3,7 @@ import urlcat from "urlcat";
 import {
   transformFullTenderDetails,
   transformTenderResponse,
+  transformTenderSuggestion,
 } from "./transform/tender";
 export const getTenderSearchAPI = async (data) => {
   const newData = { ...data };
@@ -57,10 +58,10 @@ export const getTenderSuggestionAPI = async (tenderId) => {
     url: urlcat("v1/tenders/:tenderId/suggestion", { tenderId }),
     method: "GET",
   });
-  if (response.status === "success") {
+  if (response.remote === "success") {
     return {
       remote: "success",
-      data: transformTenderResponse(response.data),
+      data: transformTenderSuggestion(response.data),
     };
   }
   return response;

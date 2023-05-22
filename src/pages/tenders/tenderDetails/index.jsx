@@ -89,7 +89,7 @@ function TenderDetailsComponent() {
   const getTenderSuggestion = async (tenderId) => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
-      console.log(res.data.results);
+      console.log("getTenderSuggestion ", res.data);
       setTenderSuggestion(res.data.results);
     }
   };
@@ -97,7 +97,6 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
-  console.log({ tenderSuggestion });
   return (
     <>
       <Container>
@@ -234,7 +233,7 @@ function TenderDetailsComponent() {
                   </p>
                   <div
                     style={{
-                      height: "75%",
+                      height: "236px",
                       overflow: "hidden",
                       borderRadius: "5px",
                     }}
@@ -250,15 +249,19 @@ function TenderDetailsComponent() {
           <div className={`${styles.LikeJob}`}>
             <h2>more tenders like this:</h2>
             {tenderSuggestion.map((item, key) => {
-              console.log(item);
+              console.log("item", item);
               return (
                 <p key={key}>
-                  <Link to={urlcat("/tender/details/:tenderId", { tenderId: item.id })}>
+                  <Link
+                    to={urlcat("/tender/details/:tenderId", {
+                      tenderId: item.id,
+                    })}
+                  >
                     {item?.title}
                   </Link>
                   <span>
-                    – {"item?.city.title"}, {"item?.country.title"} $
-                    {"item.budgetAmount"}{" "}
+                    – {item?.city}, {item?.country} $
+                    {item.budgetAmount}{" "}
                   </span>
                 </p>
               );
