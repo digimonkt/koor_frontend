@@ -299,7 +299,7 @@ const JobDetails = () => {
                   payPeriod={details.budgetPayPeriod}
                   user={details.user}
                 />
-                {role === USER_ROLES.jobSeeker ? (
+                {role === USER_ROLES.jobSeeker || role === "" ? (
                   <div className={`${styles.jobpostbtn}`}>
                     <FilledButton
                       title={
