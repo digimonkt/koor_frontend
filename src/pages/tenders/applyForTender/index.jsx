@@ -8,7 +8,11 @@ import { ErrorMessage } from "@components/caption";
 import { Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { applyForTenderAPI, getTenderDetailsByIdAPI, updateAppliedTenderAPI } from "@api/tender";
+import {
+  applyForTenderAPI,
+  getTenderDetailsByIdAPI,
+  updateAppliedTenderAPI,
+} from "@api/tender";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -18,7 +22,7 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import DialogBox from "@components/dialogBox";
 import ApplySuccessfully from "./applySuccessfully";
 import { useDispatch } from "react-redux";
-import CancelApply from "@pages/jobs/applyForJob/cancelApply";
+import CancelApply from "@pages/tenders/applyForTender/cancelApply";
 import { applyTenderValidationSchema } from "./validator";
 import { getApplicationDetailsAPI } from "@api/vendor";
 function ApplyForTender() {
@@ -78,7 +82,7 @@ function ApplyForTender() {
         short_letter: values.shortLetter,
         attachments: values.attachments,
       };
-      if (searchParams.get("tenderId") && values.attachmentsRemove.length) {
+      if (searchParams.get("applicationId") && values.attachmentsRemove.length) {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
@@ -122,7 +126,7 @@ function ApplyForTender() {
   };
 
   const updateAppliedTender = async (data) => {
-    const res = await updateAppliedTenderAPI(params.jobId, data);
+    const res = await updateAppliedTenderAPI(params.tenderId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
@@ -345,11 +349,13 @@ function ApplyForTender() {
                   disabled={isSubmitting}
                 />
                 <FilledButton
-                  title={isSubmitting
+                  title={
+                    isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
                       ? "Update"
-                      : "Apply"}
+                      : "Apply"
+                  }
                   className={`${styles.applybtn}`}
                   type="submit"
                   disabled={isSubmitting}

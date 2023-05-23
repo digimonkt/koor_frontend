@@ -1,6 +1,9 @@
 import api from ".";
 import urlcat from "urlcat";
-import { transformTenderSavedFilter, transformVendorSavedFilter } from "./transform/vendor";
+import {
+  transformTenderSavedFilter,
+  transformVendorSavedFilter,
+} from "./transform/vendor";
 import { transformTenderResponse } from "./transform/tender";
 import { transformGetUserDetails } from "./transform/user";
 export const saveTenderAPI = async (tenderId) => {
@@ -189,12 +192,39 @@ export const getApplicationDetailsAPI = async (applicationId) => {
       data: {
         id: res.data.id,
         createdAt: res.data.created,
-        job: res.data.job,
+        tender: res.data.tender,
         rejectedAt: res.data.rejected_at,
         shortLetter: res.data.short_letter,
         shortlistedAt: res.data.shortlisted_at,
         attachments: res.data.attachments,
         user: { ...transformGetUserDetails(res.data.user) },
+      },
+    };
+  }
+  return res;
+};
+export const getAppliedTendersAPI = async (sortQuery) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/vendor/tender/apply", sortQuery),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        ...res.data,
+        results: res.data.results.map((result) => {
+          return {
+            attachments: result.attachments,
+            id: result.id,
+            rejectedAt: result.rejected_at,
+            shortLetter: result.short_letter,
+            shortlistedAt: result.shortlisted_at,
+            tender: transformTenderResponse({
+              results: [result.tender],
+            }).results[0],
+          };
+        }),
       },
     };
   }
