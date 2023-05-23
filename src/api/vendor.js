@@ -2,6 +2,7 @@ import api from ".";
 import urlcat from "urlcat";
 import { transformTenderSavedFilter, transformVendorSavedFilter } from "./transform/vendor";
 import { transformTenderResponse } from "./transform/tender";
+import { transformGetUserDetails } from "./transform/user";
 export const saveTenderAPI = async (tenderId) => {
   const response = await api.request({
     url: urlcat("v1/users/vendor/tender/save/:tenderId", { tenderId }),
@@ -169,4 +170,33 @@ export const updateSavedSearchVendorFilterAPI = async (filterId, status) => {
     method: "PUT",
     data,
   });
+};
+
+export const getApplicationDetailsAPI = async (applicationId) => {
+  const res = await api.request({
+    url: urlcat("/v1/tenders/applications-detail/:applicationId", {
+      applicationId,
+    }),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    res.data.user.profile = {
+      ...(res.data.user.profile || {}),
+      description: res.data.user.description,
+    };
+    return {
+      remote: "success",
+      data: {
+        id: res.data.id,
+        createdAt: res.data.created,
+        job: res.data.job,
+        rejectedAt: res.data.rejected_at,
+        shortLetter: res.data.short_letter,
+        shortlistedAt: res.data.shortlisted_at,
+        attachments: res.data.attachments,
+        user: { ...transformGetUserDetails(res.data.user) },
+      },
+    };
+  }
+  return res;
 };

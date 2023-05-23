@@ -11,16 +11,25 @@ import {
 import JobCostCard from "@pages/jobs/component/jobCostCard";
 import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getTenderDetailsByIdAPI, getTenderSuggestionAPI } from "@api/tender";
+import {
+  getTenderDetailsByIdAPI,
+  getTenderSuggestionAPI,
+  saveTenderAPI,
+  unSaveTenderAPI,
+  withdrawTenderApplicationAPI,
+} from "@api/tender";
 import dayjs from "dayjs";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
+import DialogBox from "@components/dialogBox";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 
 function TenderDetailsComponent() {
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -50,6 +59,7 @@ function TenderDetailsComponent() {
     isPartTime: false,
     isSaved: false,
     isApplied: false,
+    isEditable: false,
     hasContract: false,
     contactEmail: "",
     contactPhone: "",
@@ -82,6 +92,7 @@ function TenderDetailsComponent() {
     attachments: [],
   });
   const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const [registrationWarning, setRegistrationWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
@@ -94,6 +105,42 @@ function TenderDetailsComponent() {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
       setTenderSuggestion(res.data.results);
+    }
+  };
+  const handleSaveTender = async (tenderId) => {
+    if (isLoggedIn) {
+      setDetails((prevState) => ({
+        ...prevState,
+        isSaved: !prevState.isSaved,
+      }));
+      if (!details.isSaved) {
+        const resp = await saveTenderAPI(tenderId);
+        if (resp.remote === "success") {
+          console.log("resp", resp);
+        }
+      } else {
+        const resp = await unSaveTenderAPI(tenderId);
+        if (resp.remote === "success") {
+          console.log("resp", resp);
+        }
+      }
+    } else {
+      setRegistrationWarning(true);
+    }
+  };
+  const handleWithdrawTenderApplication = async () => {
+    if (details.isEditable) {
+      const res = await withdrawTenderApplicationAPI({ tenderId: params.tenderId });
+      if (res.remote === "success") {
+        setDetails({
+          ...details,
+          isApplied: false,
+          isEditable: false,
+        });
+        dispatch(setSuccessToast("Withdraw successfully"));
+      }
+    } else {
+      dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
   useEffect(() => {
@@ -202,19 +249,49 @@ function TenderDetailsComponent() {
                   payPeriod={"month"}
                   user={details?.user}
                 />
-                {isLoggedIn && role === USER_ROLES.vendor ? (
+                {role === USER_ROLES.vendor || role === "" ? (
                   <div className={`${styles.jobpostbtn}`}>
                     <FilledButton
-                      title={"Apply for this Tender"}
+                      title={
+                        details.isApplied
+                          ? details.isEditable
+                            ? "Edit"
+                            : "Applied"
+                          : "Apply for this Tender"
+                      }
                       className={`${styles.enablebtn}`}
+                      disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
-                        navigate(
-                          urlcat("../tender/apply/:tenderId", {
-                            tenderId: params.tenderId,
-                          })
-                        );
+                        if (isLoggedIn) {
+                          if (details.isEditable) {
+                            navigate(
+                              urlcat("../tender/apply/:tenderId", {
+                                tenderId: params.tenderId,
+                                applicationId: details.application.id,
+                              })
+                            );
+                          } else {
+                            navigate(
+                              urlcat("../tender/apply/:tenderId", {
+                                tenderId: params.tenderId,
+                              })
+                            );
+                          }
+                        } else {
+                          setRegistrationWarning(true);
+                        }
                       }}
                     />
+                    {details.isEditable && details.isApplied && isLoggedIn && (
+                      <FilledButton
+                        title="Withdraw"
+                        className={`${styles.enablebtn}`}
+                        disabled={!details.isEditable}
+                        onClick={() => {
+                          handleWithdrawTenderApplication();
+                        }}
+                      />
+                    )}
                     <Stack
                       direction="row"
                       spacing={{
@@ -226,13 +303,17 @@ function TenderDetailsComponent() {
                       justifyContent="center"
                     >
                       <OutlinedButton
-                        title={"Saved"}
+                        title={details.isSaved ? "Saved" : "Save Tender"}
                         style={{ height: "44px" }}
+                        vendor
+                        onClick={() => {
+                          handleSaveTender(params.tenderId);
+                        }}
                       />
                     </Stack>
                   </div>
                 ) : (
-                  console.log()
+                  ""
                 )}
               </Grid>
             </Grid>
@@ -259,6 +340,41 @@ function TenderDetailsComponent() {
                 </div>
               </Grid>
             </Grid>
+            <DialogBox open={registrationWarning} handleClose={() => {}}>
+              <div>
+                <h1 className="heading">Register as vendor</h1>
+                <div className="form-content">
+                  <p>
+                    To apply for the vendor and have many other useful features
+                    to find a tender, please register on Koor.
+                  </p>
+                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
+                    <Link to="/register">
+                      <OutlinedButton
+                        title="Register as vendor"
+                        jobSeeker
+                        style={{
+                          width: "100%",
+                        }}
+                      />
+                    </Link>
+                    <span>
+                      Already have an account?{" "}
+                      <Link
+                        to={`/login?role=${USER_ROLES.vendor}`}
+                        style={{
+                          textDecoration: "none",
+                          color: "#EEA23D",
+                          fontWeight: 600,
+                        }}
+                      >
+                        Login
+                      </Link>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </DialogBox>
           </div>
           <div className={`${styles.LikeJob}`}>
             <h2>more tenders like this:</h2>

@@ -141,6 +141,11 @@ const ApplyForTender = lazy(() =>
     default: module.ApplyForTender,
   }))
 );
+const AppliedTender = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.AppliedTender,
+  }))
+);
 const Search = lazy(() => import("@pages/search"));
 // prefix => `/`
 export const ROUTES = [
@@ -332,12 +337,12 @@ export const VENDOR_ROUTES = [
     path: "/dashboard",
     component: VendorDashboard,
   },
-  // {
-  //   id: "vendorAppliedTender",
-  //   name: "vendor saved Jobs",
-  //   path: "/tender/applied",
-  //   component: SavedJobs,
-  // },
+  {
+    id: "vendorAppliedTender",
+    name: "Vendor Applied Tender",
+    path: "/tender/applied",
+    component: AppliedTender,
+  },
   {
     id: "vendorSavedJobs",
     name: "vendor saved Jobs",

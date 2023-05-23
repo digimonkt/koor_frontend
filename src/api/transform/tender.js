@@ -68,6 +68,8 @@ export const transformFullTenderDetails = (data) => {
     vendor: data.vendor,
     isApplied: data.is_applied,
     isSaved: data.is_saved,
+    isEditable: data.is_editable,
+    application: data.application,
   };
 };
 

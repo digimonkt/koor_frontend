@@ -8,7 +8,7 @@ import { ErrorMessage } from "@components/caption";
 import { Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { applyForTenderAPI, getTenderDetailsByIdAPI } from "@api/tender";
+import { applyForTenderAPI, getTenderDetailsByIdAPI, updateAppliedTenderAPI } from "@api/tender";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -20,6 +20,7 @@ import ApplySuccessfully from "./applySuccessfully";
 import { useDispatch } from "react-redux";
 import CancelApply from "@pages/jobs/applyForJob/cancelApply";
 import { applyTenderValidationSchema } from "./validator";
+import { getApplicationDetailsAPI } from "@api/vendor";
 function ApplyForTender() {
   const navigate = useNavigate();
   const params = useParams();
@@ -93,16 +94,35 @@ function ApplyForTender() {
         }
       }
 
-      if (searchParams.get("tenderId")) {
-        // await updateAppliedTender(payload);
+      if (searchParams.get("applicationId")) {
+        await updateAppliedTender(payload);
       } else {
         await applyForTender(payload);
       }
       setIsSubmitting(false);
     },
   });
+  const getApplicantDetails = async () => {
+    const applicationId = searchParams.get("applicationId");
+    const res = await getApplicationDetailsAPI(applicationId);
+    if (res.remote === "success") {
+      formik.setFieldValue("shortLetter", res.data.shortLetter);
+      formik.setFieldValue("attachments", res.data.attachments);
+    }
+  };
+
   const applyForTender = async (data) => {
     const res = await applyForTenderAPI(params.tenderId, data);
+    if (res.remote === "success") {
+      dispatch(setSuccessToast("Applied successfully"));
+      setIsApplied(true);
+    } else {
+      dispatch(setErrorToast("Something went wrong"));
+    }
+  };
+
+  const updateAppliedTender = async (data) => {
+    const res = await updateAppliedTenderAPI(params.jobId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
@@ -113,7 +133,9 @@ function ApplyForTender() {
   useEffect(() => {
     getTenderDetails(params.tenderId);
   }, [params.tenderId]);
-
+  useEffect(() => {
+    getApplicantDetails();
+  }, [searchParams.get("applicationId")]);
   return (
     <div>
       <Container>
@@ -264,7 +286,7 @@ function ApplyForTender() {
                 <LabeledInput
                   type="textarea"
                   className={`${styles.textarea}`}
-                  placeholder="Write a few words about yourself and why you think that you are a good fit for this particular job."
+                  placeholder="Write a few words about yourself and why you think that you are a good fit for this particular tender."
                   value={formik.values.shortLetter}
                   {...formik.getFieldProps("shortLetter")}
                 />
@@ -323,9 +345,14 @@ function ApplyForTender() {
                   disabled={isSubmitting}
                 />
                 <FilledButton
-                  title={"Apply"}
+                  title={isSubmitting
+                      ? "Submitting..."
+                      : searchParams.get("applicationId")
+                      ? "Update"
+                      : "Apply"}
                   className={`${styles.applybtn}`}
                   type="submit"
+                  disabled={isSubmitting}
                 />
               </Stack>
             </form>
