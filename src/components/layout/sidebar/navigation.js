@@ -87,13 +87,19 @@ const VendorNavigationOptions = Object.freeze([
     isDisable: false,
   },
   {
+    to: "/tender/applied",
+    icon: SVG.UnSave,
+    title: "Applied Tenders",
+    id: "appliedTenders",
+    isDisable: false,
+  },
+  {
     to: "/tender/saved",
     icon: SVG.UnSave,
     title: "Saved Tenders",
     id: "savedTenders",
     isDisable: false,
   },
-
   {
     icon: SVG.CalenderIcon,
     title: "Calender",
