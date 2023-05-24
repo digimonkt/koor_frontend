@@ -163,7 +163,12 @@ function TenderDetailsComponent() {
             <Grid container spacing={2}>
               <Grid item xs={8}>
                 <div className={`${styles.postJob}`}>
-                  <span style={{ paddingTop: "5px" }}>{<SVG.LeftArrow />}</span>
+                  <span
+                    style={{ paddingTop: "5px" }}
+                    onClick={() => navigate(-1)}
+                  >
+                    {<SVG.LeftArrow />}
+                  </span>
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
@@ -254,7 +259,6 @@ function TenderDetailsComponent() {
               <Grid item xs={12} lg={3}>
                 <JobCostCard
                   amount={details.budgetAmount}
-                  payPeriod={"month"}
                   user={details?.user}
                 />
                 {role === USER_ROLES.vendor || role === "" ? (
