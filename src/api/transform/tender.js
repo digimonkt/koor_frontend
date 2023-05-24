@@ -53,6 +53,7 @@ export const transformFullTenderDetails = (data) => {
       true
     ),
     startDate: data.start_date,
+    deadline: data.deadline,
     user: {
       id: data.user.id,
       name: data.user.name,

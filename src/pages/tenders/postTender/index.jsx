@@ -142,6 +142,7 @@ const PostTender = () => {
       }
     },
   });
+  console.log({ formik });
   const getTenderDetailsById = useCallback(async (tenderId) => {
     const response = await getTenderDetailsByIdAPI({ tenderId });
     if (response.remote === "success") {
