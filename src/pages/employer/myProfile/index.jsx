@@ -117,12 +117,22 @@ function MyProfileComponent() {
             mobileNumber,
             countryCode,
             profile: {
-              organizationType: values.organizationType,
+              // website: values.website,
+              organizationType: sectors.data.find(
+                (sector) => sector.id === values.organizationType
+              ),
               licenseId: values.licenseId,
               licenseIdFile: values.license[0],
               marketingInformationNotification:
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
+              country: countries.data.find(
+                (country) => country.id === values.country
+              ),
+              city: cities.data[values.country]?.find(
+                (city) => city.id === values.city
+              ),
+              address: values.address,
             },
           })
         );

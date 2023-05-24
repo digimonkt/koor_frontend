@@ -1,100 +1,80 @@
-import styles from "./styles.module.css";
+import React, { useState, useEffect } from "react";
+import styles from "./applyForTender.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-// import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { SearchButton, SolidButton } from "@components/button";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
-import { useFormik } from "formik";
-import { applyJobValidationSchema } from "./validator";
+import { FilledButton, SearchButton, SolidButton } from "@components/button";
 import { AttachmentDragNDropInput, LabeledInput } from "@components/input";
 import { ErrorMessage } from "@components/caption";
+import { Stack } from "@mui/material";
+import { SVG } from "@assets/svg";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
-  applyForJobAPI,
-  getJobDetailsByIdAPI,
-  updateAppliedJobAPI,
-} from "@api/job";
+  applyForTenderAPI,
+  getTenderDetailsByIdAPI,
+  updateAppliedTenderAPI,
+} from "@api/tender";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import JobCostCard from "@pages/jobs/component/jobCostCard";
+import { useFormik } from "formik";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { useDispatch } from "react-redux";
-import JobRequirementCard from "../component/jobRequirementCard";
-import JobCostCard from "../component/jobCostCard";
 import DialogBox from "@components/dialogBox";
-import CancelApply from "./cancelApply";
 import ApplySuccessfully from "./applySuccessfully";
-import { getApplicationDetailsAPI } from "@api/employer";
-const ApplyForJob = () => {
-  const dispatch = useDispatch();
-  // navigate
+import { useDispatch } from "react-redux";
+import CancelApply from "@pages/tenders/applyForTender/cancelApply";
+import { applyTenderValidationSchema } from "./validator";
+import { getApplicationDetailsAPI } from "@api/vendor";
+function ApplyForTender() {
   const navigate = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  // state management
+
+  const [isApplied, setIsApplied] = useState(false);
   const [details, setDetails] = useState({
     id: "",
     title: "",
-    description: "",
+    tenderId: "",
     budgetCurrency: "",
     budgetAmount: "",
-    budgetPayPeriod: "",
-    country: {
-      id: "",
-      title: "",
-    },
-    city: {
-      id: "",
-      title: "",
-    },
-    address: "",
-    jobCategories: [],
-    deadline: "",
-    isFullTime: false,
-    isPartTime: false,
-    hasContract: false,
-    contactEmail: "",
-    contactPhone: "",
-    contactWhatsapp: "",
-    highestEducation: {
-      id: "",
-      title: "",
-    },
-    languages: [],
-    skills: [],
-    workingDays: "5",
-    status: "active",
-    applicant: 0,
-    createdAt: "2023-02-23T05:44:36",
-    expiredInDays: 37,
+    description: "",
+    country: {},
+    city: {},
+    tag: [],
+    categories: [],
+    type: {},
+    sector: {},
+    expiredInDays: 46,
+    startDate: "2023-05-19",
     user: {
-      id: "",
-      name: "",
-      email: "",
-      countryCode: "",
-      mobileNumber: "",
-      image: {
-        id: "",
-        title: "",
-        path: "",
-        type: "image",
-      },
+      image: {},
+      description: "",
+      isBlacklisted: false,
     },
     attachments: [],
+    createdAt: "",
+    vendor: 0,
+    isApplied: false,
+    isSaved: false,
   });
   const [isCanceling, setIsCanceling] = useState(false);
   const [hide, setHide] = useState(false);
-  const [isApplied, setIsApplied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const getTenderDetails = async (tenderId) => {
+    const res = await getTenderDetailsByIdAPI({ tenderId });
+    if (res.remote === "success") {
+      setDetails(res.data);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
       attachments: [],
       attachmentsRemove: [],
     },
-    validationSchema: applyJobValidationSchema,
+    validationSchema: applyTenderValidationSchema,
     onSubmit: async (values) => {
       setIsSubmitting(true);
       const payload = new FormData();
@@ -102,10 +82,7 @@ const ApplyForJob = () => {
         short_letter: values.shortLetter,
         attachments: values.attachments,
       };
-      if (
-        searchParams.get("applicationId") &&
-        values.attachmentsRemove.length
-      ) {
+      if (searchParams.get("applicationId") && values.attachmentsRemove.length) {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
@@ -120,15 +97,15 @@ const ApplyForJob = () => {
           payload.append(key, newValues[key]);
         }
       }
+
       if (searchParams.get("applicationId")) {
-        await updateAppliedJob(payload);
+        await updateAppliedTender(payload);
       } else {
-        await applyForJob(payload);
+        await applyForTender(payload);
       }
       setIsSubmitting(false);
     },
   });
-
   const getApplicantDetails = async () => {
     const applicationId = searchParams.get("applicationId");
     const res = await getApplicationDetailsAPI(applicationId);
@@ -138,17 +115,8 @@ const ApplyForJob = () => {
     }
   };
 
-  const applyForJob = async (data) => {
-    const res = await applyForJobAPI(params.jobId, data);
-    if (res.remote === "success") {
-      dispatch(setSuccessToast("Applied successfully"));
-      setIsApplied(true);
-    } else {
-      dispatch(setErrorToast("Something went wrong"));
-    }
-  };
-  const updateAppliedJob = async (data) => {
-    const res = await updateAppliedJobAPI(params.jobId, data);
+  const applyForTender = async (data) => {
+    const res = await applyForTenderAPI(params.tenderId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
@@ -157,16 +125,18 @@ const ApplyForJob = () => {
     }
   };
 
-  const getJobDetails = async (jobId) => {
-    const res = await getJobDetailsByIdAPI({ jobId });
+  const updateAppliedTender = async (data) => {
+    const res = await updateAppliedTenderAPI(params.tenderId, data);
     if (res.remote === "success") {
-      setDetails(res.data);
+      dispatch(setSuccessToast("Applied successfully"));
+      setIsApplied(true);
+    } else {
+      dispatch(setErrorToast("Something went wrong"));
     }
   };
-
   useEffect(() => {
-    getJobDetails(params.jobId);
-  }, [params.jobId]);
+    getTenderDetails(params.tenderId);
+  }, [params.tenderId]);
   useEffect(() => {
     getApplicantDetails();
   }, [searchParams.get("applicationId")]);
@@ -185,7 +155,7 @@ const ApplyForJob = () => {
                     {<SVG.LeftArrow />}
                   </span>
 
-                  <h1>Apply for the job</h1>
+                  <h1>Apply for the tender</h1>
                 </div>
               </Grid>
               <Grid item xs={1}>
@@ -219,7 +189,13 @@ const ApplyForJob = () => {
                   />
                 </div>
               </Grid>
-              <Grid item xs={4}>
+              <Grid
+                item
+                xs={9}
+                style={{
+                  borderRight: "1px solid #cacaca",
+                }}
+              >
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
                   <p className="job-description">{details.description}</p>
@@ -260,37 +236,50 @@ const ApplyForJob = () => {
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
-                    text="5-Day week"
-                    leftIcon={<SVG.BagClock />}
+                    text={details?.country?.title}
+                    leftIcon={<SVG.LocationIcon />}
                     className={`${styles.iconbutton}`}
                   />
                   <SearchButton
-                    leftIcon={<SVG.HalfCircle />}
-                    text="Full time"
+                    text={details?.sector?.title}
+                    leftIcon={<SVG.CategoryIcon />}
                     className={`${styles.iconbutton}`}
                   />
-                </div>
-                <div className={`${styles.datesatrt}`}>
-                  <span>{<SVG.StartDate />}</span>
-                  <p className="m-0 ms-2">
-                    <span className={`${styles.startDate}`}>Start date:</span>
-                    <b className={`${styles.startB}`}>Septermber 13</b>
-                  </p>
-                </div>
-              </Grid>
-              <Grid item xs={5}>
-                <div className={`${styles.requirement}`}>
-                  <JobRequirementCard
-                    highestEducation={details.highestEducation}
-                    languages={details.languages}
-                    skills={details.skills}
+                  <SearchButton
+                    text={details?.type?.title}
+                    leftIcon={<SVG.CategoryIcon />}
+                    className={`${styles.iconbutton}`}
                   />
+                  {(details.tag || []).map((tag, i) => {
+                    return (
+                      <SearchButton
+                        key={i}
+                        text={tag.title}
+                        leftIcon={<SVG.SellIcon />}
+                        className={`${styles.iconbutton}`}
+                      />
+                    );
+                  })}
                 </div>
+                {details.startDate && (
+                  <div className={`${styles.datesatrt}`}>
+                    <span>{<SVG.StartDate />}</span>
+                    <p className="m-0 ms-2">
+                      <span className={`${styles.startDate}`}>Start date:</span>
+                      <b className={`${styles.startB}`}>
+                        {details?.startDate
+                          ? dayjs(details.startDate).format("ll")
+                          : ""}
+                      </b>
+                    </p>
+                  </div>
+                )}
               </Grid>
+
               <Grid item xs={3}>
                 <JobCostCard
                   amount={details.budgetAmount}
-                  payPeriod={details.budgetPayPeriod}
+                  payPeriod={details.budgetPayPeriod || "monthly"}
                   user={details.user}
                 />
               </Grid>
@@ -301,7 +290,7 @@ const ApplyForJob = () => {
                 <LabeledInput
                   type="textarea"
                   className={`${styles.textarea}`}
-                  placeholder="Write a few words about yourself and why you think that you are a good fit for this particular job."
+                  placeholder="Write a few words about yourself and why you think that you are a good fit for this particular tender."
                   value={formik.values.shortLetter}
                   {...formik.getFieldProps("shortLetter")}
                 />
@@ -359,8 +348,8 @@ const ApplyForJob = () => {
                   onClick={() => setIsCanceling(true)}
                   disabled={isSubmitting}
                 />
-                <SearchButton
-                  text={
+                <FilledButton
+                  title={
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
@@ -393,5 +382,6 @@ const ApplyForJob = () => {
       </DialogBox>
     </div>
   );
-};
-export default ApplyForJob;
+}
+
+export default ApplyForTender;

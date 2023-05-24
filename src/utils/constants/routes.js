@@ -27,6 +27,9 @@ const VerifyOTP = lazy(() =>
 const ResetPassword = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.ResetPassword }))
 );
+const TenderDetails = lazy(() =>
+  import("@pages/tenders").then((module) => ({ default: module.TenderDetails }))
+);
 
 // notification
 const Notification = lazy(() => import("@pages/notification"));
@@ -133,6 +136,16 @@ const ApplyForJob = lazy(() =>
     default: module.ApplyForJob,
   }))
 );
+const ApplyForTender = lazy(() =>
+  import("@pages/tenders").then((module) => ({
+    default: module.ApplyForTender,
+  }))
+);
+const AppliedTender = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.AppliedTender,
+  }))
+);
 const Search = lazy(() => import("@pages/search"));
 // prefix => `/`
 export const ROUTES = [
@@ -174,6 +187,12 @@ export const ROUTES = [
     name: "Job Details",
     path: "/jobs/details/:jobId",
     component: JobDetails,
+  },
+  {
+    id: "tenderDetails",
+    name: "Tender Details",
+    path: "/tender/details/:tenderId",
+    component: TenderDetails,
   },
   {
     id: "home",
@@ -251,6 +270,12 @@ export const AUTHENTICATED_ROUTES = [
     component: ApplyForJob,
   },
   {
+    id: "applyTender",
+    name: "Apply Tender",
+    path: "/tender/apply/:tenderId",
+    component: ApplyForTender,
+  },
+  {
     id: "notification",
     name: "Notifications",
     path: "/notification",
@@ -312,12 +337,12 @@ export const VENDOR_ROUTES = [
     path: "/dashboard",
     component: VendorDashboard,
   },
-  // {
-  //   id: "vendorAppliedTender",
-  //   name: "vendor saved Jobs",
-  //   path: "/tender/applied",
-  //   component: SavedJobs,
-  // },
+  {
+    id: "vendorAppliedTender",
+    name: "Vendor Applied Tender",
+    path: "/tender/applied",
+    component: AppliedTender,
+  },
   {
     id: "vendorSavedJobs",
     name: "vendor saved Jobs",

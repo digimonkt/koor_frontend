@@ -35,7 +35,7 @@ function App() {
     const refreshToken = globalLocalStorage.getRefreshToken();
     if (accessToken && refreshToken && !currentUser.id) {
       dispatch(getUserDetails());
-    } else {
+    } else if (!accessToken || !refreshToken) {
       dispatch(setIsLoggedIn(false));
     }
   };

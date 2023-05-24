@@ -43,12 +43,18 @@ export const transformFullTenderDetails = (data) => {
     description: data.description,
     country: data.country || {},
     city: data.city || {},
+    address: data.address || "",
     tag: data.tag || [],
     categories: data.tender_category || [],
     type: data.tender_type || {},
     sector: data.sector,
-    deadline: data.deadline,
+    expiredInDays: dayjs(data.deadline).diff(
+      dayjs(new Date().toISOString().split("T")[0]),
+      "day",
+      true
+    ),
     startDate: data.start_date,
+    deadline: data.deadline,
     user: {
       id: data.user.id,
       name: data.user.name,
@@ -64,6 +70,8 @@ export const transformFullTenderDetails = (data) => {
     vendor: data.vendor,
     isApplied: data.is_applied,
     isSaved: data.is_saved,
+    isEditable: data.is_editable,
+    application: data.application,
   };
 };
 
@@ -79,5 +87,20 @@ export const transformSavedFilter = (data) => {
     hasContract: data.has_contract,
     title: data.title,
     workingDays: data.working_days,
+  };
+};
+export const transformTenderSuggestion = (data) => {
+  return {
+    count: data.count,
+    next: data.next,
+    previous: data.previous,
+    results: data.results.map((res) => ({
+      id: res.id,
+      title: res.title,
+      country: res.country.title,
+      city: res.city.title,
+      budgetAmount: res.budget_amount,
+      budgetCurrency: res.budget_currency,
+    })),
   };
 };

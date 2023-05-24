@@ -144,6 +144,7 @@ function MyProfile() {
         delete payload.mobile_number;
         delete payload.country_code;
       }
+      console.log({ payload });
       const newFormData = new FormData();
       for (const keys in payload) {
         // using only for files only !
@@ -160,24 +161,44 @@ function MyProfile() {
 
       const response = await updateVendorAboutMeAPI(newFormData);
       if (response.remote === "success") {
+        console.log({ values });
         handleToggleModel();
-        dispatch(
-          updateCurrentUser({
-            name: values.organizationName,
-            mobileNumber,
-            countryCode,
-            profile: {
-              website: values.website,
-              licenseId: values.businessLicenseId,
-              licenseIdFile: values.businessLicense[0],
-              registrationNumber: values.certificationNumber,
-              registrationCertificate: values.certification[0],
-              marketingInformationNotification:
-                values.marketingInformationNotification,
-              otherNotification: values.otherNotification,
-            },
-          })
-        );
+        const updatedUser = {
+          name: values.organizationName,
+          mobileNumber,
+          countryCode,
+          profile: {
+            website: values.website,
+            licenseId: values.businessLicenseId,
+            licenseIdFile: values.businessLicense[0],
+            registrationNumber: values.certificationNumber,
+            registrationCertificate: values.certification[0],
+            marketingInformationNotification:
+              values.marketingInformationNotification,
+            otherNotification: values.otherNotification,
+            description: values.description,
+            operatingYears: values.operatingYears,
+            jobsExperience: values.noOfJobsAsExperience,
+            organizationType: sectors.data.find(
+              (sector) => sector.id === values.organizationType
+            ),
+
+            address: values.address,
+            country: countries.data.find(
+              (country) => country.id === values.country
+            ),
+            city: cities.data[values.country]?.find(
+              (city) => city.id === values.city
+            ),
+          },
+        };
+        if (!updatedUser.profile.city) {
+          delete updatedUser.profile.city;
+        }
+        if (!updatedUser.profile.country) {
+          delete updatedUser.profile.country;
+        }
+        dispatch(updateCurrentUser(updatedUser));
       }
     },
   });

@@ -7,6 +7,7 @@ import Tenders from "./components/tendersjob";
 import { useNavigate } from "react-router-dom";
 import { OutlinedButton } from "@components/button";
 import { AntTab, AntTabs } from "./style";
+import { useSelector } from "react-redux";
 
 // tab data
 const tabsData = [
@@ -28,24 +29,32 @@ const ManageTenders = () => {
 
   // state management
   const [panel, setPanel] = useState(0);
-
+  const { totalTender } = useSelector((state) => state.employer);
+  const { totalApplications } = useSelector((state) => state.employer);
   return (
     <>
       <div className="manage-jobs">
         <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
-          {tabsData.map((tab, index) => (
-            <AntTab
-              key={index}
-              label={
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <span>{tab.title}</span>{" "}
-                  <Chip label={tab.count} className="job-count" />
-                </Stack>
-              }
-              id={`simple-tab-${index}`}
-              aria-controls={`simple-tabpanel-${index}`}
-            />
-          ))}
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>My Tenders</span>{" "}
+                <Chip label={totalTender} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${0}`}
+            aria-controls={`simple-tabpanel-${0}`}
+          />
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>All Applications</span>{" "}
+                <Chip label={totalApplications} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${1}`}
+            aria-controls={`simple-tabpanel-${1}`}
+          />
           <div className="ms-auto">
             <OutlinedButton
               onClick={() => navigate("/employer/tender/post")}

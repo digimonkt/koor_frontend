@@ -32,6 +32,13 @@ const initialState = {
       organizationType: {},
       licenseId: "",
       licenseIdFile: "",
+
+      // vendor
+      operatingYears: "",
+      jobsExperience: "",
+      certificationNumber: "",
+      registrationNumber: "",
+      registrationCertificate: "",
     },
     jobPreferences: {
       id: "",

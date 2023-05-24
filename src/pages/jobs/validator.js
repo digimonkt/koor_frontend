@@ -95,6 +95,7 @@ export const validateCreateTenderInput = Yup.object().shape({
     .min(1, "At Least one category is required"),
   sectors: Yup.string().required(" Sector is required"),
   tag: Yup.string().required(" Tag is required"),
+  address: Yup.string().required("Address is required"),
   deadline: Yup.string()
     .required("Deadline is required")
     .test("isFuture", "Date Must be of Future", (value, context) => {

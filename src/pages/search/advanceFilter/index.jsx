@@ -42,10 +42,14 @@ import TenderFilter from "./tenderFilter";
 import dayjs from "dayjs";
 import {
   deleteSearchTenderFilterAPI,
+  deleteSearchVendorFilterAPI,
   getSearchTenderFilterAPI,
   saveSearchTenderFilterAPI,
+  saveSearchVendorFilterAPI,
   updateSavedSearchTenderFilterAPI,
+  updateSavedSearchVendorFilterAPI,
 } from "@api/vendor";
+import VendorFilter from "./vendorFilter";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
   const {
@@ -70,6 +74,9 @@ function AdvanceFilter({ searchType }) {
       category = jobCategories;
       break;
     case SEARCH_TYPE.tenders:
+      category = tenderCategories;
+      break;
+    case SEARCH_TYPE.vendors:
       category = tenderCategories;
       break;
     default:
@@ -120,6 +127,8 @@ function AdvanceFilter({ searchType }) {
         return <TalentFilter formik={formik} footer={footer()} />;
       case SEARCH_TYPE.tenders:
         return <TenderFilter formik={formik} footer={footer()} />;
+      case SEARCH_TYPE.vendors:
+        return <VendorFilter formik={formik} footer={footer()} />;
       default:
         return <></>;
     }
@@ -149,11 +158,11 @@ function AdvanceFilter({ searchType }) {
   };
 
   const getSearchVendorFilter = async () => {
-    // const data = await getSearchTenderFilterAPI();
-    // if (data.remote === "success") {
-      // setAllFilters([...data.data]);
-    // }
-     setAllFilters([...[]]);
+    const data = await getSearchTenderFilterAPI();
+    if (data.remote === "success") {
+      setAllFilters([...data.data]);
+    }
+    setAllFilters([...[]]);
   };
 
   const handleSelectFilter = async (filter) => {
@@ -177,6 +186,8 @@ function AdvanceFilter({ searchType }) {
     formik.setFieldValue("budgetMin", filter.budgetMin);
     formik.setFieldValue("budgetMax", filter.budgetMax);
     formik.setFieldValue("deadline", filter.deadline);
+    // vendors
+    formik.setFieldValue("yearsInMarket", filter.yearsInMarket);
     const payload = {
       country: filter.country?.title || "",
       city: filter.city?.title || "",
@@ -208,6 +219,9 @@ function AdvanceFilter({ searchType }) {
       case SEARCH_TYPE.tenders:
         await deleteSearchTenderFilterAPI(filterId);
         break;
+      case SEARCH_TYPE.vendors:
+        await deleteSearchVendorFilterAPI(filterId);
+        break;
       default:
         break;
     }
@@ -234,6 +248,8 @@ function AdvanceFilter({ searchType }) {
         sector: "",
         opportunityType: "",
         tag: "",
+        // vendor
+        yearsInMarket: "",
       })
     );
   };
@@ -334,6 +350,38 @@ function AdvanceFilter({ searchType }) {
     }
   };
 
+  const handleSaveVendorSearch = async (title) => {
+    const rawData = formik.values;
+    const data = {
+      title,
+      country: rawData.country,
+      tender_category: rawData.tenderCategories,
+      sector: rawData.sector,
+      opportunity_type: rawData.opportunityType,
+      tag: rawData.tag,
+      years_in_market: rawData.yearsInMarket,
+    };
+    if (rawData.country) {
+      const city = cities.data[rawData.country].find(
+        (city) => city.title === rawData.city
+      );
+      if (city && city.id) {
+        data.city = city?.id;
+      }
+    }
+
+    const res = await saveSearchVendorFilterAPI(data);
+    if (res.remote === "success") {
+      setAllFilters((prevState) => [res.data, ...prevState]);
+      setSelectedFilter(res.data.id);
+      dispatch(setSuccessToast("Filter Saved Successfully"));
+      handleToggleModel();
+    } else {
+      // temporarily showing error message
+      dispatch(setErrorToast("Name is required"));
+    }
+  };
+
   const toggleNotificationStatus = async (filterId) => {
     let newFilters = [...allFilters];
     const filter = newFilters.find((filter) => filter.id === filterId);
@@ -358,6 +406,9 @@ function AdvanceFilter({ searchType }) {
           break;
         case SEARCH_TYPE.tenders:
           await updateSavedSearchTenderFilterAPI(filterId, !currentStatus);
+          break;
+        case SEARCH_TYPE.vendors:
+          await updateSavedSearchVendorFilterAPI(filterId, !currentStatus);
           break;
         default:
           break;
@@ -430,6 +481,8 @@ function AdvanceFilter({ searchType }) {
       opportunityType: [],
       tag: [],
       tenderCategories: [],
+      // vendor
+      yearsInMarket: "",
     },
 
     onSubmit: async (values) => {
@@ -469,6 +522,8 @@ function AdvanceFilter({ searchType }) {
           (tenderCategory) =>
             tenderCategories.data.find((i) => i.id === tenderCategory)?.title
         ),
+        // vendor
+        years_in_market: values.yearsInMarket,
       };
       dispatch(setAdvanceFilter(payload));
     },
@@ -586,6 +641,9 @@ function AdvanceFilter({ searchType }) {
                   break;
                 case SEARCH_TYPE.tenders:
                   handleSaveTenderSearch(title);
+                  break;
+                case SEARCH_TYPE.vendors:
+                  handleSaveVendorSearch(title);
                   break;
                 default:
                   break;

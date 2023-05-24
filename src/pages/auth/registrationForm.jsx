@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { CreateUserAPI } from "@api/user";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "@components/button";
@@ -9,11 +9,13 @@ import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
 import { ErrorMessage } from "@components/caption";
 import { useSelector } from "react-redux";
+import Loader from "@components/loader";
 
 function RegistrationForm() {
   // navigate
   const navigate = useNavigate();
   const { role } = useSelector((state) => state.auth);
+  const [loading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -28,6 +30,7 @@ function RegistrationForm() {
     },
     validationSchema: validateRegistrationForm,
     onSubmit: async (values) => {
+      setIsLoading(true);
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
@@ -46,12 +49,14 @@ function RegistrationForm() {
       }
       const res = await CreateUserAPI(payload);
       if (res.remote === "success") {
+        setIsLoading(false);
         if (role === USER_ROLES.jobSeeker) {
           navigate(`/${role}/my-profile/job-criteria`);
         } else {
           navigate(`/${role}/my-profile`);
         }
       } else {
+        setIsLoading(false);
         console.log({ res: res.error.errors });
         formik.setErrors({
           email: res.error.errors.email,
@@ -119,7 +124,11 @@ function RegistrationForm() {
             ) : null}
           </div>
           <div className="my-4 text-center">
-            <FilledButton title="Register" type="submit" />
+            <FilledButton
+              title={loading ? <Loader loading={loading} /> : "Register"}
+              type="submit"
+              disabled={loading}
+            />
           </div>
         </form>
       </div>

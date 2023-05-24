@@ -6,14 +6,22 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
+import { USER_ROLES } from "@utils/enum";
+import { useSelector } from "react-redux";
 function JobCostCard({ amount, payPeriod, user }) {
+  const { role } = useSelector((state) => state.auth);
   return (
     <>
       {amount ? (
         <div className={`${styles.monthBox}`}>
           <>
             <h4>UP TO</h4>
-            <p className="m-0">
+            <p
+              className="m-0"
+              style={{
+                color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+              }}
+            >
               $ <span>{amount}</span>
             </p>
             <h5 className="mt-0">/ {payPeriod}</h5>
