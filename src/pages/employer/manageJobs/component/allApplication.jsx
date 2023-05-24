@@ -75,6 +75,7 @@ function AllApplication() {
             recentApplication.map((item, index) => (
               <ApplicationCard
                 jobId={item.jobId}
+                tenderId={item.jobId}
                 details={item}
                 subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
                 isDisabled={item.disabled}

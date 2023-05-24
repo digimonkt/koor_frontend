@@ -3,7 +3,11 @@ import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { SVG } from "@assets/svg";
 import ApplicationCard from "@components/applicationCard";
-import { getApplicationOnJobAPI } from "@api/employer";
+import {
+  getApplicationOnJobAPI,
+  getApplicationOnTenderAPI,
+} from "@api/employer";
+
 import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
 import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
@@ -32,6 +36,19 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
     }
     setIsLoading(false);
   };
+
+  const getTenderApplicationList = async () => {
+    setIsLoading(true);
+    const res = await getApplicationOnTenderAPI({ tenderId, filter });
+    if (res.remote === "success") {
+      setApplicants(res.data.results);
+      setTotalRejected(res.data.rejectedCount);
+      setTotalShortlisted(res.data.shortlistedCount);
+      setTotalPlannedInterview(res.data.plannedInterviewCount);
+      setTotalBlacklisted(res.data.blacklistedCount);
+    }
+    setIsLoading(false);
+  };
   const handleGetApplicationByStatus = (status) => {
     setFilter((prevState) => (prevState === status ? "" : status));
   };
@@ -39,8 +56,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
     if (jobId) {
       if (isActive) getApplicationList();
     } else if (tenderId) {
-      // !TODO: Implement Tender application
-      setIsLoading(false);
+      if (isActive) getTenderApplicationList();
     }
   }, [isActive, filter]);
   return (
@@ -93,26 +109,29 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
                 }
                 icon={<SVG.StarIcon />}
               />
-              <Chip
-                style={{
-                  backgroundColor:
-                    filter === JOB_APPLICATION_OPTIONS.plannedInterviews &&
-                    "#d5e3f7",
-                }}
-                className="chip-cricle"
-                onClick={() => {
-                  handleGetApplicationByStatus(
-                    JOB_APPLICATION_OPTIONS.plannedInterviews
-                  );
-                }}
-                label={
-                  <>
-                    Planned interviews{" "}
-                    <span className="cricle">{totalPlannedInterview}</span>
-                  </>
-                }
-                icon={<SVG.EventIcon />}
-              />
+              {jobId && (
+                <Chip
+                  style={{
+                    backgroundColor:
+                      filter === JOB_APPLICATION_OPTIONS.plannedInterviews &&
+                      "#d5e3f7",
+                  }}
+                  className="chip-cricle"
+                  onClick={() => {
+                    handleGetApplicationByStatus(
+                      JOB_APPLICATION_OPTIONS.plannedInterviews
+                    );
+                  }}
+                  label={
+                    <>
+                      Planned interviews{" "}
+                      <span className="cricle">{totalPlannedInterview}</span>
+                    </>
+                  }
+                  icon={<SVG.EventIcon />}
+                />
+              )}
+
               <Chip
                 style={{
                   backgroundColor:
@@ -172,6 +191,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
               return (
                 <ApplicationCard
                   jobId={jobId}
+                  tenderId={tenderId}
                   details={item}
                   subTitle={item.subtitle}
                   isDisabled={item.disabled}

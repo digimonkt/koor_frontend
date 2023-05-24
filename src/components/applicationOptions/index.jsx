@@ -22,6 +22,7 @@ function ApplicationOptions({
   applicationId,
   isShortlisted,
   jobId,
+  tenderId,
   isRejected,
   isBlacklisted,
   isInterviewPlanned,
@@ -134,16 +135,29 @@ function ApplicationOptions({
         <Button
           variant="link"
           onClick={() => {
-            navigate(
-              urlcat(
-                "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
-                {
-                  applicationId: applicationId || "applicationId",
-                  role: USER_ROLES.employer,
-                  jobId: jobId || "jobId",
-                }
-              )
-            );
+            if (tenderId) {
+              navigate(
+                urlcat(
+                  "/:role/manage-tender/:tenderId/applicant-details/:applicationId",
+                  {
+                    applicationId: applicationId || "applicationId",
+                    role: USER_ROLES.employer,
+                    tenderId: tenderId || "tenderId",
+                  }
+                )
+              );
+            } else {
+              navigate(
+                urlcat(
+                  "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+                  {
+                    applicationId: applicationId || "applicationId",
+                    role: USER_ROLES.employer,
+                    jobId: jobId || "jobId",
+                  }
+                )
+              );
+            }
           }}
         >
           <SVG.OpenNewIcon className="application-option-icon" />

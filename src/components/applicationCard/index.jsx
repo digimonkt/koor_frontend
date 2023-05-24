@@ -20,6 +20,7 @@ const ApplicationCard = ({
   isRejected,
   isBlacklisted,
   isInterviewPlanned,
+  tenderId,
 }) => {
   // navigate
   // const navigate = useNavigate();
@@ -120,6 +121,7 @@ const ApplicationCard = ({
           isInterviewPlanned={isInterviewPlanned}
           userImage={details?.user?.image?.path || ""}
           userName={details?.user?.name || details?.user?.email}
+          tenderId= {tenderId}
         />
       </Stack>
     </Stack>

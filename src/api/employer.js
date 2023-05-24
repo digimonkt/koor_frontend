@@ -261,3 +261,17 @@ export const getEmployerActiveJobsAPI = async (data) => {
   }
   return response;
 };
+
+export const getApplicationOnTenderAPI = async ({ tenderId, filter }) => {
+  const response = await api.request({
+    url: urlcat("/v1/tenders/:tenderId/applications", { tenderId, filter }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationOnJobListData(response.data),
+    };
+  }
+  return response;
+};
