@@ -122,11 +122,15 @@ export const getApplicationDetailsAPI = async (applicationId) => {
         id: res.data.id,
         createdAt: res.data.created,
         job: res.data.job,
+        isInterviewPlanned: res.data.interview_at,
         rejectedAt: res.data.rejected_at,
         shortLetter: res.data.short_letter,
         shortlistedAt: res.data.shortlisted_at,
         attachments: res.data.attachments,
-        user: { ...transformGetUserDetails(res.data.user) },
+        user: {
+          ...transformGetUserDetails(res.data.user),
+          isBlacklisted: res.data.user.is_blacklisted,
+        },
       },
     };
   }
