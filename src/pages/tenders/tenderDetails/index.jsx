@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import { getLetLongByAddressAPI } from "@api/user";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -92,12 +93,17 @@ function TenderDetailsComponent() {
     attachments: [],
   });
   const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const [addressGeoCode, setAddressGeoCode] = useState({});
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
       setDetails(res.data);
+      const geoCode = await getLetLongByAddressAPI(res.data.address);
+      if (geoCode.remote === "success") {
+        setAddressGeoCode(geoCode.data.results[0]?.geometry.location || {});
+      }
     }
   };
 
@@ -130,7 +136,9 @@ function TenderDetailsComponent() {
   };
   const handleWithdrawTenderApplication = async () => {
     if (details.isEditable) {
-      const res = await withdrawTenderApplicationAPI({ tenderId: params.tenderId });
+      const res = await withdrawTenderApplicationAPI({
+        tenderId: params.tenderId,
+      });
       if (res.remote === "success") {
         setDetails({
           ...details,
@@ -323,9 +331,7 @@ function TenderDetailsComponent() {
               <Grid item xs={7}>
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
-                  <p>
-                    {"Germany, Dusseldorf. Menara Suruhanjaya Syakinat Str. 7"}
-                  </p>
+                  <p>{details.address}</p>
                   <div
                     style={{
                       height: "236px",
@@ -334,7 +340,7 @@ function TenderDetailsComponent() {
                     }}
                   >
                     <GoogleMapWrapper>
-                      <GoogleMap center={{}} zoom={15} />
+                      <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
                   </div>
                 </div>

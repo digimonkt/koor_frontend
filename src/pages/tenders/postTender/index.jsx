@@ -37,7 +37,9 @@ import { validateCreateTenderInput } from "@pages/jobs/validator";
 import { getTenderDetailsByIdAPI } from "@api/tender";
 import DialogBox from "@components/dialogBox";
 import { SVG } from "@assets/svg";
-import styles from "./postTender.moudle.css";
+import styles from "./postTender.module.css";
+import { useDebounce } from "usehooks-ts";
+import { GetSuggestedAddressAPI } from "@api/user";
 const PostTender = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -53,6 +55,16 @@ const PostTender = () => {
   const [tenderId, setTenderId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const debouncedSearchValue = useDebounce(searchValue, 500);
+  const [suggestedAddress, setSuggestedAddress] = useState([]);
+
+  const getSuggestedAddress = async (search) => {
+    const res = await GetSuggestedAddressAPI(search);
+    if (res.remote === "success") {
+      setSuggestedAddress(res.data.predictions);
+    }
+  };
 
   const handleRedirect = () => {
     setOpen(close);
@@ -71,6 +83,7 @@ const PostTender = () => {
       description: "",
       country: "",
       city: "",
+      address: "",
       categories: [],
       sectors: "",
       opportunityType: "",
@@ -94,6 +107,7 @@ const PostTender = () => {
         city: values.city,
         tender_category: values.categories,
         deadline: dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
+        address: values.address,
         start_date: values.startDate
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
@@ -142,12 +156,10 @@ const PostTender = () => {
       }
     },
   });
-  console.log({ formik });
   const getTenderDetailsById = useCallback(async (tenderId) => {
     const response = await getTenderDetailsByIdAPI({ tenderId });
     if (response.remote === "success") {
       const { data } = response;
-      console.log({ data });
       const payloadFormik = {
         title: data.title,
         budgetCurrency: data.budgetCurrency || "usd",
@@ -163,12 +175,25 @@ const PostTender = () => {
         startDate: data.startDate,
         deadline: data.deadline,
         attachments: data.attachments,
+        address: data.address,
       };
+      if (data.address) {
+        setSearchValue(data.address);
+      }
       for (const key in payloadFormik) {
         formik.setFieldValue(key, payloadFormik[key]);
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      debouncedSearchValue &&
+      debouncedSearchValue !== formik.values.address
+    ) {
+      getSuggestedAddress(debouncedSearchValue);
+    }
+  }, [debouncedSearchValue]);
 
   useEffect(() => {
     if (!countries.data.length) {
@@ -259,7 +284,6 @@ const PostTender = () => {
                       optionsValues={{
                         currency: formik.getFieldProps("budgetCurrency"),
                         input: formik.getFieldProps("budgetAmount"),
-                        payPeriod: formik.getFieldProps("budgetPayPeriod"),
                       }}
                       errors={{
                         currency: formik.touched.budgetCurrency
@@ -289,7 +313,7 @@ const PostTender = () => {
                       <ErrorMessage>{formik.errors.description}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
+                  <Grid item xl={8} lg={8} xs={12}>
                     <label>
                       Location <span className="required-field">*</span>
                     </label>
@@ -330,11 +354,53 @@ const PostTender = () => {
                       </Grid>
                     </Grid>
                   </Grid>
+                  <Grid item xl={4} lg={4} xs={12}>
+                    <label>
+                      Working place address{" "}
+                      <span className="required-field">*</span>
+                    </label>
+                    <div className={styles.positionReltive}>
+                      <input
+                        type="text"
+                        placeholder="Address"
+                        className="add-form-control"
+                        name={formik.getFieldProps("address").name}
+                        onBlur={(e) => formik.getFieldProps("address").onBlur}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        value={searchValue}
+                      />
+                      {debouncedSearchValue &&
+                        searchValue !== formik.values.address && (
+                          <div className={styles.search_results_box}>
+                            {suggestedAddress.map((address) => {
+                              return (
+                                <div
+                                  key={address.description}
+                                  className={styles.search_results}
+                                  onClick={() => {
+                                    formik.setFieldValue(
+                                      "address",
+                                      address.description
+                                    );
+                                    setSearchValue(address.description);
+                                  }}
+                                >
+                                  {address.description}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                    </div>
+                    {formik.touched.address && formik.errors.address ? (
+                      <ErrorMessage>{formik.errors.address}</ErrorMessage>
+                    ) : null}
+                  </Grid>
 
                   <Grid item xl={12} lg={12} xs={12}>
                     <label>Category</label>
                     <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={5} lg={5} xs={12}>
                         <SelectInput
                           multiple
                           defaultValue=""

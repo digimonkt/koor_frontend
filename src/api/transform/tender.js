@@ -43,6 +43,7 @@ export const transformFullTenderDetails = (data) => {
     description: data.description,
     country: data.country || {},
     city: data.city || {},
+    address: data.address || "",
     tag: data.tag || [],
     categories: data.tender_category || [],
     type: data.tender_type || {},
