@@ -31,4 +31,4 @@ jobs:
             git pull origin main
             yarn install
             yarn build
-            pm2 restart 59
+            pm2 restart 52
