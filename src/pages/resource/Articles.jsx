@@ -42,7 +42,7 @@ const Articles = () => {
               <Grid container spacing={3}>
                 {cardItem.map((item, index) => (
                   <>
-                    <Grid item lg={4}>
+                    <Grid item lg={4} xs={12} sm={6}>
                       <Card className={styles.div_card} key={index}>
                         <div>
                           <img src={item.img} className={styles.card_img} />

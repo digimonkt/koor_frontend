@@ -165,7 +165,7 @@ function Header() {
               sx={{
                 mr: 2,
                 fontSize: "14px",
-                display: { sm: "none" },
+                display: { lg: "none" },
               }}
             >
               <MenuIcon />
