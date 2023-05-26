@@ -342,6 +342,10 @@
 .appview {
   margin-top: -75px;
 }
+@media screen and (min-width:1440px) {
+  .back_img_div{height:845px}
+  
+}
 @media screen and (max-width: 992px) {
  
   .bg_corav:before {
