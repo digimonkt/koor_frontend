@@ -78,6 +78,7 @@ const Home = () => {
               backgroundRepeat: "no-repeat",
               position: "relative",
               "@media (max-width:992px)": { backgroundSize: "contain" },
+              "@media (min-width:992px)": { backgroundSize: "contain" },
             }}
           >
             <Box
