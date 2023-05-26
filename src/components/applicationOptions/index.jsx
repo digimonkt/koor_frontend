@@ -74,7 +74,7 @@ function ApplicationOptions({
   };
   return (
     <>
-      {allOptions && (
+      {(allOptions && tenderId) && (
         <Button
           disabled={shortlist || rejected || blacklisted || interviewPlanned}
           variant="link"
