@@ -20,7 +20,6 @@ import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
 import NotificationPopup from "./notificationPopup";
-
 // const ismenu = false;
 
 function Header() {
