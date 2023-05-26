@@ -129,10 +129,12 @@ const ApplicantDetails = () => {
                   alignItems="center"
                 >
                   <ApplicationOptions
-                    applicationId={params.applicationId}
-                    allOptions
-                    isShortlisted={applicantDetails.shortlistedAt}
-                    isRejected={applicantDetails.rejectedAt}
+                    details={applicantDetails}
+                    interviewPlanned
+                    shortlist
+                    reject
+                    blacklist
+                    message
                   />
                 </Stack>
               </Grid>

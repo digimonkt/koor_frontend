@@ -7,6 +7,7 @@ import {
 import {
   getDashboardActivityAPIResponseTransform,
   transformApplicationOnJobListData,
+  transformApplicationTenderListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
 import { transformTenderResponse } from "./transform/tender";
@@ -126,7 +127,10 @@ export const getApplicationDetailsAPI = async (applicationId) => {
         shortLetter: res.data.short_letter,
         shortlistedAt: res.data.shortlisted_at,
         attachments: res.data.attachments,
-        user: { ...transformGetUserDetails(res.data.user) },
+        user: {
+          ...transformGetUserDetails(res.data.user),
+          isBlacklisted: res.data.user.is_blacklisted,
+        },
       },
     };
   }
@@ -270,7 +274,7 @@ export const getApplicationOnTenderAPI = async ({ tenderId, filter }) => {
   if (response.remote === "success") {
     return {
       remote: "success",
-      data: transformApplicationOnJobListData(response.data),
+      data: transformApplicationTenderListData(response.data),
     };
   }
   return response;
