@@ -93,7 +93,8 @@ const Home = () => {
                     className={styles.headding}
                     sx={{
                       paddingTop: "26%",
-                      "@media(max-width:992px)": { paddingTop: "90%" },
+                      "@media(max-width:992px)": { paddingTop: "35%" },
+                      "@media(max-width:480px)": { paddingTop: "90%" },
                     }}
                   >
                     <h2>Find your dream job</h2>
@@ -178,38 +179,61 @@ const Home = () => {
           </Box>
           <Container>
             <Box>
-              <Typography className={`${styles.first_heading}`}>
+              <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
                 Listings from the top companies
               </Typography>
-              <Box className={`${styles.social_img}`}>
-                <img
-                  src={IMAGES.Mintra}
-                  alt="img"
-                  className={`${styles.mintra}`}
-                />
-                <img
-                  src={IMAGES.Amazon}
-                  alt="img"
-                  className={`${styles.amazon}`}
-                />
-                <img src={IMAGES.Dhl} alt="img" className={`${styles.dhl}`} />
-                <img
-                  src={IMAGES.Binance}
-                  alt="img"
-                  className={`${styles.binance}`}
-                />
-                <img
-                  src={IMAGES.Dominos}
-                  alt="img"
-                  className={`${styles.dominos}`}
-                />
-                <img
-                  src={IMAGES.Lingo}
-                  alt="img"
-                  className={`${styles.lingo}`}
-                />
-              </Box>
-              <Divider className={styles.divider_line} />
+              <Grid
+                container
+                spacing={{ xs: 2, lg: 10 }}
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item xs={4} lg={2} sm={1}>
+                  <img
+                    src={IMAGES.Mintra}
+                    alt="img"
+                    className={`${styles.mintra}`}
+                  />
+                </Grid>
+                <Grid item xs={4} lg={2} sm={2}>
+                  <img
+                    src={IMAGES.Amazon}
+                    alt="img"
+                    className={`${styles.amazon}`}
+                  />
+                </Grid>
+                <Grid item xs={4} lg={2} sm={2}>
+                  <img src={IMAGES.Dhl} alt="img" className={`${styles.dhl}`} />
+                </Grid>
+                <Grid item xs={4} lg={2} sm={2}>
+                  <img
+                    src={IMAGES.Binance}
+                    alt="img"
+                    className={`${styles.binance}`}
+                  />
+                </Grid>
+                <Grid item xs={4} lg={2} sm={1}>
+                  <img
+                    src={IMAGES.Dominos}
+                    alt="img"
+                    className={`${styles.dominos}`}
+                  />
+                </Grid>
+                <Grid item xs={4} lg={2} sm={2}>
+                  <img
+                    src={IMAGES.Lingo}
+                    alt="img"
+                    className={`${styles.lingo}`}
+                  />
+                </Grid>
+              </Grid>
+              <Divider
+                sx={{
+                  marginTop: "110px",
+                  "@media(max-width:992px)": { marginTop: "24px" },
+                }}
+              />
             </Box>
             <Box>
               <Stack direction="row" spacing={2} className={styles.stack_box}>

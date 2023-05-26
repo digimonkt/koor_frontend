@@ -256,7 +256,26 @@
     background-color: #ffffff !important;
   }
 }
+@media screen and (max-width:992px) {
+  .resource_heading {
+ 
+    line-height: 40px !important;
 
+  }
+  .resource_text{font-size: 16px !important; margin-top: 5px !important;}
+  .resource_share_p{margin-top: 5px !important; font-size: 16px !important;}
+  .resource_social_box{margin-top: 5px !important;}
+  .content_heading{padding-top: 35px;}
+}
+@media screen and (max-width:480px) {
+  .resource_banner{
+    margin-top: 0px !important;
+  }
+  .content_heading{padding-top: 0px;}
+  .content_div{margin-top: 30px;}
+  .content_sub_head{margin-top: 24px;}
+  .articles{margin-top: 35px !important; padding: 33px 0px !important;}
+}
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
   .resource_social_box {
     margin-top: 14px !important;
@@ -334,7 +353,7 @@
   }
 
   .resource_text_box {
-    margin-top: 0px;
+    margin-top: 95px;
   }
 
   .content_div {
@@ -391,11 +410,11 @@
   }
 
   .resource_text_box {
-    margin-top: 100px;
+    margin-top: 30px;
   }
 
   .resource_back_box {
-    background-size: 100% 15% !important;
+    background-size: 100% 9% !important;
   }
 
   .card_title {
