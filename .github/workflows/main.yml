@@ -27,6 +27,7 @@ jobs:
           port: 22
 
           script: |
+            bash
             cd /home/user/koor/frontend_koor/ 
             git pull origin main
             yarn install
