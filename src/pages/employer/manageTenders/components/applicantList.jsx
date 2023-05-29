@@ -1,27 +1,24 @@
-import { Chip } from "@mui/material";
-import { Stack } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import { getApplicationOnTenderAPI } from "@api/employer";
 import { SVG } from "@assets/svg";
-import { getApplicationOnJobAPI } from "@api/employer";
-
-import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
 import { NoDataFoundAnimation } from "@components/animations";
-import ApplicationListLayout from "@components/layout/applicationListLayout";
 import ApplicantCard from "@components/applicantCard";
 import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
+import ApplicationListLayout from "@components/layout/applicationListLayout";
+import { Chip, Stack } from "@mui/material";
+import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
+import React, { useState, useEffect } from "react";
 
-const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
+function ApplicantList({ totalApplications, tenderId }) {
+  const [isLoading, setIsLoading] = useState(true);
   const [applicants, setApplicants] = useState([]);
   const [filter, setFilter] = useState("");
   const [totalShortlisted, setTotalShortlisted] = useState(0);
   const [totalRejected, setTotalRejected] = useState(0);
   const [totalBlacklisted, setTotalBlacklisted] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const getApplicationList = async () => {
+  const getTenderApplicationList = async () => {
     setIsLoading(true);
-    const res = await getApplicationOnJobAPI({ jobId, filter });
+    const res = await getApplicationOnTenderAPI({ tenderId, filter });
     if (res.remote === "success") {
       setApplicants(res.data.results);
       setTotalRejected(res.data.rejectedCount);
@@ -31,14 +28,9 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
     }
     setIsLoading(false);
   };
-
   const handleGetApplicationByStatus = (status) => {
     setFilter((prevState) => (prevState === status ? "" : status));
   };
-
-  useEffect(() => {
-    if (filter) getApplicationList(filter);
-  }, [filter]);
 
   const allFilters = () => {
     return (
@@ -115,45 +107,46 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
       </Stack>
     );
   };
+
+  useEffect(() => {
+    if (filter) getTenderApplicationList(filter);
+  }, [filter]);
+
   return (
-    <>
-      <ApplicationListLayout
-        filters={allFilters()}
-        totalApplications={totalApplications}
-        onActive={(active) => {
-          if (active) getApplicationList();
-        }}
-      >
-        {isLoading ? (
-          // skeleton loading need to implement
-          [1, 2, 3].map((loaders) => {
-            return <ApplicantCardSkeletonLoading key={loaders} />;
-          })
-        ) : !applicants.length ? (
-          <NoDataFoundAnimation
-            title={`There are currently no applications for your ${
-              jobId ? "job" : "tender"
-            } posting.`}
-          />
-        ) : (
-          applicants.map((item, index) => {
-            return (
-              <ApplicantCard
-                key={index}
-                details={item}
-                interviewPlanned
-                shortlist
-                reject
-                blacklist
-                view
-                message
-              />
-            );
-          })
-        )}
-      </ApplicationListLayout>
-    </>
+    <ApplicationListLayout
+      filters={allFilters()}
+      totalApplications={totalApplications}
+      onActive={(active) => {
+        if (active) getTenderApplicationList();
+      }}
+    >
+      {isLoading ? (
+        // skeleton loading need to implement
+        [1, 2, 3].map((loaders) => {
+          return <ApplicantCardSkeletonLoading key={loaders} />;
+        })
+      ) : !applicants.length ? (
+        <NoDataFoundAnimation
+          title={"There are currently no applications for your tender posting."}
+        />
+      ) : (
+        applicants.map((item, index) => {
+          return (
+            <ApplicantCard
+              key={index}
+              details={item}
+              interviewPlanned
+              shortlist
+              reject
+              blacklist
+              view
+              message
+            />
+          );
+        })
+      )}
+    </ApplicationListLayout>
   );
-};
+}
 
 export default ApplicantList;
