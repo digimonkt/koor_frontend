@@ -16,7 +16,7 @@ function Map({ center, zoom }) {
     }
   }, [center]);
   useEffect(() => {
-    console.log({ newCenter, zoom });
+    // console.log({ newCenter, zoom });
     if (newCenter.lat && newCenter.lng) {
       const newMap = new window.google.maps.Map(ref.current, {
         center: newCenter,
@@ -31,6 +31,6 @@ function Map({ center, zoom }) {
     }
   }, [newCenter, zoom]);
 
-  return <div ref={ref} id="map" style={{ height: "80%" }} />;
+  return <div ref={ref} id="map" style={{ height: "100%" }} />;
 }
 export default Map;

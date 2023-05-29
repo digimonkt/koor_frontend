@@ -43,7 +43,7 @@ const Tenders = () => {
       chips.filter((chip) => chip.key !== chipToDelete.key)
     );
   };
-  const managetenderlist = [
+  const manageTenderList = [
     {
       title: "Request for quotation for aluminium asset tags",
     },
@@ -88,7 +88,7 @@ const Tenders = () => {
             </button>
           </Stack>
         </div>
-        {managetenderlist.map((items, index) => (
+        {manageTenderList.map((items, index) => (
           <Card
             key={index}
             sx={{

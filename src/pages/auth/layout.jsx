@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { Container, Grid, Stack } from "@mui/material";
+import { Box, Container, Grid, IconButton, Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { Card, CardContent } from "@components/card";
 import { USER_ROLES } from "@utils/enum";
@@ -70,6 +70,11 @@ function AuthLayout({
           display_image: res.data.photoURL,
           source: "google",
         };
+        for (const key in payload) {
+          if (!payload[key]) {
+            delete payload[key];
+          }
+        }
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           console.log({ result });
@@ -95,6 +100,11 @@ function AuthLayout({
           display_image: res.data.photoURL,
           source: "apple",
         };
+        for (const key in payload) {
+          if (!payload[key]) {
+            delete payload[key];
+          }
+        }
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           console.log({ result });
@@ -142,25 +152,99 @@ function AuthLayout({
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
       <div
-        className={`register py-5 ${
+        className={`register pb-0 pt-5 py-lg-5 ${
           role === USER_ROLES.employer || role === USER_ROLES.vendor
             ? "vendor"
             : ""
         }`}
       >
-        <Container>
+        <Container
+          sx={{
+            "@media(max-width:992px)": {
+              padding: "0px",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              fontFamily: "Bahnschrift",
+              textAlign: "center",
+              marginBottom: "25px",
+              color: "#fff",
+              "& h5": { fontSize: "40px", color: "#fff", margin: "0px" },
+              "& p": { fontSize: "16px", margin: "0px" },
+              "@media(min-width:992px)": {
+                display: "none",
+              },
+            }}
+          >
+            <h5>Welcome!</h5>
+            <p>I want to register as...</p>
+          </Box>
+          <Box
+            sx={{
+              "@media(max-width:992px)": {
+                overflow: "hidden",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                marginTop: "50%",
+                opacity: 0.2,
+                "@media(max-width:992px)": {
+                  marginTop: "0%",
+                },
+                "@media(min-width:992px)": {
+                  display: "none",
+                },
+              }}
+            >
+              <Marquee
+                play={true}
+                speed={100}
+                gradient={false}
+                direction="left"
+                className="marquee"
+              >
+                <h1>Register</h1>
+                <h1>Search</h1>
+                <h1>Apply</h1>
+                <h1>Work</h1>
+              </Marquee>
+            </Box>
+          </Box>
           <Grid container>
-            <Grid item md={5}>
+            <Grid
+              item
+              md={5}
+              sx={{
+                "@media(max-width:992px)": {
+                  width: "100%",
+                },
+              }}
+            >
               <Card>
                 <CardContent
                   sx={{
                     padding: `75px 60px ${!role ? "!important" : ""}`,
+                    "@media(max-width:992px)": {
+                      padding: `25px ${!role ? "!important" : ""}`,
+                    },
                   }}
                 >
                   {isRoleSelection && !role ? (
                     <div className="content-box">
-                      <h5 data-cy="title">{title}</h5>
-                      <p data-cy="subTitle">{subTitle}</p>
+                      <Box
+                        sx={{
+                          "@media(max-width:992px)": {
+                            display: "none",
+                          },
+                        }}
+                      >
+                        <h5 data-cy="title">{title}</h5>
+                        <p data-cy="subTitle">{subTitle}</p>
+                      </Box>
                       <div className="register-des mt-4" data-cy="authOptions">
                         {AuthOptions.map((option) => {
                           return (
@@ -190,6 +274,26 @@ function AuthLayout({
                             </Link>
                           );
                         })}
+                        <Box
+                          sx={{
+                            color: "#848484",
+                            fontFamily: "Poppins",
+                            fontSize: "14px",
+                            marginTop: "50px",
+                            textAlign: "center",
+                            "@media(min-width:992px)": {
+                              display: "none",
+                            },
+                          }}
+                        >
+                          Already have an account?{" "}
+                          <Link
+                            to="/login"
+                            style={{ color: "#EEA23D", fontWeight: "600" }}
+                          >
+                            Log in
+                          </Link>
+                        </Box>
                       </div>
                     </div>
                   ) : (
@@ -202,6 +306,18 @@ function AuthLayout({
                               : "none",
                           }}
                         >
+                          <IconButton
+                            onClick={() => navigate(-1)}
+                            sx={{
+                              padding: "0px",
+                              marginRight: "10px",
+                              "@media(min-width:992px)": {
+                                display: "none",
+                              },
+                            }}
+                          >
+                            <SVG.BackArrow />
+                          </IconButton>
                           {selectedRoleTitle
                             .replace("@role", processRoleToDisplay(role))
                             .replace("@email", verifyEmail)}
@@ -219,15 +335,24 @@ function AuthLayout({
                               spacing={2}
                               justifyContent="center"
                             >
-                              <div onClick={loginWithGoogle} disabled={loading}>
+                              <div
+                                onClick={loginWithGoogle}
+                                disabled={loading}
+                                style={{ cursor: "pointer" }}
+                              >
                                 <SVG.Google />
                               </div>
-                              <div onClick={loginWithApple} disabled={loading}>
+                              <div
+                                onClick={loginWithApple}
+                                disabled={loading}
+                                style={{ cursor: "pointer" }}
+                              >
                                 <SVG.Apple />
                               </div>
                               <div
                                 onClick={loginWithFacebook}
                                 disabled={loading}
+                                style={{ cursor: "pointer" }}
                               >
                                 <SVG.Facebook />
                               </div>
@@ -261,8 +386,24 @@ function AuthLayout({
                 </CardContent>
               </Card>
             </Grid>
-            <Grid md={7}>
-              <div style={{ marginTop: "50%", opacity: "0.2" }}>
+            <Grid
+              md={7}
+              sx={{
+                "@media(max-width:992px)": {
+                  overflow: "hidden",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  marginTop: "50%",
+                  opacity: 0.2,
+                  "@media(max-width:992px)": {
+                    marginTop: "0%",
+                    display: "none",
+                  },
+                }}
+              >
                 <Marquee
                   play={true}
                   speed={100}
@@ -275,7 +416,7 @@ function AuthLayout({
                   <h1>Apply</h1>
                   <h1>Work</h1>
                 </Marquee>
-              </div>
+              </Box>
             </Grid>
           </Grid>
         </Container>

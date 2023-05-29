@@ -8,12 +8,14 @@ import { OutlinedButton } from "@components/button";
 import {
   getDashboardActivityAPI,
   getRecentApplicationAPI,
+  getShareCountDataAPI,
 } from "@api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 import JobAnalytics from "./jobAnalytics";
+import Loader from "@components/loader";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const [counts, setCounts] = useState({
@@ -27,6 +29,12 @@ const Dashboard = () => {
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDonutShow, setIsDonutShow] = useState(false);
+  const [shareCount, setShareCount] = useState({
+    series: [],
+    sites: [],
+    total: 0,
+  });
   const getRecentApplications = async () => {
     setIsLoading(true);
     const res = await getRecentApplicationAPI({
@@ -62,7 +70,31 @@ const Dashboard = () => {
       });
     }
   };
-
+  const getShareCountData = async () => {
+    const res = await getShareCountDataAPI();
+    if (res.remote === "success") {
+      setShareCount({
+        series: [
+          res.data.facebook,
+          res.data.whatsapp,
+          res.data.telegram,
+          res.data.linked_in,
+          res.data.mail,
+          res.data.direct_link,
+        ],
+        sites: [
+          { name: "Facebook", count: res.data.facebook },
+          { name: "Whatsapp", count: res.data.whatsapp },
+          { name: "Telegram", count: res.data.telegram },
+          { name: "Linked In", count: res.data.linked_in },
+          { name: "Mail", count: res.data.mail },
+          { name: "Direct Link", count: res.data.direct_link },
+        ].sort((a, b) => b.count - a.count),
+        total: res.data.total,
+      });
+      setIsDonutShow(true);
+    }
+  };
   const handleShowMore = () =>
     setRecentApplicationPage((prevState) => prevState + 1);
 
@@ -72,15 +104,18 @@ const Dashboard = () => {
   useEffect(() => {
     getDashboardActivity();
   }, []);
+  useEffect(() => {
+    getShareCountData();
+  }, []);
   return (
     <>
       <div className="employer-dashboard">
         <Grid item container spacing={2} sx={{ mb: 4 }}>
           {employerCard(counts).map((item, index) => (
-            <Grid item lg={3} xl={3} xs={12} key={index}>
+            <Grid item lg={3} xl={3} xs={6} key={index}>
               <Stack
                 direction="row"
-                spacing={2}
+                spacing={{ xs: 1, lg: 2 }}
                 alignItems="center"
                 sx={{
                   borderRadius: "80px",
@@ -142,7 +177,23 @@ const Dashboard = () => {
                 }}
               >
                 <div className="add-content">
-                  <DonutChart totalShare={"48 total shares:"} />
+                  {isDonutShow ? (
+                    <DonutChart shareCountData={shareCount} />
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        paddingTop: "32%",
+                        justifyContent: "center",
+                        alignSelf: "center",
+                      }}
+                    >
+                      <Loader
+                        style={{ width: "44px", height: "44px" }}
+                        loading={true}
+                      />
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

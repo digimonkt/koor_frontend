@@ -11,20 +11,30 @@ export const transformGetUserDetails = (data) => {
     role: data.role,
     profile: {
       description: data.profile.description || "",
+      country: data.profile.country || {},
+      city: data.profile.city || {},
       // job-seeker
       gender: data.profile.gender || "",
       dob: data.profile.dob || "",
-      country: data.profile.country || {},
-      city: data.profile.city || {},
       employmentStatus: data.profile.employment_status || "",
       highestEducation: data.profile.highest_education,
       marketInformationNotification:
         data.profile.market_information_notification || false,
       jobNotification: data.profile.job_notification,
       // employer
-      organizationType: data.profile.organization_type,
+      organizationType: data.profile.organization_type || {},
       licenseId: data.profile.license_id,
       licenseIdFile: data.profile.license_id_file,
+      experience: data.profile.experience,
+      address: data.profile.address || "",
+
+      // vendor
+      registrationNumber: data.profile.registration_number || "",
+      registrationCertificate: data.profile.registration_certificate,
+      operatingYears: data.profile.operating_years || "",
+      jobsExperience: data.profile.jobs_experience || "",
+      website: data.profile.website || "",
+      otherNotification: data.profile.other_notification || false,
     },
     jobPreferences: data.job_preferences
       ? {
@@ -106,5 +116,22 @@ export const transformSearchUserByRoleResponse = (data) => {
     country: data.country || "",
     city: data.city || "",
     highestEducation: data.highest_education || "",
+  };
+};
+
+export const transformSearchUserFilterResponse = (data) => {
+  return {
+    id: data.id,
+    title: data.title,
+    country: data.country,
+    city: data.city,
+    jobCategories: data.category.map((category) => category.id),
+    isFullTime: data.is_full_time,
+    isPartTime: data.is_part_time,
+    hasContract: data.has_contract,
+    isAvailable: data.availability,
+    isNotification: data.is_notification,
+    salaryMin: data.salary_min,
+    salaryMax: data.salary_max,
   };
 };

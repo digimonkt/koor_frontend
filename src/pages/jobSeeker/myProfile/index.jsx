@@ -103,7 +103,7 @@ const MyProfile = () => {
                         <p>
                           Uploading a resume speeds up your job application
                           process. It also helps the employer to know more about
-                          your strenths. Job seekers with resume usually find a
+                          your strengths. Job seekers with resume usually find a
                           job faster 😉
                         </p>
                       </>

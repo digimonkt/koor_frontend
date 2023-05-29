@@ -49,20 +49,28 @@ function NotificationPopup() {
           horizontal: "left",
         }}
         open={open}
+        PaperProps={{
+          style: {
+            maxHeight: "500px",
+          },
+        }}
         className="drop_menu"
       >
         <div ref={wrapperRef} id="notificationPopup">
-          <MenuItem>
+          <MenuItem sx={{ padding: "20px 15px 15px 15px" }}>
             <div className={styles.notification_heading_div}>
               <div>
                 <h3 className={styles.notification_heading}>Notifications</h3>
               </div>
               <div>
-                <SVG.CrossCircle onClick={handleClose} />
+                <SVG.CrossCircle
+                  style={{ width: "23px", height: "23px" }}
+                  onClick={handleClose}
+                />
               </div>
             </div>
           </MenuItem>
-          <MenuItem className="w-100">
+          <MenuItem className="w-100" sx={{ padding: "0px 0px 0px 15px" }}>
             <NotificationContent footer handleClose={handleClose} />
           </MenuItem>
         </div>

@@ -4,27 +4,41 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { SVG } from "@assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getJobDetailsByIdAPI, getJobSuggestionAPI } from "@api/job";
+import {
+  getJobDetailsByIdAPI,
+  getJobSuggestionAPI,
+  withdrawJobApplicationAPI,
+} from "@api/job";
 import dayjs from "dayjs";
-import { SolidButton, SearchButton, OutlinedButton } from "@components/button";
+import {
+  SolidButton,
+  SearchButton,
+  OutlinedButton,
+  FilledButton,
+} from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DialogBox from "@components/dialogBox";
 import { USER_ROLES } from "@utils/enum";
 import { getLetLongByAddressAPI } from "@api/user";
 import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
+import { Stack } from "@mui/material";
+import ShareJob from "../shareJob";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 
 const JobDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
+  const [isSharing, setIsSharing] = useState(false);
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -41,7 +55,14 @@ const JobDetails = () => {
       title: "",
     },
     address: "",
-    jobCategories: [],
+    jobCategories: {
+      id: "",
+      title: "",
+    },
+    jobSubCategory: {
+      id: "",
+      title: "",
+    },
     deadline: "",
     isFullTime: false,
     isPartTime: false,
@@ -55,6 +76,7 @@ const JobDetails = () => {
       id: "",
       title: "",
     },
+    application: {},
     languages: [],
     skills: [],
     workingDays: "5",
@@ -94,11 +116,48 @@ const JobDetails = () => {
       setSuggestionJobs(res.data.results);
     }
   };
+  const handleWithdrawJobApplication = async () => {
+    if (details.isEditable) {
+      const res = await withdrawJobApplicationAPI({ jobId: params.jobId });
+      if (res.remote === "success") {
+        setDetails({
+          ...details,
+          isApplied: false,
+        });
+        dispatch(setSuccessToast("Withdraw successfully"));
+      }
+    } else {
+      dispatch(setErrorToast("Cannot be withdraw"));
+    }
+  };
+
+  function handleSendEmail() {
+    const email = details.contactEmail;
+    const ccEmail1 = details.cc1;
+    const ccEmail2 = details.cc2;
+    const subject = `Job Application for ${details.title}`;
+    const body = `Here is the my job application for this job \n ${window.location.href}`;
+    let link = `mailto:${email}?&subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    if (ccEmail1) {
+      link += `&cc=${ccEmail1}`;
+    }
+    if (ccEmail1 && ccEmail2) {
+      link += `,${ccEmail2}`;
+    }
+    const tag = document.createElement("a");
+    tag.href = link;
+    tag.target = "_blank";
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
+  }
+
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
   }, [params.jobId]);
-  // console.log("suggestionJobs_page", suggestionJobs);
   const handleSaveJob = async (jobId) => {
     if (isLoggedIn) {
       setDetails((prevState) => ({
@@ -129,7 +188,12 @@ const JobDetails = () => {
               <Grid item xs={8}>
                 <div className={`${styles.postJob}`}>
                   {/* <Link to="/saved-jobs"> */}
-                  <span onClick={() => navigate(-1)}>{<SVG.LeftArrow />}</span>
+                  <span
+                    style={{ paddingTop: "5px" }}
+                    onClick={() => navigate(-1)}
+                  >
+                    {<SVG.LeftArrow />}
+                  </span>
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -156,8 +220,8 @@ const JobDetails = () => {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={8}>
-                <div className={`${styles.contentJob}`}>
+              <Grid item xs={12} lg={9}>
+                <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <p className="job-description">{details.description}</p>
                 </div>
@@ -229,38 +293,95 @@ const JobDetails = () => {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={4}>
+              <Grid item xs={12} lg={3}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
                   user={details.user}
                 />
-                <div className={`${styles.jobpostbtn}`}>
-                  <SearchButton
-                    text={details.isApplied ? "Applied" : "Apply for this job"}
-                    className={`${styles.enablebtn}`}
-                    lefticon={<SVG.Enable />}
-                    disabled={details.isApplied}
-                    onClick={() => {
-                      if (isLoggedIn) {
-                        navigate(
-                          urlcat("../job/apply/:jobId", { jobId: params.jobId })
-                        );
-                      } else {
-                        setRegistrationWarning(true);
+                {role === USER_ROLES.jobSeeker || role === "" ? (
+                  <div className={`${styles.jobpostbtn}`}>
+                    <FilledButton
+                      title={
+                        details.isApplied
+                          ? details.isEditable
+                            ? "Edit"
+                            : "Applied"
+                          : "Apply for this job"
                       }
-                    }}
-                  />
-
-                  <SearchButton
-                    text={details.isSaved ? "Saved" : "Save job"}
-                    lefticon={<SVG.BlueFlag />}
-                    className={`${styles.outlinebtn}`}
-                    onClick={() => {
-                      handleSaveJob(params.jobId);
-                    }}
-                  />
-                </div>
+                      className={`${styles.enablebtn}`}
+                      disabled={details.isApplied && !details.isEditable}
+                      onClick={() => {
+                        if (isLoggedIn) {
+                          if (details.isEditable) {
+                            navigate(
+                              urlcat("../job/apply/:jobId", {
+                                jobId: params.jobId,
+                                applicationId: details.application.id,
+                              })
+                            );
+                          } else {
+                            navigate(
+                              urlcat("../job/apply/:jobId", {
+                                jobId: params.jobId,
+                              })
+                            );
+                          }
+                        } else {
+                          setRegistrationWarning(true);
+                        }
+                      }}
+                    />
+                    {details.isEditable && details.isApplied && isLoggedIn && (
+                      <FilledButton
+                        title="Withdraw"
+                        className={`${styles.enablebtn}`}
+                        disabled={!details.isEditable}
+                        onClick={() => {
+                          handleWithdrawJobApplication();
+                        }}
+                      />
+                    )}
+                    {!details.isApplied && details.contactEmail && (
+                      <FilledButton
+                        title="Apply via Mail"
+                        className={`${styles.enablebtn}`}
+                        onClick={() => {
+                          handleSendEmail();
+                        }}
+                      />
+                    )}
+                    {/* <div className={styles.btnGroup}> */}
+                    <Stack
+                      direction="row"
+                      spacing={{
+                        xs: 1,
+                        sm: 2,
+                        lg: 2,
+                      }}
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <OutlinedButton
+                        title={details.isSaved ? "Saved" : "Save job"}
+                        style={{ height: "44px" }}
+                        jobSeeker
+                        onClick={() => {
+                          handleSaveJob(params.jobId);
+                        }}
+                      />
+                      <OutlinedButton
+                        title={<SVG.ShareIcon />}
+                        jobSeeker
+                        style={{ height: "44px" }}
+                        onClick={() => {
+                          setIsSharing(true);
+                        }}
+                      />
+                    </Stack>
+                    {/* </div> */}
+                  </div>
+                ) : null}
               </Grid>
             </Grid>
           </div>
@@ -268,7 +389,7 @@ const JobDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={7}>
                 <JobRequirementCard
-                  jobCategories={details.jobCategories}
+                  highestEducation={details.highestEducation}
                   languages={details.languages}
                   skills={details.skills}
                 />
@@ -277,7 +398,13 @@ const JobDetails = () => {
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
-                  <div style={{ height: "100%" }}>
+                  <div
+                    style={{
+                      height: "75%",
+                      overflow: "hidden",
+                      borderRadius: "5px",
+                    }}
+                  >
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
@@ -339,6 +466,19 @@ const JobDetails = () => {
           </div>
         </div>
       </Container>
+      <DialogBox
+        open={isSharing}
+        handleClose={() => setIsSharing(false)}
+        title="Share"
+        sx={{
+          "& .MuiPaper-root": {
+            width: "700px",
+            maxWidth: "857px",
+          },
+        }}
+      >
+        <ShareJob />
+      </DialogBox>
     </>
   );
 };

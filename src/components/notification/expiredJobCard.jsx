@@ -23,7 +23,7 @@ function ExpiredJobCard({ job, createdAt }) {
               background: "#F0F0F0",
             },
           }}
-          src={generateFileUrl(job.user.image)}
+          src={generateFileUrl(job?.user.image)}
         >
           <SVG.UserIcon />
         </Avatar>

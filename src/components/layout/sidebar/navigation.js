@@ -48,7 +48,7 @@ const EmployerNavigationOptions = Object.freeze([
     isDisable: false,
   },
   {
-    to: "/employer-manage-tenders",
+    to: "/manage-tenders",
     icon: SVG.TendersIcon,
     title: "Manage tenders",
     id: "manageTenders",
@@ -76,23 +76,30 @@ const VendorNavigationOptions = Object.freeze([
     icon: SVG.DashboardIcon,
     title: "Dashboard",
     id: "dashboard",
-    to: "/dashboard-2",
+    to: "/dashboard",
+    isDisable: true,
   },
   {
-    to: "/my-profile-2",
+    to: "/my-profile",
     icon: SVG.ProfileIcon,
     title: "My Profile",
     id: "myProfile",
     isDisable: false,
   },
   {
-    to: "/job/saved",
+    to: "/tender/applied",
     icon: SVG.UnSave,
-    title: "Saved Jobs",
-    id: "savedJobs",
+    title: "Applied Tenders",
+    id: "appliedTenders",
     isDisable: false,
   },
-
+  {
+    to: "/tender/saved",
+    icon: SVG.UnSave,
+    title: "Saved Tenders",
+    id: "savedTenders",
+    isDisable: false,
+  },
   {
     icon: SVG.CalenderIcon,
     title: "Calender",
@@ -104,7 +111,7 @@ const VendorNavigationOptions = Object.freeze([
     title: "Messages",
     id: "messages",
     count: 2,
-    to: "/chat-2",
+    to: "/chat",
   },
 ]);
 
@@ -125,12 +132,10 @@ export const navigationOptions = (role) => {
         })
       );
     case USER_ROLES.vendor:
-      return VendorNavigationOptions.filter((item) => !item.isDisable).map(
-        (option) => ({
-          ...option,
-          to: `/vendor${option.to}`,
-        })
-      );
+      return VendorNavigationOptions.map((option) => ({
+        ...option,
+        to: `/vendor${option.to}`,
+      }));
     default:
       return [];
   }

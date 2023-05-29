@@ -34,6 +34,12 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
       country: selectedCountry,
       city: selectedCity,
     };
+    if (!payload.country) {
+      delete payload.country;
+    }
+    if (!payload.city) {
+      delete payload.city;
+    }
     const res = await UpdateJobSeekerAdditionalParametersAPI(payload);
     if (res.remote === "success") {
       dispatch(
@@ -115,7 +121,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             </FormControl>
           </Grid>
           <Grid item md={12} xs={12}>
-            <Divider className="my-3" />
+            <Divider className="mb-3" />
             <label className="d-block" style={{ marginBottom: "0.5rem" }}>
               Job type
             </label>

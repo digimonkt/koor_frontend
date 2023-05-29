@@ -7,10 +7,12 @@ import AllApplication from "./component/allApplication";
 import MyJobs from "./component/myJobs";
 import { AntTab, AntTabs } from "./style";
 import { useSelector } from "react-redux";
+import Blacklist from "./component/blacklist";
 
 function ManageJobsComponent() {
   const { totalCreatedJobs } = useSelector((state) => state.employer);
   const { totalApplications } = useSelector((state) => state.employer);
+  const { totalBlacklist } = useSelector((state) => state.employer);
   const [panel, setPanel] = useState(0);
   const [tabs, setTabs] = useState([
     {
@@ -23,7 +25,13 @@ function ManageJobsComponent() {
       count: 0,
       component: AllApplication,
     },
+    {
+      title: "Blacklist",
+      count: 0,
+      component: Blacklist,
+    },
   ]);
+
   useEffect(() => {
     setTabs((prevState) => {
       const newTabs = prevState.map((tab) => {
@@ -58,18 +66,28 @@ function ManageJobsComponent() {
           id={`simple-tab-${1}`}
           aria-controls={`simple-tabpanel-${1}`}
         />
+        <AntTab
+          label={
+            <Stack direction="row" spacing={1} alignItems="center">
+              <span>Blacklist</span>{" "}
+              <Chip label={totalBlacklist} className="job-count" />
+            </Stack>
+          }
+          id={`simple-tab-${1}`}
+          aria-controls={`simple-tabpanel-${1}`}
+        />
 
         <div className="ms-auto">
           <OutlinedButton
-            // LinkComponent={Link}
-            // to="/manage-jobs/post-a-new-job"
+            LinkComponent={Link}
+            to="/employer/jobs/post"
             title={
-              <Link to="/employer/jobs/post">
-                <span className="me-3">
+              <>
+                <span className="me-3 d-inline-flex">
                   <SVG.EditIcon />
                 </span>
                 Post new job
-              </Link>
+              </>
             }
           />
         </div>

@@ -6,7 +6,7 @@ import { USER_ROLES } from "@utils/enum";
 import dayjs from "dayjs";
 import { YEAR_FORMAT } from "@utils/constants/constants";
 import { deleteEducationDetailsAPI } from "@api/jobSeeker";
-import { setSuccessToast } from "@redux/slice/toast";
+import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
 import { deleteEducationRecord } from "@redux/slice/user";
 import DialogBox from "@components/dialogBox";
 import DeleteCard from "@components/deleteCard";
@@ -20,6 +20,7 @@ function EducationCard({
   institute,
   educationLevel,
   handleEdit,
+  noOptions,
 }) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
@@ -33,7 +34,7 @@ function EducationCard({
       dispatch(deleteEducationRecord(id));
       dispatch(setSuccessToast("Education Deleted Successfully"));
     } else {
-      dispatch(setSuccessToast("Something went wrong"));
+      dispatch(setErrorToast("Something went wrong"));
     }
     setLoading(false);
     setDeleting(false);
@@ -55,7 +56,7 @@ function EducationCard({
             {present ? "Present" : dayjs(endDate).format(YEAR_FORMAT)}
           </span>
         </div>
-        {role === USER_ROLES.jobSeeker && (
+        {role === USER_ROLES.jobSeeker && !noOptions ? (
           <Stack direction="row" spacing={1} className="list-button">
             <button onClick={handleEdit}>
               <SVG.EditIcon />
@@ -66,7 +67,7 @@ function EducationCard({
               <span>Delete</span>
             </button>
           </Stack>
-        )}
+        ) : null}
       </Stack>
       <DialogBox open={deleting} handleClose={() => setDeleting(false)}>
         <DeleteCard

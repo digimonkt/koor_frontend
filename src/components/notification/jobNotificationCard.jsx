@@ -37,7 +37,9 @@ function JobNotificationCard({ job, jobFilter, createdAt }) {
           >
             It matches your "{jobFilter?.title}" Search
           </p>
-          <p className={styles.duration}>{timeAgoFromNow(createdAt)}</p>
+          <p style={{ marginTop: "5px" }} className={styles.duration}>
+            {timeAgoFromNow(createdAt)}
+          </p>
         </div>
       </div>
     </Link>

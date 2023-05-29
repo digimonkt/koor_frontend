@@ -160,14 +160,15 @@
   height: 13px;
   content: "•";
   text-align: center;
-  opacity: 0.3;
-  color: #274593 !important;
+opacity: 1;
+  color: #EFEFEF;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .slick-dots li.slick-active button:before {
   opacity: 1 !important ;
+  color: #274593;
 }
 
 body {
@@ -285,18 +286,10 @@ textarea {
     transform: rotate(90deg);
     position: relative;
     bottom: 220px;
+    left:-20px;
   }
 
-  .update_checkbox {
-    display: grid !important;
-    margin-right: 25px !important;
-  }
 
-  .update_checkbox .MuiButtonBase-root.MuiCheckbox-root {
-    display: block !important;
-    margin-top: 10px !important;
-    padding: 0px !important;
-  }
 
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
@@ -398,4 +391,11 @@ textarea {
   .newstabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 0px !important;
   }
+}
+
+img{max-width: 100%;}
+@media screen and (max-width:480px){
+
+  .verticalSlider ul.slick-dots{bottom:38em; transform:none}
+
 }

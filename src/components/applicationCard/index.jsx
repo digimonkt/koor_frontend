@@ -6,6 +6,10 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ApplicationOptions from "@components/applicationOptions";
+import utcPlugin from "dayjs/plugin/utc";
+import timezonePlugin from "dayjs/plugin/timezone";
+dayjs.extend(utcPlugin);
+dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
 
 const ApplicationCard = ({
@@ -15,6 +19,7 @@ const ApplicationCard = ({
   allOptions,
   isRejected,
   isBlacklisted,
+  isInterviewPlanned,
 }) => {
   // navigate
   // const navigate = useNavigate();
@@ -50,7 +55,10 @@ const ApplicationCard = ({
             <h4>{details?.user?.name || details?.user?.email}</h4>
             <div className="recent-research" style={{ flexWrap: "wrap" }}>
               <span>
-                Applied <strong>{dayjs(details?.createdAt).fromNow()}</strong>{" "}
+                Applied{" "}
+                <strong>
+                  {dayjs.utc(details?.createdAt).local().fromNow()}
+                </strong>{" "}
                 to:{" "}
               </span>
               <div>{details?.job?.title}</div>
@@ -109,6 +117,9 @@ const ApplicationCard = ({
           isShortlisted={isShortlisted}
           isRejected={isRejected}
           isBlacklisted={isBlacklisted}
+          isInterviewPlanned={isInterviewPlanned}
+          userImage={details?.user?.image?.path || ""}
+          userName={details?.user?.name || details?.user?.email}
         />
       </Stack>
     </Stack>

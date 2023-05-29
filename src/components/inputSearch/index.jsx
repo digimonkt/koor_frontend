@@ -1,21 +1,21 @@
 import React from "react";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import styles from "./inputsearch.module.css";
-import { IconButton } from "@mui/material";
+
 import { SVG } from "@assets/svg";
 
 const InputSearch = ({ placeholder, svg, ...rest }) => {
   return (
     <>
       <div className={`${styles.searchInput}`}>
-        <IconButton
+        {/* <IconButton
           color="inherit"
           aria-label="open drawer"
           edge="start"
           sx={{ mr: 2, display: { sm: "none" } }}
         >
           <MenuIcon />
-        </IconButton>
+        </IconButton> */}
         <div className="searchmainbox">
           <small className="telentsearchicon">{<SVG.HeaderSearch />}</small>
           <input

@@ -27,15 +27,15 @@ import { getUserCountryByIpAPI, getUserIpAPI } from "@api/user";
 function App() {
   const dispatch = useDispatch();
   const {
-    auth: { isGlobalLoading },
+    auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken && !currentUser.id) {
       dispatch(getUserDetails());
-    } else {
+    } else if (!accessToken || !refreshToken) {
       dispatch(setIsLoggedIn(false));
     }
   };

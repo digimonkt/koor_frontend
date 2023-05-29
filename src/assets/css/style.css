@@ -1,12 +1,16 @@
 @import url(spacing.css);
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+body {
+  background-color: #e5e5e5 !important;
+}
+
 .job_card .MuiGrid-root {
   margin-top: 0px !important;
 }
 
 .CardWidth {
-  width: 650px !important;
+  width: 650px;
 }
 
 .meets_div {
@@ -69,7 +73,7 @@ iframe {
   border: 0;
 }
 .attachments span {
-  color: #eea23d !important;
+  color: #eea23d;
 }
 .attachments small {
   display: none !important;
@@ -135,7 +139,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   border-top: 1px solid #cacaca;
   margin-top: 15px;
 }
-.SelectDropdown .MuiFormControl-root.css-ptt77l-MuiFormControl-root {
+.SelectDropdown .filter_input {
   width: 100% !important;
 }
 .Tenderinput .MuiFormControl-root.MuiTextField-root {
@@ -191,6 +195,9 @@ header {
 .menu {
   margin: 0px;
   padding: 0px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .menu li {
@@ -593,7 +600,7 @@ hr {
   border-radius: 50px;
   padding: 10px 10px 10px 40px;
   outline: none;
-  width: 365px;
+  width: 320px;
   background: #fff url("../images/search.png") no-repeat 14px 8px;
   box-sizing: border-box;
 }
@@ -961,7 +968,6 @@ hr {
 
 .pricebox h4 small {
   display: inline-block;
-  margin-right: 3px;
 }
 
 .pricebox span {
@@ -1376,7 +1382,7 @@ span.count {
 
 .usd {
   padding: 8px;
-  width: 100px !important;
+  width: 80px !important;
   background: #cacaca40;
   border-radius: 10px;
   font-family: "Poppins";
@@ -1407,7 +1413,7 @@ span.count {
   margin-right: 5px;
   color: #121212;
   opacity: 0.5;
-  width: calc(100% - 190px);
+  width: calc(100% - 160px);
 }
 .usd-bg {
   background: #f0f0f0;
@@ -1464,7 +1470,6 @@ span.count {
   position: relative;
 
   padding: 10px 5px 10px 18px;
-  border-bottom: 1px solid #cacaca;
 }
 
 .listitems li:before {
@@ -1580,6 +1585,7 @@ body {
     visibility: hidden;
     opacity: 0;
     transition: visibility 1s, opacity 0.5s linear;
+    display: block;
   }
   .menu.menu-selected {
     visibility: visible;
@@ -1736,4 +1742,36 @@ input.employersearch {
 .squer-width {
   width: 100px;
   height: 100px;
+}
+.required-field {
+  color: red;
+}
+
+@media only screen and (max-width: 992px) {
+  .CardWidth {
+    width: 100%;
+  }
+  .footer,
+  header {
+    display: none;
+  }
+  .register {
+    margin-top: 0px;
+    background: url("../images/intro.png");
+  }
+  .register-des > a {
+    padding: 12px 15px;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+  }
+  .marquee h1 {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .vendor {
+    background: url("../images/register.png") center top !important;
+  }
 }

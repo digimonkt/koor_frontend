@@ -2,6 +2,7 @@
   "name": "koor-frontend",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": false,
   "dependencies": {
     "@craco/craco": "^7.0.0",
     "@emotion/react": "^11.10.5",
@@ -21,7 +22,9 @@
     "@types/react-dom": "^18.0.9",
     "apexcharts": "^3.36.3",
     "axios": "^1.2.3",
+    "compression": "^1.7.4",
     "dayjs": "^1.11.7",
+    "dotenv": "^16.0.3",
     "envalid": "^7.3.1",
     "file-saver": "^2.0.5",
     "firebase": "^9.17.2",
@@ -55,6 +58,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
+    "server": "node server.js",
     "cypress": "cypress open",
     "analyze": "source-map-explorer 'build/static/js/*.js'"
   },

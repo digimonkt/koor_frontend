@@ -4,7 +4,15 @@ import ChoiceReducer from "./slice/choices";
 import EmployerReducer from "./slice/employer";
 import ToastReducer from "./slice/toast";
 import JobReducer from "./slice/search";
+const isProd = process.env.NODE_ENV === "production";
 export const store = configureStore({
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ["auth/updateCurrentUser"],
+      },
+    }),
   reducer: {
     auth: AuthReducer,
     choices: ChoiceReducer,
@@ -12,4 +20,5 @@ export const store = configureStore({
     toast: ToastReducer,
     search: JobReducer,
   },
+  devTools: !isProd,
 });

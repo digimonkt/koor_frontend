@@ -1,11 +1,17 @@
 import api from ".";
 import urlcat from "urlcat";
-import { transformJobListResponse } from "./transform/job";
+import {
+  transformFullJobDetails,
+  transformJobListResponse,
+} from "./transform/job";
 import {
   getDashboardActivityAPIResponseTransform,
   transformApplicationOnJobListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
+import { transformTenderResponse } from "./transform/tender";
+import { transformBlacklistUser } from "./transform/blacklist";
+
 export const createJobAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs"),
@@ -17,6 +23,7 @@ export const createJobAPI = async (data) => {
   });
   return res;
 };
+
 export const getEmployerJobsAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/employer/jobs", data || {}),
@@ -57,6 +64,13 @@ export const updateEmployerJobAPI = async (jobId, data) => {
 export const updateEmployerJobStatusAPI = async (jobId) => {
   const response = await api.request({
     url: urlcat("/v1/users/employer/jobs/:jobId/status", { jobId }),
+    method: "PUT",
+  });
+  return response;
+};
+export const updateEmployerTenderStatusAPI = async (tendersId) => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/tenders/:tendersId/status", { tendersId }),
     method: "PUT",
   });
   return response;
@@ -108,24 +122,33 @@ export const getApplicationDetailsAPI = async (applicationId) => {
         id: res.data.id,
         createdAt: res.data.created,
         job: res.data.job,
+        isInterviewPlanned: res.data.interview_at,
         rejectedAt: res.data.rejected_at,
         shortLetter: res.data.short_letter,
         shortlistedAt: res.data.shortlisted_at,
         attachments: res.data.attachments,
-        user: { ...transformGetUserDetails(res.data.user) },
+        user: {
+          ...transformGetUserDetails(res.data.user),
+          isBlacklisted: res.data.user.is_blacklisted,
+        },
       },
     };
   }
   return res;
 };
 
-export const changeApplicationStatusAPI = async ({ action, applicationId }) => {
+export const changeApplicationStatusAPI = async ({
+  action,
+  applicationId,
+  data,
+}) => {
   const res = await api.request({
     url: urlcat("/v1/jobs/applications-detail/:applicationId/:action", {
       applicationId,
       action,
     }),
     method: "PUT",
+    data,
   });
   return res;
 };
@@ -155,4 +178,90 @@ export const getJobAnalyticsAPI = async () => {
     };
   }
   return res;
+};
+
+export const createTenderAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/employer/tenders"),
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data,
+  });
+  return res;
+};
+
+export const getShareCountDataAPI = async () => {
+  const res = await api.request({
+    url: "v1/users/employer/share-count",
+    method: "GET",
+  });
+  if (res.method === "success") {
+    return {
+      remote: "success",
+      data: res.data,
+    };
+  }
+  return res;
+};
+
+export const getTenderAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformTenderResponse(response.data),
+    };
+  }
+  return response;
+};
+
+export const updateTenderAPI = async (tendersId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders/:tendersId", { tendersId }),
+    method: "PUT",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};
+
+export const getBlacklistAPI = async (search) => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/blacklisted-user", search),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformBlacklistUser(response.data),
+    };
+  }
+  return response;
+};
+export const getEmployerActiveJobsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/active-jobs/:employerId", data),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        count: response.data.count,
+        next: response.data.next,
+        previous: response.data.previous,
+        results: response.data.results.map((data) =>
+          transformFullJobDetails(data)
+        ),
+      },
+    };
+  }
+  return response;
 };

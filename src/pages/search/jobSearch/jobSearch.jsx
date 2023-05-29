@@ -20,7 +20,7 @@ function JobSearchComponent() {
           );
         })
       ) : !jobs.length ? (
-        <NoDataFoundAnimation title="We are sorry, but we couldn't find any jobs that match your search criteria." />
+        <NoDataFoundAnimation title="We apologize, but we couldn't find any jobs that match your search criteria." />
       ) : (
         jobs.map((job) => {
           return (

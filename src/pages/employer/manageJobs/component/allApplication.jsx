@@ -1,5 +1,5 @@
 import { Card, CardContent, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { SVG } from "@assets/svg";
 import ApplicationCard from "@components/applicationCard";
 import { getRecentApplicationAPI } from "@api/employer";
@@ -13,25 +13,39 @@ function AllApplication() {
 
   const [recentApplication, setRecentApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
-  const getRecentApplications = async () => {
+  const getRecentApplications = useCallback(async () => {
     setIsLoading(true);
-    const res = await getRecentApplicationAPI();
+    const res = await getRecentApplicationAPI({ search });
     if (res.remote === "success") {
       setRecentApplication(res.data.results);
       dispatch(setTotalApplications(res.data.count));
     }
     setIsLoading(false);
-  };
+  }, [search]);
   useEffect(() => {
     getRecentApplications();
-  }, []);
+  }, [isSearching]);
   return (
     <div className="py-3">
       <div className="mb-3">
         <Stack direction="row" spacing={0} className="searchjob-box">
-          <input className="jobsearch" placeholder="Search your jobs" />
-          <button className="jobt-btn-search">{<SVG.SearchIcon />}</button>
+          <input
+            className="jobsearch"
+            placeholder="Search your jobs"
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) =>
+              e.key === "Enter" ? setIsSearching(!isSearching) : null
+            }
+          />
+          <button
+            onClick={() => setIsSearching(!isSearching)}
+            className="jobt-btn-search"
+          >
+            {<SVG.SearchIcon />}
+          </button>
         </Stack>
       </div>
       <Card

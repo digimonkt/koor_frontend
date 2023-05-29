@@ -10,4 +10,4 @@ export const UpdateProfile = UpdateProfileComponent;
 export const JobCriteria = JobCriteriaComponent;
 export const AppliedJobs = AppliedJobsComponent;
 export const SavedJobs = SavedJobsComponent;
-export const JobseekerPublicProfile = PublicProfileComponent;
+export const JobSeekerPublicProfile = PublicProfileComponent;

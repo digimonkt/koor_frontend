@@ -15,7 +15,6 @@ import {
   CheckboxInput,
   DateInput,
   LabeledInput,
-  LabeledPhoneInput,
   SelectInput,
 } from "@components/input";
 import CurrencyInput from "./currencyInput";
@@ -30,6 +29,7 @@ import {
   getCountries,
   getEducationLevels,
   getJobCategories,
+  getJobSubCategories,
   getLanguages,
   getSkills,
 } from "@redux/slice/choices";
@@ -58,6 +58,7 @@ function PostJobsComponent() {
     countries,
     cities,
     jobCategories,
+    jobSubCategories,
     educationLevels,
     languages,
     skills,
@@ -81,7 +82,8 @@ function PostJobsComponent() {
       country: "",
       city: "",
       address: "",
-      jobCategories: [],
+      jobCategories: "",
+      jobSubCategory: "",
       isFullTime: false,
       isPartTime: false,
       hasContract: false,
@@ -89,6 +91,8 @@ function PostJobsComponent() {
       startDate: "",
       isContactEmail: false,
       contactEmail: "",
+      cc1: "",
+      cc2: "",
       isContactWhatsapp: false,
       duration: 0,
       experience: "",
@@ -113,6 +117,7 @@ function PostJobsComponent() {
         city: values.city,
         address: values.address,
         job_category: values.jobCategories,
+        job_sub_category: values.jobSubCategory,
         is_full_time: values.isFullTime,
         is_part_time: values.isPartTime,
         has_contract: values.hasContract,
@@ -121,6 +126,8 @@ function PostJobsComponent() {
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
         contact_email: values.isContactEmail ? values.contactEmail : "",
+        cc1: values.isContactEmail ? values.cc1 : "",
+        cc2: values.isContactEmail ? values.cc2 : "",
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
@@ -136,7 +143,7 @@ function PostJobsComponent() {
       for (const key in payload) {
         if (key === "language") {
           payload.language.forEach((language) => {
-            if (language.language && language.spoken && language.written) {
+            if (language.language) {
               newFormData.append("language", JSON.stringify(language));
             }
           });
@@ -200,12 +207,8 @@ function PostJobsComponent() {
       formik.setFieldValue("duration", data.duration);
       formik.setFieldValue("experience", data.experience);
       setSearchValue(data.address);
-      formik.setFieldValue(
-        "jobCategories",
-        data.jobCategories.map
-          ? data.jobCategories.map((category) => category.id)
-          : []
-      );
+      formik.setFieldValue("jobCategories", data.jobCategories.id);
+      formik.setFieldValue("jobSubCategory", data.jobSubCategory.id);
       formik.setFieldValue("isFullTime", data.isFullTime);
       formik.setFieldValue("isPartTime", data.isPartTime);
       formik.setFieldValue("hasContract", data.hasContract);
@@ -213,6 +216,8 @@ function PostJobsComponent() {
       formik.setFieldValue("startDate", dayjs(data.startDate));
       formik.setFieldValue("isContactEmail", Boolean(data.contactEmail));
       formik.setFieldValue("contactEmail", data.contactEmail);
+      formik.setFieldValue("cc1", data.cc1);
+      formik.setFieldValue("cc2", data.cc2);
       formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
       formik.setFieldValue("highestEducation", data.highestEducation.id);
@@ -264,7 +269,6 @@ function PostJobsComponent() {
       debouncedSearchValue &&
       debouncedSearchValue !== formik.values.address
     ) {
-      console.log({ debouncedSearchValue });
       getSuggestedAddress(debouncedSearchValue);
     }
   }, [debouncedSearchValue]);
@@ -299,6 +303,16 @@ function PostJobsComponent() {
       dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
+  useEffect(() => {
+    if (
+      formik.values.jobCategories &&
+      !jobSubCategories.data[formik.values.jobCategories]?.length
+    ) {
+      dispatch(
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
+      );
+    }
+  }, [formik.values.jobCategories]);
   return (
     <div className="job-application">
       <Card
@@ -334,24 +348,26 @@ function PostJobsComponent() {
                       title="Title of your job"
                       className="add-form-control"
                       placeholder="Online Research Participant (Work From Home/Part Time/Casual)…"
+                      required
                       {...formik.getFieldProps("title")}
                     />
                     {formik.touched.title && formik.errors.title ? (
                       <ErrorMessage>{formik.errors.title}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={2} lg={2}>
+                  <Grid item xl={3} lg={3}>
                     <LabeledInput
                       title="Experience in Years"
                       className="add-form-control"
                       placeholder="Experience in Years"
+                      required
                       {...formik.getFieldProps("experience")}
                     />
                     {formik.touched.experience && formik.errors.experience ? (
                       <ErrorMessage>{formik.errors.experience}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4}>
+                  <Grid item xl={3} lg={3}>
                     <CurrencyInput
                       currency="USD"
                       title="Budget"
@@ -375,7 +391,9 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <div>
-                      <label>Description</label>
+                      <label>
+                        Description<span className="required-field">*</span>
+                      </label>
                       <textarea
                         className="form-control-area"
                         placeholder="Write more details to attract the right candidates."
@@ -387,7 +405,9 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={9} lg={9} xs={12}>
-                    <label>Location</label>
+                    <label>
+                      Location<span className="required-field">*</span>
+                    </label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
@@ -426,8 +446,11 @@ function PostJobsComponent() {
                     </Grid>
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12}>
-                    <label>Working place address</label>
-                    <div>
+                    <label>
+                      Working place address{" "}
+                      <span className="required-field">*</span>
+                    </label>
+                    <div className={styles.positionReltive}>
                       <input
                         type="text"
                         placeholder="Address"
@@ -446,7 +469,6 @@ function PostJobsComponent() {
                                   key={address.description}
                                   className={styles.search_results}
                                   onClick={() => {
-                                    console.log({ address });
                                     formik.setFieldValue(
                                       "address",
                                       address.description
@@ -466,7 +488,10 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <label>Job Category (Maximum 2)</label>
+                    <label>
+                      Job Category
+                      <span className="required-field">*</span>
+                    </label>
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
@@ -476,8 +501,8 @@ function PostJobsComponent() {
                             value: jobCategory.id,
                             label: jobCategory.title,
                           }))}
-                          name={"jobCategories[0]"}
-                          value={formik.values.jobCategories[0] || ""}
+                          name={"jobCategories"}
+                          value={formik.values.jobCategories || ""}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
@@ -491,46 +516,60 @@ function PostJobsComponent() {
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
                           defaultValue=""
-                          placeholder="Select a Job category"
-                          options={jobCategories.data.map((jobCategory) => ({
-                            value: jobCategory.id,
-                            label: jobCategory.title,
+                          placeholder={
+                            formik.values.jobCategories
+                              ? "Job Sub Category"
+                              : "Select Category first"
+                          }
+                          options={(
+                            jobSubCategories.data[
+                              formik.values.jobCategories
+                            ] || []
+                          ).map((subCategory) => ({
+                            value: subCategory.id,
+                            label: subCategory.title,
                           }))}
-                          name="jobCategories[1]"
-                          value={formik.values.jobCategories[1] || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                          {...formik.getFieldProps("jobSubCategory")}
                         />
+                        {formik.touched.jobSubCategory &&
+                        formik.errors.jobSubCategory ? (
+                          <ErrorMessage>
+                            {formik.errors.jobSubCategory}
+                          </ErrorMessage>
+                        ) : null}
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={3} lg={4} xs={12} className="mt-2">
+                  <Grid item xl={4} lg={4} xs={12} className="mt-2">
                     <label>Job type</label>
-                    <FormGroup row sx={{ marginLeft: "7px", display: "flex" }}>
+                    <FormGroup
+                      row
+                      sx={{ marginLeft: "7px", display: "flex", mt: 1 }}
+                    >
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
+                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
                         label="Part Time"
                         checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 8px" }} />}
+                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
                         label="Full Time"
                         checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 6px" }} />}
+                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
                         label="Contract"
                         checked={formik.values.hasContract}
                         {...formik.getFieldProps("hasContract")}
                       />
                     </FormGroup>
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
                     <LabeledInput
                       title="Duration in Month"
                       className="add-form-control"
@@ -542,39 +581,50 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.duration}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={5} xs={12} className="mt-2">
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <DateInput
-                          label="Start Date"
-                          onChange={(e) => formik.setFieldValue("startDate", e)}
-                          value={formik.values.startDate}
-                          onBlur={formik.getFieldProps("startDate").onBlur}
-                        />
-                        {formik.touched.startDate && formik.errors.startDate ? (
-                          <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
-                        ) : null}
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <DateInput
-                          label="Deadline"
-                          onChange={(e) => formik.setFieldValue("deadline", e)}
-                          value={formik.values.deadline}
-                          onBlur={formik.getFieldProps("deadline").onBlur}
-                        />
-                        {formik.touched.deadline && formik.errors.deadline ? (
-                          <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
-                        ) : null}
-                      </div>
+                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        className="mb-2"
+                      >
+                        <label className="mb-1 d-inline-block">
+                          Start Date
+                        </label>
+                      </Stack>
+                      <DateInput
+                        onChange={(e) => formik.setFieldValue("startDate", e)}
+                        value={formik.values.startDate}
+                        onBlur={formik.getFieldProps("startDate").onBlur}
+                      />
+                      {formik.touched.startDate && formik.errors.startDate ? (
+                        <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                      ) : null}
                     </div>
                   </Grid>
-
+                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        className="mb-2"
+                      >
+                        <label className="mb-1 d-inline-block">
+                          Deadline<span className="required-field">*</span>{" "}
+                        </label>
+                      </Stack>
+                      <DateInput
+                        onChange={(e) => formik.setFieldValue("deadline", e)}
+                        value={formik.values.deadline}
+                        onBlur={formik.getFieldProps("deadline").onBlur}
+                      />
+                      {formik.touched.deadline && formik.errors.deadline ? (
+                        <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
+                      ) : null}
+                    </div>
+                  </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                   </Grid>
@@ -599,39 +649,35 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
 
-                  <Grid item xl={4} lg={4} xs={12}>
-                    <JobFormControl
-                      control={<CheckboxInput />}
-                      label="Apply via WhatsApp/Telegram"
-                      checked={formik.values.isContactWhatsapp}
-                      {...formik.getFieldProps("isContactWhatsapp")}
+                  <Grid
+                    item
+                    xl={4}
+                    lg={4}
+                    xs={12}
+                    sx={{
+                      marginTop: "41px",
+                    }}
+                  >
+                    <input
+                      className="add-form-control"
+                      placeholder="CC email address"
+                      {...formik.getFieldProps("cc1")}
                     />
-                    <LabeledPhoneInput
-                      placeholder="Your WhatsApp/Telegram number"
-                      value={formik.values.contactWhatsapp}
-                      onChange={(e) =>
-                        formik.setFieldValue("contactWhatsapp", e.value)
-                      }
-                      onCountryChange={(e) =>
-                        formik.setFieldValue("countryCodeContactWhatsapp", e)
-                      }
-                      isInvalidNumber={(isValid) => {
-                        if (!isValid) {
-                          formik.setFieldError(
-                            "contactWhatsapp",
-                            "Invalid Whatsapp/Telegram Number"
-                          );
-                        }
-                      }}
-                      onBlur={formik.getFieldProps("contactWhatsapp").onBlur}
-                      name="contactWhatsapp"
+                  </Grid>
+                  <Grid
+                    item
+                    xl={4}
+                    lg={4}
+                    xs={12}
+                    sx={{
+                      marginTop: "41px",
+                    }}
+                  >
+                    <input
+                      className="add-form-control"
+                      placeholder="Another CC email address"
+                      {...formik.getFieldProps("cc2")}
                     />
-                    {formik.touched.contactWhatsapp &&
-                    formik.errors.contactWhatsapp ? (
-                      <ErrorMessage>
-                        {formik.errors.contactWhatsapp}
-                      </ErrorMessage>
-                    ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
@@ -661,6 +707,7 @@ function PostJobsComponent() {
                     <label className="mb-2">
                       Required languages
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                      <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
                       {[0, 1, 2].map((i) => {
@@ -701,6 +748,7 @@ function PostJobsComponent() {
                   <label className="mb-2">
                     Job skills
                     <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                    <span className="required-field">*</span>
                   </label>
                   <Grid container spacing={2}>
                     <Grid item xl={4} lg={4} xs={12}>
