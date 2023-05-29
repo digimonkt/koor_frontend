@@ -3,7 +3,7 @@ import { Chip, Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import ApplicationsJobs from "./components/tenderAllApplications";
 
-import Tenders from "./components/tendersjob";
+import Tenders from "./components/tenders";
 import { useNavigate } from "react-router-dom";
 import { OutlinedButton } from "@components/button";
 import { AntTab, AntTabs } from "./style";

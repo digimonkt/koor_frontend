@@ -1,163 +1,197 @@
 import { changeApplicationStatusAPI } from "@api/employer";
+import { changeTenderApplicationStatusAPI } from "@api/tender";
 import { SVG } from "@assets/svg";
-import { Avatar, Box, Button } from "@mui/material";
-import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import urlcat from "urlcat";
-import "./style.css";
+import { FilledButton, OutlinedButton } from "@components/button";
 import DialogBox from "@components/dialogBox";
 import { LabeledInput } from "@components/input";
-import { FilledButton, OutlinedButton } from "@components/button";
-import { setSuccessToast } from "@redux/slice/toast";
-import { useDispatch, useSelector } from "react-redux";
-import Loader from "@components/loader";
 import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
-import { generateFileUrl } from "@utils/generateFileUrl";
-import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
+import Loader from "@components/loader";
+import { Avatar, Box, Button } from "@mui/material";
 import { setTotalBlacklist } from "@redux/slice/employer";
+import { setSuccessToast } from "@redux/slice/toast";
+import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
+import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
+import { generateFileUrl } from "@utils/generateFileUrl";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import urlcat from "urlcat";
 
 function ApplicationOptions({
-  allOptions,
-  applicationId,
-  isShortlisted,
-  jobId,
-  isRejected,
-  isBlacklisted,
-  isInterviewPlanned,
-  userImage,
-  userName,
+  details,
+  interviewPlanned,
+  shortlist,
+  reject,
+  blacklist,
+  view,
+  message,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const [shortlist, setShortlist] = useState(false);
-  const [rejected, setRejected] = useState(false);
-  const [blacklisted, setBlacklisted] = useState(false);
-  const [interviewPlanned, setInterviewPlanned] = useState(false);
-  const [isBlacklisting, setIsBlacklisting] = useState(false);
+  const { totalBlacklist } = useSelector((state) => state.employer);
+  const [isDisabledActions, setIsDisabledActions] = useState(false);
+  const [isInterviewPlanned, setIsInterviewPlanned] = useState(false);
+  const [isBlacklisted, setIsBlacklisted] = useState(false);
+  const [isRejected, setIsRejected] = useState(false);
+  const [isShortlisted, setIsShortlisted] = useState(false);
+
   const [blackListReason, setBlackListReason] = useState("");
   const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
   const [interviewTime, setInterviewTime] = useState("");
+  const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { totalBlacklist } = useSelector((state) => state.employer);
-  useEffect(() => {
-    setShortlist(!!isShortlisted);
-    setRejected(!!isRejected);
-    setBlacklisted(!!isBlacklisted);
-    setInterviewPlanned(!!isInterviewPlanned);
-  }, [isShortlisted]);
-  const handlerChangeApplicationStatus = async (action, applicationId) => {
+
+  const handlerChangeApplicationStatus = async (action) => {
     const data = { reason: blackListReason, interview_at: interviewTime };
     for (const key in data) {
       if (!data[key]) {
         delete data[key];
       }
     }
+    switch (action) {
+      case JOB_APPLICATION_OPTIONS.blacklisted:
+        setIsBlacklisted(true);
+        break;
+      case JOB_APPLICATION_OPTIONS.plannedInterviews:
+        setIsInterviewPlanned(true);
+        break;
+      case JOB_APPLICATION_OPTIONS.rejected:
+        setIsRejected(true);
+        break;
+      case JOB_APPLICATION_OPTIONS.shortlisted:
+        setIsShortlisted(true);
+        break;
+      default:
+        return;
+    }
     setLoading(true);
-    const res = await changeApplicationStatusAPI({
-      action,
-      applicationId,
-      data,
-    });
+    let res;
+    if (details.tender) {
+      res = await changeTenderApplicationStatusAPI({
+        action,
+        applicationId: details.id,
+        data,
+      });
+    } else {
+      res = await changeApplicationStatusAPI({
+        action,
+        applicationId: details.id,
+        data,
+      });
+    }
     if (res.remote === "success") {
       dispatch(setSuccessToast("Status updated successfully"));
-      setShortlist(true);
       setLoading(false);
-      setIsInterviewPlanning(false);
-      if (action === "blacklisted") {
+      if (action === JOB_APPLICATION_OPTIONS.blacklisted) {
         dispatch(setTotalBlacklist(totalBlacklist + 1));
         setIsBlacklisting(false);
       }
     }
+    setIsInterviewPlanning(false);
   };
+
+  useEffect(() => {
+    setIsInterviewPlanned(!!details.interviewAt);
+    setIsBlacklisted(!!details.user.isBlacklisted);
+    setIsRejected(!!details.rejectedAt);
+    setIsShortlisted(!!details.shortlistedAt);
+  }, [details]);
+  useEffect(() => {
+    setIsDisabledActions(
+      isInterviewPlanned || isBlacklisted || isRejected || isShortlisted
+    );
+  }, [isInterviewPlanned, isBlacklisted, isRejected, isShortlisted]);
+
   return (
     <>
-      {allOptions && (
+      {interviewPlanned && (
         <Button
-          disabled={shortlist || rejected || blacklisted || interviewPlanned}
-          variant="link"
-          onClick={() => {
-            setIsInterviewPlanning(true);
+          disabled={isDisabledActions}
+          style={{
+            fontWeight: isInterviewPlanned ? 900 : "",
           }}
+          onClick={() => setIsInterviewPlanning(true)}
         >
-          {<SVG.EventIcon className="application-option-icon" />}{" "}
-          <span>Interview planned</span>
+          <SVG.EventIcon className="application-option-icon" />
+          <span>
+            {!isInterviewPlanned ? "Plan Interview" : "Interview Planned"}
+          </span>
         </Button>
       )}
-      <Button
-        disabled={shortlist || rejected || blacklisted || interviewPlanned}
-        variant="link"
-        onClick={() =>
-          handlerChangeApplicationStatus(
-            JOB_APPLICATION_OPTIONS.shortlisted,
-            applicationId
-          )
-        }
-      >
-        {<SVG.StarIcon className="application-option-icon" />}{" "}
-        <span>{shortlist ? "Shortlisted" : "Shortlist"}</span>
-      </Button>
-      {allOptions && (
-        <>
-          <Button
-            variant="link"
-            disabled={shortlist || rejected || blacklisted || interviewPlanned}
-            onClick={() =>
-              handlerChangeApplicationStatus(
-                JOB_APPLICATION_OPTIONS.rejected,
-                applicationId
-              )
-            }
-          >
-            {<SVG.RejectIcon className="application-option-icon" />}{" "}
-            <span>{rejected ? "Rejected" : "Reject"}</span>
-          </Button>
-          <Button
-            variant="link"
-            disabled={shortlist || rejected || blacklisted || interviewPlanned}
-            className="application-option-btn"
-            onClick={() => {
-              setIsBlacklisting(true);
-              // handlerChangeApplicationStatus(
-              //   JOB_APPLICATION_OPTIONS.blacklisted,
-              //   applicationId
-              // );
-            }}
-          >
-            {<SVG.BlockedIcon className="application-option-icon" />}{" "}
-            <span>{blacklisted ? "Blacklisted" : "Blacklist"}</span>
-          </Button>
-        </>
+      {shortlist && (
+        <Button
+          disabled={isDisabledActions}
+          style={{
+            fontWeight: isShortlisted ? 900 : "",
+          }}
+          onClick={() =>
+            handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.shortlisted)
+          }
+        >
+          <SVG.StarIcon className="application-option-icon" />
+          <span>{!isShortlisted ? "Shortlist" : "Shortlisted"}</span>
+        </Button>
       )}
-      {location.pathname.includes("applicant") ? null : (
+      {reject && (
+        <Button
+          variant="link"
+          disabled={isDisabledActions}
+          style={{
+            fontWeight: isRejected ? 900 : "",
+          }}
+          onClick={() =>
+            handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.rejected)
+          }
+        >
+          <SVG.RejectIcon className="application-option-icon" />
+          <span> {!isRejected ? "Reject" : "Rejected"}</span>
+        </Button>
+      )}
+      {blacklist && (
+        <Button
+          variant="link"
+          disabled={isDisabledActions}
+          style={{
+            fontWeight: isBlacklisted ? 900 : "",
+          }}
+          onClick={() => {
+            setIsBlacklisting(true);
+            // handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.blacklisted);
+          }}
+        >
+          <SVG.BlockedIcon className="application-option-icon" />
+          <span>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</span>
+        </Button>
+      )}
+      {view && (
         <Button
           variant="link"
           onClick={() => {
-            navigate(
-              urlcat(
-                "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
-                {
-                  applicationId: applicationId || "applicationId",
-                  role: USER_ROLES.employer,
-                  jobId: jobId || "jobId",
-                }
-              )
-            );
+            if (details.job) {
+              navigate(
+                urlcat(
+                  "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+                  {
+                    applicationId: details.id,
+                    role: USER_ROLES.employer,
+                    jobId: details.job.id,
+                  }
+                )
+              );
+            }
           }}
         >
           <SVG.OpenNewIcon className="application-option-icon" />
           <span>View</span>
         </Button>
       )}
-      {allOptions && (
+      {message && (
         <Button variant="link">
-          {
-            <SVG.MessageIcon
-              style={{ color: "#274593" }}
-              className="application-option-icon"
-            />
-          }{" "}
+          <SVG.MessageIcon
+            style={{ color: "#274593" }}
+            className="application-option-icon"
+          />
+
           <span>Message</span>
         </Button>
       )}
@@ -184,7 +218,7 @@ function ApplicationOptions({
             </div>
             <div>
               <Avatar
-                src={generateFileUrl(userImage)}
+                src={generateFileUrl(details.user.image?.path || "")}
                 sx={{
                   width: "40px",
                   height: "40px",
@@ -198,13 +232,14 @@ function ApplicationOptions({
                 marginLeft: "15px",
               }}
             >
-              {userName}
+              {details.user.name || details.user.email}
             </div>
           </Box>
 
           <p>
-            Are you sure you want to blacklist {userName}? They will not be able
-            to apply for your jobs anymore until you un-blacklist them.
+            Are you sure you want to blacklist{" "}
+            {details.user.name || details.user.email}? They will not be able to
+            apply for your jobs anymore until you un-blacklist them.
           </p>
           <div className="dialog-reason">
             <LabeledRadioInputComponent
@@ -230,8 +265,7 @@ function ApplicationOptions({
               title="Blacklist"
               onClick={() =>
                 handlerChangeApplicationStatus(
-                  JOB_APPLICATION_OPTIONS.blacklisted,
-                  applicationId
+                  JOB_APPLICATION_OPTIONS.blacklisted
                 )
               }
             />
@@ -255,12 +289,13 @@ function ApplicationOptions({
             <FilledButton
               title={loading ? <Loader loading={loading} /> : "submit"}
               disabled={loading}
-              onClick={() =>
-                handlerChangeApplicationStatus(
-                  JOB_APPLICATION_OPTIONS.plannedInterviews,
-                  applicationId
-                )
-              }
+              onClick={() => {
+                if (interviewTime) {
+                  handlerChangeApplicationStatus(
+                    JOB_APPLICATION_OPTIONS.plannedInterviews
+                  );
+                }
+              }}
             />
           </div>
         </div>

@@ -1,16 +1,14 @@
 import { Card, CardContent, Stack } from "@mui/material";
 import React, { useEffect, useState, useCallback } from "react";
 import { SVG } from "@assets/svg";
-import ApplicationCard from "@components/applicationCard";
 import { getRecentApplicationAPI } from "@api/employer";
-import dayjs from "dayjs";
 import { setTotalApplications } from "@redux/slice/employer";
 import { useDispatch } from "react-redux";
 import { NoDataFoundAnimation } from "@components/animations";
-import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
+import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
+import ApplicantCard from "@components/applicantCard";
 function AllApplication() {
   const dispatch = useDispatch();
-
   const [recentApplication, setRecentApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -67,21 +65,21 @@ function AllApplication() {
           {isLoading ? (
             // skeleton loading need to be implemented
             [1, 2, 3].map((loader) => (
-              <ApplicationCardSkeletonLoading key={loader} />
+              <ApplicantCardSkeletonLoading key={loader} />
             ))
           ) : !recentApplication.length ? (
             <NoDataFoundAnimation title="You haven't received any job applications yet." />
           ) : (
             recentApplication.map((item, index) => (
-              <ApplicationCard
-                jobId={item.jobId}
+              <ApplicantCard
                 details={item}
-                subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-                isDisabled={item.disabled}
-                isShortlisted={item.shortlistedAt}
-                isRejected={item.rejectedAt}
-                isBlacklisted={item.user.isBlacklisted}
                 key={index}
+                interviewPlanned
+                shortlist
+                reject
+                blacklist
+                view
+                message
               />
             ))
           )}

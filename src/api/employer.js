@@ -7,6 +7,7 @@ import {
 import {
   getDashboardActivityAPIResponseTransform,
   transformApplicationOnJobListData,
+  transformApplicationTenderListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
 import { transformTenderResponse } from "./transform/tender";
@@ -261,6 +262,20 @@ export const getEmployerActiveJobsAPI = async (data) => {
           transformFullJobDetails(data)
         ),
       },
+    };
+  }
+  return response;
+};
+
+export const getApplicationOnTenderAPI = async ({ tenderId, filter }) => {
+  const response = await api.request({
+    url: urlcat("/v1/tenders/:tenderId/applications", { tenderId, filter }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationTenderListData(response.data),
     };
   }
   return response;
