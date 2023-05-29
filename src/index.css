@@ -392,3 +392,10 @@ textarea {
     margin-left: 0px !important;
   }
 }
+
+img{max-width: 100%;}
+@media screen and (max-width:480px){
+
+  .verticalSlider ul.slick-dots{bottom:38em; transform:none}
+
+}

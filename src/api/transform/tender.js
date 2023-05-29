@@ -43,6 +43,7 @@ export const transformFullTenderDetails = (data) => {
     description: data.description,
     country: data.country || {},
     city: data.city || {},
+    address: data.address || "",
     tag: data.tag || [],
     categories: data.tender_category || [],
     type: data.tender_type || {},
@@ -53,6 +54,7 @@ export const transformFullTenderDetails = (data) => {
       true
     ),
     startDate: data.start_date,
+    deadline: data.deadline,
     user: {
       id: data.user.id,
       name: data.user.name,

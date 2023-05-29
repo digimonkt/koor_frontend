@@ -27,20 +27,23 @@ function CurrencyInput({ title, optionsValues, errors, ...rest }) {
           value={optionsValues ? optionsValues.input.value || "" : ""}
         />
         <Divider orientation="vertical" variant="middle" flexItem />
-
-        <SelectInput
-          sx={{
-            "& .MuiSelect-select": {
-              paddingLeft: "0px",
-            },
-          }}
-          options={Object.keys(PAY_PERIOD).map((period) => ({
-            value: PAY_PERIOD[period],
-            label: `per ${period}`,
-          }))}
-          style={{ width: "30%" }}
-          {...((optionsValues && optionsValues.payPeriod) || {})}
-        />
+        {optionsValues.payPeriod ? (
+          <SelectInput
+            sx={{
+              "& .MuiSelect-select": {
+                paddingLeft: "0px",
+              },
+            }}
+            options={Object.keys(PAY_PERIOD).map((period) => ({
+              value: PAY_PERIOD[period],
+              label: `per ${period}`,
+            }))}
+            style={{ width: "30%" }}
+            {...((optionsValues && optionsValues.payPeriod) || {})}
+          />
+        ) : (
+          ""
+        )}
       </Stack>
       <ErrorMessage>{errors?.input}</ErrorMessage>
       <ErrorMessage>{errors?.title}</ErrorMessage>
