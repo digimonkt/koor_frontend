@@ -42,7 +42,10 @@ function ApplicantCard({
             sx={{ mb: 1, ...sx }}
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
-            <div className="recent-research" style={{ flexWrap: "wrap" }}>
+            <div
+              className="recent-research"
+              style={{ flexWrap: "wrap", display: "flex" }}
+            >
               <span>
                 Applied{" "}
                 <strong>
@@ -56,39 +59,36 @@ function ApplicantCard({
           {details?.education || details?.skills || details?.language ? (
             <Stack
               direction="row"
-              spacing={2}
+              spacing={1}
               alignItems="center"
               sx={{ mb: 1, ...sx }}
               className="meets_div"
             >
-              <div>
-                <span className="meets">Meets your requirements with: </span>
-              </div>
-              <div>
-                <>
-                  {details?.education && (
-                    <Chip
-                      label="Education"
-                      className="chiplabel"
-                      icon={<SVG.SchoolIcon />}
-                    />
-                  )}
-                  {details?.skills && (
-                    <Chip
-                      label="Skills"
-                      className="chiplabel"
-                      icon={<SVG.SmallSkillsIcon />}
-                    />
-                  )}
-                  {details?.language && (
-                    <Chip
-                      label="Language"
-                      className="chiplabel"
-                      icon={<SVG.SmallLangugeIcon />}
-                    />
-                  )}
-                </>
-              </div>
+              <span className="meets">Meets your requirements with: </span>
+
+              <>
+                {details?.education && (
+                  <Chip
+                    label="Education"
+                    className="chiplabel"
+                    icon={<SVG.SchoolIcon />}
+                  />
+                )}
+                {details?.skills && (
+                  <Chip
+                    label="Skills"
+                    className="chiplabel"
+                    icon={<SVG.SmallSkillsIcon />}
+                  />
+                )}
+                {details?.language && (
+                  <Chip
+                    label="Language"
+                    className="chiplabel"
+                    icon={<SVG.SmallLangugeIcon />}
+                  />
+                )}
+              </>
             </Stack>
           ) : (
             ""

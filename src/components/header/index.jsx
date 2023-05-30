@@ -62,8 +62,8 @@ function Header() {
         maxWidth={false}
         sx={{
           "@media(min-width:600px)": {
-            paddingLeft: "110px",
-            paddingRight: "110px",
+            paddingLeft: "100px",
+            paddingRight: "100px",
           },
         }}
       >

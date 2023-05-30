@@ -89,7 +89,15 @@ const Home = () => {
               }}
             >
               <Box>
-                <Container>
+                <Container
+                  maxWidth={false}
+                  sx={{
+                    "@media(min-width:600px)": {
+                      paddingLeft: "100px",
+                      paddingRight: "100px",
+                    },
+                  }}
+                >
                   <Box
                     className={styles.headding}
                     sx={{
@@ -153,7 +161,15 @@ const Home = () => {
                 </Container>
               </Box>
             </Box>
-            <Container>
+            <Container
+              maxWidth={false}
+              sx={{
+                "@media(min-width:600px)": {
+                  paddingLeft: "100px",
+                  paddingRight: "100px",
+                },
+              }}
+            >
               {role !== USER_ROLES.jobSeeker && role !== USER_ROLES.vendor ? (
                 <Stack
                   direction={"row"}
@@ -178,7 +194,15 @@ const Home = () => {
               )}
             </Container>
           </Box>
-          <Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
             <Box>
               <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
                 Listings from the top companies
@@ -254,17 +278,26 @@ const Home = () => {
           <Container
             maxWidth={false}
             sx={{
-              "@media (min-width:992px)": {
-                paddingLeft: "81px",
-                paddingRight: "0px",
-                overflow: "hidden",
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
               },
             }}
           >
             <SlickSlider />
           </Container>
           <Box>
-            <HomeSection />
+            <Container
+              maxWidth={false}
+              sx={{
+                "@media(min-width:600px)": {
+                  paddingLeft: "100px",
+                  paddingRight: "100px",
+                },
+              }}
+            >
+              <HomeSection />
+            </Container>
           </Box>
           <Box className={`${styles.home_back}`}>
             <Box className={`${styles.home_powerfull_box}`}>
@@ -293,13 +326,31 @@ const Home = () => {
               </Box>
             </Box>
             <Box className={styles.home_testi_box}>
-              <VerticalSlider />
+              <Container
+                maxWidth={false}
+                sx={{
+                  "@media(min-width:600px)": {
+                    paddingLeft: "100px",
+                    paddingRight: "100px",
+                  },
+                }}
+              >
+                <VerticalSlider />
+              </Container>
             </Box>
             <Box>
               <TextSlide />
             </Box>
             <Box className={styles.stay_back_img} sx={{ marginTop: "50px" }}>
-              <Container>
+              <Container
+                maxWidth={false}
+                sx={{
+                  "@media(min-width:600px)": {
+                    paddingLeft: "100px",
+                    paddingRight: "100px",
+                  },
+                }}
+              >
                 <Grid container spacing={3}>
                   <Grid item xs={12} lg={5} sm={5}>
                     <Box

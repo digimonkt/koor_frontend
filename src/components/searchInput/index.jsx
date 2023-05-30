@@ -22,7 +22,15 @@ export default function SearchInput({
   }, [value]);
   return (
     <div>
-      <Container>
+      <Container
+        maxWidth={false}
+        sx={{
+          "@media(min-width:600px)": {
+            paddingLeft: "100px",
+            paddingRight: "100px",
+          },
+        }}
+      >
         <div className={`${styles.searchInput}`}>
           <IconButton
             color="inherit"
