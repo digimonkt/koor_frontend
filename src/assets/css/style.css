@@ -791,7 +791,7 @@ hr {
   height: 90px;
   padding: 6px 12px;
   font-family: "Poppins";
-  font-size: 14px;
+  font-size: 12px;
   box-sizing: border-box;
 }
 .description {
@@ -1774,4 +1774,11 @@ input.employersearch {
   .vendor {
     background: url("../images/register.png") center top !important;
   }
+}
+.PhoneInputInput{font-size: 12px;}
+.labelbox .MuiFormLabel-root {
+  display: none;
+}
+.labelbox .MuiOutlinedInput-input {
+  font-size: 12px;
 }

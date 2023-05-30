@@ -40,9 +40,10 @@
 }
 .home_section_img_box {
 
-  padding: 15px;
+  padding: 0px 100px 0px 0px;
   margin-top: 0px;
  }
+ .home_section_img_box img{width:100%;}
  .homeheadding{
   font-family: 'Bahnschrift';
 font-style: normal;

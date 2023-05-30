@@ -181,7 +181,15 @@ const JobDetails = () => {
   };
   return (
     <>
-      <Container>
+      <Container
+        maxWidth={false}
+        sx={{
+          "@media(min-width:600px)": {
+            paddingLeft: "100px",
+            paddingRight: "100px",
+          },
+        }}
+      >
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
@@ -189,7 +197,7 @@ const JobDetails = () => {
                 <div className={`${styles.postJob}`}>
                   {/* <Link to="/saved-jobs"> */}
                   <span
-                    style={{ paddingTop: "5px" }}
+                    style={{ paddingTop: "5px", cursor: "pointer" }}
                     onClick={() => navigate(-1)}
                   >
                     {<SVG.LeftArrow />}
