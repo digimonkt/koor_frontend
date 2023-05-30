@@ -1,27 +1,13 @@
 import React, { useState } from "react";
 import { Chip, Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
-import ApplicationsJobs from "./components/tenderAllApplications";
+import AllApplication from "./components/tenderAllApplications";
 
 import Tenders from "./components/tenders";
 import { useNavigate } from "react-router-dom";
 import { OutlinedButton } from "@components/button";
 import { AntTab, AntTabs } from "./style";
 import { useSelector } from "react-redux";
-
-// tab data
-const tabsData = [
-  {
-    title: "My Tenders",
-    count: 3,
-    component: Tenders,
-  },
-  {
-    title: "All applications",
-    count: 107,
-    component: ApplicationsJobs,
-  },
-];
 
 const ManageTenders = () => {
   // navigate
@@ -30,7 +16,18 @@ const ManageTenders = () => {
   // state management
   const [panel, setPanel] = useState(0);
   const { totalTender } = useSelector((state) => state.employer);
-  const { totalApplications } = useSelector((state) => state.employer);
+  const { totalTenderApplications } = useSelector((state) => state.employer);
+  // tab data
+  const tabsData = [
+    {
+      title: "My Tenders",
+      component: Tenders,
+    },
+    {
+      title: "All applications",
+      component: AllApplication,
+    },
+  ];
   return (
     <>
       <div className="manage-jobs">
@@ -49,7 +46,7 @@ const ManageTenders = () => {
             label={
               <Stack direction="row" spacing={1} alignItems="center">
                 <span>All Applications</span>{" "}
-                <Chip label={totalApplications} className="job-count" />
+                <Chip label={totalTenderApplications} className="job-count" />
               </Stack>
             }
             id={`simple-tab-${1}`}

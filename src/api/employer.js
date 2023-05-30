@@ -7,6 +7,7 @@ import {
 import {
   getDashboardActivityAPIResponseTransform,
   transformApplicationOnJobListData,
+  transformApplicationOnTenderListData,
   transformApplicationTenderListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
@@ -276,6 +277,20 @@ export const getApplicationOnTenderAPI = async ({ tenderId, filter }) => {
     return {
       remote: "success",
       data: transformApplicationTenderListData(response.data),
+    };
+  }
+  return response;
+};
+
+export const getRecentTenderApplicationAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/tenders/applications", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationOnTenderListData(response.data),
     };
   }
   return response;
