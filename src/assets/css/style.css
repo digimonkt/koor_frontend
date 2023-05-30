@@ -1748,6 +1748,7 @@ input.employersearch {
 }
 
 @media only screen and (max-width: 992px) {
+  .noti-mobile{display: none !important;}
   .CardWidth {
     width: 100%;
   }
