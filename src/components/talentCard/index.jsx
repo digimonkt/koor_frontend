@@ -43,23 +43,20 @@ function TalentCard({ talentDetails }) {
           </Stack>
           <Stack
             direction="row"
-            spacing={2}
+            spacing={1}
             alignItems="center"
             sx={{ mb: 1 }}
             className="meets_div"
           >
             {talentDetails.country ? (
               <>
-                <div>
-                  <span className="meets">
-                    <SVG.LocationIcon />
-                  </span>
-                </div>
-                <div>
-                  <span className="meets">
-                    {talentDetails.country}, {talentDetails.city}
-                  </span>
-                </div>
+                <span className="meets">
+                  <SVG.LocationIcon />
+                </span>
+
+                <span className="meets">
+                  {talentDetails.country}, {talentDetails.city}
+                </span>
               </>
             ) : (
               ""

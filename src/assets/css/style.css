@@ -1395,7 +1395,7 @@ span.count {
   letter-spacing: 0.02em;
 
   color: #121212;
-  opacity: 0.5;
+
 }
 
 .usdinput {
@@ -1412,7 +1412,7 @@ span.count {
   letter-spacing: 0.02em;
   margin-right: 5px;
   color: #121212;
-  opacity: 0.5;
+
   width: calc(100% - 160px);
 }
 .usd-bg {

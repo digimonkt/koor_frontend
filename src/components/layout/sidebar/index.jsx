@@ -21,6 +21,9 @@ function Sidebar() {
       navigate("/job_seeker/my-profile/update-profile");
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const currentUserMobileNumber =
