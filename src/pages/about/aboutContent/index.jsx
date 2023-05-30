@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Container, Stack, Tab, Tabs } from "@mui/material";
 import styles from "./about-content.module.css";
 import PropTypes from "prop-types";
 import ScrollTabs from "../scrollTabs";
@@ -17,8 +17,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+        <Box sx={{ p: 3, "@media (max-width:480px)": { px: 0 } }}>
+          {children}
         </Box>
       )}
     </div>
@@ -60,7 +60,7 @@ const AboutContent = () => {
                 <Box className={styles.stack_box}>
                   <Stack
                     direction={{ xs: "column", sm: "row" }}
-                    spacing={{ xs: 3, sm: 8, md: 8 }}
+                    spacing={{ xs: 2, sm: 8, md: 8 }}
                   >
                     <Box sx={{ width: "100%", typography: "body1" }}>
                       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -69,6 +69,21 @@ const AboutContent = () => {
                           className="newstabs"
                           onChange={handleChange}
                           aria-label="basic tabs example"
+                          sx={{
+                            "& .MuiButtonBase-root.MuiTab-root": {
+                              "@media(max-width:992px)": {
+                                fontSize: "16px !important",
+                                marginLeft: "0px !important",
+                                paddingLeft: "5px",
+                                paddingRight: "5px",
+                              },
+                            },
+                            "& .MuiTabs-scroller": {
+                              "@media(max-width:992px)": {
+                                textAlign: "center",
+                              },
+                            },
+                          }}
                         >
                           <Tab label="Job Seeker" {...a11yProps(0)} />
                           <Tab label="Employer" {...a11yProps(1)} />
