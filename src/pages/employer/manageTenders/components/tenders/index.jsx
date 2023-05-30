@@ -6,7 +6,7 @@ import { getTenderAPI } from "@api/employer";
 import { useDispatch } from "react-redux";
 import { setTotalTenders } from "@redux/slice/employer";
 import TenderCard from "@components/tenderCard";
-import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
+import ApplicantList from "../applicantList";
 
 const Tenders = () => {
   const dispatch = useDispatch();

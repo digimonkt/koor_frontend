@@ -133,17 +133,12 @@ const ApplicantDetails = () => {
                   alignItems="center"
                 >
                   <ApplicationOptions
-                    applicationId={params.applicationId}
-                    allOptions
-                    isShortlisted={applicantDetails.shortlistedAt}
-                    isRejected={applicantDetails.rejectedAt}
-                    isBlacklisted={applicantDetails.user.isBlacklisted}
-                    isInterviewPlanned={applicantDetails.isInterviewPlanned}
-                    userImage={applicantDetails?.user?.image?.path || ""}
-                    userName={
-                      applicantDetails?.user?.name ||
-                      applicantDetails?.user?.email
-                    }
+                    details={applicantDetails}
+                    interviewPlanned
+                    shortlist
+                    reject
+                    blacklist
+                    message
                   />
                 </Stack>
               </Grid>

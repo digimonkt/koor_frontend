@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
-const ApplicationCardSkeletonLoading = ({ sx }) => {
+const ApplicantCardSkeletonLoading = ({ sx }) => {
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -76,4 +76,4 @@ const ApplicationCardSkeletonLoading = ({ sx }) => {
   );
 };
 
-export default ApplicationCardSkeletonLoading;
+export default ApplicantCardSkeletonLoading;

@@ -111,3 +111,19 @@ export const updateAppliedTenderAPI = async (tenderId, data) => {
   });
   return response;
 };
+
+// !TODO implement ChangeApplicationStatus API
+export const changeTenderApplicationStatusAPI = async ({
+  action,
+  applicationId,
+  data,
+}) => {
+  return await api.request({
+    url: urlcat("/v1/tenders/applications-detail/:applicationId/:action", {
+      applicationId,
+      action,
+    }),
+    method: "PUT",
+    data,
+  });
+};

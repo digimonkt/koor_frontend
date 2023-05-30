@@ -1,35 +1,24 @@
-import { Avatar, Chip, Divider } from "@mui/material";
-import { Stack } from "@mui/system";
-import React from "react";
-import { SVG } from "@assets/svg";
+import { Avatar, Chip, Divider, Stack } from "@mui/material";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import React, { useState, useEffect } from "react";
+import { SVG } from "@assets/svg";
 import ApplicationOptions from "@components/applicationOptions";
-import utcPlugin from "dayjs/plugin/utc";
-import timezonePlugin from "dayjs/plugin/timezone";
-dayjs.extend(utcPlugin);
-dayjs.extend(timezonePlugin);
-dayjs.extend(relativeTime);
 
-const ApplicationCard = ({
+function ApplicantCard({
   details,
   sx,
-  isShortlisted,
-  allOptions,
-  isRejected,
-  isBlacklisted,
-  isInterviewPlanned,
-}) => {
-  // navigate
-  // const navigate = useNavigate();
-
-  // handle navigation
-  // const handleNavigate = () => {
-  //   navigate("/employer/manage-jobs/applicant-details");
-  // };
-  // const [isShortlisted, setIsShortlisted] = useState(false);
-  // const [isRejected, setIsRejected] = useState(false);
+  interviewPlanned,
+  shortlist,
+  reject,
+  blacklist,
+  view,
+  message,
+}) {
+  const [jobOrTenderDetails, setJobOrTenderDetails] = useState({});
+  useEffect(() => {
+    setJobOrTenderDetails(details.tender || details.job);
+  });
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -40,9 +29,9 @@ const ApplicationCard = ({
     >
       <Stack direction="row" spacing={2} alignItems="center">
         <Avatar
-          src={generateFileUrl(details?.user?.image?.path || "")}
+          src={generateFileUrl(details.user.image?.path || "")}
           sx={{ width: "70px", height: "70px" }}
-        />{" "}
+        />
         <div className="recent-content">
           <Stack
             direction="row"
@@ -64,9 +53,8 @@ const ApplicationCard = ({
                 </strong>{" "}
                 to:{" "}
               </span>
-              <div>{details?.job?.title}</div>
+              <div>{jobOrTenderDetails.title}</div>
             </div>
-            {/* {subTitle && <div className="recent-research">{subTitle}</div>} */}
           </Stack>
           {details?.education || details?.skills || details?.language ? (
             <Stack
@@ -112,18 +100,17 @@ const ApplicationCard = ({
       </Stack>
       <Stack direction="row" spacing={0} className="edit-button">
         <ApplicationOptions
-          allOptions={allOptions}
-          applicationId={details.id}
-          isShortlisted={isShortlisted}
-          isRejected={isRejected}
-          isBlacklisted={isBlacklisted}
-          isInterviewPlanned={isInterviewPlanned}
-          userImage={details?.user?.image?.path || ""}
-          userName={details?.user?.name || details?.user?.email}
+          details={details}
+          interviewPlanned={interviewPlanned}
+          shortlist={shortlist}
+          reject={reject}
+          blacklist={blacklist}
+          view={view}
+          message={message}
         />
       </Stack>
     </Stack>
   );
-};
+}
 
-export default ApplicationCard;
+export default ApplicantCard;
