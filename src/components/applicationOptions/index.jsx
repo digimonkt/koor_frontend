@@ -177,6 +177,17 @@ function ApplicationOptions({
                   }
                 )
               );
+            } else {
+              navigate(
+                urlcat(
+                  "/:role/manage-tenders/:tenderId/applicant-details/:applicationId",
+                  {
+                    applicationId: details.id,
+                    role: USER_ROLES.employer,
+                    tenderId: details.tender.id,
+                  }
+                )
+              );
             }
           }}
         >
