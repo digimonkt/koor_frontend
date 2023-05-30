@@ -101,10 +101,9 @@ function ApplicationOptions({
       isInterviewPlanned || isBlacklisted || isRejected || isShortlisted
     );
   }, [isInterviewPlanned, isBlacklisted, isRejected, isShortlisted]);
-
   return (
     <>
-      {interviewPlanned && (
+      {(interviewPlanned && !details.tender) && (
         <Button
           disabled={isDisabledActions}
           style={{
