@@ -136,17 +136,24 @@ const Skills = () => {
                 />
                 {debouncedSearchSkillValue && searchSkill && (
                   <div className={styles.search_results_box}>
-                    {skills.data.map((skill) => {
-                      return (
-                        <div
-                          key={skill.id}
-                          className={styles.search_results}
-                          onClick={() => handleClick(skill)}
-                        >
-                          {skill.title}
-                        </div>
-                      );
-                    })}
+                    {skills.data
+                      .filter(
+                        (skill) =>
+                          !allSkills.some(
+                            (otherItem) => otherItem.title === skill.title
+                          )
+                      )
+                      .map((skill) => {
+                        return (
+                          <div
+                            key={skill.id}
+                            className={styles.search_results}
+                            onClick={() => handleClick(skill)}
+                          >
+                            {skill.title}
+                          </div>
+                        );
+                      })}
                   </div>
                 )}
               </div>

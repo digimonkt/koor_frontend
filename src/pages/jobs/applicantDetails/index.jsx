@@ -44,7 +44,6 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getApplicantDetails();
   }, []);
-  console.log({ applicantDetails });
   return (
     <>
       <div className="job-application">
@@ -82,9 +81,13 @@ const ApplicantDetails = () => {
                 divider={<Divider orientation="vertical" flexItem />}
               >
                 <h4>{applicantDetails.user.name}</h4>
-                <div className="recent-research">
+                <div
+                  className="recent-research"
+                  style={{ display: "flex", alignItems: "center" }}
+                >
                   <span>
-                    Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
+                    Appliedvfvc {dayjs(applicantDetails.createdAt).fromNow()}{" "}
+                    to:{" "}
                   </span>
                   <div>{applicantDetails.job.title}</div>
                 </div>
@@ -130,10 +133,12 @@ const ApplicantDetails = () => {
                   alignItems="center"
                 >
                   <ApplicationOptions
-                    applicationId={params.applicationId}
-                    allOptions
-                    isShortlisted={applicantDetails.shortlistedAt}
-                    isRejected={applicantDetails.rejectedAt}
+                    details={applicantDetails}
+                    interviewPlanned
+                    shortlist
+                    reject
+                    blacklist
+                    message
                   />
                 </Stack>
               </Grid>
@@ -160,19 +165,24 @@ const ApplicantDetails = () => {
                 )}
                 {applicantDetails.attachments.map((attachment) => {
                   return (
-                    <div key={attachment.id}>
+                    <Stack
+                      direction={"row"}
+                      alignItems={"center"}
+                      spacing={1}
+                      key={attachment.id}
+                    >
                       <span className="d-inline-flex">
                         {<SVG.OrangeIcon />}
                       </span>
                       <a
                         href={generateFileUrl(attachment.path)}
                         target="_blank"
-                        className="m-0"
                         rel="noreferrer"
+                        style={{ color: "#000" }}
                       >
                         {attachment.title}
                       </a>
-                    </div>
+                    </Stack>
                   );
                 })}
               </div>

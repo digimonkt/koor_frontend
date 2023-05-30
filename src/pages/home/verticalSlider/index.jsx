@@ -37,7 +37,7 @@ const VerticalSlider = () => {
     dots: true,
     infinite: true,
     arrows: false,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 1500,
     speed: 500,
     vertical: true,
@@ -52,9 +52,20 @@ const VerticalSlider = () => {
           {vertical.map((item, index) => (
             <>
               <Box className={styles.slider_box}>
-                <Grid container spacing={2}>
-                  <Grid md={6} lg={6} key="index">
-                    <Box className="text-center">
+                <Grid
+                  container
+                  spacing={2}
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid xs={12} md={6} lg={6} sm={6} key="index">
+                    <Box
+                      className="text-center"
+                      sx={{
+                        "@media(max-width:992px)": { paddingRight: "15px" },
+                      }}
+                    >
                       <img
                         src={IMAGES.Testi}
                         alt=""
@@ -62,7 +73,7 @@ const VerticalSlider = () => {
                       />
                     </Box>
                   </Grid>
-                  <Grid md={6} lg={6}>
+                  <Grid xs={12} md={6} lg={6} sm={6}>
                     <Box className={styles.home_testi_box_testi}>
                       <h2 className={styles.testi_heading}>{item.heading}</h2>
                       <p className={styles.testi_p}>{item.title}</p>

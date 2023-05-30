@@ -6,8 +6,15 @@ import {
   getJobSubCategoriesAPI,
   getLanguagesAPI,
   getSkillsAPI,
+<<<<<<< HEAD
   getSectorsAPI,
   getTagsAPI,
+=======
+  getTenderCategoryAPI,
+  getTenderOpportunityTypeAPI,
+  getTenderSectorAPI,
+  getTenderTagsAPI,
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
 } from "@api/choices";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -106,24 +113,23 @@ const initialState = {
     loading: false,
     data: [],
   },
+<<<<<<< HEAD
+=======
+  opportunityTypes: {
+    loading: false,
+    data: [],
+  },
+  tenderCategories: {
+    loading: false,
+    data: [],
+  },
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
 };
 
 export const getCountries = createAsyncThunk(
   "choices/getCountries",
   async (_, { rejectWithValue }) => {
     const res = await getCountriesAPI();
-    if (res.remote === "success") {
-      return res.data;
-    } else {
-      return rejectWithValue(res.error);
-    }
-  }
-);
-
-export const getTags = createAsyncThunk(
-  "choices/getTags",
-  async (_, { rejectWithValue }) => {
-    const res = await getTagsAPI();
     if (res.remote === "success") {
       return res.data;
     } else {
@@ -210,10 +216,17 @@ export const getSkills = createAsyncThunk(
   }
 );
 
+<<<<<<< HEAD
 export const getSectors = createAsyncThunk(
   "choices/getSectors",
   async (data, { rejectWithValue }) => {
     const res = await getSectorsAPI(data);
+=======
+export const getTenderSector = createAsyncThunk(
+  "choices/sectors",
+  async (_, { rejectWithValue }) => {
+    const res = await getTenderSectorAPI();
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
     if (res.remote === "success") {
       return res.data;
     } else {
@@ -221,7 +234,43 @@ export const getSectors = createAsyncThunk(
     }
   }
 );
+<<<<<<< HEAD
 
+=======
+export const getTenderOpportunityType = createAsyncThunk(
+  "choices/opportunityTypes",
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderOpportunityTypeAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+export const getTenderTags = createAsyncThunk(
+  "choices/tags",
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderTagsAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+export const getTenderCategories = createAsyncThunk(
+  "choices/tenderCategories",
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderCategoryAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
 export const choiceSlice = createSlice({
   name: "choice",
   initialState,
@@ -364,13 +413,24 @@ export const choiceSlice = createSlice({
         loading: false,
       };
     });
+<<<<<<< HEAD
 
     builder.addCase(getSectors.fulfilled, (state, action) => {
+=======
+    builder.addCase(getTenderSector.pending, (state) => {
+      state.sectors = {
+        ...state.sectors,
+        loading: true,
+      };
+    });
+    builder.addCase(getTenderSector.fulfilled, (state, action) => {
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
       state.sectors = {
         loading: false,
         data: action.payload,
       };
     });
+<<<<<<< HEAD
 
     builder.addCase(getSectors.pending, (state) => {
       state.sectors = {
@@ -380,18 +440,45 @@ export const choiceSlice = createSlice({
     });
 
     builder.addCase(getSectors.rejected, (state) => {
+=======
+    builder.addCase(getTenderSector.rejected, (state) => {
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
       state.sectors = {
         ...state.sectors,
         loading: false,
       };
     });
+<<<<<<< HEAD
 
     builder.addCase(getTags.fulfilled, (state, action) => {
+=======
+    builder.addCase(getTenderOpportunityType.fulfilled, (state, action) => {
+      state.opportunityTypes = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getTenderOpportunityType.pending, (state) => {
+      state.opportunityTypes = {
+        ...state.opportunityTypes,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getTenderOpportunityType.rejected, (state) => {
+      state.opportunityTypes = {
+        ...state.opportunityTypes,
+        loading: false,
+      };
+    });
+    builder.addCase(getTenderTags.fulfilled, (state, action) => {
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
       state.tags = {
         loading: false,
         data: action.payload,
       };
     });
+<<<<<<< HEAD
 
     builder.addCase(getTags.pending, (state) => {
       state.tags = {
@@ -403,6 +490,37 @@ export const choiceSlice = createSlice({
     builder.addCase(getTags.rejected, (state) => {
       state.tags = {
         ...state.sectors,
+=======
+    builder.addCase(getTenderTags.pending, (state) => {
+      state.tags = {
+        ...state.tags,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getTenderTags.rejected, (state) => {
+      state.tags = {
+        ...state.tags,
+        loading: false,
+      };
+    });
+    builder.addCase(getTenderCategories.fulfilled, (state, action) => {
+      state.tenderCategories = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getTenderCategories.pending, (state) => {
+      state.tenderCategories = {
+        ...state.tenderCategories,
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getTenderCategories.rejected, (state) => {
+      state.tenderCategories = {
+        ...state.tenderCategories,
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
         loading: false,
       };
     });

@@ -84,26 +84,31 @@ export const validateCreateJobInput = Yup.object().shape({
 
 export const validateCreateTenderInput = Yup.object().shape({
   title: Yup.string().required("Title is required"),
-  jobType: Yup.string().required("Title is required"),
-  budgetCurrency: Yup.string().required("Currency is required"),
-  budgetAmount: Yup.number().required("Amount is required"),
-  budgetPayPeriod: Yup.string().required("Pay period is required"),
+  opportunityType: Yup.string().required("Type is required"),
+  budgetCurrency: Yup.string(),
+  budgetAmount: Yup.number(),
+  budgetPayPeriod: Yup.string(),
   description: Yup.string().required("Description is required"),
   country: Yup.string().required("Country is required"),
-  jobCategories: Yup.string().required("Category is required"),
-  sector: Yup.string().required(" Sector is required"),
+  categories: Yup.array()
+    .of(Yup.string())
+    .min(1, "At Least one category is required"),
+  sectors: Yup.string().required(" Sector is required"),
   tag: Yup.string().required(" Tag is required"),
+  address: Yup.string().required("Address is required"),
   deadline: Yup.string()
     .required("Deadline is required")
     .test("isFuture", "Date Must be of Future", (value, context) => {
       return dayjs(value).isSameOrAfter(dayjs());
     }),
-  startDate: Yup.string()
-    .required("Start Date is required")
-    .test("isFuture", "Date Must be of Future", (value, context) => {
+  startDate: Yup.string().test(
+    "isFuture",
+    "Date Must be of Future",
+    (value, context) => {
       if (!value) {
         return true;
       }
       return dayjs(value).isSameOrAfter(dayjs());
-    }),
+    }
+  ),
 });

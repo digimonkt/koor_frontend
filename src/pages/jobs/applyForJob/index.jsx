@@ -377,7 +377,7 @@ const ApplyForJob = () => {
         </div>
       </Container>
       <DialogBox open={isCanceling} handleClose={() => console.log("close")}>
-        <CancelApply handleClose={() => setIsCanceling(true)} />
+        <CancelApply handleClose={() => setIsCanceling(false)} />
       </DialogBox>
       <DialogBox
         open={isApplied}

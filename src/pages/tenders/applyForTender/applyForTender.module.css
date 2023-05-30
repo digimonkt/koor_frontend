@@ -1,0 +1,373 @@
+.Jobcard {
+  box-shadow: 0px 15px 40px 0px #0000000d;
+  border-radius: 10px;
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 110px;
+  margin-bottom: 40px;
+}
+.postJob {
+  display: flex;
+  align-items: center;
+}
+.postJob p {
+  margin-left: 4%;
+  margin-top: 0;
+}
+.clocs {
+  display: flex;
+  align-items: center;
+  position: relative;
+  bottom: 3px;
+  justify-content: flex-end;
+}
+.clocs p {
+  margin-left: 3%;
+  font-weight: bold;
+}
+.clocs span svg {
+  font-weight: 100 !important;
+  position: relative;
+  top: 2px;
+  right: 10px;
+}
+.contentJob h4 {
+  margin-bottom: 8px;
+  font-size: 18px;
+  position: relative;
+  bottom: 10px;
+  text-transform: uppercase;
+}
+.required h6 {
+  font-size: 16px;
+  margin: 0;
+}
+.educations {
+  display: flex;
+  align-items: center;
+  padding-top: 6px;
+}
+.english {
+  display: flex;
+  align-items: center;
+}
+.englishtext span {
+  display: block;
+}
+.dots {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 100%;
+  display: block;
+  background: #eea23d;
+  position: relative;
+  top: 8px;
+}
+.englishtext {
+  margin-left: 10px !important;
+}
+.englishtext h6 {
+  font-size: 14px;
+}
+.language h6 {
+  font-size: 16px;
+}
+.englishtext span {
+  font-size: 14px;
+  padding-top: 4px;
+  font-family: "Poppins";
+}
+.educations p {
+  font-size: 14px;
+  margin-left: 10px !important;
+  font-weight: 600;
+}
+.educations span {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 100%;
+  display: block;
+  background: #eea23d;
+}
+.skilssbtn {
+  display: flex;
+  align-items: center;
+}
+.grybtn {
+  background-color: #f0f0f0 !important;
+  font-size: 11px !important;
+  color: #121212 !important;
+  width: 100% !important;
+  height: 30px !important;
+  border-radius: 60px !important;
+  padding: 0 !important;
+  margin: 0 24px 0 0 !important;
+}
+.requirement h5 {
+  font-size: 18px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+.monthBox {
+  text-align: center;
+  border-bottom: 1px solid #cacaca;
+  margin: 0 14px;
+  padding-bottom: 4px;
+}
+.monthBox h4 {
+  font-size: 14px;
+  margin-bottom: 0;
+}
+.monthBox p {
+  color: #eea23d;
+  font-size: 16px !important;
+  font-family: "Bahnschrift";
+  padding-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.monthBox span {
+  font-size: 32px !important;
+  font-family: "Bahnschrift";
+}
+.lotusimg {
+  display: flex;
+  align-items: center;
+  margin: 20px 20px 0 20px;
+}
+.lotusimg h3 {
+  font-size: 18px;
+  margin-left: 18px;
+  text-transform: capitalize;
+}
+.Numbers {
+  text-align: center;
+}
+.Numbers span {
+  display: block;
+  color: #121212;
+  opacity: 0.5;
+  font-family: "Poppins";
+}
+.lotus {
+  padding-bottom: 20px;
+}
+.enablebtn {
+  background-color: #eea23d !important;
+  width: 250px !important;
+  height: 44px !important;
+  font-weight: 600 !important;
+  padding: 0 !important;
+  font-size: 16px !important;
+  margin-bottom: 7% !important;
+  color: #121212 !important;
+  border-radius: 60px !important;
+}
+.enablebtn span {
+  position: relative;
+  top: 4px;
+  right: 4px;
+}
+.outlinebtn {
+  width: 250px !important;
+  height: 44px !important;
+  border: 1px solid #ffa500 !important;
+  border-radius: 60px !important;
+  color: #ffa500 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+}
+.outlinebtn svg path {
+  fill: #ffa500 !important;
+}
+.outlinebtn span {
+  position: relative;
+  right: 10px;
+  top: 4px;
+}
+
+.greenbtn {
+  background-color: #4caf50 !important;
+  width: 100px !important;
+  font-size: 12px !important;
+  padding: 0 !important;
+  height: 32px !important;
+  color: #fff !important;
+  margin: 0 0px 0 20px !important;
+}
+.contentJob p {
+  font-size: 14px !important;
+  font-weight: 300 !important;
+}
+.grids h1 {
+  font-size: 28px;
+  margin: 0px 24px;
+}
+.grids {
+  position: relative;
+}
+.crossed {
+  position: absolute;
+  right: 0;
+}
+.grids p {
+  font-size: 18px;
+  margin: 0;
+  font-family: "Poppins";
+}
+.clocs p {
+  font-size: 12px !important;
+}
+.iconbutton {
+  background-color: #f0f0f0 !important;
+  font-size: 12px !important;
+  width: 124px !important;
+  height: 28px !important;
+  border-radius: 60px !important;
+  color: #000 !important;
+  margin-right: 14px !important;
+}
+.iconbtn {
+  display: flex;
+  align-items: center;
+}
+.iconbutton span {
+  position: relative;
+  right: 4px;
+  top: 3px;
+}
+.datesatrt {
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+}
+.datesatrt span {
+  margin-right: 1%;
+  display: inline-flex;
+}
+.datesatrt p {
+  font-size: 16px;
+  white-space: nowrap;
+}
+.infomore {
+  text-align: center;
+}
+.infomore h6 {
+  color: #274593;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+.infomore h6 span svg {
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+.rotate svg {
+  transform: rotate(180deg);
+}
+.requirement {
+  border-left: 1px solid #cacaca;
+  /* border-right: 1px solid #cacaca; */
+  padding: 0 36px 0 40px;
+}
+.requirement p {
+  font-size: 14px !important;
+}
+.textarea {
+  background: #f0f0f0;
+  border: 0;
+  width: 100% !important;
+  border-radius: 10px;
+  padding: 12px 19px 24px;
+  box-sizing: border-box;
+}
+.textarea:focus-visible {
+  border: 0 !important;
+  outline: 0 !important;
+}
+.shortLetter {
+  border-bottom: 1px solid #cacaca;
+  padding-bottom: 26px;
+  border-top: 1px solid #cacaca;
+  padding-top: 30px;
+  margin-top: 14px;
+}
+.applybtns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
+  padding-bottom: 0px;
+}
+.cancelbtn {
+  color: #848484 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  padding: 10px 30px !important;
+  border-radius: 80px !important;
+}
+.cancelbtn:hover {
+  background: #feefd3 !important;
+  color: #eea23d !important;
+}
+.applybtn {
+  background-color: #eea23d !important;
+  width: 133px !important;
+  color: #121212 !important;
+  font-size: 16px !important;
+  height: 42px !important;
+  border-radius: 60px !important;
+  font-weight: 600 !important;
+}
+.applybtn:hover {
+  background: #d88b24 !important;
+}
+.startDate {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  /* identical to box height */
+
+  text-align: center;
+
+  /* Black #121212 */
+
+  color: #121212;
+
+  opacity: 0.7;
+}
+.startB {
+  font-family: "Poppins";
+  font-weight: 600;
+  color: #121212;
+  font-size: 16px;
+}
+
+.cancel_popup {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.cancel_popup p {
+  display: block;
+  color: #121212;
+  opacity: 0.5;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-family: Bahnschrift;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0.03em;
+}
+
+@media screen and (max-width: 1440px) and (min-width: 1200px) {
+  .requirement {
+    padding: 0 8px 0 8px;
+  }
+}

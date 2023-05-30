@@ -27,6 +27,9 @@ const VerifyOTP = lazy(() =>
 const ResetPassword = lazy(() =>
   import("@pages/auth").then((module) => ({ default: module.ResetPassword }))
 );
+const TenderDetails = lazy(() =>
+  import("@pages/tenders").then((module) => ({ default: module.TenderDetails }))
+);
 
 // notification
 const Notification = lazy(() => import("@pages/notification"));
@@ -68,6 +71,12 @@ const EmployerPublicProfile = lazy(() =>
     default: module.EmployerPublicProfile,
   }))
 );
+// employer
+const VendorPublicProfile = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorPublicProfile,
+  }))
+);
 const ManageJobs = lazy(() =>
   import("@pages/employer").then((module) => ({
     default: module.ManageJobs,
@@ -99,6 +108,11 @@ const VendorDashboard = lazy(() =>
     default: module.VendorDashboard,
   }))
 );
+const VendorSavedTenders = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.VendorSavedTenders,
+  }))
+);
 
 // jobs
 const PostJobs = lazy(() =>
@@ -120,6 +134,16 @@ const JobDetails = lazy(() =>
 const ApplyForJob = lazy(() =>
   import("@pages/jobs").then((module) => ({
     default: module.ApplyForJob,
+  }))
+);
+const ApplyForTender = lazy(() =>
+  import("@pages/tenders").then((module) => ({
+    default: module.ApplyForTender,
+  }))
+);
+const AppliedTender = lazy(() =>
+  import("@pages/vendor").then((module) => ({
+    default: module.AppliedTender,
   }))
 );
 const Search = lazy(() => import("@pages/search"));
@@ -165,6 +189,12 @@ export const ROUTES = [
     component: JobDetails,
   },
   {
+    id: "tenderDetails",
+    name: "Tender Details",
+    path: "/tender/details/:tenderId",
+    component: TenderDetails,
+  },
+  {
     id: "home",
     name: "Home",
     path: "/",
@@ -187,6 +217,12 @@ export const ROUTES = [
     name: "Employer Public Profile",
     path: "/employer/:userId/profile",
     component: EmployerPublicProfile,
+  },
+  {
+    id: "vendor-public-profile",
+    name: "Vendor Public Profile",
+    path: "/vendor/:userId/profile",
+    component: VendorPublicProfile,
   },
 ];
 
@@ -232,6 +268,12 @@ export const AUTHENTICATED_ROUTES = [
     name: "Apply Job",
     path: "/job/apply/:jobId",
     component: ApplyForJob,
+  },
+  {
+    id: "applyTender",
+    name: "Apply Tender",
+    path: "/tender/apply/:tenderId",
+    component: ApplyForTender,
   },
   {
     id: "notification",
@@ -286,25 +328,31 @@ export const VENDOR_ROUTES = [
   {
     id: "myProfile",
     name: "My Profile",
-    path: "/my-profile-2",
+    path: "/my-profile",
     component: VendorMyProfile,
   },
   {
     id: "dashboard",
     name: "Dashboard",
-    path: "/dashboard-2",
+    path: "/dashboard",
     component: VendorDashboard,
   },
   {
-    id: "vendorsavedJobs",
+    id: "vendorAppliedTender",
+    name: "Vendor Applied Tender",
+    path: "/tender/applied",
+    component: AppliedTender,
+  },
+  {
+    id: "vendorSavedJobs",
     name: "vendor saved Jobs",
-    path: "/job/saved",
-    component: SavedJobs,
+    path: "/tender/saved",
+    component: VendorSavedTenders,
   },
   {
     id: "chat",
     name: "chat",
-    path: "/chat-2",
+    path: "/chat",
     component: ChatBox,
   },
 ];
@@ -326,7 +374,7 @@ export const EMPLOYER_ROUTES = [
   {
     id: "manageTenders",
     name: "Manage Tenders",
-    path: "/employer-manage-tenders",
+    path: "/manage-tenders",
     component: EmployerManageTenders,
   },
   {

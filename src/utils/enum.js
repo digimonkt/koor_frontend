@@ -21,6 +21,11 @@ export const ORGANIZATION_TYPE = Object.freeze({
   business: "business",
   ngo: "ngo",
   government: "government",
+<<<<<<< HEAD
+=======
+  public: "public",
+  private: "private",
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
 });
 
 export const GENDER = {
@@ -57,7 +62,7 @@ export const JOB_ORDER_BY = {
 export const JOB_SORT_BY = {
   salary: "salary",
   expiration: "expiration",
-  workload: "workload",
+  created: "created_at",
 };
 
 export const NOTIFICATION_TYPE = {

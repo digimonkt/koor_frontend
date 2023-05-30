@@ -33,6 +33,40 @@ export const transformApplicationOnJobListData = (data) => {
     }),
   };
 };
+export const transformApplicationTenderListData = (data) => {
+  return {
+    count: data.count,
+    next: data.next,
+    previous: data.previous,
+    blacklistedCount: data.blacklisted_count || 0,
+    rejectedCount: data.rejected_count || 0,
+    shortlistedCount: data.shortlisted_count || 0,
+    plannedInterviewCount: data.planned_interview_count || 0,
+    results: data.results.map((result) => {
+      return {
+        id: result.id,
+        shortlistedAt: result.shortlisted_at,
+        rejectedAt: result.rejected_at,
+        createdAt: result.created,
+        shortLetter: result.short_letter,
+        user: {
+          id: result.user.id,
+          name: result.user.name,
+          email: result.user.email,
+          countryCode: result.user.country_code,
+          mobileNumber: result.user.mobile_number,
+          image: result.user.image,
+          description: result.user.description,
+          isBlacklisted: result.user.is_blacklisted,
+        },
+        tender: {
+          id: result.tender.id,
+          title: result.tender.title,
+        },
+      };
+    }),
+  };
+};
 
 export const getDashboardActivityAPIResponseTransform = (data) => {
   return {
@@ -71,3 +105,46 @@ export const getTenderDetailsAPIResponseTransform = (data) => {
     }),
   };
 };
+<<<<<<< HEAD
+=======
+
+export const transformApplicationOnTenderListData = (data) => {
+  return {
+    count: data.count,
+    next: data.next,
+    previous: data.previous,
+    blacklistedCount: data.blacklisted_count || 0,
+    rejectedCount: data.rejected_count || 0,
+    shortlistedCount: data.shortlisted_count || 0,
+    plannedInterviewCount: data.planned_interview_count || 0,
+    results: data.results.map((result) => {
+      return {
+        id: result.id,
+        shortlistedAt: result.shortlisted_at,
+        rejectedAt: result.rejected_at,
+        createdAt: result.created,
+        shortLetter: result.short_letter,
+        interviewAt: result.interview_at,
+        job: result.job,
+        user: {
+          id: result.user.id,
+          name: result.user.name,
+          email: result.user.email,
+          countryCode: result.user.country_code,
+          mobileNumber: result.user.mobile_number,
+          image: result.user.image,
+          description: result.user.description,
+          isBlacklisted: result.user.is_blacklisted,
+        },
+        tender: {
+          id: result.tender.id,
+          title: result.tender.title
+        },
+        education: result.education,
+        language: result.language,
+        skills: result.skill,
+      };
+    }),
+  };
+};
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d

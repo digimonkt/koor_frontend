@@ -10,7 +10,7 @@ body {
 }
 
 .CardWidth {
-  width: 650px !important;
+  width: 650px;
 }
 
 .meets_div {
@@ -73,7 +73,7 @@ iframe {
   border: 0;
 }
 .attachments span {
-  color: #eea23d !important;
+  color: #eea23d;
 }
 .attachments small {
   display: none !important;
@@ -139,7 +139,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   border-top: 1px solid #cacaca;
   margin-top: 15px;
 }
-.SelectDropdown .MuiFormControl-root.css-ptt77l-MuiFormControl-root {
+.SelectDropdown .filter_input {
   width: 100% !important;
 }
 .Tenderinput .MuiFormControl-root.MuiTextField-root {
@@ -195,6 +195,9 @@ header {
 .menu {
   margin: 0px;
   padding: 0px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .menu li {
@@ -788,7 +791,7 @@ hr {
   height: 90px;
   padding: 6px 12px;
   font-family: "Poppins";
-  font-size: 14px;
+  font-size: 12px;
   box-sizing: border-box;
 }
 .description {
@@ -965,7 +968,6 @@ hr {
 
 .pricebox h4 small {
   display: inline-block;
-  margin-right: 3px;
 }
 
 .pricebox span {
@@ -1583,6 +1585,7 @@ body {
     visibility: hidden;
     opacity: 0;
     transition: visibility 1s, opacity 0.5s linear;
+    display: block;
   }
   .menu.menu-selected {
     visibility: visible;
@@ -1742,4 +1745,40 @@ input.employersearch {
 }
 .required-field {
   color: red;
+}
+
+@media only screen and (max-width: 992px) {
+  .CardWidth {
+    width: 100%;
+  }
+  .footer,
+  header {
+    display: none;
+  }
+  .register {
+    margin-top: 0px;
+    background: url("../images/intro.png");
+  }
+  .register-des > a {
+    padding: 12px 15px;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+  }
+  .marquee h1 {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .vendor {
+    background: url("../images/register.png") center top !important;
+  }
+}
+.PhoneInputInput{font-size: 12px;}
+.labelbox .MuiFormLabel-root {
+  display: none;
+}
+.labelbox .MuiOutlinedInput-input {
+  font-size: 12px;
 }

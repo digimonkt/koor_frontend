@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Chip, Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
-import ApplicationsJobs from "./components/tenderAllApplications";
+import AllApplication from "./components/tenderAllApplications";
 
-import Tenders from "./components/tendersjob";
+import Tenders from "./components/tenders";
 import { useNavigate } from "react-router-dom";
 import { OutlinedButton } from "@components/button";
 import { AntTab, AntTabs } from "./style";
@@ -54,11 +54,24 @@ const ManageTenders = () => {
 
   // state management
   const [panel, setPanel] = useState(0);
-
+  const { totalTender } = useSelector((state) => state.employer);
+  const { totalTenderApplications } = useSelector((state) => state.employer);
+  // tab data
+  const tabsData = [
+    {
+      title: "My Tenders",
+      component: Tenders,
+    },
+    {
+      title: "All applications",
+      component: AllApplication,
+    },
+  ];
   return (
     <>
       <div className="manage-jobs">
         <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
+<<<<<<< HEAD
           {tabs.map((tab, index) => (
             <AntTab
               key={index}
@@ -72,6 +85,28 @@ const ManageTenders = () => {
               aria-controls={`simple-tabpanel-${index}`}
             />
           ))}
+=======
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>My Tenders</span>{" "}
+                <Chip label={totalTender} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${0}`}
+            aria-controls={`simple-tabpanel-${0}`}
+          />
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>All Applications</span>{" "}
+                <Chip label={totalTenderApplications} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${1}`}
+            aria-controls={`simple-tabpanel-${1}`}
+          />
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
           <div className="ms-auto">
             <OutlinedButton
               onClick={() => navigate("/employer/tender/post")}

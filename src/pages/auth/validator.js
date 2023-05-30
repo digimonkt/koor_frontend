@@ -1,7 +1,13 @@
 import { isValidPhoneNumber } from "react-phone-number-input";
 import * as Yup from "yup";
 const passwordValidation = {
-  password: Yup.string().required("Password is Required"),
+  password: Yup.string()
+    .required("Password is Required")
+    .min(6, "Password must be at least 6 characters long")
+    .matches(
+      /.*[!@#$%^&*()].*/,
+      "Password must contain at least one special character"
+    ),
   confirmPassword: Yup.string()
     .required("Confirm Password is Required")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),

@@ -1,12 +1,19 @@
 import api from ".";
 import urlcat from "urlcat";
-import { transformJobListResponse } from "./transform/job";
+import {
+  transformFullJobDetails,
+  transformJobListResponse,
+} from "./transform/job";
 import {
   getDashboardActivityAPIResponseTransform,
   getTenderDetailsAPIResponseTransform,
   transformApplicationOnJobListData,
+  transformApplicationOnTenderListData,
+  transformApplicationTenderListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
+import { transformTenderResponse } from "./transform/tender";
+import { transformBlacklistUser } from "./transform/blacklist";
 
 export const createJobAPI = async (data) => {
   const res = await api.request({
@@ -64,6 +71,13 @@ export const updateEmployerJobStatusAPI = async (jobId) => {
   });
   return response;
 };
+export const updateEmployerTenderStatusAPI = async (tendersId) => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/tenders/:tendersId/status", { tendersId }),
+    method: "PUT",
+  });
+  return response;
+};
 
 export const getApplicationOnJobAPI = async ({ jobId, filter }) => {
   const response = await api.request({
@@ -111,11 +125,15 @@ export const getApplicationDetailsAPI = async (applicationId) => {
         id: res.data.id,
         createdAt: res.data.created,
         job: res.data.job,
+        isInterviewPlanned: res.data.interview_at,
         rejectedAt: res.data.rejected_at,
         shortLetter: res.data.short_letter,
         shortlistedAt: res.data.shortlisted_at,
         attachments: res.data.attachments,
-        user: { ...transformGetUserDetails(res.data.user) },
+        user: {
+          ...transformGetUserDetails(res.data.user),
+          isBlacklisted: res.data.user.is_blacklisted,
+        },
       },
     };
   }
@@ -177,6 +195,7 @@ export const createTenderAPI = async (data) => {
   return res;
 };
 
+<<<<<<< HEAD
 export const getTenderAPI = async () => {
   const response = await api.request({
     url: urlcat("/v1/users/employer/tenders"),
@@ -190,6 +209,8 @@ export const getTenderAPI = async () => {
   }
   return response;
 };
+=======
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
 export const getShareCountDataAPI = async () => {
   const res = await api.request({
     url: "v1/users/employer/share-count",
@@ -202,4 +223,92 @@ export const getShareCountDataAPI = async () => {
     };
   }
   return res;
+};
+
+export const getTenderAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformTenderResponse(response.data),
+    };
+  }
+  return response;
+};
+
+export const updateTenderAPI = async (tendersId, data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/tenders/:tendersId", { tendersId }),
+    method: "PUT",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response;
+};
+
+export const getBlacklistAPI = async (search) => {
+  const response = await api.request({
+    url: urlcat("v1/users/employer/blacklisted-user", search),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformBlacklistUser(response.data),
+    };
+  }
+  return response;
+};
+export const getEmployerActiveJobsAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/users/employer/active-jobs/:employerId", data),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: {
+        count: response.data.count,
+        next: response.data.next,
+        previous: response.data.previous,
+        results: response.data.results.map((data) =>
+          transformFullJobDetails(data)
+        ),
+      },
+    };
+  }
+  return response;
+};
+
+export const getApplicationOnTenderAPI = async ({ tenderId, filter }) => {
+  const response = await api.request({
+    url: urlcat("/v1/tenders/:tenderId/applications", { tenderId, filter }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationTenderListData(response.data),
+    };
+  }
+  return response;
+};
+
+export const getRecentTenderApplicationAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/tenders/applications", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationOnTenderListData(response.data),
+    };
+  }
+  return response;
 };

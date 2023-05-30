@@ -3,7 +3,7 @@ import urlcat from "urlcat";
 import { transformGetCountriesAPIResponse } from "./transform/choices";
 export const getCountriesAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/admin/country", data || {}),
+    url: urlcat("/v1/admin/country", { limit: 100, ...(data || {}) }),
     method: "GET",
   });
   if (response.remote === "success") {
@@ -96,7 +96,10 @@ export const getSkillsAPI = async (data) => {
   return response;
 };
 
+<<<<<<< HEAD
 export const getSectorsAPI = async (data) => {
+=======
+export const getTenderSectorAPI = async (data) => {
   const response = await api.request({
     url: urlcat("/v1/admin/sector", data || {}),
     method: "GET",
@@ -109,8 +112,27 @@ export const getSectorsAPI = async (data) => {
   }
   return response;
 };
+// pending  opportunity type
+export const getTenderOpportunityTypeAPI = async (data) => {
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
+  const response = await api.request({
+    url: urlcat("/v1/admin/opportunity-type", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
 
+<<<<<<< HEAD
 export const getTagsAPI = async (data) => {
+=======
+export const getTenderTagsAPI = async (data) => {
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d
   const response = await api.request({
     url: urlcat("/v1/admin/tag", data || {}),
     method: "GET",
@@ -123,3 +145,20 @@ export const getTagsAPI = async (data) => {
   }
   return response;
 };
+<<<<<<< HEAD
+=======
+
+export const getTenderCategoryAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/tender-category", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
+>>>>>>> a22fb17987cacc5ad6ce8a2bcf83e4672ae45b4d

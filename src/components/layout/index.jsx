@@ -13,7 +13,16 @@ import { FallbackLoading } from "@components/loader/fallbackLoader";
 
 function Layout() {
   return (
-    <Box sx={{ display: "flex", marginTop: "60px", minHeight: "93vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        marginTop: "60px",
+        minHeight: "93vh",
+        "@media(max-width:992px)": {
+          display: "block",
+        },
+      }}
+    >
       <Sidebar />
       <Box
         component="main"

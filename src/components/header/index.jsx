@@ -20,10 +20,10 @@ import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
 import NotificationPopup from "./notificationPopup";
-
-const ismenu = true;
+// const ismenu = false;
 
 function Header() {
+  const [ismenu, setIsmenu] = useState(false);
   const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
@@ -62,8 +62,8 @@ function Header() {
         maxWidth={false}
         sx={{
           "@media(min-width:600px)": {
-            paddingLeft: "110px",
-            paddingRight: "110px",
+            paddingLeft: "100px",
+            paddingRight: "100px",
           },
         }}
       >
@@ -78,12 +78,7 @@ function Header() {
           {isLoggedIn ? (
             <div className="">
               <SearchCategory direction="row" spacing={1} alignItems="center">
-                <Link
-                  to={role === USER_ROLES.jobSeeker ? "/search/jobs" : "/"}
-                  className="d-inline-flex"
-                >
-                  <SVG.SearchIcon />
-                </Link>
+                <SVG.SearchIcon />
                 {role === "employer" ? (
                   <FormControl
                     sx={{
@@ -163,14 +158,14 @@ function Header() {
             // ref={menu}
           >
             <IconButton
-              // onClick={() => setIsmenu(!ismenu)}
+              onClick={() => setIsmenu(!ismenu)}
               color="inherit"
               aria-label="open drawer"
               edge="start"
               sx={{
                 mr: 2,
                 fontSize: "14px",
-                display: { sm: "none" },
+                display: { lg: "none" },
               }}
             >
               <MenuIcon />

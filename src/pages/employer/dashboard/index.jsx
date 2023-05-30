@@ -2,7 +2,6 @@ import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import { DonutChart } from "@components/charts";
-import ApplicationCard from "@components/applicationCard";
 import { employerCard } from "./employerCardData";
 import { OutlinedButton } from "@components/button";
 import {
@@ -13,9 +12,10 @@ import {
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { NoDataFoundAnimation } from "@components/animations";
-import ApplicationCardSkeletonLoading from "@components/applicationCard/applicationCardSkeletonLoading";
 import JobAnalytics from "./jobAnalytics";
 import Loader from "@components/loader";
+import ApplicantCard from "@components/applicantCard";
+import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const [counts, setCounts] = useState({
@@ -112,10 +112,10 @@ const Dashboard = () => {
       <div className="employer-dashboard">
         <Grid item container spacing={2} sx={{ mb: 4 }}>
           {employerCard(counts).map((item, index) => (
-            <Grid item lg={3} xl={3} xs={12} key={index}>
+            <Grid item lg={3} xl={3} xs={6} key={index}>
               <Stack
                 direction="row"
-                spacing={2}
+                spacing={{ xs: 1, lg: 2 }}
                 alignItems="center"
                 sx={{
                   borderRadius: "80px",
@@ -180,10 +180,18 @@ const Dashboard = () => {
                   {isDonutShow ? (
                     <DonutChart shareCountData={shareCount} />
                   ) : (
-                    <div style={{ display: "flex", paddingTop: "32%", justifyContent: "center", alignSelf: "center" }}>
-                    <Loader style={{ width: "44px", height: "44px" }}
-                      loading={true}
-                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        paddingTop: "32%",
+                        justifyContent: "center",
+                        alignSelf: "center",
+                      }}
+                    >
+                      <Loader
+                        style={{ width: "44px", height: "44px" }}
+                        loading={true}
+                      />
                     </div>
                   )}
                 </div>
@@ -221,21 +229,17 @@ const Dashboard = () => {
                   {isLoading ? (
                     // skeleton loading need to implement
                     [1, 2, 3, 4, 5].map((loader) => (
-                      <ApplicationCardSkeletonLoading key={loader} />
+                      <ApplicantCardSkeletonLoading key={loader} />
                     ))
                   ) : !recentApplication.length ? (
                     <NoDataFoundAnimation title="We could not find any recent job applications." />
                   ) : (
                     recentApplication.map((item, index) => (
-                      <ApplicationCard
-                        jobId={item.jobId}
+                      <ApplicantCard
                         details={item}
-                        subTitle={`Applied ${dayjs(item.createdAt).fromNow()}`}
-                        isDisabled={item.disabled}
-                        isShortlisted={item.shortlistedAt}
-                        isRejected={item.rejectedAt}
-                        isBlacklisted={item.user.isBlacklisted}
                         key={index}
+                        shortlist
+                        view
                       />
                     ))
                   )}

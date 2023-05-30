@@ -1,6 +1,8 @@
+import { getEmployerActiveJobsAPI } from "@api/employer";
 import { GetUserDetailsAPI } from "@api/user";
 import { SVG } from "@assets/svg";
 import { NoRecordFoundAnimation } from "@components/animations";
+import JobCard from "@components/jobCard";
 import {
   Box,
   CardContent,
@@ -12,10 +14,11 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
+import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function PublicProfileComponent() {
   const params = useParams();
@@ -33,6 +36,7 @@ function PublicProfileComponent() {
     skills: [],
     workExperiences: [],
   });
+  const [jobList, setJobList] = useState([]);
   const getUserDetails = async (userId) => {
     setIsLoading(true);
     const res = await GetUserDetailsAPI({ userId });
@@ -41,14 +45,24 @@ function PublicProfileComponent() {
     }
     setIsLoading(false);
   };
+  const getEmployersJob = async (userId) => {
+    const res = await getEmployerActiveJobsAPI({
+      employerId: userId,
+      limit: 3,
+    });
+    if (res.remote === "success") {
+      setJobList(res.data.results);
+    }
+  };
   useEffect(() => {
     const userId = params.userId;
     getUserDetails(userId);
+    getEmployersJob(userId);
   }, []);
   return (
     <Box sx={{ marginTop: "67px", py: 3 }}>
       {isLoading ? (
-        "<PublicProfileSkeletonLoading />"
+        <PublicProfileSkeletonLoading />
       ) : (
         <Container>
           <Card
@@ -161,19 +175,40 @@ function PublicProfileComponent() {
                       </Typography>
                       <Divider sx={{ borderColor: "#ccc", my: 2 }} />
                       <Box>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            fontSize: "26px",
-                            fontFamily: "Bahnschrift",
-                            fontWeight: "600",
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
                           }}
                         >
-                          Active Jobs
-                        </Typography>
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontSize: "26px",
+                              fontFamily: "Bahnschrift",
+                              fontWeight: "600",
+                            }}
+                          >
+                            Active Jobs
+                          </Typography>
+                          <Typography
+                            variant="string"
+                            sx={{
+                              fontSize: "15px",
+                              fontFamily: "Bahnschrift",
+                            }}
+                          >
+                            <Link
+                              to={`/search/jobs?search=${userDetails.name}`}
+                            >
+                              See All
+                            </Link>
+                          </Typography>
+                        </div>
                         <ul className="listitems">
-                          {userDetails.workExperiences.length ? (
-                            userDetails.workExperiences.map((item, index) => (
+                          {jobList.length ? (
+                            jobList.map((item, index) => (
                               <li
                                 key={index}
                                 style={{
@@ -184,8 +219,7 @@ function PublicProfileComponent() {
                                       : "",
                                 }}
                               >
-                                data
-                                {/* <WorkExperienceCard {...item} noOptions /> */}
+                                <JobCard jobDetails={item} />
                               </li>
                             ))
                           ) : (
@@ -301,6 +335,94 @@ function PublicProfileComponent() {
                           </Typography>
                         </Box>
                       </Stack>
+                      {userDetails.profile.website ? (
+                        <Stack
+                          direction={"row"}
+                          spacing={2}
+                          alignItems={"center"}
+                        >
+                          <Box
+                            sx={{
+                              background: "#FEEFD3",
+                              borderRadius: "5px",
+                              p: 1,
+                              color: "#EEA23D",
+                              width: "40px",
+                              height: "40px",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <SVG.Mail />
+                          </Box>
+                          <Box>
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                fontSize: "16px",
+                                fontFamily: "Poppins",
+                                fontWeight: "600",
+                              }}
+                            >
+                              {userDetails.profile.website}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "#848484",
+                                fontFamily: "Poppins",
+                                fontSize: "12px",
+                              }}
+                            >
+                              Website
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      ) : null}
+                      {userDetails.profile.address ? (
+                        <Stack
+                          direction={"row"}
+                          spacing={2}
+                          alignItems={"center"}
+                        >
+                          <Box
+                            sx={{
+                              background: "#FEEFD3",
+                              borderRadius: "5px",
+                              p: 1,
+                              color: "#EEA23D",
+                              width: "40px",
+                              height: "40px",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <SVG.LocationIcon />
+                          </Box>
+                          <Box>
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                fontSize: "16px",
+                                fontFamily: "Poppins",
+                                fontWeight: "600",
+                              }}
+                            >
+                              {userDetails.profile.address}
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "#848484",
+                                fontFamily: "Poppins",
+                                fontSize: "12px",
+                              }}
+                            >
+                              Address
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      ) : null}
                       <Divider sx={{ borderColor: "#cacaca" }} />
                       <Box
                         sx={{

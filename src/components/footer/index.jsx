@@ -2,6 +2,7 @@ import { Container, Divider, Stack } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
+import dayjs from "dayjs";
 
 function Footer() {
   return (
@@ -18,7 +19,9 @@ function Footer() {
             alignItems="center"
           >
             <SVG.KoorLogo />
-            <span className="copy-right">© Copyright 2022, Koor</span>
+            <span className="copy-right">
+              © Copyright {dayjs().year()}, Koor
+            </span>
           </Stack>
           <Divider orientation="vertical" flexItem />
           <div className="footer-menu">
@@ -27,13 +30,13 @@ function Footer() {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/">Jobs</Link>
+                <Link to="/search/jobs">Jobs</Link>
               </li>
               <li>
-                <Link to="/">Tenders</Link>
+                <Link to="/search/tenders">Tenders</Link>
               </li>
               <li>
-                <Link to="/">About us</Link>
+                <Link to="/about-us">About us</Link>
               </li>
             </ul>
           </div>

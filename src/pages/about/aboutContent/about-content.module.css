@@ -33,16 +33,25 @@
 }
 
 .about_content_heading {
-  font-family: "Bahnschrift", sans-serif !important;
-  font-size: 40px !important;
-  font-weight: 600 !important;
-  line-height: 48px !important;
-  color: #121212 !important;
+  font-family: "Bahnschrift", sans-serif;
+  font-size: 40px;
+  font-weight: 600 ;
+  line-height: 48px ;
+  color: #121212;
 }
 
-@media screen and (max-width: 1536px) and (min-width: 1440px) {
-}
+@media screen and (max-width:992px) {
+  .about_content_heading {
+   font-size:32px;
 
+  }
+}
+@media screen and (max-width:480px) {
+  .about_content_heading {
+   font-size:22px;
+
+  }
+}
 @media screen and (max-width: 768px) and (min-width: 480px) {
   .about_content_text {
     display: contents !important;

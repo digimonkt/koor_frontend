@@ -29,5 +29,6 @@ jobs:
           script: |
             cd /home/user/koor/frontend_koor/ 
             git pull origin main
-            yarn build
-            pm2 restart 43
+            /home/user/.yarn/bin/yarn install
+            /home/user/.yarn/bin/yarn build
+            pm2 restart 52

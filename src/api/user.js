@@ -122,7 +122,6 @@ export const getLetLongByAddressAPI = async (address) => {
     }),
     method: "GET",
   });
-  console.log({ res });
   return res;
 };
 
