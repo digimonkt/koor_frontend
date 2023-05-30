@@ -21,12 +21,10 @@ const ManageTenders = () => {
   const tabsData = [
     {
       title: "My Tenders",
-      count: 3,
       component: Tenders,
     },
     {
       title: "All applications",
-      count: 107,
       component: AllApplication,
     },
   ];
