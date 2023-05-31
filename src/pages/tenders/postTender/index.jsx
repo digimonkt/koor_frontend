@@ -257,7 +257,10 @@ const PostTender = () => {
             <h2>
               {tenderId ? "Update tender" : "Post a new tender"}
               <span className="right-pull">
-                <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
+                <IconButton
+                  LinkComponent={Link}
+                  to={"/employer/manage-tenders"}
+                >
                   <CloseIcon />
                 </IconButton>
               </span>

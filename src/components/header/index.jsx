@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Box,
   Container,
   FormControl,
   IconButton,
@@ -20,10 +21,15 @@ import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
 import NotificationPopup from "./notificationPopup";
+
 // const ismenu = false;
 
 function Header() {
   const [ismenu, setIsmenu] = useState(false);
+  const [isMobileSearch, setIsMobileSearch] = useState(false);
+  const mobileSearchToggle = () => {
+    setIsMobileSearch(!isMobileSearch);
+  };
   const dispatch = useDispatch();
   // navigate
   const navigate = useNavigate();
@@ -69,16 +75,20 @@ function Header() {
       >
         <Stack
           direction="row"
-          spacing="3"
-          alignItems={{ xs: "start", lg: "center" }}
+          spacing={{ xs: 10, lg: 3 }}
+          alignItems={{ xs: "center", lg: "center" }}
         >
           <Link to="/" className="navbar-brand">
             <SVG.KoorLogo />
           </Link>
           {isLoggedIn ? (
-            <div className="">
-              <SearchCategory direction="row" spacing={1} alignItems="center">
-                <SVG.SearchIcon />
+            <Stack
+              direction={"row"}
+              alignItems={"center"}
+              spacing={2}
+              sx={{ display: { xs: "none", sm: "block" } }}
+            >
+              <SearchCategory direction="row" spacing={0} alignItems="center">
                 {role === "employer" ? (
                   <FormControl
                     sx={{
@@ -130,7 +140,7 @@ function Header() {
                           break;
                         case SEARCH_TYPE.tenders:
                           navigate(
-                            role === USER_ROLES.vendors
+                            role === USER_ROLES.vendor
                               ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
                               : "/"
                           );
@@ -148,7 +158,7 @@ function Header() {
                   value={searchValue}
                 />
               </SearchCategory>
-            </div>
+            </Stack>
           ) : (
             ""
           )}
@@ -157,19 +167,52 @@ function Header() {
             className="ms-auto"
             // ref={menu}
           >
-            <IconButton
-              onClick={() => setIsmenu(!ismenu)}
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              sx={{
-                mr: 2,
-                fontSize: "14px",
-                display: { lg: "none" },
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
+            <Stack direction={"row"} alignItems={"center"} spacing={1}>
+              <IconButton
+                disableFocusRipple={false}
+                onClick={mobileSearchToggle}
+                sx={{
+                  "&.MuiIconButton-root": {
+                    p: 0,
+                    mt: 1,
+                  },
+                  display: { xs: "block", sm: "none" },
+                }}
+              >
+                <Box
+                  component={"span"}
+                  sx={{ "& svg": { width: "24px", height: "24px" } }}
+                >
+                  <SVG.SearchIcon />
+                </Box>
+              </IconButton>
+              <IconButton
+                disableFocusRipple={false}
+                sx={{
+                  "&.MuiIconButton-root": {
+                    p: 0,
+                    mt: 1,
+                  },
+                  display: { xs: "block", sm: "none" },
+                }}
+              >
+                <NotificationPopup />
+              </IconButton>
+              <IconButton
+                onClick={() => setIsmenu(!ismenu)}
+                color="inherit"
+                aria-label="open drawer"
+                sx={{
+                  "&.MuiIconButton-root": {
+                    p: 0,
+                  },
+                  fontSize: "18px",
+                  display: { lg: "none" },
+                }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Stack>
             <ul
               className={`menu ${ismenu && "menu-selected"} ${
                 role !== USER_ROLES.jobSeeker ? "color-change" : null
@@ -278,12 +321,13 @@ function Header() {
               </li>
               {isLoggedIn ? (
                 <>
-                  <li>
+                  <li className="noti-mobile">
                     <IconButton
                       disableFocusRipple={false}
                       sx={{
                         "&.MuiIconButton-root": {
                           p: 0,
+                          mt: 1,
                         },
                       }}
                     >
@@ -324,6 +368,94 @@ function Header() {
             </ul>
           </div>
         </Stack>
+        {isLoggedIn ? (
+          <Stack
+            direction={"row"}
+            alignItems={"center"}
+            spacing={2}
+            sx={{
+              display: { xs: isMobileSearch ? "block" : "none", sm: "none" },
+            }}
+          >
+            <SearchCategory
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{ width: "100%" }}
+            >
+              {role === "employer" ? (
+                <FormControl
+                  sx={{
+                    "&.MuiSelect-select": {
+                      fontFamily: "Poppins",
+                      fontSize: "16px",
+                    },
+                  }}
+                  size="small"
+                >
+                  <SelectBox
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    inputProps={{ "aria-label": "Without label" }}
+                    displayEmpty
+                    sx={{ width: "100px" }}
+                  >
+                    <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
+                    <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
+                  </SelectBox>
+                </FormControl>
+              ) : (
+                ""
+              )}
+              <input
+                onKeyDown={(e) => {
+                  if (e.key === "enter" || e.key === "Enter") {
+                    switch (search) {
+                      case SEARCH_TYPE.jobs:
+                        navigate(
+                          role === USER_ROLES.jobSeeker
+                            ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
+                            : "/"
+                        );
+                        break;
+                      case SEARCH_TYPE.talents:
+                        navigate(
+                          role === USER_ROLES.employer
+                            ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
+                            : "/"
+                        );
+                        break;
+                      case SEARCH_TYPE.vendors:
+                        navigate(
+                          role === USER_ROLES.employer
+                            ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
+                            : "/"
+                        );
+                        break;
+                      case SEARCH_TYPE.tenders:
+                        navigate(
+                          role === USER_ROLES.vendors
+                            ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
+                            : "/"
+                        );
+                        break;
+                      default:
+                        break;
+                    }
+                  }
+                }}
+                className="employersearch"
+                placeholder={
+                  role === USER_ROLES.employer ? "" : searchPlaceholder
+                }
+                onChange={(e) => setSearchValue(e.target.value)}
+                value={searchValue}
+              />
+            </SearchCategory>
+          </Stack>
+        ) : (
+          ""
+        )}
       </Container>
     </header>
   );
