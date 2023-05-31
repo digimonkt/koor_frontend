@@ -10,10 +10,11 @@ const Resources = () => {
     <>
       <Box className={`${styles.resources}`}>
         <Container
+          maxWidth={false}
           sx={{
-            maxWidth: {
-              xl: "xl",
-              lg: "lg",
+            "@media(min-width:600px)": {
+              paddingLeft: "100px",
+              paddingRight: "100px",
             },
           }}
         >
