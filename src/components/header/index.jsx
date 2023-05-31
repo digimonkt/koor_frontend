@@ -62,6 +62,9 @@ function Header() {
     const search = searchParams.get("search");
     setSearchValue(search || "");
   }, [location.search]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <header>
       <Container
