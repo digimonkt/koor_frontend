@@ -82,7 +82,7 @@ const DonutChart = ({ shareCountData }) => {
           breakpoint: 480,
           options: {
             chart: {
-              width: 100,
+              width: 200,
             },
             legend: {
               position: "bottom",

@@ -29,7 +29,7 @@ function Layout() {
         sx={{
           flexGrow: 1,
           p: 3,
-          width: { sm: `calc(100% - ${"300"}px)` },
+          width: { lg: `calc(100% - ${"300"}px)` },
           background: "#E5E5E5",
           minHeight: "544px",
         }}

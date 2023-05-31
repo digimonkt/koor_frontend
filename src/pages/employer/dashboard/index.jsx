@@ -112,7 +112,7 @@ const Dashboard = () => {
       <div className="employer-dashboard">
         <Grid item container spacing={2} sx={{ mb: 4 }}>
           {employerCard(counts).map((item, index) => (
-            <Grid item lg={3} xl={3} xs={6} key={index}>
+            <Grid item lg={3} xs={6} sm={3} key={index}>
               <Stack
                 direction="row"
                 spacing={{ xs: 1, lg: 2 }}
@@ -124,6 +124,10 @@ const Dashboard = () => {
                   padding: "21px 25px",
                   color: "#fff",
                   height: "100px",
+                  "@media (max-width:992px)": {
+                    padding: "10px 15px",
+                    "& span svg": { width: "20px", height: "20px" },
+                  },
                 }}
               >
                 <span>{item.icon}</span>
@@ -136,7 +140,7 @@ const Dashboard = () => {
           ))}
         </Grid>
         <Grid container spacing={2}>
-          <Grid item xl={6} lg={6}>
+          <Grid item xl={6} lg={6} xs={12}>
             <Card
               sx={{
                 "&.MuiCard-root": {
@@ -159,7 +163,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xl={6} lg={6}>
+          <Grid item xl={6} lg={6} xs={12}>
             <Card
               sx={{
                 "&.MuiCard-root": {
@@ -220,7 +224,12 @@ const Dashboard = () => {
                     spacing={2}
                     justifyContent="space-between"
                     alignItems="center"
-                    sx={{ mb: 3 }}
+                    sx={{
+                      mb: 3,
+                      "@media (max-width:768px)": {
+                        "& h3": { fontSize: "20px" },
+                      },
+                    }}
                   >
                     <h3>Recent application</h3>
                     {/* <p>Applicants for past 12 hours shown</p> */}
