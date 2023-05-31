@@ -17,7 +17,15 @@ const Resource = () => {
     <>
       <Box className={styles.resource}>
         <Box className={styles.resource_back_box}>
-          <Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
             <Grid
               container
               spacing={3}
