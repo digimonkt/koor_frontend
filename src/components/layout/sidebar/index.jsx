@@ -21,6 +21,9 @@ function Sidebar() {
       navigate("/job_seeker/my-profile/update-profile");
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const currentUserMobileNumber =
@@ -114,7 +117,7 @@ function Sidebar() {
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: "none", sm: "block" },
+          display: { xs: "none", lg: "block" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,

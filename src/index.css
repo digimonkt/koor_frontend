@@ -48,11 +48,11 @@
 .tab_list .MuiTabs-indicator {
   display: none !important;
 }
-.drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+/* .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
   width: 480px !important;
   left: 1180px !important;
   top: 70px !important;
-}
+} */
 
 .homepage .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
   background-color: #fff !important;
@@ -391,4 +391,11 @@ textarea {
   .newstabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 0px !important;
   }
+}
+
+img{max-width: 100%;}
+@media screen and (max-width:480px){
+
+  .verticalSlider ul.slick-dots{bottom:38em; transform:none}
+
 }

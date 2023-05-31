@@ -297,6 +297,7 @@ const AboutMe = (props) => {
                 onBlur={formik.getFieldProps("dob").onBlur}
                 maxDate={dayjs("2006-01-01")}
                 openTo="year"
+                className="labelbox"
               />
               {formik.touched.dob && formik.errors.dob ? (
                 <ErrorMessage>{formik.errors.dob}</ErrorMessage>

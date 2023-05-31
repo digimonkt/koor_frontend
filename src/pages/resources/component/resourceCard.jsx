@@ -3,8 +3,10 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { OutlinedButton } from "@components/button";
 import { Card, CardContent, Grid } from "@mui/material";
 import styles from "../styles.module.css";
+import { useNavigate } from "react-router-dom";
 
 export const ResourceCard = ({ image, title, description }) => {
+  const navigate = useNavigate();
   return (
     <Card
       sx={{
@@ -34,6 +36,7 @@ export const ResourceCard = ({ image, title, description }) => {
               <p>{description}</p>
 
               <OutlinedButton
+                onClick={() => navigate("/resource")}
                 title={
                   <>
                     <span className="me-2 d-inline-flex">

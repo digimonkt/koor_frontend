@@ -38,14 +38,14 @@ export const transformGetUserDetails = (data) => {
     },
     jobPreferences: data.job_preferences
       ? {
-          id: data.job_preferences.id,
-          isAvailable: data.job_preferences.is_available,
-          displayInSearch: data.job_preferences.display_in_search,
-          isPartTime: data.job_preferences.is_part_time,
-          isFullTime: data.job_preferences.is_full_time,
-          hasContract: data.job_preferences.has_contract,
-          expectedSalary: data.job_preferences.expected_salary,
-        }
+        id: data.job_preferences.id,
+        isAvailable: data.job_preferences.is_available,
+        displayInSearch: data.job_preferences.display_in_search,
+        isPartTime: data.job_preferences.is_part_time,
+        isFullTime: data.job_preferences.is_full_time,
+        hasContract: data.job_preferences.has_contract,
+        expectedSalary: data.job_preferences.expected_salary,
+      }
       : {},
     educationRecord: (data.education_record || []).map((record) => ({
       id: record.id,
@@ -83,6 +83,14 @@ export const transformGetUserDetails = (data) => {
       title: record.title,
       filePath: record.file_path,
       createdAt: record.created_at,
+    })),
+    sectors: (data.sector || []).map((record) => ({
+      id: record.id,
+      sector: record.sector,
+    })),
+    tags: (data.tag || []).map((record) => ({
+      id: record.id,
+      tag: record.tag,
     })),
   };
 };
