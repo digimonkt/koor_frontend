@@ -35,7 +35,15 @@ const AboutUs = () => {
     <>
       <Box className={styles.about}>
         <Box className={styles.about_back_color}>
-          <Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
             <Grid
               container
               spacing={{ xs: 2, sm: 3, lg: 10 }}
@@ -82,7 +90,15 @@ const AboutUs = () => {
           <AboutContent />
         </Box>
         <Box className={styles.about_black_color}>
-          <Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item lg={6}>
                 <Box className={styles.about_stack_box}>

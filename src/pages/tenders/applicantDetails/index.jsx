@@ -2,7 +2,6 @@ import {
   Avatar,
   Card,
   CardContent,
-  Chip,
   Divider,
   Grid,
   IconButton,
@@ -12,33 +11,29 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SVG } from "@assets/svg";
-import { getApplicationDetailsAPI } from "@api/employer";
+import { getTenderApplicationDetailsAPI } from "@api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import EducationCard from "@components/educationCard";
-import WorkExperienceCard from "@components/workExperienceCard";
-import LanguageCard from "@components/languageCard";
 import ApplicationOptions from "@components/applicationOptions";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { NoRecordFoundAnimation } from "@components/animations";
 import urlcat from "urlcat";
 dayjs.extend(relativeTime);
-
 const ApplicantDetails = () => {
   // navigate
   const navigate = useNavigate();
   const params = useParams();
-  const [applicantDetails, setApplicantsDetails] = useState({
+  const [applicantDetails, setApplicantDetails] = useState({
     user: {
       profile: {},
     },
-    job: {},
+    tender: {},
     attachments: [],
   });
+
   const getApplicantDetails = async () => {
-    const res = await getApplicationDetailsAPI(params.applicationId);
+    const res = await getTenderApplicationDetailsAPI(params.applicationId);
     if (res.remote === "success") {
-      setApplicantsDetails(res.data);
+      setApplicantDetails(res.data);
     }
   };
   useEffect(() => {
@@ -89,7 +84,7 @@ const ApplicantDetails = () => {
                     Appliedvfvc {dayjs(applicantDetails.createdAt).fromNow()}{" "}
                     to:{" "}
                   </span>
-                  <div>{applicantDetails.job.title}</div>
+                  <div>{applicantDetails.tender.title}</div>
                 </div>
               </Stack>
             </Stack>
@@ -105,7 +100,7 @@ const ApplicantDetails = () => {
                   />
                   <div className="user-application">
                     <Link
-                      to={urlcat("/job-seeker/:userId/profile", {
+                      to={urlcat("/vendor/:userId/profile", {
                         userId: applicantDetails.user.id || "a",
                       })}
                     >
@@ -187,98 +182,6 @@ const ApplicantDetails = () => {
                 })}
               </div>
             </Stack>
-
-            {/* ---------------- education, experience and skills -------- */}
-
-            <div className="user-skills">
-              <Grid container spacing={2}>
-                <Grid item xl={6} lg={6}>
-                  <div className="skills-card">
-                    <h3>Work experience</h3>
-                    <ul>
-                      {!applicantDetails.user.workExperiences?.length ? (
-                        <NoRecordFoundAnimation title="Applicant has no work experience on record." />
-                      ) : (
-                        applicantDetails.user.workExperiences.map(
-                          (item, index) => (
-                            <li key={index}>
-                              <div className="list-content">
-                                <WorkExperienceCard {...item} />
-                              </div>
-                            </li>
-                          )
-                        )
-                      )}
-                    </ul>
-                  </div>
-                </Grid>
-                <Grid item xl={6} lg={6}>
-                  <div className="skills-card">
-                    <h3>Education</h3>
-                    <ul>
-                      {!applicantDetails.user.educationRecord?.length ? (
-                        <NoRecordFoundAnimation title="We could not locate any educational history for the applicant." />
-                      ) : (
-                        applicantDetails.user.educationRecord.map(
-                          (item, index) => (
-                            <li key={index}>
-                              <EducationCard
-                                {...item}
-                              // handleEdit={() => handleEdit(item)}
-                              />
-                            </li>
-                          )
-                        )
-                      )}
-                    </ul>
-                  </div>
-                </Grid>
-              </Grid>
-            </div>
-            <div className="user-skills pb-3">
-              <Grid container spacing={2}>
-                <Grid item xl={6} lg={6}>
-                  <div className="skills-card">
-                    <h3>Skills</h3>
-                    <Stack direction="row" spacing={0} flexWrap="wrap">
-                      {!applicantDetails.user.skills?.length ? (
-                        <NoRecordFoundAnimation title="No skills have been added by the applicant." />
-                      ) : (
-                        applicantDetails.user.skills.map((item, index) => (
-                          <Chip
-                            key={index}
-                            label={item.skill.title}
-                            sx={{
-                              fontSize: "12px",
-                              fontFamily: "Poppins",
-                              color: "#121212",
-                              fontWeight: "400",
-                              margin: "0px 8px 8px 0px",
-                            }}
-                          />
-                        ))
-                      )}
-                    </Stack>
-                  </div>
-                </Grid>
-                <Grid item xl={6} lg={6}>
-                  <div className="skills-card">
-                    <h3>Languages</h3>
-                    <ul className="list-content">
-                      {!applicantDetails.user.languages?.length ? (
-                        <NoRecordFoundAnimation title="There are no languages added by the applicant." />
-                      ) : (
-                        applicantDetails.user.languages.map((item, index) => (
-                          <li key={index}>
-                            <LanguageCard {...item} />
-                          </li>
-                        ))
-                      )}
-                    </ul>
-                  </div>
-                </Grid>
-              </Grid>
-            </div>
           </CardContent>
         </Card>
       </div>
