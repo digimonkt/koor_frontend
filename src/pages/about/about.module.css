@@ -62,7 +62,7 @@
   padding-left: 16px;
 }
 
-.about_text {
+.about_text_box p {
   font-family: "Poppins", sans-serif;
   font-size: 20px;
   font-weight: 400;
@@ -70,12 +70,13 @@
   color: #ffffff;
 }
 
-.about_heading {
+.about_text_box h2 {
   font-family: "Bahnschrift", sans-serif;
   font-size: 50px;
   font-weight: 700;
   line-height: 55px;
   color: #ffffff;
+  margin: 0px;
 }
 
 .about_text_box {
@@ -100,6 +101,20 @@
 .about {
   margin-top: 67px;
   background-color: #ffffff;
+}
+
+@media screen and (max-width:992px){
+  .about_text_box {
+    margin-top: 0%;
+  
+  }
+  .about_text_box h2 {
+    font-size: 40px;
+  }
+  .about_text_box p {
+    font-size: 16px;
+    line-height: 22px;
+  }
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {

@@ -6,6 +6,7 @@ import styles from "./home_section.module.css";
 const sectionItem = [
   {
     image: IMAGES.Easy,
+    imgtext: "easy",
     heading: "Koor is something new but easy",
     text: "At Koor, our mission is to make job searching easier and more efficient. Our platform is designed with the jobseeker in mind, offering a simple and intuitive way to find job opportunities that match your skills and location preferences.",
     title:
@@ -13,6 +14,7 @@ const sectionItem = [
   },
   {
     image: IMAGES.Friend,
+    imgtext: "friendly",
     heading: "Another title",
     text: "At Koor, our mission is to make job searching easier and more efficient. Our platform is designed with the jobseeker in mind, offering a simple and intuitive way to find job opportunities that match your skills and location preferences.",
     title:
@@ -20,6 +22,7 @@ const sectionItem = [
   },
   {
     image: IMAGES.Useful,
+    imgtext: "useful",
     heading: "The last one  ",
     text: "At Koor, our mission is to make job searching easier and more efficient. Our platform is designed with the jobseeker in mind, offering a simple and intuitive way to find job opportunities that match your skills and location preferences.",
     title:
@@ -44,6 +47,7 @@ const HomeSection = () => {
               >
                 <Box className={`${styles.home_section_img_box}`}>
                   <img src={item.image} alt="img" />
+                  <h5 className={styles.homeheadding}>{item.imgtext}</h5>
                 </Box>
               </Grid>
               <Grid item xs={12} md={6} lg={6}>

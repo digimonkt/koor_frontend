@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid } from "@mui/material";
+import { Box, Button, Container, Grid, Stack } from "@mui/material";
 import React from "react";
 import styles from "./about.module.css";
 import { IMAGES } from "../../assets/images";
@@ -35,23 +35,24 @@ const AboutUs = () => {
     <>
       <Box className={styles.about}>
         <Box className={styles.about_back_color}>
-          <Container>
-            <Grid container spacing={{ xs: 2, sm: 10 }}>
-              <Grid item md={4} lg={4}>
-                {aboutImg.map((item, index) => (
-                  <Box key={index}>
-                    <img
-                      src={item.img}
-                      alt="img"
-                      className={styles.about_banner_img}
-                    />
-                  </Box>
-                ))}
-              </Grid>
-              <Grid item lg={8}>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
+            <Grid
+              container
+              spacing={{ xs: 2, sm: 3, lg: 10 }}
+              direction={{ sm: "row-reverse", md: "row", lg: "row-reverse" }}
+            >
+              <Grid item md={8} lg={8} sm={8} xs={12}>
                 <Box className={styles.about_text_box}>
-                  <h2 className={styles.about_heading}>About Our Company</h2>
-                  <p className={styles.about_text}>
+                  <h2>About Our Company</h2>
+                  <p>
                     Koor is an award-winning mobile app which connects
                     non-executive job seekers to reliable employers quickly &
                     easily. With just a tap, applicants can apply for jobs
@@ -71,6 +72,17 @@ const AboutUs = () => {
                   </Link>
                 </Box>
               </Grid>
+              <Grid item md={4} lg={4} xs={12} sm={4}>
+                {aboutImg.map((item, index) => (
+                  <Box key={index}>
+                    <img
+                      src={item.img}
+                      alt="img"
+                      className={styles.about_banner_img}
+                    />
+                  </Box>
+                ))}
+              </Grid>
             </Grid>
           </Container>
         </Box>
@@ -78,7 +90,15 @@ const AboutUs = () => {
           <AboutContent />
         </Box>
         <Box className={styles.about_black_color}>
-          <Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item lg={6}>
                 <Box className={styles.about_stack_box}>
@@ -93,23 +113,25 @@ const AboutUs = () => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item lg={6}>
+              <Grid item lg={6} xs={12}>
                 <Box className={styles.btn_about_box}>
                   {button.map((item, index) => {
                     return (
-                      <>
-                        <Box>
-                          <Button
-                            variant="contained"
-                            key={index}
-                            className={styles.btn_about}
-                          >
-                            <span className={styles.icon}>{item.icon}</span>
-                            <span className="mx-2">{item.text}</span>
-                            {item.svg}
-                          </Button>
-                        </Box>
-                      </>
+                      <Stack
+                        key={index}
+                        direction={{ xs: "column", lg: "row" }}
+                        spacing={{ xs: 2, lg: 2 }}
+                      >
+                        <Button
+                          variant="contained"
+                          className={styles.btn_about}
+                          fullWidth
+                        >
+                          <span className={styles.icon}>{item.icon}</span>
+                          <span className="mx-2">{item.text}</span>
+                          {item.svg}
+                        </Button>
+                      </Stack>
                     );
                   })}
                 </Box>

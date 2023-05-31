@@ -791,7 +791,7 @@ hr {
   height: 90px;
   padding: 6px 12px;
   font-family: "Poppins";
-  font-size: 14px;
+  font-size: 12px;
   box-sizing: border-box;
 }
 .description {
@@ -1395,7 +1395,7 @@ span.count {
   letter-spacing: 0.02em;
 
   color: #121212;
-  opacity: 0.5;
+
 }
 
 .usdinput {
@@ -1412,7 +1412,7 @@ span.count {
   letter-spacing: 0.02em;
   margin-right: 5px;
   color: #121212;
-  opacity: 0.5;
+
   width: calc(100% - 160px);
 }
 .usd-bg {
@@ -1585,6 +1585,7 @@ body {
     visibility: hidden;
     opacity: 0;
     transition: visibility 1s, opacity 0.5s linear;
+    display: block;
   }
   .menu.menu-selected {
     visibility: visible;
@@ -1747,6 +1748,7 @@ input.employersearch {
 }
 
 @media only screen and (max-width: 992px) {
+  .noti-mobile{display: none !important;}
   .CardWidth {
     width: 100%;
   }
@@ -1773,4 +1775,11 @@ input.employersearch {
   .vendor {
     background: url("../images/register.png") center top !important;
   }
+}
+.PhoneInputInput{font-size: 12px;}
+.labelbox .MuiFormLabel-root {
+  display: none;
+}
+.labelbox .MuiOutlinedInput-input {
+  font-size: 12px;
 }

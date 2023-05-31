@@ -230,3 +230,32 @@ export const getAppliedTendersAPI = async (sortQuery) => {
   }
   return res;
 };
+
+export const addSectorsDetailsAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/vendor/sector"),
+    method: "POST",
+    data,
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.data,
+    };
+  }
+  return res;
+};
+export const addTagsDetailsAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/vendor/tag"),
+    method: "POST",
+    data,
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.data,
+    };
+  }
+  return res;
+};

@@ -126,6 +126,13 @@ const ApplicantDetails = lazy(() =>
     default: module.ApplicantDetails,
   }))
 );
+
+const tenderApplicantDetails = lazy(() =>
+  import("@pages/tenders").then((module) => ({
+    default: module.ApplicantDetails,
+  }))
+);
+
 const JobDetails = lazy(() =>
   import("@pages/jobs").then((module) => ({
     default: module.JobDetails,
@@ -382,6 +389,12 @@ export const EMPLOYER_ROUTES = [
     name: "Applicant Detials",
     path: "/manage-jobs/:jobId/applicant-details/:applicationId",
     component: ApplicantDetails,
+  },
+  {
+    id: "tenderApplicantDetails",
+    name: "Tender Applicant Details",
+    path: "/manage-tenders/:Id/applicant-details/:applicationId",
+    component: tenderApplicantDetails,
   },
   {
     id: "dashboard",

@@ -38,13 +38,48 @@
 .home_section_box {
   margin-top: 50px;
 }
+.home_section_img_box {
 
-@media screen and (max-width: 1440px) {
+  padding: 0px 100px 0px 0px;
+  margin-top: 0px;
+ }
+ .home_section_img_box img{width:100%;}
+ .homeheadding{
+  font-family: 'Bahnschrift';
+font-style: normal;
+font-weight: 600;
+font-size: 28px;
+line-height: 34px;
+/* identical to box height */
+
+text-align: left;
+text-transform: uppercase;
+
+/* Black #121212 */
+
+color: #121212;
+margin: 0px;
+opacity: 0.12;
+padding: 0px 33px;
+}
+
+@media screen and (max-width: 992px) {
   .home_section_text_box {
     display: flex;
     justify-content: center;
-    padding-top: 100px;
-    padding-left: 36px;
-    padding-right: 36px;
+    padding-top: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
+  .home_section_img_box {
+
+   padding: 0px 15px;
+   margin-top: 0px;
+  }
+  .home_section_grid {
+    border-right:0px;
+  }
+  .homeheadding{text-align: center; padding: 5px 0px 0px; }
+  .home_section_text_h3{margin-top: 0px;}
+  
 }

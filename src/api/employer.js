@@ -7,6 +7,8 @@ import {
 import {
   getDashboardActivityAPIResponseTransform,
   transformApplicationOnJobListData,
+  transformApplicationOnTenderListData,
+  transformApplicationTenderListData,
 } from "./transform/employer";
 import { transformGetUserDetails } from "./transform/user";
 import { transformTenderResponse } from "./transform/tender";
@@ -264,4 +266,64 @@ export const getEmployerActiveJobsAPI = async (data) => {
     };
   }
   return response;
+};
+
+export const getApplicationOnTenderAPI = async ({ tenderId, filter }) => {
+  const response = await api.request({
+    url: urlcat("/v1/tenders/:tenderId/applications", { tenderId, filter }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationTenderListData(response.data),
+    };
+  }
+  return response;
+};
+
+export const getRecentTenderApplicationAPI = async (data) => {
+  const response = await api.request({
+    url: urlcat("/v1/tenders/applications", data || {}),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformApplicationOnTenderListData(response.data),
+    };
+  }
+  return response;
+};
+export const getTenderApplicationDetailsAPI = async (applicationId) => {
+  const res = await api.request({
+    url: urlcat("/v1/tenders/applications-detail/:applicationId", {
+      applicationId,
+    }),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    res.data.user.profile = {
+      ...(res.data.user.profile || {}),
+      description: res.data.user.description,
+    };
+    return {
+      remote: "success",
+      data: {
+        id: res.data.id,
+        createdAt: res.data.created,
+        tender: res.data.tender,
+        isInterviewPlanned: res.data.interview_at,
+        rejectedAt: res.data.rejected_at,
+        shortLetter: res.data.short_letter,
+        shortlistedAt: res.data.shortlisted_at,
+        attachments: res.data.attachments,
+        user: {
+          ...transformGetUserDetails(res.data.user),
+          isBlacklisted: res.data.user.is_blacklisted,
+        },
+      },
+    };
+  }
+  return res;
 };

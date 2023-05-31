@@ -8,7 +8,15 @@ const Content = () => {
   return (
     <>
       <div className={styles.content_first_div}>
-        <Container>
+        <Container
+          maxWidth={false}
+          sx={{
+            "@media(min-width:600px)": {
+              paddingLeft: "100px",
+              paddingRight: "100px",
+            },
+          }}
+        >
           <div className={styles.content_div}>
             <h1 className={styles.content_heading}>Where ?</h1>
             <p className={styles.content_text_p}>

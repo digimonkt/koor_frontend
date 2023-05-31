@@ -17,20 +17,21 @@ const Resource = () => {
     <>
       <Box className={styles.resource}>
         <Box className={styles.resource_back_box}>
-          <Container>
-            <Grid container spacing={3}>
-              <Grid item lg={5}>
-                {banner.map((item, index) => (
-                  <Box key={index}>
-                    <img
-                      src={item.img}
-                      alt="img"
-                      className={styles.resource_banner}
-                    />
-                  </Box>
-                ))}
-              </Grid>
-              <Grid item lg={7}>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
+            <Grid
+              container
+              spacing={3}
+              direction={{ sm: "row-reverse", md: "row", lg: "row-reverse" }}
+            >
+              <Grid item lg={7} sm={6} xs={12}>
                 <Box className={styles.resource_text_box}>
                   <Box>
                     <Typography className={styles.resource_heading}>
@@ -59,6 +60,17 @@ const Resource = () => {
                     </Box>
                   </Box>
                 </Box>
+              </Grid>
+              <Grid item lg={5} sm={6} xs={12}>
+                {banner.map((item, index) => (
+                  <Box key={index}>
+                    <img
+                      src={item.img}
+                      alt="img"
+                      className={styles.resource_banner}
+                    />
+                  </Box>
+                ))}
               </Grid>
             </Grid>
           </Container>
