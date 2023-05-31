@@ -36,6 +36,8 @@ import {
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
 import { updateCurrentUser, setProfilePic } from "@redux/slice/user";
+import Sectors from "./sectors";
+import Tags from "./tags";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -312,7 +314,7 @@ function MyProfile() {
                     {...formik.getFieldProps("organizationName")}
                   />
                   {formik.touched.organizationName &&
-                  formik.errors.organizationName ? (
+                    formik.errors.organizationName ? (
                     <ErrorMessage>
                       {formik.errors.organizationName}
                     </ErrorMessage>
@@ -328,7 +330,7 @@ function MyProfile() {
                     {...formik.getFieldProps("organizationType")}
                   />
                   {formik.touched.organizationType &&
-                  formik.errors.organizationType ? (
+                    formik.errors.organizationType ? (
                     <ErrorMessage>
                       {formik.errors.organizationType}
                     </ErrorMessage>
@@ -441,7 +443,7 @@ function MyProfile() {
                     {...formik.getFieldProps("businessLicenseId")}
                   />
                   {formik.touched.businessLicenseId &&
-                  formik.errors.businessLicenseId ? (
+                    formik.errors.businessLicenseId ? (
                     <ErrorMessage>
                       {formik.errors.businessLicenseId}
                     </ErrorMessage>
@@ -464,7 +466,7 @@ function MyProfile() {
                     />
                   </Stack>
                   {formik.touched.businessLicense &&
-                  formik.errors.businessLicense ? (
+                    formik.errors.businessLicense ? (
                     <ErrorMessage>{formik.errors.businessLicense}</ErrorMessage>
                   ) : null}
                   <HorizontalLabelInput
@@ -473,7 +475,7 @@ function MyProfile() {
                     {...formik.getFieldProps("certificationNumber")}
                   />
                   {formik.touched.certificationNumber &&
-                  formik.errors.certificationNumber ? (
+                    formik.errors.certificationNumber ? (
                     <ErrorMessage>
                       {formik.errors.certificationNumber}
                     </ErrorMessage>
@@ -496,7 +498,7 @@ function MyProfile() {
                     />
                   </Stack>
                   {formik.touched.certification &&
-                  formik.errors.certification ? (
+                    formik.errors.certification ? (
                     <ErrorMessage>{formik.errors.certification}</ErrorMessage>
                   ) : null}
                   <HorizontalLabelInput
@@ -505,7 +507,7 @@ function MyProfile() {
                     {...formik.getFieldProps("yearsOfOperating")}
                   />
                   {formik.touched.yearsOfOperating &&
-                  formik.errors.yearsOfOperating ? (
+                    formik.errors.yearsOfOperating ? (
                     <ErrorMessage>
                       {formik.errors.yearsOfOperating}
                     </ErrorMessage>
@@ -516,7 +518,7 @@ function MyProfile() {
                     {...formik.getFieldProps("noOfJobsAsExperience")}
                   />
                   {formik.touched.noOfJobsAsExperience &&
-                  formik.errors.noOfJobsAsExperience ? (
+                    formik.errors.noOfJobsAsExperience ? (
                     <ErrorMessage>
                       {formik.errors.noOfJobsAsExperience}
                     </ErrorMessage>
@@ -568,33 +570,38 @@ function MyProfile() {
           </Card>
         </Grid>
         <Grid item lg={6} xs={12}>
-          <Card
-            sx={{
-              "&.MuiCard-root": {
-                boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-                borderRadius: "10px",
-              },
-            }}
-          >
-            <CardContent
+          <Stack direction="column" spacing={2}>
+            <Card
               sx={{
-                "&.MuiCardContent-root": {
-                  padding: "30px",
+                "&.MuiCard-root": {
+                  boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                  borderRadius: "10px",
                 },
               }}
             >
-              <ProfilePicInput
-                title="Your organization logo"
-                textColor="#274593"
-                color="#274593"
-                bgColor="rgba(40, 71, 146, 0.1)"
-                handleSave={handleProfilePicSave}
-                image={currentUser.profileImage}
-                loading={profilePicLoading === "loading"}
-              />
-            </CardContent>
-          </Card>
+              <CardContent
+                sx={{
+                  "&.MuiCardContent-root": {
+                    padding: "30px",
+                  },
+                }}
+              >
+                <ProfilePicInput
+                  title="Your organization logo"
+                  textColor="#274593"
+                  color="#274593"
+                  bgColor="rgba(40, 71, 146, 0.1)"
+                  handleSave={handleProfilePicSave}
+                  image={currentUser.profileImage}
+                  loading={profilePicLoading === "loading"}
+                />
+              </CardContent>
+            </Card>
+            <Sectors />
+            <Tags />
+          </Stack>
         </Grid>
+
       </Grid>
       <DialogBox open={open} handleClose={handleClose}>
         <div className="add-content">

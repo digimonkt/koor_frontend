@@ -210,8 +210,8 @@ export const getSkills = createAsyncThunk(
 
 export const getTenderSector = createAsyncThunk(
   "choices/sectors",
-  async (_, { rejectWithValue }) => {
-    const res = await getTenderSectorAPI();
+  async (data, { rejectWithValue }) => {
+    const res = await getTenderSectorAPI(data);
     if (res.remote === "success") {
       return res.data;
     } else {
