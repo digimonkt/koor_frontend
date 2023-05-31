@@ -312,7 +312,7 @@ function Header() {
               )}
               <li>
                 <Link
-                  to="/resource"
+                  to="/resources"
                   style={{
                     color: location.pathname.includes("/resource")
                       ? "#274593"
