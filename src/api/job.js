@@ -28,8 +28,9 @@ export const getSearchJobsAPI = async (data) => {
   }
   let url = urlcat("/v1/jobs", newData);
   jobSubCategories.forEach((category) => {
-    url += `&jobSubCategories=${category.title}`;
+    url += `&jobSubCategory=${category.title}`;
   });
+  console.log({ url });
   const response = await api.request({
     url,
     method: "GET",
