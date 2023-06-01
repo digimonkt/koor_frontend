@@ -27,6 +27,7 @@
   justify-content: space-around;
   margin-top: 30px;
   margin-left: 50px;
+  white-space: nowrap;
 }
 
 .about_black_box_text p {
