@@ -178,11 +178,7 @@ function AdvanceFilter({ searchType }) {
       filter.country?.id ||
       (typeof filter.country === "string" ? filter.country : "")
     );
-    formik.setFieldValue(
-      "city",
-      filter.city?.id ||
-      (typeof filter.city === "string" ? filter.city : "")
-    );
+    formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
     formik.setFieldValue("isPartTime", filter.isPartTime);
     formik.setFieldValue("hasContract", filter.hasContract);
