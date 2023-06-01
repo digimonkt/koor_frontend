@@ -170,8 +170,13 @@ function AdvanceFilter({ searchType }) {
     setSelectedFilter(filter.id);
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories);
-    formik.setFieldValue("country", filter.country?.id || "");
-    formik.setFieldValue("city", filter.city?.title || "");
+    formik.setFieldValue("jobSubCategories", filter.jobSubCategory);
+    formik.setFieldValue(
+      "country",
+      filter.country?.id ||
+        (typeof filter.country === "string" ? filter.country : "")
+    );
+    formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
     formik.setFieldValue("isPartTime", filter.isPartTime);
     formik.setFieldValue("hasContract", filter.hasContract);
@@ -258,7 +263,8 @@ function AdvanceFilter({ searchType }) {
     const data = {
       title,
       country: rawData.country,
-      job_category: rawData.jobCategories,
+      job_category: [rawData.jobCategories],
+      job_sub_category: rawData.jobSubCategories,
       is_full_time: rawData.isFullTime,
       is_part_time: rawData.isPartTime,
       has_contract: rawData.hasContract,
@@ -273,6 +279,7 @@ function AdvanceFilter({ searchType }) {
     }
     const res = await saveSearchJobsFilterAPI(data);
     if (res.remote === "success") {
+      console.log({ res, data, rawData });
       setAllFilters((prevState) => [res.data, ...prevState]);
       setSelectedFilter(res.data.id);
       dispatch(setSuccessToast("Filter Saved Successfully"));
@@ -492,7 +499,9 @@ function AdvanceFilter({ searchType }) {
       const payload = {
         country: country ? country.title : "",
         city: values.city,
-        jobCategory: values.jobCategories,
+        jobCategory: jobCategories.data.find(
+          (val) => val.id === values.jobCategories
+        ).title,
         jobSubCategories: values.jobSubCategories.map((subCategories) => {
           return jobSubCategories.data[values.jobCategories].find(
             (subCategory) => subCategory.id === subCategories
