@@ -174,7 +174,7 @@ function AdvanceFilter({ searchType }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-        (typeof filter.country === "string" ? filter.country : "")
+      (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -205,10 +205,26 @@ function AdvanceFilter({ searchType }) {
       isAvailable: filter.isAvailable,
       salaryMin: filter.salaryMin,
       salaryMax: filter.salaryMax,
+      // tender
+      opportunityType: (filter.opportunityType || []).map((opportunityType) => {
+        return opportunityTypes.data.find((opportunityType) => opportunityType.id === opportunityType
+        ).title;
+      }),
+      sector: (filter.sector || []).map((sectorItem) => {
+        return sectors.data.find((sector) => sector.id === sectorItem
+        ).title;
+      }),
+      tenderCategories: (filter.tenderCategories || []).map((tenderCategory) => {
+        return tenderCategories.data.find((tenderCategoryItem) => tenderCategoryItem.id === tenderCategory
+        ).title;
+      }),
+
+      tag: filter.tag,
     };
     if (!payload.timing) {
       delete payload.timing;
     }
+    console.log({ payload });
     dispatch(setAdvanceFilter(payload));
   };
   const handleDeleteFilter = async (filterId) => {
@@ -493,6 +509,7 @@ function AdvanceFilter({ searchType }) {
     },
 
     onSubmit: async (values) => {
+      console.log("job cat", values);
       const country = countries.data.find(
         (country) => country.id === values.country
       );
@@ -501,8 +518,8 @@ function AdvanceFilter({ searchType }) {
         city: values.city,
         jobCategory: jobCategories.data.find(
           (val) => val.id === values.jobCategories
-        ).title,
-        jobSubCategories: values.jobSubCategories.map((subCategories) => {
+        )?.title,
+        jobSubCategories: (values.jobSubCategories || []).map((subCategories) => {
           return jobSubCategories.data[values.jobCategories].find(
             (subCategory) => subCategory.id === subCategories
           );
@@ -518,16 +535,16 @@ function AdvanceFilter({ searchType }) {
         deadline:
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        sector: values.sector.map(
+        sector: (values.sector || []).map(
           (sector) => sectors.data.find((i) => i.id === sector)?.title
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
-        opportunityType: values.opportunityType.map(
+        opportunityType: (values.opportunityType || []).map(
           (type) => opportunityTypes.data.find((i) => i.id === type)?.title
         ),
         tag: values.tag,
-        tenderCategories: values.tenderCategories.map(
+        tenderCategories: (values.tenderCategories || []).map(
           (tenderCategory) =>
             tenderCategories.data.find((i) => i.id === tenderCategory)?.title
         ),
@@ -567,11 +584,10 @@ function AdvanceFilter({ searchType }) {
                 return (
                   <MenuItem key={filter.id}>
                     <SearchButton
-                      className={`${
-                        selectedFilter === filter.id
-                          ? styles.btninActive
-                          : styles.btnActive
-                      }`}
+                      className={`${selectedFilter === filter.id
+                        ? styles.btninActive
+                        : styles.btnActive
+                        }`}
                       leftIcon={
                         <div
                           onClick={() => toggleNotificationStatus(filter.id)}
