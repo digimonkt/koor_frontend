@@ -95,7 +95,7 @@ const Home = () => {
                   "@media (max-width:992px)": { marginTop: "0px" },
                 }}
               >
-                <Box>
+                <Box sx={{ width: "100%" }}>
                   <Container
                     maxWidth={false}
                     sx={{
