@@ -171,7 +171,7 @@ function AdvanceFilter({ searchType }) {
     setSelectedFilter(filter.id);
     dispatch(setSearchTrue());
     formik.setFieldValue("id", filter.id);
-    formik.setFieldValue("jobCategories", filter.jobCategories[0]);
+    formik.setFieldValue("jobCategories", filter.jobCategories?.[0]);
     formik.setFieldValue("jobSubCategories", filter.jobSubCategory);
     formik.setFieldValue(
       "country",
@@ -492,8 +492,7 @@ function AdvanceFilter({ searchType }) {
         jobCategory: jobCategories.data.find(
           (val) => val.id === values.jobCategories
         )?.title,
-        jobSubCategories: values.jobSubCategories
-          .map((subCategories) => {
+        jobSubCategories: (values.jobSubCategories || []).map((subCategories) => {
             return jobSubCategories.data[values.jobCategories]?.find(
               (subCategory) => subCategory.id === subCategories
             );
