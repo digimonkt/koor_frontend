@@ -482,7 +482,6 @@ function AdvanceFilter({ searchType }) {
     },
 
     onSubmit: async (values) => {
-      console.log("job cat", values);
       const country = countries.data.find(
         (country) => country.id === values.country
       );
@@ -493,10 +492,10 @@ function AdvanceFilter({ searchType }) {
           (val) => val.id === values.jobCategories
         )?.title,
         jobSubCategories: (values.jobSubCategories || []).map((subCategories) => {
-            return jobSubCategories.data[values.jobCategories]?.find(
-              (subCategory) => subCategory.id === subCategories
-            );
-          })
+          return jobSubCategories.data[values.jobCategories]?.find(
+            (subCategory) => subCategory.id === subCategories
+          );
+        })
           .filter((e) => e),
         experience: values.experience,
         fullTime: values.isFullTime,
