@@ -19,6 +19,7 @@ const initialState = {
     country: "",
     city: "",
     jobCategory: "",
+    jobSubCategory: [],
     fullTime: false,
     partTime: false,
     contract: false,
