@@ -221,17 +221,21 @@ function Header() {
                 role !== USER_ROLES.jobSeeker ? "color-change" : null
               }`}
             >
-              <li>
-                <Link
-                  to="/"
-                  className="active"
-                  style={{
-                    color: location.pathname === "/" ? "#274593" : "",
-                  }}
-                >
-                  Home
-                </Link>
-              </li>
+              {role !== USER_ROLES.employer ? (
+                <li>
+                  <Link
+                    to="/"
+                    className="active"
+                    style={{
+                      color: location.pathname === "/" ? "#274593" : "",
+                    }}
+                  >
+                    Home
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
               {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
                 <li>
                   <Link
