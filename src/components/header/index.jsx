@@ -171,36 +171,43 @@ function Header() {
             // ref={menu}
           >
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
-              <IconButton
-                disableFocusRipple={false}
-                onClick={mobileSearchToggle}
-                sx={{
-                  "&.MuiIconButton-root": {
-                    p: 0,
-                    mt: 1,
-                  },
-                  display: { xs: "block", sm: "none" },
-                }}
-              >
-                <Box
-                  component={"span"}
-                  sx={{ "& svg": { width: "24px", height: "24px" } }}
-                >
-                  <SVG.SearchIcon />
-                </Box>
-              </IconButton>
-              <IconButton
-                disableFocusRipple={false}
-                sx={{
-                  "&.MuiIconButton-root": {
-                    p: 0,
-                    mt: 1,
-                  },
-                  display: { xs: "block", sm: "none" },
-                }}
-              >
-                <NotificationPopup />
-              </IconButton>
+              {isLoggedIn ? (
+                <>
+                  <IconButton
+                    disableFocusRipple={false}
+                    onClick={mobileSearchToggle}
+                    sx={{
+                      "&.MuiIconButton-root": {
+                        p: 0,
+                        mt: 1,
+                      },
+                      display: { xs: "block", sm: "none" },
+                    }}
+                  >
+                    <Box
+                      component={"span"}
+                      sx={{ "& svg": { width: "24px", height: "24px" } }}
+                    >
+                      <SVG.SearchIcon />
+                    </Box>
+                  </IconButton>
+                  <IconButton
+                    disableFocusRipple={false}
+                    sx={{
+                      "&.MuiIconButton-root": {
+                        p: 0,
+                        mt: 1,
+                      },
+                      display: { xs: "block", sm: "none" },
+                    }}
+                  >
+                    <NotificationPopup />
+                  </IconButton>
+                </>
+              ) : (
+                ""
+              )}
+
               <IconButton
                 onClick={() => setIsmenu(!ismenu)}
                 color="inherit"
