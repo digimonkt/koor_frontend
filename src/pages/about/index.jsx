@@ -21,12 +21,12 @@ const button = [
   {
     icon: <SVG.ProfileIcon />,
     svg: <SVG.ArrowForward />,
-    text: "Find Tender",
+    text: "Find Talent",
   },
   {
     icon: <SVG.Work />,
     svg: <SVG.ArrowForward />,
-    text: "Find Tender",
+    text: "Find Job",
   },
 ];
 
