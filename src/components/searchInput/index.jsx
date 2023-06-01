@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
+// import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
-import { Container, IconButton } from "@mui/material";
+import { Container } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
@@ -32,14 +32,14 @@ export default function SearchInput({
         }}
       >
         <div className={`${styles.searchInput}`}>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <div className="searchmainbox">
             <small className="telentsearchicon">{<SVG.HeaderSearch />}</small>
             <input

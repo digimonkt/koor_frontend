@@ -155,6 +155,9 @@ const searchSlice = createSlice({
     setAdvanceFilter: (state, action) => {
       state.advanceFilter = action.payload;
     },
+    setSearchTrue: (state, action) => {
+      state.isSearching = true;
+    },
   },
   extraReducers: (builder) => {
     // jobs
@@ -169,6 +172,7 @@ const searchSlice = createSlice({
       state.totalPages = pages;
     });
     builder.addCase(searchJobs.rejected, (state, action) => {
+      console.log({ action });
       state.isSearching = false;
     });
     // talent
@@ -215,5 +219,6 @@ const searchSlice = createSlice({
     });
   },
 });
-export const { setJobPage, setAdvanceFilter } = searchSlice.actions;
+export const { setJobPage, setAdvanceFilter, setSearchTrue } =
+  searchSlice.actions;
 export default searchSlice.reducer;

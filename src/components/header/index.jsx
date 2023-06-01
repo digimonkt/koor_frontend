@@ -222,7 +222,7 @@ function Header() {
               }`}
             >
               {role !== USER_ROLES.employer ? (
-                <li>
+                <li onClick={() => setIsmenu(false)}>
                   <Link
                     to="/"
                     className="active"
@@ -237,7 +237,7 @@ function Header() {
                 ""
               )}
               {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
-                <li>
+                <li onClick={() => setIsmenu(false)}>
                   <Link
                     to="/search/jobs"
                     style={{
@@ -253,7 +253,7 @@ function Header() {
                 ""
               )}
               {isLoggedIn && role === USER_ROLES.employer ? (
-                <li>
+                <li onClick={() => setIsmenu(false)}>
                   <Link
                     to="/search/talents"
                     style={{
@@ -269,7 +269,7 @@ function Header() {
                 ""
               )}
               {isLoggedIn && role === USER_ROLES.employer ? (
-                <li>
+                <li onClick={() => setIsmenu(false)}>
                   <Link
                     to="/search/vendors"
                     style={{
@@ -285,7 +285,7 @@ function Header() {
                 ""
               )}
               {!isLoggedIn || role === USER_ROLES.vendor ? (
-                <li>
+                <li onClick={() => setIsmenu(false)}>
                   <Link
                     to="/search/tenders"
                     style={{
@@ -301,7 +301,7 @@ function Header() {
                 ""
               )}
               {!isLoggedIn && (
-                <li>
+                <li onClick={() => setIsmenu(false)}>
                   <Link
                     to="/about-us"
                     style={{
@@ -314,7 +314,7 @@ function Header() {
                   </Link>
                 </li>
               )}
-              <li>
+              <li onClick={() => setIsmenu(false)}>
                 <Link
                   to="/resources"
                   style={{
@@ -328,7 +328,7 @@ function Header() {
               </li>
               {isLoggedIn ? (
                 <>
-                  <li className="noti-mobile">
+                  <li className="noti-mobile" onClick={() => setIsmenu(false)}>
                     <IconButton
                       disableFocusRipple={false}
                       sx={{
@@ -341,7 +341,7 @@ function Header() {
                       <NotificationPopup />
                     </IconButton>
                   </li>
-                  <li>
+                  <li onClick={() => setIsmenu(false)}>
                     <Link to={`/${role}/my-profile`}>
                       <FilledButton title="My Profile" />
                     </Link>
@@ -349,7 +349,7 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <li>
+                  <li onClick={() => setIsmenu(false)}>
                     <div
                       onClick={() => {
                         dispatch(setUserRole(""));
@@ -359,7 +359,7 @@ function Header() {
                       <OutlinedButton title="Register" />
                     </div>
                   </li>
-                  <li>
+                  <li onClick={() => setIsmenu(false)}>
                     <div
                       data-cy="login-nav"
                       onClick={() => {

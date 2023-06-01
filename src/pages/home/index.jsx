@@ -215,7 +215,7 @@ const Home = () => {
                 },
               }}
             >
-              <Box>
+              <Box sx={{ width: "100%" }}>
                 <Typography
                   className={`${styles.first_heading}`}
                   sx={{ mb: 4 }}
@@ -305,7 +305,7 @@ const Home = () => {
             >
               <SlickSlider />
             </Container>
-            <Box>
+            <Box sx={{ paddingTop: "50px" }}>
               <Container
                 maxWidth={false}
                 sx={{
