@@ -132,3 +132,8 @@ body {
   background-color: rgb(207, 207, 207);
   border-radius: 15px;
 }
+
+@media screen and (max-width:992px) {
+ .historySearch{flex-direction: column;}
+ .savesearch{margin-top:5px;} 
+} 
