@@ -178,7 +178,11 @@ function AdvanceFilter({ searchType }) {
       filter.country?.id ||
       (typeof filter.country === "string" ? filter.country : "")
     );
-    formik.setFieldValue("city", filter.city?.title);
+    formik.setFieldValue(
+      "city",
+      filter.city?.id ||
+      (typeof filter.city === "string" ? filter.city : "")
+    );
     formik.setFieldValue("isFullTime", filter.isFullTime);
     formik.setFieldValue("isPartTime", filter.isPartTime);
     formik.setFieldValue("hasContract", filter.hasContract);
@@ -324,6 +328,9 @@ function AdvanceFilter({ searchType }) {
       tag: rawData.tag,
       budget_min: rawData.budgetMin,
       budget_max: rawData.budgetMax,
+      deadline:
+      rawData.deadline &&
+          dayjs(rawData.deadline).format(DATABASE_DATE_FORMAT),
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
