@@ -54,7 +54,7 @@ const VerticalSlider = () => {
               <Box className={styles.slider_box}>
                 <Grid
                   container
-                  spacing={2}
+                  spacing={0}
                   direction="row"
                   justifyContent="center"
                   alignItems="center"

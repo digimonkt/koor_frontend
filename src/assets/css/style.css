@@ -1596,16 +1596,16 @@ body {
     display: block;
     border-top: 1px solid #cacaca;
     padding: 8px 15px;
+    
   }
 
-  ul.menu li:nth-child(4) {
-    display: inline-block;
-    border: 0;
-  }
 
-  ul.menu li:nth-child(5) {
+
+  ul.menu li:nth-child(6), ul.menu li:nth-child(7) {
     display: inline-block;
+    
     border: 0;
+   
   }
 }
 .bluebtn {
@@ -1689,9 +1689,7 @@ input.employersearch {
     width: 50px;
   }
 
-  .meets_div {
-    display: block !important;
-  }
+  
 
   .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
     padding-left: 6px !important;

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import {
   EMPLOYER_ROUTES,
@@ -8,10 +8,18 @@ import {
 import { EmployerRoute, JobSeekerRoute, VendorRoute } from "@utils/routes";
 import Sidebar from "./sidebar";
 import { USER_ROLES } from "@utils/enum";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { FallbackLoading } from "@components/loader/fallbackLoader";
+import MenuIcon from "@mui/icons-material/Menu";
 
 function Layout() {
+  const [SidebarMenu, setSideBarMenu] = useState(false);
+  const toggleDrawer = () => {
+    setSideBarMenu(true);
+  };
+  const handleDrawerClose = () => {
+    setSideBarMenu(false);
+  };
   return (
     <Box
       sx={{
@@ -23,17 +31,30 @@ function Layout() {
         },
       }}
     >
-      <Sidebar />
+      <Sidebar
+        SidebarMenu={SidebarMenu}
+        toggleDrawer={toggleDrawer}
+        handleDrawerClose={handleDrawerClose}
+      />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           p: 3,
-          width: { sm: `calc(100% - ${"300"}px)` },
+          width: { lg: `calc(100% - ${"300"}px)` },
           background: "#E5E5E5",
           minHeight: "544px",
         }}
       >
+        <IconButton
+          color="inherit"
+          onClick={toggleDrawer}
+          aria-label="open drawer"
+          edge="start"
+          sx={{ mr: 2, display: { sm: "none" } }}
+        >
+          <MenuIcon />
+        </IconButton>
         {/* {role === USER_ROLES.jobSeeker ? ( */}
         <Routes>
           {JOB_SEEKER_ROUTES.map((route) => {

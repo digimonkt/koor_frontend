@@ -20,14 +20,15 @@
   font-family: "Bahnschrift", sans-serif;
   line-height: 34px;
   color: #121212;
+  margin-top: 0px;
 }
 
 .home_section_text_box {
   display: flex;
   justify-content: center;
-  padding-top: 100px;
-  padding-left: 141px;
-  padding-right: 141px;
+ 
+  padding-left: 90px;
+  padding-right: 90px;
 }
 
 .home_section_img_box {
@@ -40,7 +41,7 @@
 }
 .home_section_img_box {
 
-  padding: 0px 100px 0px 0px;
+  padding: 24px 100px 0px 0px;
   margin-top: 0px;
  }
  .home_section_img_box img{width:100%;}
