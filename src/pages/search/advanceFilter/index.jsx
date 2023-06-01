@@ -18,8 +18,9 @@ import {
   getTenderTags,
   getTenderCategories,
   getTenderSector,
+  getJobSubCategories,
 } from "@redux/slice/choices";
-import { setAdvanceFilter } from "@redux/slice/search";
+import { setAdvanceFilter, setSearchTrue } from "@redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
 import { useFormik } from "formik";
 import DialogBox from "@components/dialogBox";
@@ -80,6 +81,7 @@ function AdvanceFilter({ searchType }) {
       category = tenderCategories;
       break;
     default:
+      // eslint-disable-next-line no-unused-vars
       category = jobCategories;
   }
   const [allFilters, setAllFilters] = useState([]);
@@ -166,10 +168,10 @@ function AdvanceFilter({ searchType }) {
   };
 
   const handleSelectFilter = async (filter) => {
-    console.log({ filter });
     setSelectedFilter(filter.id);
+    dispatch(setSearchTrue());
     formik.setFieldValue("id", filter.id);
-    formik.setFieldValue("jobCategories", filter.jobCategories);
+    formik.setFieldValue("jobCategories", filter.jobCategories[0]);
     formik.setFieldValue("jobSubCategories", filter.jobSubCategory);
     formik.setFieldValue(
       "country",
@@ -193,23 +195,10 @@ function AdvanceFilter({ searchType }) {
     formik.setFieldValue("deadline", filter.deadline);
     // vendors
     formik.setFieldValue("yearsInMarket", filter.yearsInMarket);
-    const payload = {
-      country: filter.country?.title || "",
-      city: filter.city?.title || "",
-      jobCategory: (filter.jobCategories || []).map((jobCategory) => {
-        return category.data.find((category) => category.id === jobCategory);
-      }),
-      fullTime: filter.isFullTime,
-      partTime: filter.isPartTime,
-      contract: filter.hasContract,
-      isAvailable: filter.isAvailable,
-      salaryMin: filter.salaryMin,
-      salaryMax: filter.salaryMax,
-    };
-    if (!payload.timing) {
-      delete payload.timing;
-    }
-    dispatch(setAdvanceFilter(payload));
+    // running after 1 sec the handle submit because jobSubCategories API call need to be done
+    setTimeout(() => {
+      formik.handleSubmit();
+    }, 1000);
   };
   const handleDeleteFilter = async (filterId) => {
     const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
@@ -239,6 +228,7 @@ function AdvanceFilter({ searchType }) {
         country: "",
         city: "",
         jobCategory: "",
+        jobSubCategories: [],
         fullTime: false,
         partTime: false,
         contract: false,
@@ -496,17 +486,20 @@ function AdvanceFilter({ searchType }) {
       const country = countries.data.find(
         (country) => country.id === values.country
       );
+      console.log({ values });
       const payload = {
         country: country ? country.title : "",
         city: values.city,
         jobCategory: jobCategories.data.find(
           (val) => val.id === values.jobCategories
-        ).title,
-        jobSubCategories: values.jobSubCategories.map((subCategories) => {
-          return jobSubCategories.data[values.jobCategories].find(
-            (subCategory) => subCategory.id === subCategories
-          );
-        }),
+        )?.title,
+        jobSubCategories: values.jobSubCategories
+          .map((subCategories) => {
+            return jobSubCategories.data[values.jobCategories]?.find(
+              (subCategory) => subCategory.id === subCategories
+            );
+          })
+          .filter((e) => e),
         experience: values.experience,
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
@@ -518,16 +511,16 @@ function AdvanceFilter({ searchType }) {
         deadline:
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        sector: values.sector.map(
+        sector: values.sector?.map(
           (sector) => sectors.data.find((i) => i.id === sector)?.title
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
-        opportunityType: values.opportunityType.map(
+        opportunityType: values.opportunityType?.map(
           (type) => opportunityTypes.data.find((i) => i.id === type)?.title
         ),
         tag: values.tag,
-        tenderCategories: values.tenderCategories.map(
+        tenderCategories: values.tenderCategories?.map(
           (tenderCategory) =>
             tenderCategories.data.find((i) => i.id === tenderCategory)?.title
         ),
@@ -541,7 +534,16 @@ function AdvanceFilter({ searchType }) {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {
       dispatch(getCities({ countryId: formik.values.country }));
     }
-  }, [formik.values.country]);
+    if (
+      formik.values.jobCategories &&
+      !jobSubCategories.data[formik.values.jobCategories]?.length
+    ) {
+      console.log("formik.values.jobCategories", formik.values.jobCategories);
+      dispatch(
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
+      );
+    }
+  }, [formik.values.country, formik.values.jobCategories]);
   return (
     <div>
       <div className={`${styles.searchResult}`}>
