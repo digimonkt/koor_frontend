@@ -23,6 +23,7 @@ import { FallbackLoading } from "@components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
 // eslint-disable-next-line no-unused-vars
 import { getUserCountryByIpAPI, getUserIpAPI } from "@api/user";
+import InnerFooter from "@components/footer/innerfooter";
 
 function App() {
   const dispatch = useDispatch();
@@ -85,7 +86,8 @@ function App() {
                     <Suspense fallback={<FallbackLoading />}>
                       <route.component />
                     </Suspense>
-                    <Footer />
+                    <InnerFooter />
+                    {/* <Footer /> */}
                   </>
                 }
                 key={route.id}

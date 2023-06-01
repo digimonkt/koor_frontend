@@ -131,7 +131,7 @@ function PostJobsComponent() {
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
-        highest_education: values.highestEducation,
+        highest_education: values.highestEducation || "",
         language: values.languages,
         skill: values.skills,
         attachments: values.attachments,
@@ -139,6 +139,7 @@ function PostJobsComponent() {
         duration: values.duration,
         experience: values.experience,
       };
+      console.log({ payload });
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "language") {
@@ -220,7 +221,7 @@ function PostJobsComponent() {
       formik.setFieldValue("cc2", data.cc2);
       formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
-      formik.setFieldValue("highestEducation", data.highestEducation.id);
+      formik.setFieldValue("highestEducation", data.highestEducation.id || "");
       // !TEMPORARY SOLUTION
       formik.setFieldValue(
         "languages",

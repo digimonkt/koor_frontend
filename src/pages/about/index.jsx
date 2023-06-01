@@ -115,25 +115,28 @@ const AboutUs = () => {
               </Grid>
               <Grid item lg={6} xs={12}>
                 <Box className={styles.btn_about_box}>
-                  {button.map((item, index) => {
-                    return (
-                      <Stack
-                        key={index}
-                        direction={{ xs: "column", lg: "row" }}
-                        spacing={{ xs: 2, lg: 2 }}
-                      >
-                        <Button
-                          variant="contained"
-                          className={styles.btn_about}
-                          fullWidth
-                        >
-                          <span className={styles.icon}>{item.icon}</span>
-                          <span className="mx-2">{item.text}</span>
-                          {item.svg}
-                        </Button>
-                      </Stack>
-                    );
-                  })}
+                  <Stack
+                    direction={{ xs: "column", lg: "row", sm: "row" }}
+                    spacing={{ xs: 2, lg: 2, sm: 2 }}
+                  >
+                    {button.map((item, index) => {
+                      return (
+                        <>
+                          <Button
+                            sx={{ textTransform: "capitalize" }}
+                            key={index}
+                            variant="contained"
+                            className={styles.btn_about}
+                            fullWidth
+                          >
+                            <span className={styles.icon}>{item.icon}</span>
+                            <span className="mx-2">{item.text}</span>
+                            {item.svg}
+                          </Button>
+                        </>
+                      );
+                    })}
+                  </Stack>
                 </Box>
               </Grid>
             </Grid>

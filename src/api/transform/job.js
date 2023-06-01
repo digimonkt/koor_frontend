@@ -103,9 +103,12 @@ export const transformFullJobDetails = (data) => {
 export const transformSavedFilter = (data) => {
   return {
     id: data.id,
-    jobCategories: data.job_category.map((category) => category.id),
-    country: data.country?.id ? data.country : null,
-    city: data.city?.id ? data.city : null,
+    jobCategories: data.job_category.map((category) => category.id || category),
+    jobSubCategory: data.job_sub_category.map(
+      (subCategory) => subCategory.id || subCategory
+    ),
+    country: data.country,
+    city: data.city,
     isFullTime: data.is_full_time,
     isPartTime: data.is_part_time,
     isNotification: data.is_notification,

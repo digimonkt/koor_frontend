@@ -10,7 +10,7 @@ export const SelectBox = styled(Select)`
     border-radius: 10px;
     color: "#121212";
   }
-  &.MuiInputBase-root {
+  & .MuiInputBase-root {
     border-radius: 0px;
     font-family: "Poppins";
     font-style: normal;
