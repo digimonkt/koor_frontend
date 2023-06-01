@@ -269,7 +269,6 @@ function AdvanceFilter({ searchType }) {
     }
     const res = await saveSearchJobsFilterAPI(data);
     if (res.remote === "success") {
-      console.log({ res, data, rawData });
       setAllFilters((prevState) => [res.data, ...prevState]);
       setSelectedFilter(res.data.id);
       dispatch(setSuccessToast("Filter Saved Successfully"));
@@ -486,7 +485,6 @@ function AdvanceFilter({ searchType }) {
       const country = countries.data.find(
         (country) => country.id === values.country
       );
-      console.log({ values });
       const payload = {
         country: country ? country.title : "",
         city: values.city,
@@ -538,7 +536,6 @@ function AdvanceFilter({ searchType }) {
       formik.values.jobCategories &&
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
-      console.log("formik.values.jobCategories", formik.values.jobCategories);
       dispatch(
         getJobSubCategories({ categoryId: formik.values.jobCategories })
       );
