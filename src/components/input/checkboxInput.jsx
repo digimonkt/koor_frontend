@@ -14,7 +14,6 @@ function CheckboxInputComponent({ ...rest }) {
       sx={
         role === USER_ROLES.jobSeeker
           ? {
-              color: "#CACACA",
               transition: "all 0.5s ease-out",
               "&.Mui-checked": {
                 color: "#EEA23D",
@@ -22,7 +21,6 @@ function CheckboxInputComponent({ ...rest }) {
               },
             }
           : {
-              color: "#CACACA",
               transition: "all 0.5s ease-out",
               padding: "9px 10px",
               "&.Mui-checked": {

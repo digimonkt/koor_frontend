@@ -17,18 +17,29 @@ import { SVG } from "@assets/svg";
 const InnerFooter = () => {
   return (
     <Box sx={{ background: "#FFFFFF", padding: "60px 0px 60px" }}>
-      <Container>
+      <Container
+        maxWidth={false}
+        sx={{
+          "@media(min-width:600px)": {
+            paddingLeft: "100px",
+            paddingRight: "100px",
+          },
+        }}
+      >
         <Grid container spacing={2}>
-          <Grid item lg={8} xs={12}>
+          <Grid item lg={8} xs={12} sm={12}>
             <Grid container spacing={2}>
               {menu.map((items, index) => (
-                <Grid item lg={3} key={index}>
+                <Grid item lg={3} xs={6} sm={3} key={index}>
                   <Typography
                     sx={{
-                      fontSize: "18px",
-                      color: "#EEA23D",
-                      fontWeight: 500,
+                      fontSize: "20px",
+                      color: "#274593",
+                      fontWeight: 600,
                       fontFamily: "Poppins",
+                      "@media (max-width:992px)": {
+                        fontSize: "16px",
+                      },
                     }}
                   >
                     {items.title}
@@ -48,6 +59,9 @@ const InnerFooter = () => {
                                   background: "transparent",
                                   color: "#EEA23D",
                                 },
+                                "@media (max-width:992px)": {
+                                  fontSize: "12px",
+                                },
                               },
                             }}
                             LinkComponent={Link}
@@ -65,16 +79,25 @@ const InnerFooter = () => {
               ))}
             </Grid>
           </Grid>
-          <Grid item lg={4} xs={12}>
+          <Grid item lg={4} xs={12} sm={12}>
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 height: "100%",
                 paddingLeft: "5rem",
+                "@media(max-width:992px)": {
+                  paddingLeft: "0rem",
+                  justifyContent: "center",
+                },
               }}
             >
-              <Box sx={{ marginLeft: "auto" }}>
+              <Box
+                sx={{
+                  marginLeft: "auto",
+                  "@media(max-width:992px)": { marginLeft: "0" },
+                }}
+              >
                 <Typography
                   variant="h2"
                   sx={{
@@ -120,11 +143,12 @@ const InnerFooter = () => {
           </Grid>
         </Grid>
         <Stack
-          direction={"row"}
-          spacing={2}
-          alignItems="center"
+          direction={{ xs: "column", lg: "row", sm: "row" }}
+          spacing={{ xs: 1, sm: 2, lg: 5 }}
+          alignItems={{ xs: "flex-start", lg: "center" }}
           justifyContent={"space-between"}
-          sx={{ mt: 4 }}
+          flexDirection={{ xs: "column-reverse", lg: "row", sm: "row" }}
+          sx={{ mt: 4, "@media (max-width:540px)": { mt: 0 } }}
         >
           <Stack direction={"row"} spacing={1} alignItems="center">
             <SVG.KoorLogo />
@@ -135,6 +159,7 @@ const InnerFooter = () => {
                 mt: 2,
                 fontWeight: 400,
                 fontFamily: "Bahnschrift",
+                "@media (max-width:992px)": { fontSize: "16px" },
               }}
             >
               © Copyright 2022, Koor
@@ -143,8 +168,14 @@ const InnerFooter = () => {
 
           <Stack
             direction={"row"}
-            spacing={1}
-            sx={{ fontFamily: "Poppins", fontSize: "15px", fontWeight: "400" }}
+            spacing={{ xs: 2, lg: 5 }}
+            justifyContent={{ xs: "center" }}
+            sx={{
+              fontFamily: "Poppins",
+              fontSize: "15px",
+              fontWeight: "400",
+              "@media (max-width:992px)": { width: "100%", fontSize: "12px" },
+            }}
           >
             <Link to="#!" style={{ color: "#848484" }}>
               Terms of use
@@ -158,7 +189,15 @@ const InnerFooter = () => {
             direction={"row"}
             spacing={2}
             alignItems="center"
-            sx={{ my: 4 }}
+            justifyContent={{ xs: "center" }}
+            sx={{
+              my: 4,
+              "@media (max-width:992px)": {
+                width: "100%",
+                my: 0,
+                "& svg": { width: "20px", height: "20px" },
+              },
+            }}
           >
             <a href="#!">
               <SVG.TwitterIcon />

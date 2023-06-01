@@ -88,7 +88,7 @@ const Home = () => {
                 "@media (max-width:992px)": { marginTop: "0px" },
               }}
             >
-              <Box>
+              <Box sx={{ width: "100%" }}>
                 <Container
                   maxWidth={false}
                   sx={{
@@ -100,11 +100,11 @@ const Home = () => {
                 >
                   <Box
                     className={styles.headding}
-                    sx={{
-                      paddingTop: "26%",
-                      "@media(max-width:992px)": { paddingTop: "35%" },
-                      "@media(max-width:480px)": { paddingTop: "90%" },
-                    }}
+                    // sx={{
+
+                    //   "@media(max-width:992px)": { paddingTop: "35%" },
+                    //   "@media(max-width:480px)": { paddingTop: "90%" },
+                    // }}
                   >
                     <h2>Find your dream job</h2>
                     <h5 className="mb-5">
@@ -286,7 +286,7 @@ const Home = () => {
           >
             <SlickSlider />
           </Container>
-          <Box>
+          <Box sx={{ paddingTop: "50px" }}>
             <Container
               maxWidth={false}
               sx={{
