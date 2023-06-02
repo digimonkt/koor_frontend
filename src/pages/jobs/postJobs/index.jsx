@@ -344,7 +344,7 @@ function PostJobsComponent() {
             <div className="form-content">
               <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xl={6} lg={6}>
+                  <Grid item xl={5} lg={5}>
                     <LabeledInput
                       title="Title of your job"
                       className="add-form-control"
@@ -368,7 +368,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.experience}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={3}>
+                  <Grid item xl={4} lg={4}>
                     <CurrencyInput
                       currency="USD"
                       title="Budget"
