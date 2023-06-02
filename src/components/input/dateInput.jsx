@@ -26,6 +26,11 @@ export const DateFiled = styled("div")(() => ({
     transform: "translate(14px, -7px) scale(1)",
     fontSize: "12px",
   },
+  "& input": {
+    "&::placeholder": {
+      fontSize: "12px",
+    },
+  },
 }));
 
 function DateInputComponent({ renderInput, ...rest }) {

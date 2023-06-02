@@ -166,8 +166,9 @@ function ApplicantCard({
       <Stack
         direction="row"
         spacing={0}
+        flexWrap={"wrap"}
         className="edit-button"
-        justifyContent={{ xs: "space-between" }}
+        justifyContent={{ xs: "space-between", lg: "row" }}
         sx={{
           marginLeft: {
             sm: "50px !important",
