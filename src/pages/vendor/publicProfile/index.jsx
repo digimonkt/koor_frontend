@@ -11,6 +11,7 @@ import {
   Avatar,
   Typography,
   Divider,
+  Chip,
 } from "@mui/material";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -23,8 +24,6 @@ function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const contractsExperience = [];
-  const vendorSectors = [];
-  const vendorTags = [];
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
     jobPreferences: {},
@@ -34,8 +33,8 @@ function PublicProfileComponent() {
       country: {},
       highestEducation: {},
     },
-    resume: [],
-    skills: [],
+    tags: [],
+    sectors: [],
     workExperiences: [],
   });
 
@@ -258,7 +257,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
@@ -403,117 +402,79 @@ function PublicProfileComponent() {
                           </Box>
                         </Stack>
                       ) : null}
-                      <Divider sx={{ borderColor: "#cacaca" }} />
+
                     </Stack>
                   </Box>
-                  <Box sx={{ mt: 3 }}>
-                    <Stack direction={"column"} spacing={2}>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontSize: "26px",
-                          fontFamily: "Bahnschrift",
-                          fontWeight: "600",
-                          mb: 2,
-                        }}
-                      >
-                        Sectors
-                      </Typography>
-                      {vendorSectors.length ? (
-                        <Stack
-                          direction={"row"}
-                          spacing={2}
-                          alignItems={"center"}
-                        >
-                          <Box
+                  <Divider sx={{ borderColor: "#cacaca" }} />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontSize: "26px",
+                      fontFamily: "Bahnschrift",
+                      fontWeight: "600",
+                      mb: 2,
+                    }}
+                  >
+                    Sectors
+                  </Typography>
+                  <Box>
+                    <Stack direction={"row"} spacing={0} flexWrap="wrap">
+                      {userDetails.sectors.length ? (
+                        userDetails.sectors.map((item, index) => (
+                          <Chip
+                            key={index}
+                            label={item.sector.title}
                             sx={{
-                              background: "#FEEFD3",
-                              borderRadius: "5px",
-                              p: 1,
-                              color: "#EEA23D",
-                              width: "40px",
-                              height: "40px",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              justifyContent: "center",
+                              fontSize: "12px",
+                              fontFamily: "Poppins",
+                              color: "#121212",
+                              fontWeight: "400",
+                              // padding: "5px 10px 5px 20px",
+                              margin: "0px 8px 8px 0px",
                             }}
-                          >
-                            <SVG.Phone />
-                          </Box>
-                          <Box>
-                            <Typography
-                              sx={{
-                                color: "#848484",
-                                fontFamily: "Poppins",
-                                fontSize: "12px",
-                              }}
-                            >
-                              Mobile
-                            </Typography>
-                          </Box>
-                        </Stack>
+                          />
+                        ))
                       ) : (
                         <div>
                           <NoRecordFoundAnimation title="No Sectors have been added by the user." />
                         </div>
                       )}
-
-                      <Divider sx={{ borderColor: "#cacaca" }} />
                     </Stack>
                   </Box>
-                  <Box sx={{ mt: 3 }}>
-                    <Stack direction={"column"} spacing={2}>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          fontSize: "26px",
-                          fontFamily: "Bahnschrift",
-                          fontWeight: "600",
-                          mb: 2,
-                        }}
-                      >
-                        Tags
-                      </Typography>
-                      {vendorTags.length ? (
-                        <Stack
-                          direction={"row"}
-                          spacing={2}
-                          alignItems={"center"}
-                        >
-                          <Box
+                  <Divider sx={{ borderColor: "#cacaca" }} />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontSize: "26px",
+                      fontFamily: "Bahnschrift",
+                      fontWeight: "600",
+                      mb: 2,
+                    }}
+                  >
+                    Tags
+                  </Typography>
+                  <Box>
+                    <Stack direction={"row"} spacing={0} flexWrap="wrap">
+                      {userDetails.tags.length ? (
+                        userDetails.tags.map((item, index) => (
+                          <Chip
+                            key={index}
+                            label={item.tag.title}
                             sx={{
-                              background: "#FEEFD3",
-                              borderRadius: "5px",
-                              p: 1,
-                              color: "#EEA23D",
-                              width: "40px",
-                              height: "40px",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              justifyContent: "center",
+                              fontSize: "12px",
+                              fontFamily: "Poppins",
+                              color: "#121212",
+                              fontWeight: "400",
+                              // padding: "5px 10px 5px 20px",
+                              margin: "0px 8px 8px 0px",
                             }}
-                          >
-                            <SVG.Phone />
-                          </Box>
-                          <Box>
-                            <Typography
-                              sx={{
-                                color: "#848484",
-                                fontFamily: "Poppins",
-                                fontSize: "12px",
-                              }}
-                            >
-                              Mobile
-                            </Typography>
-                          </Box>
-                        </Stack>
+                          />
+                        ))
                       ) : (
                         <div>
                           <NoRecordFoundAnimation title="No Tags have been added by the user." />
                         </div>
                       )}
-
-                      <Divider sx={{ borderColor: "#cacaca" }} />
                     </Stack>
                   </Box>
                 </Grid>
