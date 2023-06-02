@@ -81,7 +81,7 @@ function LabeledInputComponent({
           )}
         </>
       ) : (
-        <div className="showpassword" style={{ width }}>
+        <div className="showpassword" style={{ width, zIndex: 9999 }}>
           <input
             className="form-control"
             type={
