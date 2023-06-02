@@ -172,11 +172,11 @@ function AdvanceFilter({ searchType }) {
     dispatch(setSearchTrue());
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories?.[0]);
-    formik.setFieldValue("jobSubCategories", filter.jobSubCategory);
+    formik.setFieldValue("jobSubCategories", filter.jobSubCategory || []);
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-      (typeof filter.country === "string" ? filter.country : "")
+        (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -253,7 +253,7 @@ function AdvanceFilter({ searchType }) {
     const data = {
       title,
       country: rawData.country,
-      job_category: [rawData.jobCategories],
+      job_category: rawData.jobCategories ? [rawData.jobCategories] : [],
       job_sub_category: rawData.jobSubCategories,
       is_full_time: rawData.isFullTime,
       is_part_time: rawData.isPartTime,
@@ -283,7 +283,7 @@ function AdvanceFilter({ searchType }) {
     const data = {
       title,
       country: rawData.country,
-      category: [rawData.jobCategories],
+      category: rawData.jobCategories ? [rawData.jobCategories] : [],
       sub_category: rawData.jobSubCategories,
       is_full_time: rawData.isFullTime,
       is_part_time: rawData.isPartTime,
@@ -324,6 +324,9 @@ function AdvanceFilter({ searchType }) {
       tag: rawData.tag,
       budget_min: rawData.budgetMin,
       budget_max: rawData.budgetMax,
+      deadline:
+        rawData.deadline &&
+        dayjs(rawData.deadline).format(DATABASE_DATE_FORMAT),
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -491,11 +494,12 @@ function AdvanceFilter({ searchType }) {
         jobCategory: jobCategories.data.find(
           (val) => val.id === values.jobCategories
         )?.title,
-        jobSubCategories: (values.jobSubCategories || []).map((subCategories) => {
-          return jobSubCategories.data[values.jobCategories]?.find(
-            (subCategory) => subCategory.id === subCategories
-          );
-        })
+        jobSubCategories: (values.jobSubCategories || [])
+          .map((subCategories) => {
+            return jobSubCategories.data[values.jobCategories]?.find(
+              (subCategory) => subCategory.id === subCategories
+            );
+          })
           .filter((e) => e),
         experience: values.experience,
         fullTime: values.isFullTime,
@@ -565,10 +569,11 @@ function AdvanceFilter({ searchType }) {
                 return (
                   <MenuItem key={filter.id}>
                     <SearchButton
-                      className={`${selectedFilter === filter.id
-                        ? styles.btninActive
-                        : styles.btnActive
-                        }`}
+                      className={`${
+                        selectedFilter === filter.id
+                          ? styles.btninActive
+                          : styles.btnActive
+                      }`}
                       leftIcon={
                         <div
                           onClick={() => toggleNotificationStatus(filter.id)}

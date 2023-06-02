@@ -106,6 +106,7 @@ function RegistrationForm() {
               placeholder="Your Password"
               type="password"
               title="Create new password"
+              zIndex={9999}
               {...formik.getFieldProps("password")}
             />
             {formik.touched.password && formik.errors.password ? (
@@ -117,6 +118,7 @@ function RegistrationForm() {
               placeholder="Re-enter Password"
               title="Repeat your password"
               type="password"
+              zIndex={9999}
               {...formik.getFieldProps("confirmPassword")}
             />
             {formik.touched.confirmPassword && formik.errors.confirmPassword ? (

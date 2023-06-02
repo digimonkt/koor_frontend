@@ -202,12 +202,6 @@ export const ROUTES = [
     component: TenderDetails,
   },
   {
-    id: "home",
-    name: "Home",
-    path: "/",
-    component: Home,
-  },
-  {
     id: "browse-tenders",
     name: "Browse Tenders",
     path: "/browse-tenders",
@@ -247,7 +241,6 @@ export const UNAUTHENTICATED_ROUTES = [
     path: "/register",
     component: Registration,
   },
-
   {
     id: "forgot-password",
     name: "Forgot Password",
@@ -265,6 +258,12 @@ export const UNAUTHENTICATED_ROUTES = [
     name: "Reset Password",
     path: "/reset-password",
     component: ResetPassword,
+  },
+  {
+    id: "home",
+    name: "Home",
+    path: "/",
+    component: Home,
   },
 ];
 
