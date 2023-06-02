@@ -308,7 +308,7 @@
   background-repeat: no-repeat;
   position: relative;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   padding-bottom: 135px;
 }
 
