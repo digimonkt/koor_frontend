@@ -172,7 +172,7 @@ function AdvanceFilter({ searchType }) {
     dispatch(setSearchTrue());
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories?.[0]);
-    formik.setFieldValue("jobSubCategories", filter.jobSubCategory);
+    formik.setFieldValue("jobSubCategories", filter.jobSubCategory || []);
     formik.setFieldValue(
       "country",
       filter.country?.id ||

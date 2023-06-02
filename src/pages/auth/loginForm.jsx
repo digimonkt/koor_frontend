@@ -61,6 +61,7 @@ function LoginForm() {
               title="Password"
               data-cy="login-password"
               type="password"
+              zIndex={9999}
               {...formik.getFieldProps("password")}
             />
             {formik.touched.password && formik.errors.password ? (
