@@ -7,6 +7,7 @@ import {
   transformSearchUserFilterResponse,
 } from "./transform/user";
 import env from "@utils/validateEnv";
+import { USER_ROLES } from "@utils/enum";
 export const CreateUserAPI = async (data) => {
   return await api.request({
     url: "/v1/users",
@@ -182,6 +183,14 @@ export const searchUserByRole = async (data) => {
   if (newData.jobSubCategories) {
     jobSubCategories = newData.jobSubCategories;
     delete newData.jobSubCategories;
+  }
+  if (data.role === USER_ROLES.vendor) {
+    const city = data.city;
+    const country = data.country;
+    delete newData.city;
+    delete newData.country;
+    newData.vendor_city = city;
+    newData.vendor_country = country;
   }
   let url = urlcat("/v1/users/search/:role", { ...newData });
   jobSubCategories.forEach((subCategory) => {

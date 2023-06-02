@@ -6,7 +6,7 @@ import DialogBox from "@components/dialogBox";
 import { LabeledInput } from "@components/input";
 import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
 import Loader from "@components/loader";
-import { Avatar, Box, Button } from "@mui/material";
+import { Avatar, Box, Button, Grid } from "@mui/material";
 import { setTotalBlacklist } from "@redux/slice/employer";
 import { setSuccessToast } from "@redux/slice/toast";
 import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
@@ -102,109 +102,130 @@ function ApplicationOptions({
     );
   }, [isInterviewPlanned, isBlacklisted, isRejected, isShortlisted]);
   return (
-    <>
-      {(interviewPlanned && !details.tender) && (
-        <Button
-          disabled={isDisabledActions}
-          style={{
-            fontWeight: isInterviewPlanned ? 900 : "",
-          }}
-          onClick={() => setIsInterviewPlanning(true)}
-        >
-          <SVG.EventIcon className="application-option-icon" />
-          <span>
-            {!isInterviewPlanned ? "Plan Interview" : "Interview Planned"}
-          </span>
-        </Button>
-      )}
-      {shortlist && (
-        <Button
-          disabled={isDisabledActions}
-          style={{
-            fontWeight: isShortlisted ? 900 : "",
-          }}
-          onClick={() =>
-            handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.shortlisted)
-          }
-        >
-          <SVG.StarIcon className="application-option-icon" />
-          <span>{!isShortlisted ? "Shortlist" : "Shortlisted"}</span>
-        </Button>
-      )}
-      {reject && (
-        <Button
-          variant="link"
-          disabled={isDisabledActions}
-          style={{
-            fontWeight: isRejected ? 900 : "",
-          }}
-          onClick={() =>
-            handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.rejected)
-          }
-        >
-          <SVG.RejectIcon className="application-option-icon" />
-          <span> {!isRejected ? "Reject" : "Rejected"}</span>
-        </Button>
-      )}
-      {blacklist && (
-        <Button
-          variant="link"
-          disabled={isDisabledActions}
-          style={{
-            fontWeight: isBlacklisted ? 900 : "",
-          }}
-          onClick={() => {
-            setIsBlacklisting(true);
-            // handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.blacklisted);
-          }}
-        >
-          <SVG.BlockedIcon className="application-option-icon" />
-          <span>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</span>
-        </Button>
-      )}
-      {view && (
-        <Button
-          variant="link"
-          onClick={() => {
-            if (details.job) {
-              navigate(
-                urlcat(
-                  "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
-                  {
-                    applicationId: details.id,
-                    role: USER_ROLES.employer,
-                    jobId: details.job.id,
-                  }
+    <Box sx={{ width: "100%" }}>
+      <Grid container spacing={1}>
+        {interviewPlanned && !details.tender && (
+          <Grid item xs={6} lg={4} sm={4}>
+            <Button
+              fullWidth
+              disabled={isDisabledActions}
+              style={{
+                fontWeight: isInterviewPlanned ? 900 : "",
+              }}
+              onClick={() => setIsInterviewPlanning(true)}
+            >
+              <SVG.EventIcon className="application-option-icon" />
+              <span>
+                {!isInterviewPlanned ? "Plan Interview" : "Interview Planned"}
+              </span>
+            </Button>
+          </Grid>
+        )}
+        {shortlist && (
+          <Grid item xs={6} lg={4} sm={4}>
+            <Button
+              fullWidth
+              disabled={isDisabledActions}
+              style={{
+                fontWeight: isShortlisted ? 900 : "",
+              }}
+              onClick={() =>
+                handlerChangeApplicationStatus(
+                  JOB_APPLICATION_OPTIONS.shortlisted
                 )
-              );
-            } else {
-              navigate(
-                urlcat(
-                  "/:role/manage-tenders/:tenderId/applicant-details/:applicationId",
-                  {
-                    applicationId: details.id,
-                    role: USER_ROLES.employer,
-                    tenderId: details.tender.id,
-                  }
-                )
-              );
-            }
-          }}
-        >
-          <SVG.OpenNewIcon className="application-option-icon" />
-          <span>View</span>
-        </Button>
-      )}
-      {message && (
-        <Button variant="link">
-          <SVG.MessageIcon
-            style={{ color: "#274593" }}
-            className="application-option-icon"
-          />
+              }
+            >
+              <SVG.StarIcon className="application-option-icon" />
+              <span>{!isShortlisted ? "Shortlist" : "Shortlisted"}</span>
+            </Button>
+          </Grid>
+        )}
+        {reject && (
+          <Grid item xs={6} lg={4} sm={4}>
+            <Button
+              fullWidth
+              variant="link"
+              disabled={isDisabledActions}
+              style={{
+                fontWeight: isRejected ? 900 : "",
+              }}
+              onClick={() =>
+                handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.rejected)
+              }
+            >
+              <SVG.RejectIcon className="application-option-icon" />
+              <span> {!isRejected ? "Reject" : "Rejected"}</span>
+            </Button>
+          </Grid>
+        )}
+        {blacklist && (
+          <Grid item xs={6} lg={4} sm={4}>
+            <Button
+              fullWidth
+              variant="link"
+              disabled={isDisabledActions}
+              style={{
+                fontWeight: isBlacklisted ? 900 : "",
+              }}
+              onClick={() => {
+                setIsBlacklisting(true);
+                // handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.blacklisted);
+              }}
+            >
+              <SVG.BlockedIcon className="application-option-icon" />
+              <span>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</span>
+            </Button>
+          </Grid>
+        )}
+        {view && (
+          <Grid item xs={6} lg={4} sm={4}>
+            <Button
+              fullWidth
+              variant="link"
+              onClick={() => {
+                if (details.job) {
+                  navigate(
+                    urlcat(
+                      "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+                      {
+                        applicationId: details.id,
+                        role: USER_ROLES.employer,
+                        jobId: details.job.id,
+                      }
+                    )
+                  );
+                } else {
+                  navigate(
+                    urlcat(
+                      "/:role/manage-tenders/:tenderId/applicant-details/:applicationId",
+                      {
+                        applicationId: details.id,
+                        role: USER_ROLES.employer,
+                        tenderId: details.tender.id,
+                      }
+                    )
+                  );
+                }
+              }}
+            >
+              <SVG.OpenNewIcon className="application-option-icon" />
+              <span>View</span>
+            </Button>
+          </Grid>
+        )}
+        {message && (
+          <Grid item xs={6} lg={4} sm={4}>
+            <Button variant="link" fullWidth>
+              <SVG.MessageIcon
+                style={{ color: "#274593" }}
+                className="application-option-icon"
+              />
 
-          <span>Message</span>
-        </Button>
-      )}
+              <span>Message</span>
+            </Button>
+          </Grid>
+        )}
+      </Grid>
       <DialogBox
         open={isBlacklisting}
         handleClose={() => setIsBlacklisting(false)}
@@ -310,7 +331,7 @@ function ApplicationOptions({
           </div>
         </div>
       </DialogBox>
-    </>
+    </Box>
   );
 }
 

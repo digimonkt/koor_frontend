@@ -8,7 +8,8 @@ export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: #f0f0f0;
     border-radius: 10px;
-    color: "#121212";
+    color: #121212;
+    font-size: 12px;
   }
   & .MuiInputBase-root {
     border-radius: 0px;

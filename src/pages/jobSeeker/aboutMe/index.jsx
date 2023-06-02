@@ -387,7 +387,18 @@ const AboutMe = (props) => {
                 name="row-radio-buttons-group"
               >
                 <FormControlReminder
-                  control={<CheckboxInput />}
+                  control={
+                    <CheckboxInput
+                      sx={{
+                        color: "#CACACA",
+                        transition: "all 0.5s ease-out",
+                        "&.Mui-checked": {
+                          color: "#EEA23D",
+                          transition: "all 0.5s ease-out",
+                        },
+                      }}
+                    />
+                  }
                   onChange={(e) =>
                     formik.setFieldValue("jobNotification", e.target.checked)
                   }
