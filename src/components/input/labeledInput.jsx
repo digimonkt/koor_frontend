@@ -11,6 +11,7 @@ function LabeledInputComponent({
   required,
   limit,
   width,
+  zIndex,
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -81,7 +82,7 @@ function LabeledInputComponent({
           )}
         </>
       ) : (
-        <div className="showpassword" style={{ width, zIndex: 9999 }}>
+        <div className="showpassword" style={{ width, zIndex }}>
           <input
             className="form-control"
             type={

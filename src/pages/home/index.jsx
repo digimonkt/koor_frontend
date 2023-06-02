@@ -47,7 +47,7 @@ const Home = () => {
   // redux dispatch
   const dispatch = useDispatch();
   const { countries, jobCategories } = useSelector((state) => state.choices);
-  const { role } = useSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   // state management
   const [categories, setCategories] = useState("");
   const [location, setLocation] = useState("");
@@ -66,15 +66,9 @@ const Home = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (role === USER_ROLES.employer) {
-      navigate("/employer/dashboard");
-    }
-  }, [role]);
-
   return (
     <>
-      {role !== USER_ROLES.employer ? (
+      {!isLoggedIn ? (
         <div className="homepage">
           <Box className={styles.home_page}>
             <Box
