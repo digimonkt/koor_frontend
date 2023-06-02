@@ -324,6 +324,9 @@ function AdvanceFilter({ searchType }) {
       tag: rawData.tag,
       budget_min: rawData.budgetMin,
       budget_max: rawData.budgetMax,
+      deadline:
+      rawData.deadline &&
+          dayjs(rawData.deadline).format(DATABASE_DATE_FORMAT),
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
