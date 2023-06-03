@@ -1,46 +1,49 @@
+import { getAppliedTendersAPI } from "@api/vendor";
+import { NoDataFoundAnimation } from "@components/animations";
 import { OutlinedButton } from "@components/button";
-// import { AreaChart, DonutChart } from "@components/charts";
-import { Card, CardContent, Grid, Stack } from "@mui/material";
-// import { RECENT_ITEMS } from "@pages/employer/dashboard/recentHelper";
-// import ApplicationCard from "@components/applicationCard";
-import React, { useEffect } from "react";
-import { vendorCardData } from "./vendorCardData";
-import { useNavigate } from "react-router-dom";
+import { AreaChart } from "@components/charts";
+import TenderCard from "@components/tenderCard";
+import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
+import { Card, CardContent, Divider, Grid, Stack } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 function Dashboard() {
-  const navigate = useNavigate();
+  const [recentApplication, setRecentApplication] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [recentApplicationPage, setRecentApplicationPage] = useState(1);
+  const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
+    useState(true);
+  const getRecentApplications = async () => {
+    setIsLoading(true);
+    const res = await getAppliedTendersAPI({
+      limit: 5,
+      page: recentApplicationPage,
+    });
+    if (res.remote === "success") {
+      setRecentApplication((prevState) =>
+        [...prevState, ...res.data.results].filter(
+          (value, index, self) =>
+            index === self.findIndex((t) => t.id === value.id)
+        )
+      );
+      setIsMoreApplicationAvailable(!!res.data.next);
+    } else {
+      if (recentApplicationPage > 0) {
+        setRecentApplicationPage((prevState) => prevState - 1);
+      }
+      setIsMoreApplicationAvailable(false);
+    }
+    setIsLoading(false);
+  };
+  const handleShowMore = () =>
+    setRecentApplicationPage((prevState) => prevState + 1);
   useEffect(() => {
-    navigate("/vendor/my-profile");
-  });
+    getRecentApplications();
+  }, [recentApplicationPage]);
   return (
     <div className="employer-dashboard">
-      <Grid container spacing={2} sx={{ mb: 4 }}>
-        {vendorCardData.map((item, index) => (
-          <Grid item lg={4} xl={4} xs={12} key={index}>
-            <Stack
-              direction="row"
-              spacing={2}
-              alignItems="center"
-              sx={{
-                borderRadius: "80px",
-                boxShadow: item.boxshadow,
-                background: item.bgcolor,
-                padding: "21px 25px",
-                color: "#fff",
-                height: "100px",
-              }}
-            >
-              <span>{item.icon}</span>
-              <div className="card-count">
-                <h1>{item.title}</h1>
-                <p>{item.subtitle}</p>
-              </div>
-            </Stack>
-          </Grid>
-        ))}
-      </Grid>
       <Grid container spacing={2}>
-        <Grid item xl={6} lg={6}>
+        <Grid item xl={12} lg={12}>
           <Card
             sx={{
               "&.MuiCard-root": {
@@ -57,32 +60,12 @@ function Dashboard() {
               }}
             >
               <div className="add-content">
-                {/* <AreaChart title="Job posts analytics" /> */}
+                <AreaChart title="Applications stats" />
               </div>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xl={6} lg={6}>
-          <Card
-            sx={{
-              "&.MuiCard-root": {
-                boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-                borderRadius: "10px",
-                height: "100%",
-              },
-            }}
-          >
-            <CardContent
-              sx={{
-                "&.MuiCardContent-root": {
-                  padding: "25px 25px 25px",
-                },
-              }}
-            >
-              <div className="add-content">{/* <DonutChart /> */}</div>
-            </CardContent>
-          </Card>
-        </Grid>
+
         <Grid item xl={12} lg={12} xs={12}>
           <Card
             sx={{
@@ -107,22 +90,32 @@ function Dashboard() {
                   alignItems="center"
                   sx={{ mb: 3 }}
                 >
-                  <h3>Vendor Recent </h3>
+                  <h3>My recent applications</h3>
                 </Stack>
-                {/* {RECENT_ITEMS.map((item, index) => (
-                  <ApplicationCard
-                    image={item.img}
-                    title={item.title}
-                    description={item.description}
-                    isDisabled={item.disabled}
-                    key={index}
-                    isShortlisted={item.shortlistedAt}
-                    isRejected={item.rejectedAt}
-                    isBlacklisted={item.user.isBlacklisted}
-                    sx={{ mb: 0 }}
-                    url="#!"
-                  />
-                ))} */}
+                {isLoading ? (
+                  [1, 2, 3].map((loader) => (
+                    <div
+                      style={{ borderBottom: "1px solid #cacaca" }}
+                      key={loader}
+                    >
+                      <TenderCardSkeletonLoader logo />
+                    </div>
+                  ))
+                ) : !recentApplication.length ? (
+                  <NoDataFoundAnimation title="It seems like you haven't submitted any tender applications yet." />
+                ) : (
+                  recentApplication.map((list) => {
+                    return (
+                      <div
+                        style={{ borderBottom: "1px solid #cacaca" }}
+                        key={list.id}
+                      >
+                        <TenderCard logo applied tenderDetails={list.tender} />
+                        <Divider />
+                      </div>
+                    );
+                  })
+                )}
 
                 <div className="text-center mt-4">
                   <OutlinedButton
@@ -136,10 +129,14 @@ function Dashboard() {
                         fontSize: "16px",
                         fontFamily: "Bahnschrift",
                         padding: "10px 30px",
-
+                        background: !isMoreApplicationsAvailable
+                          ? "#e3e3e3"
+                          : "",
                         "&:hover": { background: "#1976d20a" },
                       },
                     }}
+                    onClick={handleShowMore}
+                    disabled={!isMoreApplicationsAvailable}
                   />
                 </div>
               </div>

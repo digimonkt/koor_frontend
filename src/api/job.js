@@ -138,3 +138,15 @@ export const updateJobShareCountAPI = async ({ jobId, platform }) => {
     method: "PUT",
   });
 };
+export const getTopJobCategoriesAPI = async () => {
+  return await api.request({
+    url: urlcat("v1/jobs/job-categories"),
+    method: "GET",
+  });
+};
+export const getTopCategoriesAPI = async () => {
+  return await api.request({
+    url: urlcat("v1/jobs/categories"),
+    method: "GET",
+  });
+};

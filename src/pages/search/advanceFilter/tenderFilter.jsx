@@ -10,11 +10,6 @@ import { getTenderSector } from "@redux/slice/choices";
 
 function TenderFilter({ formik, footer }) {
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (!sectors.data.length) {
-      dispatch(getTenderSector());
-    }
-  }, []);
   const {
     choices: {
       countries,
@@ -26,6 +21,12 @@ function TenderFilter({ formik, footer }) {
     },
     search: { totalItems },
   } = useSelector((state) => state);
+
+  useEffect(() => {
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
+  }, []);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
