@@ -556,7 +556,7 @@ function AdvanceFilter({ searchType }) {
     formik.setFieldValue("jobCategories", categories);
     formik.setFieldValue("tenderCategories", [tenderCategories]);
     formik.setFieldValue("country", country);
-    formik.handleSubmit();
+    setTimeout(() => formik.handleSubmit(), 500);
   }, []);
   return (
     <div>
