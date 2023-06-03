@@ -15,7 +15,6 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   const [filter, setFilter] = useState("");
   const [totalShortlisted, setTotalShortlisted] = useState(0);
   const [totalRejected, setTotalRejected] = useState(0);
-  const [totalBlacklisted, setTotalBlacklisted] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +26,6 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
       setTotalRejected(res.data.rejectedCount);
       setTotalShortlisted(res.data.shortlistedCount);
       setTotalPlannedInterview(res.data.plannedInterviewCount);
-      setTotalBlacklisted(res.data.blacklistedCount);
     }
     setIsLoading(false);
   };
@@ -105,11 +103,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           onClick={() => {
             handleGetApplicationByStatus(JOB_APPLICATION_OPTIONS.blacklisted);
           }}
-          label={
-            <>
-              Blacklisted <span className="cricle">{totalBlacklisted}</span>
-            </>
-          }
+          label={<>Blacklisted</>}
           icon={<SVG.RejectIcon />}
         />
       </Stack>

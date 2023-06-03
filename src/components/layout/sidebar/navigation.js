@@ -77,7 +77,6 @@ const VendorNavigationOptions = Object.freeze([
     title: "Dashboard",
     id: "dashboard",
     to: "/dashboard",
-    isDisable: true,
   },
   {
     to: "/my-profile",
