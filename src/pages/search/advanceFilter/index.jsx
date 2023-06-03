@@ -554,7 +554,9 @@ function AdvanceFilter({ searchType }) {
     const tenderCategories = searchParams.get("tenderCategories");
     const country = searchParams.get("location");
     formik.setFieldValue("jobCategories", categories);
-    formik.setFieldValue("tenderCategories", [tenderCategories]);
+    if (tenderCategories) {
+      formik.setFieldValue("tenderCategories", [tenderCategories]);
+    }
     formik.setFieldValue("country", country);
     setTimeout(() => formik.handleSubmit(), 500);
   }, []);
