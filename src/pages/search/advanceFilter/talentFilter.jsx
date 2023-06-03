@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "@redux/slice/choices";
 
-function TalentFilter({ formik, footer }) {
+function TalentFilter({ formik, footer, handleReset }) {
   const dispatch = useDispatch();
   const {
     choices: { countries, cities, jobCategories, jobSubCategories },
@@ -28,6 +28,10 @@ function TalentFilter({ formik, footer }) {
       );
     }
   }, [formik.values.jobCategories]);
+
+  useEffect(() => {
+    if (handleReset) handleReset();
+  }, []);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
@@ -163,10 +167,16 @@ function TalentFilter({ formik, footer }) {
             <label>Expected salary</label>
             <div style={{ display: "flex", marginLeft: "7px" }}>
               <div>
-                <HorizontalLabelInput label="From" />
+                <HorizontalLabelInput
+                  label="From"
+                  {...formik.getFieldProps("salaryMin")}
+                />
               </div>
               <div style={{ marginLeft: "20px" }}>
-                <HorizontalLabelInput label="To" />
+                <HorizontalLabelInput
+                  label="To"
+                  {...formik.getFieldProps("salaryMax")}
+                />
               </div>
             </div>
           </Grid>

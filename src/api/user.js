@@ -179,6 +179,9 @@ export const deleteSearchUserFilterAPI = async (filterId) => {
 };
 export const searchUserByRole = async (data) => {
   let jobSubCategories = [];
+  let organizationTypes = [];
+  let tag = [];
+  let sector = [];
   const newData = { ...data };
   if (newData.jobSubCategories) {
     jobSubCategories = newData.jobSubCategories;
@@ -191,10 +194,31 @@ export const searchUserByRole = async (data) => {
     delete newData.country;
     newData.vendor_city = city;
     newData.vendor_country = country;
+    if (data.opportunityType) {
+      organizationTypes = data.opportunityType;
+      delete newData.opportunityType;
+    }
+    if (data.tag) {
+      tag = data.tag;
+      delete newData.tag;
+    }
+    if (data.sector) {
+      sector = data.sector;
+      delete newData.sector;
+    }
   }
   let url = urlcat("/v1/users/search/:role", { ...newData });
   jobSubCategories.forEach((subCategory) => {
     url += `&jobSubCategory=${subCategory.title}`;
+  });
+  organizationTypes.forEach((organizationType) => {
+    url += `&organizationType=${organizationType.title}`;
+  });
+  tag.forEach((tag) => {
+    url += `&tag=${tag.title}`;
+  });
+  sector.forEach((sector) => {
+    url += `&organizationType=${sector.title}`;
   });
   const res = await api.request({
     url,

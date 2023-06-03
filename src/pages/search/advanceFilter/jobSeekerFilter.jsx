@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "@redux/slice/choices";
 
-function JobSeekerFilter({ formik, footer }) {
+function JobSeekerFilter({ formik, footer, handleReset }) {
   const dispatch = useDispatch();
   const {
     choices: { countries, cities, jobCategories, jobSubCategories },
@@ -23,6 +23,9 @@ function JobSeekerFilter({ formik, footer }) {
       );
     }
   }, [formik.values.jobCategories]);
+  useEffect(() => {
+    if (handleReset) handleReset();
+  }, []);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">

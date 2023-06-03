@@ -6,13 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getTenderSector } from "@redux/slice/choices";
 
-function VendorFilter({ formik, footer }) {
+function VendorFilter({ formik, footer, handleReset }) {
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (!sectors.data.length) {
-      dispatch(getTenderSector());
-    }
-  }, []);
   const {
     choices: {
       countries,
@@ -24,6 +19,16 @@ function VendorFilter({ formik, footer }) {
     },
     search: { totalItems },
   } = useSelector((state) => state);
+
+  useEffect(() => {
+    if (!sectors.data.length) {
+      dispatch(getTenderSector());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (handleReset) handleReset();
+  }, []);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">

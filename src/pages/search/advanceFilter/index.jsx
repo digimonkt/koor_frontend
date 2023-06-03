@@ -124,13 +124,37 @@ function AdvanceFilter({ searchType }) {
   const searchFilter = () => {
     switch (searchType) {
       case SEARCH_TYPE.jobs:
-        return <JobSeekerFilter formik={formik} footer={footer()} />;
+        return (
+          <JobSeekerFilter
+            formik={formik}
+            footer={footer()}
+            handleReset={handleReset}
+          />
+        );
       case SEARCH_TYPE.talents:
-        return <TalentFilter formik={formik} footer={footer()} />;
+        return (
+          <TalentFilter
+            formik={formik}
+            footer={footer()}
+            handleReset={handleReset}
+          />
+        );
       case SEARCH_TYPE.tenders:
-        return <TenderFilter formik={formik} footer={footer()} />;
+        return (
+          <TenderFilter
+            formik={formik}
+            footer={footer()}
+            handleReset={handleReset}
+          />
+        );
       case SEARCH_TYPE.vendors:
-        return <VendorFilter formik={formik} footer={footer()} />;
+        return (
+          <VendorFilter
+            formik={formik}
+            footer={footer()}
+            handleReset={handleReset}
+          />
+        );
       default:
         return <></>;
     }
@@ -505,25 +529,24 @@ function AdvanceFilter({ searchType }) {
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
         contract: values.hasContract,
-        isAvailable: values.available,
+        availability: values.available,
         salary_min: values.salaryMin,
         salary_max: values.salaryMax,
         // tender
         deadline:
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        sector: values.sector?.map(
-          (sector) => sectors.data.find((i) => i.id === sector)?.title
+        sector: values.sector?.map((sector) =>
+          sectors.data.find((i) => i.id === sector)
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
-        opportunityType: values.opportunityType?.map(
-          (type) => opportunityTypes.data.find((i) => i.id === type)?.title
+        opportunityType: values.opportunityType?.map((type) =>
+          opportunityTypes.data.find((i) => i.id === type)
         ),
-        tag: values.tag,
-        tenderCategories: values.tenderCategories?.map(
-          (tenderCategory) =>
-            tenderCategories.data.find((i) => i.id === tenderCategory)?.title
+        tag: values.tag?.map((tag) => tags.data.find((i) => i.id === tag)),
+        tenderCategories: values.tenderCategories?.map((tenderCategory) =>
+          tenderCategories.data.find((i) => i.id === tenderCategory)
         ),
         // vendor
         years_in_market: values.yearsInMarket,
