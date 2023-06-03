@@ -13,8 +13,21 @@ import {
 import { Link } from "react-router-dom";
 import { menu } from "./helper";
 import { SVG } from "@assets/svg";
+import { useState, useEffect } from "react";
+import { getTopCategoriesAPI } from "@api/job";
 
 const InnerFooter = () => {
+  const [categories, setCategories] = useState({});
+  const getCategories = async () => {
+    const res = await getTopCategoriesAPI();
+    if (res.remote === "success") {
+      setCategories(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
   return (
     <Box sx={{ background: "#FFFFFF", padding: "60px 0px 60px" }}>
       <Container
@@ -65,7 +78,7 @@ const InnerFooter = () => {
                               },
                             }}
                             LinkComponent={Link}
-                            to="/"
+                            to={child.url}
                             dense={true}
                             disableGutters={true}
                           >
@@ -77,6 +90,145 @@ const InnerFooter = () => {
                   </List>
                 </Grid>
               ))}
+              <Grid item lg={3} xs={6} sm={3}>
+                <Typography
+                  sx={{
+                    fontSize: "20px",
+                    color: "#274593",
+                    fontWeight: 600,
+                    fontFamily: "Poppins",
+                    "@media (max-width:992px)": {
+                      fontSize: "16px",
+                    },
+                  }}
+                >
+                  Jobs
+                </Typography>
+                <List>
+                  {categories.jobs?.map((child, index) => {
+                    return (
+                      <ListItem disablePadding={true} key={index}>
+                        <ListItemButton
+                          sx={{
+                            "&.MuiButtonBase-root": {
+                              fontFamily: "Poppins",
+                              fontSize: "16px",
+                              color: "#121212",
+                              fontWeight: 400,
+                              "&:hover": {
+                                background: "transparent",
+                                color: "#EEA23D",
+                              },
+                              "@media (max-width:992px)": {
+                                fontSize: "12px",
+                              },
+                            },
+                          }}
+                          LinkComponent={Link}
+                          to={`/search/jobs?categories=${child.id}`}
+                          dense={true}
+                          disableGutters={true}
+                        >
+                          {child.title}
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Grid>
+
+              <Grid item lg={3} xs={6} sm={3}>
+                <Typography
+                  sx={{
+                    fontSize: "20px",
+                    color: "#274593",
+                    fontWeight: 600,
+                    fontFamily: "Poppins",
+                    "@media (max-width:992px)": {
+                      fontSize: "16px",
+                    },
+                  }}
+                >
+                  Tenders
+                </Typography>
+                <List>
+                  {categories.tenders?.map((child, index) => {
+                    return (
+                      <ListItem disablePadding={true} key={index}>
+                        <ListItemButton
+                          sx={{
+                            "&.MuiButtonBase-root": {
+                              fontFamily: "Poppins",
+                              fontSize: "16px",
+                              color: "#121212",
+                              fontWeight: 400,
+                              "&:hover": {
+                                background: "transparent",
+                                color: "#EEA23D",
+                              },
+                              "@media (max-width:992px)": {
+                                fontSize: "12px",
+                              },
+                            },
+                          }}
+                          LinkComponent={Link}
+                          to={`/search/tenders?tenderCategories=${child.id}`}
+                          dense={true}
+                          disableGutters={true}
+                        >
+                          {child.title}
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Grid>
+              <Grid item lg={3} xs={6} sm={3}>
+                <Typography
+                  sx={{
+                    fontSize: "20px",
+                    color: "#274593",
+                    fontWeight: 600,
+                    fontFamily: "Poppins",
+                    "@media (max-width:992px)": {
+                      fontSize: "16px",
+                    },
+                  }}
+                >
+                  Talents
+                </Typography>
+                <List>
+                  {categories.talents?.map((child, index) => {
+                    return (
+                      <ListItem disablePadding={true} key={index}>
+                        <ListItemButton
+                          sx={{
+                            "&.MuiButtonBase-root": {
+                              fontFamily: "Poppins",
+                              fontSize: "16px",
+                              color: "#121212",
+                              fontWeight: 400,
+                              "&:hover": {
+                                background: "transparent",
+                                color: "#EEA23D",
+                              },
+                              "@media (max-width:992px)": {
+                                fontSize: "12px",
+                              },
+                            },
+                          }}
+                          LinkComponent={Link}
+                          to={`/search/talents?categories=${"d85a4105-408c-45ae-9aeb-7455f9556c93"}`}
+                          dense={true}
+                          disableGutters={true}
+                        >
+                          {child.title}
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item lg={4} xs={12} sm={12}>

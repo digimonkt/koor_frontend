@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getTenderSector } from "@redux/slice/choices";
 
-function VendorFilter({ formik, footer, handleReset }) {
+function VendorFilter({ formik, footer }) {
   const dispatch = useDispatch();
   const {
     choices: {
@@ -26,9 +26,6 @@ function VendorFilter({ formik, footer, handleReset }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (handleReset) handleReset();
-  }, []);
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">

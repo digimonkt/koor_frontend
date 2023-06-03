@@ -51,8 +51,10 @@ import {
   updateSavedSearchVendorFilterAPI,
 } from "@api/vendor";
 import VendorFilter from "./vendorFilter";
+import { useSearchParams } from "react-router-dom";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const {
     auth: { role, isLoggedIn },
     choices: {
@@ -124,37 +126,13 @@ function AdvanceFilter({ searchType }) {
   const searchFilter = () => {
     switch (searchType) {
       case SEARCH_TYPE.jobs:
-        return (
-          <JobSeekerFilter
-            formik={formik}
-            footer={footer()}
-            handleReset={handleReset}
-          />
-        );
+        return <JobSeekerFilter formik={formik} footer={footer()} />;
       case SEARCH_TYPE.talents:
-        return (
-          <TalentFilter
-            formik={formik}
-            footer={footer()}
-            handleReset={handleReset}
-          />
-        );
+        return <TalentFilter formik={formik} footer={footer()} />;
       case SEARCH_TYPE.tenders:
-        return (
-          <TenderFilter
-            formik={formik}
-            footer={footer()}
-            handleReset={handleReset}
-          />
-        );
+        return <TenderFilter formik={formik} footer={footer()} />;
       case SEARCH_TYPE.vendors:
-        return (
-          <VendorFilter
-            formik={formik}
-            footer={footer()}
-            handleReset={handleReset}
-          />
-        );
+        return <VendorFilter formik={formik} footer={footer()} />;
       default:
         return <></>;
     }
@@ -440,6 +418,9 @@ function AdvanceFilter({ searchType }) {
   };
 
   useEffect(() => {
+    handleReset();
+  }, [location.pathname]);
+  useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
     }
@@ -567,6 +548,16 @@ function AdvanceFilter({ searchType }) {
       );
     }
   }, [formik.values.country, formik.values.jobCategories]);
+
+  useEffect(() => {
+    const categories = searchParams.get("categories");
+    const tenderCategories = searchParams.get("tenderCategories");
+    const country = searchParams.get("location");
+    formik.setFieldValue("jobCategories", categories);
+    formik.setFieldValue("tenderCategories", [tenderCategories]);
+    formik.setFieldValue("country", country);
+    formik.handleSubmit();
+  }, []);
   return (
     <div>
       <div className={`${styles.searchResult}`}>

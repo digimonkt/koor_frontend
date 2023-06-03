@@ -8,7 +8,7 @@ import styles from "./advanceFilter.module.css";
 // import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { getTenderSector } from "@redux/slice/choices";
 
-function TenderFilter({ formik, footer, handleReset }) {
+function TenderFilter({ formik, footer }) {
   const dispatch = useDispatch();
   const {
     choices: {
@@ -22,9 +22,6 @@ function TenderFilter({ formik, footer, handleReset }) {
     search: { totalItems },
   } = useSelector((state) => state);
 
-  useEffect(() => {
-    if (handleReset) handleReset();
-  }, []);
   useEffect(() => {
     if (!sectors.data.length) {
       dispatch(getTenderSector());

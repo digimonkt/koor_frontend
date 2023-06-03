@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "./slider.module.css";
 import { SVG } from "../../assets/svg";
+import { Link } from "react-router-dom";
 
 const slideItem = [
   {
@@ -34,7 +35,7 @@ const slideItem = [
   },
 ];
 
-const SlickSlider = () => {
+const SlickSlider = ({ items }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -61,18 +62,23 @@ const SlickSlider = () => {
   return (
     <>
       <Box>
-        <Slider {...settings}>
-          {slideItem.map((item, index) => (
+        <Slider
+          {...settings}
+          slidesToShow={items?.length <= 4 ? items.length : 4}
+        >
+          {(items || slideItem).map((item, index) => (
             <Box key="index" className="px-3">
-              <Box className={`${styles.slider_box}`}>
-                <Box className={`${styles.slider_icon_box}`}>{item.icon}</Box>
-                <Box>
-                  <h4 className={`${styles.slider_box_h4}`}>{item.title}</h4>
-                  <p className={`m-0 p-0 ${styles.slider_box_p}`}>
-                    {item.text}
-                  </p>
+              <Link to={`/search/jobs?&categories=${item.id}`}>
+                <Box className={`${styles.slider_box}`}>
+                  <Box className={`${styles.slider_icon_box}`}>{item.icon}</Box>
+                  <Box>
+                    <h4 className={`${styles.slider_box_h4}`}>{item.title}</h4>
+                    <p className={`m-0 p-0 ${styles.slider_box_p}`}>
+                      {item.text}
+                    </p>
+                  </Box>
                 </Box>
-              </Box>
+              </Link>
             </Box>
           ))}
         </Slider>
