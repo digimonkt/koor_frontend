@@ -26,21 +26,7 @@ import { getCountries, getJobCategories } from "@redux/slice/choices";
 import { USER_ROLES } from "@utils/enum";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CoravImg from "../../assets/images/corav-bg.png";
-
-// const options = [
-//   {
-//     id: 1,
-//     value: "cat 1",
-//     title: "category",
-//   },
-// ];
-// const locations = [
-//   {
-//     id: 1,
-//     value: "cat 1",
-//     title: "Location",
-//   },
-// ];
+import { getTopJobCategoriesAPI } from "@api/job";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -52,6 +38,18 @@ const Home = () => {
   const [categories, setCategories] = useState("");
   const [location, setLocation] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [topJobCategories, setTopJobCategories] = useState([]);
+
+  const getTopJobCategories = async () => {
+    const res = await getTopJobCategoriesAPI();
+    if (res.remote === "success") {
+      setTopJobCategories(res.data);
+    }
+  };
+
+  useEffect(() => {
+    getTopJobCategories();
+  }, []);
 
   useEffect(() => {
     dispatch(setIstHomePage(true));
@@ -278,7 +276,15 @@ const Home = () => {
                   <Typography className={styles.popular_job}>
                     Popular job categories
                   </Typography>
-                  <Typography className={`ms-auto ${styles.see_all_jobs}`}>
+                  <Typography
+                    className={`ms-auto ${styles.see_all_jobs}`}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      navigate("/search/jobs");
+                    }}
+                  >
                     See all 4590 jobs{" "}
                     <IconButton>
                       <ArrowForwardIcon sx={{ color: "#eea23d" }} />
@@ -297,7 +303,14 @@ const Home = () => {
                 },
               }}
             >
-              <SlickSlider />
+              <SlickSlider
+                items={topJobCategories.map((category) => ({
+                  icon: <SVG.Market />,
+                  title: category.title,
+                  text: `${category.count || 0} jobs`,
+                  id: category.id,
+                }))}
+              />
             </Container>
             <Box sx={{ paddingTop: "50px" }}>
               <Container

@@ -28,6 +28,7 @@ function TalentFilter({ formik, footer }) {
       );
     }
   }, [formik.values.jobCategories]);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
@@ -163,10 +164,16 @@ function TalentFilter({ formik, footer }) {
             <label>Expected salary</label>
             <div style={{ display: "flex", marginLeft: "7px" }}>
               <div>
-                <HorizontalLabelInput label="From" />
+                <HorizontalLabelInput
+                  label="From"
+                  {...formik.getFieldProps("salaryMin")}
+                />
               </div>
               <div style={{ marginLeft: "20px" }}>
-                <HorizontalLabelInput label="To" />
+                <HorizontalLabelInput
+                  label="To"
+                  {...formik.getFieldProps("salaryMax")}
+                />
               </div>
             </div>
           </Grid>
