@@ -9,16 +9,20 @@ import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationListLayout from "@components/layout/applicationListLayout";
 import ApplicantCard from "@components/applicantCard";
 import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTotalApplicationsByJob } from "@redux/slice/employer";
 const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
+  const { totalApplicationsByJob } = useSelector((state) => state.employer);
   const [applicants, setApplicants] = useState([]);
   const [filter, setFilter] = useState("");
   const [totalShortlisted, setTotalShortlisted] = useState(0);
   const [totalRejected, setTotalRejected] = useState(0);
+  const [totalBlacklisted, setTotalBlacklisted] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
+
+  // const applicationsStatusCount = totalApplicationsByJob.data[jobId];
 
   const getApplicationList = async () => {
     setIsLoading(true);
@@ -28,6 +32,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
       setTotalRejected(res.data.rejectedCount);
       setTotalShortlisted(res.data.shortlistedCount);
       setTotalPlannedInterview(res.data.plannedInterviewCount);
+      setTotalBlacklisted(res.data.blacklistedCount);
     }
     setIsLoading(false);
   };
@@ -37,17 +42,25 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
 
   useEffect(() => {
     if (filter) getApplicationList(filter);
-
     dispatch(setTotalApplicationsByJob(
       {
         jobId,
         data: {
-          shortlist: totalShortlisted,
+          shortlisted: totalShortlisted,
           rejected: totalRejected,
-          planedInterview: totalPlannedInterview
+          plannedInterview: totalPlannedInterview,
         },
       }));
   }, [filter]);
+
+  useEffect(() => {
+    if (totalApplicationsByJob.data) {
+      const applicationStatusCount = totalApplicationsByJob.data[jobId];
+      setTotalRejected(applicationStatusCount.rejected);
+      setTotalShortlisted(applicationStatusCount.shortlisted);
+      setTotalPlannedInterview(applicationStatusCount.plannedInterview);
+    }
+  }, [totalApplicationsByJob.data]);
 
   const allFilters = () => {
     return (
@@ -114,7 +127,11 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           onClick={() => {
             handleGetApplicationByStatus(JOB_APPLICATION_OPTIONS.blacklisted);
           }}
-          label={<>Blacklisted</>}
+          label={
+            <>
+              Blacklisted <span className="cricle">{totalBlacklisted}</span>
+            </>
+          }
           icon={<SVG.RejectIcon />}
         />
       </Stack>
