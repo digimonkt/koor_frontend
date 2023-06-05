@@ -228,7 +228,7 @@ function Header() {
                 role !== USER_ROLES.jobSeeker ? "color-change" : null
               }`}
             >
-              {role !== USER_ROLES.employer ? (
+              {!isLoggedIn ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
                     to="/"

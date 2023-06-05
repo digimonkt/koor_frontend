@@ -10,13 +10,16 @@ import { USER_ROLES } from "@utils/enum";
 import { useSelector } from "react-redux";
 import { DateInput } from "@components/input";
 import { SVG } from "@assets/svg";
+import DialogBox from "@components/dialogBox";
+import Settings from "./settings";
 
-function NotificationContentComponent({ footer, header, handleClose }) {
+function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const { role } = useSelector((state) => state.auth);
 
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState([]);
   const [section, setSection] = useState("all");
+  const [settings, setSetting] = useState(false);
   const handleChangeSection = (event, newValue) => {
     setSection(newValue);
   };
@@ -110,15 +113,20 @@ function NotificationContentComponent({ footer, header, handleClose }) {
               >
                 View All Notification
               </Link>
-              <Link to="#/" className={styles.settings}>
-                Settings
-              </Link>
+              <div onClick={() => setSetting(true)}>Settings</div>
             </div>
           ) : (
             ""
           )}
         </TabContext>
       </Box>
+      {/* don't remove `notification-settings` id from the bottom div it is preventing the
+      popup to stay open even after clicking outside the notification content box */}
+      <div id="notification-settings">
+        <DialogBox open={settings} handleClose={() => setSetting(false)}>
+          <Settings />
+        </DialogBox>
+      </div>
     </div>
   );
 }

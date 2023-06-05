@@ -1,6 +1,6 @@
 import Header from "./components/header";
 import React, { Suspense, useEffect } from "react";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 import {
   AUTHENTICATED_ROUTES,
   ROUTES,
@@ -107,7 +107,8 @@ function App() {
                         <route.component />
                       </UnauthorizedRoute>
                     </Suspense>
-                    <Footer />
+                    {/* <Footer /> */}
+                    <InnerFooter />
                   </>
                 }
               />
