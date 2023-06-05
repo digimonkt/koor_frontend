@@ -67,12 +67,12 @@ function TalentCard({ talentDetails }) {
           </div>
           <Stack
             direction="row"
-            spacing={2}
+            spacing={1}
             alignItems="center"
             sx={{ mb: 1, mt: 2 }}
             className="meets_div"
           >
-            <div>
+            <>
               {talentDetails.skills.map((skill) => (
                 <Chip
                   key={skill.id}
@@ -81,7 +81,7 @@ function TalentCard({ talentDetails }) {
                   icon={<SVG.SchoolIcon />}
                 />
               ))}
-            </div>
+            </>
           </Stack>
         </div>
       </Stack>
