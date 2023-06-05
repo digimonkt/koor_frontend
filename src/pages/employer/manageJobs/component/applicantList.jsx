@@ -9,14 +9,19 @@ import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationListLayout from "@components/layout/applicationListLayout";
 import ApplicantCard from "@components/applicantCard";
 import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
-
+import { useDispatch, useSelector } from "react-redux";
+import { setTotalApplicationsByJob } from "@redux/slice/employer";
 const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
+  const { totalApplicationsByJob } = useSelector((state) => state.employer);
   const [applicants, setApplicants] = useState([]);
   const [filter, setFilter] = useState("");
   const [totalShortlisted, setTotalShortlisted] = useState(0);
   const [totalRejected, setTotalRejected] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+
+  // const applicationsStatusCount = totalApplicationsByJob.data[jobId];
 
   const getApplicationList = async () => {
     setIsLoading(true);
@@ -29,14 +34,31 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
     }
     setIsLoading(false);
   };
-
   const handleGetApplicationByStatus = (status) => {
     setFilter((prevState) => (prevState === status ? "" : status));
   };
 
   useEffect(() => {
     if (filter) getApplicationList(filter);
+    dispatch(setTotalApplicationsByJob(
+      {
+        jobId,
+        data: {
+          shortlisted: totalShortlisted,
+          rejected: totalRejected,
+          plannedInterview: totalPlannedInterview,
+        },
+      }));
   }, [filter]);
+
+  useEffect(() => {
+    if (totalApplicationsByJob.data) {
+      const applicationStatusCount = totalApplicationsByJob.data[jobId];
+      setTotalRejected(applicationStatusCount.rejected);
+      setTotalShortlisted(applicationStatusCount.shortlisted);
+      setTotalPlannedInterview(applicationStatusCount.plannedInterview);
+    }
+  }, [totalApplicationsByJob.data]);
 
   const allFilters = () => {
     return (
@@ -103,7 +125,11 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           onClick={() => {
             handleGetApplicationByStatus(JOB_APPLICATION_OPTIONS.blacklisted);
           }}
-          label={<>Blacklisted</>}
+          label={
+            <>
+              Blacklisted
+            </>
+          }
           icon={<SVG.RejectIcon />}
         />
       </Stack>
@@ -125,9 +151,8 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           })
         ) : !applicants.length ? (
           <NoDataFoundAnimation
-            title={`There are currently no applications for your ${
-              jobId ? "job" : "tender"
-            } posting.`}
+            title={`There are currently no applications for your ${jobId ? "job" : "tender"
+              } posting.`}
           />
         ) : (
           applicants.map((item, index) => {

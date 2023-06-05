@@ -7,7 +7,7 @@ import { LabeledInput } from "@components/input";
 import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
 import Loader from "@components/loader";
 import { Avatar, Box, Button, Grid } from "@mui/material";
-import { setTotalBlacklist } from "@redux/slice/employer";
+import { setTotalApplicationsByJob, setTotalBlacklist } from "@redux/slice/employer";
 import { setSuccessToast } from "@redux/slice/toast";
 import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
 import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
@@ -29,7 +29,6 @@ function ApplicationOptions({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { totalBlacklist } = useSelector((state) => state.employer);
-  const [isDisabledActions, setIsDisabledActions] = useState(false);
   const [isInterviewPlanned, setIsInterviewPlanned] = useState(false);
   const [isBlacklisted, setIsBlacklisted] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
@@ -40,7 +39,7 @@ function ApplicationOptions({
   const [interviewTime, setInterviewTime] = useState("");
   const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const { totalApplicationsByJob } = useSelector((state) => state.employer);
   const handlerChangeApplicationStatus = async (action) => {
     const data = { reason: blackListReason, interview_at: interviewTime };
     for (const key in data) {
@@ -48,22 +47,44 @@ function ApplicationOptions({
         delete data[key];
       }
     }
+    let applicationStatus = {};
+    const applicationsStatusCount = totalApplicationsByJob.data[details.job?.id];
     switch (action) {
       case JOB_APPLICATION_OPTIONS.blacklisted:
         setIsBlacklisted(true);
         break;
       case JOB_APPLICATION_OPTIONS.plannedInterviews:
         setIsInterviewPlanned(true);
+        applicationStatus = {
+          shortlisted: shortlist ? applicationsStatusCount.shortlisted - 1 : applicationsStatusCount.shortlisted,
+          rejected: applicationsStatusCount.rejected,
+          plannedInterview: applicationsStatusCount.plannedInterview + 1,
+        };
         break;
       case JOB_APPLICATION_OPTIONS.rejected:
         setIsRejected(true);
+        applicationStatus = {
+          shortlisted: applicationsStatusCount.shortlisted,
+          rejected: applicationsStatusCount.rejected + 1,
+          plannedInterview: applicationsStatusCount.plannedInterview,
+        };
         break;
       case JOB_APPLICATION_OPTIONS.shortlisted:
         setIsShortlisted(true);
+        applicationStatus = {
+          shortlisted: applicationsStatusCount.shortlisted + 1,
+          rejected: applicationsStatusCount.rejected,
+          plannedInterview: applicationsStatusCount.plannedInterview,
+        };
         break;
       default:
         return;
     }
+    dispatch(setTotalApplicationsByJob(
+      {
+        jobId: details.job.id,
+        data: applicationStatus,
+      }));
     setLoading(true);
     let res;
     if (details.tender) {
@@ -96,11 +117,6 @@ function ApplicationOptions({
     setIsRejected(!!details.rejectedAt);
     setIsShortlisted(!!details.shortlistedAt);
   }, [details]);
-  useEffect(() => {
-    setIsDisabledActions(
-      isInterviewPlanned || isBlacklisted || isRejected || isShortlisted
-    );
-  }, [isInterviewPlanned, isBlacklisted, isRejected, isShortlisted]);
   return (
     <Box sx={{ width: "100%" }}>
       <Grid container spacing={0}>
@@ -109,7 +125,7 @@ function ApplicationOptions({
             <Button
               sx={{ minWidth: "auto" }}
               fullWidth
-              disabled={isDisabledActions}
+              disabled={isInterviewPlanned || isBlacklisted || isRejected}
               style={{
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
@@ -126,7 +142,7 @@ function ApplicationOptions({
           <Grid item>
             <Button
               sx={{ minWidth: "auto" }}
-              disabled={isDisabledActions}
+              disabled={isInterviewPlanned || isBlacklisted || isRejected || isShortlisted}
               style={{
                 fontWeight: isShortlisted ? 700 : "",
               }}
@@ -146,7 +162,7 @@ function ApplicationOptions({
             <Button
               sx={{ minWidth: "auto" }}
               variant="link"
-              disabled={isDisabledActions}
+              disabled={isInterviewPlanned || isBlacklisted || isRejected || isShortlisted}
               style={{
                 fontWeight: isRejected ? 700 : "",
               }}
@@ -162,9 +178,9 @@ function ApplicationOptions({
         {blacklist && (
           <Grid item>
             <Button
-              sx={{ minWidth: "auto" }}
+              sx={{ minWidth: "auto", "& svg": { width: "20px", height: "20px" } }}
               variant="link"
-              disabled={isDisabledActions}
+              disabled={isInterviewPlanned || isBlacklisted || isRejected || isShortlisted}
               style={{
                 fontWeight: isBlacklisted ? 700 : "",
               }}
@@ -181,7 +197,7 @@ function ApplicationOptions({
         {view && (
           <Grid item>
             <Button
-              sx={{ minWidth: "auto" }}
+              sx={{ minWidth: "auto", "& svg": { width: "20px", height: "20px" } }}
               variant="link"
               onClick={() => {
                 if (details.job) {
