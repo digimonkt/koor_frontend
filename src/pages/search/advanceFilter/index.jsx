@@ -51,8 +51,10 @@ import {
   updateSavedSearchVendorFilterAPI,
 } from "@api/vendor";
 import VendorFilter from "./vendorFilter";
+import { useSearchParams } from "react-router-dom";
 function AdvanceFilter({ searchType }) {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
   const {
     auth: { role, isLoggedIn },
     choices: {
@@ -172,11 +174,11 @@ function AdvanceFilter({ searchType }) {
     dispatch(setSearchTrue());
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories?.[0]);
-    formik.setFieldValue("jobSubCategories", filter.jobSubCategory);
+    formik.setFieldValue("jobSubCategories", filter.jobSubCategory || []);
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-      (typeof filter.country === "string" ? filter.country : "")
+        (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -253,7 +255,7 @@ function AdvanceFilter({ searchType }) {
     const data = {
       title,
       country: rawData.country,
-      job_category: [rawData.jobCategories],
+      job_category: rawData.jobCategories ? [rawData.jobCategories] : [],
       job_sub_category: rawData.jobSubCategories,
       is_full_time: rawData.isFullTime,
       is_part_time: rawData.isPartTime,
@@ -283,7 +285,7 @@ function AdvanceFilter({ searchType }) {
     const data = {
       title,
       country: rawData.country,
-      category: [rawData.jobCategories],
+      category: rawData.jobCategories ? [rawData.jobCategories] : [],
       sub_category: rawData.jobSubCategories,
       is_full_time: rawData.isFullTime,
       is_part_time: rawData.isPartTime,
@@ -325,8 +327,8 @@ function AdvanceFilter({ searchType }) {
       budget_min: rawData.budgetMin,
       budget_max: rawData.budgetMax,
       deadline:
-      rawData.deadline &&
-          dayjs(rawData.deadline).format(DATABASE_DATE_FORMAT),
+        rawData.deadline &&
+        dayjs(rawData.deadline).format(DATABASE_DATE_FORMAT),
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -416,6 +418,9 @@ function AdvanceFilter({ searchType }) {
   };
 
   useEffect(() => {
+    handleReset();
+  }, [location.pathname]);
+  useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
     }
@@ -494,35 +499,35 @@ function AdvanceFilter({ searchType }) {
         jobCategory: jobCategories.data.find(
           (val) => val.id === values.jobCategories
         )?.title,
-        jobSubCategories: (values.jobSubCategories || []).map((subCategories) => {
-          return jobSubCategories.data[values.jobCategories]?.find(
-            (subCategory) => subCategory.id === subCategories
-          );
-        })
+        jobSubCategories: (values.jobSubCategories || [])
+          .map((subCategories) => {
+            return jobSubCategories.data[values.jobCategories]?.find(
+              (subCategory) => subCategory.id === subCategories
+            );
+          })
           .filter((e) => e),
         experience: values.experience,
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
         contract: values.hasContract,
-        isAvailable: values.available,
+        availability: values.available,
         salary_min: values.salaryMin,
         salary_max: values.salaryMax,
         // tender
         deadline:
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        sector: values.sector?.map(
-          (sector) => sectors.data.find((i) => i.id === sector)?.title
+        sector: values.sector?.map((sector) =>
+          sectors.data.find((i) => i.id === sector)
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
-        opportunityType: values.opportunityType?.map(
-          (type) => opportunityTypes.data.find((i) => i.id === type)?.title
+        opportunityType: values.opportunityType?.map((type) =>
+          opportunityTypes.data.find((i) => i.id === type)
         ),
-        tag: values.tag,
-        tenderCategories: values.tenderCategories?.map(
-          (tenderCategory) =>
-            tenderCategories.data.find((i) => i.id === tenderCategory)?.title
+        tag: values.tag?.map((tag) => tags.data.find((i) => i.id === tag)),
+        tenderCategories: values.tenderCategories?.map((tenderCategory) =>
+          tenderCategories.data.find((i) => i.id === tenderCategory)
         ),
         // vendor
         years_in_market: values.yearsInMarket,
@@ -543,6 +548,18 @@ function AdvanceFilter({ searchType }) {
       );
     }
   }, [formik.values.country, formik.values.jobCategories]);
+
+  useEffect(() => {
+    const categories = searchParams.get("categories");
+    const tenderCategories = searchParams.get("tenderCategories");
+    const country = searchParams.get("location");
+    formik.setFieldValue("jobCategories", categories);
+    if (tenderCategories) {
+      formik.setFieldValue("tenderCategories", [tenderCategories]);
+    }
+    formik.setFieldValue("country", country);
+    setTimeout(() => formik.handleSubmit(), 500);
+  }, []);
   return (
     <div>
       <div className={`${styles.searchResult}`}>
@@ -568,10 +585,11 @@ function AdvanceFilter({ searchType }) {
                 return (
                   <MenuItem key={filter.id}>
                     <SearchButton
-                      className={`${selectedFilter === filter.id
-                        ? styles.btninActive
-                        : styles.btnActive
-                        }`}
+                      className={`${
+                        selectedFilter === filter.id
+                          ? styles.btninActive
+                          : styles.btnActive
+                      }`}
                       leftIcon={
                         <div
                           onClick={() => toggleNotificationStatus(filter.id)}

@@ -9,10 +9,6 @@ const AreaChart = ({ title }) => {
         name: "series1",
         data: [31, 40, 28, 51, 42, 109, 100],
       },
-      {
-        name: "series2",
-        data: [11, 32, 45, 32, 34, 52, 41],
-      },
     ],
     options: {
       chart: {
@@ -103,11 +99,7 @@ const AreaChart = ({ title }) => {
       <Stack direction="row" spacing={5}>
         <div className="views">
           <span className="blueview" style={{ borderColor: "#274593" }}></span>
-          <b>345 </b>views
-        </div>
-        <div className="views">
-          <span className="blueview" style={{ borderColor: "#4CAF50" }}></span>
-          <b>75 </b>Applications
+          <b>228 </b>viewed
         </div>
       </Stack>
       <div className="chart-space">
