@@ -129,7 +129,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           }}
           label={
             <>
-              Blacklisted <span className="cricle">{totalBlacklisted}</span>
+              Blacklisted
             </>
           }
           icon={<SVG.RejectIcon />}
