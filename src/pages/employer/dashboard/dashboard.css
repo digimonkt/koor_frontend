@@ -139,17 +139,17 @@ span.blueview {
   font-family: "Poppins" !important;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px !important;
+  font-size: 12px !important;
   line-height: 18px;
   color: #121212 !important;
   opacity: 0.75;
-  padding: 5px 10px !important;
+  padding: 5px!important;
 }
 .meets {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 21px;
   white-space: nowrap;
 
@@ -158,6 +158,13 @@ span.blueview {
 .recent-descrition p {
   color: #121212;
   margin: 0;
+}
+.recent-descrition p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 .border-recent {
   border-bottom: 1px solid #cacaca;
@@ -182,7 +189,7 @@ span.blueview {
   color: #274593;
   display: block;
   text-transform: capitalize !important;
-  padding: 6px 10px !important;
+  padding: 6px 6px !important;
 }
 .edit-button button span {
   display: block;

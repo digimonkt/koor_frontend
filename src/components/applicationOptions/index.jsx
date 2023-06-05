@@ -103,14 +103,15 @@ function ApplicationOptions({
   }, [isInterviewPlanned, isBlacklisted, isRejected, isShortlisted]);
   return (
     <Box sx={{ width: "100%" }}>
-      <Grid container spacing={1}>
+      <Grid container spacing={0}>
         {interviewPlanned && !details.tender && (
           <Grid item>
             <Button
+              sx={{ minWidth: "auto" }}
               fullWidth
               disabled={isDisabledActions}
               style={{
-                fontWeight: isInterviewPlanned ? 900 : "",
+                fontWeight: isInterviewPlanned ? 700 : "",
               }}
               onClick={() => setIsInterviewPlanning(true)}
             >
@@ -124,10 +125,10 @@ function ApplicationOptions({
         {shortlist && (
           <Grid item>
             <Button
-              fullWidth
+              sx={{ minWidth: "auto" }}
               disabled={isDisabledActions}
               style={{
-                fontWeight: isShortlisted ? 900 : "",
+                fontWeight: isShortlisted ? 700 : "",
               }}
               onClick={() =>
                 handlerChangeApplicationStatus(
@@ -143,11 +144,11 @@ function ApplicationOptions({
         {reject && (
           <Grid item>
             <Button
-              fullWidth
+              sx={{ minWidth: "auto" }}
               variant="link"
               disabled={isDisabledActions}
               style={{
-                fontWeight: isRejected ? 900 : "",
+                fontWeight: isRejected ? 700 : "",
               }}
               onClick={() =>
                 handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.rejected)
@@ -161,11 +162,11 @@ function ApplicationOptions({
         {blacklist && (
           <Grid item>
             <Button
-              fullWidth
+              sx={{ minWidth: "auto" }}
               variant="link"
               disabled={isDisabledActions}
               style={{
-                fontWeight: isBlacklisted ? 900 : "",
+                fontWeight: isBlacklisted ? 700 : "",
               }}
               onClick={() => {
                 setIsBlacklisting(true);
@@ -180,7 +181,7 @@ function ApplicationOptions({
         {view && (
           <Grid item>
             <Button
-              fullWidth
+              sx={{ minWidth: "auto" }}
               variant="link"
               onClick={() => {
                 if (details.job) {
@@ -215,7 +216,7 @@ function ApplicationOptions({
         )}
         {message && (
           <Grid item>
-            <Button variant="link" fullWidth>
+            <Button variant="link" sx={{ minWidth: "auto" }}>
               <SVG.MessageIcon
                 style={{ color: "#274593" }}
                 className="application-option-icon"
