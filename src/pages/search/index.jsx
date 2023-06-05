@@ -144,13 +144,39 @@ function Search() {
         handleSearch={handleSearch}
         value={search}
       />
-      <Container>
+      <Container
+        maxWidth={false}
+        sx={{
+          "@media(min-width:600px)": {
+            paddingLeft: "100px",
+            paddingRight: "100px",
+          },
+        }}
+      >
         <AdvanceFilter searchType={searchType} />
       </Container>
       <div className="paginations">
-        <Container>{pagination()}</Container>
+        <Container
+          maxWidth={false}
+          sx={{
+            "@media(min-width:600px)": {
+              paddingLeft: "100px",
+              paddingRight: "100px",
+            },
+          }}
+        >
+          {pagination()}
+        </Container>
       </div>
-      <Container>
+      <Container
+        maxWidth={false}
+        sx={{
+          "@media(min-width:600px)": {
+            paddingLeft: "100px",
+            paddingRight: "100px",
+          },
+        }}
+      >
         <Box className={`${styles.jobcards}`} sx={{ minHeight: "450px" }}>
           <div className="saved-jobs">
             <Stack
@@ -274,7 +300,17 @@ function Search() {
         </Box>
       </Container>
       <div className="paginations pt-4">
-        <Container>{pagination()}</Container>
+        <Container
+          maxWidth={false}
+          sx={{
+            "@media(min-width:600px)": {
+              paddingLeft: "100px",
+              paddingRight: "100px",
+            },
+          }}
+        >
+          {pagination()}
+        </Container>
       </div>
     </div>
   );

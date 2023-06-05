@@ -28,8 +28,9 @@ export const getSearchJobsAPI = async (data) => {
   }
   let url = urlcat("/v1/jobs", newData);
   jobSubCategories.forEach((category) => {
-    url += `&jobSubCategories=${category.title}`;
+    url += `&jobSubCategory=${category.title}`;
   });
+  console.log({ url });
   const response = await api.request({
     url,
     method: "GET",
@@ -135,5 +136,17 @@ export const updateJobShareCountAPI = async ({ jobId, platform }) => {
   return await api.request({
     url: urlcat("v1/jobs/:jobId/share/:platform", { jobId, platform }),
     method: "PUT",
+  });
+};
+export const getTopJobCategoriesAPI = async () => {
+  return await api.request({
+    url: urlcat("v1/jobs/job-categories"),
+    method: "GET",
+  });
+};
+export const getTopCategoriesAPI = async () => {
+  return await api.request({
+    url: urlcat("v1/jobs/categories"),
+    method: "GET",
   });
 };

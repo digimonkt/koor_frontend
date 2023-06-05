@@ -11,7 +11,7 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 const drawerWidth = 300;
 
-function Sidebar() {
+function Sidebar(props) {
   const navigate = useNavigate();
   const { role, currentUser } = useSelector((state) => state.auth);
   const [mobileNumber, setMobileNumber] = useState("");
@@ -21,6 +21,9 @@ function Sidebar() {
       navigate("/job_seeker/my-profile/update-profile");
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     const currentUserMobileNumber =
@@ -65,6 +68,7 @@ function Sidebar() {
             <li>
               {navigationOptions(role).map((option) => (
                 <Link
+                  onClick={props.handleDrawerClose}
                   style={{
                     pointerEvents: option.isDisable && "none",
                     // backgroundColor: option.isDisable && "#F2F3F4",
@@ -114,7 +118,7 @@ function Sidebar() {
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: "none", sm: "block" },
+          display: { xs: "none", lg: "block" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
@@ -123,6 +127,13 @@ function Sidebar() {
           },
         }}
         open
+      >
+        {drawer}
+      </Drawer>
+      <Drawer
+        anchor={"left"}
+        open={props.SidebarMenu}
+        onClose={props.handleDrawerClose}
       >
         {drawer}
       </Drawer>

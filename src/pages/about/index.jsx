@@ -21,12 +21,12 @@ const button = [
   {
     icon: <SVG.ProfileIcon />,
     svg: <SVG.ArrowForward />,
-    text: "Find Tender",
+    text: "Find Talent",
   },
   {
     icon: <SVG.Work />,
     svg: <SVG.ArrowForward />,
-    text: "Find Tender",
+    text: "Find Job",
   },
 ];
 
@@ -35,7 +35,15 @@ const AboutUs = () => {
     <>
       <Box className={styles.about}>
         <Box className={styles.about_back_color}>
-          <Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
             <Grid
               container
               spacing={{ xs: 2, sm: 3, lg: 10 }}
@@ -82,7 +90,15 @@ const AboutUs = () => {
           <AboutContent />
         </Box>
         <Box className={styles.about_black_color}>
-          <Container>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:600px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item lg={6}>
                 <Box className={styles.about_stack_box}>
@@ -99,25 +115,28 @@ const AboutUs = () => {
               </Grid>
               <Grid item lg={6} xs={12}>
                 <Box className={styles.btn_about_box}>
-                  {button.map((item, index) => {
-                    return (
-                      <Stack
-                        key={index}
-                        direction={{ xs: "column", lg: "row" }}
-                        spacing={{ xs: 2, lg: 2 }}
-                      >
-                        <Button
-                          variant="contained"
-                          className={styles.btn_about}
-                          fullWidth
-                        >
-                          <span className={styles.icon}>{item.icon}</span>
-                          <span className="mx-2">{item.text}</span>
-                          {item.svg}
-                        </Button>
-                      </Stack>
-                    );
-                  })}
+                  <Stack
+                    direction={{ xs: "column", lg: "row", sm: "row" }}
+                    spacing={{ xs: 2, lg: 2, sm: 2 }}
+                  >
+                    {button.map((item, index) => {
+                      return (
+                        <>
+                          <Button
+                            sx={{ textTransform: "capitalize" }}
+                            key={index}
+                            variant="contained"
+                            className={styles.btn_about}
+                            fullWidth
+                          >
+                            <span className={styles.icon}>{item.icon}</span>
+                            <span className="mx-2">{item.text}</span>
+                            {item.svg}
+                          </Button>
+                        </>
+                      );
+                    })}
+                  </Stack>
                 </Box>
               </Grid>
             </Grid>

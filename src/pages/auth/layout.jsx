@@ -163,7 +163,12 @@ function AuthLayout({
             "@media(max-width:992px)": {
               padding: "0px",
             },
+            "@media(min-width:600px)": {
+              paddingLeft: "100px",
+              paddingRight: "100px",
+            },
           }}
+          maxWidth={false}
         >
           <Box
             sx={{
@@ -224,7 +229,7 @@ function AuthLayout({
                 },
               }}
             >
-              <Card>
+              <Card sx={{ position: "relative", zIndex: 2 }}>
                 <CardContent
                   sx={{
                     padding: `75px 60px ${!role ? "!important" : ""}`,
@@ -352,9 +357,16 @@ function AuthLayout({
                               <div
                                 onClick={loginWithFacebook}
                                 disabled={loading}
-                                style={{ cursor: "pointer" }}
+                                style={{
+                                  cursor: "pointer",
+                                  border: "1px solid #CACACA",
+                                  borderRadius: "16px",
+                                  width: "50px",
+                                  height: "50px",
+                                  padding: "10px",
+                                }}
                               >
-                                <SVG.Facebook />
+                                <SVG.Facebook width={30} height={30} />
                               </div>
                             </Stack>
                           </div>

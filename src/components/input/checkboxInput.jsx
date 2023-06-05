@@ -4,7 +4,7 @@ import { SVG } from "@assets/svg";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
 
-function CheckboxInputComponent({ ...rest }) {
+function CheckboxInputComponent({ sx, ...rest }) {
   const { role } = useSelector((state) => state.auth);
   return (
     <Checkbox
@@ -14,21 +14,22 @@ function CheckboxInputComponent({ ...rest }) {
       sx={
         role === USER_ROLES.jobSeeker
           ? {
-              color: "#CACACA",
               transition: "all 0.5s ease-out",
+              padding: "9px 10px",
               "&.Mui-checked": {
                 color: "#EEA23D",
                 transition: "all 0.5s ease-out",
               },
+              ...(sx || {}),
             }
           : {
-              color: "#CACACA",
               transition: "all 0.5s ease-out",
               padding: "9px 10px",
               "&.Mui-checked": {
                 color: "#274593",
                 transition: "all 0.5s ease-out",
               },
+              ...(sx || {}),
             }
       }
       {...rest}

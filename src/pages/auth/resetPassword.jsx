@@ -67,6 +67,7 @@ function ResetPasswordComponent() {
               placeholder="New Password"
               type="password"
               disabled={loading}
+              zIndex={9999}
               {...formik.getFieldProps("password")}
             />
             {formik.touched.password && formik.errors.password ? (
@@ -78,6 +79,7 @@ function ResetPasswordComponent() {
               placeholder="Re-type Password"
               type="password"
               disabled={loading}
+              zIndex={9999}
               {...formik.getFieldProps("confirmPassword")}
             />
             {formik.touched.confirmPassword && formik.errors.confirmPassword ? (

@@ -1,6 +1,6 @@
 import Header from "./components/header";
 import React, { Suspense, useEffect } from "react";
-import Footer from "./components/footer";
+// import Footer from "./components/footer";
 import {
   AUTHENTICATED_ROUTES,
   ROUTES,
@@ -23,6 +23,7 @@ import { FallbackLoading } from "@components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
 // eslint-disable-next-line no-unused-vars
 import { getUserCountryByIpAPI, getUserIpAPI } from "@api/user";
+import InnerFooter from "@components/footer/innerfooter";
 
 function App() {
   const dispatch = useDispatch();
@@ -85,7 +86,8 @@ function App() {
                     <Suspense fallback={<FallbackLoading />}>
                       <route.component />
                     </Suspense>
-                    <Footer />
+                    <InnerFooter />
+                    {/* <Footer /> */}
                   </>
                 }
                 key={route.id}
@@ -105,7 +107,8 @@ function App() {
                         <route.component />
                       </UnauthorizedRoute>
                     </Suspense>
-                    <Footer />
+                    {/* <Footer /> */}
+                    <InnerFooter />
                   </>
                 }
               />

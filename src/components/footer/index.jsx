@@ -7,11 +7,20 @@ import dayjs from "dayjs";
 function Footer() {
   return (
     <div className="footer">
-      <Container>
+      <Container
+        maxWidth={false}
+        sx={{
+          "@media(min-width:600px)": {
+            paddingLeft: "100px",
+            paddingRight: "100px",
+          },
+        }}
+      >
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
           alignItems="center"
+          justifyContent={"space-between"}
         >
           <Stack
             direction={{ xs: "column", sm: "row" }}

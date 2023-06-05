@@ -20,7 +20,15 @@ function NotificationPopup() {
      * Alert if clicked on outside of element
      */
     function handleClickOutside(event) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      const notificationSettings = document.getElementById(
+        "notification-settings"
+      );
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target) &&
+        (!notificationSettings ||
+          !wrapperRef.current.contains(notificationSettings))
+      ) {
         setAnchorEl(null);
       }
     }

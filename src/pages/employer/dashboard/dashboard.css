@@ -666,6 +666,23 @@ span.arrowjobs svg {
   /* Dark grey */
   color: #848484;
 }
+.mobile-recent-descrition{display: none;}
+@media screen and (max-width:992px) {
+  .card-count h1{font-size: 16px; line-height: normal;}
+  .card-count p{font-size: 10px;}
+  .recent-research span{border-left: none; padding-left: 0px;}
+  .recent-research{display: block;}
+ 
+}
+@media screen and (max-width:540px) {
+  .recent-descrition{display: none;}
+.mobile-recent-descrition{display: block;}
+.chiplabel {
+  font-size: 12px !important;
+
+  padding: 5px 5px !important;
+}
+}
 @media (min-width: 1200px) {
   .itemvalue ul {
     height: 140px;
@@ -701,9 +718,7 @@ span.arrowjobs svg {
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
-  .meets_div {
-    display: flex;
-  }
+
 
   .chip-cricle {
     font-size: 12px !important;
@@ -721,17 +736,15 @@ span.arrowjobs svg {
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
-  .meets_div {
-    display: flex;
-  }
+
 
   .chip-cricle {
     font-size: 12px !important;
   }
 
-  .chiplabel {
+  /* .chiplabel {
     margin-left: -15px !important;
-  }
+  } */
 
   .recent-research span {
     border-left: none !important;

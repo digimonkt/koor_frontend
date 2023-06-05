@@ -721,9 +721,7 @@ span.arrowjobs svg {
     border-left: none !important;
     padding-left: 0px !important;
   }
-  .chiplabel {
-    margin-left: -15px !important;
-  }
+
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
@@ -734,7 +732,5 @@ span.arrowjobs svg {
   .edit-button button {
     font-size: 11px !important;
   }
-  .chiplabel {
-    margin-left: -15px !important;
-  }
+ 
 }

@@ -181,8 +181,8 @@ function MyProfileComponent() {
         "organizationType",
         currentUser.profile.organizationType?.id
       );
-      formik.setFieldValue("country", currentUser.profile.country.id || "");
-      formik.setFieldValue("city", currentUser.profile.city.id || "");
+      formik.setFieldValue("country", currentUser.profile.country?.id || "");
+      formik.setFieldValue("city", currentUser.profile.city?.id || "");
       formik.setFieldValue("address", currentUser.profile.address);
       setSearchValue(currentUser.profile.address);
       formik.setFieldValue("description", currentUser.profile.description);

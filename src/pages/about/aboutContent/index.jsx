@@ -48,7 +48,15 @@ const AboutContent = () => {
   return (
     <>
       <Box>
-        <Container>
+        <Container
+          maxWidth={false}
+          sx={{
+            "@media(min-width:600px)": {
+              paddingLeft: "100px",
+              paddingRight: "100px",
+            },
+          }}
+        >
           <Box className={styles.about_content}>
             <TabContext value={value}>
               <Box className={styles.about_content_text}>
