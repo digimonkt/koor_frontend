@@ -39,6 +39,7 @@ function ApplicationOptions({
   const [interviewTime, setInterviewTime] = useState("");
   const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [applicationShortlistStatus, setApplicationShortlistStatus] = useState(details.shortlistedAt);
   const { totalApplicationsByJob } = useSelector((state) => state.employer);
   const handlerChangeApplicationStatus = async (action) => {
     const data = { reason: blackListReason, interview_at: interviewTime };
@@ -56,7 +57,7 @@ function ApplicationOptions({
       case JOB_APPLICATION_OPTIONS.plannedInterviews:
         setIsInterviewPlanned(true);
         applicationStatus = {
-          shortlisted: shortlist ? applicationsStatusCount.shortlisted - 1 : applicationsStatusCount.shortlisted,
+          shortlisted: applicationShortlistStatus ? applicationsStatusCount.shortlisted - 1 : applicationsStatusCount.shortlisted,
           rejected: applicationsStatusCount.rejected,
           plannedInterview: applicationsStatusCount.plannedInterview + 1,
         };
@@ -71,6 +72,7 @@ function ApplicationOptions({
         break;
       case JOB_APPLICATION_OPTIONS.shortlisted:
         setIsShortlisted(true);
+        setApplicationShortlistStatus(!details.shortlistedAt ? true : details.shortlistedAt);
         applicationStatus = {
           shortlisted: applicationsStatusCount.shortlisted + 1,
           rejected: applicationsStatusCount.rejected,
