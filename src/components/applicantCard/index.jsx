@@ -31,7 +31,7 @@ function ApplicantCard({
         direction="row"
         spacing={2}
         alignItems="center"
-        sx={{ width: "60%", "@media(max-width:992)": { width: "auto" } }}
+        sx={{ width: "57%", "@media(max-width:992)": { width: "auto" } }}
       >
         <Avatar
           src={generateFileUrl(details.user.image?.path || "")}
@@ -87,7 +87,7 @@ function ApplicantCard({
             >
               <span className="meets">Meets your requirements with: </span>
 
-              <Stack direction={"row"} alignItems={"center"} spacing={2}>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
                 {details?.education && (
                   <Chip
                     label="Education"
@@ -177,7 +177,7 @@ function ApplicantCard({
         justifyContent={{ xs: "space-between", lg: "row" }}
         sx={{
           marginLeft: {
-            sm: "50px !important",
+            sm: "0px !important",
             xs: "0px",
           },
           marginTop: "5px !important",
