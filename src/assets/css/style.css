@@ -765,6 +765,29 @@ hr {
   padding: 6px 12px;
   width: 100%;
 }
+.add-form-control::-webkit-input-placeholder { /* Edge */
+  color: #121212;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.add-form-control:-ms-input-placeholder { /* Internet Explorer */
+  color: #121212;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.add-form-control::placeholder {
+  color: #121212;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+}
 .w-30 {
   width: 30%;
 }
@@ -793,6 +816,7 @@ hr {
   font-family: "Poppins";
   font-size: 12px;
   box-sizing: border-box;
+  color:#121212;
 }
 .description {
   font-family: "Poppins";
