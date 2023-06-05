@@ -335,11 +335,11 @@ textarea {
     bottom: 220px;
   }
 
-  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+  /* .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
     left: 420px !important;
     top: 68px !important;
-  }
+  } */
 
   .scroll_tabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 10px !important;
@@ -357,11 +357,11 @@ textarea {
     bottom: 220px;
   }
 
-  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+  /* .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
     left: 420px !important;
     top: 68px !important;
-  }
+  } */
 
   .scroll_tabs .MuiButtonBase-root.MuiTab-root {
     margin-left: 10px !important;

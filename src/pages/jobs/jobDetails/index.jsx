@@ -184,7 +184,7 @@ const JobDetails = () => {
       <Container
         maxWidth={false}
         sx={{
-          "@media(min-width:600px)": {
+          "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
