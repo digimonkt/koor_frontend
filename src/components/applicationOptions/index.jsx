@@ -105,7 +105,7 @@ function ApplicationOptions({
     <Box sx={{ width: "100%" }}>
       <Grid container spacing={1}>
         {interviewPlanned && !details.tender && (
-          <Grid item xs={6} lg={4} sm={4}>
+          <Grid item>
             <Button
               fullWidth
               disabled={isDisabledActions}
@@ -122,7 +122,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {shortlist && (
-          <Grid item xs={6} lg={4} sm={4}>
+          <Grid item>
             <Button
               fullWidth
               disabled={isDisabledActions}
@@ -141,7 +141,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {reject && (
-          <Grid item xs={6} lg={4} sm={4}>
+          <Grid item>
             <Button
               fullWidth
               variant="link"
@@ -159,7 +159,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {blacklist && (
-          <Grid item xs={6} lg={4} sm={4}>
+          <Grid item>
             <Button
               fullWidth
               variant="link"
@@ -178,7 +178,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {view && (
-          <Grid item xs={6} lg={4} sm={4}>
+          <Grid item>
             <Button
               fullWidth
               variant="link"
@@ -214,7 +214,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {message && (
-          <Grid item xs={6} lg={4} sm={4}>
+          <Grid item>
             <Button variant="link" fullWidth>
               <SVG.MessageIcon
                 style={{ color: "#274593" }}

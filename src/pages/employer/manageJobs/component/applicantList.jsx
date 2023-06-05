@@ -40,7 +40,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
 
   const allFilters = () => {
     return (
-      <Stack direction={{ xs: "column", lg: "row" }} spacing={1}>
+      <Stack direction={{ xs: "column", lg: "row", sm: "row" }} spacing={1}>
         <Chip
           style={{
             backgroundColor:

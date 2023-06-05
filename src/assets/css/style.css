@@ -1746,6 +1746,11 @@ input.employersearch {
 }
 
 @media only screen and (max-width: 992px) {
+  .saved-jobs h2 {
+
+    font-size: 16px;
+
+  }
   .noti-mobile{display: none !important;}
   .CardWidth {
     width: 100%;
@@ -1755,7 +1760,7 @@ input.employersearch {
     display: none;
   }
   .register {
-    margin-top: 0px;
+   
     background: url("../images/intro.png");
   }
   .register-des > a {
