@@ -9,18 +9,32 @@ import SendIcon from "@mui/icons-material/Send";
 import { FilledButton } from "@components/button";
 import { USER_ROLES } from "@utils/enum";
 import { useSelector } from "react-redux";
+import { getConversationMessageHistoryAPI } from "@api/chat";
+import { useSearchParams } from "react-router-dom";
 
 function ChatBox() {
-  const { role } = useSelector((state) => state.auth);
-  const [messages] = useState([]);
+  const [searchParams] = useSearchParams();
+  const { role, currentUser } = useSelector((state) => state.auth);
+  const [messages, setMessage] = useState([]);
   const scrollbarRef = useRef();
-
-  useEffect(() => {
-    if (scrollbarRef.current) {
-      scrollbarRef.current.scrollTop = scrollbarRef.current.scrollHeight;
+  const getMessageHistory = async (data) => {
+    const res = await getConversationMessageHistoryAPI({
+      conversationId: searchParams.get("conversion"),
+    });
+    console.log({ messageResponse: res, message: res.data.results });
+    if (res.remote === "success") {
+      setMessage(res.data.results);
     }
-  }, [messages]);
-
+  };
+  useEffect(() => {
+    getMessageHistory();
+  }, []);
+  // useEffect(() => {
+  //   if (scrollbarRef.current) {
+  //     scrollbarRef.current.scrollTop = scrollbarRef.current.scrollHeight;
+  //   }
+  // }, [messages]);
+  console.log({ messages });
   return (
     <>
       <div className="message-header">
@@ -29,26 +43,32 @@ function ChatBox() {
             <h3>John Doe</h3>
             <p>Job Title</p>
           </div>
-          <ApplicationOptions />
+          <ApplicationOptions details={{ user: {} }} />
         </Stack>
       </div>
       <div className="meassagebox pe-0">
         <PerfectScrollbar className="pe-4" ref={scrollbarRef}>
-          <div className="rightside mt-3">
-            <Stack direction="row" spacing={2} justifyContent="end">
-              <div className="w-70 text-right">
-                <div className="message-text">
-                  <div className="text-inline">
-                    <p>
-                      Today I've asked my business partners about this. Let's
-                      ditch this and see how it looks like. Okay?
-                    </p>
-                    <span className="ms-2">16:03</span>
+          {messages.map((message) => {
+            return (
+              <div
+                className={`${
+                  message.user.id === currentUser.id ? "rightside" : "leftside"
+                } mt-3`}
+                key={message.id}
+              >
+                <Stack direction="row" spacing={2} justifyContent="end">
+                  <div className="w-70 text-right">
+                    <div className="message-text">
+                      <div className="text-inline">
+                        <p>{message.message}</p>
+                        <span className="ms-2">16:03</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Stack>
               </div>
-            </Stack>
-          </div>
+            );
+          })}
           <div className="leftside mt-3">
             <Stack direction="row" spacing={2} justifyContent="start">
               <Avatar src={IMAGES.User} />

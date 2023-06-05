@@ -2,8 +2,11 @@ import { Box, Card } from "@mui/material";
 import React from "react";
 import ChatList from "./chatList";
 import ChatBox from "./chatBoxRight";
+import { useSearchParams } from "react-router-dom";
+import { ChatNotSelected } from "@components/animations";
 
 function ChatComponent() {
+  const [searchParams] = useSearchParams();
   return (
     <>
       <Card
@@ -32,7 +35,11 @@ function ChatComponent() {
               width: { sm: "75%" },
             }}
           >
-            <ChatBox />
+            {searchParams.get("conversion") ? (
+              <ChatBox />
+            ) : (
+              <ChatNotSelected title="You haven't made any conversation selections." />
+            )}
           </Box>
         </Box>
       </Card>
