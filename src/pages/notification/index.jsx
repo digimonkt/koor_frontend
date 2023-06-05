@@ -6,7 +6,14 @@ import styles from "./notification.module.css";
 function Notification() {
   return (
     <div className={styles.notification}>
-      <Container>
+      <Container
+        sx={{
+          "@media(min-width:992px)": {
+            paddingLeft: "100px",
+            paddingRight: "100px",
+          },
+        }}
+      >
         <div className={styles.content}>
           <h3 className={`${styles.content_heading}`}>Notifications</h3>
           <div className={styles.content_tabs} style={{ marginTop: "15px" }}>

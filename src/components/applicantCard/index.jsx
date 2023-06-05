@@ -27,7 +27,12 @@ function ApplicantCard({
       justifyContent={{ xs: "center", lg: "space-between" }}
       className="border-recent"
     >
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        sx={{ width: "60%", "@media(max-width:992)": { width: "auto" } }}
+      >
         <Avatar
           src={generateFileUrl(details.user.image?.path || "")}
           sx={{
@@ -123,6 +128,7 @@ function ApplicantCard({
           sx={{
             display: "none",
             mb: 1,
+
             ...sx,
             "@media(max-width:768px)": {
               display: { xs: "flex", sm: "none" },

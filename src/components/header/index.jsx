@@ -70,7 +70,7 @@ function Header() {
       <Container
         maxWidth={false}
         sx={{
-          "@media(min-width:600px)": {
+          "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
@@ -198,7 +198,7 @@ function Header() {
                         p: 0,
                         mt: 1,
                       },
-                      display: { xs: "block", sm: "none" },
+                      display: { xs: "block", sm: "block", lg: "none" },
                     }}
                   >
                     <NotificationPopup />

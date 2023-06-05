@@ -716,6 +716,10 @@ span.arrowjobs svg {
   width: 100%;
 }
 
+@media screen and (max-width:992px){
+  .my-jobs h2{font-size: 14px;}
+}
+
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
   .recent-research span {
     border-left: none !important;

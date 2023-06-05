@@ -163,7 +163,7 @@ function AuthLayout({
             "@media(max-width:992px)": {
               padding: "0px",
             },
-            "@media(min-width:600px)": {
+            "@media(min-width:992px)": {
               paddingLeft: "100px",
               paddingRight: "100px",
             },
