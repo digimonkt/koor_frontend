@@ -168,7 +168,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           </div>
         </Grid>
         <Grid item lg={logo ? 2 : 3} xs={12}>
-          <div className="text-end mb-4">
+          <div className="text-end mb-4 text-start">
             <SolidButton
               style={{ textTransform: "lowercase" }}
               title={
@@ -184,7 +184,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           <Stack
             direction="row"
             spacing={2}
-            justifyContent="end"
+            justifyContent={{ xs: "center", lg: "end" }}
             alignItems="center"
             divider={<Divider orientation="vertical" flexItem />}
             className="py-2"

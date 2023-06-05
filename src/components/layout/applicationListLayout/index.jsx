@@ -21,10 +21,10 @@ function ApplicationListLayout({
   return (
     <>
       <Stack
-        direction="row"
-        spacing={2}
-        justifyContent="space-between"
-        alignItems="center"
+        direction={{ xs: "column", lg: "row", md: "column" }}
+        spacing={{ xs: 1, lg: 2, md: 1 }}
+        justifyContent={{ xs: "flex-start", lg: "space-between" }}
+        alignItems={{ xs: "flex-start", lg: "center" }}
         sx={{ mt: 2 }}
       >
         <div className="toggle-application">
