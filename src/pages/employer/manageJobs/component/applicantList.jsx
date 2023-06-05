@@ -9,7 +9,8 @@ import { NoDataFoundAnimation } from "@components/animations";
 import ApplicationListLayout from "@components/layout/applicationListLayout";
 import ApplicantCard from "@components/applicantCard";
 import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
-
+import { useDispatch } from "react-redux";
+import { setTotalApplicationsByJob } from "@redux/slice/employer";
 const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   const [applicants, setApplicants] = useState([]);
   const [filter, setFilter] = useState("");
@@ -18,6 +19,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   const [totalBlacklisted, setTotalBlacklisted] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
   const getApplicationList = async () => {
     setIsLoading(true);
@@ -31,13 +33,22 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
     }
     setIsLoading(false);
   };
-
   const handleGetApplicationByStatus = (status) => {
     setFilter((prevState) => (prevState === status ? "" : status));
   };
 
   useEffect(() => {
     if (filter) getApplicationList(filter);
+
+    dispatch(setTotalApplicationsByJob(
+      {
+        jobId,
+        data: {
+          shortlist: totalShortlisted,
+          rejected: totalRejected,
+          planedInterview: totalPlannedInterview
+        },
+      }));
   }, [filter]);
 
   const allFilters = () => {
@@ -131,9 +142,8 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           })
         ) : !applicants.length ? (
           <NoDataFoundAnimation
-            title={`There are currently no applications for your ${
-              jobId ? "job" : "tender"
-            } posting.`}
+            title={`There are currently no applications for your ${jobId ? "job" : "tender"
+              } posting.`}
           />
         ) : (
           applicants.map((item, index) => {
