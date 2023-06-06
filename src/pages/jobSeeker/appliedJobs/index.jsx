@@ -39,6 +39,7 @@ function AppliedJobsComponent() {
     }
     setIsLoading(false);
   };
+
   const handleSorting = (search) => {
     setSortBy(search);
     if (orderBy === "ascending") {
@@ -198,7 +199,7 @@ function AppliedJobsComponent() {
                   style={{ borderBottom: "1px solid #cacaca" }}
                   key={list.id}
                 >
-                  <JobCard logo applied jobDetails={list.job} />
+                  <JobCard logo applied isShortlisted={list.shortlistedAt} isRejected={list.rejectedAt} isPlannedInterview={list.interviewAt} jobDetails={list.job} />
                   <Divider />
                 </div>
               );

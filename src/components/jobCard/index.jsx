@@ -11,12 +11,13 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "@api/employer";
-function JobCard({ logo, selfJob, applied, jobDetails }) {
+function JobCard({ logo, selfJob, applied, jobDetails, isShortlisted, isPlannedInterview, isRejected }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
+  const [applicationStatus, setApplicationStatus] = useState("applied");
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -30,7 +31,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
   };
-
   const updateJob = async (jobId) => {
     const res = await updateEmployerJobStatusAPI(jobId);
     if (res.remote === "success") {
@@ -48,7 +48,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       });
     }
   }, [logo]);
-
+  useEffect(() => {
+    if (isShortlisted) {
+      setApplicationStatus("Shortlisted");
+    }
+    if (isRejected) {
+      setApplicationStatus("Rejected");
+    }
+    if (isPlannedInterview) {
+      setApplicationStatus("Planned Interview at " + dayjs(isPlannedInterview).format("ll"));
+    }
+  }, [jobDetails]);
   return (
     <div className="job_card">
       <Grid container spacing={1.875} {...gridProps}>
@@ -96,12 +106,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
                 {jobDetails?.title}
               </Link>
-              {jobDetails.isApplied ? (
+              {applied && applicationStatus ? (
                 <Chip
                   // variant="outlined"
-                  color="success"
+                  // color="success"
+                  color={(applicationStatus === "Rejected") ? "error" : "success"}
                   size="small"
-                  label="Applied"
+                  label={applicationStatus}
                   sx={{
                     marginLeft: "5px",
                   }}
