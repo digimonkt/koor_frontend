@@ -56,7 +56,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus("Rejected");
     }
     if (jobDetails.isPlannedInterview) {
-      setApplicationStatus("Planned Interview at " + dayjs(jobDetails.isPlannedInterview).format("ll"));
+      setApplicationStatus("Interview planned on " + dayjs(jobDetails.isPlannedInterview).format("MMMM D, YYYY [at] h:mm A"));
     }
   }, [jobDetails]);
   return (

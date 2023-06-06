@@ -39,7 +39,6 @@ function AppliedJobsComponent() {
     }
     setIsLoading(false);
   };
-
   const handleSorting = (search) => {
     setSortBy(search);
     if (orderBy === "ascending") {
