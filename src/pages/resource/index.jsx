@@ -1,10 +1,11 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import styles from "./resource.module.css";
 import { IMAGES } from "@assets/images";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { SVG } from "@assets/svg";
 import Content from "./Content";
+import { getResourceDetailsAPI } from "@api/user";
 
 const banner = [
   {
@@ -13,6 +14,17 @@ const banner = [
 ];
 
 const Resource = () => {
+  const { id } = useParams();
+  const [resourceList, setResourceList] = useState([]);
+  const resourceDetails = async () => {
+    const response = await getResourceDetailsAPI(id);
+    if (response.remote === "success") {
+      setResourceList(response.data);
+    }
+  };
+  useEffect(() => {
+    resourceDetails();
+  }, []);
   return (
     <>
       <Box className={styles.resource}>
@@ -75,7 +87,7 @@ const Resource = () => {
             </Grid>
           </Container>
           <Box>
-            <Content />
+            <Content resourceList={resourceList} />
           </Box>
         </Box>
       </Box>

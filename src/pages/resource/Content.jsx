@@ -1,10 +1,12 @@
-import { IMAGES } from "@assets/images";
+// import { IMAGES } from "@assets/images";
 import { Box, Container } from "@mui/material";
 import React from "react";
 import Articles from "./Articles";
 import styles from "./resource.module.css";
 
-const Content = () => {
+const Content = (resourceList) => {
+  const resourceContent = resourceList.resourceList.description;
+
   return (
     <>
       <div className={styles.content_first_div}>
@@ -17,26 +19,30 @@ const Content = () => {
             },
           }}
         >
+          {/* {resourceContent.map((item, index) => (
+            <p key={index}>hello</p>
+          ))} */}
           <div className={styles.content_div}>
-            <h1 className={styles.content_heading}>Where ?</h1>
-            <p className={styles.content_text_p}>
-              Odio convallis nunc odio dui platea sagittis donec non, quis.
-              Vitae morbi cum lobortis eget lorem consequat. Quis turpis nulla
-              cras rhoncus fermentum, et, porta tristique. Donec mauris sit
-              augue felis egestas rutrum at consequat. Amet nisl semper nulla
-              interdum at. Scelerisque volutpat urna sed molestie. Sodales
-              mauris vestibulum, proin eget orci duis. Ornare scelerisque
-              parturient eget nulla mi nunc commodo, vitae. Volutpat tempus, a
-              nec vivamus sit volutpat egestas. Facilisis quis mattis ut arcu.
-              Odio risus at tristique mauris orci, ipsum tincidunt quisque id.
-              Volutpat velit sed auctor nam in ullamcorper adipiscing. Sed nec
-              gravida nec tincidunt. Eget luctus quam in mauris nunc. Turpis
-              blandit ut pretium ligula.
-            </p>
-            <Box>
+            {resourceContent?.map((item, index) => (
+              <p
+                key={index}
+                dangerouslySetInnerHTML={{
+                  __html: item,
+                }}
+              />
+            ))}
+
+            {/* <h1 className={styles.content_heading}>Where ?</h1> */}
+            {/* <p
+              className={styles.content_text_p}
+              dangerouslySetInnerHTML={{
+                __html: resourceList.resourceList.description,
+              }}
+            ></p> */}
+            {/* <Box>
               <img src={IMAGES.ResourceImg} className={styles.content_img} />
-            </Box>
-            <p className={styles.content_text_p}>
+            </Box> */}
+            {/* <p className={styles.content_text_p}>
               Odio convallis nunc odio dui platea sagittis donec non, quis.
               Vitae morbi cum lobortis eget lorem consequat. Quis turpis nulla
               cras rhoncus fermentum, et, porta tristique. Donec mauris sit
@@ -85,7 +91,7 @@ const Content = () => {
             <h4 className={styles.text_content}>
               Remember that finding work takes time and effort. Stay positive,
               be persistent, and keep trying. Good luck!
-            </h4>
+            </h4> */}
           </div>
         </Container>
         <Box>
