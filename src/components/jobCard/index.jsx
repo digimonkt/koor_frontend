@@ -11,7 +11,7 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "@api/employer";
-function JobCard({ logo, selfJob, applied, jobDetails, isShortlisted, isPlannedInterview, isRejected }) {
+function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
@@ -49,14 +49,14 @@ function JobCard({ logo, selfJob, applied, jobDetails, isShortlisted, isPlannedI
     }
   }, [logo]);
   useEffect(() => {
-    if (isShortlisted) {
+    if (jobDetails.isShortlisted) {
       setApplicationStatus("Shortlisted");
     }
-    if (isRejected) {
+    if (jobDetails.isRejected) {
       setApplicationStatus("Rejected");
     }
-    if (isPlannedInterview) {
-      setApplicationStatus("Planned Interview at " + dayjs(isPlannedInterview).format("ll"));
+    if (jobDetails.isPlannedInterview) {
+      setApplicationStatus("Planned Interview at " + dayjs(jobDetails.isPlannedInterview).format("ll"));
     }
   }, [jobDetails]);
   return (
@@ -106,11 +106,11 @@ function JobCard({ logo, selfJob, applied, jobDetails, isShortlisted, isPlannedI
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
                 {jobDetails?.title}
               </Link>
-              {applied && applicationStatus ? (
+              {jobDetails.isApplied ? (
                 <Chip
                   // variant="outlined"
                   // color="success"
-                  color={(applicationStatus === "Rejected") ? "error" : "success"}
+                  color={(jobDetails.isRejected) ? "error" : "success"}
                   size="small"
                   label={applicationStatus}
                   sx={{

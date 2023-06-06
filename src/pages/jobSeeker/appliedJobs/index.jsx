@@ -199,7 +199,7 @@ function AppliedJobsComponent() {
                   style={{ borderBottom: "1px solid #cacaca" }}
                   key={list.id}
                 >
-                  <JobCard logo applied isShortlisted={list.shortlistedAt} isRejected={list.rejectedAt} isPlannedInterview={list.interviewAt} jobDetails={list.job} />
+                  <JobCard logo applied jobDetails={list.job} />
                   <Divider />
                 </div>
               );
