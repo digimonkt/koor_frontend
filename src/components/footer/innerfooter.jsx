@@ -332,7 +332,7 @@ const InnerFooter = () => {
             <Link to="/terms-condition" style={{ color: "#848484" }}>
               Terms of use
             </Link>
-            <Link to="privacy-policy" style={{ color: "#848484" }}>
+            <Link to="/privacy-policy" style={{ color: "#848484" }}>
               Privacy policy
             </Link>
           </Stack>

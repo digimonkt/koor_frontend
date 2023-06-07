@@ -32,7 +32,11 @@ export const ResourceCard = ({ id, image, title, description }) => {
         <Grid container spacing={2}>
           <Grid item lg={4} xs={12}>
             <div className={`${styles.imgbox}`}>
-              <img alt="" src={generateFileUrl(image)} />
+              <img
+                alt=""
+                src={generateFileUrl(image)}
+                className={`${styles.imgSize}`}
+              />
             </div>
           </Grid>
           <Grid item lg={8} xs={12}>
@@ -43,7 +47,7 @@ export const ResourceCard = ({ id, image, title, description }) => {
                   <div
                     key={innerIndex}
                     dangerouslySetInnerHTML={{
-                      __html: html?.slice(0, 10) + "......",
+                      __html: html?.slice(0, 300) + "......",
                     }}
                   />
                 )

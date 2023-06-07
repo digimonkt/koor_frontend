@@ -2,20 +2,19 @@ import { Box, Container } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { TablePagination } from "./style";
-// import { resourcesList } from "./fakeData";
 import { ResourceCard } from "./component/resourceCard";
-import { getResourcesAPI } from "@api/user";
+import { getResourcesAPI } from "@api/common";
 
 const Resources = () => {
-  const [resourceInfo, setResourceInfo] = useState([]);
+  const [resourceList, setResourceList] = useState([]);
   const [pages, setPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
-  const resourceList = async () => {
+  const getResourceDetails = async () => {
     const page = pages;
     const limit = 10;
     const response = await getResourcesAPI(limit, page);
     if (response.remote === "success") {
-      setResourceInfo(response.data.results);
+      setResourceList(response.data.results);
       const totalCounts = Math.ceil(response.data.count / limit);
       setTotalCount(totalCounts);
     }
@@ -25,7 +24,7 @@ const Resources = () => {
   }
 
   useEffect(() => {
-    resourceList();
+    getResourceDetails();
   }, [pages]);
   return (
     <>
@@ -42,7 +41,7 @@ const Resources = () => {
           <Box component="h2" className={`${styles.heddingTitle}`}>
             Resources
           </Box>
-          {resourceInfo.map((item, index) => (
+          {resourceList.map((item, index) => (
             <ResourceCard
               key={index}
               title={item.title}
