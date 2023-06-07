@@ -38,9 +38,16 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
     <div style={{ width: "100%" }}>
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={section}>
-          <Box
-            sx={{ borderBottom: 1, borderColor: "divider" }}
-            className={`pe-4 ${styles.tabs_box}`}
+          <Stack
+            direction={{ xs: "column", lg: "row" }}
+            spacing={{ xs: 1, lg: 2 }}
+            justifyContent={{ xs: "flex-start", lg: "space-between" }}
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              pe: 4,
+              "@media(max-width:600px)": { pe: 0 },
+            }}
           >
             <TabList className="tab_list" onChange={handleChangeSection}>
               <Tab label="All" className={styles.tabs_btn} value="all" />
@@ -64,7 +71,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                 </Button>
               </Stack>
             )}
-          </Box>
+          </Stack>
           <div className={footer ? `pe-3 ${styles.scrollbarNotification}` : ""}>
             {loading ? (
               <Loader loading={loading} />

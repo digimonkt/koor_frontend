@@ -10,7 +10,14 @@ export const SelectBox = styled(Select)`
     border-radius: 10px;
     color: #121212;
     font-size: 12px;
+    font-family: "Poppins";
+    font-weight: 400;
   }
+  & .Mui-disabled {
+    color: #121212;
+    -webkit-text-fill-color: #121212;
+  }
+
   & .MuiInputBase-root {
     border-radius: 0px;
     font-family: "Poppins";
@@ -58,6 +65,7 @@ function SelectInputComponent({
           "&.MuiSelect-select": {
             fontFamily: "Poppins",
             fontSize: "12px",
+            color: "#121212",
           },
         }}
         size="small"
@@ -78,7 +86,15 @@ function SelectInputComponent({
         >
           {options.map((option) => {
             return (
-              <MenuItem value={option.value} key={option.value}>
+              <MenuItem
+                value={option.value}
+                key={option.value}
+                sx={{
+                  fontSize: "12px",
+                  fontFamily: "Poppins",
+                  color: "#121212",
+                }}
+              >
                 {option.label}
               </MenuItem>
             );
