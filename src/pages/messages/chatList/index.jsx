@@ -6,6 +6,8 @@ import styles from "../message.module.css";
 import { getConversationListAPI } from "@api/chat";
 import { NoDataFoundAnimation } from "@components/animations";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { WebSocketClient } from "@utils/constants/websocket";
+import { transformConversationResponse } from "@api/transform/chat";
 function ChatList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -23,6 +25,27 @@ function ChatList() {
     }
     setInitialLoading(false);
   };
+
+  const onUpdateChatActivity = (data) => {
+    console.log({ activity: data.content });
+    const updatedConversations = data.content.map((conversation) =>
+      transformConversationResponse(conversation)
+    );
+    setChatList([...updatedConversations]);
+  };
+
+  useEffect(() => {
+    const data = {
+      url: "ws/chat_activity",
+    };
+    const ws = new WebSocketClient(data);
+    ws.connect();
+    ws.onMessage(onUpdateChatActivity);
+    // Clean up WebSocket connection when component unmounts
+    return () => {
+      ws.close();
+    };
+  }, []);
 
   useEffect(() => {
     getConversationList();

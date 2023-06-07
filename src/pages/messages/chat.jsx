@@ -35,7 +35,7 @@ function ChatComponent() {
               width: { sm: "75%" },
             }}
           >
-            {searchParams.get("conversion") ? (
+            {searchParams.get("conversion") || searchParams.get("userId") ? (
               <ChatBox />
             ) : (
               <ChatNotSelected title="You haven't made any conversation selections." />

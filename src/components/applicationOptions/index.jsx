@@ -1,3 +1,4 @@
+import { getConversationIdByUserIdAPI } from "@api/chat";
 import { changeApplicationStatusAPI } from "@api/employer";
 import { changeTenderApplicationStatusAPI } from "@api/tender";
 import { SVG } from "@assets/svg";
@@ -40,6 +41,23 @@ function ApplicationOptions({
   const [interviewTime, setInterviewTime] = useState("");
   const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const handleMessageClick = async () => {
+    console.log("Runiing", details?.user.id);
+    const res = await getConversationIdByUserIdAPI({
+      userId: details?.user?.id,
+    });
+    console.log({ res });
+    if (res.remote === "success") {
+      const conversationId = res.data.converesation_id;
+      console.log({ conversationId });
+      if (conversationId) {
+        navigate(urlcat("/employer/chat", { conversion: conversationId }));
+      } else {
+        navigate(urlcat("/employer/chat", { userId: details?.user?.id }));
+      }
+    }
+  };
 
   const handlerChangeApplicationStatus = async (action) => {
     const data = { reason: blackListReason, interview_at: interviewTime };
@@ -215,12 +233,11 @@ function ApplicationOptions({
         )}
         {message && (
           <Grid item xs={6} lg={4} sm={4}>
-            <Button variant="link" fullWidth>
+            <Button variant="link" fullWidth onClick={handleMessageClick}>
               <SVG.MessageIcon
                 style={{ color: "#274593" }}
                 className="application-option-icon"
               />
-
               <span>Message</span>
             </Button>
           </Grid>

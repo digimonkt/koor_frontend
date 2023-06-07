@@ -46,3 +46,9 @@ export const getConversationMessageHistoryAPI = async ({ conversationId }) => {
   }
   return res;
 };
+
+export const getConversationIdByUserIdAPI = async ({ userId }) => {
+  return await api.request({
+    url: urlcat("v1/chat/conversations/:userId", { userId }),
+  });
+};
