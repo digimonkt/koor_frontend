@@ -44,6 +44,7 @@ import styles from "./postJobs.module.css";
 import { JobFormControl } from "./style";
 import DialogBox from "@components/dialogBox";
 import { SVG } from "@assets/svg";
+import urlcat from "urlcat";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -52,6 +53,7 @@ const SUBMITTING_STATUS_ENUM = Object.freeze({
   null: "",
 });
 function PostJobsComponent() {
+  const { currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -227,19 +229,19 @@ function PostJobsComponent() {
         "languages",
         data.languages.map && data.languages.length
           ? [
-              ...data.languages.map((language) => ({
-                language: language.language.id,
-              })),
-              {
-                language: "",
-              },
-              {
-                language: "",
-              },
-            ]
-          : [1, 2, 3].map(() => ({
+            ...data.languages.map((language) => ({
+              language: language.language.id,
+            })),
+            {
               language: "",
-            }))
+            },
+            {
+              language: "",
+            },
+          ]
+          : [1, 2, 3].map(() => ({
+            language: "",
+          }))
       );
       formik.setFieldValue("highestEducation", data.highestEducation.id);
       formik.setFieldValue(
@@ -314,6 +316,13 @@ function PostJobsComponent() {
       );
     }
   }, [formik.values.jobCategories]);
+  useEffect(() => {
+    if (!currentUser.profile.isVerified) {
+      navigate(
+        urlcat("../employer/manage-jobs")
+      );
+    }
+  }, []);
   return (
     <div className="job-application">
       <Card
@@ -508,7 +517,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                        formik.errors.jobCategories ? (
+                          formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -524,7 +533,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                              formik.values.jobCategories
+                            formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -533,7 +542,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                        formik.errors.jobSubCategory ? (
+                          formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -645,7 +654,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                    formik.errors.contactEmail ? (
+                      formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -698,7 +707,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                    formik.errors.highestEducation ? (
+                      formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -730,7 +739,7 @@ function PostJobsComponent() {
                             {i === 0 ? (
                               <>
                                 {formik.touched.languages &&
-                                formik.errors.languages ? (
+                                  formik.errors.languages ? (
                                   <ErrorMessage>
                                     {formik.errors.languages}
                                   </ErrorMessage>
@@ -875,8 +884,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                          ? "UPDATE THE JOB"
-                          : "POST THE JOB"
+                            ? "UPDATE THE JOB"
+                            : "POST THE JOB"
                       }
                       type="submit"
                       disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
