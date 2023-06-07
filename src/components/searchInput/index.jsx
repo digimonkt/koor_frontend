@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
-import { Container } from "@mui/material";
+
 import { SVG } from "@assets/svg";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
@@ -21,18 +21,9 @@ export default function SearchInput({
     }
   }, [value]);
   return (
-    <div>
-      <Container
-        maxWidth={false}
-        sx={{
-          "@media(min-width:992px)": {
-            paddingLeft: "100px",
-            paddingRight: "100px",
-          },
-        }}
-      >
-        <div className={`${styles.searchInput}`}>
-          {/* <IconButton
+    <>
+      <div className={`${styles.searchInput}`}>
+        {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
@@ -40,33 +31,31 @@ export default function SearchInput({
           >
             <MenuIcon />
           </IconButton> */}
-          <div className="searchmainbox">
-            <small className="telentsearchicon">{<SVG.HeaderSearch />}</small>
-            <input
-              className={`${styles.searchbox}`}
-              placeholder={placeholder}
-              {...rest}
-              onChange={(e) => setFieldValue(e.target.value)}
-              value={fieldValue}
-              onKeyDown={(e) => {
-                if (e.key === "enter" || e.key === "Enter") {
-                  handleSearch(fieldValue);
-                }
-              }}
-            />
-            <span
-              onClick={() => handleSearch(fieldValue)}
-              style={{
-                background:
-                  role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
-                borderRadius: "20px",
-              }}
-            >
-              {svg}
-            </span>
-          </div>
+        <div className="searchmainbox">
+          <small className="telentsearchicon">{<SVG.HeaderSearch />}</small>
+          <input
+            className={`${styles.searchbox}`}
+            placeholder={placeholder}
+            {...rest}
+            onChange={(e) => setFieldValue(e.target.value)}
+            value={fieldValue}
+            onKeyDown={(e) => {
+              if (e.key === "enter" || e.key === "Enter") {
+                handleSearch(fieldValue);
+              }
+            }}
+          />
+          <span
+            onClick={() => handleSearch(fieldValue)}
+            style={{
+              background: role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
+              borderRadius: "20px",
+            }}
+          >
+            {svg}
+          </span>
         </div>
-      </Container>
-    </div>
+      </div>
+    </>
   );
 }

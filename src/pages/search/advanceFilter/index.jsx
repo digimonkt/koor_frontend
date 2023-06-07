@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./advanceFilter.module.css";
-import { MenuItem, MenuList } from "@mui/material";
+import { MenuItem, MenuList, Stack } from "@mui/material";
 import { OutlinedButton, SearchButton } from "@components/button";
 import { SVG } from "@assets/svg";
 import {
@@ -561,24 +561,29 @@ function AdvanceFilter({ searchType }) {
     setTimeout(() => formik.handleSubmit(), 500);
   }, []);
   return (
-    <div>
+    <>
       <div className={`${styles.searchResult}`}>
         <div className={`${styles.label} lables`}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "start",
+          <Stack
+            direction={{ xs: "column", lg: "row" }}
+            alignItems={{ xs: "flex-start", lg: "center" }}
+            justifyContent={"start"}
+            spacing={1}
+            sx={{
               maxWidth: "90%",
+              "@media (max-width:992px)": {
+                maxWidth: "100%",
+              },
             }}
           >
             <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
             <MenuList
               style={{
                 overflow: "auto",
-                marginLeft: "25px",
+
                 display: "flex",
                 alignItems: "center",
+                flexWrap: "wrap",
               }}
             >
               {allFilters.map((filter) => {
@@ -614,7 +619,7 @@ function AdvanceFilter({ searchType }) {
                 );
               })}
             </MenuList>
-          </div>
+          </Stack>
 
           <div
             onClick={() => setData(!data)}
@@ -680,7 +685,7 @@ function AdvanceFilter({ searchType }) {
           />
         </DialogBox>
       </div>
-    </div>
+    </>
   );
 }
 

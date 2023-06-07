@@ -118,8 +118,8 @@ body {
   display: flex;
   justify-content: space-between;
   text-align: center;
-  align-items: center;
-  /* height: 54px; */
+  align-items: start;
+  
 }
 
 .label ul::-webkit-scrollbar {
@@ -135,5 +135,6 @@ body {
 
 @media screen and (max-width:992px) {
  .historySearch{flex-direction: column;}
- .savesearch{margin-top:5px;} 
+ .savesearch{margin-top:5px; flex-direction: column} 
+ .savesearch span{margin-bottom: 15px;}
 } 

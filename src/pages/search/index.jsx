@@ -6,6 +6,7 @@ import {
   Box,
   Chip,
   Container,
+  Grid,
   IconButton,
   Menu,
   MenuItem,
@@ -29,6 +30,8 @@ import {
   setJobPage,
 } from "@redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
+import WebFillter from "./advanceFilter/webfiltter";
+
 function Search() {
   const params = useParams();
   const dispatch = useDispatch();
@@ -133,17 +136,7 @@ function Search() {
     );
   };
   return (
-    <div className={`${styles.body}`}>
-      <SearchInput
-        svg={
-          <SVG.Buttonsearch
-            color={role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593"}
-          />
-        }
-        placeholder={`Search ${searchPlaceHolder}`}
-        handleSearch={handleSearch}
-        value={search}
-      />
+    <Box className={`${styles.body}`} sx={{ marginTop: "118px" }}>
       <Container
         maxWidth={false}
         sx={{
@@ -153,166 +146,164 @@ function Search() {
           },
         }}
       >
-        <AdvanceFilter searchType={searchType} />
-      </Container>
-      <div className="paginations">
-        <Container
-          maxWidth={false}
-          sx={{
-            "@media(min-width:992px)": {
-              paddingLeft: "100px",
-              paddingRight: "100px",
-            },
-          }}
-        >
-          {pagination()}
-        </Container>
-      </div>
-      <Container
-        maxWidth={false}
-        sx={{
-          "@media(min-width:992px)": {
-            paddingLeft: "100px",
-            paddingRight: "100px",
-          },
-        }}
-      >
-        <Box className={`${styles.jobcards}`} sx={{ minHeight: "450px" }}>
-          <div className="saved-jobs">
-            <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <h2 className="m-0" style={{ textTransform: "capitalize" }}>
-                {searchType}
-                <Chip
-                  label={totalItems}
-                  className="ms-3"
-                  sx={{
-                    background:
-                      role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
-                    color:
-                      role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
-                    fontFamily: "Bahnschrift",
-                    fontSize: "16px",
-                  }}
+        <Grid container spacing={2}>
+          <Grid item lg={3.5} sx={{ display: { xs: "none", lg: "block" } }}>
+            <WebFillter />
+          </Grid>
+          <Grid item lg={8.5} xs={12}>
+            <SearchInput
+              svg={
+                <SVG.Buttonsearch
+                  color={role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593"}
                 />
-              </h2>
-              {searchType === SEARCH_TYPE.jobs ? (
-                <>
-                  <IconButton
-                    sx={{ width: "50px", height: "50px" }}
-                    onClick={handleClick}
-                  >
-                    {<SVG.FillterICon />}
-                  </IconButton>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                    PaperProps={{
-                      elevation: 0,
-                      sx: {
-                        overflow: "visible",
-                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                        mt: 1.5,
-                        "& .MuiAvatar-root": {
-                          width: 32,
-                          height: 32,
-                          ml: -0.5,
-                          mr: 1,
-                        },
-                        "&:before": {
-                          content: '""',
-                          display: "block",
-                          position: "absolute",
-                          top: 0,
-                          right: 14,
-                          width: 10,
-                          height: 10,
-                          bgcolor: "background.paper",
-                          transform: "translateY(-50%) rotate(45deg)",
-                          zIndex: 0,
-                        },
-                      },
-                    }}
-                    transformOrigin={{ horizontal: "right", vertical: "top" }}
-                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                  >
-                    <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
-                    {[
-                      {
-                        label: "Newest",
-                        sortBy: JOB_SORT_BY.created,
-                        orderBy: JOB_ORDER_BY.descending,
-                      },
-                      {
-                        label: "Oldest",
-                        sortBy: JOB_SORT_BY.created,
-                        orderBy: JOB_ORDER_BY.ascending,
-                      },
-                      {
-                        label: "Salary: Low to High",
-                        sortBy: JOB_SORT_BY.salary,
-                        orderBy: JOB_ORDER_BY.ascending,
-                      },
-                      {
-                        label: "Salary: High to Low",
-                        sortBy: JOB_SORT_BY.salary,
-                        orderBy: JOB_ORDER_BY.descending,
-                      },
-                    ].map((data) => {
-                      return (
-                        <MenuItem
-                          key={data.label}
-                          onClick={() => {
-                            handleClose();
-                            handleSorting(data.sortBy, data.orderBy);
-                          }}
-                          className="fillterbox"
-                          sx={{
-                            backgroundColor:
-                              sortBy === data.sortBy && orderBy === data.orderBy
-                                ? role === USER_ROLES.jobSeeker
-                                  ? "#FEEFD3"
-                                  : "#D5E3F7"
-                                : "",
-                          }}
-                        >
-                          {data.label}
-                        </MenuItem>
-                      );
-                    })}
-                  </Menu>
-                </>
-              ) : (
-                ""
-              )}
-            </Stack>
-          </div>
-          <Component />
-        </Box>
+              }
+              placeholder={`Search ${searchPlaceHolder}`}
+              handleSearch={handleSearch}
+              value={search}
+            />
+            <Box sx={{ display: { xs: "block", lg: "none" } }}>
+              <AdvanceFilter searchType={searchType} />
+            </Box>
+            <Box
+              className="paginations"
+              sx={{ marginTop: { lg: "24px", xs: "24px" } }}
+            >
+              {pagination()}
+            </Box>
+
+            <Box className={`${styles.jobcards}`} sx={{ minHeight: "450px" }}>
+              <div className="saved-jobs">
+                <Stack
+                  direction={{ xs: "column", lg: "row" }}
+                  spacing={{ xs: 1, lg: 2 }}
+                  justifyContent={{ xs: "left", lg: "space-between" }}
+                  alignItems={{ xs: "flex-start", lg: "center" }}
+                >
+                  <h2 className="m-0" style={{ textTransform: "capitalize" }}>
+                    {searchType}
+                    <Chip
+                      label={totalItems}
+                      className="ms-3"
+                      sx={{
+                        background:
+                          role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
+                        color:
+                          role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
+                        fontFamily: "Bahnschrift",
+                        fontSize: "16px",
+                      }}
+                    />
+                  </h2>
+                  {searchType === SEARCH_TYPE.jobs ? (
+                    <>
+                      <IconButton
+                        sx={{ width: "50px", height: "50px" }}
+                        onClick={handleClick}
+                      >
+                        {<SVG.FillterICon />}
+                      </IconButton>
+                      <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                          "aria-labelledby": "basic-button",
+                        }}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            overflow: "visible",
+                            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                            mt: 1.5,
+                            "& .MuiAvatar-root": {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            "&:before": {
+                              content: '""',
+                              display: "block",
+                              position: "absolute",
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: "background.paper",
+                              transform: "translateY(-50%) rotate(45deg)",
+                              zIndex: 0,
+                            },
+                          },
+                        }}
+                        transformOrigin={{
+                          horizontal: "right",
+                          vertical: "top",
+                        }}
+                        anchorOrigin={{
+                          horizontal: "right",
+                          vertical: "bottom",
+                        }}
+                      >
+                        <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
+                        {[
+                          {
+                            label: "Newest",
+                            sortBy: JOB_SORT_BY.created,
+                            orderBy: JOB_ORDER_BY.descending,
+                          },
+                          {
+                            label: "Oldest",
+                            sortBy: JOB_SORT_BY.created,
+                            orderBy: JOB_ORDER_BY.ascending,
+                          },
+                          {
+                            label: "Salary: Low to High",
+                            sortBy: JOB_SORT_BY.salary,
+                            orderBy: JOB_ORDER_BY.ascending,
+                          },
+                          {
+                            label: "Salary: High to Low",
+                            sortBy: JOB_SORT_BY.salary,
+                            orderBy: JOB_ORDER_BY.descending,
+                          },
+                        ].map((data) => {
+                          return (
+                            <MenuItem
+                              key={data.label}
+                              onClick={() => {
+                                handleClose();
+                                handleSorting(data.sortBy, data.orderBy);
+                              }}
+                              className="fillterbox"
+                              sx={{
+                                backgroundColor:
+                                  sortBy === data.sortBy &&
+                                  orderBy === data.orderBy
+                                    ? role === USER_ROLES.jobSeeker
+                                      ? "#FEEFD3"
+                                      : "#D5E3F7"
+                                    : "",
+                              }}
+                            >
+                              {data.label}
+                            </MenuItem>
+                          );
+                        })}
+                      </Menu>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </Stack>
+              </div>
+              <Component />
+            </Box>
+          </Grid>
+        </Grid>
+        <div className="paginations pt-4">{pagination()}</div>
       </Container>
-      <div className="paginations pt-4">
-        <Container
-          maxWidth={false}
-          sx={{
-            "@media(min-width:992px)": {
-              paddingLeft: "100px",
-              paddingRight: "100px",
-            },
-          }}
-        >
-          {pagination()}
-        </Container>
-      </div>
-    </div>
+    </Box>
   );
 }
 
