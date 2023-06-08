@@ -54,7 +54,7 @@ export const ResourceCard = ({ id, image, title, description }) => {
               )}
 
               <OutlinedButton
-                onClick={() => navigate(`/resource/${id}`)}
+                onClick={() => navigate(`/resources/${id}`)}
                 title={
                   <>
                     <span className="me-2 d-inline-flex">

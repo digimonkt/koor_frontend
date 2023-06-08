@@ -172,9 +172,9 @@ export const ROUTES = [
   },
 
   {
-    id: "resource",
-    name: "Resource",
-    path: "/resource/:id",
+    id: "resources",
+    name: "Resources",
+    path: "/resources/:id",
     component: Resource,
   },
 

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getPrivacyApi } from "@api/common";
+import { getPrivacyAPI } from "@api/common";
 import ShowContent from "@components/showContent";
 
 const PrivacyPolicy = () => {
   const [privacyPolicy, setPrivacyPolicy] = useState("");
 
   const userRights = async () => {
-    const response = await getPrivacyApi();
+    const response = await getPrivacyAPI();
     if (response.remote === "success") {
       setPrivacyPolicy(response.data.description);
     }

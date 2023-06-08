@@ -18,7 +18,7 @@ export const getResourceDetailsAPI = async (resourcesId) => {
   return res;
 };
 
-export const getUserRightsApi = async () => {
+export const getUserRightsAPI = async () => {
   const response = await api.request({
     url: urlcat("/v1/admin/user-rights"),
     method: "GET",
@@ -26,7 +26,7 @@ export const getUserRightsApi = async () => {
   return response;
 };
 
-export const getPrivacyApi = async () => {
+export const getPrivacyAPI = async () => {
   const response = await api.request({
     url: urlcat("/v1/admin/privacy-policy"),
     method: "GET",

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { getUserRightsApi } from "@api/common";
+import { getUserRightsAPI } from "@api/common";
 import ShowContent from "@components/showContent";
 const TermsCondition = () => {
   const [userRightData, setUserRightData] = useState("");
 
   const userRights = async () => {
-    const response = await getUserRightsApi();
+    const response = await getUserRightsAPI();
     if (response.remote === "success") {
       setUserRightData(response.data.description);
     } else {
