@@ -1,9 +1,11 @@
 import { ChatBox } from "@pages/messages";
 import Resource from "@pages/resource";
+import TermsCondition from "@pages/termsCondition";
 import Home from "@pages/home";
 import AboutUs from "../../pages/about";
 import { PostTender } from "@pages/tenders"; // need to relocate to employer folder
 import { lazy } from "react";
+import PrivacyPolicy from "@pages/privacyPolicy";
 // resources
 const Resources = lazy(() =>
   import("@pages/resources").then((module) => ({ default: module.Resources }))
@@ -170,10 +172,17 @@ export const ROUTES = [
   },
 
   {
-    id: "resource",
-    name: "Resource",
-    path: "/resource",
+    id: "resources",
+    name: "Resources",
+    path: "/resources/:id",
     component: Resource,
+  },
+
+  {
+    id: "termsCondition",
+    name: "termsCondition",
+    path: "/terms-condition",
+    component: TermsCondition,
   },
 
   {
@@ -181,6 +190,13 @@ export const ROUTES = [
     name: "About Us",
     path: "/about-us",
     component: AboutUs,
+  },
+
+  {
+    id: "privacy-policy",
+    name: "privacy-policy",
+    path: "/privacy-policy",
+    component: PrivacyPolicy,
   },
 
   {

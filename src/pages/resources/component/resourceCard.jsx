@@ -4,9 +4,14 @@ import { OutlinedButton } from "@components/button";
 import { Card, CardContent, Grid } from "@mui/material";
 import styles from "../styles.module.css";
 import { useNavigate } from "react-router-dom";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
-export const ResourceCard = ({ image, title, description }) => {
+export const ResourceCard = ({ id, image, title, description }) => {
   const navigate = useNavigate();
+  const removeImagesFromHTMLArray = (htmlArray) => {
+    const imgRegex = /<img[^>]+>/g;
+    return htmlArray.map((html) => html.replace(imgRegex, ""));
+  };
   return (
     <Card
       sx={{
@@ -27,16 +32,29 @@ export const ResourceCard = ({ image, title, description }) => {
         <Grid container spacing={2}>
           <Grid item lg={4} xs={12}>
             <div className={`${styles.imgbox}`}>
-              <img alt="" src={image} />
+              <img
+                alt=""
+                src={generateFileUrl(image)}
+                className={`${styles.imgSize}`}
+              />
             </div>
           </Grid>
           <Grid item lg={8} xs={12}>
             <div className={`${styles.content}`}>
               <h3>{title}</h3>
-              <p>{description}</p>
+              {removeImagesFromHTMLArray(description)?.map(
+                (html, innerIndex) => (
+                  <div
+                    key={innerIndex}
+                    dangerouslySetInnerHTML={{
+                      __html: html?.slice(0, 300) + "......",
+                    }}
+                  />
+                )
+              )}
 
               <OutlinedButton
-                onClick={() => navigate("/resource")}
+                onClick={() => navigate(`/resources/${id}`)}
                 title={
                   <>
                     <span className="me-2 d-inline-flex">
