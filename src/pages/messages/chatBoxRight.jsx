@@ -40,14 +40,18 @@ function ChatBox() {
   const [hasMore, setHasMore] = useState(false);
   const [ws, setWs] = useState(null);
   const scrollbarRef = useRef();
-  const getMessageHistory = async (data, isScrollToBottom) => {
+  const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
       limit: 20,
       ...(data || {}),
     });
     if (res.remote === "success") {
-      setMessage([...messages, ...res.data.results]);
+      if (initialLoad) {
+        setMessage([...res.data.results]);
+      } else {
+        setMessage([...messages, ...res.data.results]);
+      }
       setTimeout(() => {
         setHasMore(!!res.data.next);
       }, 500);
@@ -89,10 +93,7 @@ function ChatBox() {
         urlcat("/employer/chat", { conversion: message.conversation.id })
       );
     }
-    console.log(
-      scrollbarRef.current.scrollHeight - scrollbarRef.current.scrollTop,
-      scrollbarRef.current.scrollHeight - scrollbarRef.current.scrollTop <= 500
-    );
+
     if (
       scrollbarRef.current.scrollHeight - scrollbarRef.current.scrollTop <=
       500
@@ -106,16 +107,14 @@ function ChatBox() {
     const res = await getConversationIdByUserIdAPI({
       userId: id,
     });
-    console.log({ res });
     if (res.remote === "success") {
       const conversationId = res.data.converesation_id;
-      console.log({ conversationId });
       if (conversationId) {
         navigate(urlcat("/employer/chat", { conversion: conversationId }));
       }
     }
+    setIsLoading(false);
   };
-
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -128,7 +127,11 @@ function ChatBox() {
       checkExistingConversation(searchParams.get("userId"));
     }
     if (searchParams.get("conversion")) {
-      getMessageHistory({}, true);
+      getMessageHistory({
+        data: {},
+        isScrollToBottom: true,
+        initialLoad: true,
+      });
     }
   }, [searchParams.get("conversion")]);
 
@@ -186,7 +189,9 @@ function ChatBox() {
               loadMore={() => {
                 if (messages.length) {
                   getMessageHistory({
-                    messageId: messages[messages.length - 1].id,
+                    data: {
+                      messageId: messages[messages.length - 1].id,
+                    },
                   });
                 }
               }}
