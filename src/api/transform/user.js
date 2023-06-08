@@ -28,7 +28,7 @@ export const transformGetUserDetails = (data) => {
       licenseIdFile: data.profile.license_id_file,
       experience: data.profile.experience,
       address: data.profile.address || "",
-
+      isVerified: data.profile.is_verified,
       // vendor
       registrationNumber: data.profile.registration_number || "",
       registrationCertificate: data.profile.registration_certificate,

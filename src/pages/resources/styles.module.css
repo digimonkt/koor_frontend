@@ -40,3 +40,7 @@
     .imgbox img {
         width: 100%;
     }
+    .imgSize{
+        width: 400px !important;
+        height: 300px;
+      }
