@@ -1,3 +1,3 @@
-import ChatBoxComponent from "./chatBox";
+import ChatComponent from "./chat";
 
-export const ChatBox = ChatBoxComponent;
+export const ChatBox = ChatComponent;

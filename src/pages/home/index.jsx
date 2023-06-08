@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Container } from "@mui/system";
 import SlickSlider from "@pages/slider";
 import InputSearch from "@components/inputSearch";
-// import SelectInput from "./selectinput";
 import { SVG } from "@assets/svg";
 import VerticalSlider from "./verticalSlider";
 import { Link, useNavigate } from "react-router-dom";
