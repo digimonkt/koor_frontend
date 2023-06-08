@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { OutlinedButton } from "@components/button";
 import { AntTab, AntTabs } from "./style";
 import { useSelector } from "react-redux";
-
+import DialogBox from "@components/dialogBox";
+import urlcat from "urlcat";
 const ManageTenders = () => {
   // navigate
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ const ManageTenders = () => {
   const [panel, setPanel] = useState(0);
   const { totalTender } = useSelector((state) => state.employer);
   const { totalTenderApplications } = useSelector((state) => state.employer);
+  const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
+  const { currentUser } = useSelector((state) => state.auth);
   // tab data
   const tabsData = [
     {
@@ -54,7 +57,13 @@ const ManageTenders = () => {
           />
           <div className="ms-auto">
             <OutlinedButton
-              onClick={() => navigate("/employer/tender/post")}
+              onClick={() => {
+                if (currentUser.profile.isVerified) {
+                  navigate(urlcat("../employer/tender/post"));
+                } else {
+                  setAccountVerifiedWarning(true);
+                }
+              }}
               title={
                 <>
                   <span className="me-3">{<SVG.EditDashIcon />}</span>Post new
@@ -87,6 +96,17 @@ const ManageTenders = () => {
             <tab.component />
           </div>
         ))}
+        <DialogBox open={accountVerifiedWarning} handleClose={() => setAccountVerifiedWarning(false)}>
+          <div>
+            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+            <h1 className="heading">Account Verification Status</h1>
+            <div className="form-content">
+              <p>
+                Dear {currentUser.name || currentUser.email }, your account is not verified by the administrator. Please contact the administrator for further assistance.
+              </p>
+            </div>
+          </div>
+        </DialogBox>
       </div>
     </>
   );
