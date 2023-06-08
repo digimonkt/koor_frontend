@@ -89,6 +89,18 @@ function ChatBox() {
         urlcat("/employer/chat", { conversion: message.conversation.id })
       );
     }
+    console.log(
+      scrollbarRef.current.scrollHeight - scrollbarRef.current.scrollTop,
+      scrollbarRef.current.scrollHeight - scrollbarRef.current.scrollTop <= 500
+    );
+    if (
+      scrollbarRef.current.scrollHeight - scrollbarRef.current.scrollTop <=
+      500
+    ) {
+      setTimeout(() => {
+        scrollToBottom();
+      }, 100);
+    }
   };
   const checkExistingConversation = async (id) => {
     const res = await getConversationIdByUserIdAPI({
