@@ -102,7 +102,7 @@ const ManageTenders = () => {
             <h1 className="heading">Account Verification Status</h1>
             <div className="form-content">
               <p>
-                Dear {currentUser.name}, your account is not verified by the administrator. Please contact the administrator for further assistance.
+                Dear {currentUser.name || currentUser.email }, your account is not verified by the administrator. Please contact the administrator for further assistance.
               </p>
             </div>
           </div>
