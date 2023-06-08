@@ -29,7 +29,7 @@ export const transformMessageResponse = (data) => {
       id: data.user.id,
       name: data.user.name,
       email: data.user.email,
-      image: generateFileUrl(data.user.image?.path || ""),
+      image: generateFileUrl(data.user.image || ""),
     },
     conversation: data.conversation.id,
     message: data.message,

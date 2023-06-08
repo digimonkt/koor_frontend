@@ -26,9 +26,12 @@ export const getConversationListAPI = async () => {
   return res;
 };
 
-export const getConversationMessageHistoryAPI = async ({ conversationId }) => {
+export const getConversationMessageHistoryAPI = async ({
+  conversationId,
+  ...rest
+}) => {
   const res = await api.request({
-    url: urlcat("v1/chat/:conversationId/history", { conversationId }),
+    url: urlcat("v1/chat/:conversationId/history", { conversationId, ...rest }),
     method: "GET",
   });
   if (res.remote === "success") {
