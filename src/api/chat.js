@@ -17,9 +17,10 @@ export const getConversationListAPI = async () => {
         count: res.data.count,
         next: res.data.next,
         previous: res.data.previous,
-        results: res.data.results.map((data) =>
-          transformConversationResponse(data)
-        ),
+        results:
+          res.data.results?.map((data) =>
+            transformConversationResponse(data)
+          ) || [],
       },
     };
   }
