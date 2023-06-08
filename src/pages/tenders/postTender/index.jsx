@@ -40,7 +40,9 @@ import { SVG } from "@assets/svg";
 import styles from "./postTender.module.css";
 import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "@api/user";
+import urlcat from "urlcat";
 const PostTender = () => {
+  const { currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -235,6 +237,13 @@ const PostTender = () => {
     const newTenderId = searchParams.get("tenderId");
     if (newTenderId && tenderId !== newTenderId) setTenderId(newTenderId);
   }, [searchParams.get("tenderId")]);
+  useEffect(() => {
+    if (!currentUser.profile.isVerified) {
+      navigate(
+        urlcat("../employer/manage-tenders")
+      );
+    }
+  }, []);
   return (
     <div className="job-application">
       <Card
