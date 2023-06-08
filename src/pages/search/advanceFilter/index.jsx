@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./advanceFilter.module.css";
-import { MenuItem, MenuList } from "@mui/material";
+import {
+  MenuItem,
+  // MenuList,
+  Stack,
+} from "@mui/material";
 import { OutlinedButton, SearchButton } from "@components/button";
 import { SVG } from "@assets/svg";
 import {
@@ -599,13 +603,11 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
             }}
           >
             <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
-            <MenuList
-              style={{
-                overflow: "auto",
-                marginLeft: "25px",
-                display: "flex",
-                alignItems: "center",
-              }}
+            <Stack
+              direction={"row"}
+              spacing={0}
+              overflow={responsive ? "" : "auto"}
+              flexWrap={responsive ? "wrap" : ""}
             >
               {allFilters.map((filter) => {
                 return (
@@ -639,7 +641,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                   </MenuItem>
                 );
               })}
-            </MenuList>
+            </Stack>
           </div>
 
           {!defaultOpen && (

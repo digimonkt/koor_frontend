@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getTenderSector } from "@redux/slice/choices";
 
-function VendorFilter({ formik, footer }) {
+function VendorFilter({ formik, footer, responsive }) {
   const dispatch = useDispatch();
   const {
     choices: {
@@ -30,7 +30,7 @@ function VendorFilter({ formik, footer }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -54,7 +54,7 @@ function VendorFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -79,7 +79,7 @@ function VendorFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -107,7 +107,7 @@ function VendorFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -132,7 +132,7 @@ function VendorFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -148,7 +148,7 @@ function VendorFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -171,7 +171,7 @@ function VendorFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <LabeledInput
               title="Years in market"
               className="add-form-control"
