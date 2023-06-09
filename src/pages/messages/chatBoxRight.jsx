@@ -25,6 +25,7 @@ import { LabeledInput } from "@components/input";
 import { transformMessageResponse } from "@api/transform/chat";
 import styles from "./message.module.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import { GetUserDetailsAPI } from "@api/user";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -39,6 +40,7 @@ function ChatBox() {
   const [isScrollToBottom, setIsScrollToBottom] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [ws, setWs] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
   const scrollbarRef = useRef();
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
@@ -110,11 +112,21 @@ function ChatBox() {
     if (res.remote === "success") {
       const conversationId = res.data.converesation_id;
       if (conversationId) {
-        navigate(urlcat("/employer/chat", { conversion: conversationId }));
+        navigate(
+          urlcat("/employer/chat", { conversion: conversationId, userId: id })
+        );
       }
     }
     setIsLoading(false);
   };
+
+  const getUserDetails = async () => {
+    const res = await GetUserDetailsAPI({ userId: searchParams.get("userId") });
+    if (res.remote === "success") {
+      setUserDetails(res.data);
+    }
+  };
+
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -123,7 +135,7 @@ function ChatBox() {
 
   useEffect(() => {
     setMessage([]);
-    if (searchParams.get("userId")) {
+    if (!searchParams.get("conversion") && searchParams.get("userId")) {
       checkExistingConversation(searchParams.get("userId"));
     }
     if (searchParams.get("conversion")) {
@@ -133,14 +145,22 @@ function ChatBox() {
         initialLoad: true,
       });
     }
+    if (searchParams.get("userId")) {
+      getUserDetails();
+    }
   }, [searchParams.get("conversion")]);
 
   useEffect(() => {
+    const queryParams = {};
+    if (searchParams.get("conversion")) {
+      queryParams.conversation_id = searchParams.get("conversion");
+    } else {
+      queryParams.conversation_id = searchParams.get("userId");
+    }
     const data = {
       url: "ws/chat",
       queryParams: {
-        conversation_id: searchParams.get("conversion"),
-        user_id: searchParams.get("userId"),
+        ...queryParams,
       },
     };
     const ws = new WebSocketClient(data);
@@ -161,10 +181,12 @@ function ChatBox() {
           <div className="message-header">
             <Stack direction="row" spacing={2} justifyContent="space-between">
               <div className="headerbox">
-                <h3>John Doe</h3>
-                <p>Job Title</p>
+                <h3>{userDetails.name || userDetails.email}</h3>
+                {/* <p>Job Title</p> */}
               </div>
-              <ApplicationOptions details={{ user: {} }} />
+              <div>
+                <ApplicationOptions details={{ user: userDetails }} view />
+              </div>
             </Stack>
           </div>
           <div

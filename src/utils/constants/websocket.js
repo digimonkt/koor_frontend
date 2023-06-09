@@ -67,13 +67,11 @@ export class WebSocketClient {
       this.websocket.send(JSON.stringify(message));
     } else {
       console.error("WebSocket connection is not open");
-      // Add your custom logic for handling a closed connection
     }
   }
 
   onClose(event) {
     console.log("WebSocket connection closed:", event);
-    // Add your custom logic for handling a closed connection
   }
 
   close() {
