@@ -1,31 +1,10 @@
 import React from "react";
-import { Box, Button, Container, Grid, Stack } from "@mui/material";
+import { Box, Container, Grid, Stack } from "@mui/material";
 import styles from "../../pages/about/about.module.css";
-import { SVG } from "@assets/svg";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { otherButton } from "@utils/constants/constants";
 
 const ShowContent = ({ content }) => {
-  const navigate = useNavigate();
-  const button = [
-    {
-      icon: <SVG.Reciept />,
-      svg: <SVG.ArrowForward />,
-      text: "Find Tender",
-      url: "/search/tenders",
-    },
-    {
-      icon: <SVG.ProfileIcon />,
-      svg: <SVG.ArrowForward />,
-      text: "Find Talent",
-      url: "/search/talents",
-    },
-    {
-      icon: <SVG.Work />,
-      svg: <SVG.ArrowForward />,
-      text: "Find Job",
-      url: "/search/jobs",
-    },
-  ];
   return (
     <>
       <Box className={styles.about}>
@@ -85,23 +64,23 @@ const ShowContent = ({ content }) => {
                     direction={{ xs: "column", lg: "row", sm: "row" }}
                     spacing={{ xs: 2, lg: 2, sm: 2 }}
                   >
-                    {button.map((item, index) => {
+                    {otherButton.map((item, index) => {
+                      console.log(item);
                       return (
                         <>
-                          <Button
+                          <Link
                             sx={{ textTransform: "capitalize" }}
                             key={index}
                             variant="contained"
                             className={styles.btn_about}
-                            fullWidth
-                            onClick={() => {
-                              navigate(`${item.url}`);
-                            }}
+                            to={
+                              `${item.url}`
+                            }
                           >
                             <span className={styles.icon}>{item.icon}</span>
                             <span className="mx-2">{item.text}</span>
                             {item.svg}
-                          </Button>
+                          </Link>
                         </>
                       );
                     })}
