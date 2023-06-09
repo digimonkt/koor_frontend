@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Container, Grid, Stack } from "@mui/material";
 import styles from "../../pages/about/about.module.css";
 import { Link } from "react-router-dom";
-import { otherButton } from "@utils/constants/constants";
+import { OTHER_BUTTON } from "@utils/constants/constants";
 
 const ShowContent = ({ content }) => {
   return (
@@ -64,8 +64,7 @@ const ShowContent = ({ content }) => {
                     direction={{ xs: "column", lg: "row", sm: "row" }}
                     spacing={{ xs: 2, lg: 2, sm: 2 }}
                   >
-                    {otherButton.map((item, index) => {
-                      console.log(item);
+                    {OTHER_BUTTON.map((item, index) => {
                       return (
                         <>
                           <Link

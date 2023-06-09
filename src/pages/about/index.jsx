@@ -4,7 +4,7 @@ import styles from "./about.module.css";
 import { IMAGES } from "../../assets/images";
 import { Link } from "react-router-dom";
 import AboutContent from "./aboutContent";
-import { otherButton } from "@utils/constants/constants";
+import { OTHER_BUTTON } from "@utils/constants/constants";
 const aboutImg = [
   {
     img: IMAGES.AboutBanner,
@@ -100,8 +100,7 @@ const AboutUs = () => {
                     direction={{ xs: "column", lg: "row", sm: "row" }}
                     spacing={{ xs: 2, lg: 2, sm: 2 }}
                   >
-                    {otherButton.map((item, index) => {
-                      console.log(item);
+                    {OTHER_BUTTON.map((item, index) => {
                       return (
                         <>
                           <Link

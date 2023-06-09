@@ -11,7 +11,7 @@ export const BLACKLIST_REASON_LIST = [
   { label: "Fake Information", value: "Fake Information" },
   { label: "Malicious activity", value: "Malicious Activity" },
 ];
-export const otherButton = [
+export const OTHER_BUTTON = [
   {
     icon: <SVG.Reciept />,
     svg: <SVG.ArrowForward />,
