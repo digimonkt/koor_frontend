@@ -28,3 +28,20 @@ export const getTestimonialListAPI = async () => {
     }
     return response;
 };
+
+export const storeNewsletterAPI = async (email) => {
+    const response = await api.request({
+        url: urlcat("v1/admin/newsletter-user"),
+        method: "POST",
+        data: { email },
+    });
+    if (response.remote === "success") {
+        return {
+            remote: "success",
+        };
+    }
+    return {
+        remote: "failure",
+        error: response.error.errors.email,
+    };
+};
