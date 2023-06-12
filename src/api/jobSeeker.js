@@ -140,6 +140,7 @@ export const getAppliedJobsAPI = async (sortQuery) => {
             rejectedAt: result.rejected_at,
             shortLetter: result.short_letter,
             shortlistedAt: result.shortlisted_at,
+            interviewAt: result.interview_at,
             job: transformJobListResponse({
               results: [result.job],
             }).results[0],

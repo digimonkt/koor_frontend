@@ -8,7 +8,7 @@ import styles from "./advanceFilter.module.css";
 // import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { getTenderSector } from "@redux/slice/choices";
 
-function TenderFilter({ formik, footer }) {
+function TenderFilter({ formik, footer, responsive }) {
   const dispatch = useDispatch();
   const {
     choices: {
@@ -31,7 +31,7 @@ function TenderFilter({ formik, footer }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -55,7 +55,7 @@ function TenderFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -80,7 +80,7 @@ function TenderFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -108,7 +108,7 @@ function TenderFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -133,7 +133,7 @@ function TenderFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -149,7 +149,7 @@ function TenderFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -172,7 +172,7 @@ function TenderFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} lg={responsive ? 12 : 4}>
             <div
               style={{ display: "flex", flexDirection: "column" }}
               className="filter_input"
@@ -196,7 +196,7 @@ function TenderFilter({ formik, footer }) {
             </div>
           </Grid>
 
-          {/* <Grid item xs={4} lg={3}>
+          {/* <Grid item xs={4} lg={responsive ? 12 : 4}>
             <CurrencyInput
               currency="USD"
               title="Budget"
@@ -210,7 +210,7 @@ function TenderFilter({ formik, footer }) {
               }}
             />
           </Grid>
-          <Grid item xs={4} sx={{ marginTop: "7px" }}>
+          <Grid item xs={4} lg={responsive ? 12 : 4} sx={{ marginTop: "7px" }}>
             <FormGroup row sx={{ marginLeft: "7px" }}>
               <LabeledInput
                 placeholder="To"

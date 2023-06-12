@@ -12,6 +12,7 @@ const initialState = {
   role: "",
   currentUser: {
     id: "",
+    sessionId: "",
     email: "",
     mobileNumber: "",
     countryCode: "",

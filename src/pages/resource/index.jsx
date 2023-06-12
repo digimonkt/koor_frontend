@@ -1,18 +1,25 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import styles from "./resource.module.css";
-import { IMAGES } from "@assets/images";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { SVG } from "@assets/svg";
 import Content from "./Content";
-
-const banner = [
-  {
-    img: IMAGES.Resource,
-  },
-];
+import { getResourceDetailsAPI } from "@api/common";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const Resource = () => {
+  const { id } = useParams();
+  const [resourceList, setResourceList] = useState([]);
+
+  const resourceDetails = async () => {
+    const response = await getResourceDetailsAPI(id);
+    if (response.remote === "success") {
+      setResourceList(response.data);
+    }
+  };
+  useEffect(() => {
+    resourceDetails();
+  }, []);
   return (
     <>
       <Box className={styles.resource}>
@@ -62,20 +69,18 @@ const Resource = () => {
                 </Box>
               </Grid>
               <Grid item lg={5} sm={6} xs={12}>
-                {banner.map((item, index) => (
-                  <Box key={index}>
-                    <img
-                      src={item.img}
-                      alt="img"
-                      className={styles.resource_banner}
-                    />
-                  </Box>
-                ))}
+                <Box>
+                  <img
+                    src={generateFileUrl(resourceList?.attachment?.path)}
+                    alt="img"
+                    className={styles.resource_banner}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </Container>
           <Box>
-            <Content />
+            <Content resourceList={resourceList} />
           </Box>
         </Box>
       </Box>
