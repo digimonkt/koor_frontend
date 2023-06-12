@@ -26,6 +26,8 @@ import { USER_ROLES } from "@utils/enum";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CoravImg from "../../assets/images/corav-bg.png";
 import { getTopJobCategoriesAPI } from "@api/job";
+import { getTestimonialListAPI, getTopListingCompaniesAPI } from "@api/home";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -38,6 +40,8 @@ const Home = () => {
   const [location, setLocation] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [topJobCategories, setTopJobCategories] = useState([]);
+  const [topListingCompanies, setTopListingCompanies] = useState([]);
+  const [testimonialList, setTestimonialList] = useState([]);
 
   const getTopJobCategories = async () => {
     const res = await getTopJobCategoriesAPI();
@@ -45,11 +49,23 @@ const Home = () => {
       setTopJobCategories(res.data);
     }
   };
-
+  const getTopListingCompanies = async () => {
+    const res = await getTopListingCompaniesAPI();
+    if (res.remote === "success") {
+      setTopListingCompanies(res.data);
+    }
+  };
+  const getTestimonialList = async () => {
+    const res = await getTestimonialListAPI();
+    if (res.remote === "success") {
+      setTestimonialList(res.data.result);
+    }
+  };
   useEffect(() => {
     getTopJobCategories();
+    getTopListingCompanies();
+    getTestimonialList();
   }, []);
-
   useEffect(() => {
     dispatch(setIstHomePage(true));
     if (!countries.data.length) {
@@ -62,7 +78,6 @@ const Home = () => {
       dispatch(setIstHomePage(false));
     };
   }, []);
-
   return (
     <>
       {!isLoggedIn ? (
@@ -220,48 +235,20 @@ const Home = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Grid item xs={4} lg={2} sm={1}>
-                    <img
-                      src={IMAGES.Mintra}
-                      alt="img"
-                      className={`${styles.mintra}`}
-                    />
-                  </Grid>
-                  <Grid item xs={4} lg={2} sm={2}>
-                    <img
-                      src={IMAGES.Amazon}
-                      alt="img"
-                      className={`${styles.amazon}`}
-                    />
-                  </Grid>
-                  <Grid item xs={4} lg={2} sm={2}>
-                    <img
-                      src={IMAGES.Dhl}
-                      alt="img"
-                      className={`${styles.dhl}`}
-                    />
-                  </Grid>
-                  <Grid item xs={4} lg={2} sm={2}>
-                    <img
-                      src={IMAGES.Binance}
-                      alt="img"
-                      className={`${styles.binance}`}
-                    />
-                  </Grid>
-                  <Grid item xs={4} lg={2} sm={1}>
-                    <img
-                      src={IMAGES.Dominos}
-                      alt="img"
-                      className={`${styles.dominos}`}
-                    />
-                  </Grid>
-                  <Grid item xs={4} lg={2} sm={2}>
-                    <img
-                      src={IMAGES.Lingo}
-                      alt="img"
-                      className={`${styles.lingo}`}
-                    />
-                  </Grid>
+                  {
+                    (topListingCompanies || []).map((item, key) => {
+                      return <>
+                        <Grid key={{ key }} item xs={4} lg={2} sm={1}>
+                          <img
+                            src={generateFileUrl(item.logo.path)}
+                            alt="img"
+                            className={`${styles.mintra}`}
+                          />
+                        </Grid>
+                      </>;
+                    })
+                  }
+
                 </Grid>
                 <Divider
                   sx={{
@@ -360,7 +347,7 @@ const Home = () => {
                     },
                   }}
                 >
-                  <VerticalSlider />
+                  <VerticalSlider testimonialList={testimonialList} />
                 </Container>
               </Box>
               <Box>
