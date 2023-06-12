@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import {
   getConversationIdByUserIdAPI,
   getConversationMessageHistoryAPI,
+  sendAttachmentAPI,
 } from "@api/chat";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -26,6 +27,7 @@ import { transformMessageResponse } from "@api/transform/chat";
 import styles from "./message.module.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import { GetUserDetailsAPI } from "@api/user";
+import { generateFileUrl } from "@utils/generateFileUrl";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -120,6 +122,24 @@ function ChatBox() {
     setIsLoading(false);
   };
 
+  const handleAttachment = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const newFormData = new FormData();
+      newFormData.append("attachment", file);
+      const res = await sendAttachmentAPI(newFormData);
+      if (res.remote === "success") {
+        ws.sendMessage({
+          message_attachment: res.data,
+          content_type: "attachment",
+        });
+        setTimeout(() => {
+          scrollToBottom();
+        }, 500);
+      }
+    }
+  };
+
   const getUserDetails = async () => {
     const res = await GetUserDetailsAPI({ userId: searchParams.get("userId") });
     if (res.remote === "success") {
@@ -172,6 +192,22 @@ function ChatBox() {
       ws.close();
     };
   }, [searchParams.get("conversion")]);
+
+  const renderAttachment = (attachment) => {
+    switch (attachment.type) {
+      case "image":
+        return (
+          <img
+            alt="attachment"
+            src={generateFileUrl(attachment.path)}
+            width={"400px"}
+          />
+        );
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -280,11 +316,20 @@ function ChatBox() {
                             ) : (
                               <h4>{message.user.name}</h4>
                             )}
-                            <div className="text-inline">
-                              <p>{message.message}</p>
-                              <span className="ms-2">
+                            <div
+                              className={
+                                message.attachment ? "" : "text-inline"
+                              }
+                            >
+                              <div>
+                                {message.attachment
+                                  ? renderAttachment(message.attachment)
+                                  : ""}
+                                <p>{message.message}</p>
+                              </div>
+                              <div className="ms-2">
                                 {dayjs.utc(message.createdAt).local().fromNow()}
-                              </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -298,11 +343,10 @@ function ChatBox() {
           <div className="bottomnav">
             <Stack direction={"row"} spacing={2}>
               <div className="chatinput">
-                <span className="attachment-icon">{<SVG.AttachIcon />}</span>
-                {/* <textarea
-              placeholder="Write a message…"
-              value="Write a message…"
-            ></textarea> */}
+                <span className="attachment-icon">
+                  <input type="file" onChange={handleAttachment} value={""} />
+                  <SVG.AttachIcon />
+                </span>
                 <LabeledInput
                   placeholder="Write a message…"
                   type="textarea"
