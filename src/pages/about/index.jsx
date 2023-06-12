@@ -1,32 +1,13 @@
-import { Box, Button, Container, Grid, Stack } from "@mui/material";
+import { Box, Container, Grid, Stack } from "@mui/material";
 import React from "react";
 import styles from "./about.module.css";
 import { IMAGES } from "../../assets/images";
 import { Link } from "react-router-dom";
-import { SVG } from "@assets/svg";
 import AboutContent from "./aboutContent";
-
+import { OTHER_BUTTON } from "@utils/constants/constants";
 const aboutImg = [
   {
     img: IMAGES.AboutBanner,
-  },
-];
-
-const button = [
-  {
-    icon: <SVG.Reciept />,
-    svg: <SVG.ArrowForward />,
-    text: "Find Tender",
-  },
-  {
-    icon: <SVG.ProfileIcon />,
-    svg: <SVG.ArrowForward />,
-    text: "Find Talent",
-  },
-  {
-    icon: <SVG.Work />,
-    svg: <SVG.ArrowForward />,
-    text: "Find Job",
   },
 ];
 
@@ -119,20 +100,22 @@ const AboutUs = () => {
                     direction={{ xs: "column", lg: "row", sm: "row" }}
                     spacing={{ xs: 2, lg: 2, sm: 2 }}
                   >
-                    {button.map((item, index) => {
+                    {OTHER_BUTTON.map((item, index) => {
                       return (
                         <>
-                          <Button
+                          <Link
                             sx={{ textTransform: "capitalize" }}
                             key={index}
                             variant="contained"
                             className={styles.btn_about}
-                            fullWidth
+                            to={
+                              `${item.url}`
+                            }
                           >
                             <span className={styles.icon}>{item.icon}</span>
                             <span className="mx-2">{item.text}</span>
                             {item.svg}
-                          </Button>
+                          </Link>
                         </>
                       );
                     })}
