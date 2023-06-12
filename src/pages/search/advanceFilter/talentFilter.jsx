@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "@redux/slice/choices";
 
-function TalentFilter({ formik, footer }) {
+function TalentFilter({ formik, footer, responsive }) {
   const dispatch = useDispatch();
   const {
     choices: { countries, cities, jobCategories, jobSubCategories },
@@ -33,7 +33,7 @@ function TalentFilter({ formik, footer }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -57,7 +57,7 @@ function TalentFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -89,7 +89,7 @@ function TalentFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -105,7 +105,7 @@ function TalentFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -128,7 +128,7 @@ function TalentFilter({ formik, footer }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <label>Preferred job type</label>
             <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
               <JobFormControl
@@ -151,7 +151,7 @@ function TalentFilter({ formik, footer }) {
               />
             </FormGroup>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <label>Min Experience (In years)</label>
             <LabeledInput
               // title="Duration in Month"
@@ -160,7 +160,7 @@ function TalentFilter({ formik, footer }) {
               {...formik.getFieldProps("experience")}
             />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <label>Expected salary</label>
             <div style={{ display: "flex", marginLeft: "7px" }}>
               <div>
@@ -177,7 +177,7 @@ function TalentFilter({ formik, footer }) {
               </div>
             </div>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={3} lg={responsive ? 12 : 3}>
             <label>Availability</label>
             <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
               <JobFormControl

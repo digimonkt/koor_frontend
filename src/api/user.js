@@ -31,7 +31,7 @@ export const LoginUserAPI = async (data) => {
  */
 export const GetUserDetailsAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/users", data || {}),
+  url: urlcat("/v1/users", data || {}),
   });
   if (response.remote === "success") {
     return {

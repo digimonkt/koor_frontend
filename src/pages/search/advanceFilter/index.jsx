@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./advanceFilter.module.css";
-import { MenuItem, MenuList } from "@mui/material";
+import {
+  MenuItem,
+  // MenuList,
+  Stack,
+} from "@mui/material";
 import { OutlinedButton, SearchButton } from "@components/button";
 import { SVG } from "@assets/svg";
 import {
@@ -52,7 +56,7 @@ import {
 } from "@api/vendor";
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
-function AdvanceFilter({ searchType }) {
+function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const {
@@ -90,7 +94,9 @@ function AdvanceFilter({ searchType }) {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
   const [open, setOpen] = useState(false);
-
+  useEffect(() => {
+    setData(!!defaultOpen);
+  }, []);
   const footer = () => {
     return (
       <>
@@ -126,13 +132,37 @@ function AdvanceFilter({ searchType }) {
   const searchFilter = () => {
     switch (searchType) {
       case SEARCH_TYPE.jobs:
-        return <JobSeekerFilter formik={formik} footer={footer()} />;
+        return (
+          <JobSeekerFilter
+            formik={formik}
+            footer={footer()}
+            responsive={responsive}
+          />
+        );
       case SEARCH_TYPE.talents:
-        return <TalentFilter formik={formik} footer={footer()} />;
+        return (
+          <TalentFilter
+            formik={formik}
+            footer={footer()}
+            responsive={responsive}
+          />
+        );
       case SEARCH_TYPE.tenders:
-        return <TenderFilter formik={formik} footer={footer()} />;
+        return (
+          <TenderFilter
+            formik={formik}
+            footer={footer()}
+            responsive={responsive}
+          />
+        );
       case SEARCH_TYPE.vendors:
-        return <VendorFilter formik={formik} footer={footer()} />;
+        return (
+          <VendorFilter
+            formik={formik}
+            footer={footer()}
+            responsive={responsive}
+          />
+        );
       default:
         return <></>;
     }
@@ -573,13 +603,11 @@ function AdvanceFilter({ searchType }) {
             }}
           >
             <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
-            <MenuList
-              style={{
-                overflow: "auto",
-                marginLeft: "25px",
-                display: "flex",
-                alignItems: "center",
-              }}
+            <Stack
+              direction={"row"}
+              spacing={0}
+              overflow={responsive ? "" : "auto"}
+              flexWrap={responsive ? "wrap" : ""}
             >
               {allFilters.map((filter) => {
                 return (
@@ -613,19 +641,33 @@ function AdvanceFilter({ searchType }) {
                   </MenuItem>
                 );
               })}
-            </MenuList>
+            </Stack>
           </div>
 
-          <div
-            onClick={() => setData(!data)}
-            style={{
-              color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
-              cursor: "pointer",
-            }}
-          >
-            Advance filter{" "}
-            {data ? (
-              <>
+          {!defaultOpen && (
+            <div
+              onClick={() => setData(!data)}
+              style={{
+                color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                cursor: "pointer",
+              }}
+            >
+              Advance filter{" "}
+              {data ? (
+                <>
+                  <span
+                    style={{
+                      marginLeft: "10px",
+                      width: "18px",
+                      display: "inline-block",
+                      color:
+                        role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                    }}
+                  >
+                    {<SVG.ArrowUpIcon />}
+                  </span>
+                </>
+              ) : (
                 <span
                   style={{
                     marginLeft: "10px",
@@ -635,22 +677,11 @@ function AdvanceFilter({ searchType }) {
                       role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                   }}
                 >
-                  {<SVG.ArrowUpIcon />}
+                  {<SVG.Downarrow />}
                 </span>
-              </>
-            ) : (
-              <span
-                style={{
-                  marginLeft: "10px",
-                  width: "18px",
-                  display: "inline-block",
-                  color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
-                }}
-              >
-                {<SVG.Downarrow />}
-              </span>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </div>
         {data ? <>{searchFilter()}</> : null}
         <DialogBox open={open} handleClose={handleToggleModel}>

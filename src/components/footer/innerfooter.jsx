@@ -329,10 +329,10 @@ const InnerFooter = () => {
               "@media (max-width:992px)": { width: "100%", fontSize: "12px" },
             }}
           >
-            <Link to="#!" style={{ color: "#848484" }}>
+            <Link to="/terms-condition" style={{ color: "#848484" }}>
               Terms of use
             </Link>
-            <Link to="#!" style={{ color: "#848484" }}>
+            <Link to="/privacy-policy" style={{ color: "#848484" }}>
               Privacy policy
             </Link>
           </Stack>

@@ -17,6 +17,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
+  const [applicationStatus, setApplicationStatus] = useState("applied");
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -30,7 +31,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
   };
-
   const updateJob = async (jobId) => {
     const res = await updateEmployerJobStatusAPI(jobId);
     if (res.remote === "success") {
@@ -48,7 +48,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       });
     }
   }, [logo]);
-
+  useEffect(() => {
+    if (jobDetails.isShortlisted) {
+      setApplicationStatus("Shortlisted");
+    }
+    if (jobDetails.isRejected) {
+      setApplicationStatus("Rejected");
+    }
+    if (jobDetails.isPlannedInterview) {
+      setApplicationStatus("Interview planned on " + dayjs(jobDetails.isPlannedInterview).format("MMMM D, YYYY [at] h:mm A"));
+    }
+  }, [jobDetails]);
   return (
     <div className="job_card">
       <Grid container spacing={1.875} {...gridProps}>
@@ -99,9 +109,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               {jobDetails.isApplied ? (
                 <Chip
                   // variant="outlined"
-                  color="success"
+                  // color="success"
+                  color={(jobDetails.isRejected) ? "error" : "success"}
                   size="small"
-                  label="Applied"
+                  label={applicationStatus}
                   sx={{
                     marginLeft: "5px",
                   }}
