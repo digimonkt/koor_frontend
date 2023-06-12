@@ -56,3 +56,14 @@ export const getConversationIdByUserIdAPI = async ({ userId }) => {
     url: urlcat("v1/chat/conversations/:userId", { userId }),
   });
 };
+
+export const sendAttachmentAPI = async (data) => {
+  return await api.request({
+    url: urlcat("v1/chat/attachment"),
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data,
+  });
+};

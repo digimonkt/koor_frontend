@@ -20,7 +20,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
-
+import "./style.css";
 function ApplicationOptions({
   details,
   interviewPlanned,
@@ -57,13 +57,13 @@ function ApplicationOptions({
     });
     console.log({ res });
     if (res.remote === "success") {
-      const conversationId = res.data.converesation_id;
-      console.log({ conversationId });
-      if (conversationId) {
-        navigate(urlcat("/employer/chat", { conversion: conversationId }));
-      } else {
-        navigate(urlcat("/employer/chat", { userId: details?.user?.id }));
-      }
+      const conversationId = res.data.conversation_id;
+      navigate(
+        urlcat("/employer/chat", {
+          conversion: conversationId,
+          userId: details?.user?.id,
+        })
+      );
     }
   };
 
@@ -266,7 +266,7 @@ function ApplicationOptions({
                       }
                     )
                   );
-                } else {
+                } else if (details.tender) {
                   navigate(
                     urlcat(
                       "/:role/manage-tenders/:tenderId/applicant-details/:applicationId",
@@ -276,6 +276,13 @@ function ApplicationOptions({
                         tenderId: details.tender.id,
                       }
                     )
+                  );
+                } else {
+                  navigate(
+                    urlcat("/:role/:userId/profile", {
+                      userId: details.user.id,
+                      role: details.user.role.replace("_", "-"),
+                    })
                   );
                 }
               }}

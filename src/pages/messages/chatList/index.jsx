@@ -18,7 +18,6 @@ function ChatList() {
   const getConversationList = async () => {
     setInitialLoading(true);
     const res = await getConversationListAPI();
-    console.log({ res });
 
     if (res.remote === "success") {
       setChatList(res.data.results);
@@ -83,7 +82,7 @@ function ChatList() {
                 <li
                   key={chat.id}
                   onClick={() => {
-                    navigate(`?conversion=${chat.id}`);
+                    navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
                   }}
                   style={{
                     background:
