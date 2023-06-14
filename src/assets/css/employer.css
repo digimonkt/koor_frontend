@@ -718,6 +718,8 @@ span.arrowjobs svg {
 
 @media screen and (max-width:992px){
   .my-jobs h2{font-size: 14px;}
+  .recent-content h4{white-space: normal;
+    word-break: break-all;}
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
