@@ -15,16 +15,31 @@ import { menu } from "./helper";
 import { SVG } from "@assets/svg";
 import { useState, useEffect } from "react";
 import { getTopCategoriesAPI } from "@api/job";
+import { storeNewsletterAPI } from "@api/home";
+import { ErrorToast, SuccessToast } from "@components/toast";
 
 const InnerFooter = () => {
   const [categories, setCategories] = useState({});
+  const [email, setEmail] = useState("");
+  const [successToastPopup, setSuccessToastPopup] = useState(false);
+  const [failedToastPopup, setFailedToastPopup] = useState(false);
+  const [failedMessage, setFailedMessage] = useState(false);
   const getCategories = async () => {
     const res = await getTopCategoriesAPI();
     if (res.remote === "success") {
       setCategories(res.data);
     }
   };
-
+  const saveNewsletter = async () => {
+    const res = await storeNewsletterAPI(email);
+    if (res.remote === "success") {
+      setEmail("");
+      setSuccessToastPopup(true);
+    } else {
+      setFailedMessage(res.error);
+      setFailedToastPopup(true);
+    }
+  };
   useEffect(() => {
     getCategories();
   }, []);
@@ -276,8 +291,9 @@ const InnerFooter = () => {
                     },
                   }}
                 >
-                  <input placeholder="Email..." />
+                  <input placeholder="Email..." value={email} onChange={(e) => setEmail(e.target.value)} />
                   <Button
+                    onClick={() => saveNewsletter()}
                     sx={{
                       borderRadius: "66px",
                       background: "#D5E3F7",
@@ -369,7 +385,18 @@ const InnerFooter = () => {
           </Stack>
         </Stack>
       </Container>
+      <SuccessToast
+        open={successToastPopup}
+        handleClose={() => setSuccessToastPopup(false)}
+        message="Thank you for subscribing to our newsletter!"
+      />
+      <ErrorToast
+        open={failedToastPopup}
+        handleClose={() => { setFailedToastPopup(false); }}
+        message={failedMessage}
+      />
     </Box>
+
   );
 };
 export default InnerFooter;
