@@ -14,18 +14,22 @@ function TalentCard({ talentDetails }) {
       justifyContent={{ xs: "center", lg: "space-between" }}
       className="border-recent"
     >
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems={{ xs: "flex-start", lg: "row" }}
+      >
         <Avatar
           src={generateFileUrl(talentDetails.profilePicture?.path || "")}
           sx={{ width: "70px", height: "70px" }}
         />
         <div className="recent-content">
           <Stack
-            direction="row"
+            direction={{ xs: "column", lg: "row" }}
             divider={<Divider orientation="vertical" flexItem />}
             spacing={2}
             flexWrap="wrap"
-            alignItems="center"
+            alignItems={{ xs: "flex-start", lg: "center" }}
             sx={{ mb: 1 }}
           >
             <h4>
@@ -66,15 +70,16 @@ function TalentCard({ talentDetails }) {
             <p>{talentDetails.description}</p>
           </div>
           <Stack
-            direction="row"
+            direction={{ xs: "column", lg: "row" }}
             spacing={1}
-            alignItems="center"
+            alignItems={{ xs: "flex-start", lg: "center" }}
             sx={{ mb: 1, mt: 2 }}
             className="meets_div"
           >
             <>
               {talentDetails.skills.map((skill) => (
                 <Chip
+                  sx={{ width: { xs: "100%" } }}
                   key={skill.id}
                   label={skill.skill.title}
                   className="chiplabel"

@@ -136,6 +136,7 @@
   font-size: 16px;
   margin-left: 25px !important;
   font-family: "Poppins";
+  word-break: break-all;
 }
 .downloadtext svg {
   width: 32px;
