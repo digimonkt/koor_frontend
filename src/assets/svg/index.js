@@ -107,6 +107,8 @@ import { ReactComponent as LinkedIn } from "./linkedinIcon.svg";
 import { ReactComponent as MailIcon } from "./mailIcon.svg";
 import { ReactComponent as BackArrow } from "./arrow_back.svg";
 import { ReactComponent as Warning } from "./warning.svg";
+import { ReactComponent as AvailableCredits } from "./generating_tokens.svg";
+import { ReactComponent as TimeIcon } from "./schedule.svg";
 export const SVG = {
   BackArrow,
   MailIcon,
@@ -217,4 +219,6 @@ export const SVG = {
   AppliedJob,
   UnSave,
   Warning,
+  AvailableCredits,
+  TimeIcon
 };
