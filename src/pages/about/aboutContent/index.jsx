@@ -3,11 +3,13 @@ import styles from "./about-content.module.css";
 import PropTypes from "prop-types";
 import ScrollTabs from "../scrollTabs";
 import { TabContext } from "@mui/lab";
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { getFAQCategoryAPI } from "@api/faq";
+import { USER_ROLES } from "@utils/enum";
+import { resetFAQQuestions } from "@redux/slice/faq";
+import { useDispatch } from "react-redux";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -39,12 +41,23 @@ function a11yProps(index) {
 }
 
 const AboutContent = () => {
+  const dispatch = useDispatch();
+  const [faqCategory, setFaqCategory] = useState([]);
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const handleFAQCategory = async (role) => {
+    dispatch(resetFAQQuestions([]));
+    const res = await getFAQCategoryAPI({ role });
+    if (res.remote === "success") {
+      setFaqCategory(res.data.results);
+    }
+  };
+  useEffect(() => {
+    handleFAQCategory(USER_ROLES.jobSeeker);
+  }, []);
   return (
     <>
       <Box>
@@ -93,9 +106,9 @@ const AboutContent = () => {
                             },
                           }}
                         >
-                          <Tab label="Job Seeker" {...a11yProps(0)} />
-                          <Tab label="Employer" {...a11yProps(1)} />
-                          <Tab label="Vender" {...a11yProps(2)} />
+                          <Tab label="Job Seeker" onClick={() => handleFAQCategory(USER_ROLES.jobSeeker)} {...a11yProps(0)} />
+                          <Tab label="Employer" onClick={() => handleFAQCategory(USER_ROLES.employer)} {...a11yProps(1)} />
+                          <Tab label="Vendor" onClick={() => handleFAQCategory(USER_ROLES.vendor)} {...a11yProps(2)} />
                         </Tabs>
                       </Box>
                     </Box>
@@ -104,13 +117,13 @@ const AboutContent = () => {
               </Box>
 
               <TabPanel value={value} index={0}>
-                <ScrollTabs />
+                <ScrollTabs faqCategory={faqCategory} />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <ScrollTabs />
+                <ScrollTabs faqCategory={faqCategory} />
               </TabPanel>
               <TabPanel value={value} index={2}>
-                <ScrollTabs />
+                <ScrollTabs faqCategory={faqCategory} />
               </TabPanel>
             </TabContext>
           </Box>
