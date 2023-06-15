@@ -1,6 +1,7 @@
 import { SearchButton } from "@components/button";
 import React from "react";
 import styles from "./styles.module.css";
+import { Stack } from "@mui/material";
 
 function JobRequirementCard({ highestEducation, languages, skills }) {
   return (
@@ -27,18 +28,23 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
           );
         })}
         <div className={`${styles.skills}`}>
-          <h6 className="mb-1  mt-3">Skills</h6>
-          <div className={`${styles.skilssbtn}`}>
+          <h6 className="mb-2  mt-3">Skills</h6>
+          <Stack
+            direction={{ xs: "column", lg: "row" }}
+            spacing={2}
+            alignItems={"center"}
+          >
             {skills.map((skill) => {
               return (
                 <SearchButton
                   key={skill.id}
                   text={skill.title}
                   className={`${styles.grybtn}`}
+                  sx={{ minWidth: "100%" }}
                 />
               );
             })}
-          </div>
+          </Stack>
         </div>
       </div>
     </div>
