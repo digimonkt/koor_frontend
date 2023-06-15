@@ -29,4 +29,11 @@ export const employerCard = (count) => [
     bgcolor: "#9C62E8",
     boxshadow: "0px 5px 25px rgba(156, 98, 232, 0.5)",
   },
+  {
+    icon: <SVG.AvailableCredits />,
+    title: count.availableCredits,
+    subtitle: "available credits",
+    bgcolor: "#5CC1E0",
+    boxshadow: "0px 5px 25px rgba(92, 193, 224, 0.5)",
+  },
 ];
