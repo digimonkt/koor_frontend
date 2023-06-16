@@ -12,8 +12,8 @@ const VerticalSlider = ({ testimonialList }) => {
     autoplay: false,
     autoplaySpeed: 1500,
     speed: 500,
-    vertical: true,
-    verticalSwiping: true,
+    vertical: false,
+    verticalSwiping: false,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
