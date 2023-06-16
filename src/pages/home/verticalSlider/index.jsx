@@ -1,6 +1,6 @@
 // import { React } from "react";
 import { Box, Grid } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import styles from "./verticalslider.module.css";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -17,7 +17,10 @@ const VerticalSlider = ({ testimonialList }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-
+  const [showMore, setShowMore] = useState("");
+  const handleShowMore = (testimonialId) => {
+    setShowMore(testimonialId);
+  };
   return (
     <>
       <Box className="verticalSlider">
@@ -44,6 +47,7 @@ const VerticalSlider = ({ testimonialList }) => {
                           src={generateFileUrl(item.image.path)}
                           alt=""
                           className={styles.home_testi_img}
+                          height={100}
                         />)
                       }
 
@@ -52,7 +56,13 @@ const VerticalSlider = ({ testimonialList }) => {
                   <Grid xs={12} md={6} lg={6} sm={6}>
                     <Box className={styles.home_testi_box_testi}>
                       <h2 className={styles.testi_heading}>{item.title}</h2>
-                      <p className={styles.testi_p}>{item.description}</p>
+                      {
+                        (showMore === item.id) ? <p dangerouslySetInnerHTML={{ __html: item.description }}></p> : <p dangerouslySetInnerHTML={{ __html: item.description.substring(0, 250) }}></p>
+                      }
+
+                      {
+                        (item.description.length > 250 && showMore !== item.id) ? <div onClick={() => handleShowMore(item.id)}>Show More</div> : <div onClick={() => handleShowMore("")}>Show Less</div>
+                      }
                       <h5 className={styles.testi_h5}>
                         <span className={styles.testi_h5_span}>
                           {item.clientName}
