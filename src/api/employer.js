@@ -327,3 +327,16 @@ export const getTenderApplicationDetailsAPI = async (applicationId) => {
   }
   return res;
 };
+export const getMinimumCreditForJobPostAPI = async () => {
+  const res = await api.request({
+    url: "v1/admin/set-points",
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.point,
+    };
+  }
+  return res;
+};
