@@ -112,7 +112,7 @@ function ChatBox() {
       userId: id,
     });
     if (res.remote === "success") {
-      const conversationId = res.data.converesation_id;
+      const conversationId = res.data.conversation_id;
       if (conversationId) {
         navigate(
           urlcat("/employer/chat", { conversion: conversationId, userId: id })
@@ -175,7 +175,7 @@ function ChatBox() {
     if (searchParams.get("conversion")) {
       queryParams.conversation_id = searchParams.get("conversion");
     } else {
-      queryParams.conversation_id = searchParams.get("userId");
+      queryParams.user_id = searchParams.get("userId");
     }
     const data = {
       url: "ws/chat",
@@ -191,7 +191,7 @@ function ChatBox() {
     return () => {
       ws.close();
     };
-  }, [searchParams.get("conversion")]);
+  }, [searchParams.get("conversion"), searchParams.get("userId")]);
 
   const renderAttachment = (attachment) => {
     switch (attachment.type) {
