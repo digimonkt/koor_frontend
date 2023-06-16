@@ -16,6 +16,7 @@ import JobAnalytics from "./jobAnalytics";
 import Loader from "@components/loader";
 import ApplicantCard from "@components/applicantCard";
 import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
+import { useSelector } from "react-redux";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const [counts, setCounts] = useState({
@@ -23,6 +24,7 @@ const Dashboard = () => {
     activeTender: 0,
     appliedJobs: 0,
     appliedTender: 0,
+    availableCredits: 0,
   });
   const [recentApplication, setRecentApplication] = useState([]);
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
@@ -35,6 +37,7 @@ const Dashboard = () => {
     sites: [],
     total: 0,
   });
+  const { jobPostUpdate } = useSelector((state) => state.employer);
   const getRecentApplications = async () => {
     setIsLoading(true);
     const res = await getRecentApplicationAPI({
@@ -67,6 +70,7 @@ const Dashboard = () => {
         activeTender: res.data.activeTender,
         appliedJobs: res.data.appliedJobs,
         appliedTender: res.data.appliedTender,
+        availableCredits: res.data.availableCredits,
       });
     }
   };
@@ -97,13 +101,12 @@ const Dashboard = () => {
   };
   const handleShowMore = () =>
     setRecentApplicationPage((prevState) => prevState + 1);
-
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
   useEffect(() => {
     getDashboardActivity();
-  }, []);
+  }, [jobPostUpdate]);
   useEffect(() => {
     getShareCountData();
   }, []);

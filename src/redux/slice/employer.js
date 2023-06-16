@@ -10,6 +10,7 @@ const initialState = {
   totalBlacklist: 0,
   totalTenderApplications: 0,
   totalApplicationsByJob: [],
+  jobPostUpdate: false
 };
 
 export const employerSlice = createSlice({
@@ -41,6 +42,9 @@ export const employerSlice = createSlice({
         }
       };
     },
+    setJobPostUpdate: (state, action) => {
+      state.jobPostUpdate = action.payload;
+    }
   },
 });
 export const {
@@ -49,6 +53,7 @@ export const {
   setTotalTenders,
   setTotalBlacklist,
   setTotalTenderApplications,
-  setTotalApplicationsByJob
+  setTotalApplicationsByJob,
+  setJobPostUpdate
 } = employerSlice.actions;
 export default employerSlice.reducer;

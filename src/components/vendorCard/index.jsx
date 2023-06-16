@@ -14,7 +14,7 @@ function VendorCard({ vendorDetails }) {
       justifyContent={{ xs: "center", lg: "space-between" }}
       className="border-recent"
     >
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack direction="row" spacing={2} alignItems={"center"}>
         <Avatar
           src={generateFileUrl(vendorDetails.profilePicture?.path || "")}
           sx={{ width: "70px", height: "70px" }}

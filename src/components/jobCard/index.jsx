@@ -65,6 +65,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         {logo && (
           <Grid
             item
+            xs={12}
             sx={{
               "@media (min-width: 1200px)": {
                 maxWidth: "10.555%",
@@ -93,7 +94,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         <Grid
           item
           // lg={logo ? 8 : 9}
-          // xs={12}
+          xs={12}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "72%",
@@ -110,7 +111,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <Chip
                   // variant="outlined"
                   // color="success"
-                  color={(jobDetails.isRejected) ? "error" : "success"}
+                  color={jobDetails.isRejected ? "error" : "success"}
                   size="small"
                   label={applicationStatus}
                   sx={{

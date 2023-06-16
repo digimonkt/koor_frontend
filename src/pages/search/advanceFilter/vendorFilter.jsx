@@ -30,9 +30,9 @@ function VendorFilter({ formik, footer, responsive }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={4} lg={responsive ? 12 : 4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+              <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Category"
@@ -54,9 +54,9 @@ function VendorFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4} lg={responsive ? 12 : 4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+              <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Sector"
@@ -79,9 +79,9 @@ function VendorFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4} lg={responsive ? 12 : 4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+              <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Type"
@@ -107,9 +107,9 @@ function VendorFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4} lg={responsive ? 12 : 4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+              <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
                   multiple
                   title="Tag"
@@ -132,9 +132,9 @@ function VendorFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4} lg={responsive ? 12 : 4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+              <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
                   title="Country"
                   placeholder="Country"
@@ -148,9 +148,9 @@ function VendorFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4} lg={responsive ? 12 : 4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
-              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+              <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
                   title="City"
                   placeholder={
@@ -171,7 +171,7 @@ function VendorFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={4} lg={responsive ? 12 : 4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
             <LabeledInput
               title="Years in market"
               className="add-form-control"

@@ -27,7 +27,7 @@ import DialogBox from "@components/dialogBox";
 import { USER_ROLES } from "@utils/enum";
 import { getLetLongByAddressAPI } from "@api/user";
 import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 
@@ -193,7 +193,7 @@ const JobDetails = () => {
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
-              <Grid item xs={8}>
+              <Grid item xs={12} sm={8} lg={8}>
                 <div className={`${styles.postJob}`}>
                   {/* <Link to="/saved-jobs"> */}
                   <span
@@ -206,7 +206,7 @@ const JobDetails = () => {
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={4} lg={4}>
                 <div className={`${styles.clocs}`}>
                   {<SVG.ClockIconSmall />}
                   <p className="mb-0 mt-0 me-1">
@@ -233,7 +233,11 @@ const JobDetails = () => {
                   <h4>Details :</h4>
                   <p className="job-description">{details.description}</p>
                 </div>
-                <div className={`${styles.iconbtn}`}>
+                <Stack
+                  direction={{ xs: "column", lg: "row" }}
+                  alignItems={{ xs: "flex-start", lg: "center" }}
+                  spacing={2}
+                >
                   <SearchButton
                     text={details.country.title}
                     leftIcon={<SVG.LocationIcon />}
@@ -265,7 +269,7 @@ const JobDetails = () => {
                       className={`${styles.iconbutton}`}
                     />
                   )}
-                </div>
+                </Stack>
                 {details.startDate && (
                   <div className={`${styles.datesatrt}`}>
                     <span>{<SVG.StartDate />}</span>
@@ -395,28 +399,31 @@ const JobDetails = () => {
           </div>
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={7}>
+              <Grid item xs={12} lg={7} sm={7}>
                 <JobRequirementCard
                   highestEducation={details.highestEducation}
                   languages={details.languages}
                   skills={details.skills}
                 />
               </Grid>
-              <Grid item xs={5}>
+              <Grid item xs={12} lg={5} sm={5}>
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
-                  <div
-                    style={{
+                  <Box
+                    sx={{
                       height: "75%",
                       overflow: "hidden",
                       borderRadius: "5px",
+                      "@media (max-width:992px)": {
+                        height: "250px",
+                      },
                     }}
                   >
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
-                  </div>
+                  </Box>
                 </div>
               </Grid>
             </Grid>

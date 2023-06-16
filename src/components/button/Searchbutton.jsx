@@ -10,7 +10,7 @@ export default function SearchButtonComponent({
   ...rest
 }) {
   return (
-    <div>
+    <>
       <Button className={className} {...rest}>
         <span>{leftIcon}</span>
         {text}
@@ -22,6 +22,6 @@ export default function SearchButtonComponent({
           ""
         )}
       </Button>
-    </div>
+    </>
   );
 }
