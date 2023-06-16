@@ -74,6 +74,7 @@ export const getDashboardActivityAPIResponseTransform = (data) => {
     activeTender: data.active_tender,
     appliedJobs: data.applied_jobs,
     appliedTender: data.applied_tender,
+    availableCredits: data.credit,
   };
 };
 

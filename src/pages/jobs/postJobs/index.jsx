@@ -45,6 +45,7 @@ import { JobFormControl } from "./style";
 import DialogBox from "@components/dialogBox";
 import { SVG } from "@assets/svg";
 import urlcat from "urlcat";
+import { setJobPostUpdate } from "@redux/slice/employer";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -171,6 +172,7 @@ function PostJobsComponent() {
         // create
         res = await createJobAPI(newFormData);
         if (res.remote === "success") {
+          dispatch(setJobPostUpdate(true));
           setSubmitting(SUBMITTING_STATUS_ENUM.submitted);
           resetForm();
         } else {
@@ -181,6 +183,7 @@ function PostJobsComponent() {
         // update
         res = await updateEmployerJobAPI(jobId, newFormData);
         if (res.remote === "success") {
+          dispatch(setJobPostUpdate(true));
           setSubmitting(SUBMITTING_STATUS_ENUM.updated);
         } else {
           setSubmitting(SUBMITTING_STATUS_ENUM.error);
