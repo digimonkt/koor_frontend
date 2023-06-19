@@ -33,7 +33,7 @@ import {
   getLanguages,
   getSkills,
 } from "@redux/slice/choices";
-import { createJobAPI, updateEmployerJobAPI } from "@api/employer";
+import { createJobAPI, getDashboardActivityAPI, getMinimumCreditForJobPostAPI, updateEmployerJobAPI } from "@api/employer";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import dayjs from "dayjs";
 import { getJobDetailsByIdAPI } from "@api/job";
@@ -45,7 +45,7 @@ import { JobFormControl } from "./style";
 import DialogBox from "@components/dialogBox";
 import { SVG } from "@assets/svg";
 import urlcat from "urlcat";
-import { setJobPostUpdate } from "@redux/slice/employer";
+import { setJobPostUpdate, setMinimumCreditJobPost, setTotalAvailableCredits } from "@redux/slice/employer";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -66,6 +66,7 @@ function PostJobsComponent() {
     languages,
     skills,
   } = useSelector((state) => state.choices);
+  const { minimumCreditJobPost, totalAvailableCredits } = useSelector((state) => state.employer);
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
@@ -265,6 +266,19 @@ function PostJobsComponent() {
     setOpen(false);
     setIsRedirect(true);
   };
+  const getMinimumCreditForJobPost = async () => {
+    const res = await getMinimumCreditForJobPostAPI();
+    if (res.remote === "success") {
+      dispatch(setMinimumCreditJobPost(res.data));
+    }
+  };
+  const getDashboardActivity = async () => {
+    const res = await getDashboardActivityAPI();
+    if (res.remote === "success") {
+      dispatch(setTotalAvailableCredits(res.data.availableCredits));
+    }
+  };
+
   useEffect(() => {
     if (isRedirect) {
       navigate(`/${USER_ROLES.employer}/manage-jobs`);
@@ -325,6 +339,10 @@ function PostJobsComponent() {
         urlcat("../employer/manage-jobs")
       );
     }
+  }, []);
+  useEffect(() => {
+    getDashboardActivity();
+    getMinimumCreditForJobPost();
   }, []);
   return (
     <div className="job-application">
@@ -850,6 +868,7 @@ function PostJobsComponent() {
                     sx={{ borderColor: "#CACACA", opacity: "1", my: 2 }}
                   />
                 </Grid>
+                {(!jobId && totalAvailableCredits < minimumCreditJobPost) ? <div>Currently, you have <b>{totalAvailableCredits} credits remaining </b>. In order to post a job, you will need to purchase <b>{minimumCreditJobPost - totalAvailableCredits} more credits. </b></div> : <div>Currently, you have <b>{totalAvailableCredits} credits remaining </b>. In order to post a job, you will redeemed <b>{minimumCreditJobPost} credits</b>  .</div>}
                 <Grid item xl={12} lg={12} xs={12}>
                   <Stack
                     direction="row"
@@ -891,7 +910,7 @@ function PostJobsComponent() {
                             : "POST THE JOB"
                       }
                       type="submit"
-                      disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
+                      disabled={submitting === SUBMITTING_STATUS_ENUM.loading || (!jobId && totalAvailableCredits < minimumCreditJobPost)}
                     />
                   </Stack>
                 </Grid>
@@ -936,7 +955,7 @@ function PostJobsComponent() {
           </Grid>
         </Grid>
       </DialogBox>
-    </div>
+    </div >
   );
 }
 
