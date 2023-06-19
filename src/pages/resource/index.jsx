@@ -20,6 +20,7 @@ const Resource = () => {
   useEffect(() => {
     resourceDetails();
   }, []);
+
   return (
     <>
       <Box className={styles.resource}>
@@ -68,20 +69,27 @@ const Resource = () => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item lg={5} sm={6} xs={12}>
-                <Box>
-                  <img
-                    src={generateFileUrl(resourceList?.attachment?.path)}
-                    alt="img"
-                    className={styles.resource_banner}
-                  />
-                </Box>
-              </Grid>
+              {
+                (resourceList?.attachment?.path) ? (<Grid item lg={5} sm={6} xs={12}>
+                  <Box>
+                    <img
+                      src={generateFileUrl(resourceList?.attachment?.path)}
+                      alt="img"
+                      className={styles.resource_banner}
+                    />
+                  </Box>
+                </Grid>) : ""
+              }
             </Grid>
           </Container>
-          <Box>
-            <Content resourceList={resourceList} />
-          </Box>
+          {
+            (resourceList) ? (
+              <Box>
+                <Content resourceList={resourceList} />
+              </Box>
+            ) : ""
+          }
+
         </Box>
       </Box>
     </>
