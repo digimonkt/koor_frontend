@@ -370,4 +370,12 @@
   .requirement {
     padding: 0 8px 0 8px;
   }
+ 
+}
+@media screen and (max-width:540px) {
+  .requirement {
+    border-left: 0;
+    padding: 0px;
+  }
+  
 }

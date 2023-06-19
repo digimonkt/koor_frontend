@@ -42,10 +42,10 @@ function WorkExperienceCard({
   return (
     <>
       <Stack
-        direction="row"
+        direction={{ xs: "column", lg: "row" }}
         spacing={2}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={{ xs: "self-start", lg: "center" }}
       >
         <div className="list-content">
           <h5>{title}</h5>

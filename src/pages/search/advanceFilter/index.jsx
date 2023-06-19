@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./advanceFilter.module.css";
 import {
+  Box,
   MenuItem,
   // MenuList,
   Stack,
@@ -594,20 +595,21 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     <div>
       <div className={`${styles.searchResult}`}>
         <div className={`${styles.label} lables`}>
-          <div
-            style={{
+          <Box
+            sx={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: "start",
-              maxWidth: "90%",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              flexDirection: "column",
+              maxWidth: { xs: "85%", lg: "100%" },
             }}
           >
             <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
             <Stack
               direction={"row"}
-              spacing={0}
+              spacing={{ xs: 1, lg: 0 }}
               overflow={responsive ? "" : "auto"}
-              flexWrap={responsive ? "wrap" : ""}
+              flexWrap={responsive ? "wrap" : "wrap"}
             >
               {allFilters.map((filter) => {
                 return (
@@ -642,7 +644,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                 );
               })}
             </Stack>
-          </div>
+          </Box>
 
           {!defaultOpen && (
             <div

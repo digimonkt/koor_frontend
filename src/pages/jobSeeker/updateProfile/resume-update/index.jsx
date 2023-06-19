@@ -48,7 +48,11 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
     <>
       <div className="add-content">
         <h2>{title}</h2>
-        <Stack direction="row" spacing={2} className="mt-4">
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          spacing={2}
+          className="mt-4"
+        >
           <IconButton
             sx={{
               "&.MuiIconButton-root": {
@@ -56,6 +60,9 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 width: "101px",
                 height: "101px",
                 color,
+                "@media (max-width:540px)": {
+                  margin: "auto",
+                },
               },
             }}
           >

@@ -189,7 +189,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                     }}
                   />
                 }
-                label="I am currently studying"
+                label="I am currently working"
                 onChange={(e) =>
                   formik.setFieldValue("isPresent", e.target.checked)
                 }
