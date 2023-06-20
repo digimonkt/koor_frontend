@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import { TablePagination } from "./style";
 import { ResourceCard } from "./component/resourceCard";
 import { getResourcesAPI } from "@api/common";
+import ResourceListSkeletonLoader from "./resourceListSkelton";
 
 const Resources = () => {
   const [resourceList, setResourceList] = useState([]);
@@ -41,15 +42,18 @@ const Resources = () => {
           <Box component="h2" className={`${styles.heddingTitle}`}>
             Resources
           </Box>
-          {resourceList.map((item, index) => (
-            <ResourceCard
-              key={index}
-              title={item.title}
-              description={item.description}
-              image={item.attachment.path}
-              id={item.id}
-            />
-          ))}
+          {
+            (resourceList.length > 0) ? (
+              resourceList.map((item, index) => (
+                <ResourceCard
+                  key={index}
+                  title={item.title}
+                  description={item.description}
+                  image={item.attachment.path}
+                  id={item.id}
+                />
+              ))) : (<ResourceListSkeletonLoader />)
+          }
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <TablePagination
               count={totalCount || 0}

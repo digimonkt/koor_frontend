@@ -83,7 +83,7 @@ function ResumeTemplate({ user }) {
                   ? "Present"
                   : dayjs(experience.endDate).format(YEAR_FORMAT)}
               </span>
-              <p>{experience.description}</p>
+              <p className="job-description">{experience.description}</p>
             </React.Fragment>
           );
         })}
