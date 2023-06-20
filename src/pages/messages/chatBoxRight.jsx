@@ -80,7 +80,6 @@ function ChatBox() {
       event.stopPropagation();
     }
     if (newMessage.trim()) {
-      console.log("message", newMessage.trim());
       ws.sendMessage({
         message: newMessage.trim(),
         content_type: "text",
