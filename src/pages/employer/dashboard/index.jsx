@@ -16,9 +16,11 @@ import JobAnalytics from "./jobAnalytics";
 import Loader from "@components/loader";
 import ApplicantCard from "@components/applicantCard";
 import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setTotalAvailableCredits } from "@redux/slice/employer";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [counts, setCounts] = useState({
     activeJobs: 0,
     activeTender: 0,
@@ -65,6 +67,7 @@ const Dashboard = () => {
   const getDashboardActivity = async () => {
     const res = await getDashboardActivityAPI();
     if (res.remote === "success") {
+      dispatch(setTotalAvailableCredits(res.data.availableCredits));
       setCounts({
         activeJobs: res.data.activeJobs,
         activeTender: res.data.activeTender,
@@ -74,6 +77,7 @@ const Dashboard = () => {
       });
     }
   };
+
   const getShareCountData = async () => {
     const res = await getShareCountDataAPI();
     if (res.remote === "success") {
@@ -99,6 +103,7 @@ const Dashboard = () => {
       setIsDonutShow(true);
     }
   };
+
   const handleShowMore = () =>
     setRecentApplicationPage((prevState) => prevState + 1);
   useEffect(() => {
