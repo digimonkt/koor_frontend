@@ -54,9 +54,9 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   useEffect(() => {
     if (totalApplicationsByJob.data) {
       const applicationStatusCount = totalApplicationsByJob.data[jobId];
-      setTotalRejected(applicationStatusCount.rejected);
-      setTotalShortlisted(applicationStatusCount.shortlisted);
-      setTotalPlannedInterview(applicationStatusCount.plannedInterview);
+      setTotalRejected(applicationStatusCount?.rejected);
+      setTotalShortlisted(applicationStatusCount?.shortlisted);
+      setTotalPlannedInterview(applicationStatusCount?.plannedInterview);
     }
   }, [totalApplicationsByJob.data]);
 

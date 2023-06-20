@@ -23,15 +23,15 @@ function ApplicantCard({
     <Stack
       direction={{ xs: "column", lg: "row" }}
       spacing={{ xs: "2", lg: "2" }}
-      alignItems={{ xs: "start", lg: "center" }}
+      alignItems={{ xs: "flex-start", lg: "center" }}
       justifyContent={{ xs: "center", lg: "space-between" }}
       className="border-recent"
     >
       <Stack
         direction="row"
         spacing={2}
-        alignItems="center"
-        sx={{ width: "57%", "@media(max-width:992)": { width: "auto" } }}
+        alignItems={{ xs: "flex-start", lg: "row" }}
+        sx={{ width: "57%", "@media (max-width:992px)": { width: "auto" } }}
       >
         <Avatar
           src={generateFileUrl(details.user.image?.path || "")}

@@ -2,7 +2,7 @@
   text-align: center;
   border-bottom: 1px solid #cacaca;
   margin: 0 14px;
-  padding-bottom: 4px;
+  padding:20px 0px;
 }
 .monthBox h4 {
   font-size: 14px;
@@ -116,4 +116,13 @@
   border-radius: 60px !important;
   font-family: "poppins";
   margin-right: 15px !important;
+}
+
+@media screen and (max-width:540px) {
+  .requirement {
+    border-right: 0;
+    margin-right: 0px;
+    min-height: auto;
+  }
+  
 }
