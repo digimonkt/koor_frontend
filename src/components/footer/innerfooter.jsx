@@ -18,6 +18,9 @@ import { getTopCategoriesAPI } from "@api/job";
 import { storeNewsletterAPI } from "@api/home";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import dayjs from "dayjs";
+import { useSelector } from "react-redux";
+import { USER_ROLES } from "@utils/enum";
+import DialogBox from "@components/dialogBox";
 
 const InnerFooter = () => {
   const [categories, setCategories] = useState({});
@@ -25,6 +28,9 @@ const InnerFooter = () => {
   const [successToastPopup, setSuccessToastPopup] = useState(false);
   const [failedToastPopup, setFailedToastPopup] = useState(false);
   const [failedMessage, setFailedMessage] = useState(false);
+  const [warningTrue, setWarningTrue] = useState(false);
+  const [warningRole, setWarningRole] = useState(USER_ROLES.vendor);
+  const { isLoggedIn, role } = useSelector((state) => state.auth);
   const getCategories = async () => {
     const res = await getTopCategoriesAPI();
     if (res.remote === "success") {
@@ -39,6 +45,15 @@ const InnerFooter = () => {
     } else {
       setFailedMessage(res.error);
       setFailedToastPopup(true);
+    }
+  };
+
+  const checkUserLoggedIn = (e, role) => {
+    // console.log({ isLoggedIn });
+    if (!isLoggedIn) {
+      e.preventDefault();
+      setWarningTrue(true);
+      setWarningRole(role);
     }
   };
   useEffect(() => {
@@ -154,7 +169,7 @@ const InnerFooter = () => {
               </Grid>
 
               <Grid item lg={3} xs={6} sm={3}>
-                <Typography
+                {role !== USER_ROLES.jobSeeker ? (<><Typography
                   sx={{
                     fontSize: "20px",
                     color: "#274593",
@@ -167,83 +182,88 @@ const InnerFooter = () => {
                 >
                   Tenders
                 </Typography>
-                <List>
-                  {categories.tenders?.map((child, index) => {
-                    return (
-                      <ListItem disablePadding={true} key={index}>
-                        <ListItemButton
-                          sx={{
-                            "&.MuiButtonBase-root": {
-                              fontFamily: "Poppins",
-                              fontSize: "16px",
-                              color: "#121212",
-                              fontWeight: 400,
-                              "&:hover": {
-                                background: "transparent",
-                                color: "#EEA23D",
+                  <List>
+                    {categories.tenders?.map((child, index) => {
+                      return (
+                        <ListItem disablePadding={true} key={index}>
+                          <ListItemButton
+                            sx={{
+                              "&.MuiButtonBase-root": {
+                                fontFamily: "Poppins",
+                                fontSize: "16px",
+                                color: "#121212",
+                                fontWeight: 400,
+                                "&:hover": {
+                                  background: "transparent",
+                                  color: "#EEA23D",
+                                },
+                                "@media (max-width:992px)": {
+                                  fontSize: "12px",
+                                },
                               },
-                              "@media (max-width:992px)": {
-                                fontSize: "12px",
-                              },
-                            },
-                          }}
-                          LinkComponent={Link}
-                          to={`/search/tenders?tenderCategories=${child.id}`}
-                          dense={true}
-                          disableGutters={true}
-                        >
-                          {child.title}
-                        </ListItemButton>
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                            }}
+                            LinkComponent={Link}
+                            to={isLoggedIn ? `/search/tenders?tenderCategories=${child.id}` : "#"}
+                            dense={true}
+                            onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
+                            disableGutters={true}
+                          >
+                            {child.title}
+                          </ListItemButton>
+                        </ListItem>
+                      );
+                    })}
+                  </List></>) : ""}
               </Grid>
               <Grid item lg={3} xs={6} sm={3}>
-                <Typography
-                  sx={{
-                    fontSize: "20px",
-                    color: "#274593",
-                    fontWeight: 600,
-                    fontFamily: "Poppins",
-                    "@media (max-width:992px)": {
-                      fontSize: "16px",
-                    },
-                  }}
-                >
-                  Talents
-                </Typography>
-                <List>
-                  {categories.talents?.map((child, index) => {
-                    return (
-                      <ListItem disablePadding={true} key={index}>
-                        <ListItemButton
-                          sx={{
-                            "&.MuiButtonBase-root": {
-                              fontFamily: "Poppins",
-                              fontSize: "16px",
-                              color: "#121212",
-                              fontWeight: 400,
-                              "&:hover": {
-                                background: "transparent",
-                                color: "#EEA23D",
+                {role !== USER_ROLES.jobSeeker ? (<>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      color: "#274593",
+                      fontWeight: 600,
+                      fontFamily: "Poppins",
+                      "@media (max-width:992px)": {
+                        fontSize: "16px",
+                      },
+                    }}
+                  >
+                    Talents
+                  </Typography>
+                  <List>
+                    {categories.talents?.map((child, index) => {
+                      return (
+                        <ListItem disablePadding={true} key={index}>
+                          <ListItemButton
+                            sx={{
+                              "&.MuiButtonBase-root": {
+                                fontFamily: "Poppins",
+                                fontSize: "16px",
+                                color: "#121212",
+                                fontWeight: 400,
+                                "&:hover": {
+                                  background: "transparent",
+                                  color: "#EEA23D",
+                                },
+                                "@media (max-width:992px)": {
+                                  fontSize: "12px",
+                                },
                               },
-                              "@media (max-width:992px)": {
-                                fontSize: "12px",
-                              },
-                            },
-                          }}
-                          LinkComponent={Link}
-                          to={`/search/talents?categories=${"d85a4105-408c-45ae-9aeb-7455f9556c93"}`}
-                          dense={true}
-                          disableGutters={true}
-                        >
-                          {child.title}
-                        </ListItemButton>
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                            }}
+                            LinkComponent={Link}
+                            to={isLoggedIn ? `/search/talents?categories=${child.id}` : "#"}
+                            dense={true}
+                            disableGutters={true}
+                            onClick={(e) => checkUserLoggedIn(e, USER_ROLES.employer)}
+                          >
+                            {child.title}
+                          </ListItemButton>
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </>) : ""}
+
               </Grid>
             </Grid>
           </Grid>
@@ -396,6 +416,17 @@ const InnerFooter = () => {
         handleClose={() => { setFailedToastPopup(false); }}
         message={failedMessage}
       />
+      <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
+        <div>
+          <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+          <h1 className="heading" style={{ textTransform: "capitalize" }}>{warningRole} login required</h1>
+          <div className="form-content">
+            <p>
+              Dear user, to access this content, please log in as a {warningRole}.
+            </p>
+          </div>
+        </div>
+      </DialogBox>
     </Box>
 
   );
