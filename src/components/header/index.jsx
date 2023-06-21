@@ -21,6 +21,7 @@ import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "@redux/slice/user";
 import NotificationPopup from "./notificationPopup";
+import DialogBox from "@components/dialogBox";
 
 // const ismenu = false;
 
@@ -40,6 +41,15 @@ function Header() {
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const { currentUser } = useSelector((state) => state.auth);
+  const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
+
+  const checkUserVerified = (e) => {
+    if (!currentUser.profile.isVerified) {
+      setAccountVerifiedWarning(true);
+      e.preventDefault();
+    }
+  };
   useEffect(() => {
     switch (role) {
       case USER_ROLES.jobSeeker:
@@ -168,7 +178,7 @@ function Header() {
 
           <div
             className="ms-auto"
-            // ref={menu}
+          // ref={menu}
           >
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
               {isLoggedIn ? (
@@ -224,9 +234,8 @@ function Header() {
               </IconButton>
             </Stack>
             <ul
-              className={`menu ${ismenu && "menu-selected"} ${
-                role !== USER_ROLES.jobSeeker ? "color-change" : null
-              }`}
+              className={`menu ${ismenu && "menu-selected"} ${role !== USER_ROLES.jobSeeker ? "color-change" : null
+                }`}
             >
               {!isLoggedIn ? (
                 <li onClick={() => setIsmenu(false)}>
@@ -262,12 +271,13 @@ function Header() {
               {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to="/search/talents"
+                    to={currentUser.profile.isVerified ? "/search/talents" : "#"}
                     style={{
                       color: location.pathname.includes("/search/talents")
                         ? "#274593"
                         : "",
                     }}
+                    onClick={(e) => { checkUserVerified(e); }}
                   >
                     Browse Talents
                   </Link>
@@ -278,12 +288,13 @@ function Header() {
               {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to="/search/vendors"
+                    to={currentUser.profile.isVerified ? "/search/vendors" : "#"}
                     style={{
                       color: location.pathname.includes("/search/vendors")
                         ? "#274593"
                         : "",
                     }}
+                    onClick={(e) => { checkUserVerified(e); }}
                   >
                     Browse Vendors
                   </Link>
@@ -470,6 +481,17 @@ function Header() {
         ) : (
           ""
         )}
+        <DialogBox open={accountVerifiedWarning} handleClose={() => setAccountVerifiedWarning(false)}>
+          <div>
+            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+            <h1 className="heading">Account Verification Status</h1>
+            <div className="form-content">
+              <p>
+                Dear {currentUser.name || currentUser.email}, your account is not verified by the administrator. Please contact the administrator for further assistance.
+              </p>
+            </div>
+          </div>
+        </DialogBox>
       </Container>
     </header>
   );

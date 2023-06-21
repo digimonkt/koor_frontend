@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { getTopCategoriesAPI } from "@api/job";
 import { storeNewsletterAPI } from "@api/home";
 import { ErrorToast, SuccessToast } from "@components/toast";
+import dayjs from "dayjs";
 
 const InnerFooter = () => {
   const [categories, setCategories] = useState({});
@@ -330,7 +331,7 @@ const InnerFooter = () => {
                 "@media (max-width:992px)": { fontSize: "16px" },
               }}
             >
-              © Copyright 2022, Koor
+              © Copyright {dayjs().year()}, Koor
             </Typography>
           </Stack>
 
