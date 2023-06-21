@@ -325,6 +325,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       availability: rawData.available,
       salary_min: rawData.salaryMin,
       salary_max: rawData.salaryMax,
+      role: USER_ROLES.jobSeeker
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -388,11 +389,12 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     const data = {
       title,
       country: rawData.country,
-      tender_category: rawData.tenderCategories,
+      // tender_category: rawData.tenderCategories,
       sector: rawData.sector,
       opportunity_type: rawData.opportunityType,
       tag: rawData.tag,
       years_in_market: rawData.yearsInMarket || null,
+      role: USER_ROLES.vendor
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(

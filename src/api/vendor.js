@@ -122,7 +122,7 @@ export const getSaveTenderAPI = async () => {
   return response;
 };
 
-// vendor
+// vendor advance search filter
 export const saveSearchVendorFilterAPI = async (data) => {
   const response = await api.request({
     url: urlcat("v1/users/filter"),
@@ -140,7 +140,7 @@ export const saveSearchVendorFilterAPI = async (data) => {
 
 export const getSearchVendorFilterAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("v1/users/filter"),
+    url: urlcat("v1/users/filter", { role: "vendor" }),
     method: "GET",
     data,
   });
