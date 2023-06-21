@@ -49,7 +49,6 @@ const InnerFooter = () => {
   };
 
   const checkUserLoggedIn = (e, role) => {
-    // console.log({ isLoggedIn });
     if (!isLoggedIn) {
       e.preventDefault();
       setWarningTrue(true);
