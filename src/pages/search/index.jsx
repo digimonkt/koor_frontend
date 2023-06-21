@@ -13,7 +13,7 @@ import {
   Pagination,
   Stack,
 } from "@mui/material";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { ComponentSelector } from "./helper";
 import {
   JOB_ORDER_BY,
@@ -30,6 +30,7 @@ import {
   setJobPage,
 } from "@redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
+import urlcat from "urlcat";
 function Search() {
   const params = useParams();
   const dispatch = useDispatch();
@@ -38,14 +39,15 @@ function Search() {
     search: { totalItems, totalPages, page, advanceFilter },
   } = useSelector((state) => state);
   const [searchParams, setSearchParams] = useSearchParams({});
-  const [searchType, setSearchType] = useState();
+  const [searchType, setSearchType] = useState("");
   const [searchPlaceHolder, setSearchPlaceHolder] = useState("Jobs");
   const Component = ComponentSelector(searchType);
   const [anchorEl, setAnchorEl] = useState(null);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
   const [search, setSearch] = useState("");
-
+  const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -75,6 +77,7 @@ function Search() {
       setSearch(search);
     }
   }, [params]);
+
   useEffect(() => {
     const payload = { search, order_by: orderBy, search_by: sortBy };
     switch (searchType) {
@@ -98,7 +101,15 @@ function Search() {
         break;
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
-
+  useEffect(() => {
+    if (SEARCH_TYPE.talents === params.type || SEARCH_TYPE.vendors === params.type) {
+      if (isLoggedIn && !currentUser.profile.isVerified) {
+        navigate(
+          urlcat("../employer/dashboard")
+        );
+      }
+    }
+  }, []);
   const pagination = () => {
     return (
       <Pagination
@@ -133,6 +144,7 @@ function Search() {
       />
     );
   };
+
   return (
     <Box className={`${styles.body}`} sx={{ marginTop: "118px" }}>
       <Container
@@ -167,7 +179,7 @@ function Search() {
               className="paginations"
               sx={{ marginTop: { lg: "24px", xs: "24px" } }}
             >
-              {pagination()}
+              {/* {pagination()} */}
             </Box>
             <Box className={`${styles.jobcards}`} sx={{ minHeight: "450px" }}>
               <div className="saved-jobs">
@@ -277,7 +289,7 @@ function Search() {
                               sx={{
                                 backgroundColor:
                                   sortBy === data.sortBy &&
-                                  orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                     ? role === USER_ROLES.jobSeeker
                                       ? "#FEEFD3"
                                       : "#D5E3F7"

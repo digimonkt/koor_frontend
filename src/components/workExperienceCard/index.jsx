@@ -32,7 +32,7 @@ function WorkExperienceCard({
     const res = await deleteWorkExperienceDetailsAPI(id);
     if (res.remote === "success") {
       dispatch(deleteWorkExperienceRecord(id));
-      dispatch(setSuccessToast("Education Deleted Successfully"));
+      dispatch(setSuccessToast("Work Experience Deleted Successfully"));
     } else {
       dispatch(setSuccessToast("Something went wrong"));
     }
@@ -52,14 +52,15 @@ function WorkExperienceCard({
           <h6>{organization}</h6>
           {description ? (
             <>
-              <p
+              {/* <p
                 dangerouslySetInnerHTML={{
                   __html: description,
                 }}
                 style={{
                   wordBreak: "break-all",
                 }}
-              />
+              /> */}
+              <p className="job-description">{description}</p>
               <br />
             </>
           ) : (

@@ -122,10 +122,10 @@ export const getSaveTenderAPI = async () => {
   return response;
 };
 
-// vendor
+// vendor advance search filter
 export const saveSearchVendorFilterAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("v1/vendors/filter"),
+    url: urlcat("v1/users/filter"),
     method: "POST",
     data,
   });
@@ -140,7 +140,7 @@ export const saveSearchVendorFilterAPI = async (data) => {
 
 export const getSearchVendorFilterAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("v1/vendors/filter"),
+    url: urlcat("v1/users/filter", { role: "vendor" }),
     method: "GET",
     data,
   });
@@ -154,7 +154,7 @@ export const getSearchVendorFilterAPI = async (data) => {
 };
 export const deleteSearchVendorFilterAPI = async (filterId) => {
   const response = await api.request({
-    url: urlcat("v1/vendors/filter/:filterId", { filterId }),
+    url: urlcat("v1/users/filter/:filterId", { filterId }),
     method: "DELETE",
   });
   if (response.remote === "success") {
@@ -169,7 +169,7 @@ export const deleteSearchVendorFilterAPI = async (filterId) => {
 export const updateSavedSearchVendorFilterAPI = async (filterId, status) => {
   const data = { is_notification: status };
   return await api.request({
-    url: urlcat("/v1/vendors/filter/:filterId", { filterId }),
+    url: urlcat("/v1/users/filter/:filterId", { filterId }),
     method: "PUT",
     data,
   });

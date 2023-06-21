@@ -79,13 +79,15 @@ function ChatBox() {
       event.preventDefault();
       event.stopPropagation();
     }
-    ws.sendMessage({
-      message: newMessage.trim(),
-      content_type: "text",
-    });
-    setNewMessage("");
-    // Scroll to the bottom after sending the message
-    scrollToBottom();
+    if (newMessage.trim()) {
+      ws.sendMessage({
+        message: newMessage.trim(),
+        content_type: "text",
+      });
+      setNewMessage("");
+      // Scroll to the bottom after sending the message
+      scrollToBottom();
+    }
   };
 
   const onMessageReceive = async (message) => {
@@ -204,7 +206,14 @@ function ChatBox() {
           />
         );
       default:
-        return "";
+        return (<span className="me-2 d-inline-flex">
+          <a
+            href={generateFileUrl(attachment.path)}
+            target="_blank"
+            className="m-0"
+            rel="noreferrer"
+          ><SVG.UploadIcon /></a>
+        </span>);
     }
   };
 
@@ -270,11 +279,10 @@ function ChatBox() {
                 .map((message) => {
                   return (
                     <div
-                      className={`${
-                        message.user.id === currentUser.id
-                          ? "rightside"
-                          : "leftside"
-                      } mt-3`}
+                      className={`${message.user.id === currentUser.id
+                        ? "rightside"
+                        : "leftside"
+                        } mt-3`}
                       key={message.id}
                     >
                       <Stack
@@ -290,25 +298,23 @@ function ChatBox() {
                           <Avatar src={message.user.image} />
                         )}
                         <div
-                          className={`w-70 ${
-                            message.user.id === currentUser.id
-                              ? "text-right"
-                              : "text-left"
-                          }`}
+                          className={`w-70 ${message.user.id === currentUser.id
+                            ? "text-right"
+                            : "text-left"
+                            }`}
                         >
                           <div
-                            className={`message-text ${
-                              message.user.id === currentUser.id
-                                ? ""
-                                : "message-tex-2"
-                            }`}
+                            className={`message-text ${message.user.id === currentUser.id
+                              ? ""
+                              : "message-tex-2"
+                              }`}
                             style={{
                               background:
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                  ? "#D5E3F7"
-                                  : "#FEEFD3",
+                                    ? "#D5E3F7"
+                                    : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -327,7 +333,7 @@ function ChatBox() {
                                   : ""}
                                 <p>{message.message}</p>
                               </div>
-                              <div className="ms-2">
+                              <div className={`ms-2 ${styles.chatTime}`}>
                                 {dayjs.utc(message.createdAt).local().fromNow()}
                               </div>
                             </div>
