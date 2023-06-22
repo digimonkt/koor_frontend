@@ -132,7 +132,7 @@ const AboutMe = (props) => {
         );
       } else {
         formik.setErrors({ mobileNumber: res.error.errors.mobile_number });
-        dispatch(setErrorToast(res.error.errors.mobile_number || "Something went wrong"));
+        dispatch(setErrorToast(res.error.errors.dob || res.error.errors.mobile_number || "Something went wrong"));
       }
       setLoading(false);
     },
