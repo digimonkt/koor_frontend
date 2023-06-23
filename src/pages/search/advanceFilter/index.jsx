@@ -50,6 +50,7 @@ import {
   deleteSearchTenderFilterAPI,
   deleteSearchVendorFilterAPI,
   getSearchTenderFilterAPI,
+  getSearchVendorFilterAPI,
   saveSearchTenderFilterAPI,
   saveSearchVendorFilterAPI,
   updateSavedSearchTenderFilterAPI,
@@ -193,11 +194,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   };
 
   const getSearchVendorFilter = async () => {
-    const data = await getSearchTenderFilterAPI();
+    const data = await getSearchVendorFilterAPI();
     if (data.remote === "success") {
       setAllFilters([...data.data]);
     }
-    setAllFilters([...[]]);
   };
 
   const handleSelectFilter = async (filter) => {
@@ -209,7 +209,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-        (typeof filter.country === "string" ? filter.country : "")
+      (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -324,6 +324,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       availability: rawData.available,
       salary_min: rawData.salaryMin,
       salary_max: rawData.salaryMax,
+      role: USER_ROLES.jobSeeker
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -381,17 +382,18 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       dispatch(setErrorToast("Name is required"));
     }
   };
-
+  // Vendor
   const handleSaveVendorSearch = async (title) => {
     const rawData = formik.values;
     const data = {
       title,
       country: rawData.country,
-      tender_category: rawData.tenderCategories,
+      // tender_category: rawData.tenderCategories,
       sector: rawData.sector,
       opportunity_type: rawData.opportunityType,
       tag: rawData.tag,
-      years_in_market: rawData.yearsInMarket,
+      years_in_market: rawData.yearsInMarket || null,
+      role: USER_ROLES.vendor
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -615,11 +617,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                 return (
                   <MenuItem key={filter.id}>
                     <SearchButton
-                      className={`${
-                        selectedFilter === filter.id
-                          ? styles.btninActive
-                          : styles.btnActive
-                      }`}
+                      className={`${selectedFilter === filter.id
+                        ? styles.btninActive
+                        : styles.btnActive
+                        }`}
                       leftIcon={
                         <div
                           onClick={() => toggleNotificationStatus(filter.id)}

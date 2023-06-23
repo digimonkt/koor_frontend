@@ -31,7 +31,7 @@ export const LoginUserAPI = async (data) => {
  */
 export const GetUserDetailsAPI = async (data) => {
   const response = await api.request({
-  url: urlcat("/v1/users", data || {}),
+    url: urlcat("/v1/users", data || {}),
   });
   if (response.remote === "success") {
     return {
@@ -141,7 +141,7 @@ export const getUserCountryByIpAPI = async (ip) => {
 };
 export const getSearchUserFilterAPI = async (data) => {
   const res = await api.request({
-    url: urlcat("/v1/users/filter"),
+    url: urlcat("/v1/users/filter", { role: "jobSeeker" }),
     method: "GET",
   });
   if (res.remote === "success") {
@@ -218,7 +218,7 @@ export const searchUserByRole = async (data) => {
     url += `&tag=${tag.title}`;
   });
   sector.forEach((sector) => {
-    url += `&organizationType=${sector.title}`;
+    url += `&sector=${sector.title}`;
   });
   const res = await api.request({
     url,

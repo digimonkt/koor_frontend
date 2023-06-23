@@ -12,7 +12,7 @@ function VendorFilter({ formik, footer, responsive }) {
     choices: {
       countries,
       cities,
-      tenderCategories,
+      // tenderCategories,
       tags,
       opportunityTypes,
       sectors,
@@ -30,7 +30,7 @@ function VendorFilter({ formik, footer, responsive }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={responsive ? 12 : 4}>
+          {/* <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
@@ -53,7 +53,7 @@ function VendorFilter({ formik, footer, responsive }) {
                 ) : null}
               </FormControl>
             </div>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1 }} className="filter_input">
