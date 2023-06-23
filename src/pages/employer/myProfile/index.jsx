@@ -37,6 +37,7 @@ import { SVG } from "@assets/svg";
 import { getCities, getCountries, getTenderSector } from "@redux/slice/choices";
 import { useDebounce } from "usehooks-ts";
 import styles from "./myProfile.module.css";
+import { setErrorToast } from "@redux/slice/toast";
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
@@ -139,6 +140,7 @@ function MyProfileComponent() {
         setLoading(false);
       } else {
         console.log({ res });
+        dispatch(setErrorToast(res.error.errors.mobile_number || "Something went wrong"));
         setLoading(false);
       }
     },
