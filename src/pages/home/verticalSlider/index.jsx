@@ -13,7 +13,7 @@ const VerticalSlider = ({ testimonialList }) => {
     autoplay: false,
     autoplaySpeed: 1500,
     speed: 500,
-    vertical: true,
+    vertical: false,
     verticalSwiping: true,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -58,7 +58,7 @@ const VerticalSlider = ({ testimonialList }) => {
                     <Box className={styles.home_testi_box_testi}>
                       <h2 className={styles.testi_heading}>{item.title}</h2>
                       {
-                        (showMore === item.id) ? <p dangerouslySetInnerHTML={{ __html: item.description }}></p> : <p dangerouslySetInnerHTML={{ __html: item.description.substring(0, TESTIMONIAL_MAX_WORD) }}></p>
+                        (showMore === item.id) ? <div dangerouslySetInnerHTML={{ __html: item.description }}></div> : <div dangerouslySetInnerHTML={{ __html: item.description.substring(0, TESTIMONIAL_MAX_WORD) }}></div>
                       }
 
                       {
