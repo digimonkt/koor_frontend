@@ -27,7 +27,7 @@ export const transformVendorSavedFilter = (data) => {
     tag: (data.tag || []).map((tag) => tag.id),
     tenderCategories: (data.tender_category || []).map((cate) => cate.id),
     isNotification: data.is_notification,
-    deadline: data.deadline,
+    yearsInMarket: data.years_in_market,
     budgetMin: data.budget_min,
     budgetMax: data.budget_max,
   };

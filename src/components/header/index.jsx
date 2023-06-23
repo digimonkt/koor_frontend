@@ -43,11 +43,18 @@ function Header() {
   const [searchValue, setSearchValue] = useState("");
   const { currentUser } = useSelector((state) => state.auth);
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
+  const [warningTrue, setWarningTrue] = useState(false);
 
   const checkUserVerified = (e) => {
     if (!currentUser.profile.isVerified) {
       setAccountVerifiedWarning(true);
       e.preventDefault();
+    }
+  };
+  const checkUserLoggedIn = (e) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      setWarningTrue(true);
     }
   };
   useEffect(() => {
@@ -75,6 +82,7 @@ function Header() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
   return (
     <header>
       <Container
@@ -305,12 +313,13 @@ function Header() {
               {!isLoggedIn || role === USER_ROLES.vendor ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to="/search/tenders"
+                    to={isLoggedIn ? "/search/tenders" : "#"}
                     style={{
                       color: location.pathname.includes("/search/tenders")
                         ? "#274593"
                         : "",
                     }}
+                    onClick={(e) => checkUserLoggedIn(e)}
                   >
                     Browse Tenders
                   </Link>
@@ -488,6 +497,17 @@ function Header() {
             <div className="form-content">
               <p>
                 Dear {currentUser.name || currentUser.email}, your account is not verified by the administrator. Please contact the administrator for further assistance.
+              </p>
+            </div>
+          </div>
+        </DialogBox>
+        <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
+          <div>
+            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+            <h1 className="heading" style={{ textTransform: "capitalize" }}>{USER_ROLES.vendor} login required</h1>
+            <div className="form-content">
+              <p>
+                Dear user, to access this content, please log in as a {USER_ROLES.vendor}.
               </p>
             </div>
           </div>
