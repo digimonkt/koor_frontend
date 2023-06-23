@@ -48,6 +48,7 @@ const AboutMe = (props) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [filledData, setFilledData] = useState(null);
+  const [countryId, setCountryId] = useState("");
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -168,9 +169,12 @@ const AboutMe = (props) => {
   }, []);
   useEffect(() => {
     if (formik.values.country) {
-      dispatch(getCities({ countryId: formik.values.country }));
+      setCountryId(formik.values.country);
     }
-  }, [formik.values.country]);
+    if (countryId) {
+      dispatch(getCities({ countryId }));
+    }
+  }, [formik.values.country, countryId]);
   useEffect(() => {
     const currentUserMobileNumber =
       currentUser.countryCode && currentUser.mobileNumber
