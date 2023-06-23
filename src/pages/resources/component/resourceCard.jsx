@@ -36,6 +36,7 @@ export const ResourceCard = ({ id, image, title, description }) => {
                 alt=""
                 src={generateFileUrl(image)}
                 className={`${styles.imgSize}`}
+                rel="nofollow"
               />
             </div>
           </Grid>

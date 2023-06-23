@@ -203,6 +203,7 @@ function ChatBox() {
             alt="attachment"
             src={generateFileUrl(attachment.path)}
             width={"400px"}
+            rel="nofollow"
           />
         );
       default:

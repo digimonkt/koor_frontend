@@ -46,7 +46,7 @@ const HomeSection = () => {
                 className={styles.home_section_grid}
               >
                 <Box className={`${styles.home_section_img_box}`}>
-                  <img src={item.image} alt="img" />
+                  <img src={item.image} alt="img" rel="nofollow" />
                   <h5 className={styles.homeheadding}>{item.imgtext}</h5>
                 </Box>
               </Grid>
