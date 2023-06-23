@@ -5,6 +5,7 @@ export const DATABASE_DATE_FORMAT = "YYYY-MM-DD";
 export const YEAR_FORMAT = "YYYY";
 export const SALARY_MIN = "";
 export const SALARY_MAX = "";
+export const TESTIMONIAL_MAX_WORD = 350;
 export const BLACKLIST_REASON_LIST = [
   { label: "Spam", value: "Spam" },
   { label: "Offensive Behavior", value: "Offensive Behavior" },

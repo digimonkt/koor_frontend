@@ -43,7 +43,9 @@
   margin-top: 18%;
   padding-left: 25px;
   padding-right: 25px;
+  font-family: "Poppins", sans-serif;
 }
+/* .home_testi_box_testi strong{font-weight: 400;} */
 @media screen and (max-width: 992px) {
   .home_testi_img {
     width: auto;
