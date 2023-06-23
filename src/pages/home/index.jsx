@@ -385,8 +385,8 @@ const Home = () => {
                             },
                           }}
                         >
-                          <img src={IMAGES.Googleplay} alt="" />
-                          <img src={IMAGES.Appstore} alt="" className="mx-3" />
+                          <img src={IMAGES.Googleplay} alt="" rel="nofollow" />
+                          <img src={IMAGES.Appstore} alt="" className="mx-3" rel="nofollow"/>
                         </Box>
                       </Box>
                     </Grid>
@@ -406,6 +406,7 @@ const Home = () => {
                         src={IMAGES.MobileApp}
                         alt=""
                         className={styles.appview}
+                        rel="nofollow"
                       />
                     </Grid>
                   </Grid>
