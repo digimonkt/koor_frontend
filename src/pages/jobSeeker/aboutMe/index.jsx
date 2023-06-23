@@ -47,6 +47,8 @@ const AboutMe = (props) => {
   } = useSelector((state) => state);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [filledData, setFilledData] = useState(null);
+  const [countryId, setCountryId] = useState("");
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -104,6 +106,7 @@ const AboutMe = (props) => {
         delete payload.email;
       }
       const res = await updateJobSeekerAboutMeAPI(payload);
+      setFilledData(formik.values);
       if (res.remote === "success") {
         // dispatch(setSuccessToast("About Me Updated Successfully"));
         handleToggleModel();
@@ -129,13 +132,33 @@ const AboutMe = (props) => {
           })
         );
       } else {
-        console.log({ res });
         formik.setErrors({ mobileNumber: res.error.errors.mobile_number });
-        dispatch(setErrorToast("Something went wrong"));
+        dispatch(setErrorToast(res.error.errors.dob || res.error.errors.mobile_number || "Something went wrong"));
       }
       setLoading(false);
     },
   });
+  useEffect(() => {
+    if (filledData) {
+      formik.setFieldValue("city", filledData.city);
+      formik.setFieldValue("country", filledData.country);
+      formik.setFieldValue("description", filledData.description);
+      formik.setFieldValue("dob", filledData.dob);
+      formik.setFieldValue("email", filledData.email);
+      formik.setFieldValue("employmentStatus", filledData.employmentStatus);
+      formik.setFieldValue("experience", filledData.experience);
+      formik.setFieldValue("fullName", filledData.fullName);
+      formik.setFieldValue("gender", filledData.gender);
+      formik.setFieldValue("highestEducation", filledData.highestEducation);
+      formik.setFieldValue("marketInformationNotification", filledData.marketInformationNotification);
+      formik.setFieldValue("countryCode", filledData.mobileNumber.international.split(" ")[0]);
+      formik.setFieldValue("mobileNumber", {
+        national: filledData.mobileNumber.national,
+        international: filledData.mobileNumber.international,
+        value: filledData.mobileNumber.value,
+      });
+    }
+  }, [filledData]);
   useEffect(() => {
     if (!educationLevels.data.length) {
       dispatch(getEducationLevels());
@@ -146,9 +169,12 @@ const AboutMe = (props) => {
   }, []);
   useEffect(() => {
     if (formik.values.country) {
-      dispatch(getCities({ countryId: formik.values.country }));
+      setCountryId(formik.values.country);
     }
-  }, [formik.values.country]);
+    if (countryId) {
+      dispatch(getCities({ countryId }));
+    }
+  }, [formik.values.country, countryId]);
   useEffect(() => {
     const currentUserMobileNumber =
       currentUser.countryCode && currentUser.mobileNumber
@@ -315,7 +341,7 @@ const AboutMe = (props) => {
                 {...formik.getFieldProps("employmentStatus")}
               />
               {formik.touched.employmentStatus &&
-              formik.errors.employmentStatus ? (
+                formik.errors.employmentStatus ? (
                 <ErrorMessage>{formik.errors.employmentStatus}</ErrorMessage>
               ) : null}
               <HorizontalLabelInput
@@ -369,7 +395,7 @@ const AboutMe = (props) => {
                 {...formik.getFieldProps("highestEducation")}
               />
               {formik.touched.highestEducation &&
-              formik.errors.highestEducation ? (
+                formik.errors.highestEducation ? (
                 <ErrorMessage>{formik.errors.highestEducation}</ErrorMessage>
               ) : null}
               <HorizontalLabelInput

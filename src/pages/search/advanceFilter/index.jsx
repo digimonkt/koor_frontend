@@ -197,7 +197,6 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     const data = await getSearchVendorFilterAPI();
     if (data.remote === "success") {
       setAllFilters([...data.data]);
-      // console.log(data.data);
     }
   };
 
