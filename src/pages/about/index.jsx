@@ -46,10 +46,10 @@ const AboutUs = () => {
                 </Box>
                 <Box className={styles.about_social}>
                   <Link to="/social">
-                    <img src={IMAGES.Googleplay} alt="img" />
+                    <img src={IMAGES.Googleplay} rel="nofollow" alt="img" />
                   </Link>
                   <Link to="/social" className="mx-3">
-                    <img src={IMAGES.Appstore} alt="img" />
+                    <img src={IMAGES.Appstore} rel="nofollow" alt="img" />
                   </Link>
                 </Box>
               </Grid>
@@ -59,6 +59,7 @@ const AboutUs = () => {
                     <img
                       src={item.img}
                       alt="img"
+                      rel="nofollow"
                       className={styles.about_banner_img}
                     />
                   </Box>
