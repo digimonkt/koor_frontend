@@ -218,7 +218,7 @@ export const searchUserByRole = async (data) => {
     url += `&tag=${tag.title}`;
   });
   sector.forEach((sector) => {
-    url += `&organizationType=${sector.title}`;
+    url += `&sector=${sector.title}`;
   });
   const res = await api.request({
     url,
