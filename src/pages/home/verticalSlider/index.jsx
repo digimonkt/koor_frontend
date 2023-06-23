@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Slider from "react-slick";
 import styles from "./verticalslider.module.css";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import { TESTIMONIAL_MAX_WORD } from "@utils/constants/constants";
 const VerticalSlider = ({ testimonialList }) => {
   const settings = {
     dots: true,
@@ -57,11 +58,11 @@ const VerticalSlider = ({ testimonialList }) => {
                     <Box className={styles.home_testi_box_testi}>
                       <h2 className={styles.testi_heading}>{item.title}</h2>
                       {
-                        (showMore === item.id) ? <p dangerouslySetInnerHTML={{ __html: item.description }}></p> : <p dangerouslySetInnerHTML={{ __html: item.description.substring(0, 250) }}></p>
+                        (showMore === item.id) ? <p dangerouslySetInnerHTML={{ __html: item.description }}></p> : <p dangerouslySetInnerHTML={{ __html: item.description.substring(0, TESTIMONIAL_MAX_WORD) }}></p>
                       }
 
                       {
-                        (item.description.length > 250 && showMore !== item.id) ? <div onClick={() => handleShowMore(item.id)}>Show More</div> : <div onClick={() => handleShowMore("")}>Show Less</div>
+                        (item.description.length > TESTIMONIAL_MAX_WORD && showMore !== item.id) ? <div onClick={() => handleShowMore(item.id)}>Show More</div> : (item.description.length > TESTIMONIAL_MAX_WORD) ? <div onClick={() => handleShowMore("")}>Show Less</div> : " "
                       }
                       <h5 className={styles.testi_h5}>
                         <span className={styles.testi_h5_span}>
