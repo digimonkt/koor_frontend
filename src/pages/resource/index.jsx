@@ -76,6 +76,7 @@ const Resource = () => {
                       src={generateFileUrl(resourceList?.attachment?.path)}
                       alt="img"
                       className={styles.resource_banner}
+                      rel="nofollow"
                     />
                   </Box>
                 </Grid>) : ""

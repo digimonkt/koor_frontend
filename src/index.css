@@ -160,8 +160,8 @@
   height: 13px;
   content: "•";
   text-align: center;
-opacity: 1;
-  color: #EFEFEF;
+  opacity: 1;
+  color: #efefef;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -286,10 +286,8 @@ textarea {
     transform: rotate(90deg);
     position: relative;
     bottom: 220px;
-    left:-20px;
+    left: -20px;
   }
-
-
 
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
@@ -393,9 +391,81 @@ textarea {
   }
 }
 
-img{max-width: 100%;}
-@media screen and (max-width:480px){
+img {
+  max-width: 100%;
+}
+@media screen and (max-width: 480px) {
+  .verticalSlider ul.slick-dots {
+    bottom: 35.6em;
+    transform: none;
+  }
+}
+.testmonial-img img {
+  display: inline-block;
+  border-radius: 15;
+  -webkit-border-radius: 15;
+  -moz-border-radius: 15;
+  -ms-border-radius: 15;
+  -o-border-radius: 15;
+  width: 100%;
+}
 
-  .verticalSlider ul.slick-dots{bottom:35.6em; transform:none}
 
+
+.testmonials-slider .slick-slide,
+.testmonials-slider .slick-slide[aria-hidden="true"]:not(.slick-cloned) ~ .slick-cloned[aria-hidden="true"] {
+  transform: scale(0.8, 0.8);
+  transition: all 0.4s ease-in-out;
+  opacity: 0.5;
+}
+
+/* Active center slide (You can change anything here for cenetr slide)*/
+.testmonials-slider .slick-center,
+.testmonials-slider .slick-slide[aria-hidden="true"]:not([tabindex="-1"]) + .slick-cloned[aria-hidden="true"] {
+  transform: scale(1.2);
+  
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  opacity: 0.5;
+}
+.testmonials-slider .slick-current.slick-active{
+  transform: scale(1.2);
+
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  opacity: 1;
+}
+.testmonials-slider .slick-current.slick-active .testmonial-img img{
+  opacity: 1;
+}
+
+
+ul.listvertical {
+  list-style: none;
+  position: absolute;
+  top: -12px;
+  margin: 0px;
+  right: -50px;
+}
+
+ul.listvertical button {
+  text-indent: -5000px;
+  background: #EFEFEF;
+  border: 0px;
+  width: 13px;
+  height: 13px;
+  border-radius: 100%;
+  outline: none;
+  cursor: pointer;
+}
+
+ul.listvertical li.slick-active button {
+  background: #274593;
+}
+ul.listvertical li {
+  margin-bottom: 5px;
 }
