@@ -40,7 +40,7 @@ const Accordian = ({ faqCategory }) => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography className={styles.accordion_text}>
-                    {faq.answer}
+                    <div dangerouslySetInnerHTML={{ __html: faq.answer }}></div>
                   </Typography>
                 </AccordionDetails>
               </Accordion>

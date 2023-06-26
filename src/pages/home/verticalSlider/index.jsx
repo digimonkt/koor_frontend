@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import styles from "./verticalslider.module.css";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { TESTIMONIAL_MAX_WORD } from "@utils/constants/constants";
+import { SVG } from "@assets/svg";
 const VerticalSlider = ({ testimonialList }) => {
   const settings = {
     dots: true,
@@ -62,7 +63,7 @@ const VerticalSlider = ({ testimonialList }) => {
                       }
 
                       {
-                        (item.description.length > TESTIMONIAL_MAX_WORD && showMore !== item.id) ? <div onClick={() => handleShowMore(item.id)}>Show More</div> : (item.description.length > TESTIMONIAL_MAX_WORD) ? <div onClick={() => handleShowMore("")}>Show Less</div> : " "
+                        (item.description.length > TESTIMONIAL_MAX_WORD && showMore !== item.id) ? <div className={styles.home_img_contents_p} onClick={() => handleShowMore(item.id)}>Show More <SVG.ArrowDownward /></div> : (item.description.length > TESTIMONIAL_MAX_WORD) ? <div className={styles.home_img_contents_p} onClick={() => handleShowMore("")}>Show Less <SVG.ArrowUpward className={styles.rightarrow} /></div> : " "
                       }
                       <h5 className={styles.testi_h5}>
                         <span className={styles.testi_h5_span}>
