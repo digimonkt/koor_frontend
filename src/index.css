@@ -400,6 +400,9 @@ img {
     transform: none;
   }
 }
+.testmonial-img{height: 300px;
+  display: flex;
+  align-items: center;}
 .testmonial-img img {
   display: inline-block;
   border-radius: 15;
@@ -408,6 +411,8 @@ img {
   -ms-border-radius: 15;
   -o-border-radius: 15;
   width: 100%;
+  height: 180px;
+  object-fit: cover;
 }
 
 
@@ -438,6 +443,7 @@ img {
   -ms-transform: scale(1.2);
   -o-transform: scale(1.2);
   opacity: 1;
+  height: 300px;
 }
 .testmonials-slider .slick-current.slick-active .testmonial-img img{
   opacity: 1;
@@ -447,7 +453,7 @@ img {
 ul.listvertical {
   list-style: none;
   position: absolute;
-  top: -12px;
+  top: 70px;
   margin: 0px;
   right: -50px;
 }

@@ -1,10 +1,11 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import React, { useState } from "react";
 import Slider from "react-slick";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { TESTIMONIAL_MAX_WORD } from "@utils/constants/constants";
 
+import { SVG } from "@assets/svg";
 function TestimonialSlider({ testimonialList }) {
   const [nav1, setNav1] = React.useState(null);
   const [nav2, setNav2] = React.useState(null);
@@ -22,7 +23,7 @@ function TestimonialSlider({ testimonialList }) {
 
   return (
     <>
-      <Grid container spacing={{ xs: 3, lg: 10 }} alignItems={"center"}>
+      <Grid container spacing={{ xs: 3, lg: 10 }}>
         <Grid item xs={5}>
           <Slider
             asNavFor={nav1}
@@ -66,34 +67,85 @@ function TestimonialSlider({ testimonialList }) {
             {(testimonialList || []).map((item, index) => (
               <>
                 <Box>
-                  <h2>{item.title}</h2>
+                  <Typography
+                    variant="h2"
+                    sx={{
+                      fontSize: "32px",
+                      fontFamily: "Bahnschrift",
+                      fontWeight: 600,
+                      m: 0,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
                   {showMore === item.id ? (
-                    <div
+                    <Box
+                      sx={{
+                        "& p": {
+                          fontSize: "16px",
+                          fontFamily: "Poppins",
+                          fontWeight: 400,
+                        },
+                      }}
                       dangerouslySetInnerHTML={{ __html: item.description }}
-                    ></div>
+                    ></Box>
                   ) : (
-                    <div
+                    <Box
+                      sx={{
+                        "& p": {
+                          fontSize: "16px",
+                          fontFamily: '"Poppins", sans-serif',
+                          fontWeight: 400,
+                        },
+                      }}
                       dangerouslySetInnerHTML={{
                         __html: item.description.substring(
                           0,
                           TESTIMONIAL_MAX_WORD
                         ),
                       }}
-                    ></div>
+                    ></Box>
                   )}
 
                   {item.description.length > TESTIMONIAL_MAX_WORD &&
                   showMore !== item.id ? (
-                    <div onClick={() => handleShowMore(item.id)}>Show More</div>
+                    <Box
+                      onClick={() => handleShowMore(item.id)}
+                      sx={{
+                        cursor: "pointer",
+                        mb: 3,
+                        position: "relative",
+                        zIndex: 2,
+                      }}
+                    >
+                      Show More <SVG.ArrowDownward />
+                    </Box>
                   ) : item.description.length > TESTIMONIAL_MAX_WORD ? (
-                    <div onClick={() => handleShowMore("")}>Show Less</div>
+                    <Box
+                      onClick={() => handleShowMore("")}
+                      sx={{
+                        cursor: "pointer",
+                        mb: 3,
+                        position: "relative",
+                        zIndex: 2,
+                      }}
+                    >
+                      Show Less <SVG.ArrowUpward />
+                    </Box>
                   ) : (
                     " "
                   )}
-                  <h5>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      fontSize: "16px",
+                      fontFamily: '"Poppins", sans-serif',
+                    }}
+                  >
                     <span>{item.clientName}</span>, {item.clientPosition} at{" "}
                     {item.clientCompany}
-                  </h5>
+                  </Typography>
                 </Box>
               </>
             ))}
