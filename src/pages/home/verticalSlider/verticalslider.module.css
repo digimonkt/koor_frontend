@@ -1,9 +1,9 @@
 /* vertical slider css */
 
-.home_testi_img {
+/* .home_testi_img {
   width: 523px;
   height: 433px;
-}
+} */
 
 .testi_h5_span {
   font-family: "Poppins", sans-serif;
@@ -45,6 +45,11 @@
   color: #121212;
   text-align: justify;
   opacity: 0.7;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* number of lines to show */
+          line-clamp: 4; 
+  -webkit-box-orient: vertical;
 }
 
 .testi_heading {
