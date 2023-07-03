@@ -86,7 +86,7 @@ const ApplicantDetails = () => {
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   <span>
-                    Appliedvfvc {dayjs(applicantDetails.createdAt).fromNow()}{" "}
+                    Applied {dayjs(applicantDetails.createdAt).fromNow()}{" "}
                     to:{" "}
                   </span>
                   <div>{applicantDetails.job.title}</div>
