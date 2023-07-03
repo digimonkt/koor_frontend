@@ -18,17 +18,17 @@ jobs:
         uses: appleboy/ssh-action@master
 
         with:
-          host: 203.190.153.20
+          host: 203.190.153.19
 
           key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-          username: user
+          username: devops
 
           port: 22
 
           script: |
-            cd /home/user/koor/frontend_koor/ 
+            cd /home/user/koor/frontend/ 
             git pull origin main
             /home/user/.yarn/bin/yarn install
             /home/user/.yarn/bin/yarn build
-            pm2 restart 41
+            pm2 restart 3
