@@ -10,6 +10,7 @@ import { UpdateJobPreferencesAPI } from "@api/jobSeeker";
 import { setSuccessToast } from "@redux/slice/toast";
 import { updateCurrentUser } from "@redux/slice/user";
 import { Link } from "react-router-dom";
+import { PAY_PERIOD } from "@utils/enum";
 
 const JobPreferences = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const JobPreferences = () => {
     isFullTime: false,
     hasContract: false,
     expectedSalary: 0,
+    payPeriod: PAY_PERIOD.month
   });
 
   const handleChangeCheckbox = (name) => (e) => {
@@ -31,7 +33,7 @@ const JobPreferences = () => {
     console.log("e: ", e.target.value, name);
     setJobPreferences({ ...jobPreferences, [name]: e.target.value });
   };
-
+  console.log({ jobPreferences });
   const handleSubmit = async () => {
     setLoading(true);
     const payload = {
@@ -41,6 +43,7 @@ const JobPreferences = () => {
       is_full_time: jobPreferences.isFullTime,
       has_contract: jobPreferences.hasContract,
       expected_salary: jobPreferences.expectedSalary,
+      pay_period: jobPreferences.payPeriod,
     };
     const res = await UpdateJobPreferencesAPI(payload);
     if (res.remote === "success") {
@@ -54,6 +57,7 @@ const JobPreferences = () => {
             isFullTime: !!payload.is_full_time,
             hasContract: !!payload.has_contract,
             expectedSalary: payload.expected_salary,
+            payPeriod: payload.pay_period,
           },
         })
       );
@@ -69,6 +73,7 @@ const JobPreferences = () => {
       isFullTime: currentUser.jobPreferences.isFullTime,
       hasContract: currentUser.jobPreferences.hasContract,
       expectedSalary: currentUser.jobPreferences.expectedSalary,
+      payPeriod: currentUser.jobPreferences.payPeriod,
     });
   }, []);
   return (
@@ -171,7 +176,7 @@ const JobPreferences = () => {
                   value: Number(jobPreferences.expectedSalary || 0),
                   onChange: handleChangeInput("expectedSalary"),
                 },
-                payPeriod: {},
+                payPeriod: { value: jobPreferences.payPeriod || PAY_PERIOD.month, onChange: handleChangeInput("payPeriod") },
               }}
               errors={{
                 currency: "",
