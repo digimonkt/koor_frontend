@@ -46,6 +46,7 @@ export const transformGetUserDetails = (data) => {
           isFullTime: data.job_preferences.is_full_time,
           hasContract: data.job_preferences.has_contract,
           expectedSalary: data.job_preferences.expected_salary,
+          payPeriod: data.job_preferences.pay_period,
         }
       : {},
     educationRecord: (data.education_record || []).map((record) => ({
