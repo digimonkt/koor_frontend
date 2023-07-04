@@ -5,9 +5,9 @@ import {
   transformMessageResponse,
 } from "./transform/chat";
 
-export const getConversationListAPI = async () => {
+export const getConversationListAPI = async (search) => {
   const res = await api.request({
-    url: "v1/chat/conversations",
+    url: urlcat("v1/chat/conversations", { search }),
     method: "GET",
   });
   if (res.remote === "success") {
