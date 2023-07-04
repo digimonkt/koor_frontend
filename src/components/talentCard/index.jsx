@@ -3,9 +3,25 @@ import { Avatar, Button, Chip, Divider, Stack } from "@mui/material";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import React from "react";
 import urlcat from "urlcat";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getConversationIdByUserIdAPI } from "@api/chat";
 
 function TalentCard({ talentDetails }) {
+  const navigate = useNavigate();
+  const handleMessageClick = async () => {
+    const res = await getConversationIdByUserIdAPI({
+      userId: talentDetails?.id,
+    });
+    if (res.remote === "success") {
+      const conversationId = res.data.conversation_id;
+      navigate(
+        urlcat("/employer/chat", {
+          conversion: conversationId,
+          userId: talentDetails?.id,
+        })
+      );
+    }
+  };
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -41,6 +57,9 @@ function TalentCard({ talentDetails }) {
                 {talentDetails.name || talentDetails.email}
               </Link>
             </h4>
+            <p className="job-description card-description mt-1 mb-3">
+              {talentDetails?.profile?.description}
+            </p>
             <div className="recent-research" style={{ flexWrap: "wrap" }}>
               <span>{talentDetails.highestEducation}</span>
             </div>
@@ -92,7 +111,7 @@ function TalentCard({ talentDetails }) {
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
         <Stack direction="row" spacing={0} className="edit-button">
-          <Button variant="link">
+          <Button variant="link" onClick={handleMessageClick}>
             <SVG.MessageIcon
               style={{
                 color: "#274593",
