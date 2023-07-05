@@ -25,11 +25,13 @@ export const SelectBox = styled(Select)`
   }
 `;
 const AreaChart = () => {
-  const [isSelect, setIsSelect] = useState("");
+  const [isSelect, setIsSelect] = useState(new Date().getFullYear());
   const handleChange = (event) => {
     setIsSelect(event.target.value);
   };
-
+  const currentYear = new Date().getFullYear();
+  const lastFiveYears = Array.from({ length: 5 }, (_, index) => currentYear - index);
+  console.log({ isSelect });
   const [state] = React.useState({
     data: [
       {
@@ -137,10 +139,11 @@ const AreaChart = () => {
             IconComponent={KeyboardArrowUpIcon}
             displayEmpty
           >
-            <MenuItem value="">2019</MenuItem>
-            <MenuItem value={20}>2020</MenuItem>
-            <MenuItem value={30}>2021</MenuItem>
-            <MenuItem value={31}>2022</MenuItem>
+            {
+              lastFiveYears.map((year, index) =>
+                (<MenuItem key={index} value={year}>{year}</MenuItem>)
+              )
+            }
           </SelectBox>
         </FormControl>
       </Stack>

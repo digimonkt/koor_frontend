@@ -239,3 +239,11 @@ export const DownloadResumeAPI = async () => {
     method: "GET",
   });
 };
+
+export const getProfileAnalyticsAPI = async (year) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/analytic", year),
+    method: "GET",
+  });
+  return res;
+};

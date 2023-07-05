@@ -245,3 +245,12 @@ export const getJobSeekerCategoriesAPI = async () => {
   });
   return res;
 };
+
+export const storeProfileAnalyticsAPI = async (data) => {
+  const res = await api.request({
+    url: urlcat("/v1/users/analytic"),
+    method: "POST",
+    data
+  });
+  return res;
+};
