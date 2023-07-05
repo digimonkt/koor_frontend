@@ -1,4 +1,4 @@
-import { GetUserDetailsAPI } from "@api/user";
+import { GetUserDetailsAPI, storeProfileAnalyticsAPI } from "@api/user";
 import { SVG } from "@assets/svg";
 import {
   Box,
@@ -63,6 +63,16 @@ export default function PublicProfileComponent() {
     }
     setIsLoading(false);
   };
+  const storeProfileAnalytics = async (userId) => {
+    const res = await storeProfileAnalyticsAPI({ user_id: userId });
+    if (res.remote === "success") {
+      console.log(res);
+    }
+  };
+  useEffect(() => {
+    const userId = params.userId;
+    storeProfileAnalytics(userId);
+  }, []);
   useEffect(() => {
     const userId = params.userId;
     getUserDetails(userId);
@@ -235,7 +245,7 @@ export default function PublicProfileComponent() {
                                 style={{
                                   borderBottom:
                                     index !==
-                                    userDetails.workExperiences.length - 1
+                                      userDetails.workExperiences.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
                                 }}
@@ -270,7 +280,7 @@ export default function PublicProfileComponent() {
                                 style={{
                                   borderBottom:
                                     index !==
-                                    userDetails.educationRecord.length - 1
+                                      userDetails.educationRecord.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
                                 }}
@@ -364,7 +374,7 @@ export default function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
