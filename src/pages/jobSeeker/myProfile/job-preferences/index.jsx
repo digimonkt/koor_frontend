@@ -33,7 +33,6 @@ const JobPreferences = () => {
     console.log("e: ", e.target.value, name);
     setJobPreferences({ ...jobPreferences, [name]: e.target.value });
   };
-  console.log({ jobPreferences });
   const handleSubmit = async () => {
     setLoading(true);
     const payload = {

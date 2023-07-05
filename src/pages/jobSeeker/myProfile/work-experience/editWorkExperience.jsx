@@ -166,6 +166,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                     onChange={(e) => formik.setFieldValue("endDate", e)}
                     value={formik.values.endDate}
                     minDate={formik.values.startDate}
+                    maxDate={dayjs()}
                     onBlur={formik.getFieldProps("endDate").onBlur}
                     disabled={
                       formik.values.isPresent || !formik.values.startDate
