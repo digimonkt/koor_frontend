@@ -201,7 +201,7 @@ const AreaChart = () => {
           <p>in the last month</p>
         </div>
         <div className="chart-view">
-          <h5> {(lastMonthComparing && lastMonthComparing !== "Nan") ? (lastMonthComparing > 0) ? "+" : "-" : ""} {lastMonthComparing || 0}%</h5>
+          <h5> {(lastMonthComparing > 0) ? "+" : (lastMonthComparing === 0) ? "" : "-"} {lastMonthComparing || 0}%</h5>
           <p>comparing to previous period</p>
         </div>
       </Stack>
