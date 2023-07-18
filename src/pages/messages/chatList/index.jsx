@@ -8,16 +8,18 @@ import { NoDataFoundAnimation } from "@components/animations";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { WebSocketClient } from "@utils/constants/websocket";
 import { transformConversationResponse } from "@api/transform/chat";
+import { useDebounce } from "usehooks-ts";
 function ChatList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { role } = useSelector((state) => state.auth);
   const [chatList, setChatList] = useState([]);
   const [initialLoading, setInitialLoading] = useState(true);
-
+  const [search, setSearch] = useState("");
+  const debouncedSearchValue = useDebounce(search, 500);
   const getConversationList = async () => {
     setInitialLoading(true);
-    const res = await getConversationListAPI();
+    const res = await getConversationListAPI(search);
 
     if (res.remote === "success") {
       setChatList(res.data.results);
@@ -50,18 +52,21 @@ function ChatList() {
     getConversationList();
   }, []);
 
+  useEffect(() => {
+    getConversationList(search);
+  }, [debouncedSearchValue]);
+
   return (
     <>
       <div className="searchmessage">
         <div className="searchmessage-icon">
-          <input className="chat-search" placeholder="Search" />
+          <input className="chat-search" placeholder="Search" onChange={(e) => { setSearch(e.target.value); }} />
         </div>
       </div>
 
       <div
-        className={`chatbox ${
-          role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
-        }`}
+        className={`chatbox ${role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
+          }`}
         style={{ overflow: "auto" }}
         onScroll={(e) => {
           const { scrollTop, clientHeight, scrollHeight } = e.target;

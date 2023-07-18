@@ -13,3 +13,18 @@ export const transformJobSeekerCategoriesResponse = (data) => {
     };
   });
 };
+export const transformProfileAnalytics = (data) => {
+  let total = 0;
+  const counts = new Array(12).fill(0);
+  for (const d of data) {
+    counts[d.date__month] += d.total_count;
+    total += d.total_count;
+  }
+
+  const result = [];
+  for (let i = 1; i <= 12; i++) {
+    result.push(`${counts[i] || 0}`);
+  }
+
+  return { result, total };
+};

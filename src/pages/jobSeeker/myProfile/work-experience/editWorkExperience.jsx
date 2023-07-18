@@ -56,8 +56,8 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
             addWorkExperienceRecord({
               id: res.data.data.id,
               title: res.data.data.title,
-              startDate: res.data.data.startDate,
-              endDate: res.data.data.endDate,
+              startDate: res.data.data.start_date,
+              endDate: res.data.data.end_date,
               present: values.isPresent,
               organization: res.data.data.organization,
               description: res.data.data.description,
@@ -166,6 +166,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                     onChange={(e) => formik.setFieldValue("endDate", e)}
                     value={formik.values.endDate}
                     minDate={formik.values.startDate}
+                    maxDate={dayjs()}
                     onBlur={formik.getFieldProps("endDate").onBlur}
                     disabled={
                       formik.values.isPresent || !formik.values.startDate
