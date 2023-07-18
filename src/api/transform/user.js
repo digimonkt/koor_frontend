@@ -46,6 +46,7 @@ export const transformGetUserDetails = (data) => {
           isFullTime: data.job_preferences.is_full_time,
           hasContract: data.job_preferences.has_contract,
           expectedSalary: data.job_preferences.expected_salary,
+          payPeriod: data.job_preferences.pay_period,
         }
       : {},
     educationRecord: (data.education_record || []).map((record) => ({
@@ -120,7 +121,7 @@ export const transformSearchUserByRoleResponse = (data) => {
     name: data.name,
     email: data.email,
     profilePicture: data.image || {},
-    description: data.description,
+    description: data.profile.description || "",
     skills: data.skills || [],
     country: data.country || "",
     city: data.city || "",

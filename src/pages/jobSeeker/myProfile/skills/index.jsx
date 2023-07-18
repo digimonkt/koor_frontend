@@ -18,7 +18,7 @@ const Skills = () => {
     currentUser: { skills: selectedSkills },
   } = useSelector((state) => state.auth);
   const [searchSkill, setSearchSkill] = useState("");
-  const debouncedSearchSkillValue = useDebounce(searchSkill, 500);
+  const debouncedSearchSkillValue = useDebounce(searchSkill, 1000);
   const [newSelectedSkills, setNewSelectedSkills] = useState([]);
   const [removedSkills, setRemovedSkills] = useState([]);
   const [allSkills, setAllSkills] = useState([]);
@@ -65,6 +65,7 @@ const Skills = () => {
   }, []);
 
   useEffect(() => {
+    console.log({ debouncedSearchSkillValue });
     if (debouncedSearchSkillValue) {
       dispatch(
         getSkills({

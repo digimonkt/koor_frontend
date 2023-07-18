@@ -15,7 +15,7 @@ const VerticalSlider = ({ testimonialList }) => {
     autoplaySpeed: 1500,
     speed: 500,
     vertical: false,
-    verticalSwiping: true,
+    verticalSwiping: false,
     slidesToShow: 1,
     slidesToScroll: 1,
   };
@@ -50,21 +50,47 @@ const VerticalSlider = ({ testimonialList }) => {
                           alt=""
                           className={styles.home_testi_img}
                           height={100}
-                        />)
-                      }
-
+                        />
+                      )}
                     </Box>
                   </Grid>
                   <Grid xs={12} md={6} lg={6} sm={6}>
                     <Box className={styles.home_testi_box_testi}>
                       <h2 className={styles.testi_heading}>{item.title}</h2>
-                      {
-                        (showMore === item.id) ? <div dangerouslySetInnerHTML={{ __html: item.description }}></div> : <div dangerouslySetInnerHTML={{ __html: item.description.substring(0, TESTIMONIAL_MAX_WORD) }}></div>
-                      }
+                      {showMore === item.id ? (
+                        <div
+                          dangerouslySetInnerHTML={{ __html: item.description }}
+                        ></div>
+                      ) : (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: item.description.substring(
+                              0,
+                              TESTIMONIAL_MAX_WORD
+                            ),
+                          }}
+                        ></div>
+                      )}
 
-                      {
-                        (item.description.length > TESTIMONIAL_MAX_WORD && showMore !== item.id) ? <div className={styles.home_img_contents_p} onClick={() => handleShowMore(item.id)}>Show More <SVG.ArrowDownward /></div> : (item.description.length > TESTIMONIAL_MAX_WORD) ? <div className={styles.home_img_contents_p} onClick={() => handleShowMore("")}>Show Less <SVG.ArrowUpward className={styles.rightarrow} /></div> : " "
-                      }
+                      {item.description.length > TESTIMONIAL_MAX_WORD &&
+                      showMore !== item.id ? (
+                        <div
+                          className={styles.home_img_contents_p}
+                          onClick={() => handleShowMore(item.id)}
+                        >
+                          Show More <SVG.ArrowDownward />
+                        </div>
+                      ) : item.description.length > TESTIMONIAL_MAX_WORD ? (
+                        <div
+                          className={styles.home_img_contents_p}
+                          onClick={() => handleShowMore("")}
+                        >
+                          Show Less{" "}
+                          <SVG.ArrowUpward className={styles.rightarrow} />
+                        </div>
+                      ) : (
+                        " "
+                      )}
                       <h5 className={styles.testi_h5}>
                         <span className={styles.testi_h5_span}>
                           {item.clientName}

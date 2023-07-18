@@ -125,7 +125,7 @@ function JobAnalytics({ title }) {
         ...chartData,
         data: [
           {
-            name: "series1",
+            name: "Total Job Posted",
             data: result,
           },
         ],

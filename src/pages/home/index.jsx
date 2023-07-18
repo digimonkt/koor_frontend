@@ -16,7 +16,7 @@ import { Container } from "@mui/system";
 import SlickSlider from "@pages/slider";
 import InputSearch from "@components/inputSearch";
 import { SVG } from "@assets/svg";
-import VerticalSlider from "./verticalSlider";
+// import VerticalSlider from "./verticalSlider";
 import { Link, useNavigate } from "react-router-dom";
 import TextSlide from "./textSlide";
 import HomeSection from "./homeSection";
@@ -28,6 +28,7 @@ import CoravImg from "../../assets/images/corav-bg.png";
 import { getTopJobCategoriesAPI } from "@api/job";
 import { getTestimonialListAPI, getTopListingCompaniesAPI } from "@api/home";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -235,9 +236,9 @@ const Home = () => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  {
-                    (topListingCompanies || []).map((item, key) => {
-                      return <>
+                  {(topListingCompanies || []).map((item, key) => {
+                    return (
+                      <>
                         <Grid key={{ key }} item xs={4} lg={2} sm={1}>
                           <img
                             src={generateFileUrl(item.logo.path)}
@@ -245,10 +246,9 @@ const Home = () => {
                             className={`${styles.mintra}`}
                           />
                         </Grid>
-                      </>;
-                    })
-                  }
-
+                      </>
+                    );
+                  })}
                 </Grid>
                 <Divider
                   sx={{
@@ -347,7 +347,7 @@ const Home = () => {
                     },
                   }}
                 >
-                  <VerticalSlider testimonialList={testimonialList} />
+                  <TestimonialSlider testimonialList={testimonialList} />
                 </Container>
               </Box>
               <Box>
@@ -386,7 +386,12 @@ const Home = () => {
                           }}
                         >
                           <img src={IMAGES.Googleplay} alt="" rel="nofollow" />
-                          <img src={IMAGES.Appstore} alt="" className="mx-3" rel="nofollow"/>
+                          <img
+                            src={IMAGES.Appstore}
+                            alt=""
+                            className="mx-3"
+                            rel="nofollow"
+                          />
                         </Box>
                       </Box>
                     </Grid>
