@@ -65,7 +65,6 @@ const Skills = () => {
   }, []);
 
   useEffect(() => {
-    console.log({ debouncedSearchSkillValue });
     if (debouncedSearchSkillValue) {
       dispatch(
         getSkills({

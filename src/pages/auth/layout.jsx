@@ -6,7 +6,7 @@ import { USER_ROLES } from "@utils/enum";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserRole } from "@redux/slice/user";
+import { setSocialLoginError, setUserRole } from "@redux/slice/user";
 import { processRoleToDisplay } from "@utils/constants/utility";
 import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
 import { setErrorToast } from "@redux/slice/toast";
@@ -79,7 +79,7 @@ function AuthLayout({
         if (result.remote === "success") {
           console.log({ result });
         } else {
-          console.log({ result });
+          dispatch(setSocialLoginError(result.error.errors.message));
         }
       }
       setLoading(true);
@@ -149,14 +149,14 @@ function AuthLayout({
       if (Object.values(USER_ROLES).includes(role)) {
         dispatch(setUserRole(role));
       }
+      dispatch(setSocialLoginError(""));
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
       <div
-        className={`register pb-0 pt-5 py-lg-5 ${
-          role === USER_ROLES.employer || role === USER_ROLES.vendor
-            ? "vendor"
-            : ""
-        }`}
+        className={`register pb-0 pt-5 py-lg-5 ${role === USER_ROLES.employer || role === USER_ROLES.vendor
+          ? "vendor"
+          : ""
+          }`}
       >
         <Container
           sx={{
