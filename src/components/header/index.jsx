@@ -310,24 +310,24 @@ function Header() {
               ) : (
                 ""
               )}
-              {/* {!isLoggedIn || role === USER_ROLES.vendor ? ( */}
-              <li onClick={() => setIsmenu(false)}>
-                <Link
-                  // to={isLoggedIn ? "/search/tenders" : "#"}
-                  to="/search/tenders"
-                  style={{
-                    color: location.pathname.includes("/search/tenders")
-                      ? "#274593"
-                      : "",
-                  }}
-                // onClick={(e) => checkUserLoggedIn(e)}
-                >
-                  Browse Tenders
-                </Link>
-              </li>
-              {/* ) : (
+              {!isLoggedIn || role === USER_ROLES.vendor ? (
+                <li onClick={() => setIsmenu(false)}>
+                  <Link
+                    // to={isLoggedIn ? "/search/tenders" : "#"}
+                    to="/search/tenders"
+                    style={{
+                      color: location.pathname.includes("/search/tenders")
+                        ? "#274593"
+                        : "",
+                    }}
+                  // onClick={(e) => checkUserLoggedIn(e)}
+                  >
+                    Browse Tenders
+                  </Link>
+                </li>
+              ) : (
                 ""
-              )} */}
+              )}
               {!isLoggedIn && (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
