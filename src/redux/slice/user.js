@@ -107,6 +107,8 @@ const initialState = {
   },
   // here that email is come on which mail is sent
   verifyEmail: "",
+  // use for social login error
+  socialLoginError: "",
 };
 
 export const getUserDetails = createAsyncThunk(
@@ -261,6 +263,9 @@ export const authSlice = createSlice({
     setCurrentLocation: (state, action) => {
       state.currentLocation = action.payload;
     },
+    setSocialLoginError: (state, action) => {
+      state.socialLoginError = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.pending, (state, action) => {
@@ -297,5 +302,6 @@ export const {
   updateWorkExperienceRecord,
   deleteWorkExperienceRecord,
   setCurrentLocation,
+  setSocialLoginError
 } = authSlice.actions;
 export default authSlice.reducer;
