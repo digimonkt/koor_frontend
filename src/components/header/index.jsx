@@ -51,12 +51,12 @@ function Header() {
       e.preventDefault();
     }
   };
-  const checkUserLoggedIn = (e) => {
-    if (!isLoggedIn) {
-      e.preventDefault();
-      setWarningTrue(true);
-    }
-  };
+  // const checkUserLoggedIn = (e) => {
+  //   if (!isLoggedIn) {
+  //     e.preventDefault();
+  //     setWarningTrue(true);
+  //   }
+  // };
   useEffect(() => {
     switch (role) {
       case USER_ROLES.jobSeeker:
@@ -313,13 +313,14 @@ function Header() {
               {!isLoggedIn || role === USER_ROLES.vendor ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to={isLoggedIn ? "/search/tenders" : "#"}
+                    // to={isLoggedIn ? "/search/tenders" : "#"}
+                    to="/search/tenders"
                     style={{
                       color: location.pathname.includes("/search/tenders")
                         ? "#274593"
                         : "",
                     }}
-                    onClick={(e) => checkUserLoggedIn(e)}
+                  // onClick={(e) => checkUserLoggedIn(e)}
                   >
                     Browse Tenders
                   </Link>
