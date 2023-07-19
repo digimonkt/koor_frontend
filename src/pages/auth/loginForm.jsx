@@ -5,16 +5,18 @@ import { LoginUserAPI } from "@api/user";
 import { validateLoginForm } from "./validator";
 import { useFormik } from "formik";
 import { ErrorMessage } from "@components/caption";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Loader from "@components/loader";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import urlcat from "urlcat";
+import { setSocialLoginError } from "@redux/slice/user";
 
 function LoginForm() {
   // const navigate = useNavigate();
   const [loading, setIsLoading] = useState(false);
-  const { role } = useSelector((state) => state.auth);
+  const { role, socialLoginError } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -22,6 +24,7 @@ function LoginForm() {
     },
     validationSchema: validateLoginForm,
     onSubmit: async (values) => {
+      dispatch(setSocialLoginError(""));
       setIsLoading(true);
       const payload = {
         email: values.email,
@@ -38,6 +41,9 @@ function LoginForm() {
       }
     },
   });
+  useEffect(() => {
+    formik.setErrors({});
+  }, [socialLoginError]);
   return (
     <>
       <div className="form-content">
@@ -67,6 +73,7 @@ function LoginForm() {
             {formik.touched.password && formik.errors.password ? (
               <ErrorMessage>{formik.errors.password}</ErrorMessage>
             ) : null}
+            {socialLoginError !== "" && <ErrorMessage>{socialLoginError}</ErrorMessage>}
           </div>
           <Link
             to={urlcat("/forgot-password", { role })}
