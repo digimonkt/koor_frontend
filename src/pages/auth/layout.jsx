@@ -28,7 +28,7 @@ const AuthOptions = [
     id: "employer",
     title: "Employer",
     role: USER_ROLES.employer,
-    subtitle: "I'm looking for talents to join our team",
+    subtitle: "I’m looking for talents and vendor",
   },
   {
     id: "vendor",

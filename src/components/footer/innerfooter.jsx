@@ -202,9 +202,9 @@ const InnerFooter = () => {
                               },
                             }}
                             LinkComponent={Link}
-                            to={isLoggedIn ? `/search/tenders?tenderCategories=${child.id}` : "#"}
+                            to={!isLoggedIn ? `/search/tenders?tenderCategories=${child.id}` : "#"}
                             dense={true}
-                            onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
+                            // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
                             disableGutters={true}
                           >
                             {child.title}
