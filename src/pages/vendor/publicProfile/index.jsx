@@ -192,7 +192,7 @@ function PublicProfileComponent() {
                             }}
                           >
                             <Link
-                              to={`/search/jobs?search=${userDetails.name}`}
+                              to="#"
                             >
                               See All
                             </Link>
