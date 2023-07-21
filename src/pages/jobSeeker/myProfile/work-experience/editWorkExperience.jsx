@@ -20,13 +20,30 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { validateWorkExperience } from "../validator";
-
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
 
 function EditWorkExperience({ handleSubmit, currentSelected }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [descData, setDescData] = useState("");
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // basic formatting
+    ["blockquote", "code-block"], // blockquote and code block
+    [{ header: 1 }, { header: 2 }], // headers
+    [{ list: "ordered" }, { list: "bullet" }], // ordered and unordered lists
+    [{ script: "sub" }, { script: "super" }], // subscript and superscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent and indent
+    [{ direction: "rtl" }], // text direction
+    [{ size: ["small", false, "large", "huge"] }], // font size
+    [{ color: [] }, { background: [] }], // text and background color
+    [{ font: [] }], // font family
+    [{ align: [] }], // text alignment
+    ["link", "image", "video"], // link, image, and video
+    ["clean"], // remove formatting
+  ];
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -46,7 +63,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
         end_date: values.isPresent
           ? null
           : dayjs(values.endDate).format(DATABASE_DATE_FORMAT),
-        description: values.description,
+        description: descData,
       };
       if (!currentSelected) {
         const res = await addWorkExperienceDetailsAPI(payload);
@@ -91,6 +108,10 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
       handleSubmit();
     },
   });
+  const handleEditorValue = (content) => {
+    // Handle changes in the editor content here
+    setDescData(content);
+  };
   useEffect(() => {
     if (currentSelected) {
       const payload = {
@@ -149,7 +170,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 <Grid item lg={6} xs={12}>
                   <DateInput
                     label="Start"
-                    views={["year"]}
+                    views={["month", "year"]}
                     onChange={(e) => formik.setFieldValue("startDate", e)}
                     maxDate={dayjs()}
                     value={formik.values.startDate}
@@ -162,7 +183,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 <Grid item lg={6} xs={12}>
                   <DateInput
                     label="End"
-                    views={["year"]}
+                    views={["month", "year"]}
                     onChange={(e) => formik.setFieldValue("endDate", e)}
                     value={formik.values.endDate}
                     minDate={formik.values.startDate}
@@ -199,7 +220,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
             </Grid>
             <Grid item lg={6} xs={12}>
               <div className="form-group mb-3">
-                <LabeledInput
+                {/* <LabeledInput
                   placeholder="Job key responsibilities"
                   title="Write more about your responsibilities at this role"
                   labelWeight={500}
@@ -207,6 +228,19 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                   type="textarea"
                   style={{ height: "120px" }}
                   {...formik.getFieldProps("description")}
+                /> */}
+                <ReactQuill
+                  theme="snow"
+                  value={descData || formik.values.description}
+                  modules={{
+                    toolbar: toolbarOptions,
+                  }}
+                  onChange={(value) => handleEditorValue(value)}
+                  style={{
+                    width: "100%",
+                    marginTop: "20px",
+                    height: "170px"
+                  }}
                 />
                 {formik.touched.description && formik.errors.description ? (
                   <ErrorMessage>{formik.errors.description}</ErrorMessage>

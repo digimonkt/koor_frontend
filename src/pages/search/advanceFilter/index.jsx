@@ -592,7 +592,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     }
     formik.setFieldValue("country", country);
     setTimeout(() => formik.handleSubmit(), 500);
-  }, []);
+  }, [searchParams]);
   return (
     <div>
       <div className={`${styles.searchResult}`}>
