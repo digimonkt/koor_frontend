@@ -5,7 +5,7 @@ import DialogBox from "@components/dialogBox";
 import { Stack } from "@mui/material";
 import { setSuccessToast } from "@redux/slice/toast";
 import { deleteWorkExperienceRecord } from "@redux/slice/user";
-import { YEAR_FORMAT } from "@utils/constants/constants";
+import { MONTH_YEAR_FORMAT } from "@utils/constants/constants";
 import { USER_ROLES } from "@utils/enum";
 import dayjs from "dayjs";
 import React, { useState } from "react";
@@ -47,28 +47,28 @@ function WorkExperienceCard({
         justifyContent="space-between"
         alignItems={{ xs: "self-start", lg: "center" }}
       >
-        <div className="list-content">
+        <div className="list-content resumelistContent">
           <h5>{title}</h5>
           <h6>{organization}</h6>
           {description ? (
             <>
-              {/* <p
+              <p
                 dangerouslySetInnerHTML={{
                   __html: description,
                 }}
                 style={{
                   wordBreak: "break-all",
                 }}
-              /> */}
-              <p className="job-description">{description}</p>
+              />
+              {/* <p className="job-description">{description}</p> */}
               <br />
             </>
           ) : (
             ""
           )}
           <span>
-            {dayjs(startDate).format(YEAR_FORMAT)} -{" "}
-            {present ? "Present" : dayjs(endDate).format(YEAR_FORMAT)}
+            {dayjs(startDate).format(MONTH_YEAR_FORMAT)} -{" "}
+            {present ? "Present" : dayjs(endDate).format(MONTH_YEAR_FORMAT)}
           </span>
         </div>
         {role === USER_ROLES.jobSeeker && !noOptions ? (
