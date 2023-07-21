@@ -141,7 +141,7 @@ export const getUserCountryByIpAPI = async (ip) => {
 };
 export const getSearchUserFilterAPI = async (data) => {
   const res = await api.request({
-    url: urlcat("/v1/users/filter", { role: "jobSeeker" }),
+    url: urlcat("/v1/users/filter", { role: "job_seeker" }),
     method: "GET",
   });
   if (res.remote === "success") {
