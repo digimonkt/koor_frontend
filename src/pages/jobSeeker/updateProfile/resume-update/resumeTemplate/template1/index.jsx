@@ -101,7 +101,7 @@ function ResumeTemplate({ user }) {
           ))}
         </ul>
       </div>
-    </div >
+    </div>
   );
 }
 

@@ -27,6 +27,7 @@ export const SelectBox = styled(Select)`
   }
 `;
 const DonutChart = ({ shareCountData }) => {
+  console.log({ shareCountData });
   const [state] = React.useState({
     series: shareCountData.series,
     options: {
@@ -95,8 +96,11 @@ const DonutChart = ({ shareCountData }) => {
   });
 
   const getCountPercent = (totalCount, count) => {
-    const res = (count / totalCount) * 100;
-    return res;
+    if (totalCount > 0) {
+      const res = (count / totalCount) * 100;
+      return res;
+    }
+    return 0;
   };
   return (
     <>
@@ -134,15 +138,15 @@ const DonutChart = ({ shareCountData }) => {
           <div className="series-box">
             <h2>{shareCountData?.total} Total shares:</h2>
             <ul>
-            {shareCountData?.sites.map((site, i) => {
-              return (
-                <li key={i}>
-                  <b>{site.count}</b> – {site.name}
-                   ({getCountPercent(shareCountData?.total, site.count)}
-                  %)
-                </li>
-              );
-            })}
+              {shareCountData?.sites.map((site, i) => {
+                return (
+                  <li key={i}>
+                    <b>{site.count}</b> – {site.name}
+                    ({getCountPercent(shareCountData?.total, site.count)}
+                    %)
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </Grid>
