@@ -33,7 +33,7 @@ import {
   getLanguages,
   getSkills,
 } from "@redux/slice/choices";
-import { createJobAPI, getDashboardActivityAPI, getMinimumCreditForJobPostAPI, updateEmployerJobAPI } from "@api/employer";
+import { buyCreditsAPI, createJobAPI, getDashboardActivityAPI, getMinimumCreditForJobPostAPI, updateEmployerJobAPI } from "@api/employer";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import dayjs from "dayjs";
 import { getJobDetailsByIdAPI } from "@api/job";
@@ -46,6 +46,9 @@ import DialogBox from "@components/dialogBox";
 import { SVG } from "@assets/svg";
 import urlcat from "urlcat";
 import { setJobPostUpdate, setMinimumCreditJobPost, setTotalAvailableCredits } from "@redux/slice/employer";
+import { getPackageAPI } from "@api/choices";
+import { Package } from "@components/package";
+import { setErrorToast } from "@redux/slice/toast";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -72,6 +75,8 @@ function PostJobsComponent() {
   const [jobId, setJobId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
+  const [packageData, setPackageData] = useState([]);
+  const [buyPackage, setBuyPackage] = useState(false);
   const handleRedirect = () => {
     setOpen(close);
     setIsRedirect(true);
@@ -143,7 +148,6 @@ function PostJobsComponent() {
         duration: values.duration,
         experience: values.experience,
       };
-      console.log({ payload });
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "language") {
@@ -177,7 +181,6 @@ function PostJobsComponent() {
           setSubmitting(SUBMITTING_STATUS_ENUM.submitted);
           resetForm();
         } else {
-          console.log(res);
           setSubmitting(SUBMITTING_STATUS_ENUM.error);
         }
       } else {
@@ -278,7 +281,27 @@ function PostJobsComponent() {
       dispatch(setTotalAvailableCredits(res.data.availableCredits));
     }
   };
-
+  const getPackageData = async () => {
+    const resp = await getPackageAPI();
+    if (resp.remote === "success") {
+      setPackageData(resp.data);
+    }
+  };
+  const handleBuyPackage = async (planDetails) => {
+    const data = {
+      points: planDetails.credit,
+      price: planDetails.price,
+      notes: (`Employer buy ${planDetails.title} Plan`),
+    };
+    const resp = await buyCreditsAPI({ employer: currentUser.id, data });
+    if (resp.remote === "success") {
+      setBuyPackage(!buyPackage);
+      dispatch(setErrorToast("Buy Plan Successfully"));
+      console.log(resp);
+    } else {
+      dispatch(setErrorToast("Something Went Wrong"));
+    }
+  };
   useEffect(() => {
     if (isRedirect) {
       navigate(`/${USER_ROLES.employer}/manage-jobs`);
@@ -343,6 +366,9 @@ function PostJobsComponent() {
   useEffect(() => {
     getDashboardActivity();
     getMinimumCreditForJobPost();
+  }, [buyPackage]);
+  useEffect(() => {
+    getPackageData();
   }, []);
   return (
     <div className="job-application">
@@ -869,6 +895,12 @@ function PostJobsComponent() {
                   />
                 </Grid>
                 {(!jobId && totalAvailableCredits < minimumCreditJobPost) ? <div>Currently, you have <b>{totalAvailableCredits} credits remaining </b>. In order to post a job, you will need to purchase <b>{minimumCreditJobPost - totalAvailableCredits} more credits. </b></div> : <div>Currently, you have <b>{totalAvailableCredits} credits remaining </b>. In order to post a job, you will redeemed <b>{minimumCreditJobPost} credits</b>  .</div>}
+                <Grid container spacing={2}>
+                  <Grid item xl={12} lg={12} xs={12}>
+                    <h2 className="mt-2">Job Posting Plan</h2>
+                  </Grid>
+                  <Package packageData={packageData} handleBuyPackage={handleBuyPackage} />
+                </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
                   <Stack
                     direction="row"
@@ -955,7 +987,7 @@ function PostJobsComponent() {
           </Grid>
         </Grid>
       </DialogBox>
-    </div >
+    </div>
   );
 }
 
