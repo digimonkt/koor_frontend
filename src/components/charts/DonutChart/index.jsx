@@ -27,7 +27,6 @@ export const SelectBox = styled(Select)`
   }
 `;
 const DonutChart = ({ shareCountData }) => {
-  console.log({ shareCountData });
   const [state] = React.useState({
     series: shareCountData.series,
     options: {
