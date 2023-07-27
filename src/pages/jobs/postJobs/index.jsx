@@ -48,7 +48,7 @@ import urlcat from "urlcat";
 import { setJobPostUpdate, setMinimumCreditJobPost, setTotalAvailableCredits } from "@redux/slice/employer";
 import { getPackageAPI } from "@api/choices";
 import { Package } from "@components/package";
-import { setErrorToast } from "@redux/slice/toast";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -290,13 +290,13 @@ function PostJobsComponent() {
   const handleBuyPackage = async (planDetails) => {
     const data = {
       points: planDetails.credit,
-      price: planDetails.price,
-      notes: (`Employer buy ${planDetails.title} Plan`),
+      amount: Number(planDetails.price),
+      note: (`Employer buy ${planDetails.title} Plan`),
     };
     const resp = await buyCreditsAPI({ employer: currentUser.id, data });
     if (resp.remote === "success") {
       setBuyPackage(!buyPackage);
-      dispatch(setErrorToast("Buy Plan Successfully"));
+      dispatch(setSuccessToast("Buy Plan Successfully"));
       console.log(resp);
     } else {
       dispatch(setErrorToast("Something Went Wrong"));
