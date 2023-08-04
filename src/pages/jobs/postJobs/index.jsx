@@ -878,6 +878,12 @@ function PostJobsComponent() {
                           ...formik.values.attachmentsRemove,
                           file.id,
                         ]);
+                        formik.setFieldValue(
+                          "attachments",
+                          formik.values.attachments.filter(
+                            (attachment) => attachment.path !== file.path
+                          )
+                        );
                       } else {
                         formik.setFieldValue(
                           "attachments",
