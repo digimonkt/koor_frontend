@@ -28,6 +28,8 @@ export const transformJobListResponse = (data) => {
       hasContract: res.has_contract,
       workingDays: res.working_days,
       deadline: res.deadline,
+      company: res.company,
+      companyLogo: res.company_logo,
       expiredInDays: dayjs(res.deadline).diff(
         dayjs(new Date().toISOString().split("T")[0]),
         "day",
@@ -40,7 +42,7 @@ export const transformJobListResponse = (data) => {
         id: res.user.id,
         name: res.user.name,
         email: res.user.email,
-        image: res.user.image,
+        image: res.user.image || res.company_logo,
       },
     })),
   };
@@ -87,11 +89,11 @@ export const transformFullJobDetails = (data) => {
     ),
     user: {
       id: data.user.id,
-      name: data.user.name,
+      name: data.user.name || data.company,
       email: data.user.email,
       countryCode: data.user.country_code,
       mobileNumber: data.user.mobile_number,
-      image: data.user.image,
+      image: data.user.image || data.company_logo,
     },
     attachments:
       data.attachments?.map((attachment) => ({

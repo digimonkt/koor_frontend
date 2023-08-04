@@ -163,7 +163,14 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
-                    Company: <span>{jobDetails.user.name}</span>
+                    {(jobDetails.company === null && jobDetails.companyLogo === null) ? "Company:"
+                      : "Posted By"
+                    }
+                    <span>
+                      {(jobDetails.company === null && jobDetails.companyLogo === null) ? jobDetails.user.name
+                        : " Koor"
+                      }
+                    </span>
                   </div>
                 </Stack>
               )}
