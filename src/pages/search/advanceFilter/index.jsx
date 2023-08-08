@@ -96,6 +96,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
   const [open, setOpen] = useState(false);
+  const [filterId, setFilterId] = useState(0);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   useEffect(() => {
     setData(!!defaultOpen);
   }, []);
@@ -233,6 +235,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       formik.handleSubmit();
     }, 1000);
   };
+
   const handleDeleteFilter = async (filterId) => {
     const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
     setAllFilters([...newAllFilters]);
@@ -592,7 +595,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     }
     formik.setFieldValue("country", country);
     setTimeout(() => formik.handleSubmit(), 500);
-  }, []);
+  }, [searchParams]);
   return (
     <div>
       <div className={`${styles.searchResult}`}>
@@ -638,7 +641,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         </div>
                       }
                       handleCross={() => {
-                        handleDeleteFilter(filter.id);
+                        // handleDeleteFilter(filter.id);
+                        setFilterId(filter.id);
+                        setShowDeleteConfirmation(!showDeleteConfirmation);
                       }}
                     />
                   </MenuItem>
@@ -712,6 +717,33 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
             }}
             handleCancel={handleToggleModel}
           />
+        </DialogBox>
+        <DialogBox open={showDeleteConfirmation} handleClose={() => setShowDeleteConfirmation(!showDeleteConfirmation)} >
+          <div className="add-content">
+            <h2 className="mb-4">Warning!</h2>
+            <h3>
+              Are you sure want to delete? 😉
+            </h3>
+            <div className="text-center mt-4">
+              <OutlinedButton
+                onClick={(e) => { handleDeleteFilter(filterId); setShowDeleteConfirmation(!showDeleteConfirmation); e.preventDefault(); }}
+                title={<>Confirm</>}
+                sx={{
+                  "&.MuiButtonBase-root": {
+                    border: "1px solid #EEA23D !important",
+                    color: "#EEA23D !important",
+                    fontSize: "16px",
+                    padding: "6px 30px !important",
+                    "&:hover": { background: "#eea23d14" },
+                    "@media (max-width: 992px)": {
+                      padding: "10px 16px",
+                      fontSize: "14px",
+                    },
+                  },
+                }}
+              />
+            </div>
+          </div>
         </DialogBox>
       </div>
     </div>

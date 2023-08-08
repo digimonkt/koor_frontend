@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 @font-face {
   font-family: TimesNewRoman;
   src: url("./../../../../../../assets/fonts/times_new_roman.ttf");
@@ -49,9 +50,11 @@ html {
   font-size: 16px;
   text-transform: uppercase;
 }
+
 .header .first-name {
   font-weight: 600;
 }
+
 .header .last-name {
   font-weight: 600;
 }
@@ -70,6 +73,7 @@ html {
 .header .phone {
   font-weight: 600;
 }
+
 .header .separator {
   height: 10px;
   display: inline-block;
@@ -125,7 +129,7 @@ html {
 
 .education li {
   list-style: none;
-  margin-top: 5px;
+  margin-top: 0px;
 }
 
 .qualification {

@@ -358,7 +358,7 @@ function TenderDetailsComponent() {
                 </div>
               </Grid>
             </Grid>
-            <DialogBox open={registrationWarning} handleClose={() => {}}>
+            <DialogBox open={registrationWarning} handleClose={() => setRegistrationWarning(false)}>
               <div>
                 <h1 className="heading">Register as vendor</h1>
                 <div className="form-content">

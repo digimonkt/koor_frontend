@@ -1,4 +1,4 @@
-import { YEAR_FORMAT } from "@utils/constants/constants";
+import { MONTH_YEAR_FORMAT, YEAR_FORMAT } from "@utils/constants/constants";
 import dayjs from "dayjs";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
@@ -15,16 +15,14 @@ function ResumeTemplate({ user }) {
           <div>
             <span className="first-name">{showUser.name}</span>
           </div>
-          {/* <h4>Bondhere District</h4> */}
-          {/* <h4>Mogadishu-Somalia</h4> */}
         </div>
         <div className="contact-info">
           <span className="phone">Phone : </span>
           <span className="phone-val">
             {showUser.countryCode && showUser.mobileNumber
               ? formatPhoneNumberIntl(
-                  showUser.countryCode + showUser.mobileNumber
-                )
+                showUser.countryCode + showUser.mobileNumber
+              )
               : ""}
           </span>
           <br />
@@ -42,11 +40,13 @@ function ResumeTemplate({ user }) {
 
       <div className="about">
         <p className="position">PROFILE SUMMARY</p>
-        <span className="desc">{showUser.profile.description}</span>
+        <p className="job-description">{showUser.profile.description}</p>
       </div>
 
       <div className="knowledge">
-        <p className="title">Skills</p>
+        {/* also known as skills */}
+        <p className="title">KNOWLEDGE AND EXPERTISE
+        </p>
         <ul>
           {showUser.skills.map((skill) => (
             <li key={skill.id}>{skill.skill.title}</li>
@@ -64,7 +64,7 @@ function ResumeTemplate({ user }) {
                 {education.present
                   ? "Present"
                   : dayjs(education.endDate).format(YEAR_FORMAT)}{" "}
-                {education.title}, {education.institute}
+                {education.title} - {education.institute}
               </li>
             );
           })}
@@ -75,15 +75,16 @@ function ResumeTemplate({ user }) {
         {showUser.workExperiences.map((experience) => {
           return (
             <React.Fragment key={experience.id}>
-              <span className="title">{experience.title}</span>
-              <p className="responsibility">{experience.organization}</p>
               <span>
-                {dayjs(experience.startDate).format(YEAR_FORMAT)} -{" "}
+                {dayjs(experience.startDate).format(MONTH_YEAR_FORMAT)} -{" "}
                 {experience.present
                   ? "Present"
-                  : dayjs(experience.endDate).format(YEAR_FORMAT)}
+                  : dayjs(experience.endDate).format(MONTH_YEAR_FORMAT)}:{" "}
               </span>
-              <p className="job-description">{experience.description}</p>
+              <span className="title">{experience.title}</span> {" "}-{" "}
+              <span className="responsibility">{experience.organization}</span>
+              {" "}
+              <p className="mt-3" dangerouslySetInnerHTML={{ __html: experience.description }}></p>
             </React.Fragment>
           );
         })}

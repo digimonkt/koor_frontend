@@ -125,7 +125,7 @@ function Header() {
                       onChange={(e) => setSearch(e.target.value)}
                       inputProps={{ "aria-label": "Without label" }}
                       displayEmpty
-                      sx={{ width: "100px" }}
+                      sx={{ width: "102px" }}
                     >
                       <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
                       <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
