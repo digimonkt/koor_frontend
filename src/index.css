@@ -4,22 +4,32 @@
   height: 44px;
   width: 163px;
 }
+
+.resumelistContent ul li {
+  list-style: none;
+}
+
 .date_input label {
   top: -4px;
 }
+
 .drop_menu .MuiTabPanel-root {
   padding: 24px 24px 0px 24px !important;
 }
+
 .drop_menu .MuiButtonBase-root.MuiMenuItem-root:hover {
   background-color: #fff !important;
 }
+
 .content_notifi .MuiTabs-indicator {
   display: none !important;
 }
+
 .content_notifi .MuiTabs-flexContainer {
   display: block !important;
   justify-content: inherit !important;
 }
+
 .content_notifi .MuiButtonBase-root.MuiTab-root.Mui-selected {
   font-family: "Poppins", sans-serif !important;
   font-size: 16px !important;
@@ -30,11 +40,13 @@
   border-radius: 30px !important;
   opacity: 45% !important;
 }
+
 .tab_list .MuiTabs-flexContainer {
   display: block !important;
   justify-content: inherit !important;
   margin-bottom: 15px !important;
 }
+
 .tab_list .Mui-selected {
   font-family: "Poppins", sans-serif !important;
   font-size: 16px !important;
@@ -45,9 +57,11 @@
   border-radius: 30px !important;
   opacity: 45% !important;
 }
+
 .tab_list .MuiTabs-indicator {
   display: none !important;
 }
+
 /* .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
   width: 480px !important;
   left: 1180px !important;
@@ -57,6 +71,7 @@
 .homepage .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
   background-color: #fff !important;
 }
+
 .MuiSelect-select .newstabs .MuiTabs.scroller {
   white-space: inherit !important;
 }
@@ -167,7 +182,7 @@
 }
 
 .slick-dots li.slick-active button:before {
-  opacity: 1 !important ;
+  opacity: 1 !important;
   color: #274593;
 }
 
@@ -179,6 +194,7 @@ body {
   color: #000;
   font-size: 16px;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -186,6 +202,7 @@ body {
 code {
   font-family: "Bahnschrift";
 }
+
 textarea {
   font-family: "Poppins";
   font-style: normal;
@@ -369,6 +386,7 @@ textarea {
     margin-left: 0px !important;
   }
 }
+
 @media screen and (max-width: 765px) and (min-width: 560px) {
   .verticalSlider ul.slick-dots {
     transform: rotate(90deg);
@@ -394,15 +412,20 @@ textarea {
 img {
   max-width: 100%;
 }
+
 @media screen and (max-width: 480px) {
   .verticalSlider ul.slick-dots {
     bottom: 35.6em;
     transform: none;
   }
 }
-.testmonial-img{height: 300px;
+
+.testmonial-img {
+  height: 300px;
   display: flex;
-  align-items: center;}
+  align-items: center;
+}
+
 .testmonial-img img {
   display: inline-block;
   border-radius: 15;
@@ -418,7 +441,7 @@ img {
 
 
 .testmonials-slider .slick-slide,
-.testmonials-slider .slick-slide[aria-hidden="true"]:not(.slick-cloned) ~ .slick-cloned[aria-hidden="true"] {
+.testmonials-slider .slick-slide[aria-hidden="true"]:not(.slick-cloned)~.slick-cloned[aria-hidden="true"] {
   transform: scale(0.8, 0.8);
   transition: all 0.4s ease-in-out;
   opacity: 0.5;
@@ -426,16 +449,17 @@ img {
 
 /* Active center slide (You can change anything here for cenetr slide)*/
 .testmonials-slider .slick-center,
-.testmonials-slider .slick-slide[aria-hidden="true"]:not([tabindex="-1"]) + .slick-cloned[aria-hidden="true"] {
+.testmonials-slider .slick-slide[aria-hidden="true"]:not([tabindex="-1"])+.slick-cloned[aria-hidden="true"] {
   transform: scale(1.2);
-  
+
   -webkit-transform: scale(1.2);
   -moz-transform: scale(1.2);
   -ms-transform: scale(1.2);
   -o-transform: scale(1.2);
   opacity: 0.5;
 }
-.testmonials-slider .slick-current.slick-active{
+
+.testmonials-slider .slick-current.slick-active {
   transform: scale(1.2);
 
   -webkit-transform: scale(1.2);
@@ -445,7 +469,8 @@ img {
   opacity: 1;
   height: 300px;
 }
-.testmonials-slider .slick-current.slick-active .testmonial-img img{
+
+.testmonials-slider .slick-current.slick-active .testmonial-img img {
   opacity: 1;
 }
 
@@ -472,6 +497,7 @@ ul.listvertical button {
 ul.listvertical li.slick-active button {
   background: #274593;
 }
+
 ul.listvertical li {
   margin-bottom: 5px;
 }

@@ -3,6 +3,7 @@ import { SVG } from "@assets/svg";
 export const DATE_FORMAT = "MM-DD-YYYY";
 export const DATABASE_DATE_FORMAT = "YYYY-MM-DD";
 export const YEAR_FORMAT = "YYYY";
+export const MONTH_YEAR_FORMAT = "MMMM YYYY";
 export const SALARY_MIN = "";
 export const SALARY_MAX = "";
 export const TESTIMONIAL_MAX_WORD = 450;

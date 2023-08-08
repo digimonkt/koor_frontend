@@ -108,7 +108,7 @@ function TestimonialSlider({ testimonialList }) {
                   )}
 
                   {item.description.length > TESTIMONIAL_MAX_WORD &&
-                  showMore !== item.id ? (
+                    showMore !== item.id ? (
                     <Box
                       onClick={() => handleShowMore(item.id)}
                       sx={{

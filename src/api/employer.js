@@ -340,3 +340,16 @@ export const getMinimumCreditForJobPostAPI = async () => {
   }
   return res;
 };
+export const buyCreditsAPI = async ({ employer, data }) => {
+  const res = await api.request({
+    url: urlcat("v1/admin/employer/:employer/recharge", { employer }),
+    method: "PUT",
+    data
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: "",
+    };
+  }
+};

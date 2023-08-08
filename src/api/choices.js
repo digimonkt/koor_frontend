@@ -151,3 +151,16 @@ export const getTenderCategoryAPI = async (data) => {
   }
   return response;
 };
+export const getPackageAPI = async () => {
+  const response = await api.request({
+    url: urlcat("/v1/admin/package"),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data.results,
+    };
+  }
+  return response;
+};
