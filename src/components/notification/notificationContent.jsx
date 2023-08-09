@@ -18,22 +18,43 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
 
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState([]);
+  const [filterData, setFilterData] = useState([]);
   const [section, setSection] = useState("all");
   const [settings, setSetting] = useState(false);
   const handleChangeSection = (event, newValue) => {
+    const filterNotification = (type) => {
+      const notificationData = [...notification];
+      const FilterData = notificationData.filter((notification) => notification.notificationType === type);
+      setFilterData(FilterData);
+    };
     setSection(newValue);
+    switch (newValue) {
+      case "all":
+        setFilterData(notification);
+        break;
+      case "jobs":
+        filterNotification("applied");
+        break;
+      case "message":
+        filterNotification("message");
+        break;
+      default:
+        break;
+    }
   };
   const getNotifications = async () => {
     setLoading(true);
     const res = await GetNotificationAPI();
     if (res.remote === "success") {
       setNotification(res.data.results);
+      setFilterData(res.data.results);
     }
     setLoading(false);
   };
   useEffect(() => {
     getNotifications();
   }, []);
+
   return (
     <div style={{ width: "100%" }}>
       <Box sx={{ width: "100%", typography: "body1" }}>
@@ -60,7 +81,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
             </TabList>
             {header && (
               <Stack direction={"row"} spacing={2} className={styles.btn_div}>
-                <DateInput onChange={() => {}} />
+                <DateInput onChange={() => { }} />
 
                 <Button
                   sx={{ color: "#EEA23D", textTransform: "capitalize" }}
@@ -77,22 +98,21 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               <Loader loading={loading} />
             ) : (
               <div style={{ marginBottom: "16px" }}>
-                {notification.length ? (
-                  notification.map((item, index) => (
+                {filterData.length ? (
+                  filterData.map((item, index) => (
                     <>
-                      <hr
+                      {/* <hr
                         style={{ borderColor: "#F0F0F0 !important" }}
                         className="p-0 mb-2"
-                      />
+                      /> */}
                       <div
                         key={index}
-                        className={`${styles.notification_card} ${
-                          role === USER_ROLES.jobSeeker
-                            ? styles.notification_card_job_seeker
-                            : styles.notification_card_user
-                        }`}
+                        className={`${styles.notification_card} ${role === USER_ROLES.jobSeeker
+                          ? styles.notification_card_job_seeker
+                          : styles.notification_card_user
+                          }`}
                       >
-                        {getNotificationCardByType(item)}
+                        {getNotificationCardByType(item, handleClose)}
                       </div>
                     </>
                   ))
