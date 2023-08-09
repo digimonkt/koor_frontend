@@ -22,17 +22,24 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [section, setSection] = useState("all");
   const [settings, setSetting] = useState(false);
   const handleChangeSection = (event, newValue) => {
+    const filterNotification = (type) => {
+      const notificationData = [...notification];
+      const FilterData = notificationData.filter((notification) => notification.notificationType === type);
+      setFilterData(FilterData);
+    };
     setSection(newValue);
-    if (newValue === "all") {
-      setFilterData(notification);
-    } else if (newValue === "jobs") {
-      const notificationData = [...notification];
-      const FilterData = notificationData.filter((notification) => notification.notificationType === "applied");
-      setFilterData(FilterData);
-    } else if (newValue === "message") {
-      const notificationData = [...notification];
-      const FilterData = notificationData.filter((notification) => notification.notificationType === "message");
-      setFilterData(FilterData);
+    switch (newValue) {
+      case "all":
+        setFilterData(notification);
+        break;
+      case "jobs":
+        filterNotification("applied");
+        break;
+      case "message":
+        filterNotification("message");
+        break;
+      default:
+        break;
     }
   };
   const getNotifications = async () => {
