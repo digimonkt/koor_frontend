@@ -51,12 +51,6 @@ function Header() {
       e.preventDefault();
     }
   };
-  // const checkUserLoggedIn = (e) => {
-  //   if (!isLoggedIn) {
-  //     e.preventDefault();
-  //     setWarningTrue(true);
-  //   }
-  // };
   useEffect(() => {
     switch (role) {
       case USER_ROLES.jobSeeker:
