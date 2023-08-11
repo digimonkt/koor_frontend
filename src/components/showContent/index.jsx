@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Grid, Stack } from "@mui/material";
 import styles from "../../pages/about/about.module.css";
 import { Link } from "react-router-dom";
 import { OTHER_BUTTON } from "@utils/constants/constants";
+import { useSelector } from "react-redux";
+import DialogBox from "@components/dialogBox";
+import { SVG } from "@assets/svg";
+import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
 
 const ShowContent = ({ content }) => {
+  const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const [warningTrue, setWarningTrue] = useState(false);
+  const [warningRole, setWarningRole] = useState(USER_ROLES.employer);
+  const employerHandler = (e, section) => {
+    if (section === SEARCH_TYPE.talents) {
+      if (role !== USER_ROLES.employer) {
+        e.preventDefault();
+        setWarningTrue(true);
+        setWarningRole(USER_ROLES.employer);
+      }
+    }
+  };
+  const itemLink = (item) => {
+    if (item.section === SEARCH_TYPE.talents) {
+      if (isLoggedIn && role === USER_ROLES.employer) {
+        return item.url;
+      } else {
+        return "#";
+      }
+    }
+    return item.url;
+  };
   return (
     <>
       <Box className={styles.about}>
@@ -72,9 +98,8 @@ const ShowContent = ({ content }) => {
                             key={index}
                             variant="contained"
                             className={styles.btn_about}
-                            to={
-                              `${item.url}`
-                            }
+                            to={itemLink(item)}
+                            onClick={(e) => employerHandler(e, item.section)}
                           >
                             <span className={styles.icon}>{item.icon}</span>
                             <span className="mx-2">{item.text}</span>
@@ -89,6 +114,17 @@ const ShowContent = ({ content }) => {
             </Grid>
           </Container>
         </Box>
+        <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
+          <div>
+            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+            <h1 className="heading" style={{ textTransform: "capitalize" }}>{warningRole} login required</h1>
+            <div className="form-content">
+              <p>
+                Dear user, to access this content, please log in as a {warningRole}.
+              </p>
+            </div>
+          </div>
+        </DialogBox>
       </Box>
     </>
   );
