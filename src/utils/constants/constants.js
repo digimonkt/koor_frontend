@@ -19,17 +19,20 @@ export const OTHER_BUTTON = [
     svg: <SVG.ArrowForward />,
     text: "Find Tender",
     url: "/search/tenders",
+    section: "tenders",
   },
   {
     icon: <SVG.ProfileIcon />,
     svg: <SVG.ArrowForward />,
     text: "Find Talent",
     url: "/search/talents",
+    section: "talents",
   },
   {
     icon: <SVG.Work />,
     svg: <SVG.ArrowForward />,
     text: "Find Job",
     url: "/search/jobs",
+    section: "jobs",
   },
 ];
