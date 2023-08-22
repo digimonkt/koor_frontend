@@ -37,13 +37,22 @@ const InnerFooter = () => {
       setCategories(res.data);
     }
   };
+  const validateEmail = (input) => {
+    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    return emailPattern.test(input);
+  };
   const saveNewsletter = async () => {
-    const res = await storeNewsletterAPI(email);
-    if (res.remote === "success") {
-      setEmail("");
-      setSuccessToastPopup(true);
+    if (email !== "" && validateEmail(email)) {
+      const res = await storeNewsletterAPI(email);
+      if (res.remote === "success") {
+        setEmail("");
+        setSuccessToastPopup(true);
+      } else {
+        setFailedMessage(res.error);
+        setFailedToastPopup(true);
+      }
     } else {
-      setFailedMessage(res.error);
+      setFailedMessage("Please Enter Valid Email");
       setFailedToastPopup(true);
     }
   };
