@@ -177,7 +177,7 @@ const InnerFooter = () => {
               </Grid>
 
               <Grid item lg={3} xs={6} sm={3}>
-                {role !== USER_ROLES.jobSeeker ? (<><Typography
+                {(isLoggedIn && role !== USER_ROLES.jobSeeker) || !isLoggedIn ? (<><Typography
                   sx={{
                     fontSize: "20px",
                     color: "#274593",
@@ -211,7 +211,7 @@ const InnerFooter = () => {
                               },
                             }}
                             LinkComponent={Link}
-                            to={!isLoggedIn ? `/search/tenders?tenderCategories=${child.id}` : "#"}
+                            to={`/search/tenders?tenderCategories=${child.id}`}
                             dense={true}
                             // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
                             disableGutters={true}
@@ -224,7 +224,7 @@ const InnerFooter = () => {
                   </List></>) : ""}
               </Grid>
               <Grid item lg={3} xs={6} sm={3}>
-                {role !== USER_ROLES.jobSeeker ? (<>
+                {(isLoggedIn && role !== USER_ROLES.jobSeeker) || !isLoggedIn ? (<>
                   <Typography
                     sx={{
                       fontSize: "20px",

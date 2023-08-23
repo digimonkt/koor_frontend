@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import urlcat from "urlcat";
 import { setSocialLoginError } from "@redux/slice/user";
+import { REGEX } from "@utils/constants/regex";
+import { setErrorToast } from "@redux/slice/toast";
 
 function LoginForm() {
   // const navigate = useNavigate();
@@ -26,11 +28,21 @@ function LoginForm() {
     onSubmit: async (values) => {
       dispatch(setSocialLoginError(""));
       setIsLoading(true);
-      const payload = {
-        email: values.email,
-        password: values.password,
-        role,
+      const validateEmail = (email) => {
+        return REGEX.email.test(email);
       };
+      const payload = {
+        password: values.password,
+        role
+      };
+
+      if (validateEmail(values.email)) {
+        payload.email = values.email;
+      } else {
+        payload.mobile_number = values.email;
+      }
+
+      // Now the payload only contains non-null properties: email, password, phone, and role
       const res = await LoginUserAPI(payload);
       if (res.remote === "success") {
         setIsLoading(false);
@@ -43,6 +55,10 @@ function LoginForm() {
   });
   useEffect(() => {
     formik.setErrors({});
+    if (socialLoginError !== "") {
+      dispatch(setErrorToast(socialLoginError));
+      dispatch(setSocialLoginError(""));
+    }
   }, [socialLoginError]);
   return (
     <>
@@ -54,7 +70,7 @@ function LoginForm() {
               title="Email"
               subtitle="Your mobile phone or email"
               data-cy="login-email"
-              type="email"
+              type="text"
               {...formik.getFieldProps("email")}
             />
             {formik.touched.email && formik.errors.email ? (
@@ -73,7 +89,7 @@ function LoginForm() {
             {formik.touched.password && formik.errors.password ? (
               <ErrorMessage>{formik.errors.password}</ErrorMessage>
             ) : null}
-            {socialLoginError !== "" && <ErrorMessage>{socialLoginError}</ErrorMessage>}
+            {/* {socialLoginError !== "" && <ErrorMessage>{socialLoginError}</ErrorMessage>} */}
           </div>
           <Link
             to={urlcat("/forgot-password", { role })}
