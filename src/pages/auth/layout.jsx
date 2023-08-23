@@ -123,23 +123,22 @@ function AuthLayout({
       const res = await loginWithFacebookPopupProvider();
       console.log({ FacebooK: res });
       if (res.remote === "success") {
-        // const payload = {
-        //   email: res.data.email,
-        //   role,
-        //   name: res.data.displayName,
-        //   display_image: res.data.photoURL,
-        //   source: "facebook",
-        // };
-        // const result = await SocialLoginAPI(payload);
-        // if (result.remote === "success") {
-        //   console.log({ result });
-        // } else {
-        //   console.log({ result });
-        // }
+        const payload = {
+          email: res.data.email,
+          role,
+          name: res.data.displayName,
+          display_image: res.data.photoURL,
+          source: "facebook",
+        };
+        const result = await SocialLoginAPI(payload);
+        if (result.remote === "success") {
+          console.log({ result });
+        } else {
+          dispatch(setSocialLoginError(result.error.errors.message));
+        }
       }
       setLoading(true);
     };
-
     useEffect(() => {
       setIsLoginPage(location.pathname === "/login");
     }, [location.pathname]);
@@ -375,7 +374,7 @@ function AuthLayout({
 
                       {btnTitle && (
                         <div className={"bottombar mt-5"}>
-                          <span>Already have an account?</span>
+                          <span>{isLoginPage ? "Don't have an account?" : "Already have an account?"}</span>
                           <div
                             onClick={() => {
                               dispatch(setUserRole(""));

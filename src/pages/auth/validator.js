@@ -37,7 +37,7 @@ export const validateRegistrationForm = Yup.object().shape({
 });
 
 export const validateLoginForm = Yup.object().shape({
-  email: Yup.string().email("Invalid Email").required("Email is required"),
+  email: Yup.string().required("Email or Phone is required"),
   password: Yup.string().required("Password is Required"),
 });
 export const validateForgotPasswordForm = Yup.object().shape({

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CreateUserAPI } from "@api/user";
 import { useNavigate } from "react-router-dom";
 import { FilledButton } from "@components/button";
@@ -8,14 +8,17 @@ import { USER_ROLES } from "@utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
 import { ErrorMessage } from "@components/caption";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "@components/loader";
+import { setSocialLoginError } from "@redux/slice/user";
+import { setErrorToast } from "@redux/slice/toast";
 
 function RegistrationForm() {
   // navigate
   const navigate = useNavigate();
-  const { role } = useSelector((state) => state.auth);
+  const { role, socialLoginError } = useSelector((state) => state.auth);
   const [loading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -30,6 +33,7 @@ function RegistrationForm() {
     },
     validationSchema: validateRegistrationForm,
     onSubmit: async (values) => {
+      dispatch(setSocialLoginError(""));
       setIsLoading(true);
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
@@ -64,6 +68,14 @@ function RegistrationForm() {
       }
     },
   });
+  useEffect(() => {
+    formik.setErrors({});
+    if (socialLoginError !== "") {
+      dispatch(setErrorToast(socialLoginError));
+      dispatch(setSocialLoginError(""));
+    }
+  }, [socialLoginError]);
+
   return (
     <div>
       <div className="form-content">
