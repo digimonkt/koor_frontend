@@ -26,6 +26,7 @@ import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { getLetLongByAddressAPI } from "@api/user";
+import ShareTender from "../shareTenders";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -96,6 +97,8 @@ function TenderDetailsComponent() {
   const [addressGeoCode, setAddressGeoCode] = useState({});
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
+  const [isSharing, setIsSharing] = useState(false);
+
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
@@ -330,6 +333,14 @@ function TenderDetailsComponent() {
                           handleSaveTender(params.tenderId);
                         }}
                       />
+                      <OutlinedButton
+                        title={<SVG.ShareIcon />}
+                        jobSeeker
+                        style={{ height: "44px" }}
+                        onClick={() => {
+                          setIsSharing(true);
+                        }}
+                      />
                     </Stack>
                   </div>
                 ) : (
@@ -367,7 +378,7 @@ function TenderDetailsComponent() {
                     to find a tender, please register on Koor.
                   </p>
                   <div style={{ textAlign: "center", lineHeight: "40px" }}>
-                    <Link to="/register">
+                    <Link to="/register?role=vendor">
                       <OutlinedButton
                         title="Register as vendor"
                         jobSeeker
@@ -415,6 +426,19 @@ function TenderDetailsComponent() {
           </div>
         </div>
       </Container>
+      <DialogBox
+        open={isSharing}
+        handleClose={() => setIsSharing(false)}
+        title="Share"
+        sx={{
+          "& .MuiPaper-root": {
+            width: "700px",
+            maxWidth: "857px",
+          },
+        }}
+      >
+        <ShareTender />
+      </DialogBox>
     </>
   );
 }
