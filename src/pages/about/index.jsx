@@ -45,10 +45,10 @@ const AboutUs = () => {
                   </p>
                 </Box>
                 <Box className={styles.about_social}>
-                  <Link to="/social">
+                  <Link to="/">
                     <img src={IMAGES.Googleplay} rel="nofollow" alt="img" />
                   </Link>
-                  <Link to="/social" className="mx-3">
+                  <Link to="/" className="mx-3">
                     <img src={IMAGES.Appstore} rel="nofollow" alt="img" />
                   </Link>
                 </Box>
