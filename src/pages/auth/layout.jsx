@@ -124,7 +124,7 @@ function AuthLayout({
       console.log({ FacebooK: res });
       if (res.remote === "success") {
         const payload = {
-          email: res.data.email,
+          // email: res.data.email,
           role,
           name: res.data.displayName,
           display_image: res.data.photoURL,
