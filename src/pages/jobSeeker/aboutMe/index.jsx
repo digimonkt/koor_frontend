@@ -109,6 +109,7 @@ const AboutMe = (props) => {
       setFilledData(formik.values);
       if (res.remote === "success") {
         // dispatch(setSuccessToast("About Me Updated Successfully"));
+        setLoading(false);
         handleToggleModel();
         dispatch(
           updateCurrentUser({
@@ -117,6 +118,8 @@ const AboutMe = (props) => {
             mobileNumber,
             countryCode,
             profile: {
+              country: countries.data.find((country) => country.id === values.country),
+              city: cities.data[values.country].find((city) => city.id === values.city),
               gender: values.gender,
               dob: dayjs(values.dob).format(DATE_FORMAT),
               employmentStatus: values.employmentStatus,
