@@ -37,13 +37,22 @@ const InnerFooter = () => {
       setCategories(res.data);
     }
   };
+  const validateEmail = (input) => {
+    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    return emailPattern.test(input);
+  };
   const saveNewsletter = async () => {
-    const res = await storeNewsletterAPI(email);
-    if (res.remote === "success") {
-      setEmail("");
-      setSuccessToastPopup(true);
+    if (email !== "" && validateEmail(email)) {
+      const res = await storeNewsletterAPI(email);
+      if (res.remote === "success") {
+        setEmail("");
+        setSuccessToastPopup(true);
+      } else {
+        setFailedMessage(res.error);
+        setFailedToastPopup(true);
+      }
     } else {
-      setFailedMessage(res.error);
+      setFailedMessage("Please Enter Valid Email");
       setFailedToastPopup(true);
     }
   };
@@ -168,7 +177,7 @@ const InnerFooter = () => {
               </Grid>
 
               <Grid item lg={3} xs={6} sm={3}>
-                {role !== USER_ROLES.jobSeeker ? (<><Typography
+                {(isLoggedIn && role !== USER_ROLES.jobSeeker) || !isLoggedIn ? (<><Typography
                   sx={{
                     fontSize: "20px",
                     color: "#274593",
@@ -202,7 +211,7 @@ const InnerFooter = () => {
                               },
                             }}
                             LinkComponent={Link}
-                            to={!isLoggedIn ? `/search/tenders?tenderCategories=${child.id}` : "#"}
+                            to={`/search/tenders?tenderCategories=${child.id}`}
                             dense={true}
                             // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
                             disableGutters={true}
@@ -215,7 +224,7 @@ const InnerFooter = () => {
                   </List></>) : ""}
               </Grid>
               <Grid item lg={3} xs={6} sm={3}>
-                {role !== USER_ROLES.jobSeeker ? (<>
+                {(isLoggedIn && role !== USER_ROLES.jobSeeker) || !isLoggedIn ? (<>
                   <Typography
                     sx={{
                       fontSize: "20px",
