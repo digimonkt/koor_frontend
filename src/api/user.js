@@ -62,7 +62,7 @@ export const UpdateProfileImageAPI = async (data) => {
 
 export const SendOtpAPI = async (data) => {
   return await api.request({
-    url: urlcat("/v1/users/send-otp", { email: data.email }),
+    url: urlcat("/v1/users/send-otp", { email: data.email, role: data.role }),
     method: "GET",
   });
 };

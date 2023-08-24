@@ -16,6 +16,8 @@ function ForgotPasswordForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setIsLoading] = useState(false);
+  const url = new URL(window.location.href);
+  const role = url.searchParams.get("role");
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,6 +27,7 @@ function ForgotPasswordForm() {
       setIsLoading(true);
       const payload = {
         email: values.email,
+        role
       };
       const res = await SendOtpAPI(payload);
       if (res.remote === "success") {

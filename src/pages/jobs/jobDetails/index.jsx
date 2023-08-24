@@ -436,7 +436,7 @@ const JobDetails = () => {
                     find a job, please register on Koor.
                   </p>
                   <div style={{ textAlign: "center", lineHeight: "40px" }}>
-                    <Link to="/register">
+                    <Link to="/register?role=job_seeker">
                       <OutlinedButton
                         title="Register as jobseeker"
                         jobSeeker
