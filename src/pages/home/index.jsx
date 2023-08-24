@@ -79,6 +79,7 @@ const Home = () => {
       dispatch(setIstHomePage(false));
     };
   }, []);
+  const totalJobs = topJobCategories.reduce((total, item) => total + item.count, 0);
   return (
     <>
       {!isLoggedIn ? (
@@ -271,7 +272,7 @@ const Home = () => {
                       navigate("/search/jobs");
                     }}
                   >
-                    See all 4590 jobs{" "}
+                    See all {totalJobs} jobs{" "}
                     <IconButton>
                       <ArrowForwardIcon sx={{ color: "#eea23d" }} />
                     </IconButton>
