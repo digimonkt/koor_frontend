@@ -30,6 +30,8 @@ export const loginWithGooglePopupProvider = async () => {
 };
 
 export const loginWithFacebookPopupProvider = async () => {
+  facebookProvider.addScope("email");
+  facebookProvider.addScope("user_phone_number");
   facebookProvider.setCustomParameters({
     prompt: "select_account",
   });
