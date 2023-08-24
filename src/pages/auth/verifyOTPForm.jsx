@@ -7,6 +7,7 @@ import { FilledButton } from "@components/button";
 import { VerifyOtpAPI } from "@api/user";
 import urlcat from "urlcat";
 import { setUserRole } from "@redux/slice/user";
+import { ErrorMessage } from "@components/caption";
 function VerifyOTPForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,6 +62,11 @@ function VerifyOTPForm() {
             onChange={(e) => formik.setFieldValue("otp", e)}
             value={formik.values.otp}
           />
+          <div>
+            {formik.errors.otp ? (
+              <ErrorMessage>{formik.errors.otp}</ErrorMessage>
+            ) : null}
+          </div>
           <FilledButton type="submit" title="Submit" />
         </div>
       </form>
