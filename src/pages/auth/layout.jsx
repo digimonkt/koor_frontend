@@ -128,6 +128,7 @@ function AuthLayout({
           role,
           name: res.data.displayName,
           display_image: res.data.photoURL,
+          social_login_id: res.data.localId,
           source: "facebook",
         };
         const result = await SocialLoginAPI(payload);
