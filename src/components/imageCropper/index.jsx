@@ -69,6 +69,7 @@ function ImageCropper({ open, handleClose, image, handleSave }) {
               image={imageSrc}
               crop={crop}
               zoom={zoom}
+              rotation={rotation}
               aspect={1}
               cropShape="round"
               showGrid={false}
