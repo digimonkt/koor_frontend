@@ -35,11 +35,13 @@ export const request = async (config) => {
     if (!config.headers["Content-Type"]) {
       config.headers["Content-Type"] = "application/json";
     }
-    const accessToken = globalLocalStorage.getAccessToken();
-    const refreshToken = globalLocalStorage.getRefreshToken();
-    if (accessToken && refreshToken && !config.url.includes("http")) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-      config.headers["x-refresh"] = `${refreshToken}`;
+    if (config.url !== "v1/jobs/categories") {
+      const accessToken = globalLocalStorage.getAccessToken();
+      const refreshToken = globalLocalStorage.getRefreshToken();
+      if (accessToken && refreshToken && !config.url.includes("http")) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+        config.headers["x-refresh"] = `${refreshToken}`;
+      }
     }
     const response = await axiosInstance.request({ ...config });
     return {
