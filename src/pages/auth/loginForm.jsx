@@ -13,6 +13,7 @@ import urlcat from "urlcat";
 import { setSocialLoginError } from "@redux/slice/user";
 import { REGEX } from "@utils/constants/regex";
 import { setErrorToast } from "@redux/slice/toast";
+import { parsePhoneNumber } from "react-phone-number-input";
 
 function LoginForm() {
   // const navigate = useNavigate();
@@ -40,6 +41,10 @@ function LoginForm() {
         payload.email = values.email;
       } else {
         payload.mobile_number = values.email;
+        const phoneNumber = parsePhoneNumber(values.email);
+        if (phoneNumber) {
+          payload.mobile_number = phoneNumber.nationalNumber;
+        }
       }
 
       // Now the payload only contains non-null properties: email, password, phone, and role
