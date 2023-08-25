@@ -11,11 +11,11 @@ function LogoutForm() {
   const handleLogout = async () => {
     await LogoutUserAPI();
     globalLocalStorage.cleanLocalStorage();
+    navigate("/login");
   };
   useEffect(() => {
     dispatch(setIsLoggedIn(false));
     handleLogout();
-    navigate("/login");
   }, []);
   return <div></div>;
 }

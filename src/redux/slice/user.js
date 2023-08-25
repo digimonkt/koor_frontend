@@ -18,10 +18,13 @@ const initialState = {
     countryCode: "",
     name: "",
     profileImage: "",
+    country: "",
+    city: "",
     profile: {
       // common
       description: "",
-
+      country: {},
+      city: {},
       // job-seeker
       gender: GENDER.male,
       dob: "",

@@ -62,8 +62,8 @@ function RegistrationForm() {
       } else {
         setIsLoading(false);
         formik.setErrors({
-          email: res.error.errors.email || res.error.errors.message,
-          mobileNumber: res.error.errors.mobile_number,
+          email: res.error.errors.email,
+          mobileNumber: res.error.errors.mobile_number || res.error.errors.message,
         });
       }
     },

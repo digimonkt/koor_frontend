@@ -14,15 +14,7 @@ const passwordValidation = {
 };
 export const validateRegistrationForm = Yup.object().shape({
   email: Yup.string()
-    .email("Invalid Email")
-    .test(
-      "atLeastOneRequired",
-      "Email/Mobile Number is required",
-      (value, context) => {
-        const { parent } = context;
-        return parent.email || parent.mobileNumber.value;
-      }
-    ),
+    .email("Invalid Email"),
   mobileNumber: Yup.mixed().test(
     "isValidMobileNumber",
     "Invalid Mobile Number",
@@ -32,7 +24,15 @@ export const validateRegistrationForm = Yup.object().shape({
       }
       return isValidPhoneNumber(value.value);
     }
-  ),
+  )
+    .test(
+      "atLeastOneRequired",
+      "Email/Mobile Number is required",
+      (value, context) => {
+        const { parent } = context;
+        return parent.email || parent.mobileNumber.value;
+      }
+    ),
   ...passwordValidation,
 });
 
