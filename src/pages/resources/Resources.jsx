@@ -27,6 +27,7 @@ const Resources = () => {
   useEffect(() => {
     getResourceDetails();
   }, [pages]);
+
   return (
     <>
       <Box className={`${styles.resources}`}>
@@ -54,14 +55,16 @@ const Resources = () => {
                 />
               ))) : (<ResourceListSkeletonLoader />)
           }
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <TablePagination
-              count={totalCount || 0}
-              shape="rounded"
-              page={pages}
-              onChange={handlePageChange}
-            />
-          </Box>
+          {pages > 1 &&
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <TablePagination
+                count={totalCount || 0}
+                shape="rounded"
+                page={pages}
+                onChange={handlePageChange}
+              />
+            </Box>
+          }
         </Container>
       </Box>
     </>
