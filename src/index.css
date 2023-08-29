@@ -501,3 +501,19 @@ ul.listvertical li.slick-active button {
 ul.listvertical li {
   margin-bottom: 5px;
 }
+
+.active-footer {
+  color: #EEA23D !important;
+}
+
+.not-active-footer {
+  color: #121212;
+}
+
+.active-footer-tab {
+  color: #EEA23D !important;
+}
+
+.not-active-footer-tab {
+  color: #274593;
+}

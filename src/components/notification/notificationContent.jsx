@@ -24,7 +24,14 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const handleChangeSection = (event, newValue) => {
     const filterNotification = (type) => {
       const notificationData = [...notification];
-      const FilterData = notificationData.filter((notification) => notification.notificationType === type);
+      let notificationResult = "";
+      if (newValue !== "message") {
+        notificationResult = notificationData.filter((notification) => notification.notificationType !== "message");
+        console.log({ notificationResult });
+      } else {
+        notificationResult = notificationData.filter((notification) => notification.notificationType === type);
+      }
+      const FilterData = notificationResult;
       setFilterData(FilterData);
     };
     setSection(newValue);
@@ -33,7 +40,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
         setFilterData(notification);
         break;
       case "jobs":
-        filterNotification("applied");
+        filterNotification("jobs");
         break;
       case "message":
         filterNotification("message");
@@ -42,6 +49,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
         break;
     }
   };
+
   const getNotifications = async () => {
     setLoading(true);
     const res = await GetNotificationAPI();
@@ -101,10 +109,6 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                 {filterData.length ? (
                   filterData.map((item, index) => (
                     <>
-                      {/* <hr
-                        style={{ borderColor: "#F0F0F0 !important" }}
-                        className="p-0 mb-2"
-                      /> */}
                       <div
                         key={index}
                         className={`${styles.notification_card} ${role === USER_ROLES.jobSeeker

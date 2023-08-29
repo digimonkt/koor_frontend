@@ -99,7 +99,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 ? null
                 : dayjs(values.endDate).format(DATE_FORMAT),
               present: values.isPresent,
-              description: values.description,
+              description: descData,
             })
           );
         }

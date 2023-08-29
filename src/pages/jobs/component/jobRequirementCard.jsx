@@ -36,12 +36,16 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
           >
             {skills.map((skill) => {
               return (
-                <SearchButton
-                  key={skill.id}
-                  text={skill.title}
-                  className={`${styles.grybtn}`}
-                  sx={{ minWidth: "100%" }}
-                />
+                <>
+                  <div style={{ marginTop: "20px" }}>
+                    <SearchButton
+                      key={skill.id}
+                      text={skill.title}
+                      className={`${styles.grybtn}`}
+                      sx={{ minWidth: "100%" }}
+                    />
+                  </div>
+                </>
               );
             })}
           </Stack>

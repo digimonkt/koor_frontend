@@ -28,11 +28,13 @@ body {
   padding-top: 16px;
   padding-bottom: 15px;
 }
+
 .lables .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover {
   -webkit-text-decoration: none;
   text-decoration: none;
   background-color: transparent !important;
 }
+
 .lables span {
   font-family: "Poppins";
   font-size: 16px;
@@ -55,13 +57,16 @@ body {
 .message {
   text-align: center;
 }
+
 .formCHeck .MuiButtonBase-root.MuiCheckbox-root {
   color: #cacaca;
 }
+
 .formCHeck .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
 .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate {
   color: #eea23d;
 }
+
 .lables p {
   font-size: 14px;
   color: #ffa500;
@@ -69,43 +74,55 @@ body {
   padding-left: 16px;
   margin: 0px;
 }
+
 iframe {
   border: 0;
 }
+
 .attachments span {
   color: #eea23d;
 }
+
 .attachments small {
   display: none !important;
 }
+
 .attachments svg path {
   fill: #eea23d !important;
 }
+
 .attachments button {
   background: #eea23d52 !important;
 }
+
 .attachments {
   border-bottom: 1px solid #cacaca;
   padding-bottom: 30px;
 }
+
 .contentSvg .bookmark span {
   color: #274593 !important;
 }
+
 .shh path {
   fill: #274593 !important;
 }
+
 .shh {
   color: #274593 !important;
 }
+
 .jobCards {
   box-shadow: 0px 15px 40px 0px #0000000d;
   border-radius: 10px;
   background-color: #fff;
   padding: 20px;
 }
+
 .activemenu li a.active {
   background: #d5e3f7 !important;
 }
+
 .activemenu li a.active:after {
   content: "";
   height: 100%;
@@ -115,6 +132,7 @@ iframe {
   top: 0px;
   background: #274593 !important;
 }
+
 .talendBtn .css-1yo28cw-MuiChip-root.MuiChip-root {
   padding-left: 0px;
   padding-right: 16px;
@@ -124,24 +142,30 @@ iframe {
   font-weight: 400;
   color: #848484;
 }
+
 span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   display: none;
 }
+
 .venderSpan {
   font-weight: 500;
 }
+
 .message p {
   color: #274593 !important;
   font-weight: 400;
 }
+
 .SelectDropdown {
   padding-top: 22px;
   border-top: 1px solid #cacaca;
   margin-top: 15px;
 }
+
 .SelectDropdown .filter_input {
   width: 100% !important;
 }
+
 .Tenderinput .MuiFormControl-root.MuiTextField-root {
   width: 100%;
   background: #f0f0f0;
@@ -151,24 +175,30 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   margin-top: 10px;
   padding-top: 4px;
 }
+
 .Tenderinput .MuiInput-underline:before {
   border-bottom: 0 !important;
 }
-.SelectDropdown label + .css-hrjh4n-MuiInputBase-root {
+
+.SelectDropdown label+.css-hrjh4n-MuiInputBase-root {
   margin-top: 12px;
   font-family: "Poppins";
 }
+
 .SelectDropdown label {
   color: #121212;
   font-size: 16px;
   font-weight: 300;
 }
+
 .lables li {
   padding: 0 4px !important;
 }
+
 .formCHeck .MuiFormGroup-root.css-dmmspl-MuiFormGroup-root {
   display: block;
 }
+
 .SelectDropdown select#demo-customized-select-native {
   background: #f0f0f0;
   border: 0;
@@ -187,9 +217,10 @@ header {
   top: 0px;
   z-index: 4;
 }
+
 .navbar-brand {
   display: inline-block;
-  width: 17%;
+  width: 9%;
 }
 
 .menu {
@@ -210,6 +241,7 @@ header {
 .menu li:last-child {
   padding-right: 0px;
 }
+
 .menu li a {
   text-decoration: none;
   font-weight: 400;
@@ -263,6 +295,7 @@ header {
 .footer-menu {
   padding: 10px 15px;
 }
+
 .border-left {
   border-left: 1px solid #cacaca;
 }
@@ -292,6 +325,7 @@ header {
 .footer-menu ul li a:hover {
   color: #eea23d;
 }
+
 .social-icons {
   margin: 8px 0 0 0px;
   padding: 0px;
@@ -305,49 +339,58 @@ header {
   display: inline-block;
   padding: 0px 20px;
 }
+
 .footer .css-ldbyt5-MuiStack-root {
   justify-content: space-between;
 }
+
 .venderbtn {
   background: #274593 !important;
   color: #fff !important;
   box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35) !important;
 }
+
 .forgots span {
   color: #848484;
   font-size: 16px;
   cursor: pointer;
   font-weight: 300;
 }
+
 .register {
   background: url("../images/yellow-bg.png") no-repeat center top;
   margin-top: 68px;
   background-size: 100% 100%;
 }
+
 .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
   padding-left: 6px !important;
   padding-right: 16px !important;
 }
+
 .menu.false svg path {
   fill: #1c1b1f !important;
 }
+
 .add-content p {
   font-size: 12px;
   color: #848484;
   margin-top: 0;
   padding-bottom: 16px;
 }
-.saved-jobs
-  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
+
+.saved-jobs button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
   justify-content: center;
   position: relative !important;
   left: 13px !important;
 }
+
 .vendor {
   background: url("../images/imgs.png") no-repeat center top !important;
   margin-top: 68px;
   background-size: 100% 100% !important;
 }
+
 .content-box h5 {
   font-weight: 700;
   font-size: 45px;
@@ -363,13 +406,14 @@ header {
   padding-bottom: 40px;
   color: #000000;
 }
+
 .register-title h6 {
   font-weight: 400;
   font-size: 28px;
   margin: 0px;
 }
 
-.register-des > a {
+.register-des>a {
   border: 2px solid #cacaca;
   border-radius: 88px;
   display: block;
@@ -379,7 +423,8 @@ header {
   cursor: pointer;
   margin-bottom: 16px;
 }
-.register-des > a:last-child {
+
+.register-des>a:last-child {
   margin-bottom: 0px;
   cursor: pointer;
 }
@@ -391,21 +436,25 @@ header {
   font-family: "Poppins";
   opacity: 0.5;
 }
-.register-des > a:hover {
+
+.register-des>a:hover {
   background: #d5e3f7;
   border: 2px solid #274593;
   box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35);
   cursor: pointer;
 }
+
 .form-content {
   font-family: "Poppins";
   font-weight: 300;
   margin: 20px 0px 20px 0px !important;
 }
+
 .text-gray {
   color: #848484;
   font-weight: 300;
 }
+
 .form-control {
   height: 45px;
   width: 100%;
@@ -418,10 +467,12 @@ header {
   font-size: 16px;
   color: #000;
 }
+
 .showpassword {
   position: relative;
 }
-.showpassword > div > svg {
+
+.showpassword>div>svg {
   cursor: pointer;
   position: absolute;
   width: 20px;
@@ -448,9 +499,11 @@ header {
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
+
 .box-shadow {
   box-shadow: 0px 2px 15px 2px rgba(255, 165, 0, 0.35);
 }
+
 .bottombar {
   text-align: center;
   margin: 10px 0px;
@@ -486,6 +539,7 @@ header {
   margin: 0px;
   opacity: 0.5;
 }
+
 .dashedborder {
   border: 2px dashed #cacaca;
   border-radius: 10px;
@@ -552,9 +606,11 @@ header {
   background: #feefd3;
   border-radius: 27px 0px 0px 27px;
 }
+
 .activemenu li a:hover {
   background: #d5e3f7 !important;
 }
+
 .activemenu li a:hover:after {
   background: #274593 !important;
 }
@@ -568,6 +624,7 @@ header {
   top: 0px;
   background: #eea23d;
 }
+
 hr {
   border-bottom: 1px solid #cacaca !important;
   height: 1px !important;
@@ -576,6 +633,7 @@ hr {
   border-right: 0 !important;
   border-left: 0 !important;
 }
+
 .logout {
   padding-left: 32px;
   position: absolute;
@@ -591,10 +649,12 @@ hr {
   font-family: "Poppins";
   font-weight: 400;
 }
+
 .logout-icon {
   display: inline-flex;
   align-items: center;
 }
+
 .searchbox {
   border: 1px solid #cacaca;
   border-radius: 50px;
@@ -658,6 +718,7 @@ hr {
 
   color: #121212;
 }
+
 .step-continer .Mui-active .MuiStepConnector-line {
   border-top-width: 2px;
   border-color: #eea23d;
@@ -704,9 +765,11 @@ hr {
   padding: 5px 0px;
   color: #121212;
 }
+
 .border-top {
   border-top: 1px solid #f0f0f0;
 }
+
 .additional-box label {
   font-family: "Poppins";
   font-style: normal;
@@ -721,12 +784,15 @@ hr {
   transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   transform: rotate(0deg);
 }
+
 .arrow-color.active {
   transform: rotate(180deg);
 }
+
 .d-inline-flex {
   display: inline-flex !important;
 }
+
 .later {
   font-family: "Poppins";
   font-style: normal;
@@ -736,10 +802,12 @@ hr {
   color: #eea23d;
   cursor: pointer;
 }
+
 .add-content .css-e53awj-MuiStack-root {
   display: flex;
   align-items: center;
 }
+
 .add-content h2 {
   font-size: 28px;
   margin-bottom: 20px;
@@ -747,6 +815,7 @@ hr {
   font-weight: 600;
   margin-bottom: 30px;
 }
+
 .add-form-control {
   background: #f0f0f0;
   border-radius: 10px;
@@ -765,7 +834,9 @@ hr {
   padding: 6px 12px;
   width: 100%;
 }
-.add-form-control::-webkit-input-placeholder { /* Edge */
+
+.add-form-control::-webkit-input-placeholder {
+  /* Edge */
   color: #121212;
   font-family: "Poppins";
   font-style: normal;
@@ -773,7 +844,8 @@ hr {
   font-size: 12px;
 }
 
-.add-form-control:-ms-input-placeholder { /* Internet Explorer */
+.add-form-control:-ms-input-placeholder {
+  /* Internet Explorer */
   color: #121212;
   font-family: "Poppins";
   font-style: normal;
@@ -788,12 +860,15 @@ hr {
   font-weight: 400;
   font-size: 12px;
 }
+
 .w-30 {
   width: 30%;
 }
+
 .w-70 {
   width: 70% !important;
 }
+
 .add-content label {
   font-family: "Poppins";
   font-style: normal;
@@ -804,6 +879,7 @@ hr {
   margin-bottom: 10px;
   color: #848484;
 }
+
 .form-control-area {
   background: #f0f0f0;
   border-radius: 10px;
@@ -816,8 +892,9 @@ hr {
   font-family: "Poppins";
   font-size: 12px;
   box-sizing: border-box;
-  color:#121212;
+  color: #121212;
 }
+
 .description {
   font-family: "Poppins";
   font-style: normal;
@@ -829,11 +906,13 @@ hr {
 
   color: #121212;
 }
+
 .modal-box .MuiPaper-root {
   border-radius: 10px;
   padding: 30px;
   width: 500px;
 }
+
 .dropimg-userprofile {
   border: 2px dashed #cacaca;
   border-radius: 4px;
@@ -862,12 +941,14 @@ hr {
   color: #eea23d;
   font-weight: 600;
 }
+
 .text-resume {
   font-weight: 500;
   font-size: 16px;
 
   color: #121212;
 }
+
 .text-worry {
   font-family: "Poppins";
   font-style: normal;
@@ -884,6 +965,7 @@ hr {
 .text-worry span {
   color: #eea23d;
 }
+
 .social-icons li a {
   color: #274593;
 }
@@ -891,6 +973,7 @@ hr {
 .social-icons li a:hover {
   color: #506ebb;
 }
+
 .css-z7uhs0-MuiStepConnector-line {
   border-top-width: 2px !important;
 }
@@ -900,16 +983,19 @@ hr {
   color: #121212;
   opacity: 0.5;
 }
+
 .form-control-area::-moz-placeholder {
   /* Firefox 19+ */
   color: #121212;
   opacity: 0.5;
 }
+
 .form-control-area:-ms-input-placeholder {
   /* IE 10+ */
   color: #121212;
   opacity: 0.5;
 }
+
 .form-control-area:-moz-placeholder {
   /* Firefox 18- */
   color: #121212;
@@ -925,6 +1011,7 @@ hr {
   line-height: 34px;
   color: #121212;
 }
+
 .fillterbox {
   font-family: "Poppins" !important;
 
@@ -936,6 +1023,7 @@ hr {
 
   color: #121212;
 }
+
 .chipBox {
   margin: 0px;
   padding: 0px;
@@ -946,6 +1034,7 @@ hr {
   display: inline-block;
   padding-right: 16px;
 }
+
 .bookmark {
   text-align: center;
   color: #eea23d;
@@ -1005,6 +1094,7 @@ hr {
 
   color: #121212;
 }
+
 .descrition h1 {
   font-family: "Poppins";
   font-style: normal;
@@ -1034,6 +1124,7 @@ hr {
 .descrition {
   margin-bottom: 16px;
 }
+
 .textdes {
   font-family: "Poppins";
   font-style: normal;
@@ -1046,6 +1137,7 @@ hr {
 .textdes span {
   font-weight: 600;
 }
+
 .pricebox h4 small.year {
   display: block;
   font-family: "Bahnschrift";
@@ -1058,13 +1150,16 @@ hr {
 
   color: #848484;
 }
+
 .w-price {
   width: 100px;
   white-space: nowrap;
 }
+
 .searchmessage {
   padding: 14px 14px 16px 30px;
 }
+
 .chat-search {
   border: 1px solid #cacaca;
   border-radius: 50px;
@@ -1074,9 +1169,11 @@ hr {
   background: #fff url("../images/search.png") no-repeat 14px 8px;
   box-sizing: border-box;
 }
+
 .leftchatbox {
   border-right: 1px solid #cacaca;
 }
+
 .chatbox ul {
   margin: 0px;
   padding: 0px;
@@ -1125,6 +1222,7 @@ hr {
   opacity: 0.7;
   margin: 2px 0px 0px;
 }
+
 span.count {
   width: 16px;
   height: 16px;
@@ -1135,17 +1233,21 @@ span.count {
   color: #fff;
   font-size: 9px;
 }
+
 .chatbox ul li:hover {
   background: #ecf2fb;
   cursor: pointer;
 }
+
 .chatbox ul li.active {
   background: #ecf2fb;
   cursor: pointer;
 }
+
 .chatbox {
   height: calc(100vh - 220px);
 }
+
 .buttonbox {
   text-transform: capitalize !important;
   color: #274593 !important;
@@ -1158,6 +1260,7 @@ span.count {
 .buttonbox p {
   margin: 0px;
 }
+
 .headerbox h3 {
   font-family: "Bahnschrift";
   font-style: normal;
@@ -1173,6 +1276,7 @@ span.count {
   color: #121212;
   opacity: 0.5;
 }
+
 .message-header {
   border-bottom: 1px solid #cacaca;
 }
@@ -1188,6 +1292,7 @@ span.count {
   line-height: 18px;
   color: #121212;
 }
+
 .message-tex-2 {
   background: #f0f0f0;
   border-radius: 20px 20px 20px 0px;
@@ -1203,6 +1308,7 @@ span.count {
 .meassagebox {
   padding: 15px;
 }
+
 .message-text {
   display: inline-block;
 }
@@ -1214,6 +1320,7 @@ span.count {
 .message-text p {
   margin: 0;
 }
+
 .message-text h4 {
   margin: 0px;
   font-family: "Bahnschrift";
@@ -1224,16 +1331,20 @@ span.count {
 
   color: #121212;
 }
+
 .text-inline {
   display: inline-flex;
   align-items: flex-end;
 }
+
 .text-right {
   text-align: right;
 }
+
 .meassagebox {
   height: calc(100vh - 305px);
 }
+
 .chatinput {
   display: flex;
   align-items: center;
@@ -1255,10 +1366,12 @@ span.count {
   color: #848484;
   height: 40px;
 }
+
 .bottomnav {
   border-top: 1px solid #cacaca;
   padding-top: 15px;
 }
+
 .w-25 {
   width: 25%;
 }
@@ -1275,12 +1388,15 @@ span.count {
   .w-75 {
     width: 100%;
   }
+
   .w-30 {
     width: 100%;
   }
+
   .w-70 {
     width: 100% !important;
   }
+
   .heading {
     font-size: 18px;
   }
@@ -1288,9 +1404,11 @@ span.count {
   span.later {
     font-size: 14px;
   }
+
   .add-content h2 {
     font-size: 18px;
   }
+
   .content-box h5 {
     font-size: 24px;
   }
@@ -1306,24 +1424,29 @@ span.count {
   .register-title span {
     font-size: 16px;
   }
+
   .step-continer svg.Mui-active,
   .step-continer svg.Mui-completed {
     color: #feefd3;
     width: 20px;
     height: 20px;
   }
+
   .step-continer .MuiStepLabel-labelContainer .Mui-active,
   .step-continer .MuiStepLabel-labelContainer .Mui-completed {
     font-size: 14px;
     line-height: 16px;
   }
+
   .step-continer .Mui-disabled .MuiStepLabel-labelContainer .Mui-disabled {
     font-size: 14px;
   }
+
   .step-continer .Mui-disabled svg {
     width: 20px;
     height: 20px;
   }
+
   .according-content-box h2 {
     font-size: 14px;
   }
@@ -1343,6 +1466,7 @@ span.count {
   width: 11px;
   height: 11px;
 }
+
 .rightside .message-text:before {
   position: absolute;
   right: -9px;
@@ -1352,6 +1476,7 @@ span.count {
   width: 11px;
   height: 11px;
 }
+
 .chart-view h4 {
   font-family: "Poppins";
   font-style: normal;
@@ -1376,6 +1501,7 @@ span.count {
 
   color: #848484;
 }
+
 .chart-view h5 {
   font-family: "Poppins";
   font-style: normal;
@@ -1388,9 +1514,11 @@ span.count {
   color: #4caf50;
   margin: 0;
 }
+
 .chart-space {
   margin-left: -17px;
 }
+
 .job-text {
   font-family: "Poppins";
   font-style: normal;
@@ -1439,10 +1567,12 @@ span.count {
 
   width: calc(100% - 160px);
 }
+
 .usd-bg {
   background: #f0f0f0;
   border-radius: 10px;
 }
+
 .listitems {
   margin: 0px;
   padding: 0px;
@@ -1530,6 +1660,7 @@ span.count {
   display: block;
   text-align: center;
 }
+
 .list-content h6 strong {
   font-weight: 500;
 }
@@ -1556,17 +1687,21 @@ span.count {
 .uploadimg {
   text-align: center;
 }
+
 .uploadimg img {
   max-width: 100%;
   display: block;
 }
+
 .w-100 {
   width: 100%;
 }
+
 .color-blue {
   color: #274593;
   font-weight: 500;
 }
+
 .docpreveiw {
   width: 150px;
   background: #f0f0f0;
@@ -1578,21 +1713,26 @@ span.count {
   justify-content: center;
   overflow: hidden;
 }
+
 .img-view img {
   width: 150px;
   border-radius: 8px;
 }
+
 .sidebar-scroll {
   height: calc(100vh - 353px);
 }
+
 body {
   padding: 0px !important;
   overflow-y: auto !important;
 }
+
 @media (min-width: 1536px) {
   .MuiContainer-root {
     max-width: 1780px !important;
   }
+
   .register {
     min-height: calc(100vh - 222px);
     background-size: cover;
@@ -1611,6 +1751,7 @@ body {
     transition: visibility 1s, opacity 0.5s linear;
     display: block;
   }
+
   .menu.menu-selected {
     visibility: visible;
     opacity: 1;
@@ -1620,31 +1761,37 @@ body {
     display: block;
     border-top: 1px solid #cacaca;
     padding: 8px 15px;
-    
+
   }
 
 
 
-  ul.menu li:nth-child(6), ul.menu li:nth-child(7) {
+  ul.menu li:nth-child(6),
+  ul.menu li:nth-child(7) {
     display: inline-block;
-    
+
     border: 0;
-   
+
   }
 }
+
 .bluebtn {
   background: #274593 !important;
   color: #fff !important;
 }
+
 ul.menu.color-change li a:hover {
   color: #274593;
 }
+
 a {
   text-decoration: none;
 }
+
 .backappling a {
   color: #848484;
 }
+
 .searchfixed {
   position: relative;
 }
@@ -1658,15 +1805,19 @@ a {
   top: 0;
   border-radius: 50px;
 }
+
 .chatbox ul li.jobseekeractive {
   background: #feefd3;
 }
+
 .chatbox.jobseekerbox ul li:hover {
   background: #feefd3;
 }
+
 .count.jobcount {
   background: #eea23d;
 }
+
 input.employersearch {
   padding: 0px;
   background: transparent;
@@ -1713,7 +1864,7 @@ input.employersearch {
     width: 50px;
   }
 
-  
+
 
   .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
     padding-left: 6px !important;
@@ -1745,9 +1896,11 @@ input.employersearch {
     justify-content: space-between;
   }
 }
+
 .job-description {
   white-space: pre-line;
 }
+
 .card-description {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -1765,6 +1918,7 @@ input.employersearch {
   width: 70px;
   height: 70px;
 }
+
 .required-field {
   color: red;
 }
@@ -1775,19 +1929,26 @@ input.employersearch {
     font-size: 16px;
 
   }
-  .noti-mobile{display: none !important;}
+
+  .noti-mobile {
+    display: none !important;
+  }
+
   .CardWidth {
     width: 100%;
   }
+
   .footer,
   header {
     display: none;
   }
+
   .register {
-   
+
     background: url("../images/intro.png");
   }
-  .register-des > a {
+
+  .register-des>a {
     padding: 12px 15px;
     border-radius: 16px;
     -webkit-border-radius: 16px;
@@ -1795,18 +1956,25 @@ input.employersearch {
     -ms-border-radius: 16px;
     -o-border-radius: 16px;
   }
+
   .marquee h1 {
     padding-left: 25px;
     padding-right: 25px;
   }
+
   .vendor {
     background: url("../images/register.png") center top !important;
   }
 }
-.PhoneInputInput{font-size: 12px;}
+
+.PhoneInputInput {
+  font-size: 12px;
+}
+
 .labelbox .MuiFormLabel-root {
   display: none;
 }
+
 .labelbox .MuiOutlinedInput-input {
   font-size: 12px;
 }
