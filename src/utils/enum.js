@@ -68,6 +68,7 @@ export const NOTIFICATION_TYPE = {
   shortlisted: "shortlisted",
   message: "message",
   advanceFilter: "advance_filter",
+  plannedInterviews: "planned_interviews",
   expiredJob: "expired_save_job", // pending from backend
 };
 
