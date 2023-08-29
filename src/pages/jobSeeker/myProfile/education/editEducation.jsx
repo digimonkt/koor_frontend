@@ -192,6 +192,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
                 onChange={(e) => formik.setFieldValue("endDate", e)}
                 value={formik.values.endDate}
                 minDate={formik.values.startDate}
+                maxDate={dayjs().year(dayjs().year())}
                 onBlur={formik.getFieldProps("endDate").onBlur}
                 disabled={formik.values.isPresent || !formik.values.startDate}
               />

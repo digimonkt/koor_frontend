@@ -5,6 +5,7 @@ import NotificationContentComponent from "./notificationContent";
 import AppliedJobCard from "./appliedJobCard";
 import ShortlistedUserCard from "./shortlistedUserCard";
 import MessageNotificationCard from "./messageCard";
+import PlannedInterviewCard from "./plannedInterviewCard";
 
 const NotificationContent = NotificationContentComponent;
 
@@ -18,6 +19,8 @@ export const getNotificationCardByType = (item, handleClose) => {
       return <AppliedJobCard {...item} />;
     case NOTIFICATION_TYPE.shortlisted:
       return <ShortlistedUserCard {...item} />;
+    case NOTIFICATION_TYPE.plannedInterviews:
+      return <PlannedInterviewCard {...item} />;
     case NOTIFICATION_TYPE.message:
       return <MessageNotificationCard {...item} handleClose={() => handleClose()} />;
     default:
