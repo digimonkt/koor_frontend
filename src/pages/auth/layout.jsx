@@ -121,7 +121,7 @@ function AuthLayout({
       }
       setLoading(false);
       const res = await loginWithFacebookPopupProvider();
-      console.log({ FacebooK: res });
+      // console.log({ FacebooK: res });
       if (res.remote === "success") {
         const payload = {
           email: res.data.email,
@@ -133,7 +133,7 @@ function AuthLayout({
         };
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
-          console.log({ result });
+          // console.log({ result });
         } else {
           dispatch(setSocialLoginError(result.error.errors.message));
         }

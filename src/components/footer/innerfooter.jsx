@@ -10,7 +10,7 @@ import {
   Button,
 } from "@mui/material";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { menu } from "./helper";
 import { SVG } from "@assets/svg";
 import { useState, useEffect } from "react";
@@ -23,6 +23,7 @@ import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 
 const InnerFooter = () => {
+  const currentURL = window.location.pathname;
   const [categories, setCategories] = useState({});
   const [email, setEmail] = useState("");
   const [successToastPopup, setSuccessToastPopup] = useState(false);
@@ -31,6 +32,11 @@ const InnerFooter = () => {
   const [warningTrue, setWarningTrue] = useState(false);
   const [warningRole, setWarningRole] = useState(USER_ROLES.vendor);
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const jobCategoryId = searchParams.get("categories");
+  const tenderCategoryId = searchParams.get("tenderCategories");
+  const talentCategoryId = searchParams.get("categories");
   const getCategories = async () => {
     const res = await getTopCategoriesAPI();
     if (res.remote === "success") {
@@ -105,7 +111,7 @@ const InnerFooter = () => {
                               "&.MuiButtonBase-root": {
                                 fontFamily: "Poppins",
                                 fontSize: "16px",
-                                color: "#121212",
+                                // color: "#121212",
                                 fontWeight: 400,
                                 "&:hover": {
                                   background: "transparent",
@@ -116,6 +122,7 @@ const InnerFooter = () => {
                                 },
                               },
                             }}
+                            className={(currentURL === child.url) ? "active-footer" : "not-active-footer"}
                             LinkComponent={Link}
                             to={child.url}
                             dense={true}
@@ -133,13 +140,13 @@ const InnerFooter = () => {
                 <Typography
                   sx={{
                     fontSize: "20px",
-                    color: "#274593",
                     fontWeight: 600,
                     fontFamily: "Poppins",
                     "@media (max-width:992px)": {
                       fontSize: "16px",
                     },
                   }}
+                  className={(currentURL === "/search/jobs") ? "active-footer-tab" : "not-active-footer-tab"}
                 >
                   Jobs
                 </Typography>
@@ -152,7 +159,6 @@ const InnerFooter = () => {
                             "&.MuiButtonBase-root": {
                               fontFamily: "Poppins",
                               fontSize: "16px",
-                              color: "#121212",
                               fontWeight: 400,
                               "&:hover": {
                                 background: "transparent",
@@ -163,6 +169,7 @@ const InnerFooter = () => {
                               },
                             },
                           }}
+                          className={(currentURL === "/search/jobs" && jobCategoryId === child.id) ? "active-footer" : "not-active-footer"}
                           LinkComponent={Link}
                           to={`/search/jobs?categories=${child.id}`}
                           dense={true}
@@ -187,6 +194,7 @@ const InnerFooter = () => {
                       fontSize: "16px",
                     },
                   }}
+                  className={(currentURL === "/search/tenders") ? "active-footer-tab" : "not-active-footer-tab"}
                 >
                   Tenders
                 </Typography>
@@ -199,7 +207,6 @@ const InnerFooter = () => {
                               "&.MuiButtonBase-root": {
                                 fontFamily: "Poppins",
                                 fontSize: "16px",
-                                color: "#121212",
                                 fontWeight: 400,
                                 "&:hover": {
                                   background: "transparent",
@@ -210,6 +217,7 @@ const InnerFooter = () => {
                                 },
                               },
                             }}
+                            className={(tenderCategoryId === child.id) ? "active-footer" : "not-active-footer"}
                             LinkComponent={Link}
                             to={`/search/tenders?tenderCategories=${child.id}`}
                             dense={true}
@@ -235,6 +243,7 @@ const InnerFooter = () => {
                         fontSize: "16px",
                       },
                     }}
+                    className={(currentURL === "/search/talents") ? "active-footer-tab" : "not-active-footer-tab"}
                   >
                     Talents
                   </Typography>
@@ -247,7 +256,6 @@ const InnerFooter = () => {
                               "&.MuiButtonBase-root": {
                                 fontFamily: "Poppins",
                                 fontSize: "16px",
-                                color: "#121212",
                                 fontWeight: 400,
                                 "&:hover": {
                                   background: "transparent",
@@ -258,6 +266,7 @@ const InnerFooter = () => {
                                 },
                               },
                             }}
+                            className={(currentURL === "/search/talents" && talentCategoryId === child.id) ? "active-footer" : "not-active-footer"}
                             LinkComponent={Link}
                             to={isLoggedIn ? `/search/talents?categories=${child.id}` : "#"}
                             dense={true}
