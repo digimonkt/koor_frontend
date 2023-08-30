@@ -676,6 +676,7 @@ function PostJobsComponent() {
                         onChange={(e) => formik.setFieldValue("deadline", e)}
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
+                        minDate={formik.values.startDate}
                       />
                       {formik.touched.deadline && formik.errors.deadline ? (
                         <ErrorMessage>{formik.errors.deadline}</ErrorMessage>

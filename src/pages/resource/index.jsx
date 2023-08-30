@@ -19,7 +19,7 @@ const Resource = () => {
   };
   useEffect(() => {
     resourceDetails();
-  }, []);
+  }, [id]);
 
   return (
     <>
