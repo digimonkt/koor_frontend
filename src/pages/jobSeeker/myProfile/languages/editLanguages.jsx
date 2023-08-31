@@ -58,7 +58,7 @@ function EditLanguages({
             })
           );
         } else {
-          dispatch(setErrorToast("Something went wrong"));
+          dispatch(setErrorToast("Language already in use"));
         }
         handleSubmit();
       } else {

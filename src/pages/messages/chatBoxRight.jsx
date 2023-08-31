@@ -199,12 +199,30 @@ function ChatBox() {
     switch (attachment.type) {
       case "image":
         return (
-          <img
-            alt="attachment"
-            src={generateFileUrl(attachment.path)}
-            width={"400px"}
-            rel="nofollow"
-          />
+          <a
+            href={generateFileUrl(attachment.path)}
+            target="_blank"
+            className="m-0"
+            rel="noreferrer"
+          ><img
+              alt="attachment"
+              src={generateFileUrl(attachment.path)}
+              width={"400px"}
+              rel="nofollow"
+            />
+          </a>
+        );
+      case "video":
+        return (
+          <video width="320" height="240" controls>
+            <source src={generateFileUrl(attachment.path)} type="video/mp4"></source>
+          </video>
+        );
+      case "audio":
+        return (
+          <audio controls>
+            <source src={generateFileUrl(attachment.path)} type="audio/mp3"></source>
+          </audio>
         );
       default:
         return (<span className="me-2 d-inline-flex">
@@ -213,7 +231,7 @@ function ChatBox() {
             target="_blank"
             className="m-0"
             rel="noreferrer"
-          ><SVG.UploadIcon /></a>
+          > {attachment.title} <SVG.UploadIcon /></a>
         </span>);
     }
   };

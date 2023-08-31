@@ -27,7 +27,6 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       let notificationResult = "";
       if (newValue !== "message") {
         notificationResult = notificationData.filter((notification) => notification.notificationType !== "message");
-        console.log({ notificationResult });
       } else {
         notificationResult = notificationData.filter((notification) => notification.notificationType === type);
       }

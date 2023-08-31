@@ -150,7 +150,7 @@ const ApplyForJob = () => {
   const updateAppliedJob = async (data) => {
     const res = await updateAppliedJobAPI(params.jobId, data);
     if (res.remote === "success") {
-      dispatch(setSuccessToast("Applied successfully"));
+      dispatch(setSuccessToast("Applied Job Updated Successfully"));
       setIsApplied(true);
     } else {
       dispatch(setErrorToast("Something went wrong"));
@@ -364,8 +364,8 @@ const ApplyForJob = () => {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                      ? "Update"
-                      : "Apply"
+                        ? "Update"
+                        : "Apply"
                   }
                   className={`${styles.applybtn}`}
                   type="submit"

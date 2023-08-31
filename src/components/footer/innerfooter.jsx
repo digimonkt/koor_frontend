@@ -435,8 +435,8 @@ const InnerFooter = () => {
       />
       <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
         <div>
-          <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
-          <h1 className="heading" style={{ textTransform: "capitalize" }}>{warningRole} login required</h1>
+          <SVG.Warning style={{ marginLeft: "46%", height: "50px", width: "50px", color: "red" }} />
+          <h1 className="heading" style={{ textTransform: "capitalize", textAlign: "center" }}>{warningRole} login required</h1>
           <div className="form-content">
             <p>
               Dear user, to access this content, please log in as a {warningRole}.
