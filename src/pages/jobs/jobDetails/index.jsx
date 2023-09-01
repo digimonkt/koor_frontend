@@ -325,7 +325,7 @@ const JobDetails = () => {
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
                         if (isLoggedIn) {
-                          if (details.isEditable) {
+                          if (details.isEditable && details.isApplied) {
                             navigate(
                               urlcat("../job/apply/:jobId", {
                                 jobId: params.jobId,
