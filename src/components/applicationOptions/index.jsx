@@ -10,6 +10,7 @@ import Loader from "@components/loader";
 import { Avatar, Box, Button, Grid } from "@mui/material";
 import {
   setTotalApplicationsByJob,
+  setTotalApplicationsByTender,
   setTotalBlacklist,
 } from "@redux/slice/employer";
 import { setSuccessToast } from "@redux/slice/toast";
@@ -32,7 +33,7 @@ function ApplicationOptions({
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { totalBlacklist, totalApplicationsByJob } = useSelector(
+  const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } = useSelector(
     (state) => state.employer
   );
 
@@ -66,7 +67,6 @@ function ApplicationOptions({
       );
     }
   };
-
   const handlerChangeApplicationStatus = async (action) => {
     const data = { reason: blackListReason, interview_at: interviewTime };
     for (const key in data) {
@@ -74,9 +74,10 @@ function ApplicationOptions({
         delete data[key];
       }
     }
+
     let applicationStatus = {};
-    const applicationsStatusCount =
-      totalApplicationsByJob.data[details.job?.id];
+
+    const applicationsStatusCount = details.job ? totalApplicationsByJob.data[details.job?.id] : totalApplicationsByTender.data[details.tender?.id];
     switch (action) {
       case JOB_APPLICATION_OPTIONS.blacklisted:
         setIsBlacklisted(true);
@@ -113,22 +114,31 @@ function ApplicationOptions({
       default:
         return;
     }
-    dispatch(
-      setTotalApplicationsByJob({
-        jobId: details.job.id,
-        data: applicationStatus,
-      })
-    );
+    if (details.job) {
+      dispatch(
+        setTotalApplicationsByJob({
+          jobId: details.job.id,
+          data: applicationStatus,
+        })
+      );
+    } else {
+      dispatch(
+        setTotalApplicationsByTender({
+          tenderId: details.tender.id,
+          data: applicationStatus,
+        })
+      );
+    }
     setLoading(true);
     let res;
-    if (details.tender) {
-      res = await changeTenderApplicationStatusAPI({
+    if (details.job) {
+      res = await changeApplicationStatusAPI({
         action,
         applicationId: details.id,
         data,
       });
     } else {
-      res = await changeApplicationStatusAPI({
+      res = await changeTenderApplicationStatusAPI({
         action,
         applicationId: details.id,
         data,

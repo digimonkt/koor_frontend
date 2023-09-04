@@ -10,6 +10,7 @@ const initialState = {
   totalBlacklist: 0,
   totalTenderApplications: 0,
   totalApplicationsByJob: [],
+  totalApplicationsByTender: [],
   jobPostUpdate: false,
   totalAvailableCredits: 0,
   minimumCreditJobPost: 10,
@@ -44,6 +45,15 @@ export const employerSlice = createSlice({
         }
       };
     },
+    setTotalApplicationsByTender: (state, action) => {
+      state.totalApplicationsByTender = {
+        loading: true,
+        data: {
+          ...(state.totalApplicationsByTender.data || {}),
+          [action.payload.tenderId]: action.payload.data,
+        }
+      };
+    },
     setJobPostUpdate: (state, action) => {
       state.jobPostUpdate = action.payload;
     },
@@ -62,6 +72,7 @@ export const {
   setTotalBlacklist,
   setTotalTenderApplications,
   setTotalApplicationsByJob,
+  setTotalApplicationsByTender,
   setJobPostUpdate,
   setTotalAvailableCredits,
   setMinimumCreditJobPost,
