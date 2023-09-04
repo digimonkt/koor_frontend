@@ -1,4 +1,3 @@
-// import { IMAGES } from "@assets/images";
 import { SVG } from "@assets/svg";
 import {
   Box,
@@ -12,35 +11,14 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./resource.module.css";
-import { getResourcesAPI } from "@api/common";
+import { getResourcesSuggestionAPI } from "@api/common";
 import { useNavigate } from "react-router-dom";
 import { generateFileUrl } from "@utils/generateFileUrl";
-
-// const cardItem = [
-//   {
-//     img: IMAGES.Article1,
-//     title: "Perfect CV. How?",
-//     text: "Odio convallis nunc odio dui platea sagittis donecnon, quis. Vitae morbi cum lobortis eget..",
-//   },
-//   {
-//     img: IMAGES.Article2,
-//     title: "Find work faster with Koor!",
-//     text: "Odio convallis nunc odio dui platea sagittis donec non, quis. Vitae morbi cum lobortis eget lorem consequat. ",
-//   },
-//   {
-//     img: IMAGES.Article3,
-//     title: "How to post a job",
-//     text: "Odio convallis nunc odio dui platea sagittis donec non, quis. Vitae morbi cum lobortis eget lorem consequat. ",
-//   },
-// ];
-
-const Articles = () => {
+const Articles = ({ resourcesId }) => {
   const [resourceList, setResourceList] = useState([]);
   const navigate = useNavigate();
-  const getResourceDetails = async () => {
-    const page = 1;
-    const limit = 3;
-    const response = await getResourcesAPI(limit, page);
+  const getResourceSuggestion = async () => {
+    const response = await getResourcesSuggestionAPI(resourcesId);
     if (response.remote === "success") {
       setResourceList(response.data.results);
     }
@@ -50,8 +28,8 @@ const Articles = () => {
     return htmlArray.map((html) => html.replace(imgRegex, ""));
   };
   useEffect(() => {
-    getResourceDetails();
-  }, []);
+    getResourceSuggestion();
+  }, [resourcesId]);
   return (
     <>
       <div className={styles.articles}>

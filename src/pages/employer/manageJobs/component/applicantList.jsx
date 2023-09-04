@@ -20,9 +20,6 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-
-  // const applicationsStatusCount = totalApplicationsByJob.data[jobId];
-
   const getApplicationList = async () => {
     setIsLoading(true);
     const res = await getApplicationOnJobAPI({ jobId, filter });

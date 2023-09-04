@@ -17,7 +17,13 @@ export const getResourceDetailsAPI = async (resourcesId) => {
   });
   return res;
 };
-
+export const getResourcesSuggestionAPI = async (resourcesId) => {
+  const res = await api.request({
+    url: urlcat("/v1/admin/resources/:resourcesId/more", { resourcesId }),
+    method: "GET",
+  });
+  return res;
+};
 export const getUserRightsAPI = async () => {
   const response = await api.request({
     url: urlcat("/v1/admin/user-rights"),
