@@ -104,6 +104,11 @@ const InnerFooter = () => {
                   </Typography>
                   <List>
                     {items.children.map((child, index) => {
+                      // Check if the current child's URL is "/register" or "/login" and user is logged in
+                      if ((child.url === "/register" || child.url === "/login") && isLoggedIn) {
+                        // Render nothing (skip this item)
+                        return null;
+                      }
                       return (
                         <ListItem disablePadding={true} key={index}>
                           <ListItemButton
@@ -136,7 +141,7 @@ const InnerFooter = () => {
                   </List>
                 </Grid>
               ))}
-              <Grid item lg={3} xs={6} sm={3}>
+              {(isLoggedIn && (role === USER_ROLES.employer || role === USER_ROLES.jobSeeker)) || !isLoggedIn ? <Grid item lg={3} xs={6} sm={3}>
                 <Typography
                   sx={{
                     fontSize: "20px",
@@ -181,8 +186,7 @@ const InnerFooter = () => {
                     );
                   })}
                 </List>
-              </Grid>
-
+              </Grid> : ""}
               <Grid item lg={3} xs={6} sm={3}>
                 {(isLoggedIn && role !== USER_ROLES.jobSeeker) || !isLoggedIn ? (<><Typography
                   sx={{
@@ -231,57 +235,54 @@ const InnerFooter = () => {
                     })}
                   </List></>) : ""}
               </Grid>
-              <Grid item lg={3} xs={6} sm={3}>
-                {(isLoggedIn && role !== USER_ROLES.jobSeeker) || !isLoggedIn ? (<>
-                  <Typography
-                    sx={{
-                      fontSize: "20px",
-                      color: "#274593",
-                      fontWeight: 600,
-                      fontFamily: "Poppins",
-                      "@media (max-width:992px)": {
-                        fontSize: "16px",
-                      },
-                    }}
-                    className={(currentURL === "/search/talents") ? "active-footer-tab" : "not-active-footer-tab"}
-                  >
-                    Talents
-                  </Typography>
-                  <List>
-                    {categories.talents?.map((child, index) => {
-                      return (
-                        <ListItem disablePadding={true} key={index}>
-                          <ListItemButton
-                            sx={{
-                              "&.MuiButtonBase-root": {
-                                fontFamily: "Poppins",
-                                fontSize: "16px",
-                                fontWeight: 400,
-                                "&:hover": {
-                                  background: "transparent",
-                                  color: "#EEA23D",
-                                },
-                                "@media (max-width:992px)": {
-                                  fontSize: "12px",
-                                },
+              {(isLoggedIn && role === USER_ROLES.employer) || !isLoggedIn ? (<Grid item lg={3} xs={6} sm={3}>
+                <Typography
+                  sx={{
+                    fontSize: "20px",
+                    color: "#274593",
+                    fontWeight: 600,
+                    fontFamily: "Poppins",
+                    "@media (max-width:992px)": {
+                      fontSize: "16px",
+                    },
+                  }}
+                  className={(currentURL === "/search/talents") ? "active-footer-tab" : "not-active-footer-tab"}
+                >
+                  Talents
+                </Typography>
+                <List>
+                  {categories.talents?.map((child, index) => {
+                    return (
+                      <ListItem disablePadding={true} key={index}>
+                        <ListItemButton
+                          sx={{
+                            "&.MuiButtonBase-root": {
+                              fontFamily: "Poppins",
+                              fontSize: "16px",
+                              fontWeight: 400,
+                              "&:hover": {
+                                background: "transparent",
+                                color: "#EEA23D",
                               },
-                            }}
-                            className={(currentURL === "/search/talents" && talentCategoryId === child.id) ? "active-footer" : "not-active-footer"}
-                            LinkComponent={Link}
-                            to={isLoggedIn ? `/search/talents?categories=${child.id}` : "#"}
-                            dense={true}
-                            disableGutters={true}
-                            onClick={(e) => checkUserLoggedIn(e, USER_ROLES.employer)}
-                          >
-                            {child.title}
-                          </ListItemButton>
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                </>) : ""}
-
-              </Grid>
+                              "@media (max-width:992px)": {
+                                fontSize: "12px",
+                              },
+                            },
+                          }}
+                          className={(currentURL === "/search/talents" && talentCategoryId === child.id) ? "active-footer" : "not-active-footer"}
+                          LinkComponent={Link}
+                          to={isLoggedIn ? `/search/talents?categories=${child.id}` : "#"}
+                          dense={true}
+                          disableGutters={true}
+                          onClick={(e) => checkUserLoggedIn(e, USER_ROLES.employer)}
+                        >
+                          {child.title}
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </Grid>) : ""}
             </Grid>
           </Grid>
           <Grid item lg={4} xs={12} sm={12}>
@@ -444,7 +445,7 @@ const InnerFooter = () => {
           </div>
         </div>
       </DialogBox>
-    </Box>
+    </Box >
 
   );
 };

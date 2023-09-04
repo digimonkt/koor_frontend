@@ -653,6 +653,7 @@ function PostJobsComponent() {
                       <DateInput
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
+                        minDate={dayjs().format("YYYY-MM-DD")}
                         onBlur={formik.getFieldProps("startDate").onBlur}
                       />
                       {formik.touched.startDate && formik.errors.startDate ? (
