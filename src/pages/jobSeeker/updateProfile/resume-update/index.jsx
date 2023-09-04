@@ -34,10 +34,11 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
     if (res.remote === "success") {
       const response = await fetch(generateFileUrl(res.data.url));
       const blob = await response.blob();
-      const newFileName = `${currentUser.name || "Resume"}.docx`;
+      // const newFileName = `${currentUser.name || "Resume"}.docx`;
       const downloadLink = document.createElement("a");
       downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = newFileName;
+      // downloadLink.downtload = newFileName;
+      downloadLink.target = "_blank";
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
