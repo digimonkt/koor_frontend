@@ -5,7 +5,7 @@ import styles from "./resource.module.css";
 
 const Content = (resourceList) => {
   const resourceContent = resourceList.resourceList.description;
-
+  const resourcesId = resourceList.resourceList.id;
   return (
     <>
       <div className={styles.content_first_div}>
@@ -30,7 +30,7 @@ const Content = (resourceList) => {
           </div>
         </Container>
         <Box>
-          <Articles />
+          <Articles resourcesId={resourcesId} />
         </Box>
       </div>
     </>
