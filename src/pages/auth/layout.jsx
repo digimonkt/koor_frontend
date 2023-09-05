@@ -153,10 +153,11 @@ function AuthLayout({
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
       <div
-        className={`register pb-0 pt-5 py-lg-5 ${role === USER_ROLES.employer || role === USER_ROLES.vendor
-          ? "vendor"
-          : ""
-          }`}
+        className={`register pb-0 pt-5 py-lg-5 ${
+          role === USER_ROLES.employer || role === USER_ROLES.vendor
+            ? "vendor"
+            : ""
+        }`}
       >
         <Container
           sx={{
@@ -375,7 +376,11 @@ function AuthLayout({
 
                       {btnTitle && (
                         <div className={"bottombar mt-5"}>
-                          <span>{isLoginPage ? "Don't have an account?" : "Already have an account?"}</span>
+                          <span>
+                            {isLoginPage
+                              ? "Don't have an account?"
+                              : "Already have an account?"}
+                          </span>
                           <div
                             onClick={() => {
                               dispatch(setUserRole(""));

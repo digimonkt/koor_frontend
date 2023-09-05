@@ -80,6 +80,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
               description: res.data.data.description,
             })
           );
+          setLoading(false);
           handleSubmit();
         }
       } else {
@@ -102,10 +103,13 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
               description: descData,
             })
           );
+          setLoading(false);
+          handleSubmit();
+        } else {
+          res.error.errors?.end_date && formik.setFieldError("endDate", "Please Enter Date");
+          setLoading(false);
         }
       }
-      setLoading(false);
-      handleSubmit();
     },
   });
   const handleEditorValue = (content) => {

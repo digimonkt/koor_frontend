@@ -29,6 +29,8 @@ import { getTopJobCategoriesAPI } from "@api/job";
 import { getTestimonialListAPI, getTopListingCompaniesAPI } from "@api/home";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
+// import DialogBox from "@components/dialogBox";
+// import { OutlinedButton } from "@components/button";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -62,6 +64,7 @@ const Home = () => {
       setTestimonialList(res.data.result);
     }
   };
+
   useEffect(() => {
     getTopJobCategories();
     getTopListingCompanies();
@@ -79,7 +82,10 @@ const Home = () => {
       dispatch(setIstHomePage(false));
     };
   }, []);
-  const totalJobs = topJobCategories.reduce((total, item) => total + item.count, 0);
+  const totalJobs = topJobCategories.reduce(
+    (total, item) => total + item.count,
+    0
+  );
   return (
     <>
       {!isLoggedIn ? (
@@ -202,7 +208,7 @@ const Home = () => {
                       your job openings fast?
                     </h5>
                     <Link
-                      to="/employer/jobs/post"
+                      to={isLoggedIn ? "/employer/jobs/post" : "/login"}
                       className={styles.home_img_contents_p}
                     >
                       Post a job{" "}
@@ -420,6 +426,45 @@ const Home = () => {
               </Box>
             </Box>
           </Box>
+
+          {/* <DialogBox
+            open={registrationWarning}
+            handleClose={() => setRegistrationWarning(false)}
+          >
+            <div>
+              <h1 className="heading">Register as jobseeker</h1>
+              <div className="form-content">
+                <p>
+                  To apply for the job and have many other useful features to
+                  find a job, please register on Koor.
+                </p>
+                <div style={{ textAlign: "center", lineHeight: "40px" }}>
+                  <Link to="/register?role=job_seeker">
+                    <OutlinedButton
+                      title="Register as jobseeker"
+                      jobSeeker
+                      style={{
+                        width: "100%",
+                      }}
+                    />
+                  </Link>
+                  <span>
+                    Already have an account?{" "}
+                    <Link
+                      to={`/login?role=${USER_ROLES.jobSeeker}`}
+                      style={{
+                        textDecoration: "none",
+                        color: "#EEA23D",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Login
+                    </Link>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </DialogBox> */}
         </div>
       ) : (
         ""

@@ -247,7 +247,7 @@ function TenderDetailsComponent() {
                   </p>
                 </div>
                 <div className={`${styles.downloadattachment}`}>
-                  <h6>Download attachments</h6>
+                  <h6>Download attachments </h6>
                   {details.attachments.map((attachment, i) => {
                     return (
                       <div key={i} className={`${styles.downloadtext}`}>
@@ -256,9 +256,10 @@ function TenderDetailsComponent() {
                         </span>
                         <a
                           href={generateFileUrl(attachment.path)}
-                          target="_blank"
+                          // target="_blank"
                           className="m-0"
                           rel="noreferrer"
+                          download
                         >
                           {attachment.title}
                         </a>
@@ -369,7 +370,10 @@ function TenderDetailsComponent() {
                 </div>
               </Grid>
             </Grid>
-            <DialogBox open={registrationWarning} handleClose={() => setRegistrationWarning(false)}>
+            <DialogBox
+              open={registrationWarning}
+              handleClose={() => setRegistrationWarning(false)}
+            >
               <div>
                 <h1 className="heading">Register as vendor</h1>
                 <div className="form-content">

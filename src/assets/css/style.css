@@ -397,6 +397,7 @@ header {
   margin: 0px 0px 5px;
   color: #000000;
   padding-bottom: 12px;
+  word-wrap: break-word;
 }
 
 .content-box p {
@@ -1780,6 +1781,13 @@ body {
   color: #fff !important;
 }
 
+.sharePopup button {
+  background: #274593 !important;
+  color: #fff !important;
+  padding-top: 13px!important;
+    padding-bottom: 8px!important;
+    margin-left:10px !important
+}
 ul.menu.color-change li a:hover {
   color: #274593;
 }

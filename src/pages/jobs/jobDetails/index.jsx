@@ -282,7 +282,7 @@ const JobDetails = () => {
                   </div>
                 )}
                 <div className={`${styles.downloadattachment}`}>
-                  <h6>Download attachments</h6>
+                  <h6>Download attachments </h6>
                   {details.attachments.map((attachment) => {
                     return (
                       <div
@@ -294,9 +294,10 @@ const JobDetails = () => {
                         </span>
                         <a
                           href={generateFileUrl(attachment.path)}
-                          target="_blank"
+                          // target="_blank"
                           className="m-0"
                           rel="noreferrer"
+                          download={attachment.title}
                         >
                           {attachment.title}
                         </a>
@@ -427,7 +428,10 @@ const JobDetails = () => {
                 </div>
               </Grid>
             </Grid>
-            <DialogBox open={registrationWarning} handleClose={() => setRegistrationWarning(false)}>
+            <DialogBox
+              open={registrationWarning}
+              handleClose={() => setRegistrationWarning(false)}
+            >
               <div>
                 <h1 className="heading">Register as jobseeker</h1>
                 <div className="form-content">
