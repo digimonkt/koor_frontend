@@ -104,12 +104,12 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const footer = () => {
     return (
       <>
-        <span style={{ pointer: "cursor" }} onClick={handleReset}>
+        <span style={{ pointer: "cursor", marginTop: "10px" }} onClick={handleReset}>
           {<SVG.HalfCircle />} RESET FILTER
         </span>
         {isLoggedIn && (
           <span
-            style={{ pointer: "cursor" }}
+            style={{ pointer: "cursor", marginTop: "5px" }}
             onClick={() => {
               handleToggleModel();
             }}
@@ -118,6 +118,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           </span>
         )}
         <OutlinedButton
+          style={{ pointer: "cursor", marginTop: "5px" }}
           title={
             <>
               <span>

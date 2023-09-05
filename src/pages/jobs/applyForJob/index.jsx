@@ -27,6 +27,7 @@ import DialogBox from "@components/dialogBox";
 import CancelApply from "./cancelApply";
 import ApplySuccessfully from "./applySuccessfully";
 import { getApplicationDetailsAPI } from "@api/employer";
+import urlcat from "urlcat";
 const ApplyForJob = () => {
   const dispatch = useDispatch();
   // navigate
@@ -144,13 +145,14 @@ const ApplyForJob = () => {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
     } else {
-      dispatch(setErrorToast("Something went wrong"));
+      dispatch(setErrorToast(res.error.errors?.message));
     }
   };
   const updateAppliedJob = async (data) => {
     const res = await updateAppliedJobAPI(params.jobId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied Job Updated Successfully"));
+      navigate(urlcat("/jobs/details/:jobId", { jobId: params.jobId }));
       setIsApplied(true);
     } else {
       dispatch(setErrorToast("Something went wrong"));

@@ -32,16 +32,17 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
     setIsDownloadingDocs(true);
     const res = await DownloadResumeAPI();
     if (res.remote === "success") {
-      const response = await fetch(generateFileUrl(res.data.url));
-      const blob = await response.blob();
-      // const newFileName = `${currentUser.name || "Resume"}.docx`;
-      const downloadLink = document.createElement("a");
-      downloadLink.href = URL.createObjectURL(blob);
-      // downloadLink.downtload = newFileName;
-      downloadLink.target = "_blank";
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+      window.open(generateFileUrl(res.data.url), "_blank");
+      // const response = await fetch(generateFileUrl(res.data.url));
+      // const blob = await response.blob();
+      // // const newFileName = `${currentUser.name || "Resume"}.docx`;
+      // const downloadLink = document.createElement("a");
+      // downloadLink.href = URL.createObjectURL(blob);
+      // // downloadLink.downtload = newFileName;
+      // downloadLink.target = "_blank";
+      // document.body.appendChild(downloadLink);
+      // downloadLink.click();
+      // document.body.removeChild(downloadLink);
     }
     setIsDownloadingDocs(false);
   };
