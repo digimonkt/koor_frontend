@@ -32,7 +32,8 @@ function ResetPasswordComponent() {
   useEffect(() => {
     if (!role || !verifyEmail) {
       if (role) dispatch(setUserRole(""));
-      navigate("/login");
+      if (role) navigate(`/login?role=${role}`);
+      // navigate("/login");
     }
   }, [role, verifyEmail]);
 
@@ -51,7 +52,7 @@ function ResetPasswordComponent() {
       if (res.remote === "success") {
         if (role) dispatch(setUserRole(""));
         dispatch(setSuccessToast("Password updated successfully"));
-        navigate("/login");
+        navigate(`/login?role=${role}`);
       } else {
         dispatch(setErrorToast("Something went wrong"));
       }

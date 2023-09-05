@@ -111,7 +111,10 @@ function ShareJob() {
       </div>
       <div>
         <h3>Or copy link: </h3>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
+        <div
+          style={{ display: "flex", justifyContent: "space-around" }}
+          className="sharePopup"
+        >
           <LabeledInput
             value={shareUrl}
             width="100%"
