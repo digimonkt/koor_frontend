@@ -13,7 +13,7 @@ import {
   setTotalApplicationsByTender,
   setTotalBlacklist,
 } from "@redux/slice/employer";
-import { setSuccessToast } from "@redux/slice/toast";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
 import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -151,6 +151,8 @@ function ApplicationOptions({
         dispatch(setTotalBlacklist(totalBlacklist + 1));
         setIsBlacklisting(false);
       }
+    } else {
+      dispatch(setErrorToast(res.error.errors.message));
     }
     setIsInterviewPlanning(false);
   };
