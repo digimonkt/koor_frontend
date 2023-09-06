@@ -28,6 +28,7 @@ import styles from "./message.module.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import { GetUserDetailsAPI } from "@api/user";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import DialogBox from "@components/dialogBox";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -44,6 +45,8 @@ function ChatBox() {
   const [ws, setWs] = useState(null);
   const [userDetails, setUserDetails] = useState({});
   const scrollbarRef = useRef();
+  const [fullImg, setFullImg] = useState(false);
+  const [open, setOpen] = useState(false);
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
@@ -194,23 +197,20 @@ function ChatBox() {
       ws.close();
     };
   }, [searchParams.get("conversion"), searchParams.get("userId")]);
-
+  const handleClose = () => {
+    setOpen(false);
+  };
   const renderAttachment = (attachment) => {
     switch (attachment.type) {
       case "image":
         return (
-          <a
-            href={generateFileUrl(attachment.path)}
-            target="_blank"
-            className="m-0"
-            rel="noreferrer"
-          ><img
-              alt="attachment"
-              src={generateFileUrl(attachment.path)}
-              width={"400px"}
-              rel="nofollow"
-            />
-          </a>
+          <img
+            alt="attachment"
+            src={generateFileUrl(attachment.path)}
+            width={"400px"}
+            rel="nofollow"
+            onClick={() => { setFullImg(generateFileUrl(attachment.path)); setOpen(true); }}
+          />
         );
       case "video":
         return (
@@ -408,6 +408,9 @@ function ChatBox() {
               </Stack>
             </Stack>
           </div>
+          <DialogBox open={open} handleClose={handleClose}>
+            <img src={fullImg} />
+          </DialogBox>
         </>
       )}
     </>

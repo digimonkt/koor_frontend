@@ -16,7 +16,7 @@ function ApplicantList({ totalApplications, tenderId }) {
   const [filter, setFilter] = useState("");
   const [totalShortlisted, setTotalShortlisted] = useState(0);
   const [totalRejected, setTotalRejected] = useState(0);
-  const [totalBlacklisted, setTotalBlacklisted] = useState(0);
+  // const [totalBlacklisted, setTotalBlacklisted] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const dispatch = useDispatch();
   const { totalApplicationsByTender } = useSelector(
@@ -30,7 +30,6 @@ function ApplicantList({ totalApplications, tenderId }) {
       setTotalRejected(res.data.rejectedCount);
       setTotalShortlisted(res.data.shortlistedCount);
       setTotalPlannedInterview(res.data.plannedInterviewCount);
-      setTotalBlacklisted(res.data.blacklistedCount);
     }
     setIsLoading(false);
   };
@@ -112,7 +111,8 @@ function ApplicantList({ totalApplications, tenderId }) {
           }}
           label={
             <>
-              Blacklisted <span className="cricle">{totalBlacklisted}</span>
+              Blacklisted
+              {/* <span className="cricle"></span> */}
             </>
           }
           icon={<SVG.RejectIcon />}

@@ -9,7 +9,7 @@ import PlannedInterviewCard from "./plannedInterviewCard";
 
 const NotificationContent = NotificationContentComponent;
 
-export const getNotificationCardByType = (item, handleClose) => {
+export const getNotificationCardByType = (item, handleClose, role) => {
   switch (item.notificationType) {
     case NOTIFICATION_TYPE.advanceFilter:
       return <JobNotificationCard {...item} />;
@@ -22,7 +22,7 @@ export const getNotificationCardByType = (item, handleClose) => {
     case NOTIFICATION_TYPE.plannedInterviews:
       return <PlannedInterviewCard {...item} />;
     case NOTIFICATION_TYPE.message:
-      return <MessageNotificationCard {...item} handleClose={() => handleClose()} />;
+      return <MessageNotificationCard {...item} handleClose={() => handleClose()} role={role} />;
     default:
       return <></>;
   }

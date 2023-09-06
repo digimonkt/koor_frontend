@@ -115,7 +115,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                           : styles.notification_card_user
                           }`}
                       >
-                        {getNotificationCardByType(item, handleClose)}
+                        {getNotificationCardByType(item, handleClose, role)}
                       </div>
                     </>
                   ))
