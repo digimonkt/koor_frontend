@@ -247,6 +247,8 @@ const AboutMe = (props) => {
               <HorizontalLabelInput
                 placeholder="Email"
                 label="Email"
+                disabled="true"
+                title="You can not update the email"
                 {...formik.getFieldProps("email")}
               />
               {formik.touched.email && formik.errors.email ? (

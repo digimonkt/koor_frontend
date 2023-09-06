@@ -838,7 +838,7 @@ hr {
 
 .add-form-control::-webkit-input-placeholder {
   /* Edge */
-  color: #121212;
+  color: #808080;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -847,7 +847,7 @@ hr {
 
 .add-form-control:-ms-input-placeholder {
   /* Internet Explorer */
-  color: #121212;
+  color: #808080;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -855,7 +855,7 @@ hr {
 }
 
 .add-form-control::placeholder {
-  color: #121212;
+  color: #808080;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
@@ -981,25 +981,25 @@ hr {
 
 .form-control-area::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: #121212;
+  color: #808080;
   opacity: 0.5;
 }
 
 .form-control-area::-moz-placeholder {
   /* Firefox 19+ */
-  color: #121212;
+  color: #808080;
   opacity: 0.5;
 }
 
 .form-control-area:-ms-input-placeholder {
   /* IE 10+ */
-  color: #121212;
+  color: #808080;
   opacity: 0.5;
 }
 
 .form-control-area:-moz-placeholder {
   /* Firefox 18- */
-  color: #121212;
+  color: #808080;
 
   opacity: 0.5;
 }
