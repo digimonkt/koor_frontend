@@ -52,7 +52,7 @@ function ApplicationOptions({
   );
 
   const handleMessageClick = async () => {
-    console.log("Runiing", details?.user.id);
+    console.log("Running", details?.user.id);
     const res = await getConversationIdByUserIdAPI({
       userId: details?.user?.id,
     });
@@ -80,7 +80,7 @@ function ApplicationOptions({
     const applicationsStatusCount = details.job ? totalApplicationsByJob.data[details.job?.id] : totalApplicationsByTender.data[details.tender?.id];
     switch (action) {
       case JOB_APPLICATION_OPTIONS.blacklisted:
-        setIsBlacklisted(true);
+        // setIsBlacklisted(true);
         break;
       case JOB_APPLICATION_OPTIONS.plannedInterviews:
         setIsInterviewPlanned(true);
@@ -114,14 +114,14 @@ function ApplicationOptions({
       default:
         return;
     }
-    if (details.job) {
+    if (details.job && action !== JOB_APPLICATION_OPTIONS.blacklisted) {
       dispatch(
         setTotalApplicationsByJob({
           jobId: details.job.id,
           data: applicationStatus,
         })
       );
-    } else {
+    } else if (details.tender && action !== JOB_APPLICATION_OPTIONS.blacklisted) {
       dispatch(
         setTotalApplicationsByTender({
           tenderId: details.tender.id,
@@ -150,6 +150,7 @@ function ApplicationOptions({
       if (action === JOB_APPLICATION_OPTIONS.blacklisted) {
         dispatch(setTotalBlacklist(totalBlacklist + 1));
         setIsBlacklisting(false);
+        setIsBlacklisted(true);
       }
     } else {
       dispatch(setErrorToast(res.error.errors.message));
