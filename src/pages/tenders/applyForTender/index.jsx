@@ -128,7 +128,7 @@ function ApplyForTender() {
   const updateAppliedTender = async (data) => {
     const res = await updateAppliedTenderAPI(params.tenderId, data);
     if (res.remote === "success") {
-      dispatch(setSuccessToast("Applied successfully"));
+      dispatch(setSuccessToast("Applied Tender Updated successfully"));
       setIsApplied(true);
     } else {
       dispatch(setErrorToast("Something went wrong"));
