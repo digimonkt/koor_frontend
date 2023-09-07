@@ -10,7 +10,7 @@ function JobSearchComponent() {
 
   return (
     <div>
-      {!isSearching ? (
+      {isSearching ? (
         [1, 2, 3, 4, 5].map((loader) => {
           return (
             <React.Fragment key={loader}>
