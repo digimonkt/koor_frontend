@@ -239,9 +239,7 @@ const PostTender = () => {
   }, [searchParams.get("tenderId")]);
   useEffect(() => {
     if (!currentUser.profile.isVerified) {
-      navigate(
-        urlcat("../employer/manage-tenders")
-      );
+      navigate(urlcat("../employer/manage-tenders"));
     }
   }, []);
   return (
