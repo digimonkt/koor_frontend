@@ -227,6 +227,7 @@
   border-radius: 60px !important;
   color: #000 !important;
   margin-right: 14px !important;
+  cursor: default !important;
 }
 .iconbtn {
   display: flex;

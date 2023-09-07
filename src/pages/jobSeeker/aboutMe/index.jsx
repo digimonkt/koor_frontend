@@ -49,6 +49,7 @@ const AboutMe = (props) => {
   const [open, setOpen] = useState(false);
   const [filledData, setFilledData] = useState(null);
   const [countryId, setCountryId] = useState("");
+  const currentYear = dayjs().year();
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -118,8 +119,12 @@ const AboutMe = (props) => {
             mobileNumber,
             countryCode,
             profile: {
-              country: countries.data.find((country) => country.id === values.country),
-              city: cities.data[values.country].find((city) => city.id === values.city),
+              country: countries.data.find(
+                (country) => country.id === values.country
+              ),
+              city: cities.data[values.country].find(
+                (city) => city.id === values.city
+              ),
               gender: values.gender,
               dob: dayjs(values.dob).format(DATE_FORMAT),
               employmentStatus: values.employmentStatus,
@@ -136,7 +141,13 @@ const AboutMe = (props) => {
         );
       } else {
         formik.setErrors({ mobileNumber: res.error.errors.mobile_number });
-        dispatch(setErrorToast(res.error.errors.dob || res.error.errors.mobile_number || "Something went wrong"));
+        dispatch(
+          setErrorToast(
+            res.error.errors.dob ||
+              res.error.errors.mobile_number ||
+              "Something went wrong"
+          )
+        );
       }
       setLoading(false);
     },
@@ -153,8 +164,14 @@ const AboutMe = (props) => {
       formik.setFieldValue("fullName", filledData.fullName);
       formik.setFieldValue("gender", filledData.gender);
       formik.setFieldValue("highestEducation", filledData.highestEducation);
-      formik.setFieldValue("marketInformationNotification", filledData.marketInformationNotification);
-      formik.setFieldValue("countryCode", filledData.mobileNumber.international.split(" ")[0]);
+      formik.setFieldValue(
+        "marketInformationNotification",
+        filledData.marketInformationNotification
+      );
+      formik.setFieldValue(
+        "countryCode",
+        filledData.mobileNumber.international.split(" ")[0]
+      );
       formik.setFieldValue("mobileNumber", {
         national: filledData.mobileNumber.national,
         international: filledData.mobileNumber.international,
@@ -324,7 +341,7 @@ const AboutMe = (props) => {
                 onChange={(e) => formik.setFieldValue("dob", e)}
                 value={formik.values.dob}
                 onBlur={formik.getFieldProps("dob").onBlur}
-                maxDate={dayjs("2006-01-01")}
+                maxDate={dayjs(`${currentYear}-12-31`)}
                 openTo="year"
                 className="labelbox"
               />
@@ -344,7 +361,7 @@ const AboutMe = (props) => {
                 {...formik.getFieldProps("employmentStatus")}
               />
               {formik.touched.employmentStatus &&
-                formik.errors.employmentStatus ? (
+              formik.errors.employmentStatus ? (
                 <ErrorMessage>{formik.errors.employmentStatus}</ErrorMessage>
               ) : null}
               <HorizontalLabelInput
@@ -398,7 +415,7 @@ const AboutMe = (props) => {
                 {...formik.getFieldProps("highestEducation")}
               />
               {formik.touched.highestEducation &&
-                formik.errors.highestEducation ? (
+              formik.errors.highestEducation ? (
                 <ErrorMessage>{formik.errors.highestEducation}</ErrorMessage>
               ) : null}
               <HorizontalLabelInput

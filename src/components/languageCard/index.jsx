@@ -24,6 +24,11 @@ function LanguageCard({ id, language, spoken, written, handleEdit }) {
     setLoading(false);
     setDeleting(false);
   };
+
+  //* First letter of a string uppercase
+  function capitalizeFLetter(string) {
+    return string[0].toUpperCase() + string.slice(1);
+  }
   return (
     <>
       <Stack
@@ -34,8 +39,8 @@ function LanguageCard({ id, language, spoken, written, handleEdit }) {
       >
         <div className="list-content">
           <h5>{language.title}</h5>
-          <span>Spoken: {spoken}</span> <br />
-          <span>Written: {written}</span> <br />
+          <span>Spoken: {capitalizeFLetter(spoken)}</span> <br />
+          <span>Written: {capitalizeFLetter(written)}</span> <br />
         </div>
         {role === USER_ROLES.jobSeeker && (
           <Stack direction="row" spacing={1} className="list-button">
