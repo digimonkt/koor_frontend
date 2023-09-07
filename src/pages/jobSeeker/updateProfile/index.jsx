@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfilePic } from "@redux/slice/user";
 import { UpdateProfileImageAPI } from "@api/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
+// import { resetToast } from "@redux/slice/toast";
 
 const UpdateProfile = () => {
   // navigate
@@ -140,6 +141,7 @@ const UpdateProfile = () => {
       <SuccessToast
         open={profilePicLoading === "updated"}
         message="Profile Pic Updated successfully"
+        handleClose={() => setProfilePicLoading("")}
       />
       <ErrorToast
         open={profilePicLoading === "error"}
