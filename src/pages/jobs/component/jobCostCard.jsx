@@ -59,7 +59,7 @@ function JobCostCard({ amount, payPeriod, user }) {
             </Link>
           </h3>
         </div>
-        <div className={`mt-4 text-break text-wrap ps-lg-5 ${styles.Numbers}`}>
+        <div className={`mt-4 text-break text-wrap  ${styles.Numbers}`}>
           <span>{user.website}</span>
           <span>
             {user.countryCode && user.mobileNumber
