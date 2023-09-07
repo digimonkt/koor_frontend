@@ -514,6 +514,7 @@ header {
   letter-spacing: 0.02rem;
   color: #848484;
   font-family: "Poppins";
+  user-select: none;
 }
 
 .bottombar a {
