@@ -34,7 +34,7 @@ function LoginForm() {
       };
       const payload = {
         password: values.password,
-        role
+        role,
       };
 
       if (validateEmail(values.email)) {
@@ -84,7 +84,7 @@ function LoginForm() {
           </div>
           <div className="form-group mb-3">
             <LabeledInput
-              placeholder="Your Password"
+              placeholder="Your Password monty"
               title="Password"
               data-cy="login-password"
               type="password"

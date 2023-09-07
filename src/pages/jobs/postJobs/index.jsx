@@ -33,7 +33,13 @@ import {
   getLanguages,
   getSkills,
 } from "@redux/slice/choices";
-import { buyCreditsAPI, createJobAPI, getDashboardActivityAPI, getMinimumCreditForJobPostAPI, updateEmployerJobAPI } from "@api/employer";
+import {
+  buyCreditsAPI,
+  createJobAPI,
+  getDashboardActivityAPI,
+  getMinimumCreditForJobPostAPI,
+  updateEmployerJobAPI,
+} from "@api/employer";
 import { ErrorToast, SuccessToast } from "@components/toast";
 import dayjs from "dayjs";
 import { getJobDetailsByIdAPI } from "@api/job";
@@ -45,7 +51,11 @@ import { JobFormControl } from "./style";
 import DialogBox from "@components/dialogBox";
 import { SVG } from "@assets/svg";
 import urlcat from "urlcat";
-import { setJobPostUpdate, setMinimumCreditJobPost, setTotalAvailableCredits } from "@redux/slice/employer";
+import {
+  setJobPostUpdate,
+  setMinimumCreditJobPost,
+  setTotalAvailableCredits,
+} from "@redux/slice/employer";
 import { getPackageAPI } from "@api/choices";
 import { Package } from "@components/package";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
@@ -69,7 +79,9 @@ function PostJobsComponent() {
     languages,
     skills,
   } = useSelector((state) => state.choices);
-  const { minimumCreditJobPost, totalAvailableCredits } = useSelector((state) => state.employer);
+  const { minimumCreditJobPost, totalAvailableCredits } = useSelector(
+    (state) => state.employer
+  );
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
@@ -236,19 +248,19 @@ function PostJobsComponent() {
         "languages",
         data.languages.map && data.languages.length
           ? [
-            ...data.languages.map((language) => ({
-              language: language.language.id,
-            })),
-            {
-              language: "",
-            },
-            {
-              language: "",
-            },
-          ]
+              ...data.languages.map((language) => ({
+                language: language.language.id,
+              })),
+              {
+                language: "",
+              },
+              {
+                language: "",
+              },
+            ]
           : [1, 2, 3].map(() => ({
-            language: "",
-          }))
+              language: "",
+            }))
       );
       formik.setFieldValue("highestEducation", data.highestEducation.id);
       formik.setFieldValue(
@@ -291,7 +303,7 @@ function PostJobsComponent() {
     const data = {
       points: planDetails.credit,
       amount: Number(planDetails.price),
-      note: (`Employer buy ${planDetails.title} Plan`),
+      note: `Employer buy ${planDetails.title} Plan`,
     };
     const resp = await buyCreditsAPI({ employer: currentUser.id, data });
     if (resp.remote === "success") {
@@ -358,9 +370,7 @@ function PostJobsComponent() {
   }, [formik.values.jobCategories]);
   useEffect(() => {
     if (!currentUser.profile.isVerified) {
-      navigate(
-        urlcat("../employer/manage-jobs")
-      );
+      navigate(urlcat("../employer/manage-jobs"));
     }
   }, []);
   useEffect(() => {
@@ -564,7 +574,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -580,7 +590,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                            formik.values.jobCategories
+                              formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -589,7 +599,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
+                        formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -703,7 +713,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -756,7 +766,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -788,7 +798,7 @@ function PostJobsComponent() {
                             {i === 0 ? (
                               <>
                                 {formik.touched.languages &&
-                                  formik.errors.languages ? (
+                                formik.errors.languages ? (
                                   <ErrorMessage>
                                     {formik.errors.languages}
                                   </ErrorMessage>
@@ -902,12 +912,32 @@ function PostJobsComponent() {
                     sx={{ borderColor: "#CACACA", opacity: "1", my: 2 }}
                   />
                 </Grid>
-                {(!jobId && totalAvailableCredits < minimumCreditJobPost) ? <div>Currently, you have <b>{totalAvailableCredits} credits remaining </b>. In order to post a job, you will need to purchase <b>{minimumCreditJobPost - totalAvailableCredits} more credits. </b></div> : <div>Currently, you have <b>{totalAvailableCredits} credits remaining </b>. In order to post a job, you will redeemed <b>{minimumCreditJobPost} credits</b>  .</div>}
+                {!jobId && totalAvailableCredits < minimumCreditJobPost ? (
+                  <div>
+                    Currently, you have{" "}
+                    <b>{totalAvailableCredits} credits remaining </b>. In order
+                    to post a job, you will need to purchase{" "}
+                    <b>
+                      {minimumCreditJobPost - totalAvailableCredits} more
+                      credits.{" "}
+                    </b>
+                  </div>
+                ) : (
+                  <div>
+                    Currently, you have{" "}
+                    <b>{totalAvailableCredits} credits remaining </b>. In order
+                    to post a job, you will redeemed{" "}
+                    <b>{minimumCreditJobPost} credits</b> .
+                  </div>
+                )}
                 <Grid container spacing={2}>
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Job Posting Plan</h2>
                   </Grid>
-                  <Package packageData={packageData} handleBuyPackage={handleBuyPackage} />
+                  <Package
+                    packageData={packageData}
+                    handleBuyPackage={handleBuyPackage}
+                  />
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
                   <Stack
@@ -946,11 +976,14 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST THE JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST THE JOB"
                       }
                       type="submit"
-                      disabled={submitting === SUBMITTING_STATUS_ENUM.loading || (!jobId && totalAvailableCredits < minimumCreditJobPost)}
+                      disabled={
+                        submitting === SUBMITTING_STATUS_ENUM.loading ||
+                        (!jobId && totalAvailableCredits < minimumCreditJobPost)
+                      }
                     />
                   </Stack>
                 </Grid>
