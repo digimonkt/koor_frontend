@@ -140,7 +140,11 @@ function MyProfileComponent() {
         setLoading(false);
       } else {
         console.log({ res });
-        dispatch(setErrorToast(res.error.errors.mobile_number || "Something went wrong"));
+        dispatch(
+          setErrorToast(
+            res.error.errors.mobile_number || "Something went wrong"
+          )
+        );
         setLoading(false);
       }
     },
@@ -457,6 +461,7 @@ function MyProfileComponent() {
       <SuccessToast
         open={profilePicLoading === "updated"}
         message="Profile Pic Updated successfully"
+        handleClose={() => setProfilePicLoading("")}
       />
       <ErrorToast
         open={profilePicLoading === "error"}

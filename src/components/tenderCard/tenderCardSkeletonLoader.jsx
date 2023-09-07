@@ -44,7 +44,7 @@ function TenderCardSkeletonLoader(logo, selfJob) {
             },
           }}
         >
-          <div className="my-jobs" style={{ marginLeft: "62px" }}>
+          <div className="my-jobs" style={{ paddingLeft: "75px" }}>
             <Skeleton height={24} width={500} />
             <p className="my-3 job-description card-description">
               <Skeleton count={2} style={{ lineHeight: "9px" }} />
