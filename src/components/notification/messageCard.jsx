@@ -6,9 +6,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import styles from "./notification.module.css";
-function MessageNotificationCard({ message, createdAt, handleClose }) {
+function MessageNotificationCard({ message, createdAt, handleClose, role }) {
     return (
-        <Link onClick={() => handleClose()} to={urlcat("/employer/chat")}>
+        <Link onClick={() => handleClose()} to={urlcat(`/${role}/chat`)}>
             <div
                 className={`${styles.content_div}`}
             //   style={{ background: item.color }}
