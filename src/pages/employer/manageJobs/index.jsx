@@ -6,10 +6,11 @@ import { OutlinedButton } from "@components/button";
 import AllApplication from "./component/allApplication";
 import MyJobs from "./component/myJobs";
 import { AntTab, AntTabs } from "./style";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Blacklist from "./component/blacklist";
 import urlcat from "urlcat";
 import DialogBox from "@components/dialogBox";
+import { setManageJobActiveTab } from "@redux/slice/employer";
 function ManageJobsComponent() {
   const { totalCreatedJobs } = useSelector((state) => state.employer);
   const { totalApplications } = useSelector((state) => state.employer);
@@ -18,6 +19,8 @@ function ManageJobsComponent() {
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { manageJobActiveTab } = useSelector((state) => state.employer);
   const [tabs, setTabs] = useState([
     {
       title: "My jobs",
@@ -35,7 +38,13 @@ function ManageJobsComponent() {
       component: Blacklist,
     },
   ]);
-
+  const handlePageTab = (newValue) => {
+    setPanel(newValue);
+    dispatch(setManageJobActiveTab(newValue));
+  };
+  useEffect(() => {
+    setPanel(manageJobActiveTab);
+  }, [manageJobActiveTab]);
   useEffect(() => {
     setTabs((prevState) => {
       const newTabs = prevState.map((tab) => {
@@ -49,7 +58,7 @@ function ManageJobsComponent() {
   }, [totalCreatedJobs]);
   return (
     <div className="manage-jobs">
-      <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
+      <AntTabs value={panel} onChange={(e, newValue) => handlePageTab(newValue)}>
         <AntTab
           label={
             <Stack direction="row" spacing={1} alignItems="center">
@@ -82,7 +91,7 @@ function ManageJobsComponent() {
         />
 
         <div className="ms-auto">
-        <OutlinedButton
+          <OutlinedButton
             onClick={() => {
               if (currentUser.profile.isVerified) {
                 navigate(
@@ -116,11 +125,11 @@ function ManageJobsComponent() {
       ))}
       <DialogBox open={accountVerifiedWarning} handleClose={() => setAccountVerifiedWarning(false)}>
         <div>
-        <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+          <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
           <h1 className="heading">Account Verification Status </h1>
           <div className="form-content">
             <p>
-              Dear {currentUser.name || currentUser.email }, your account is not verified by the administrator. Please contact the administrator for further assistance.
+              Dear {currentUser.name || currentUser.email}, your account is not verified by the administrator. Please contact the administrator for further assistance.
             </p>
           </div>
         </div>

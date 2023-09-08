@@ -537,7 +537,7 @@ header {
 .user-details p {
   font-weight: 400;
   font-size: 14px;
-
+overflow-wrap: break-word;
   letter-spacing: 0.03em;
   color: #121212;
   font-family: "Poppins";
@@ -863,7 +863,7 @@ hr {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 200;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .w-30 {

@@ -12,6 +12,7 @@ import { DateInput } from "@components/input";
 import { SVG } from "@assets/svg";
 import DialogBox from "@components/dialogBox";
 import Settings from "./settings";
+import dayjs from "dayjs";
 
 function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const { role } = useSelector((state) => state.auth);
@@ -21,6 +22,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [filterData, setFilterData] = useState([]);
   const [section, setSection] = useState("all");
   const [settings, setSetting] = useState(false);
+  const [filterByDate, setFilterByDate] = useState(dayjs().format("YYYY-MM-DD"));
   const handleChangeSection = (event, newValue) => {
     const filterNotification = (type) => {
       const notificationData = [...notification];
@@ -60,7 +62,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   };
   useEffect(() => {
     getNotifications();
-  }, []);
+  }, [filterByDate]);
 
   return (
     <div style={{ width: "100%" }}>
@@ -88,7 +90,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
             </TabList>
             {header && (
               <Stack direction={"row"} spacing={2} className={styles.btn_div}>
-                <DateInput onChange={() => { }} />
+                <DateInput value={filterByDate} onChange={(value) => setFilterByDate(dayjs(value).format("YYYY-MM-DD"))} />
 
                 <Button
                   sx={{ color: "#EEA23D", textTransform: "capitalize" }}

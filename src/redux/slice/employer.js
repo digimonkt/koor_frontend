@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-/**
- * **NOTE**: Vendor is pending.
- */
 const initialState = {
   totalCreatedJobs: 0,
   totalApplications: 0,
@@ -14,6 +11,7 @@ const initialState = {
   jobPostUpdate: false,
   totalAvailableCredits: 0,
   minimumCreditJobPost: 10,
+  manageJobActiveTab: 0,
 };
 
 export const employerSlice = createSlice({
@@ -35,6 +33,9 @@ export const employerSlice = createSlice({
     },
     setTotalTenderApplications: (state, action) => {
       state.totalTenderApplications = action.payload;
+    },
+    setManageJobActiveTab: (state, action) => {
+      state.manageJobActiveTab = action.payload;
     },
     setTotalApplicationsByJob: (state, action) => {
       state.totalApplicationsByJob = {
@@ -76,5 +77,6 @@ export const {
   setJobPostUpdate,
   setTotalAvailableCredits,
   setMinimumCreditJobPost,
+  setManageJobActiveTab
 } = employerSlice.actions;
 export default employerSlice.reducer;
