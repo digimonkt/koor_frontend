@@ -4,7 +4,7 @@ import { Avatar } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { timeAgoFromNow } from "@utils/timeAgo";
 import { Link } from "react-router-dom";
-import { urlcat } from "urlcat";
+import urlcat from "urlcat";
 function RejectedCard(props, handleClose) {
     const jobId = props?.job?.id;
     return (
@@ -28,7 +28,7 @@ function RejectedCard(props, handleClose) {
             </div>
             <div className={styles.title_text_div}>
                 <h2 className={styles.title}>
-                    You've Been Rejected for the Job
+                    You've been Rejected for the Job
                     <strong>"{props.application.job?.title}"</strong>
                 </h2>
                 <p style={{ marginTop: "5px" }} className={styles.duration}>
