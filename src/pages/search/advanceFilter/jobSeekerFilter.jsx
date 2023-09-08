@@ -83,7 +83,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.jobSubCategories &&
-                formik.errors.jobSubCategories ? (
+                  formik.errors.jobSubCategories ? (
                   <ErrorMessage>{formik.errors.jobSubCategories}</ErrorMessage>
                 ) : null}
               </FormControl>
@@ -154,12 +154,12 @@ function JobSeekerFilter({ formik, footer, responsive }) {
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>
-        <h5 style={{ margin: "0px" }}>
+        <h5 style={{ margin: "20px" }}>
           <b>{totalItems}</b> jobs found
         </h5>
-        <div className={`${styles.savesearch}`}>{footer}</div>
+        <div style={{ marginTop: "0px" }} className={`${styles.savesearch}`}>{footer}</div>
       </div>
-    </form>
+    </form >
   );
 }
 
