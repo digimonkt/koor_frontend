@@ -221,7 +221,7 @@ const JobDetails = () => {
                     color={getColorByRemainingDays(
                       details.expiredInDays > 0 ? details.expiredInDays : 0
                     )}
-                    style={{ marginLeft: "20px" }}
+                    style={{ marginLeft: "20px", cursor: "default " }}
                   />
                 </div>
               </Grid>

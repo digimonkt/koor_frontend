@@ -84,8 +84,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
 
         <Grid
           item
-          // lg={logo ? 8 : 9}
-          // xs={12}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "72%",
@@ -136,6 +134,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 );
               })}
             </Stack>
+
             <Stack
               direction="row"
               spacing={2}
@@ -164,6 +163,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             </Stack>
           </div>
         </Grid>
+
         <Grid item lg={logo ? 2 : 3} xs={12}>
           <div className="text-end mb-4">
             <SolidButton
