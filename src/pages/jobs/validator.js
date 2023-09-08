@@ -22,7 +22,7 @@ export const validateCreateJobInput = Yup.object().shape({
   deadline: Yup.string()
     .required("Deadline is required")
     .test("isFuture", "Date Must be of Future", (value, context) => {
-      return dayjs(value).isSameOrAfter(dayjs());
+      return dayjs(value).isSame(dayjs(), "days");
     }),
   startDate: Yup.string()
     .required("Start Date is required"),

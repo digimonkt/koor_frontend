@@ -214,12 +214,12 @@ const JobDetails = () => {
                   </p>
                   <SolidButton
                     title={
-                      details.expiredInDays > 0
+                      details.expiredInDays > -1
                         ? `${details.expiredInDays} Days`
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details.expiredInDays > 0 ? details.expiredInDays : 0
+                      details.expiredInDays > -1 ? details.expiredInDays : -1
                     )}
                     style={{ marginLeft: "20px", cursor: "default " }}
                   />
