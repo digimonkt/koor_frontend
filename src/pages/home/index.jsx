@@ -86,6 +86,7 @@ const Home = () => {
     (total, item) => total + item.count,
     0
   );
+
   return (
     <>
       {!isLoggedIn ? (
@@ -131,53 +132,65 @@ const Home = () => {
                       <h5 className="mb-5">
                         Search for the best opportunities in your area
                       </h5>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} lg={3} sm={3}>
-                          <InputSearch
-                            onChange={(e) => setSearchValue(e.target.value)}
-                          />
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          navigate(
+                            `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+                          );
+                        }}
+                      >
+                        <Grid container spacing={2}>
+                          <Grid item xs={6} lg={3} sm={3}>
+                            <InputSearch
+                              onChange={(e) => setSearchValue(e.target.value)}
+                            />
+                          </Grid>
+                          <Grid item xs={6} lg={4} sm={3}>
+                            <SelectInput
+                              value={categories}
+                              onChange={(vl) => setCategories(vl.target.value)}
+                              options={jobCategories.data.map(
+                                (jobCategory) => ({
+                                  value: jobCategory.id,
+                                  label: jobCategory.title,
+                                })
+                              )}
+                              label="Category"
+                              placeholder="Category"
+                              className={`${styles.category_select}`}
+                            />
+                          </Grid>
+                          <Grid item xs={6} lg={3} sm={3}>
+                            <SelectInput
+                              value={location}
+                              onChange={(vl) => setLocation(vl.target.value)}
+                              options={countries.data.map((country) => ({
+                                value: country.id,
+                                label: country.title,
+                              }))}
+                              label="Location"
+                              placeholder={"Location"}
+                              className={`${styles.location_select}`}
+                            />
+                          </Grid>
+                          <Grid item xs={6} lg={2} sm={3}>
+                            <Button
+                              fullWidth
+                              variant="contained"
+                              type="submit"
+                              className={styles.home_btn_btn}
+                              // onClick={() => {
+                              //   navigate(
+                              //     `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+                              //   );
+                              // }}
+                            >
+                              Search
+                            </Button>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6} lg={4} sm={3}>
-                          <SelectInput
-                            value={categories}
-                            onChange={(vl) => setCategories(vl.target.value)}
-                            options={jobCategories.data.map((jobCategory) => ({
-                              value: jobCategory.id,
-                              label: jobCategory.title,
-                            }))}
-                            label="Category"
-                            placeholder="Category"
-                            className={`${styles.category_select}`}
-                          />
-                        </Grid>
-                        <Grid item xs={6} lg={3} sm={3}>
-                          <SelectInput
-                            value={location}
-                            onChange={(vl) => setLocation(vl.target.value)}
-                            options={countries.data.map((country) => ({
-                              value: country.id,
-                              label: country.title,
-                            }))}
-                            label="Location"
-                            placeholder={"Location"}
-                            className={`${styles.location_select}`}
-                          />
-                        </Grid>
-                        <Grid item xs={6} lg={2} sm={3}>
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            className={styles.home_btn_btn}
-                            onClick={() => {
-                              navigate(
-                                `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
-                              );
-                            }}
-                          >
-                            Search
-                          </Button>
-                        </Grid>
-                      </Grid>
+                      </form>
                     </Box>
                   </Container>
                 </Box>

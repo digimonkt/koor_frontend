@@ -195,7 +195,7 @@ function TenderDetailsComponent() {
                         ? `${details.expiredInDays} Days`
                         : "Expired"
                     }
-                    style={{ marginLeft: "20px" }}
+                    style={{ marginLeft: "20px", cursor: "default" }}
                     color="green"
                   />
                 </div>
