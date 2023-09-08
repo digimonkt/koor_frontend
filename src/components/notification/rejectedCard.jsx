@@ -3,9 +3,12 @@ import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { timeAgoFromNow } from "@utils/timeAgo";
-
-function RejectedCard(props) {
+import { Link } from "react-router-dom";
+import { urlcat } from "urlcat";
+function RejectedCard(props, handleClose) {
+    const jobId = props?.job?.id;
     return (
+        <Link onClick={() => handleClose()} to={props?.job ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
         <div className={`${styles.content_div}`}>
             <div>
                 <Avatar
@@ -33,6 +36,7 @@ function RejectedCard(props) {
                 </p>
             </div>
         </div>
+        </Link>
     );
 }
 
