@@ -105,7 +105,10 @@ const InnerFooter = () => {
                   <List>
                     {items.children.map((child, index) => {
                       // Check if the current child's URL is "/register" or "/login" and user is logged in
-                      if ((child.url === "/register" || child.url === "/login") && isLoggedIn) {
+                      if (
+                        (child.url === "/register" || child.url === "/login") &&
+                        isLoggedIn
+                      ) {
                         // Render nothing (skip this item)
                         return null;
                       }
@@ -127,7 +130,11 @@ const InnerFooter = () => {
                                 },
                               },
                             }}
-                            className={(currentURL === child.url) ? "active-footer" : "not-active-footer"}
+                            className={
+                              currentURL === child.url
+                                ? "active-footer"
+                                : "not-active-footer"
+                            }
                             LinkComponent={Link}
                             to={child.url}
                             dense={true}
@@ -141,69 +148,30 @@ const InnerFooter = () => {
                   </List>
                 </Grid>
               ))}
-              {(isLoggedIn && (role === USER_ROLES.employer || role === USER_ROLES.jobSeeker)) || !isLoggedIn ? <Grid item lg={3} xs={6} sm={3}>
-                <Typography
-                  sx={{
-                    fontSize: "20px",
-                    fontWeight: 600,
-                    fontFamily: "Poppins",
-                    "@media (max-width:992px)": {
-                      fontSize: "16px",
-                    },
-                  }}
-                  className={(currentURL === "/search/jobs") ? "active-footer-tab" : "not-active-footer-tab"}
-                >
-                  Jobs
-                </Typography>
-                <List>
-                  {categories.jobs?.map((child, index) => {
-                    return (
-                      <ListItem disablePadding={true} key={index}>
-                        <ListItemButton
-                          sx={{
-                            "&.MuiButtonBase-root": {
-                              fontFamily: "Poppins",
-                              fontSize: "16px",
-                              fontWeight: 400,
-                              "&:hover": {
-                                background: "transparent",
-                                color: "#EEA23D",
-                              },
-                              "@media (max-width:992px)": {
-                                fontSize: "12px",
-                              },
-                            },
-                          }}
-                          className={(currentURL === "/search/jobs" && jobCategoryId === child.id) ? "active-footer" : "not-active-footer"}
-                          LinkComponent={Link}
-                          to={`/search/jobs?categories=${child.id}`}
-                          dense={true}
-                          disableGutters={true}
-                        >
-                          {child.title}
-                        </ListItemButton>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </Grid> : ""}
-              <Grid item lg={3} xs={6} sm={3}>
-                {(isLoggedIn && role !== USER_ROLES.jobSeeker) || !isLoggedIn ? (<><Typography
-                  sx={{
-                    fontSize: "20px",
-                    color: "#274593",
-                    fontWeight: 600,
-                    fontFamily: "Poppins",
-                    "@media (max-width:992px)": {
-                      fontSize: "16px",
-                    },
-                  }}
-                  className={(currentURL === "/search/tenders") ? "active-footer-tab" : "not-active-footer-tab"}
-                >
-                  Tenders
-                </Typography>
+              {(isLoggedIn &&
+                (role === USER_ROLES.employer ||
+                  role === USER_ROLES.jobSeeker)) ||
+              !isLoggedIn ? (
+                <Grid item lg={3} xs={6} sm={3}>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: 600,
+                      fontFamily: "Poppins",
+                      "@media (max-width:992px)": {
+                        fontSize: "16px",
+                      },
+                    }}
+                    className={
+                      currentURL === "/search/jobs"
+                        ? "active-footer-tab"
+                        : "not-active-footer-tab"
+                    }
+                  >
+                    Jobs
+                  </Typography>
                   <List>
-                    {categories.tenders?.map((child, index) => {
+                    {categories.jobs?.map((child, index) => {
                       return (
                         <ListItem disablePadding={true} key={index}>
                           <ListItemButton
@@ -221,11 +189,15 @@ const InnerFooter = () => {
                                 },
                               },
                             }}
-                            className={(tenderCategoryId === child.id) ? "active-footer" : "not-active-footer"}
+                            className={
+                              currentURL === "/search/jobs" &&
+                              jobCategoryId === child.id
+                                ? "active-footer"
+                                : "not-active-footer"
+                            }
                             LinkComponent={Link}
-                            to={`/search/tenders?tenderCategories=${child.id}`}
+                            to={`/search/jobs?categories=${child.id}`}
                             dense={true}
-                            // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
                             disableGutters={true}
                           >
                             {child.title}
@@ -233,56 +205,141 @@ const InnerFooter = () => {
                         </ListItem>
                       );
                     })}
-                  </List></>) : ""}
+                  </List>
+                </Grid>
+              ) : (
+                ""
+              )}
+              <Grid item lg={3} xs={6} sm={3}>
+                {(isLoggedIn && role !== USER_ROLES.jobSeeker) ||
+                !isLoggedIn ? (
+                  <>
+                    <Typography
+                      sx={{
+                        fontSize: "20px",
+                        color: "#274593",
+                        fontWeight: 600,
+                        fontFamily: "Poppins",
+                        "@media (max-width:992px)": {
+                          fontSize: "16px",
+                        },
+                      }}
+                      className={
+                        currentURL === "/search/tenders"
+                          ? "active-footer-tab"
+                          : "not-active-footer-tab"
+                      }
+                    >
+                      Tenders
+                    </Typography>
+                    <List>
+                      {categories.tenders?.map((child, index) => {
+                        return (
+                          <ListItem disablePadding={true} key={index}>
+                            <ListItemButton
+                              sx={{
+                                "&.MuiButtonBase-root": {
+                                  fontFamily: "Poppins",
+                                  fontSize: "16px",
+                                  fontWeight: 400,
+                                  "&:hover": {
+                                    background: "transparent",
+                                    color: "#EEA23D",
+                                  },
+                                  "@media (max-width:992px)": {
+                                    fontSize: "12px",
+                                  },
+                                },
+                              }}
+                              className={
+                                tenderCategoryId === child.id
+                                  ? "active-footer"
+                                  : "not-active-footer"
+                              }
+                              LinkComponent={Link}
+                              to={`/search/tenders?tenderCategories=${child.id}`}
+                              dense={true}
+                              // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
+                              disableGutters={true}
+                            >
+                              {child.title}
+                            </ListItemButton>
+                          </ListItem>
+                        );
+                      })}
+                    </List>
+                  </>
+                ) : (
+                  ""
+                )}
               </Grid>
-              {(isLoggedIn && role === USER_ROLES.employer) || !isLoggedIn ? (<Grid item lg={3} xs={6} sm={3}>
-                <Typography
-                  sx={{
-                    fontSize: "20px",
-                    color: "#274593",
-                    fontWeight: 600,
-                    fontFamily: "Poppins",
-                    "@media (max-width:992px)": {
-                      fontSize: "16px",
-                    },
-                  }}
-                  className={(currentURL === "/search/talents") ? "active-footer-tab" : "not-active-footer-tab"}
-                >
-                  Talents
-                </Typography>
-                <List>
-                  {categories.talents?.map((child, index) => {
-                    return (
-                      <ListItem disablePadding={true} key={index}>
-                        <ListItemButton
-                          sx={{
-                            "&.MuiButtonBase-root": {
-                              fontFamily: "Poppins",
-                              fontSize: "16px",
-                              fontWeight: 400,
-                              "&:hover": {
-                                background: "transparent",
-                                color: "#EEA23D",
+              {(isLoggedIn && role === USER_ROLES.employer) || !isLoggedIn ? (
+                <Grid item lg={3} xs={6} sm={3}>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      color: "#274593",
+                      fontWeight: 600,
+                      fontFamily: "Poppins",
+                      "@media (max-width:992px)": {
+                        fontSize: "16px",
+                      },
+                    }}
+                    className={
+                      currentURL === "/search/talents"
+                        ? "active-footer-tab"
+                        : "not-active-footer-tab"
+                    }
+                  >
+                    Talents
+                  </Typography>
+                  <List>
+                    {categories.talents?.map((child, index) => {
+                      return (
+                        <ListItem disablePadding={true} key={index}>
+                          <ListItemButton
+                            sx={{
+                              "&.MuiButtonBase-root": {
+                                fontFamily: "Poppins",
+                                fontSize: "16px",
+                                fontWeight: 400,
+                                "&:hover": {
+                                  background: "transparent",
+                                  color: "#EEA23D",
+                                },
+                                "@media (max-width:992px)": {
+                                  fontSize: "12px",
+                                },
                               },
-                              "@media (max-width:992px)": {
-                                fontSize: "12px",
-                              },
-                            },
-                          }}
-                          className={(currentURL === "/search/talents" && talentCategoryId === child.id) ? "active-footer" : "not-active-footer"}
-                          LinkComponent={Link}
-                          to={isLoggedIn ? `/search/talents?categories=${child.id}` : "#"}
-                          dense={true}
-                          disableGutters={true}
-                          onClick={(e) => checkUserLoggedIn(e, USER_ROLES.employer)}
-                        >
-                          {child.title}
-                        </ListItemButton>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </Grid>) : ""}
+                            }}
+                            className={
+                              currentURL === "/search/talents" &&
+                              talentCategoryId === child.id
+                                ? "active-footer"
+                                : "not-active-footer"
+                            }
+                            LinkComponent={Link}
+                            to={
+                              isLoggedIn
+                                ? `/search/talents?categories=${child.id}`
+                                : "#"
+                            }
+                            dense={true}
+                            disableGutters={true}
+                            onClick={(e) =>
+                              checkUserLoggedIn(e, USER_ROLES.employer)
+                            }
+                          >
+                            {child.title}
+                          </ListItemButton>
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Grid>
+              ) : (
+                ""
+              )}
             </Grid>
           </Grid>
           <Grid item lg={4} xs={12} sm={12}>
@@ -327,19 +384,31 @@ const InnerFooter = () => {
                       fontFamily: "Poppins",
                       fontSize: "14px",
                       padding: "0px 10px",
+                      height: "50px",
                     },
                   }}
                 >
-                  <input placeholder="Email..." value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <input
+                    placeholder="Email..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                   <Button
                     onClick={() => saveNewsletter()}
                     sx={{
                       borderRadius: "66px",
-                      background: "#D5E3F7",
-                      color: "#274593",
+                      background: "#274593",
+                      color: "#ffffff",
                       fontFamily: "Bahnschrift",
                       fontSize: "15px",
                       fontWeight: "400",
+                      height: "39px",
+                      width: "116px",
+                      marginTop: "5.4px",
+                      marginRight: "5px",
+                      "&:hover": {
+                        background: "#274593",
+                      },
                     }}
                   >
                     Sign up
@@ -358,7 +427,7 @@ const InnerFooter = () => {
           sx={{ mt: 4, "@media (max-width:540px)": { mt: 0 } }}
         >
           <Stack direction={"row"} spacing={1} alignItems="center">
-            <SVG.KoorLogo />
+            <SVG.KoorLogo style={{ width: "90px" }} />
             <Typography
               sx={{
                 fontSize: "16px",
@@ -431,22 +500,36 @@ const InnerFooter = () => {
       />
       <ErrorToast
         open={failedToastPopup}
-        handleClose={() => { setFailedToastPopup(false); }}
+        handleClose={() => {
+          setFailedToastPopup(false);
+        }}
         message={failedMessage}
       />
       <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
         <div>
-          <SVG.Warning style={{ marginLeft: "46%", height: "50px", width: "50px", color: "red" }} />
-          <h1 className="heading" style={{ textTransform: "capitalize", textAlign: "center" }}>{warningRole} login required</h1>
+          <SVG.Warning
+            style={{
+              marginLeft: "46%",
+              height: "50px",
+              width: "50px",
+              color: "red",
+            }}
+          />
+          <h1
+            className="heading"
+            style={{ textTransform: "capitalize", textAlign: "center" }}
+          >
+            {warningRole} login required
+          </h1>
           <div className="form-content">
             <p>
-              Dear user, to access this content, please log in as a {warningRole}.
+              Dear user, to access this content, please log in as a{" "}
+              {warningRole}.
             </p>
           </div>
         </div>
       </DialogBox>
-    </Box >
-
+    </Box>
   );
 };
 export default InnerFooter;

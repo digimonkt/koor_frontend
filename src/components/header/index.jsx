@@ -180,7 +180,7 @@ function Header() {
 
           <div
             className="ms-auto"
-          // ref={menu}
+            // ref={menu}
           >
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
               {isLoggedIn ? (
@@ -236,8 +236,9 @@ function Header() {
               </IconButton>
             </Stack>
             <ul
-              className={`menu ${ismenu && "menu-selected"} ${role !== USER_ROLES.jobSeeker ? "color-change" : null
-                }`}
+              className={`menu ${ismenu && "menu-selected"} ${
+                role !== USER_ROLES.jobSeeker ? "color-change" : null
+              }`}
             >
               {!isLoggedIn ? (
                 <li onClick={() => setIsmenu(false)}>
@@ -264,7 +265,7 @@ function Header() {
                         : "",
                     }}
                   >
-                    Browse Jobs
+                    Browse jobs
                   </Link>
                 </li>
               ) : (
@@ -273,13 +274,17 @@ function Header() {
               {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to={currentUser.profile.isVerified ? "/search/talents" : "#"}
+                    to={
+                      currentUser.profile.isVerified ? "/search/talents" : "#"
+                    }
                     style={{
                       color: location.pathname.includes("/search/talents")
                         ? "#274593"
                         : "",
                     }}
-                    onClick={(e) => { checkUserVerified(e); }}
+                    onClick={(e) => {
+                      checkUserVerified(e);
+                    }}
                   >
                     Browse Talents
                   </Link>
@@ -290,13 +295,17 @@ function Header() {
               {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to={currentUser.profile.isVerified ? "/search/vendors" : "#"}
+                    to={
+                      currentUser.profile.isVerified ? "/search/vendors" : "#"
+                    }
                     style={{
                       color: location.pathname.includes("/search/vendors")
                         ? "#274593"
                         : "",
                     }}
-                    onClick={(e) => { checkUserVerified(e); }}
+                    onClick={(e) => {
+                      checkUserVerified(e);
+                    }}
                   >
                     Browse Vendors
                   </Link>
@@ -314,9 +323,9 @@ function Header() {
                         ? "#274593"
                         : "",
                     }}
-                  // onClick={(e) => checkUserLoggedIn(e)}
+                    // onClick={(e) => checkUserLoggedIn(e)}
                   >
-                    Browse Tenders
+                    Browse tenders
                   </Link>
                 </li>
               ) : (
@@ -332,7 +341,7 @@ function Header() {
                         : "",
                     }}
                   >
-                    About Us
+                    About us
                   </Link>
                 </li>
               )}
@@ -389,7 +398,7 @@ function Header() {
                         navigate("/login");
                       }}
                     >
-                      <FilledButton title="Login" />
+                      <FilledButton title="Log in" />
                     </div>
                   </li>
                 </>
@@ -485,24 +494,46 @@ function Header() {
         ) : (
           ""
         )}
-        <DialogBox open={accountVerifiedWarning} handleClose={() => setAccountVerifiedWarning(false)}>
+        <DialogBox
+          open={accountVerifiedWarning}
+          handleClose={() => setAccountVerifiedWarning(false)}
+        >
           <div>
-            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+            <SVG.Warning
+              style={{
+                marginLeft: "39%",
+                height: "50px",
+                width: "50px",
+                color: "red",
+              }}
+            />
             <h1 className="heading">Account Verification Status</h1>
             <div className="form-content">
               <p>
-                Dear {currentUser.name || currentUser.email}, your account is not verified by the administrator. Please contact the administrator for further assistance.
+                Dear {currentUser.name || currentUser.email}, your account is
+                not verified by the administrator. Please contact the
+                administrator for further assistance.
               </p>
             </div>
           </div>
         </DialogBox>
         <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
           <div>
-            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
-            <h1 className="heading" style={{ textTransform: "capitalize" }}>{USER_ROLES.vendor} login required</h1>
+            <SVG.Warning
+              style={{
+                marginLeft: "39%",
+                height: "50px",
+                width: "50px",
+                color: "red",
+              }}
+            />
+            <h1 className="heading" style={{ textTransform: "capitalize" }}>
+              {USER_ROLES.vendor} login required
+            </h1>
             <div className="form-content">
               <p>
-                Dear user, to access this content, please log in as a {USER_ROLES.vendor}.
+                Dear user, to access this content, please log in as a{" "}
+                {USER_ROLES.vendor}.
               </p>
             </div>
           </div>
