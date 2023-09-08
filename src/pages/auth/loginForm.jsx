@@ -84,7 +84,7 @@ function LoginForm() {
           </div>
           <div className="form-group mb-3">
             <LabeledInput
-              placeholder="Your Password monty"
+              placeholder="Your Password"
               title="Password"
               data-cy="login-password"
               type="password"
