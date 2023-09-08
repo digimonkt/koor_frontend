@@ -20,7 +20,7 @@ import Marquee from "react-fast-marquee";
 const AuthOptions = [
   {
     id: "jobSeeker",
-    title: "Individual Job Seeker",
+    title: "Individual jobseeker",
     role: USER_ROLES.jobSeeker,
     subtitle: "I'm searching for a job",
   },
@@ -28,7 +28,7 @@ const AuthOptions = [
     id: "employer",
     title: "Employer",
     role: USER_ROLES.employer,
-    subtitle: "I'm looking for talents and vendor",
+    subtitle: "I’m looking for talents to join our team",
   },
   {
     id: "vendor",
