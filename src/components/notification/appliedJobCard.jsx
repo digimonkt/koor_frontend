@@ -4,9 +4,13 @@ import { Avatar } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { timeAgoFromNow } from "@utils/timeAgo";
+import { Link } from "react-router-dom";
+import urlcat from "urlcat";
 
-function AppliedJobCard(props) {
+function AppliedJobCard(props, handleClose) {
+  const jobId = props?.job?.id;
   return (
+    <Link onClick={() => handleClose()} to={props?.job ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
     <div className={`${styles.content_div}`}>
       <div>
         <Avatar
@@ -37,6 +41,7 @@ function AppliedJobCard(props) {
         </p>
       </div>
     </div>
+    </Link>
   );
 }
 
