@@ -9,5 +9,6 @@ export const ChipBox = styled(Chip)`
     font-size: 16px;
     font-weight: 400;
     color: #121212;
+    margin-top: 5px;
   }
 `;
