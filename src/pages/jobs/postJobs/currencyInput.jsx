@@ -38,7 +38,7 @@ function CurrencyInput({ title, optionsValues, errors, ...rest }) {
               value: PAY_PERIOD[period],
               label: `per ${period}`,
             }))}
-            style={{ width: "37%" }}
+            style={{ width: "42%" }}
             {...((optionsValues && optionsValues.payPeriod) || {})}
           />
         ) : (

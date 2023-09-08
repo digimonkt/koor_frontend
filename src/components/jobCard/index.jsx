@@ -56,7 +56,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus("Rejected");
     }
     if (jobDetails.isPlannedInterview) {
-      setApplicationStatus("Interview planned on " + dayjs(jobDetails.isPlannedInterview).format("MMMM D, YYYY [at] h:mm A"));
+      setApplicationStatus(
+        "Interview planned on " +
+          dayjs(jobDetails.isPlannedInterview).format(
+            "MMMM D, YYYY [at] h:mm A"
+          )
+      );
     }
   }, [jobDetails]);
   return (
@@ -163,13 +168,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
-                    {(jobDetails.company === null && jobDetails.companyLogo === null) ? "Company:"
-                      : "Posted By"
-                    }
+                    {jobDetails.company === null &&
+                    jobDetails.companyLogo === null
+                      ? "Company:"
+                      : "Posted By"}
                     <span>
-                      {(jobDetails.company === null && jobDetails.companyLogo === null) ? jobDetails.user.name
-                        : " Koor"
-                      }
+                      {jobDetails.company === null &&
+                      jobDetails.companyLogo === null
+                        ? jobDetails.user.name
+                        : " Koor"}
                     </span>
                   </div>
                 </Stack>
@@ -258,7 +265,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             ) : isLoggedIn && role === "job_seeker" ? (
               <React.Fragment>
                 {!applied ? (
-                  <div onClick={handleToggleSave} style={{ marginLeft: "6px" }}>
+                  <div
+                    onClick={handleToggleSave}
+                    style={{ marginLeft: "6px", cursor: "pointer" }}
+                  >
                     <div className="bookmark">
                       {isSaved ? (
                         <>
