@@ -180,7 +180,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   border-bottom: 0 !important;
 }
 
-.SelectDropdown label+.css-hrjh4n-MuiInputBase-root {
+.SelectDropdown label + .css-hrjh4n-MuiInputBase-root {
   margin-top: 12px;
   font-family: "Poppins";
 }
@@ -278,6 +278,7 @@ header {
   color: #121212 !important;
   font-family: "Bahnschrift" !important;
   letter-spacing: 0.03em !important;
+  border: 1px solid #eea23d !important;
 }
 
 .footer {
@@ -380,7 +381,8 @@ header {
   padding-bottom: 16px;
 }
 
-.saved-jobs button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
+.saved-jobs
+  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
   justify-content: center;
   position: relative !important;
   left: 13px !important;
@@ -415,7 +417,7 @@ header {
   margin: 0px;
 }
 
-.register-des>a {
+.register-des > a {
   border: 2px solid #cacaca;
   border-radius: 88px;
   display: block;
@@ -426,7 +428,7 @@ header {
   margin-bottom: 16px;
 }
 
-.register-des>a:last-child {
+.register-des > a:last-child {
   margin-bottom: 0px;
   cursor: pointer;
 }
@@ -439,7 +441,7 @@ header {
   opacity: 0.5;
 }
 
-.register-des>a:hover {
+.register-des > a:hover {
   background: #d5e3f7;
   border: 2px solid #274593;
   box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35);
@@ -474,7 +476,7 @@ header {
   position: relative;
 }
 
-.showpassword>div>svg {
+.showpassword > div > svg {
   cursor: pointer;
   position: absolute;
   width: 20px;
@@ -1550,7 +1552,6 @@ span.count {
   letter-spacing: 0.02em;
 
   color: #121212;
-
 }
 
 .usdinput {
@@ -1764,31 +1765,27 @@ body {
     display: block;
     border-top: 1px solid #cacaca;
     padding: 8px 15px;
-
   }
-
-
 
   ul.menu li:nth-child(6),
   ul.menu li:nth-child(7) {
     display: inline-block;
 
     border: 0;
-
   }
 }
 
 .bluebtn {
-  background: #274593 !important;
+  /* background: #274593 !important; */
   color: #fff !important;
 }
 
 .sharePopup button {
   background: #274593 !important;
   color: #fff !important;
-  padding-top: 13px!important;
-    padding-bottom: 8px!important;
-    margin-left:10px !important
+  padding-top: 13px !important;
+  padding-bottom: 8px !important;
+  margin-left: 10px !important;
 }
 ul.menu.color-change li a:hover {
   color: #274593;
@@ -1854,7 +1851,7 @@ input.employersearch {
   .outline-button {
     border: 1px solid #274593 !important;
     border-radius: 73px !important;
-    padding: 6px 20px !important;
+    padding: 10px 30px !important;
     color: #274593 !important;
     /* font-size: 16px !important; */
     letter-spacing: 0.03em !important;
@@ -1874,8 +1871,6 @@ input.employersearch {
     width: 50px;
   }
 
-
-
   .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
     padding-left: 6px !important;
     padding-right: 0px !important;
@@ -1884,9 +1879,9 @@ input.employersearch {
   .outline-button {
     border: 1px solid #274593 !important;
     border-radius: 73px !important;
-    padding: 6px 20px !important;
+    padding: 10px 30px !important;
     color: #274593 !important;
-    /* font-size: 16px !important; */
+    font-size: 16px !important;
     letter-spacing: 0.03em !important;
     font-family: "Bahnschrift" !important;
     /* font-weight: 600 !important; */
@@ -1935,9 +1930,7 @@ input.employersearch {
 
 @media only screen and (max-width: 992px) {
   .saved-jobs h2 {
-
     font-size: 16px;
-
   }
 
   .noti-mobile {
@@ -1954,11 +1947,10 @@ input.employersearch {
   }
 
   .register {
-
     background: url("../images/intro.png");
   }
 
-  .register-des>a {
+  .register-des > a {
     padding: 12px 15px;
     border-radius: 16px;
     -webkit-border-radius: 16px;
