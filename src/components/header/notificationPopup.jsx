@@ -57,6 +57,7 @@ function NotificationPopup() {
           horizontal: "left",
         }}
         open={open}
+        onClose={handleClose}
         PaperProps={{
           style: {
             maxHeight: "500px",

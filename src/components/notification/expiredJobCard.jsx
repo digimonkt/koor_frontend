@@ -1,12 +1,16 @@
 import { SVG } from "@assets/svg";
 import { Avatar } from "@mui/material";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import { Link } from "react-router-dom";
 import { timeAgoFromNow } from "@utils/timeAgo";
 import React from "react";
 import styles from "./notification.module.css";
+import urlcat from "urlcat";
+function ExpiredJobCard({ job, createdAt, handleClose }) {
+  const jobId = job?.id;
 
-function ExpiredJobCard({ job, createdAt }) {
   return (
+    <Link onClick={() => handleClose()} to={job?.id ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
     <div
       className={`${styles.content_div}`}
       //   style={{ background: item.color }}
@@ -41,6 +45,7 @@ function ExpiredJobCard({ job, createdAt }) {
         <p className={styles.duration}>{timeAgoFromNow(createdAt)}</p>
       </div>
     </div>
+    </Link>
   );
 }
 

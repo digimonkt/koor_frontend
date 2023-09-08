@@ -64,6 +64,7 @@ export const JOB_SORT_BY = {
 
 export const NOTIFICATION_TYPE = {
   applied: "applied",
+  rejected: "rejected",
   passwordUpdate: "password_update",
   shortlisted: "shortlisted",
   message: "message",
