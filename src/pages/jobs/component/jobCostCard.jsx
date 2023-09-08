@@ -62,11 +62,19 @@ function JobCostCard({ amount, payPeriod, user }) {
         <div className={`mt-4 text-break text-wrap  ${styles.Numbers}`}>
           <span>{user.website}</span>
           <span>
-            {user.countryCode && user.mobileNumber
-              ? formatPhoneNumberIntl(user.countryCode + user.mobileNumber)
-              : ""}
+            <Link
+              to={`tel:${formatPhoneNumberIntl(
+                user.countryCode + user.mobileNumber
+              )}`}
+            >
+              {user.countryCode && user.mobileNumber
+                ? formatPhoneNumberIntl(user.countryCode + user.mobileNumber)
+                : ""}
+            </Link>
           </span>
-          <span>{user.email}</span>
+          <span>
+            <Link to={`mailto:${user.email}`}>{user.email}</Link>
+          </span>
         </div>
       </div>
     </>
