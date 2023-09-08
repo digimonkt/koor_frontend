@@ -191,12 +191,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <SolidButton
               style={{ textTransform: "lowercase" }}
               title={
-                jobDetails?.expiredInDays > 0
+                jobDetails?.expiredInDays > -1
                   ? `${jobDetails?.expiredInDays} days left`
                   : "Expired"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > -1 ? jobDetails?.expiredInDays : -1
               )}
             />
           </div>
