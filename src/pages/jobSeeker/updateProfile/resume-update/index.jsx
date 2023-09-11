@@ -77,7 +77,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
             title={
               <>
                 <span className="me-2 d-inline-flex">
-                  <SVG.UploadIcon />
+                  <SVG.DownloadIcon />
                 </span>
                 download your resume
               </>
