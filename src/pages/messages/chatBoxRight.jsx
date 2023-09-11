@@ -1,6 +1,6 @@
 import { SVG } from "@assets/svg";
 import ApplicationOptions from "@components/applicationOptions";
-import { Avatar, IconButton, Stack } from "@mui/material";
+import { Avatar, IconButton, Menu, MenuItem, Stack } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 // import PerfectScrollbar from "react-perfect-scrollbar";
 import InfiniteScroll from "react-infinite-scroller";
@@ -29,6 +29,9 @@ import "react-perfect-scrollbar/dist/css/styles.css";
 import { GetUserDetailsAPI } from "@api/user";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import DialogBox from "@components/dialogBox";
+import FormatBoldIcon from "@mui/icons-material/FormatBold";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -47,6 +50,8 @@ function ChatBox() {
   const scrollbarRef = useRef();
   const [fullImg, setFullImg] = useState(false);
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedFormat, setSelectedFormat] = useState(null);
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
@@ -152,6 +157,108 @@ function ChatBox() {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const renderAttachment = (attachment) => {
+    switch (attachment.type) {
+      case "image":
+        return (
+          <img
+            alt="attachment"
+            src={generateFileUrl(attachment.path)}
+            width={"400px"}
+            rel="nofollow"
+            onClick={() => { setFullImg(generateFileUrl(attachment.path)); setOpen(true); }}
+          />
+        );
+      case "video":
+        return (
+          <video width="320" height="240" controls>
+            <source src={generateFileUrl(attachment.path)} type="video/mp4"></source>
+          </video>
+        );
+      case "audio":
+        return (
+          <audio controls>
+            <source src={generateFileUrl(attachment.path)} type="audio/mp3"></source>
+          </audio>
+        );
+      default:
+        return (<span className="me-2 d-inline-flex">
+          <a
+            href={generateFileUrl(attachment.path)}
+            target="_blank"
+            className="m-0"
+            rel="noreferrer"
+          > {attachment.title} <SVG.UploadIcon /></a>
+        </span>);
+    }
+  };
+  // const formatSendMessage = () => {
+  //   if (newMessage.trim()) {
+  //     if (selectedFormat === "bold") {
+  //       // Apply bold formatting to newMessage
+  //       setNewMessage(`<strong>${newMessage}</strong>`);
+  //     } else if (selectedFormat === "italic") {
+  //       // Apply italic formatting to newMessage
+  //       setNewMessage(`<em>${newMessage}</em>`);
+  //     } else if (selectedFormat === "underline") {
+  //       // Apply underline formatting to newMessage
+  //       setNewMessage(`<u>${newMessage}</u>`);
+  //     }
+
+  //     // Reset the selected format and close the menu
+  //     setSelectedFormat(null);
+  //     setAnchorEl(null);
+  //   }
+  // };
+  const applyFormatting = (value) => {
+    // Apply the selected formatting to the currently selected text
+    const formattedMessage = applyFormattingToSelection(newMessage, selectedFormat);
+    console.log("------");
+    setNewMessage(formattedMessage);
+    setAnchorEl(null); // Close the menu
+  };
+
+  const applyFormattingToAll = (text) => {
+    if (text) {
+      switch (selectedFormat) {
+        case "bold":
+          return `<strong>${text}</strong>`;
+        case "italic":
+          return `<em>${text}</em>`;
+        case "underline":
+          return `<u>${text}</u>`;
+        default:
+          return text;
+      }
+    }
+  };
+  // Helper function to apply formatting to selected text
+  const applyFormattingToSelection = (text, format) => {
+    const selectedText = window.getSelection().toString();
+    if (selectedText) {
+      switch (format) {
+        case "bold":
+          return text.replace(selectedText, `<strong>${selectedText}</strong>`);
+        case "italic":
+          return text.replace(selectedText, `<em>${selectedText}</em>`);
+        case "underline":
+          return text.replace(selectedText, `<u>${selectedText}</u>`);
+        default:
+          return text;
+      }
+    }
+    return text;
+  };
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -197,45 +304,14 @@ function ChatBox() {
       ws.close();
     };
   }, [searchParams.get("conversion"), searchParams.get("userId")]);
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const renderAttachment = (attachment) => {
-    switch (attachment.type) {
-      case "image":
-        return (
-          <img
-            alt="attachment"
-            src={generateFileUrl(attachment.path)}
-            width={"400px"}
-            rel="nofollow"
-            onClick={() => { setFullImg(generateFileUrl(attachment.path)); setOpen(true); }}
-          />
-        );
-      case "video":
-        return (
-          <video width="320" height="240" controls>
-            <source src={generateFileUrl(attachment.path)} type="video/mp4"></source>
-          </video>
-        );
-      case "audio":
-        return (
-          <audio controls>
-            <source src={generateFileUrl(attachment.path)} type="audio/mp3"></source>
-          </audio>
-        );
-      default:
-        return (<span className="me-2 d-inline-flex">
-          <a
-            href={generateFileUrl(attachment.path)}
-            target="_blank"
-            className="m-0"
-            rel="noreferrer"
-          > {attachment.title} <SVG.UploadIcon /></a>
-        </span>);
+  useEffect(() => {
+    scrollToBottom();
+  });
+  useEffect(() => {
+    if (newMessage !== "") {
+      applyFormatting();
     }
-  };
-
+  }, [selectedFormat]);
   return (
     <>
       {isLoading ? (
@@ -369,16 +445,24 @@ function ChatBox() {
             <Stack direction={"row"} spacing={2}>
               <div className="chatinput">
                 <span className="attachment-icon">
-                  <input type="file" onChange={handleAttachment} value={""} />
-                  <SVG.AttachIcon />
+                  <SVG.AttachIcon style={{ position: "relative" }} />
+                  <input type="file" onChange={handleAttachment} value={""} style={{ position: "absolute", opacity: "0", right: "45.5rem", width: "35px" }} />
                 </span>
                 <LabeledInput
                   placeholder="Write a message…"
+                  style={{ background: "transparent" }}
                   type="textarea"
                   value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
+                  onChange={(e) => {
+                    if (selectedFormat) {
+                      const formattedText = applyFormattingToAll(e.target.value, selectedFormat);
+                      setNewMessage(formattedText);
+                    } else {
+                      setNewMessage(e.target.value);
+                    }
+                  }}
                   onKeyPress={(e) => {
-                    if (newMessage.trim()) {
+                    if (newMessage && newMessage.trim()) {
                       if (e.key === "Enter" && !e.shiftKey) {
                         sendMessage(e);
                       }
@@ -393,10 +477,26 @@ function ChatBox() {
                   aria-controls={open ? "basic-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
+                  style={{ border: "1px solid", width: "40px", height: "40px", borderRadius: "100%" }}
+                  onClick={handleMenuOpen} // Open the menu when the IconButton is clicked
                 >
                   <MoreHorizIcon />
                 </IconButton>
-
+                <Menu
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                >
+                  <MenuItem onClick={() => { setSelectedFormat("bold"); setAnchorEl(null); }}>
+                    <FormatBoldIcon />
+                  </MenuItem>
+                  <MenuItem onClick={() => { setSelectedFormat("italic"); setAnchorEl(null); }}>
+                    <FormatItalicIcon />
+                  </MenuItem>
+                  <MenuItem onClick={() => { setSelectedFormat("underline"); setAnchorEl(null); }}>
+                    <FormatUnderlinedIcon />
+                  </MenuItem>
+                </Menu>
                 <FilledButton
                   sx={{
                     borderRadius: "35px",
