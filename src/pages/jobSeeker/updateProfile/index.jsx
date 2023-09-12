@@ -1,5 +1,5 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UpdateInfo from "./update-info";
 import ResumeUpdate from "./resume-update";
 import { SVG } from "@assets/svg";
@@ -9,8 +9,8 @@ import { USER_ROLES } from "@utils/enum";
 import AboutMe from "../aboutMe";
 import { ProfilePicInput } from "@components/input";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfilePic } from "@redux/slice/user";
-import { UpdateProfileImageAPI } from "@api/user";
+import { setProfilePic, updateCurrentUser } from "@redux/slice/user";
+import { GetUserDetailsAPI, UpdateProfileImageAPI } from "@api/user";
 import { ErrorToast, SuccessToast } from "@components/toast";
 // import { resetToast } from "@redux/slice/toast";
 
@@ -24,6 +24,7 @@ const UpdateProfile = () => {
   // state management
   const [open, setOpen] = useState(false);
   const [profilePicLoading, setProfilePicLoading] = useState("");
+  const [profileCompleted, setProfileCompleted] = useState(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,18 +42,26 @@ const UpdateProfile = () => {
     if (res.remote === "success") setProfilePicLoading("updated");
     else setProfilePicLoading("error");
   };
-
+  const getUserProfile = async () => {
+    const res = await GetUserDetailsAPI();
+    if (res.remote === "success") {
+      setProfileCompleted(res.data.profileCompleted);
+      dispatch(
+        updateCurrentUser(res.data));
+    }
+  };
+  useEffect(() => {
+    getUserProfile();
+  }, []);
   return (
     <>
-      <Stack direction="row" spacing={3} className="mb-3">
+      {!profileCompleted && <Stack direction="row" spacing={3} className="mb-3">
         <h1 className="heading m-0">Add info to complete your profile</h1>
-        <span
-          onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)}
-          className="later"
-        >
+        <span onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)} className="later">
           Do it later
         </span>
-      </Stack>
+
+      </Stack>}
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>
           <AboutMe handleClickOpen={handleClickOpen} />

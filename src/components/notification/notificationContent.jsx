@@ -53,7 +53,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
 
   const getNotifications = async () => {
     setLoading(true);
-    const res = await GetNotificationAPI();
+    const data = {
+      type: section,
+      created: filterByDate
+    };
+    const res = await GetNotificationAPI(data);
     if (res.remote === "success") {
       setNotification(res.data.results);
       setFilterData(res.data.results);
@@ -62,7 +66,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   };
   useEffect(() => {
     getNotifications();
-  }, [filterByDate]);
+  }, [filterByDate, section]);
 
   return (
     <div style={{ width: "100%" }}>
@@ -90,11 +94,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
             </TabList>
             {header && (
               <Stack direction={"row"} spacing={2} className={styles.btn_div}>
-                <DateInput value={filterByDate} onChange={(value) => setFilterByDate(dayjs(value).format("YYYY-MM-DD"))} />
+                <DateInput value={filterByDate} maxDate={dayjs().format("YYYY-MM-DD")} onChange={(value) => setFilterByDate(dayjs(value).format("YYYY-MM-DD"))} />
 
                 <Button
                   sx={{ color: "#EEA23D", textTransform: "capitalize" }}
-                  onClick={() => setNotification([])}
+                  onClick={() => { setSection("all"); setFilterByDate(dayjs().format("YYYY-MM-DD")); }}
                   className={styles.clear_btn}
                 >
                   Clear All
