@@ -98,7 +98,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
 
                 <Button
                   sx={{ color: "#EEA23D", textTransform: "capitalize" }}
-                  onClick={() => setNotification([])}
+                  onClick={() => { setSection("all"); setFilterByDate(dayjs().format("YYYY-MM-DD")); }}
                   className={styles.clear_btn}
                 >
                   Clear All
