@@ -317,7 +317,7 @@ function AuthLayout({
                             sx={{
                               padding: "0px",
                               marginRight: "10px",
-                              "@media(min-width:992px)": {
+                              "@media(max-width:992px)": {
                                 display: "none",
                               },
                             }}
@@ -332,7 +332,7 @@ function AuthLayout({
                       {children}
                       {!options || role === USER_ROLES.employer ? null : (
                         <>
-                          <div className="spaceor mt-5 mb-4">
+                          <div className="spaceor mb-4">
                             <span>Or continue with</span>
                           </div>
                           <div className="icon-social">

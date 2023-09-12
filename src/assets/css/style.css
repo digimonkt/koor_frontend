@@ -276,7 +276,7 @@ header {
   padding: 10px 30px !important;
   font-size: 16px !important;
   font-weight: 600 !important;
-  color: #121212 !important;
+  color: #ffffff !important;
   font-family: "Bahnschrift" !important;
   letter-spacing: 0.03em !important;
   border: 1px solid #eea23d !important;
@@ -461,7 +461,7 @@ header {
 }
 
 .form-control {
-  height: 45px;
+  height: 46px;
   width: 100%;
   background: #f9f9f9;
   border-radius: 4px;
@@ -482,7 +482,7 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 14px;
+  top: 12px;
 }
 
 .spaceor {
@@ -490,6 +490,7 @@ header {
   background: #cacaca;
   height: 1px;
   position: relative;
+  margin-top: 70px !important;
 }
 
 .spaceor span {
@@ -500,9 +501,10 @@ header {
   background: #fff;
   padding: 5px 15px;
   color: #848484;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.02em;
   white-space: nowrap;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .box-shadow {
@@ -1416,11 +1418,11 @@ span.count {
   }
 
   .spaceor span {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .content-box h5 {
-    font-size: 28px;
+    font-size: 36px;
   }
 
   .content-box p {
@@ -1428,10 +1430,14 @@ span.count {
   }
 
   .register-title h6 {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .register-title span {
+    font-size: 14px;
+  }
+
+  .bottombar {
     font-size: 16px;
   }
 
@@ -1781,8 +1787,9 @@ body {
 }
 
 .bluebtn {
-  /* background: #274593 !important; */
+  background: #274593 !important;
   color: #fff !important;
+  border: 1px solid #274593 !important;
 }
 
 .sharePopup button {
@@ -1984,4 +1991,18 @@ input.employersearch {
 
 .labelbox .MuiOutlinedInput-input {
   font-size: 12px;
+}
+
+@media only screen and (max-width: 540px) {
+  .content-box h5 {
+    font-size: 28px;
+  }
+
+  .spaceor span {
+    font-size: 12px;
+  }
+
+  .bottombar {
+    font-size: 14px;
+  }
 }
