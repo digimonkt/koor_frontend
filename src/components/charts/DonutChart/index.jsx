@@ -97,7 +97,7 @@ const DonutChart = ({ shareCountData }) => {
   const getCountPercent = (totalCount, count) => {
     if (totalCount > 0) {
       const res = (count / totalCount) * 100;
-      return res;
+      return res.toFixed(2);
     }
     return 0;
   };

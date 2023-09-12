@@ -311,7 +311,7 @@ function Search() {
             </Box>
           </Grid>
         </Grid>
-        {totalPages > 1 && < div className="paginations pt-4">{pagination()}</div>}
+        {totalPages > 1 ? < div className="paginations pt-4">{pagination()}</div> : <div style={{ marginTop: "20px" }}></div>}
       </Container>
     </Box>
   );
