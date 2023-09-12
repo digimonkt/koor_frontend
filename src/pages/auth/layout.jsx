@@ -184,8 +184,8 @@ function AuthLayout({
               },
             }}
           >
-            <h5>Welcome!</h5>
-            <p>I want to register as...</p>
+            {/* <h5>Welcome!</h5> */}
+            {/* <p>I want to register as...</p> */}
           </Box>
           <Box
             sx={{
@@ -235,7 +235,7 @@ function AuthLayout({
                   sx={{
                     padding: `75px 60px ${!role ? "!important" : ""}`,
                     "@media(max-width:992px)": {
-                      padding: `25px ${!role ? "!important" : ""}`,
+                      padding: `25px 20px ${!role ? "!important" : ""}`,
                     },
                   }}
                 >
@@ -244,14 +244,14 @@ function AuthLayout({
                       <Box
                         sx={{
                           "@media(max-width:992px)": {
-                            display: "none",
+                            display: "",
                           },
                         }}
                       >
                         <h5 data-cy="title">{title}</h5>
                         <p data-cy="subTitle">{subTitle}</p>
                       </Box>
-                      <div className="register-des mt-4" data-cy="authOptions">
+                      <div className="register-des" data-cy="authOptions">
                         {AuthOptions.map((option) => {
                           return (
                             <Link
@@ -287,7 +287,7 @@ function AuthLayout({
                             fontSize: "14px",
                             marginTop: "50px",
                             textAlign: "center",
-                            "@media(min-width:992px)": {
+                            "@media(max-width:992px)": {
                               display: "none",
                             },
                           }}
@@ -390,7 +390,7 @@ function AuthLayout({
                               color:
                                 role === USER_ROLES.jobSeeker
                                   ? "#EEA23D"
-                                  : "#274593",
+                                  : "#eea23d",
                               cursor: "pointer",
                             }}
                           >

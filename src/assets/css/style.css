@@ -211,9 +211,10 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
 header {
   filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.05));
   background: #fff;
-  padding: 10.5px 0px;
+  padding: 15.5px 0px;
   position: fixed;
   width: 100%;
+  height: 80px;
   top: 0px;
   z-index: 4;
 }
@@ -537,7 +538,7 @@ header {
 .user-details p {
   font-weight: 400;
   font-size: 14px;
-overflow-wrap: break-word;
+  overflow-wrap: break-word;
   letter-spacing: 0.03em;
   color: #121212;
   font-family: "Poppins";
@@ -1414,8 +1415,12 @@ span.count {
     font-size: 18px;
   }
 
+  .spaceor span {
+    font-size: 12px;
+  }
+
   .content-box h5 {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .content-box p {
@@ -1951,12 +1956,12 @@ input.employersearch {
   }
 
   .register-des > a {
-    padding: 12px 15px;
-    border-radius: 16px;
-    -webkit-border-radius: 16px;
-    -moz-border-radius: 16px;
-    -ms-border-radius: 16px;
-    -o-border-radius: 16px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
   }
 
   .marquee h1 {
