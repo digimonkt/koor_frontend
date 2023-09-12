@@ -63,7 +63,8 @@ function RegistrationForm() {
         setIsLoading(false);
         formik.setErrors({
           email: res.error.errors.email,
-          mobileNumber: res.error.errors.mobile_number || res.error.errors.message,
+          mobileNumber:
+            res.error.errors.mobile_number || res.error.errors.message,
         });
       }
     },
@@ -84,7 +85,7 @@ function RegistrationForm() {
             <LabeledInput
               placeholder="Your Email"
               title="Email"
-              subtitle="No email? Register with mobile number!"
+              // subtitle="No email? Register with mobile number!"
               type="email"
               {...formik.getFieldProps("email")}
             />
