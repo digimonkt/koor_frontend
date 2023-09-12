@@ -518,8 +518,7 @@ span.arrowjobs svg {
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
-
-  color: #121212;
+  color: #000000;
   display: inline-block;
   margin-bottom: 5px;
 }
@@ -716,10 +715,18 @@ span.arrowjobs svg {
   width: 100%;
 }
 
-@media screen and (max-width:992px){
-  .my-jobs h2{font-size: 14px;}
-  .recent-content h4{white-space: normal;
-    word-break: break-all;}
+@media screen and (max-width: 992px) {
+  .my-jobs h2 {
+    font-size: 14px;
+  }
+  .recent-content h4 {
+    white-space: normal;
+    word-break: break-all;
+  }
+
+  .form-content label {
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
@@ -727,7 +734,6 @@ span.arrowjobs svg {
     border-left: none !important;
     padding-left: 0px !important;
   }
-
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
@@ -738,5 +744,4 @@ span.arrowjobs svg {
   .edit-button button {
     font-size: 11px !important;
   }
- 
 }
