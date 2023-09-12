@@ -254,3 +254,19 @@ export const storeProfileAnalyticsAPI = async (data) => {
   });
   return res;
 };
+
+export const settingUpdateAPI = async (notificationType) => {
+  const res = await api.request({
+    url: urlcat("v1/users/notification/settings/:notificationType", { notificationType }),
+    method: "PUT"
+  });
+  return res;
+};
+
+export const getSettingUpdateAPI = async () => {
+  const res = await api.request({
+    url: urlcat("v1/users/notification/settings"),
+    method: "GET"
+  });
+  return res;
+};
