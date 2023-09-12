@@ -8,7 +8,7 @@ function FilledButtonComponent({ className, title, onClick, ...rest }) {
   return (
     <Button
       className={`outline-login ${className} ${
-        role !== USER_ROLES.jobSeeker && " bluebtn"
+        role !== USER_ROLES.jobSeeker && "bluebtn"
       }`}
       onClick={(e) => (onClick ? onClick(e) : null)}
       {...rest}
