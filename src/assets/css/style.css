@@ -2005,4 +2005,8 @@ input.employersearch {
   .bottombar {
     font-size: 14px;
   }
+
+  .register-title span {
+    font-size: 12px;
+  }
 }

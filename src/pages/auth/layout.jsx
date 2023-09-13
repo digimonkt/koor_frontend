@@ -230,7 +230,12 @@ function AuthLayout({
                 },
               }}
             >
-              <Card sx={{ position: "relative", zIndex: 2 }}>
+              <Card
+                sx={{
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
                 <CardContent
                   sx={{
                     padding: `75px 60px ${!role ? "!important" : ""}`,
