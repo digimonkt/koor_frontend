@@ -478,6 +478,7 @@ function PostJobsComponent() {
                     <Grid container spacing={2}>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
+                          className="location-select"
                           placeholder="Country"
                           defaultValue=""
                           options={countries.data.map((country) => ({

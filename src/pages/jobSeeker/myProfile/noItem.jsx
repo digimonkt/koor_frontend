@@ -18,6 +18,7 @@ function NoItem({ icon, bgColor, color, description }) {
             width: "101px",
             height: "101px",
             color: { color: color || "#EEA23D" },
+            cursor: "default"
           },
         }}
       >

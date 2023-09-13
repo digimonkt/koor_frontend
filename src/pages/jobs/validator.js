@@ -18,7 +18,7 @@ export const validateCreateJobInput = Yup.object().shape({
   hasContract: Yup.boolean(),
   isContactEmail: Yup.boolean(),
   duration: Yup.number(),
-  experience: Yup.number().required("Experience is required"),
+  experience: Yup.number().typeError("Experience must be a number").required("Experience is required"),
   deadline: Yup.string()
     .required("Deadline is required")
     .test("isFuture", "Date Must be of Future", (value, context) => {

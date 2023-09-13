@@ -80,7 +80,7 @@ function ChatList() {
           {initialLoading ? (
             "Loading..."
           ) : !chatList.length ? (
-            <NoDataFoundAnimation title="You haven't engaged in any conversations with anyone yet." />
+              <NoDataFoundAnimation title="No conversation found." />
           ) : (
             chatList.map((chat) => {
               return (
