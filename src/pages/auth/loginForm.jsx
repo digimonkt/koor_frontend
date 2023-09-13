@@ -14,6 +14,7 @@ import { setSocialLoginError } from "@redux/slice/user";
 import { REGEX } from "@utils/constants/regex";
 import { setErrorToast } from "@redux/slice/toast";
 import { parsePhoneNumber } from "react-phone-number-input";
+import { SVG } from "@assets/svg";
 
 function LoginForm() {
   // const navigate = useNavigate();
@@ -72,8 +73,13 @@ function LoginForm() {
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Email"
-              title="Email"
-              subtitle="Your mobile phone or email"
+              title="Login"
+              subtitle={[
+                <>
+                  <SVG.HelpIcon className="Question-mark-icon" />
+                </>,
+                "Your mobile phone or email",
+              ]}
               data-cy="login-email"
               type="text"
               {...formik.getFieldProps("email")}

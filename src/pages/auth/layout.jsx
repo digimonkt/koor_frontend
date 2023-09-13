@@ -151,6 +151,7 @@ function AuthLayout({
       }
       dispatch(setSocialLoginError(""));
     }, [dispatch, location.pathname, location.search, navigate]);
+    console.log({ role });
     return (
       <div
         className={`register pb-0 pt-5 py-lg-5 ${
@@ -234,6 +235,10 @@ function AuthLayout({
                 sx={{
                   position: "relative",
                   zIndex: 2,
+                  borderRadius: "25px",
+                  "@media(max-width:992px)": {
+                    borderRadius: "25px 25px 0px 0px",
+                  },
                 }}
               >
                 <CardContent
@@ -394,9 +399,10 @@ function AuthLayout({
                             style={{
                               color:
                                 role === USER_ROLES.jobSeeker
-                                  ? "#EEA23D"
-                                  : "#eea23d",
+                                  ? "#eea23d"
+                                  : "#274593",
                               cursor: "pointer",
+                              marginLeft: "5px",
                             }}
                           >
                             {isLoginPage ? "Register" : "Login"}

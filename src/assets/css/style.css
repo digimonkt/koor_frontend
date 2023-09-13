@@ -371,6 +371,10 @@ header {
   padding-right: 16px !important;
 }
 
+.resiter-login-cards {
+  border-radius: 25px;
+}
+
 .menu.false svg path {
   fill: #1c1b1f !important;
 }
@@ -458,6 +462,8 @@ header {
 .text-gray {
   color: #848484;
   font-weight: 300;
+  display: flex;
+  align-items: center;
 }
 
 .form-control {
@@ -520,6 +526,9 @@ header {
   color: #848484;
   font-family: "Poppins";
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bottombar a {
@@ -1401,6 +1410,15 @@ span.count {
     width: 100%;
   }
 
+  .text-gray {
+    font-size: 14px;
+  }
+
+  .Question-mark-icon {
+    width: 20px;
+    height: 20px;
+  }
+
   .w-70 {
     width: 100% !important;
   }
@@ -1996,6 +2014,10 @@ input.employersearch {
 @media only screen and (max-width: 540px) {
   .content-box h5 {
     font-size: 28px;
+  }
+
+  .text-gray {
+    font-size: 12px;
   }
 
   .spaceor span {

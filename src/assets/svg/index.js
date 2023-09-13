@@ -110,6 +110,7 @@ import { ReactComponent as Warning } from "./warning.svg";
 import { ReactComponent as AvailableCredits } from "./generating_tokens.svg";
 import { ReactComponent as TimeIcon } from "./schedule.svg";
 import { ReactComponent as DownloadIcon } from "./download.svg";
+import { ReactComponent as HelpIcon } from "./help.svg";
 export const SVG = {
   BackArrow,
   MailIcon,
@@ -222,5 +223,6 @@ export const SVG = {
   Warning,
   AvailableCredits,
   TimeIcon,
-  DownloadIcon
+  DownloadIcon,
+  HelpIcon,
 };
