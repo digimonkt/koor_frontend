@@ -852,6 +852,10 @@ hr {
   width: 100%;
 }
 
+.location-select .MuiList-root .MuiMenu-list{
+  height: 50px !important;
+}
+
 .add-form-control::-webkit-input-placeholder {
   /* Edge */
   color: #808080;

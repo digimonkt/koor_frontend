@@ -259,6 +259,12 @@ function ChatBox() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+  // Function to count words
+  const countWords = (text) => {
+    const words = text.trim().split(/\s+/);
+    return words.length;
+  };
+
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -419,7 +425,7 @@ function ChatBox() {
                             )}
                             <div
                               className={
-                                message.attachment ? "" : "text-inline"
+                                message.attachment || countWords(message.message) > 10 ? "" : "text-inline"
                               }
                             >
                               <div>
