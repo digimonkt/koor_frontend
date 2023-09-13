@@ -199,14 +199,21 @@ function ApplyForTender() {
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
                   <p className="job-description">{details.description}</p>
-
+                  <div className={`${styles.infomore}`}>
+                    <h6 onClick={() => setHide(!hide)}>
+                      More
+                      <span className={`${hide ? styles.rotate : ""}`}>
+                        {<SVG.Downarrow />}
+                      </span>
+                    </h6>
+                  </div>
                   {hide ? (
                     <>
-                      <p>Please check out my attachements below..</p>
+                      <p className={styles.more_text_p}>Please check out my attachements below..</p>
                       {details.attachments.map((attachment) => {
                         return (
                           <div
-                            className={`${styles.downloadtext}`}
+                            className={styles.downloadtext}
                             key={attachment.id}
                           >
                             <span className="d-inline-flex">
@@ -215,7 +222,7 @@ function ApplyForTender() {
                             <a
                               href={generateFileUrl(attachment.path)}
                               target="_blank"
-                              className="m-0"
+                              className="ms-3 "
                               rel="noreferrer"
                             >
                               {attachment.title}
@@ -225,14 +232,6 @@ function ApplyForTender() {
                       })}
                     </>
                   ) : null}
-                  <div className={`${styles.infomore}`}>
-                    <h6 onClick={() => setHide(!hide)}>
-                      More
-                      <span className={`${hide ? styles.rotate : ""}`}>
-                        {<SVG.Downarrow />}
-                      </span>
-                    </h6>
-                  </div>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton

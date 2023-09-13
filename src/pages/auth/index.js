@@ -17,7 +17,7 @@ const registration = {
 const login = {
   title: "Login",
   subTitle: "Log in to Koor as...",
-  selectedRoleTitle: "Login as @role",
+  selectedRoleTitle: "Log in as @role",
   children: <LoginForm />,
   btnTitle: "Login",
   isRoleSelection: true,

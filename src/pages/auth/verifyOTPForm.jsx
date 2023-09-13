@@ -4,16 +4,19 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { LabeledOtpInput } from "@components/input";
 import { useFormik } from "formik";
 import { FilledButton } from "@components/button";
-import { VerifyOtpAPI } from "@api/user";
+import { SendOtpAPI, VerifyOtpAPI } from "@api/user";
 import urlcat from "urlcat";
 import { setUserRole } from "@redux/slice/user";
 import { ErrorMessage } from "@components/caption";
+import { setSuccessToast } from "@redux/slice/toast";
+import Loader from "@components/loader";
 function VerifyOTPForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams({});
 
   const { role, verifyEmail } = useSelector((state) => state.auth);
+  const [sendingOTP, setSendingOTP] = useState(false);
   //   const [loading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
 
@@ -52,7 +55,20 @@ function VerifyOTPForm() {
       }
     },
   });
-
+  const handleResendOTP = async () => {
+    setSendingOTP(true);
+    const payload = {
+      email: verifyEmail,
+      role
+    };
+    const res = await SendOtpAPI(payload);
+    if (res.remote === "success") {
+      setSendingOTP(false);
+      dispatch(setSuccessToast("OTP send successfully"));
+    } else {
+      dispatch(setSuccessToast("Network Error! Try again"));
+    }
+  };
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -68,6 +84,7 @@ function VerifyOTPForm() {
             ) : null}
           </div>
           <FilledButton type="submit" title="Submit" />
+          <FilledButton type="button" onClick={handleResendOTP} title={sendingOTP ? <Loader loading={sendingOTP} /> : "Resend OTP"} />
         </div>
       </form>
     </div>
