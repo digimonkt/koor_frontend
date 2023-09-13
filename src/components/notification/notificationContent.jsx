@@ -80,6 +80,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               borderBottom: 1,
               borderColor: "divider",
               pe: 4,
+              cursor: "default",
               "@media(max-width:600px)": { pe: 0 },
             }}
           >

@@ -115,7 +115,7 @@ const Skills = () => {
                 ))
               ) : (
                 <NoItem
-                  icon={<SVG.SkillsIcon />}
+                    icon={<SVG.SkillsIcon />}
                   description={
                     <p>
                       List your skills that you think will be useful for a jobs

@@ -65,6 +65,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 "@media (max-width:540px)": {
                   margin: "auto",
                 },
+                cursor: "default"
               },
             }}
           >

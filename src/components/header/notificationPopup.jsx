@@ -66,14 +66,14 @@ function NotificationPopup() {
         className="drop_menu"
       >
         <div ref={wrapperRef} id="notificationPopup">
-          <MenuItem sx={{ padding: "20px 15px 15px 15px" }}>
+          <MenuItem sx={{ padding: "20px 15px 15px 15px", cursor: "default" }}>
             <div className={styles.notification_heading_div}>
               <div>
                 <h3 className={styles.notification_heading}>Notifications</h3>
               </div>
               <div>
                 <SVG.CrossCircle
-                  style={{ width: "23px", height: "23px" }}
+                  style={{ width: "23px", height: "23px", cursor: "pointer" }}
                   onClick={handleClose}
                 />
               </div>

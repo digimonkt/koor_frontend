@@ -86,7 +86,7 @@ const JobPreferences = () => {
           }}
         >
           <h2>Job preferences</h2>
-          <Link to="/job_seeker/my-profile/job-criteria">
+          <Link to="/job_seeker/my-profile/job-criteria" style={{ height: "20px" }}>
             <span>More</span>
           </Link>
         </div>
