@@ -2,7 +2,7 @@ import { FormControl, MenuItem, Select, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { styled } from "@mui/material/styles";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { getProfileAnalyticsDataAPI } from "@api/jobSeeker";
 
 export const SelectBox = styled(Select)`
@@ -184,7 +184,7 @@ const AreaChart = () => {
             value={isSelect}
             onChange={handleChange}
             inputProps={{ "aria-label": "Without label" }}
-            IconComponent={KeyboardArrowUpIcon}
+            IconComponent={KeyboardArrowDownIcon}
             displayEmpty
           >
             {

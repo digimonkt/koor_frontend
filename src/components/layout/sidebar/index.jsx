@@ -122,7 +122,7 @@ function Sidebar(props) {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
-            top: "69px",
+            top: "80px",
             minHeight: "495px",
           },
         }}

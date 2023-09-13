@@ -46,7 +46,7 @@ function CategoryCard({ item, handleSelectedCategories }) {
           className={`ms-auto arrow-color ${showOptions ? "active" : null}`}
           onClick={handleShowOptions}
         >
-          <SVG.ArrowUpIcon />
+          <SVG.Downarrow />
         </span>
       </Stack>
       {showOptions && (

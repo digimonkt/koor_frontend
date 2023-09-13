@@ -68,7 +68,7 @@ function AllApplication() {
               <ApplicantCardSkeletonLoading key={loader} />
             ))
           ) : !recentApplication.length ? (
-            <NoDataFoundAnimation title="You haven't received any tender applications yet." />
+            <NoDataFoundAnimation title="You did not received any tender applications yet." />
           ) : (
             recentApplication.map((item, index) => (
               <ApplicantCard

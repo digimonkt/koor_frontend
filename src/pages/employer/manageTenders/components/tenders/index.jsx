@@ -7,14 +7,17 @@ import { useDispatch } from "react-redux";
 import { setTotalTenders } from "@redux/slice/employer";
 import TenderCard from "@components/tenderCard";
 import ApplicantList from "../applicantList";
+import { NoDataFoundAnimation } from "@components/animations";
+import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
 
 const Tenders = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [manageTenderList, setManageTenderList] = useState([]);
   const getTenderList = useCallback(async () => {
+    setIsLoading(true);
     const response = await getTenderAPI({ search });
     if (response.remote === "success") {
       setManageTenderList(response.data.results);
@@ -22,6 +25,7 @@ const Tenders = () => {
     } else {
       console.log(response.error);
     }
+    setIsLoading(false);
   }, [search]);
   useEffect(() => {
     getTenderList();
@@ -59,7 +63,45 @@ const Tenders = () => {
             </button>
           </Stack>
         </div>
-        {manageTenderList.map((tender, index) => (
+        {isLoading ? (
+          [1, 2, 3, 4, 5].map((loader) => {
+            return (
+              <React.Fragment key={loader}>
+                <Card
+                  sx={{
+                    "&.MuiCard-root": {
+                      boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                      borderRadius: "10px",
+                      mb: 3,
+                    },
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      "&.MuiCardContent-root": {
+                        padding: "25px 25px 25px",
+                      },
+                    }}
+                  >
+                    <TenderCardSkeletonLoader />
+                  </CardContent>
+                </Card>
+              </React.Fragment>
+            );
+          })
+        ) : !manageTenderList.length ? (
+          <Card
+            sx={{
+              "&.MuiCard-root": {
+                boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                borderRadius: "10px",
+                mb: 3,
+              },
+            }}
+          >
+            <NoDataFoundAnimation title="It appears that you haven't created any tender yet." />
+          </Card>
+        ) : manageTenderList.map((tender, index) => (
           <Card
             key={index}
             sx={{
