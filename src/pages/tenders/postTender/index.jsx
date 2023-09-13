@@ -620,6 +620,7 @@ const PostTender = () => {
                         },
                       }}
                       disabled={formik.isSubmitting}
+                      onClick={() => navigate("/employer/manage-tenders")}
                     />
                     <FilledButton
                       title={
