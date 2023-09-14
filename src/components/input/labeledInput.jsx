@@ -83,6 +83,7 @@ function LabeledInputComponent({
         </>
       ) : (
         <div className="showpassword" style={{ width, zIndex }}>
+          {/* className={rest.pageName !== "userLogin" ? "showpassword" : "loginshowpassword"} */}
           <input
             className="form-control"
             type={

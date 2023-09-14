@@ -503,6 +503,7 @@ span.arrowjobs svg {
   font-size: 10px;
   line-height: 15px;
   letter-spacing: 0.02em;
+  word-break: break-word;
 
   /* Black #121212 */
   color: #121212;
@@ -725,7 +726,7 @@ span.arrowjobs svg {
   }
 
   .form-content label {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 }
 
