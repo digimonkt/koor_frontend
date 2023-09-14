@@ -619,7 +619,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
             >
               {allFilters.map((filter) => {
                 return (
-                  <MenuItem key={filter.id}>
+                  <MenuItem key={filter.id} style={{ marginTop: "10px" }}>
                     <SearchButton
                       className={`${selectedFilter === filter.id
                         ? styles.btninActive

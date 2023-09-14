@@ -174,7 +174,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 <Grid item lg={6} xs={12}>
                   <DateInput
                     label="Start"
-                    views={["month", "year"]}
+                    views={["year", "month"]}
                     onChange={(e) => formik.setFieldValue("startDate", e)}
                     maxDate={dayjs()}
                     value={formik.values.startDate}
@@ -187,7 +187,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 <Grid item lg={6} xs={12}>
                   <DateInput
                     label="End"
-                    views={["month", "year"]}
+                    views={["year", "month"]}
                     onChange={(e) => formik.setFieldValue("endDate", e)}
                     value={formik.values.endDate}
                     minDate={formik.values.startDate}
