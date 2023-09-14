@@ -58,9 +58,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-          dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+        dayjs(jobDetails.isPlannedInterview).format(
+          "MMMM D, YYYY [at] h:mm A"
+        )
       );
     }
   }, [jobDetails]);
@@ -114,13 +114,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               </Link>
               {jobDetails.isApplied ? (
                 <Chip
-                  // variant="outlined"
-                  // color="success"
                   color={jobDetails.isRejected ? "error" : "success"}
                   size="small"
                   label={applicationStatus}
                   sx={{
-                    marginLeft: "5px",
+                    marginLeft: "5px", textTransform: "capitalize"
                   }}
                 />
               ) : null}
@@ -169,12 +167,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                    jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                        jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>
@@ -196,7 +194,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         <Grid item lg={logo ? 2 : 3} xs={12}>
           <div className="text-end mb-4 text-start">
             <SolidButton
-              style={{ textTransform: "lowercase" }}
+              style={{ textTransform: "lowercase", cursor: "default" }}
               title={
                 jobDetails?.expiredInDays > -1
                   ? `${jobDetails?.expiredInDays} days left`

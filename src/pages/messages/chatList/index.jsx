@@ -121,7 +121,7 @@ function ChatList() {
                       </h3>
                       <h6>{chat.jobTitle}</h6>
                       <p className={`${styles.lastMessage}`}>
-                        {chat.lastMessage.message}
+                        {chat.lastMessage.message.slice(0, 15)}
                       </p>
                     </div>
                   </Stack>

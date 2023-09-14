@@ -29,6 +29,7 @@
 .lotusimg {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 20px 20px 0 20px;
 }
 .lotusimg h3 {
