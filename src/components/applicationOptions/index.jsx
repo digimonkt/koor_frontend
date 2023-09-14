@@ -33,9 +33,8 @@ function ApplicationOptions({
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } = useSelector(
-    (state) => state.employer
-  );
+  const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } =
+    useSelector((state) => state.employer);
 
   const [isInterviewPlanned, setIsInterviewPlanned] = useState(false);
   const [isBlacklisted, setIsBlacklisted] = useState(false);
@@ -77,7 +76,9 @@ function ApplicationOptions({
 
     let applicationStatus = {};
 
-    const applicationsStatusCount = details.job ? totalApplicationsByJob.data[details.job?.id] : totalApplicationsByTender.data[details.tender?.id];
+    const applicationsStatusCount = details.job
+      ? totalApplicationsByJob.data[details.job?.id]
+      : totalApplicationsByTender.data[details.tender?.id];
     switch (action) {
       case JOB_APPLICATION_OPTIONS.blacklisted:
         // setIsBlacklisted(true);
@@ -121,7 +122,10 @@ function ApplicationOptions({
           data: applicationStatus,
         })
       );
-    } else if (details.tender && action !== JOB_APPLICATION_OPTIONS.blacklisted) {
+    } else if (
+      details.tender &&
+      action !== JOB_APPLICATION_OPTIONS.blacklisted
+    ) {
       dispatch(
         setTotalApplicationsByTender({
           tenderId: details.tender.id,

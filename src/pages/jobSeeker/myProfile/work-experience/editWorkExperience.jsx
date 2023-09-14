@@ -106,7 +106,8 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
           setLoading(false);
           handleSubmit();
         } else {
-          res.error.errors?.end_date && formik.setFieldError("endDate", "Please Enter Date");
+          res.error.errors?.end_date &&
+            formik.setFieldError("endDate", "Please Enter Date");
           setLoading(false);
         }
       }
@@ -240,10 +241,11 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                     toolbar: toolbarOptions,
                   }}
                   onChange={(value) => handleEditorValue(value)}
+                  className="work-experience-text-editor"
                   style={{
                     width: "100%",
                     marginTop: "20px",
-                    height: "170px"
+                    height: "170px",
                   }}
                 />
                 {formik.touched.description && formik.errors.description ? (

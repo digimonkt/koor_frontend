@@ -15,6 +15,7 @@ import { REGEX } from "@utils/constants/regex";
 import { setErrorToast } from "@redux/slice/toast";
 import { parsePhoneNumber } from "react-phone-number-input";
 import { SVG } from "@assets/svg";
+import { USER_ROLES } from "@utils/enum";
 
 function LoginForm() {
   // const navigate = useNavigate();
@@ -74,12 +75,14 @@ function LoginForm() {
             <LabeledInput
               placeholder="Your Email"
               title="Login"
-              subtitle={[
-                <>
-                  <SVG.HelpIcon className="Question-mark-icon" />
-                </>,
-                "Your mobile phone or email",
-              ]}
+              subtitle={
+                role !== USER_ROLES.jobSeeker && [
+                  <>
+                    <SVG.HelpIcon className="Question-mark-icon" />
+                  </>,
+                  "Your mobile phone or email",
+                ]
+              }
               data-cy="login-email"
               type="text"
               {...formik.getFieldProps("email")}
@@ -90,9 +93,11 @@ function LoginForm() {
           </div>
           <div className="form-group mb-3">
             <LabeledInput
+              style={{ height: "42px", position: "relative" }}
               placeholder="Your Password"
               title="Password"
               data-cy="login-password"
+              pageName="userLogin"
               type="password"
               zIndex={9999}
               {...formik.getFieldProps("password")}
@@ -113,6 +118,7 @@ function LoginForm() {
 
           <div className="my-4 text-center">
             <FilledButton
+              style={{ width: "150px", height: "46px" }}
               title={loading ? <Loader loading={loading} /> : "Login"}
               data-cy="login-button"
               type="submit"
