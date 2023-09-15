@@ -83,7 +83,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.jobSubCategories &&
-                  formik.errors.jobSubCategories ? (
+                formik.errors.jobSubCategories ? (
                   <ErrorMessage>{formik.errors.jobSubCategories}</ErrorMessage>
                 ) : null}
               </FormControl>
@@ -138,13 +138,13 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                 checked={formik.values.isPartTime}
               />
               <JobFormControl
-                control={<CheckboxInput />}
+                control={<CheckboxInput style={{ paddingLeft: "5px" }} />}
                 label="Full Time"
                 {...formik.getFieldProps("isFullTime")}
                 checked={formik.values.isFullTime}
               />
               <JobFormControl
-                control={<CheckboxInput />}
+                control={<CheckboxInput style={{ paddingLeft: "5px" }} />}
                 label="Contract"
                 {...formik.getFieldProps("hasContract")}
                 checked={formik.values.hasContract}
@@ -157,7 +157,9 @@ function JobSeekerFilter({ formik, footer, responsive }) {
         <h5 style={{ margin: "20px" }}>
           <b>{totalItems}</b> jobs found
         </h5>
-        <div style={{ marginTop: "0px" }} className={`${styles.savesearch}`}>{footer}</div>
+        <div style={{ marginTop: "0px" }} className={`${styles.savesearch}`}>
+          {footer}
+        </div>
       </div>
     </form>
   );

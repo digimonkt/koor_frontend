@@ -107,7 +107,7 @@ const Home = () => {
                 className={styles.back_img_div}
                 sx={{
                   marginTop: "68px",
-                  "@media (max-width:992px)": { marginTop: "0px" },
+                  "@media (max-width:992px)": { marginTop: "60px" },
                 }}
               >
                 <Box sx={{ width: "100%" }}>
@@ -148,12 +148,12 @@ const Home = () => {
                             justifyContent: "space-between",
                           }}
                         >
-                          <Grid>
+                          <Grid className="mb-2">
                             <InputSearch
                               onChange={(e) => setSearchValue(e.target.value)}
                             />
                           </Grid>
-                          <Grid>
+                          <Grid className="mb-2">
                             <SelectInput
                               value={categories}
                               onChange={(vl) => setCategories(vl.target.value)}
@@ -168,7 +168,7 @@ const Home = () => {
                               className={`${styles.category_select}`}
                             />
                           </Grid>
-                          <Grid>
+                          <Grid className="mb-2">
                             <SelectInput
                               value={location}
                               onChange={(vl) => setLocation(vl.target.value)}
@@ -181,7 +181,7 @@ const Home = () => {
                               className={`${styles.location_select}`}
                             />
                           </Grid>
-                          <Grid>
+                          <Grid className="mb-2">
                             <Button
                               fullWidth
                               variant="contained"

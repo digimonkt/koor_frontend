@@ -76,21 +76,19 @@
 }
 
 .location_select {
-  background-color: "#ffffff";
-  background-color: #fff !important;
+  background-color: #ffffff !important;
   width: 300px !important;
   height: 54px !important;
   border-radius: 10px !important;
-  padding: 8px 25px 8px 25px !important;
+  padding: 0px !important;
 }
 
 .category_select {
   background-color: "#ffffff" !important;
-  background-color: #fff !important;
   width: 300px !important;
   height: 54px !important;
   border-radius: 10px !important;
-  padding: 8px 25px 8px 25px !important;
+  padding: 0px !important;
 }
 
 .inputsearch_home {
@@ -401,10 +399,10 @@
 
     height: 54px !important;
     border-radius: 10px !important;
-    padding: 8px !important;
+    padding: 0px !important;
   }
   .location_select {
-    padding: 8px !important;
+    padding: 0px !important;
   }
   .bg_corav:before {
     bottom: 30px;
