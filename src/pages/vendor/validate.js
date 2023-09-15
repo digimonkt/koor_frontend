@@ -13,7 +13,7 @@ export const validateVendorAboutMe = Yup.object().shape({
       return isValidPhoneNumber(value.value);
     }
   ),
-  businessLicenseId: Yup.string().required("Business License Id is required"),
+  businessLicenseId: Yup.number().typeError("Business License Id must be a number ").required("Business License Id is required"),
   businessLicense: Yup.mixed().test(
     "elementPresent",
     "Business License is required",

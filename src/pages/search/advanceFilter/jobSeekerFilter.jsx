@@ -159,7 +159,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
         </h5>
         <div style={{ marginTop: "0px" }} className={`${styles.savesearch}`}>{footer}</div>
       </div>
-    </form >
+    </form>
   );
 }
 

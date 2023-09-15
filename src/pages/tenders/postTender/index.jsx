@@ -425,7 +425,7 @@ const PostTender = () => {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.categories &&
-                        formik.errors.categories ? (
+                          formik.errors.categories ? (
                           <ErrorMessage>
                             {formik.errors.categories}
                           </ErrorMessage>
@@ -467,7 +467,7 @@ const PostTender = () => {
                           {...formik.getFieldProps("opportunityType")}
                         />
                         {formik.touched.opportunityType &&
-                        formik.errors.opportunityType ? (
+                          formik.errors.opportunityType ? (
                           <ErrorMessage>
                             {formik.errors.opportunityType}
                           </ErrorMessage>
@@ -511,9 +511,10 @@ const PostTender = () => {
                             }
                             value={formik.values.startDate}
                             onBlur={formik.getFieldProps("startDate").onBlur}
+                            minDate={dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.startDate &&
-                          formik.errors.startDate ? (
+                            formik.errors.startDate ? (
                             <ErrorMessage>
                               {formik.errors.startDate}
                             </ErrorMessage>
@@ -540,6 +541,7 @@ const PostTender = () => {
                             }
                             value={formik.values.deadline}
                             onBlur={formik.getFieldProps("deadline").onBlur}
+                            minDate={formik.values.startDate || dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.deadline && formik.errors.deadline ? (
                             <ErrorMessage>
@@ -629,8 +631,8 @@ const PostTender = () => {
                             ? "Updating..."
                             : "Posting..."
                           : tenderId
-                          ? "Update the tender"
-                          : "POST THE TENDER"
+                            ? "Update the tender"
+                            : "POST THE TENDER"
                       }
                       type="submit"
                       disabled={formik.isSubmitting}
