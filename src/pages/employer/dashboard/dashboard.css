@@ -143,7 +143,7 @@ span.blueview {
   line-height: 18px;
   color: #121212 !important;
   opacity: 0.75;
-  padding: 5px!important;
+  padding: 5px !important;
 }
 .meets {
   font-family: "Poppins";
@@ -162,7 +162,7 @@ span.blueview {
 .recent-descrition p {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 3; 
+  -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
 }
@@ -509,7 +509,7 @@ span.arrowjobs svg {
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
-  color: #121212;
+  color: #000000;
   display: inline-block;
   margin-bottom: 5px;
 }
@@ -673,22 +673,37 @@ span.arrowjobs svg {
   /* Dark grey */
   color: #848484;
 }
-.mobile-recent-descrition{display: none;}
-@media screen and (max-width:992px) {
-  .card-count h1{font-size: 16px; line-height: normal;}
-  .card-count p{font-size: 10px;}
-  .recent-research span{border-left: none; padding-left: 0px;}
-  .recent-research{display: block;}
- 
+.mobile-recent-descrition {
+  display: none;
 }
-@media screen and (max-width:540px) {
-  .recent-descrition{display: none;}
-.mobile-recent-descrition{display: block;}
-.chiplabel {
-  font-size: 12px !important;
+@media screen and (max-width: 992px) {
+  .card-count h1 {
+    font-size: 16px;
+    line-height: normal;
+  }
+  .card-count p {
+    font-size: 10px;
+  }
+  .recent-research span {
+    border-left: none;
+    padding-left: 0px;
+  }
+  .recent-research {
+    display: block;
+  }
+}
+@media screen and (max-width: 540px) {
+  .recent-descrition {
+    display: none;
+  }
+  .mobile-recent-descrition {
+    display: block;
+  }
+  .chiplabel {
+    font-size: 12px !important;
 
-  padding: 5px 5px !important;
-}
+    padding: 5px 5px !important;
+  }
 }
 @media (min-width: 1200px) {
   .itemvalue ul {
@@ -725,8 +740,6 @@ span.arrowjobs svg {
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
-
-
   .chip-cricle {
     font-size: 12px !important;
   }
@@ -743,8 +756,6 @@ span.arrowjobs svg {
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
-
-
   .chip-cricle {
     font-size: 12px !important;
   }
@@ -763,15 +774,16 @@ span.arrowjobs svg {
   }
 }
 
-@media screen and (max-width:992px) {
-  .recent-content h4{
+@media screen and (max-width: 992px) {
+  .recent-content h4 {
     word-break: break-all;
-    white-space:normal;
+    white-space: normal;
     font-size: 18px;
   }
-  .recent-research{
+  .recent-research {
     font-size: 14px;
   }
-  .recent-research span{ font-size: 14px;}
-  
+  .recent-research span {
+    font-size: 14px;
+  }
 }

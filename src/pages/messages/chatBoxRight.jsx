@@ -383,7 +383,7 @@ function ChatBox() {
                       className={`${message.user.id === currentUser.id
                         ? "rightside"
                         : "leftside"
-                        } mt-3`}
+                        } mt-3 pe-2`}
                       key={message.id}
                     >
                       <Stack
@@ -432,7 +432,7 @@ function ChatBox() {
                                 {message.attachment
                                   ? renderAttachment(message.attachment)
                                   : ""}
-                                <p>{message.message}</p>
+                                <p style={{ wordBreak: "break-word" }}>{message.message}</p>
                               </div>
                               <div className={`ms-2 ${styles.chatTime}`}>
                                 {dayjs.utc(message.createdAt).local().fromNow()}

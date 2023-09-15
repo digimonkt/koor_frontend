@@ -13,6 +13,12 @@ body {
   width: 650px;
 }
 
+.work-experience-text-editor .ql-snow .ql-tooltip {
+  position: fixed !important;
+  left: 44rem !important;
+  top: 17.6rem !important;
+}
+
 .meets_div {
   display: flex;
 }
@@ -488,7 +494,7 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 12px;
+  top: 10px;
 }
 
 .spaceor {
@@ -827,10 +833,11 @@ hr {
 
 .add-content h2 {
   font-size: 28px;
-  margin-bottom: 20px;
   color: #121212;
   font-weight: 600;
+  line-height: 28px;
   margin-bottom: 30px;
+  word-break: break-word;
 }
 
 .add-form-control {
@@ -852,7 +859,7 @@ hr {
   width: 100%;
 }
 
-.location-select .MuiList-root .MuiMenu-list{
+.location-select .MuiList-root .MuiMenu-list {
   height: 50px !important;
 }
 

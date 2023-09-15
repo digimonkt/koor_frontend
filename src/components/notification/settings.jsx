@@ -25,7 +25,7 @@ function Settings() {
   };
   useEffect(() => {
     getNotificationSetting();
-  });
+  }, []);
   return (
     <div>
       <div>
