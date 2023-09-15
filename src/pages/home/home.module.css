@@ -55,12 +55,12 @@
 }
 
 .home_img_contents_p {
-  font-family: "Bahnschrift", sans-serif;
+  font-family: "Bahnschrift", sans-serif !important;
   font-size: 16px;
   font-weight: 600;
   color: #274593;
   line-height: 22px;
-  margin-left: 30px;
+  margin-left: 30px !important;
   letter-spacing: 2px;
   display: flex;
   align-items: center;
@@ -76,21 +76,19 @@
 }
 
 .location_select {
-  background-color: "#ffffff";
-  background-color: #fff !important;
-
+  background-color: #ffffff !important;
+  width: 300px !important;
   height: 54px !important;
   border-radius: 10px !important;
-  padding: 8px 25px 8px 25px !important;
+  padding: 0px !important;
 }
 
 .category_select {
   background-color: "#ffffff" !important;
-  background-color: #fff !important;
-
+  width: 300px !important;
   height: 54px !important;
   border-radius: 10px !important;
-  padding: 8px 25px 8px 25px !important;
+  padding: 0px !important;
 }
 
 .inputsearch_home {
@@ -106,12 +104,12 @@
 }
 
 .home_btn_btn {
-  font-family: "Bahnschrift", sans-serif;
+  font-family: "Bahnschrift", sans-serif !important;
   font-size: 18px !important;
   font-weight: 700 !important;
   line-height: 22px !important;
-
   height: 54px;
+  width: 209px !important;
   border-radius: 10px !important;
   background-color: #eea23d !important;
 }
@@ -282,7 +280,6 @@
   color: #cacaca;
 }
 
-
 .social_img {
   display: flex;
   justify-content: space-between;
@@ -345,16 +342,13 @@
 .appview {
   margin-top: -75px;
 }
-@media screen and (min-width:1440px) {
-  .back_img_div{  
-  
-    height:880px;
+@media screen and (min-width: 1440px) {
+  .back_img_div {
+    height: 880px;
     padding-bottom: 170px;
   }
-  
 }
 @media screen and (max-width: 992px) {
- 
   .bg_corav:before {
     bottom: 38px;
 
@@ -405,10 +399,10 @@
 
     height: 54px !important;
     border-radius: 10px !important;
-    padding: 8px !important;
+    padding: 0px !important;
   }
   .location_select {
-    padding: 8px !important;
+    padding: 0px !important;
   }
   .bg_corav:before {
     bottom: 30px;

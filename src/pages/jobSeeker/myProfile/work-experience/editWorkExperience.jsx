@@ -8,7 +8,7 @@ import { ErrorMessage } from "@components/caption";
 import { CheckboxInput, DateInput, LabeledInput } from "@components/input";
 import Loader from "@components/loader";
 import { FormControlReminder } from "@components/style";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { setSuccessToast } from "@redux/slice/toast";
 import {
   addWorkExperienceRecord,
@@ -173,34 +173,38 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
               </label>
               <Grid container spacing={2}>
                 <Grid item lg={6} xs={12}>
-                  <DateInput
-                    label="Start"
-                    views={["year", "month"]}
-                    onChange={(e) => formik.setFieldValue("startDate", e)}
-                    maxDate={dayjs()}
-                    value={formik.values.startDate}
-                    onBlur={formik.getFieldProps("startDate").onBlur}
-                  />
-                  {formik.touched.startDate && formik.errors.startDate ? (
-                    <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
-                  ) : null}
+                  <Box className="work_experience_date">
+                    <DateInput
+                      label="Start"
+                      views={["year", "month"]}
+                      onChange={(e) => formik.setFieldValue("startDate", e)}
+                      maxDate={dayjs()}
+                      value={formik.values.startDate}
+                      onBlur={formik.getFieldProps("startDate").onBlur}
+                    />
+                    {formik.touched.startDate && formik.errors.startDate ? (
+                      <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
+                    ) : null}
+                  </Box>
                 </Grid>
                 <Grid item lg={6} xs={12}>
-                  <DateInput
-                    label="End"
-                    views={["year", "month"]}
-                    onChange={(e) => formik.setFieldValue("endDate", e)}
-                    value={formik.values.endDate}
-                    minDate={formik.values.startDate}
-                    maxDate={dayjs()}
-                    onBlur={formik.getFieldProps("endDate").onBlur}
-                    disabled={
-                      formik.values.isPresent || !formik.values.startDate
-                    }
-                  />
-                  {formik.touched.endDate && formik.errors.endDate ? (
-                    <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
-                  ) : null}
+                  <Box className="work_experience_date">
+                    <DateInput
+                      label="End"
+                      views={["year", "month"]}
+                      onChange={(e) => formik.setFieldValue("endDate", e)}
+                      value={formik.values.endDate}
+                      minDate={formik.values.startDate}
+                      maxDate={dayjs()}
+                      onBlur={formik.getFieldProps("endDate").onBlur}
+                      disabled={
+                        formik.values.isPresent || !formik.values.startDate
+                      }
+                    />
+                    {formik.touched.endDate && formik.errors.endDate ? (
+                      <ErrorMessage>{formik.errors.endDate}</ErrorMessage>
+                    ) : null}
+                  </Box>
                 </Grid>
               </Grid>
               <FormControlReminder

@@ -26,10 +26,11 @@
 
 .slider_box {
   display: flex !important;
-  justify-content: center !important;
   align-items: center;
+  padding: 0px 0px 0px 20px;
   background-color: #feefd3;
   margin-top: 50px;
   border-radius: 10px;
   height: 100px;
+  width: 250px;
 }

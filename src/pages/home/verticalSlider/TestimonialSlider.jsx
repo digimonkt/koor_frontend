@@ -63,6 +63,7 @@ function TestimonialSlider({ testimonialList }) {
             arrows={false}
             fade={true}
             infinite={true}
+            // style={{ paddingTop: "120px" }}
           >
             {(testimonialList || []).map((item, index) => (
               <>
@@ -108,7 +109,7 @@ function TestimonialSlider({ testimonialList }) {
                   )}
 
                   {item.description.length > TESTIMONIAL_MAX_WORD &&
-                    showMore !== item.id ? (
+                  showMore !== item.id ? (
                     <Box
                       onClick={() => handleShowMore(item.id)}
                       sx={{
