@@ -5,10 +5,10 @@ import { SVG } from "@assets/svg";
 import { timeAgoFromNow } from "@utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
-function RejectedCard(props, handleClose) {
-    const jobId = props?.job?.id;
+function RejectedCard({ handleClose, createdAt, application }) {
+    const jobId = application?.job?.id;
     return (
-        <Link onClick={() => handleClose()} to={props?.job ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
+        <Link onClick={() => handleClose()} to={application?.job ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
         <div className={`${styles.content_div}`}>
             <div>
                 <Avatar
@@ -29,10 +29,10 @@ function RejectedCard(props, handleClose) {
             <div className={styles.title_text_div}>
                 <h2 className={styles.title}>
                     You've been Rejected for the Job
-                    <strong>"{props.application.job?.title}"</strong>
+                    <strong>"{application.job?.title}"</strong>
                 </h2>
                 <p style={{ marginTop: "5px" }} className={styles.duration}>
-                    {timeAgoFromNow(props.createdAt)}
+                    {timeAgoFromNow(createdAt)}
                 </p>
             </div>
         </div>

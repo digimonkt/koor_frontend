@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import "./style.css";
+import dayjs from "dayjs";
 function ApplicationOptions({
   details,
   interviewPlanned,
@@ -413,6 +414,7 @@ function ApplicationOptions({
               type="datetime-local"
               onChange={(e) => setInterviewTime(e.target.value)}
               value={interviewTime}
+              min={dayjs().format("YYYY-MM-DDTHH:mm")}
             />
           </div>
           <div className="dialog-reverse">
