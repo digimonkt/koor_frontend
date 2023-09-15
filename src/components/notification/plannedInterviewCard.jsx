@@ -6,9 +6,9 @@ import { timeAgoFromNow } from "@utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 
-function PlannedInterviewCard(props, handleClose) {
+function PlannedInterviewCard({ handleClose, application, createdAt }) {
     return (
-        <Link onClick={() => handleClose()} to={props?.job ? urlcat("/jobs/details/:jobId", { jobId: props?.job?.id }) : "#"}>
+        <Link onClick={() => handleClose()} to={application?.job ? urlcat("/jobs/details/:jobId", { jobId: application?.job?.id }) : "#"}>
             <div className={`${styles.content_div}`}>
                 <div>
                     <Avatar
@@ -29,10 +29,10 @@ function PlannedInterviewCard(props, handleClose) {
                 <div className={styles.title_text_div}>
                     <h2 className={styles.title}>
                         Congratulations! You have been scheduled for an interview for the job
-                        <strong>"{props.application.job?.title}"</strong>
+                        <strong>"{application.job?.title}"</strong>
                     </h2>
                     <p style={{ marginTop: "5px" }} className={styles.duration}>
-                        {timeAgoFromNow(props.createdAt)}
+                        {timeAgoFromNow(createdAt)}
                     </p>
                 </div>
             </div>
