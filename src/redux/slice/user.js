@@ -175,7 +175,7 @@ export const authSlice = createSlice({
     addEducationRecord: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
-        educationRecord: [...state.currentUser.educationRecord, action.payload],
+        educationRecord: [action.payload, ...state.currentUser.educationRecord],
       };
     },
     updateEducationRecord: (state, action) => {
@@ -204,7 +204,7 @@ export const authSlice = createSlice({
     addLanguageRecord: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
-        languages: [...state.currentUser.languages, action.payload],
+        languages: [action.payload, ...state.currentUser.languages],
       };
     },
     updateLanguageRecord: (state, action) => {
@@ -233,7 +233,7 @@ export const authSlice = createSlice({
     addWorkExperienceRecord: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
-        workExperiences: [...state.currentUser.workExperiences, action.payload],
+        workExperiences: [action.payload, ...state.currentUser.workExperiences],
       };
     },
     updateWorkExperienceRecord: (state, action) => {

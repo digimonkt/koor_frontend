@@ -323,7 +323,7 @@ function AuthLayout({
                           }}
                         >
                           <IconButton
-                            onClick={() => navigate(-1)}
+                              onClick={() => { dispatch(setUserRole("")); navigate(-1); }}
                             sx={{
                               padding: "0px",
                               marginRight: "10px",
