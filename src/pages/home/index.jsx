@@ -140,13 +140,20 @@ const Home = () => {
                           );
                         }}
                       >
-                        <Grid container spacing={2}>
-                          <Grid item xs={6} lg={3} sm={3}>
+                        <Grid
+                          container
+                          spacing={2}
+                          style={{
+                            padding: "0px 0px 0px 16px",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Grid>
                             <InputSearch
                               onChange={(e) => setSearchValue(e.target.value)}
                             />
                           </Grid>
-                          <Grid item xs={6} lg={4} sm={3}>
+                          <Grid>
                             <SelectInput
                               value={categories}
                               onChange={(vl) => setCategories(vl.target.value)}
@@ -161,7 +168,7 @@ const Home = () => {
                               className={`${styles.category_select}`}
                             />
                           </Grid>
-                          <Grid item xs={6} lg={3} sm={3}>
+                          <Grid>
                             <SelectInput
                               value={location}
                               onChange={(vl) => setLocation(vl.target.value)}
@@ -174,7 +181,7 @@ const Home = () => {
                               className={`${styles.location_select}`}
                             />
                           </Grid>
-                          <Grid item xs={6} lg={2} sm={3}>
+                          <Grid>
                             <Button
                               fullWidth
                               variant="contained"
