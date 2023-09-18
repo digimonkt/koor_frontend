@@ -151,7 +151,6 @@ function AuthLayout({
       }
       dispatch(setSocialLoginError(""));
     }, [dispatch, location.pathname, location.search, navigate]);
-    console.log({ role });
     return (
       <div
         className={`register pb-0 pt-5 py-lg-5 ${
