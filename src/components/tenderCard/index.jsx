@@ -167,7 +167,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         <Grid item lg={logo ? 2 : 3} xs={12}>
           <div className="text-end mb-4">
             <SolidButton
-              style={{ textTransform: "lowercase" }}
+              style={{ textTransform: "lowercase", cursor: "default" }}
               title={
                 tenderDetails?.expiredInDays > 0
                   ? `${tenderDetails?.expiredInDays} days left`
