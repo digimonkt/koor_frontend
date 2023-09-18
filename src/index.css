@@ -69,7 +69,9 @@
 } */
 
 .homepage .MuiSelect-select.MuiSelect-outlined.MuiInputBase-input {
-  background-color: #fff !important;
+  border-radius: 10px !important;
+  background-color: #ffffff !important;
+  padding: 15px 25px 15px 25px !important;
 }
 
 .MuiSelect-select .newstabs .MuiTabs.scroller {
@@ -438,10 +440,10 @@ img {
   object-fit: cover;
 }
 
-
-
 .testmonials-slider .slick-slide,
-.testmonials-slider .slick-slide[aria-hidden="true"]:not(.slick-cloned)~.slick-cloned[aria-hidden="true"] {
+.testmonials-slider
+  .slick-slide[aria-hidden="true"]:not(.slick-cloned)
+  ~ .slick-cloned[aria-hidden="true"] {
   transform: scale(0.8, 0.8);
   transition: all 0.4s ease-in-out;
   opacity: 0.5;
@@ -449,7 +451,9 @@ img {
 
 /* Active center slide (You can change anything here for cenetr slide)*/
 .testmonials-slider .slick-center,
-.testmonials-slider .slick-slide[aria-hidden="true"]:not([tabindex="-1"])+.slick-cloned[aria-hidden="true"] {
+.testmonials-slider
+  .slick-slide[aria-hidden="true"]:not([tabindex="-1"])
+  + .slick-cloned[aria-hidden="true"] {
   transform: scale(1.2);
 
   -webkit-transform: scale(1.2);
@@ -474,7 +478,6 @@ img {
   opacity: 1;
 }
 
-
 ul.listvertical {
   list-style: none;
   position: absolute;
@@ -485,7 +488,7 @@ ul.listvertical {
 
 ul.listvertical button {
   text-indent: -5000px;
-  background: #EFEFEF;
+  background: #efefef;
   border: 0px;
   width: 13px;
   height: 13px;
@@ -503,7 +506,7 @@ ul.listvertical li {
 }
 
 .active-footer {
-  color: #EEA23D !important;
+  color: #eea23d !important;
 }
 
 .not-active-footer {
@@ -511,7 +514,7 @@ ul.listvertical li {
 }
 
 .active-footer-tab {
-  color: #EEA23D !important;
+  color: #eea23d !important;
 }
 
 .not-active-footer-tab {

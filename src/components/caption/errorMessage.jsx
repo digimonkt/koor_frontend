@@ -5,7 +5,7 @@ function ErrorMessageComponent({ children }) {
   return (
     <Typography
       variant="caption"
-      style={{ color: "red" }}
+      style={{ color: "red", fontWeight: "600" }}
       sx={{
         "&.MuiTypography-root": {
           fontFamily: "Poppins",

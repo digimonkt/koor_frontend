@@ -13,10 +13,32 @@ body {
   width: 650px;
 }
 
+.slick-next {
+  position: absolute !important;
+  right: 0px !important;
+}
+
+.MuiFormControl-root {
+  margin: 0 !important;
+}
+
 .work-experience-text-editor .ql-snow .ql-tooltip {
   position: fixed !important;
   left: 44rem !important;
   top: 17.6rem !important;
+}
+
+.work_experience_date .MuiOutlinedInput-input {
+  padding: 8.5px 0px 8.5px 5px !important;
+  font-size: 14px !important;
+}
+
+.work_experience_date .MuiButtonBase-root.MuiIconButton-root {
+  padding: 0px 8px 0px 0px !important;
+}
+
+.work_experience_date .MuiInputBase-root.MuiOutlinedInput-root {
+  padding: 0px 8px !important;
 }
 
 .meets_div {
