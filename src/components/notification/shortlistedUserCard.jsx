@@ -5,10 +5,10 @@ import { SVG } from "@assets/svg";
 import { timeAgoFromNow } from "@utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
-function ShortlistedUserCard(props, handleClose) {
-  const jobId = props?.job?.id;
+function ShortlistedUserCard({ handleClose, application, createdAt }) {
+  const jobId = application?.job?.id;
   return (
-    <Link onClick={() => handleClose()} to={props?.job ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
+    <Link onClick={() => handleClose()} to={application.job.id ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
       <div className={`${styles.content_div}`}>
         <div>
           <Avatar
@@ -29,14 +29,14 @@ function ShortlistedUserCard(props, handleClose) {
         <div className={styles.title_text_div}>
           <h2 className={styles.title}>
             Congratulations! You've Been Shortlisted for the Job
-            <strong>"{props.application.job?.title}"</strong>
+            <strong>"{application.job?.title}"</strong>
           </h2>
           <p style={{ marginTop: "5px" }} className={styles.duration}>
-            {timeAgoFromNow(props.createdAt)}
+            {timeAgoFromNow(createdAt)}
           </p>
         </div>
       </div>
-    </Link >
+    </Link>
   );
 }
 

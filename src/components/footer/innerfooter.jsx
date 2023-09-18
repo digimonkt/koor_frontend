@@ -94,7 +94,7 @@ const InnerFooter = () => {
                       fontSize: "20px",
                       color: "#274593",
                       fontWeight: 600,
-                      fontFamily: "Poppins",
+                      fontFamily: "Bahnschrift",
                       "@media (max-width:992px)": {
                         fontSize: "16px",
                       },
@@ -118,8 +118,8 @@ const InnerFooter = () => {
                             sx={{
                               "&.MuiButtonBase-root": {
                                 fontFamily: "Poppins",
-                                fontSize: "16px",
-                                // color: "#121212",
+                                fontSize: "15px",
+                                color: "#121212",
                                 fontWeight: 400,
                                 "&:hover": {
                                   background: "transparent",
@@ -157,7 +157,7 @@ const InnerFooter = () => {
                     sx={{
                       fontSize: "20px",
                       fontWeight: 600,
-                      fontFamily: "Poppins",
+                      fontFamily: "Bahnschrift",
                       "@media (max-width:992px)": {
                         fontSize: "16px",
                       },
@@ -178,8 +178,9 @@ const InnerFooter = () => {
                             sx={{
                               "&.MuiButtonBase-root": {
                                 fontFamily: "Poppins",
-                                fontSize: "16px",
+                                fontSize: "15px",
                                 fontWeight: 400,
+                                color: "#121212",
                                 "&:hover": {
                                   background: "transparent",
                                   color: "#EEA23D",
@@ -219,7 +220,7 @@ const InnerFooter = () => {
                         fontSize: "20px",
                         color: "#274593",
                         fontWeight: 600,
-                        fontFamily: "Poppins",
+                        fontFamily: "Bahnschrift",
                         "@media (max-width:992px)": {
                           fontSize: "16px",
                         },
@@ -240,8 +241,9 @@ const InnerFooter = () => {
                               sx={{
                                 "&.MuiButtonBase-root": {
                                   fontFamily: "Poppins",
-                                  fontSize: "16px",
+                                  fontSize: "15px",
                                   fontWeight: 400,
+                                  color: "#121212",
                                   "&:hover": {
                                     background: "transparent",
                                     color: "#EEA23D",
@@ -280,7 +282,7 @@ const InnerFooter = () => {
                       fontSize: "20px",
                       color: "#274593",
                       fontWeight: 600,
-                      fontFamily: "Poppins",
+                      fontFamily: "Bahnschrift",
                       "@media (max-width:992px)": {
                         fontSize: "16px",
                       },
@@ -301,8 +303,9 @@ const InnerFooter = () => {
                             sx={{
                               "&.MuiButtonBase-root": {
                                 fontFamily: "Poppins",
-                                fontSize: "16px",
+                                fontSize: "15px",
                                 fontWeight: 400,
+                                color: "#121212",
                                 "&:hover": {
                                   background: "transparent",
                                   color: "#EEA23D",

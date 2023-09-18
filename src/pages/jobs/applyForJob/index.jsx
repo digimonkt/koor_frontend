@@ -253,7 +253,7 @@ const ApplyForJob = () => {
                   ) : null}
                   <div className={`${styles.infomore}`}>
                     <h6 onClick={() => setHide(!hide)}>
-                      More
+                      {!hide ? "More" : "Less"}
                       <span className={`${hide ? styles.rotate : ""}`}>
                         {<SVG.Downarrow />}
                       </span>
