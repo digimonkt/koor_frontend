@@ -81,12 +81,13 @@
 }
 
 .about_text_box {
-  margin-top: 11%;
+  margin-top: 6%;
   padding-left: 16px;
 }
 
 .about_banner_img {
-  width: 100%;
+  width: 447px;
+  height: 490px;
   justify-content: space-between;
   box-shadow: 15px 15px #feefd3;
   border-radius: 16px;
@@ -104,17 +105,19 @@
   background-color: #ffffff;
 }
 
-@media screen and (max-width:992px){
+@media screen and (max-width: 992px) {
   .btn_about_box {
     display: inherit;
-   
+
     margin-top: 0px;
     margin-left: 0px;
   }
-  .btn_about{font-size: 16px !important; padding: 15px 16px !important; }
+  .btn_about {
+    font-size: 16px !important;
+    padding: 15px 16px !important;
+  }
   .about_text_box {
     margin-top: 0%;
-  
   }
   .about_text_box h2 {
     font-size: 40px;

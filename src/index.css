@@ -89,6 +89,7 @@
   font-weight: 600 !important;
   line-height: 34px !important;
   color: #121212 !important;
+  opacity: 0.5;
   margin-left: 60px !important;
 }
 
@@ -109,6 +110,7 @@
   font-weight: 600 !important;
   line-height: 34px !important;
   color: #121212 !important;
+  opacity: 1 !important;
 }
 
 .scroll_tabs .MuiButtonBase-root.MuiTab-root {
