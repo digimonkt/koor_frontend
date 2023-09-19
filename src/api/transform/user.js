@@ -109,6 +109,8 @@ export const transformNotificationResponse = (data) => {
     message: data?.message || "",
     conversion: data?.conversation_id,
     userId: data?.message_sender,
+    tender: data.tender,
+    tenderApplication: data.tender_application,
     sender: {
       image: data?.sender?.img,
     },
