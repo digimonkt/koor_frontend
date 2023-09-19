@@ -30,7 +30,7 @@ const AboutUs = () => {
               spacing={{ xs: 2, sm: 3, lg: 10 }}
               direction={{ sm: "row-reverse", md: "row", lg: "row-reverse" }}
             >
-              <Grid item md={7} lg={7} xs={12}>
+              <Grid item md={8} lg={7} xs={12} sm={7}>
                 <Box className={styles.about_text_box}>
                   <h2>About Our Company</h2>
                   <p>
@@ -53,7 +53,7 @@ const AboutUs = () => {
                   </Link>
                 </Box>
               </Grid>
-              <Grid item md={5} lg={5} xs={12}>
+              <Grid item md={4} lg={5} xs={12} sm={5}>
                 {aboutImg.map((item, index) => (
                   <Box key={index}>
                     <img
