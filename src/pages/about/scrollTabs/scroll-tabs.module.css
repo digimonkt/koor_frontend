@@ -1,17 +1,20 @@
 /* scroll css */
 
-.scroll_tab_tab {
-  border: 1px solid #feefd3;
+.scroll_tabs_btn .scroll_tab_tab {
+  /* margin-right: 10px; */
+  color: #cacaca !important;
   border-radius: 50px !important;
-  /* background-color: #feefd3 !important; */
+  border: 1px solid #cacaca !important;
 }
 
 .scroll_tabs {
+  width: 100% !important;
   display: flex !important;
   justify-content: space-between !important;
-  width: 100% !important;
 }
-.active_color {
-  background-color: #feefd3!important;
-  color: orange!important;
+
+.scroll_tabs_btn .active_color {
+  background-color: #feefd3 !important;
+  color: orange !important;
+  border-color: orange !important;
 }

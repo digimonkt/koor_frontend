@@ -134,6 +134,34 @@ function ApplyForTender() {
       dispatch(setErrorToast("Something went wrong"));
     }
   };
+
+  function toDataURL(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
+  }
+  async function loadImageToDataURL(url) {
+    return new Promise((resolve, reject) => {
+      toDataURL(url, (dataURL) => {
+        resolve(dataURL);
+      });
+    });
+  }
+  const handleLoadImage = async (url) => {
+    const base64 = await loadImageToDataURL(url);
+    const element = document.createElement("a");
+    element.href = base64;
+    element.download = "Attachment";
+    element.click();
+  };
   useEffect(() => {
     getTenderDetails(params.tenderId);
   }, [params.tenderId]);
@@ -219,14 +247,13 @@ function ApplyForTender() {
                             <span className="d-inline-flex">
                               {<SVG.OrangeIcon />}
                             </span>
-                            <a
-                              href={generateFileUrl(attachment.path)}
-                              target="_blank"
-                              className="ms-3 "
-                              rel="noreferrer"
+                            <span
+                              className="ms-3"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => handleLoadImage(generateFileUrl(attachment.path))}
                             >
                               {attachment.title}
-                            </a>
+                            </span>
                           </div>
                         );
                       })}
@@ -352,8 +379,8 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                      ? "Update"
-                      : "Apply"
+                        ? "Update"
+                        : "Apply"
                   }
                   className={`${styles.applybtn}`}
                   type="submit"

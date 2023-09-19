@@ -99,7 +99,7 @@ const Tenders = () => {
               },
             }}
           >
-            <NoDataFoundAnimation title="It appears that you haven't created any tender yet." />
+            <NoDataFoundAnimation title="No tender found." />
           </Card>
         ) : manageTenderList.map((tender, index) => (
           <Card

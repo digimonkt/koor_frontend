@@ -361,13 +361,17 @@ const InnerFooter = () => {
               <Box
                 sx={{
                   marginLeft: "auto",
-                  "@media(max-width:992px)": { marginLeft: "0" },
+                  "@media(max-width:992px)": { marginLeft: "0", width: "100%" },
+                  // "@media(max-width:480px)": { width: "340px" },
+                  // "@media(max-width:375px)": { width: "340px" },
+                  // "@media(max-width:320px)": { width: "290px" },
                 }}
               >
                 <Typography
                   variant="h2"
                   sx={{
                     fontSize: "20px",
+                    "@media(max-width:480px)": { fontSize: "14px" },
                     fontFamily: "Bahnschrift",
                     fontWeight: "600",
                     mb: 1,
@@ -381,6 +385,7 @@ const InnerFooter = () => {
                     borderRadius: "66px",
                     border: "1px solid #D5E3F7",
                     overflow: "hidden",
+                    justifyContent: "space-between",
                     "& input": {
                       outline: "0px",
                       border: "0px",

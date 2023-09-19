@@ -351,12 +351,54 @@
 @media screen and (max-width: 992px) {
   .bg_corav:before {
     bottom: 38px;
-
     height: 50%;
   }
+
+  .stay_text_box h4 {
+    font-size: 20px;
+  }
+
+  .stay_text_box h2 {
+    font-size: 40px;
+  }
+
+  .stay_text_box p {
+    font-size: 16px;
+  }
+
+  .see_all_jobs {
+    font-size: 16px !important;
+  }
+
+  .popular_job {
+    font-size: 28px !important;
+  }
+
+  .home_img_contents_p {
+    font-size: 12px;
+  }
+
+  .home_img_contents_h5 {
+    font-size: 12px;
+  }
+
+  .headding {
+    top: 5rem;
+    position: relative;
+    padding-top: 40% !important;
+  }
+
+  .headding h2 {
+    font-size: 40px;
+  }
+
+  .headding h5 {
+    font-size: 20px;
+  }
+
   .home_powerfull_box {
     flex-direction: column;
-    margin: 0px;
+    margin: 0px 10px;
     padding: 15px;
   }
   .home_powerfull_h3 {
@@ -372,6 +414,18 @@
   header {
     display: block !important;
   }
+
+  .category_select {
+    width: 171px !important;
+  }
+
+  .location_select {
+    width: 171px !important;
+  }
+
+  .home_btn_btn {
+    width: 139px !important;
+  }
 }
 @media screen and (max-width: 480px) {
   .home_new_job_box {
@@ -379,6 +433,7 @@
     flex-direction: column;
     margin-left: 0px;
   }
+
   .appview {
     margin-top: 0px;
   }
@@ -387,6 +442,7 @@
     margin-bottom: 15px;
     width: 100%;
   }
+
   .headding h2 {
     font-size: 32px;
   }
@@ -396,14 +452,21 @@
   .category_select {
     background-color: "#ffffff" !important;
     background-color: #fff !important;
-
     height: 54px !important;
     border-radius: 10px !important;
     padding: 0px !important;
+    width: 142px !important;
+    margin-left: 4px;
   }
   .location_select {
     padding: 0px !important;
+    width: 142px !important;
   }
+
+  .home_btn_btn {
+    width: 142px !important;
+  }
+
   .bg_corav:before {
     bottom: 30px;
     height: 100%;
@@ -413,5 +476,21 @@
   }
   .home_testi_box {
     padding-bottom: 0px;
+  }
+
+  .back_img_div {
+    background-image: url(../../assets/images/banner3.png);
+    background-size: cover;
+    height: 800px;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 135px;
+  }
+  .headding {
+    top: 6rem;
+    position: relative;
   }
 }
