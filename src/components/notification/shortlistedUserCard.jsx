@@ -12,7 +12,6 @@ function ShortlistedUserCard({ handleClose, application, tender, tenderApplicati
   let newUrl = "#";
   let applicationFor = "";
   let applicationOriginName = "";
-  console.log();
   if (jobId) {
     newUrl = urlcat("/jobs/details/:jobId", { jobId });
     if (role === USER_ROLES.employer) {
