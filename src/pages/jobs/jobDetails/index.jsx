@@ -179,6 +179,33 @@ const JobDetails = () => {
       setRegistrationWarning(true);
     }
   };
+  function toDataURL(url, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
+  }
+  async function loadImageToDataURL(url) {
+    return new Promise((resolve, reject) => {
+      toDataURL(url, (dataURL) => {
+        resolve(dataURL);
+      });
+    });
+  }
+  const handleLoadImage = async (url) => {
+    const base64 = await loadImageToDataURL(url);
+    const element = document.createElement("a");
+    element.href = base64;
+    element.download = "Attachment";
+    element.click();
+  };
   return (
     <>
       <Container
@@ -292,15 +319,15 @@ const JobDetails = () => {
                         <span className="d-inline-flex">
                           {<SVG.OrangeIcon />}
                         </span>
-                        <a
-                          href={generateFileUrl(attachment.path)}
+                        <span
+                          onClick={() => handleLoadImage(generateFileUrl(attachment.path))}
                           // target="_blank"
+                          style={{ cursor: "pointer" }}
                           className="m-0"
                           rel="noreferrer"
-                          download={attachment.title}
                         >
                           {attachment.title}
-                        </a>
+                        </span>
                       </div>
                     );
                   })}
