@@ -69,6 +69,9 @@ const ScrollTabs = ({ faqCategory }) => {
             }}
           >
             <Box className={`${classes.scroll_tabs_btn}`}>
+              <Box className={classes.about_content_heading_2}>
+                Frequently Asked Questions
+              </Box>
               {(faqCategory || []).map((category, index) => (
                 <>
                   <OutlinedButton

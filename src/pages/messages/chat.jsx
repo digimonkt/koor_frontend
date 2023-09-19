@@ -14,7 +14,7 @@ function ChatComponent() {
           "&.MuiCard-root": {
             boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
             borderRadius: "10px",
-            height: "100%",
+            height: "auto",
           },
         }}
       >
@@ -31,7 +31,7 @@ function ChatComponent() {
             component="main"
             sx={{
               flexGrow: 1,
-              padding: "16px",
+              padding: "16px 16px 0px 16px",
               width: { sm: "75%" },
             }}
           >

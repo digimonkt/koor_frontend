@@ -26,7 +26,7 @@ const login = {
 const forgotPassword = {
   title: "Forget Password",
   subTitle: "Forget Password of...",
-  selectedRoleTitle: "Forget password of @role",
+  selectedRoleTitle: "Forget password",
   children: <ForgotPasswordForm />,
   isRoleSelection: true,
   options: false,
