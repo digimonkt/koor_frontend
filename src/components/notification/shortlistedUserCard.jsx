@@ -5,7 +5,8 @@ import { SVG } from "@assets/svg";
 import { timeAgoFromNow } from "@utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
-function ShortlistedUserCard({ handleClose, application, tender, tenderApplication, createdAt }) {
+import { USER_ROLES } from "@utils/enum";
+function ShortlistedUserCard({ handleClose, application, tender, tenderApplication, createdAt, role }) {
   const jobId = application?.job?.id;
   const tenderId = tender?.id;
   let newUrl = "#";
@@ -13,6 +14,15 @@ function ShortlistedUserCard({ handleClose, application, tender, tenderApplicati
   let applicationOriginName = "";
   if (jobId) {
     newUrl = urlcat("/jobs/details/:jobId", { jobId });
+    if (role === USER_ROLES.employer) {
+      newUrl = urlcat("/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+        {
+          applicationId: application.id,
+          role: USER_ROLES.employer,
+          jobId,
+        });
+    };
+
     applicationFor = "Job";
     applicationOriginName = application.job?.title;
   } else if (tenderId) {

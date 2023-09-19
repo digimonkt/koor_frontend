@@ -43,7 +43,7 @@ const ApplicantDetails = () => {
   };
   useEffect(() => {
     getApplicantDetails();
-  }, []);
+  }, [params.applicationId]);
   return (
     <>
       <div className="job-application">
