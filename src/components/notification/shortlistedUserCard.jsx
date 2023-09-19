@@ -5,10 +5,23 @@ import { SVG } from "@assets/svg";
 import { timeAgoFromNow } from "@utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
-function ShortlistedUserCard({ handleClose, application, createdAt }) {
+function ShortlistedUserCard({ handleClose, application, tender, tenderApplication, createdAt }) {
   const jobId = application?.job?.id;
+  const tenderId = tender?.id;
+  let newUrl = "#";
+  let applicationFor = "";
+  let applicationOriginName = "";
+  if (jobId) {
+    newUrl = urlcat("/jobs/details/:jobId", { jobId });
+    applicationFor = "Job";
+    applicationOriginName = application.job?.title;
+  } else if (tenderId) {
+    newUrl = urlcat("/tender/details/:tenderId", { tenderId });
+    applicationFor = "Tender";
+    applicationOriginName = tenderApplication?.tender?.title;
+  }
   return (
-    <Link onClick={() => handleClose()} to={application.job.id ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}>
+    <Link onClick={() => handleClose()} to={newUrl}>
       <div className={`${styles.content_div}`}>
         <div>
           <Avatar
@@ -28,8 +41,8 @@ function ShortlistedUserCard({ handleClose, application, createdAt }) {
         </div>
         <div className={styles.title_text_div}>
           <h2 className={styles.title}>
-            Congratulations! You've Been Shortlisted for the Job
-            <strong>"{application.job?.title}"</strong>
+            Congratulations! You've Been Shortlisted for the {applicationFor}
+            <strong> "{applicationOriginName}"</strong>
           </h2>
           <p style={{ marginTop: "5px" }} className={styles.duration}>
             {timeAgoFromNow(createdAt)}
