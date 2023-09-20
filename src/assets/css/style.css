@@ -1794,11 +1794,6 @@ span.count {
   height: calc(100vh - 353px);
 }
 
-body {
-  padding: 0px !important;
-  overflow-y: auto !important;
-}
-
 @media (min-width: 1536px) {
   .MuiContainer-root {
     max-width: 1780px !important;
@@ -1894,10 +1889,10 @@ a {
 }
 
 input.employersearch {
-  padding: 0px;
+  padding: 10px 10px 10px 15px;
   background: transparent;
   border: 0;
-  width: 65%;
+  width: 100%;
   font-family: "Bahnschrift";
   font-style: normal;
   font-weight: 400;

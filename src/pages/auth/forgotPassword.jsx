@@ -27,7 +27,7 @@ function ForgotPasswordForm() {
       setIsLoading(true);
       const payload = {
         email: values.email,
-        role
+        role,
       };
       const res = await SendOtpAPI(payload);
       if (res.remote === "success") {
@@ -48,6 +48,7 @@ function ForgotPasswordForm() {
           <div className="form-group mb-3">
             <LabeledInput
               placeholder="Your Email"
+              title="Enter your email address"
               type="email"
               disabled={loading}
               {...formik.getFieldProps("email")}

@@ -289,7 +289,7 @@ function AuthLayout({
                             </Link>
                           );
                         })}
-                        <Box
+                        {/* <Box
                           sx={{
                             color: "#848484",
                             fontFamily: "Poppins",
@@ -308,7 +308,7 @@ function AuthLayout({
                           >
                             Log in
                           </Link>
-                        </Box>
+                        </Box> */}
                       </div>
                     </div>
                   ) : (
