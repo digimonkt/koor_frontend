@@ -345,7 +345,6 @@ function ChatBox() {
             <Stack direction="row" spacing={2} justifyContent="space-between">
               <div className="headerbox">
                 <h3>{userDetails.name || userDetails.email}</h3>
-                {/* <p>Job Title</p> */}
               </div>
               <div>
                 <ApplicationOptions details={{ user: userDetails }} view />
