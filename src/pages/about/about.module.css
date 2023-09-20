@@ -63,6 +63,11 @@
   padding-left: 16px;
 }
 
+.about_social img {
+  width: 167px;
+  height: 49px;
+}
+
 .about_text_box p {
   font-family: "Poppins", sans-serif;
   font-size: 20px;
@@ -107,10 +112,29 @@
 
 @media screen and (max-width: 992px) {
   .btn_about_box {
-    display: inherit;
-
+    display: flex;
     margin-top: 0px;
     margin-left: 0px;
+  }
+
+  .about_black_box_text h1 {
+    text-align: center;
+    font-size: 24px !important;
+  }
+
+  .about_black_box_text p {
+    text-align: center;
+    font-size: 16px !important;
+  }
+
+  .about_social img {
+    width: 135px;
+    height: 39px;
+  }
+
+  .about_banner_img {
+    width: 236px;
+    height: 329px;
   }
   .btn_about {
     font-size: 16px !important;
@@ -124,7 +148,8 @@
   }
   .about_text_box p {
     font-size: 16px;
-    line-height: 22px;
+    line-height: 20px;
+    margin: 0px 0px 10px 0px;
   }
 }
 
@@ -150,6 +175,24 @@
   }
 
   .btn_about {
+    font-size: 14px !important;
+    text-align: center;
+    justify-content: center;
     margin-top: 10px !important;
+  }
+
+  .about_banner_img {
+    width: 284px;
+    height: 310px;
+  }
+
+  .about_black_box_text h1 {
+    text-align: center;
+    font-size: 20px !important;
+  }
+
+  .about_black_box_text p {
+    text-align: center;
+    font-size: 14px !important;
   }
 }

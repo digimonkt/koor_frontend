@@ -70,12 +70,15 @@ export const ResourceCard = ({ id, image, title, description }) => {
                     border: "0",
                     color: "#274593",
                     fontWeight: "500",
-                    fontSize: "16px",
+                    fontSize: "16px !important",
                     fontFamily: "Bahnschrift",
                     padding: "7px 30px",
                     background: "#D5E3F7",
 
                     "&:hover": { background: "#c7dcfa" },
+                    "@media(max-width:992px)": {
+                      fontSize: "14px !important"
+                    }
                   },
                 }}
               />

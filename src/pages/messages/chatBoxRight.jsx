@@ -169,30 +169,44 @@ function ChatBox() {
             src={generateFileUrl(attachment.path)}
             width={"400px"}
             rel="nofollow"
-            onClick={() => { setFullImg(generateFileUrl(attachment.path)); setOpen(true); }}
+            onClick={() => {
+              setFullImg(generateFileUrl(attachment.path));
+              setOpen(true);
+            }}
           />
         );
       case "video":
         return (
           <video width="320" height="240" controls>
-            <source src={generateFileUrl(attachment.path)} type="video/mp4"></source>
+            <source
+              src={generateFileUrl(attachment.path)}
+              type="video/mp4"
+            ></source>
           </video>
         );
       case "audio":
         return (
           <audio controls>
-            <source src={generateFileUrl(attachment.path)} type="audio/mp3"></source>
+            <source
+              src={generateFileUrl(attachment.path)}
+              type="audio/mp3"
+            ></source>
           </audio>
         );
       default:
-        return (<span className="me-2 d-inline-flex">
-          <a
-            href={generateFileUrl(attachment.path)}
-            target="_blank"
-            className="m-0"
-            rel="noreferrer"
-          > {attachment.title} <SVG.UploadIcon /></a>
-        </span>);
+        return (
+          <span className="me-2 d-inline-flex">
+            <a
+              href={generateFileUrl(attachment.path)}
+              target="_blank"
+              className="m-0"
+              rel="noreferrer"
+            >
+              {" "}
+              {attachment.title} <SVG.UploadIcon />
+            </a>
+          </span>
+        );
     }
   };
   // const formatSendMessage = () => {
@@ -215,7 +229,10 @@ function ChatBox() {
   // };
   const applyFormatting = (value) => {
     // Apply the selected formatting to the currently selected text
-    const formattedMessage = applyFormattingToSelection(newMessage, selectedFormat);
+    const formattedMessage = applyFormattingToSelection(
+      newMessage,
+      selectedFormat
+    );
     console.log("------");
     setNewMessage(formattedMessage);
     setAnchorEl(null); // Close the menu
@@ -380,10 +397,11 @@ function ChatBox() {
                 .map((message) => {
                   return (
                     <div
-                      className={`${message.user.id === currentUser.id
-                        ? "rightside"
-                        : "leftside"
-                        } mt-3 pe-2`}
+                      className={`${
+                        message.user.id === currentUser.id
+                          ? "rightside"
+                          : "leftside"
+                      } mt-3 pe-2`}
                       key={message.id}
                     >
                       <Stack
@@ -399,23 +417,25 @@ function ChatBox() {
                           <Avatar src={message.user.image} />
                         )}
                         <div
-                          className={`w-70 ${message.user.id === currentUser.id
-                            ? "text-right"
-                            : "text-left"
-                            }`}
+                          className={`w-70 ${
+                            message.user.id === currentUser.id
+                              ? "text-right"
+                              : "text-left"
+                          }`}
                         >
                           <div
-                            className={`message-text ${message.user.id === currentUser.id
-                              ? ""
-                              : "message-tex-2"
-                              }`}
+                            className={`message-text ${
+                              message.user.id === currentUser.id
+                                ? ""
+                                : "message-tex-2"
+                            }`}
                             style={{
                               background:
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                    ? "#D5E3F7"
-                                    : "#FEEFD3",
+                                  ? "#D5E3F7"
+                                  : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -425,14 +445,19 @@ function ChatBox() {
                             )}
                             <div
                               className={
-                                message.attachment || countWords(message.message) > 10 ? "" : "text-inline"
+                                message.attachment ||
+                                countWords(message.message) > 10
+                                  ? ""
+                                  : "text-inline"
                               }
                             >
                               <div>
                                 {message.attachment
                                   ? renderAttachment(message.attachment)
                                   : ""}
-                                <p style={{ wordBreak: "break-word" }}>{message.message}</p>
+                                <p style={{ wordBreak: "break-word" }}>
+                                  {message.message}
+                                </p>
                               </div>
                               <div className={`ms-2 ${styles.chatTime}`}>
                                 {dayjs.utc(message.createdAt).local().fromNow()}
@@ -452,7 +477,17 @@ function ChatBox() {
               <div className="chatinput">
                 <span className="attachment-icon">
                   <SVG.AttachIcon style={{ position: "relative" }} />
-                  <input type="file" onChange={handleAttachment} value={""} style={{ position: "absolute", opacity: "0", right: "45.5rem", width: "35px" }} />
+                  <input
+                    type="file"
+                    onChange={handleAttachment}
+                    value={""}
+                    style={{
+                      position: "absolute",
+                      opacity: "0",
+                      right: "45.5rem",
+                      width: "35px",
+                    }}
+                  />
                 </span>
                 <LabeledInput
                   placeholder="Write a message…"
@@ -461,7 +496,10 @@ function ChatBox() {
                   value={newMessage}
                   onChange={(e) => {
                     if (selectedFormat) {
-                      const formattedText = applyFormattingToAll(e.target.value, selectedFormat);
+                      const formattedText = applyFormattingToAll(
+                        e.target.value,
+                        selectedFormat
+                      );
                       setNewMessage(formattedText);
                     } else {
                       setNewMessage(e.target.value);
@@ -483,7 +521,13 @@ function ChatBox() {
                   aria-controls={open ? "basic-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
-                  style={{ border: "1px solid", width: "40px", height: "40px", borderRadius: "100%" }}
+                  style={{
+                    border: "1px solid",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "100%",
+                    marginTop: "3px",
+                  }}
                   onClick={handleMenuOpen} // Open the menu when the IconButton is clicked
                 >
                   <MoreHorizIcon />
@@ -493,13 +537,28 @@ function ChatBox() {
                   open={Boolean(anchorEl)}
                   onClose={handleMenuClose}
                 >
-                  <MenuItem onClick={() => { setSelectedFormat("bold"); setAnchorEl(null); }}>
+                  <MenuItem
+                    onClick={() => {
+                      setSelectedFormat("bold");
+                      setAnchorEl(null);
+                    }}
+                  >
                     <FormatBoldIcon />
                   </MenuItem>
-                  <MenuItem onClick={() => { setSelectedFormat("italic"); setAnchorEl(null); }}>
+                  <MenuItem
+                    onClick={() => {
+                      setSelectedFormat("italic");
+                      setAnchorEl(null);
+                    }}
+                  >
                     <FormatItalicIcon />
                   </MenuItem>
-                  <MenuItem onClick={() => { setSelectedFormat("underline"); setAnchorEl(null); }}>
+                  <MenuItem
+                    onClick={() => {
+                      setSelectedFormat("underline");
+                      setAnchorEl(null);
+                    }}
+                  >
                     <FormatUnderlinedIcon />
                   </MenuItem>
                 </Menu>

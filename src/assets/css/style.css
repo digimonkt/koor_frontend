@@ -1392,13 +1392,17 @@ span.count {
 }
 
 .meassagebox {
-  height: calc(100vh - 305px);
+  height: calc(100vh - 255px);
 }
 
 .chatinput {
   display: flex;
   align-items: center;
   width: 100%;
+}
+
+.chatinput .attachment-icon {
+  margin-top: 3px;
 }
 
 .chatinput textarea {
@@ -1412,9 +1416,10 @@ span.count {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-
   color: #848484;
   height: 40px;
+  margin-left: 10px;
+  border: 1px solid #848484;
 }
 
 .bottomnav {
