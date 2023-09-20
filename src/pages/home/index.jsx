@@ -124,8 +124,8 @@ const Home = () => {
                       className={styles.headding}
                       sx={{
                         paddingTop: "26%",
-                        "@media(max-width:992px)": { paddingTop: "35%" },
-                        "@media(max-width:480px)": { paddingTop: "90%" },
+                        // "@media(max-width:992px)": { paddingTop: "40%" },
+                        // "@media(max-width:480px)": { paddingTop: "90%" },
                       }}
                     >
                       <h2>Find your dream job</h2>
@@ -143,6 +143,11 @@ const Home = () => {
                         <Grid
                           container
                           spacing={2}
+                          sx={{
+                            "@media(max-width:480px)": {
+                              padding: "0px 0px 0px 14px !important",
+                            },
+                          }}
                           style={{
                             padding: "0px 0px 0px 16px",
                             justifyContent: "space-between",
@@ -153,7 +158,7 @@ const Home = () => {
                               onChange={(e) => setSearchValue(e.target.value)}
                             />
                           </Grid>
-                          <Grid className="mb-2">
+                          <Grid className="mb-2 ">
                             <SelectInput
                               value={categories}
                               onChange={(vl) => setCategories(vl.target.value)}
@@ -168,7 +173,7 @@ const Home = () => {
                               className={`${styles.category_select}`}
                             />
                           </Grid>
-                          <Grid className="mb-2">
+                          <Grid className="mb-2 ">
                             <SelectInput
                               value={location}
                               onChange={(vl) => setLocation(vl.target.value)}
@@ -428,9 +433,10 @@ const Home = () => {
                       lg={7}
                       sm={7}
                       sx={{
-                        padding: "50px 0px",
+                        padding: "0px 0px",
+                        marginBottom: "-5px",
                         "@media (max-width:480px)": {
-                          padding: "50px 0px 0px",
+                          padding: "0px 0px 0px",
                         },
                       }}
                     >

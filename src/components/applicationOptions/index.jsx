@@ -361,6 +361,7 @@ function ApplicationOptions({
             <div
               style={{
                 marginLeft: "15px",
+                wordBreak: "break-all"
               }}
             >
               {details.user.name || details.user.email}

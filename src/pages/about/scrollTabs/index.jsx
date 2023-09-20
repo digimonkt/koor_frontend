@@ -1,4 +1,3 @@
-
 import { Box } from "@mui/material";
 import Accordian from "../accordion";
 import { TabContext, TabList } from "@mui/lab";
@@ -62,26 +61,41 @@ const ScrollTabs = ({ faqCategory }) => {
             value={value}
             variant="scrollable"
             scrollButtons="auto"
-            className="scroll_tabs"
+            className={`${classes.scroll_tabs} scroll_tabs`}
             sx={{
               "& .MuiButtonBase-root.MuiTab-root": {
                 margin: "0px 5px !important",
               },
             }}
           >
-            {(faqCategory || []).map((category, index) =>
-            (
-              <>
-                <OutlinedButton className={(activeCategory === category.id) ? classes.active_color : ""} title={category.title} {...a11yProps(index)} onClick={() => handleFAQQuestion(category.role, category.id)} />
-              </>
-            ))}
+            <Box className={`${classes.scroll_tabs_btn}`}>
+              <Box className={classes.about_content_heading_2}>
+                Frequently Asked Questions
+              </Box>
+              {(faqCategory || []).map((category, index) => (
+                <>
+                  <OutlinedButton
+                    className={
+                      activeCategory === category.id
+                        ? classes.active_color
+                        : classes.scroll_tab_tab
+                    }
+                    title={category.title}
+                    {...a11yProps(index)}
+                    onClick={() =>
+                      handleFAQQuestion(category.role, category.id)
+                    }
+                  />
+                </>
+              ))}
+            </Box>
           </TabList>
-          {(faqCategory || []).map((category, index) =>
-          (<>
-            <TabPanel value={value} index={index}>
-              <Accordian faqCategory={faqCategory} />
-            </TabPanel>
-          </>
+          {(faqCategory || []).map((category, index) => (
+            <>
+              <TabPanel value={value} index={index}>
+                <Accordian faqCategory={faqCategory} />
+              </TabPanel>
+            </>
           ))}
         </TabContext>
       </Box>

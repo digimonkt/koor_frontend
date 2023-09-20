@@ -151,7 +151,6 @@ function AuthLayout({
       }
       dispatch(setSocialLoginError(""));
     }, [dispatch, location.pathname, location.search, navigate]);
-    console.log({ role });
     return (
       <div
         className={`register pb-0 pt-5 py-lg-5 ${
@@ -323,7 +322,10 @@ function AuthLayout({
                           }}
                         >
                           <IconButton
-                              onClick={() => { dispatch(setUserRole("")); navigate(-1); }}
+                            onClick={() => {
+                              dispatch(setUserRole(""));
+                              navigate(-1);
+                            }}
                             sx={{
                               padding: "0px",
                               marginRight: "10px",

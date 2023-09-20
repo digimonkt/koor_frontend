@@ -32,8 +32,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       } else {
         notificationResult = notificationData.filter((notification) => notification.notificationType === type);
       }
-      const FilterData = notificationResult;
-      setFilterData(FilterData);
+      const filteredData = notificationResult;
+      setFilterData(filteredData);
     };
     setSection(newValue);
     switch (newValue) {
@@ -67,7 +67,6 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   useEffect(() => {
     getNotifications();
   }, [filterByDate, section]);
-
   return (
     <div style={{ width: "100%" }}>
       <Box sx={{ width: "100%", typography: "body1" }}>
@@ -86,7 +85,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
           >
             <TabList className="tab_list" onChange={handleChangeSection}>
               <Tab label="All" className={styles.tabs_btn} value="all" />
-              <Tab label="Jobs" className={styles.tabs_btn} value="jobs" />
+              <Tab label={(role === "vendor") ? "Tenders" : "Jobs"} className={styles.tabs_btn} value={(role === "vendor") ? "Tenders" : "jobs"} />
               <Tab
                 label="Message"
                 className={styles.tabs_btn}

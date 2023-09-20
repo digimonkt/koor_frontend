@@ -242,6 +242,7 @@ const PostTender = () => {
       navigate(urlcat("../employer/manage-tenders"));
     }
   }, []);
+  console.log(formik.values.attachmentsRemove);
   return (
     <div className="job-application">
       <Card
@@ -577,6 +578,12 @@ const PostTender = () => {
                           ...formik.values.attachmentsRemove,
                           file.id,
                         ]);
+                        formik.setFieldValue(
+                          "attachments",
+                          formik.values.attachments.filter(
+                            (attachment) => attachment.path !== file.path
+                          )
+                        );
                       } else {
                         formik.setFieldValue(
                           "attachments",

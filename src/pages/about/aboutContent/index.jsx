@@ -93,8 +93,16 @@ const AboutContent = () => {
                           sx={{
                             "& .MuiButtonBase-root.MuiTab-root": {
                               "@media(max-width:992px)": {
+                                fontSize: "24px !important",
+                                marginLeft: "20px !important",
+                                marginRight: "20px !important",
+                                paddingLeft: "5px",
+                                paddingRight: "5px",
+                              },
+                              "@media(max-width:480px)": {
                                 fontSize: "16px !important",
                                 marginLeft: "0px !important",
+                                marginRight: "0px !important",
                                 paddingLeft: "5px",
                                 paddingRight: "5px",
                               },
@@ -106,9 +114,25 @@ const AboutContent = () => {
                             },
                           }}
                         >
-                          <Tab label="Job Seeker" onClick={() => handleFAQCategory(USER_ROLES.jobSeeker)} {...a11yProps(0)} />
-                          <Tab label="Employer" onClick={() => handleFAQCategory(USER_ROLES.employer)} {...a11yProps(1)} />
-                          <Tab label="Vendor" onClick={() => handleFAQCategory(USER_ROLES.vendor)} {...a11yProps(2)} />
+                          <Tab
+                            label="Job Seeker"
+                            onClick={() =>
+                              handleFAQCategory(USER_ROLES.jobSeeker)
+                            }
+                            {...a11yProps(0)}
+                          />
+                          <Tab
+                            label="Employer"
+                            onClick={() =>
+                              handleFAQCategory(USER_ROLES.employer)
+                            }
+                            {...a11yProps(1)}
+                          />
+                          <Tab
+                            label="Vendor"
+                            onClick={() => handleFAQCategory(USER_ROLES.vendor)}
+                            {...a11yProps(2)}
+                          />
                         </Tabs>
                       </Box>
                     </Box>

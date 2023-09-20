@@ -42,5 +42,23 @@
     }
     .imgSize{
         width: 400px !important;
-        height: 300px;
+        height: 300px !important;
+      }
+
+      @media screen and (max-width: 992px) {
+        .imgSize{
+            width: 648px !important;
+        }
+      }
+
+      @media screen and (max-width: 480px){
+        .heddingTitle{
+            font-size: 24px;
+        }
+        .content p{
+            font-size: 12px;
+        }
+        .content h3 {
+            font-size: 18px;
+        }
       }
