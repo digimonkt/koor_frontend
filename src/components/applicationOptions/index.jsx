@@ -43,6 +43,7 @@ function ApplicationOptions({
   const [isShortlisted, setIsShortlisted] = useState(false);
 
   const [blackListReason, setBlackListReason] = useState("");
+  const [invalidPlannedInterviewAlert, setInvalidPlannedInterviewAlert] = useState("");
   const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
   const [interviewTime, setInterviewTime] = useState("");
   const [isBlacklisting, setIsBlacklisting] = useState(false);
@@ -68,6 +69,7 @@ function ApplicationOptions({
     }
   };
   const handlerChangeApplicationStatus = async (action) => {
+    console.log({ interviewTime });
     const data = { reason: blackListReason, interview_at: interviewTime };
     for (const key in data) {
       if (!data[key]) {
@@ -181,7 +183,7 @@ function ApplicationOptions({
               style={{
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
-              onClick={() => setIsInterviewPlanning(true)}
+              onClick={() => { setInvalidPlannedInterviewAlert(""); setIsInterviewPlanning(true); }}
             >
               <SVG.EventIcon className="application-option-icon" />
               <span>
@@ -413,20 +415,24 @@ function ApplicationOptions({
           <div className="dialog-reason">
             <LabeledInput
               type="datetime-local"
-              onChange={(e) => setInterviewTime(e.target.value)}
+              onChange={(e) => { setInterviewTime(e.target.value); setInvalidPlannedInterviewAlert(""); }}
               value={interviewTime}
               min={dayjs().format("YYYY-MM-DDTHH:mm")}
             />
           </div>
+          <div style={{ color: "red" }}>{invalidPlannedInterviewAlert}</div>
           <div className="dialog-reverse">
             <FilledButton
               title={loading ? <Loader loading={loading} /> : "submit"}
               disabled={loading}
               onClick={() => {
                 if (interviewTime) {
+                  setInvalidPlannedInterviewAlert("");
                   handlerChangeApplicationStatus(
                     JOB_APPLICATION_OPTIONS.plannedInterviews
                   );
+                } else {
+                  setInvalidPlannedInterviewAlert("Please select date and time");
                 }
               }}
             />

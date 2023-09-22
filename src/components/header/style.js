@@ -5,7 +5,6 @@ export const SearchCategory = styled(Stack)(() => ({
   border: "1px solid #CACACA",
   background: "#fff",
   borderRadius: "50px",
-  padding: "10px 10px 10px 25px",
   height: "37px",
   width: "320px",
 }));

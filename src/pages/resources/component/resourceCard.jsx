@@ -30,7 +30,7 @@ export const ResourceCard = ({ id, image, title, description }) => {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item lg={4} xs={12}>
+          <Grid item lg={5} xs={12}>
             <div className={`${styles.imgbox}`}>
               <img
                 alt=""
@@ -40,7 +40,7 @@ export const ResourceCard = ({ id, image, title, description }) => {
               />
             </div>
           </Grid>
-          <Grid item lg={8} xs={12}>
+          <Grid item lg={7} xs={12}>
             <div className={`${styles.content}`}>
               <h3>{title}</h3>
               {removeImagesFromHTMLArray(description)?.map(
@@ -77,8 +77,8 @@ export const ResourceCard = ({ id, image, title, description }) => {
 
                     "&:hover": { background: "#c7dcfa" },
                     "@media(max-width:992px)": {
-                      fontSize: "14px !important"
-                    }
+                      fontSize: "14px !important",
+                    },
                   },
                 }}
               />

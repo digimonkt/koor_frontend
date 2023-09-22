@@ -191,10 +191,10 @@
 }
 
 .content_div span {
- font-size: 18px;
- font-weight: 400;
- line-height: 27px;
- font-family: "Poppins", sans-serif !important;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 27px;
+  font-family: "Poppins", sans-serif !important;
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
@@ -263,59 +263,59 @@
     background-color: #ffffff !important;
   }
 }
-@media screen and (max-width:992px) {
-  .resource_heading { 
+@media screen and (max-width: 992px) {
+  .resource_heading {
     line-height: 40px !important;
   }
 
-  .articles_heading{
+  .articles_heading {
     font-size: 28px;
   }
 
-  .resource_banner{
+  .resource_banner {
     width: 336px;
     height: 240px;
   }
 
-  .resource_text{
+  .resource_text {
     font-size: 16px !important;
-     margin-top: 5px !important;
-    }
-
-  .resource_share_p{
-    margin-top: 5px !important;
-     font-size: 16px !important;
-  }
-
-  .resource_social_box{
     margin-top: 5px !important;
   }
 
-  .content_heading{
+  .resource_share_p {
+    margin-top: 5px !important;
+    font-size: 16px !important;
+  }
+
+  .resource_social_box {
+    margin-top: 5px !important;
+  }
+
+  .content_heading {
     padding-top: 35px;
   }
 }
-@media screen and (max-width:480px) {
-  .resource_banner{
+@media screen and (max-width: 480px) {
+  .resource_banner {
     margin-top: 0px !important;
   }
-  
-  .content_heading{
+
+  .content_heading {
     padding-top: 0px;
   }
 
-  .content_div{
+  .content_div {
     margin-top: 30px;
   }
 
-  .content_sub_head{
+  .content_sub_head {
     margin-top: 24px;
   }
 
-  .articles{
+  .articles {
     margin-top: 35px !important;
-     padding: 33px 0px !important;
-    }
+    padding: 33px 0px !important;
+  }
 }
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
   .resource_social_box {
@@ -429,7 +429,7 @@
     margin-top: 40px;
   }
 
-  .resource_banner{
+  .resource_banner {
     width: 320px;
     height: 212px;
   }
@@ -462,7 +462,8 @@
   }
 
   .resource_back_box {
-    background-size: 100% 9% !important;
+    background-image: url(../../assets/images/mobile-back.png);
+    background-size: 100% 19% !important;
   }
 
   .card_title {

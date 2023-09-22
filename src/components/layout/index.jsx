@@ -24,7 +24,7 @@ function Layout() {
     <Box
       sx={{
         display: "flex",
-        marginTop: "60px",
+        marginTop: "80px",
         minHeight: "93vh",
         "@media(max-width:992px)": {
           display: "block",

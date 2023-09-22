@@ -91,8 +91,8 @@
 }
 
 .about_banner_img {
-  width: 447px;
-  height: 490px;
+  max-width: 447px;
+  height: 489px;
   justify-content: space-between;
   box-shadow: 15px 15px #feefd3;
   border-radius: 16px;
@@ -128,13 +128,13 @@
   }
 
   .about_social img {
-    width: 135px;
+    max-width: 135px;
     height: 39px;
   }
 
   .about_banner_img {
-    width: 236px;
-    height: 329px;
+    max-width: 236.21px;
+    height: 329.38px;
   }
   .btn_about {
     font-size: 16px !important;
@@ -182,13 +182,17 @@
   }
 
   .about_banner_img {
-    width: 284px;
-    height: 310px;
+    max-width: 284.23px;
+    height: 310.06px;
   }
 
   .about_black_box_text h1 {
     text-align: center;
     font-size: 20px !important;
+  }
+
+  .about_social {
+    padding: 0;
   }
 
   .about_black_box_text p {
