@@ -1,6 +1,6 @@
 import { USER_ROLES } from "@utils/enum";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Divider, Stack } from "@mui/material";
 import styles from "../message.module.css";
 import { getConversationListAPI } from "@api/chat";
@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { WebSocketClient } from "@utils/constants/websocket";
 import { transformConversationResponse } from "@api/transform/chat";
 import { useDebounce } from "usehooks-ts";
+import { setIsBlackListedByEmployer } from "@redux/slice/user";
 function ChatList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -17,10 +18,10 @@ function ChatList() {
   const [initialLoading, setInitialLoading] = useState(true);
   const [search, setSearch] = useState("");
   const debouncedSearchValue = useDebounce(search, 500);
+  const dispatch = useDispatch();
   const getConversationList = async () => {
     setInitialLoading(true);
     const res = await getConversationListAPI(search);
-
     if (res.remote === "success") {
       setChatList(res.data.results);
     }
@@ -34,7 +35,9 @@ function ChatList() {
     );
     setChatList([...updatedConversations]);
   };
-
+  const handleBlacklistStatus = (status) => {
+    dispatch(setIsBlackListedByEmployer(status));
+  };
   useEffect(() => {
     const data = {
       url: "ws/chat_activity",
@@ -55,7 +58,6 @@ function ChatList() {
   useEffect(() => {
     getConversationList(search);
   }, [debouncedSearchValue]);
-
   return (
     <>
       <div className="searchmessage">
@@ -80,14 +82,14 @@ function ChatList() {
           {initialLoading ? (
             "Loading..."
           ) : !chatList.length ? (
-              <NoDataFoundAnimation title="No conversation found." />
+            <NoDataFoundAnimation title="No conversation found." />
           ) : (
             chatList.map((chat) => {
               return (
                 <li
                   key={chat.id}
                   onClick={() => {
-                    navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
+                    handleBlacklistStatus(chat.blacklistedByEmployer); navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
                   }}
                   style={{
                     background:
