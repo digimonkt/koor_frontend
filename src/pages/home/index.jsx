@@ -396,10 +396,9 @@ const Home = () => {
                   }}
                 >
                   <Grid container spacing={3}>
-                    <Grid item xs={12} lg={5} sm={5}>
+                    <Grid item xs={12} lg={5} md={7} sm={6}>
                       <Box
                         className={styles.stay_text_box}
-                        sx={{ padding: "50px 0px" }}
                       >
                         <h4>Mobile app</h4>
                         <h2>Stay in touch</h2>
@@ -431,7 +430,8 @@ const Home = () => {
                       item
                       xs={12}
                       lg={7}
-                      sm={7}
+                      md={5}
+                      sm={6}
                       sx={{
                         padding: "0px 0px",
                         marginBottom: "-5px",
@@ -441,9 +441,15 @@ const Home = () => {
                       }}
                     >
                       <img
-                        src={IMAGES.MobileApp}
+                        src={IMAGES.MobileApp2}
                         alt=""
                         className={styles.appview}
+                        rel="nofollow"
+                      />
+                      <img
+                        src={IMAGES.MobileApp}
+                        alt=""
+                        className={styles.mobile_appview}
                         rel="nofollow"
                       />
                     </Grid>

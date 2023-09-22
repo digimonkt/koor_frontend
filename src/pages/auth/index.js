@@ -41,7 +41,7 @@ const verifyOTP = {
 };
 const resetPassword = {
   title: "Reset Password",
-  selectedRoleTitle: "Update Password of @email",
+  selectedRoleTitle: "Create a new password",
   children: <ResetPasswordComponent />,
   isRoleSelection: false,
   options: false,

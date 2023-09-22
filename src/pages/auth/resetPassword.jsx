@@ -65,6 +65,7 @@ function ResetPasswordComponent() {
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group mb-3">
             <LabeledInput
+              title="Create new password"
               placeholder="New Password"
               type="password"
               disabled={loading}
@@ -77,6 +78,7 @@ function ResetPasswordComponent() {
           </div>
           <div className="form-group mb-3">
             <LabeledInput
+              title="Repeat your password"
               placeholder="Re-type Password"
               type="password"
               disabled={loading}
@@ -89,8 +91,15 @@ function ResetPasswordComponent() {
           </div>
           <div className="my-4 text-center">
             <FilledButton
+              sx={{
+                width: "138px",
+                height: "45px",
+                "@media(max-width: 480px)": {
+                  width: "134px",
+                },
+              }}
               type="submit"
-              title={loading ? <Loader loading={loading} /> : "Update Password"}
+              title={loading ? <Loader loading={loading} /> : "Save"}
             />
           </div>
         </form>
