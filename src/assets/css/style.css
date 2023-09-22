@@ -1430,6 +1430,7 @@ span.count {
 .bottomnav {
   border-top: 1px solid #cacaca;
   padding-top: 15px;
+  text-align: center;
 }
 
 .w-25 {
@@ -1855,6 +1856,7 @@ span.count {
   padding-bottom: 8px !important;
   margin-left: 10px !important;
 }
+
 ul.menu.color-change li a:hover {
   color: #274593;
 }
@@ -2119,5 +2121,8 @@ input.employersearch {
   .step-continer .MuiStepLabel-labelContainer .Mui-completed {
     font-size: 18px;
     line-height: 16px;
+  }
+  .newstabs {
+    margin-top: 20px;
   }
 }
