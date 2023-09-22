@@ -208,7 +208,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   border-bottom: 0 !important;
 }
 
-.SelectDropdown label + .css-hrjh4n-MuiInputBase-root {
+.SelectDropdown label+.css-hrjh4n-MuiInputBase-root {
   margin-top: 12px;
   font-family: "Poppins";
 }
@@ -414,8 +414,7 @@ header {
   padding-bottom: 16px;
 }
 
-.saved-jobs
-  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
+.saved-jobs button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
   justify-content: center;
   position: relative !important;
   left: 13px !important;
@@ -450,7 +449,7 @@ header {
   margin: 0px;
 }
 
-.register-des > a {
+.register-des>a {
   border: 2px solid #cacaca;
   border-radius: 88px;
   display: block;
@@ -461,7 +460,7 @@ header {
   margin-bottom: 16px;
 }
 
-.register-des > a:last-child {
+.register-des>a:last-child {
   margin-bottom: 0px;
   cursor: pointer;
 }
@@ -474,7 +473,7 @@ header {
   opacity: 0.5;
 }
 
-.register-des > a:hover {
+.register-des>a:hover {
   background: #d5e3f7;
   border: 2px solid #274593;
   box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35);
@@ -511,7 +510,7 @@ header {
   position: relative;
 }
 
-.showpassword > div > svg {
+.showpassword>div>svg {
   cursor: pointer;
   position: absolute;
   width: 20px;
@@ -1430,6 +1429,7 @@ span.count {
 .bottomnav {
   border-top: 1px solid #cacaca;
   padding-top: 15px;
+  text-align: center;
 }
 
 .w-25 {
@@ -1855,6 +1855,7 @@ span.count {
   padding-bottom: 8px !important;
   margin-left: 10px !important;
 }
+
 ul.menu.color-change li a:hover {
   color: #274593;
 }
@@ -2018,7 +2019,7 @@ input.employersearch {
     background: url("../images/intro.png");
   }
 
-  .register-des > a {
+  .register-des>a {
     padding: 12px 20px;
     border-radius: 50px;
     -webkit-border-radius: 50px;
@@ -2075,6 +2076,7 @@ input.employersearch {
   .reset_password_btn {
     font-size: 14px !important;
   }
+
   .newstabs {
     margin-top: 20px;
   }
