@@ -249,7 +249,8 @@ header {
 
 .navbar-brand {
   display: inline-block;
-  width: 9%;
+  width: 10%;
+  height: 50px;
 }
 
 .menu {
@@ -765,7 +766,6 @@ hr {
   line-height: 29px;
   position: relative;
   top: 2px;
-
   color: #121212;
 }
 
@@ -1467,7 +1467,7 @@ span.count {
   }
 
   .heading {
-    font-size: 18px;
+    font-size: 24px;
   }
 
   span.later {
@@ -1511,7 +1511,7 @@ span.count {
 
   .step-continer .MuiStepLabel-labelContainer .Mui-active,
   .step-continer .MuiStepLabel-labelContainer .Mui-completed {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 16px;
   }
 
@@ -1525,7 +1525,7 @@ span.count {
   }
 
   .according-content-box h2 {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -1894,7 +1894,7 @@ a {
 }
 
 input.employersearch {
-  padding: 10px 10px 10px 15px;
+  padding: 10px 10px 10px 35px;
   background: transparent;
   border: 0;
   width: 100%;
@@ -1905,10 +1905,16 @@ input.employersearch {
   line-height: 22px;
   /* identical to box height, or 138% */
   letter-spacing: 0.03em;
-
+  position: relative;
   /* Dark grey */
   color: #848484;
   outline: none;
+}
+
+.login_header_search_icon {
+  position: absolute;
+  color: #848484;
+  left: 15.6rem;
 }
 
 .iconfooter a {
@@ -2001,6 +2007,14 @@ input.employersearch {
     font-size: 16px;
   }
 
+  .navbar-brand {
+    height: 33px;
+  }
+
+  .login_header_search_icon {
+    left: 11.7rem;
+  }
+
   .noti-mobile {
     display: none !important;
   }
@@ -2075,7 +2089,35 @@ input.employersearch {
   .reset_password_btn {
     font-size: 14px !important;
   }
+
+  .navbar-brand {
+    width: 87.7px;
+    height: 26px;
+  }
+
+  .according-content ul li {
+    font-size: 14px;
+  }
+
   .newstabs {
     margin-top: 20px;
+  }
+
+  .heading {
+    font-size: 20px;
+  }
+
+  .step-continer {
+    display: block !important;
+  }
+
+  .sub-step-continer {
+    margin: 10px 0px;
+  }
+
+  .step-continer .MuiStepLabel-labelContainer .Mui-active,
+  .step-continer .MuiStepLabel-labelContainer .Mui-completed {
+    font-size: 18px;
+    line-height: 16px;
   }
 }

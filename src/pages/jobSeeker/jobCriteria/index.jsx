@@ -85,11 +85,13 @@ const JobCriteria = () => {
             <Box sx={{ width: "100%" }}>
               {/* --------------- stepper slider ----------- */}
               <Stepper activeStep={activeStep} className="step-continer">
-                <Step>
+                <Step className="sub-step-continer">
                   <StepLabel icon={<SVG.OneIcon />}>Categories</StepLabel>
                 </Step>
                 <Step>
-                  <StepLabel>Additional parameters</StepLabel>
+                  <StepLabel className="sub-step-continer">
+                    Additional parameters
+                  </StepLabel>
                 </Step>
                 <StepConnector />
               </Stepper>
