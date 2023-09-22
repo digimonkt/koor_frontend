@@ -59,7 +59,7 @@ function VerifyOTPForm() {
     setSendingOTP(true);
     const payload = {
       email: verifyEmail,
-      role
+      role,
     };
     const res = await SendOtpAPI(payload);
     if (res.remote === "success") {
@@ -83,8 +83,16 @@ function VerifyOTPForm() {
               <ErrorMessage>{formik.errors.otp}</ErrorMessage>
             ) : null}
           </div>
-          <FilledButton type="submit" title="Submit" />
-          <FilledButton type="button" onClick={handleResendOTP} title={sendingOTP ? <Loader loading={sendingOTP} /> : "Resend OTP"} />
+          <FilledButton
+            type="submit"
+            title="Submit"
+            style={{ marginRight: "10px" }}
+          />
+          <FilledButton
+            type="button"
+            onClick={handleResendOTP}
+            title={sendingOTP ? <Loader loading={sendingOTP} /> : "Resend OTP"}
+          />
         </div>
       </form>
     </div>

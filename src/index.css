@@ -197,6 +197,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #000;
   font-size: 16px;
+  overflow-y: auto !important;
 }
 
 * {

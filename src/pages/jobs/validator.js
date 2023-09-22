@@ -52,26 +52,27 @@ export const validateCreateJobInput = Yup.object().shape({
     }
   ),
   highestEducation: Yup.string(),
-  languages: Yup.array()
-    .of(
-      Yup.object().shape({
-        id: Yup.string(),
-      })
-    )
-    .test(
-      "atLeastOneLanguage",
-      "At Least one Language required",
-      (value, context) => {
-        let isPresent = false;
-        value.forEach((val) => {
-          if (val.language) {
-            isPresent = true;
-          }
-        });
-        return isPresent;
-      }
-    ),
-  skills: Yup.array().of(Yup.string()).min(1, "At Least one Skill is required"),
+  // languages: Yup.array()
+  //   .of(
+  //     Yup.object().shape({
+  //       id: Yup.string(),
+  //     })
+  //   )
+  //   .test(
+  //     "atLeastOneLanguage",
+  //     "At Least one Language required",
+  //     (value, context) => {
+  //       let isPresent = false;
+  //       value.forEach((val) => {
+  //         if (val.language) {
+  //           isPresent = true;
+  //         }
+  //       });
+  //       return isPresent;
+  //     }
+  //   ),
+  languages: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Language is required"),
+  skills: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Skill is required"),
 });
 
 export const validateCreateTenderInput = Yup.object().shape({

@@ -193,7 +193,7 @@ export default function PublicProfileComponent() {
                                 lineHeight: "12px",
                               }}
                             >
-                              {userDetails.profile.experience} Years
+                              {userDetails.profile.experience} {userDetails.profile.experience > 1 ? "Years" : "Year"}
                             </Typography>
                             <Box
                               component={"span"}
