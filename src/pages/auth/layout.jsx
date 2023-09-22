@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { Box, Container, Grid, IconButton, Stack } from "@mui/material";
+import { Box, Container, Grid, Stack } from "@mui/material";
 import { SVG } from "@assets/svg";
 import { Card, CardContent } from "@components/card";
 import { USER_ROLES } from "@utils/enum";
@@ -282,9 +282,7 @@ function AuthLayout({
                                   <h6>{option.title}</h6>
                                   <span>{option.subtitle}</span>
                                 </Stack>
-                                <span>
-                                  <SVG.ArrowIcon />
-                                </span>
+                                <span>{!isLoginPage && <SVG.ArrowIcon />}</span>
                               </Stack>
                             </Link>
                           );
@@ -321,7 +319,7 @@ function AuthLayout({
                               : "none",
                           }}
                         >
-                          <IconButton
+                          {/* <IconButton
                             onClick={() => {
                               dispatch(setUserRole(""));
                               navigate(-1);
@@ -335,7 +333,7 @@ function AuthLayout({
                             }}
                           >
                             <SVG.BackArrow />
-                          </IconButton>
+                          </IconButton> */}
                           {selectedRoleTitle
                             .replace("@role", processRoleToDisplay(role))
                             .replace("@email", verifyEmail)}

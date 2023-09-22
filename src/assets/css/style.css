@@ -559,6 +559,11 @@ header {
   justify-content: center;
 }
 
+.newstabs {
+  margin-top: 40px;
+  margin-bottom: 10px;
+}
+
 .bottombar a {
   display: inline-block;
   margin-left: 5px;
@@ -1478,7 +1483,7 @@ span.count {
   }
 
   .content-box h5 {
-    font-size: 36px;
+    font-size: 36px !important;
   }
 
   .content-box p {
@@ -2046,7 +2051,7 @@ input.employersearch {
 
 @media only screen and (max-width: 540px) {
   .content-box h5 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
 
   .text-gray {
@@ -2063,5 +2068,14 @@ input.employersearch {
 
   .register-title span {
     font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .reset_password_btn {
+    font-size: 14px !important;
+  }
+  .newstabs {
+    margin-top: 20px;
   }
 }

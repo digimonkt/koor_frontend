@@ -59,6 +59,7 @@ function ForgotPasswordForm() {
             <div className="my-4 text-center">
               <FilledButton
                 type="submit"
+                className="reset_password_btn"
                 title={
                   loading ? <Loader loading={loading} /> : "Forget Password"
                 }
