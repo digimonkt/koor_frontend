@@ -23,7 +23,7 @@ const JobPreferences = () => {
     isFullTime: false,
     hasContract: false,
     expectedSalary: 0,
-    payPeriod: PAY_PERIOD.month
+    payPeriod: PAY_PERIOD.month,
   });
 
   const handleChangeCheckbox = (name) => (e) => {
@@ -86,7 +86,10 @@ const JobPreferences = () => {
           }}
         >
           <h2>Job preferences</h2>
-          <Link to="/job_seeker/my-profile/job-criteria" style={{ height: "20px" }}>
+          <Link
+            to="/job_seeker/my-profile/job-criteria"
+            style={{ height: "20px" }}
+          >
             <span>More</span>
           </Link>
         </div>
@@ -175,7 +178,10 @@ const JobPreferences = () => {
                   value: Number(jobPreferences.expectedSalary || 0),
                   onChange: handleChangeInput("expectedSalary"),
                 },
-                payPeriod: { value: jobPreferences.payPeriod || PAY_PERIOD.month, onChange: handleChangeInput("payPeriod") },
+                payPeriod: {
+                  value: jobPreferences.payPeriod || PAY_PERIOD.month,
+                  onChange: handleChangeInput("payPeriod"),
+                },
               }}
               errors={{
                 currency: "",

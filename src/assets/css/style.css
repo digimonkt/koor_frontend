@@ -208,7 +208,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   border-bottom: 0 !important;
 }
 
-.SelectDropdown label+.css-hrjh4n-MuiInputBase-root {
+.SelectDropdown label + .css-hrjh4n-MuiInputBase-root {
   margin-top: 12px;
   font-family: "Poppins";
 }
@@ -249,7 +249,8 @@ header {
 
 .navbar-brand {
   display: inline-block;
-  width: 9%;
+  width: 10%;
+  height: 50px;
 }
 
 .menu {
@@ -414,7 +415,8 @@ header {
   padding-bottom: 16px;
 }
 
-.saved-jobs button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
+.saved-jobs
+  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
   justify-content: center;
   position: relative !important;
   left: 13px !important;
@@ -449,7 +451,7 @@ header {
   margin: 0px;
 }
 
-.register-des>a {
+.register-des > a {
   border: 2px solid #cacaca;
   border-radius: 88px;
   display: block;
@@ -460,7 +462,7 @@ header {
   margin-bottom: 16px;
 }
 
-.register-des>a:last-child {
+.register-des > a:last-child {
   margin-bottom: 0px;
   cursor: pointer;
 }
@@ -473,7 +475,7 @@ header {
   opacity: 0.5;
 }
 
-.register-des>a:hover {
+.register-des > a:hover {
   background: #d5e3f7;
   border: 2px solid #274593;
   box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35);
@@ -510,7 +512,7 @@ header {
   position: relative;
 }
 
-.showpassword>div>svg {
+.showpassword > div > svg {
   cursor: pointer;
   position: absolute;
   width: 20px;
@@ -764,7 +766,6 @@ hr {
   line-height: 29px;
   position: relative;
   top: 2px;
-
   color: #121212;
 }
 
@@ -1467,7 +1468,7 @@ span.count {
   }
 
   .heading {
-    font-size: 18px;
+    font-size: 24px;
   }
 
   span.later {
@@ -1511,7 +1512,7 @@ span.count {
 
   .step-continer .MuiStepLabel-labelContainer .Mui-active,
   .step-continer .MuiStepLabel-labelContainer .Mui-completed {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 16px;
   }
 
@@ -1525,7 +1526,7 @@ span.count {
   }
 
   .according-content-box h2 {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -1895,7 +1896,7 @@ a {
 }
 
 input.employersearch {
-  padding: 10px 10px 10px 15px;
+  padding: 10px 10px 10px 35px;
   background: transparent;
   border: 0;
   width: 100%;
@@ -1906,10 +1907,16 @@ input.employersearch {
   line-height: 22px;
   /* identical to box height, or 138% */
   letter-spacing: 0.03em;
-
+  position: relative;
   /* Dark grey */
   color: #848484;
   outline: none;
+}
+
+.login_header_search_icon {
+  position: absolute;
+  color: #848484;
+  left: 15.6rem;
 }
 
 .iconfooter a {
@@ -2002,6 +2009,14 @@ input.employersearch {
     font-size: 16px;
   }
 
+  .navbar-brand {
+    height: 33px;
+  }
+
+  .login_header_search_icon {
+    left: 11.7rem;
+  }
+
   .noti-mobile {
     display: none !important;
   }
@@ -2019,7 +2034,7 @@ input.employersearch {
     background: url("../images/intro.png");
   }
 
-  .register-des>a {
+  .register-des > a {
     padding: 12px 20px;
     border-radius: 50px;
     -webkit-border-radius: 50px;
@@ -2077,6 +2092,36 @@ input.employersearch {
     font-size: 14px !important;
   }
 
+  .navbar-brand {
+    width: 87.7px;
+    height: 26px;
+  }
+
+  .according-content ul li {
+    font-size: 14px;
+  }
+
+  .newstabs {
+    margin-top: 20px;
+  }
+
+  .heading {
+    font-size: 20px;
+  }
+
+  .step-continer {
+    display: block !important;
+  }
+
+  .sub-step-continer {
+    margin: 10px 0px;
+  }
+
+  .step-continer .MuiStepLabel-labelContainer .Mui-active,
+  .step-continer .MuiStepLabel-labelContainer .Mui-completed {
+    font-size: 18px;
+    line-height: 16px;
+  }
   .newstabs {
     margin-top: 20px;
   }

@@ -82,7 +82,7 @@ const JobCategory = ({ handleNext }) => {
                 "Saving..."
               ) : (
                 <>
-                  Next{" "}
+                  Next
                   <span className="ms-2">
                     <SVG.StartIcon />
                   </span>
@@ -98,6 +98,9 @@ const JobCategory = ({ handleNext }) => {
               color: "#EEA23D !important",
               fontWeight: "500",
               fontSize: "16px",
+              "@media(max-width: 480px)": {
+                fontSize: "14px",
+              },
               padding: "10px 30px",
               "&:hover": {
                 background: "rgba(255, 165, 0, 0.1)",
