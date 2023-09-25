@@ -59,7 +59,7 @@ function ForgotPasswordForm() {
               <FilledButton
                 type="submit"
                 title={
-                  loading ? <Loader loading={loading} /> : "Forget Password"
+                  loading ? <Loader loading={loading} /> : "Reset Password"
                 }
               />
             </div>

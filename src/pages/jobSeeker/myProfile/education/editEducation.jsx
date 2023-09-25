@@ -180,6 +180,9 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
                 maxDate={dayjs()}
                 value={formik.values.startDate}
                 onBlur={formik.getFieldProps("startDate").onBlur}
+                inputProps={{
+                  placeholder: "Select year"
+                }}
               />
               {formik.touched.startDate && formik.errors.startDate ? (
                 <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
@@ -189,11 +192,15 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
               <DateInput
                 label="End"
                 views={["year"]}
+                placeholder={"Slect year"}
                 onChange={(e) => formik.setFieldValue("endDate", e)}
                 value={formik.values.endDate}
                 minDate={formik.values.startDate}
                 maxDate={dayjs().year(dayjs().year())}
                 onBlur={formik.getFieldProps("endDate").onBlur}
+                inputProps={{
+                  placeholder: "Select year"
+                }}
                 disabled={formik.values.isPresent || !formik.values.startDate}
               />
               {formik.touched.endDate && formik.errors.endDate ? (
@@ -203,6 +210,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
           </Grid>
           <FormControlReminder
             sx={{ mt: 2 }}
+            className="studying"
             control={
               <CheckboxInput
                 sx={{

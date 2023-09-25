@@ -2014,9 +2014,9 @@ input.employersearch {
     display: none;
   }
 
-  .register {
+  /* .register {
     background: url("../images/intro.png");
-  }
+  } */
 
   .register-des > a {
     padding: 12px 20px;
@@ -2069,4 +2069,24 @@ input.employersearch {
   .register-title span {
     font-size: 12px;
   }
+}
+
+@media screen and (max-width: 480px) {
+  .register {
+    background: url("../images/intro.png");
+  }
+}
+
+@media screen and (max-width: 768px) and (min-width: 1024px) {
+  .heading {
+    font-size: 28px;
+}
+
+.studying .MuiTypography-root {
+  font-size: 14px;
+}
+
+.css-bb18k4-MuiButtonBase-root-MuiButton-root {
+  font-size: 16px;
+}
 }
