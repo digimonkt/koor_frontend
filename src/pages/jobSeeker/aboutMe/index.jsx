@@ -251,7 +251,7 @@ const AboutMe = (props) => {
           }}
         >
           <div className="add-content">
-            <h2 className="mb-4">About Me</h2>
+            <h2 className="mb-4">About</h2>
             <form onSubmit={formik.handleSubmit}>
               <HorizontalLabelInput
                 placeholder="Full Name"
@@ -501,10 +501,17 @@ const AboutMe = (props) => {
                       fontWeight: "500",
                       fontSize: "16px",
                       padding: "10px 30px",
+                      width: "191px",
+                      height: "42px",
                       "&:hover": { background: "rgba(255, 165, 0, 0.1)" },
                       "@media (max-width: 992px)": {
                         padding: "10px 16px",
+                        fontSize: "16px",
+                      },
+                      "@media (max-width: 480px)": {
+                        width: "174px",
                         fontSize: "14px",
+                        padding: "10px 10px !important",
                       },
                     },
                   }}

@@ -99,28 +99,45 @@ const ProfilePicInputComponent = ({ title, handleSave, image, loading }) => {
                 </p>
               </div>
             </div>
-            <div className="text-center">
-              <OutlinedButton
-                title={
-                  <>
-                    {loading ? (
-                      "Saving..."
-                    ) : (
-                      <>
-                        <span className="me-2 d-inline-flex">
-                          <SVG.CheckIcon />
-                        </span>
-                        Save photo
-                      </>
-                    )}
-                  </>
-                }
-                disabled={loading}
-                onClick={handleSaveImage}
-              />
-            </div>
           </Stack>
         </Stack>
+        <div className="text-center">
+          <OutlinedButton
+            title={
+              <>
+                {loading ? (
+                  "Saving..."
+                ) : (
+                  <>
+                    <span className="me-2 d-inline-flex">
+                      <SVG.CheckIcon />
+                    </span>
+                    Save photo
+                  </>
+                )}
+              </>
+            }
+            sx={{
+              "&.MuiButton-outlined": {
+                border: "1px solid #EEA23D !important",
+                color: "#EEA23D !important",
+                fontWeight: "500",
+                fontSize: "16px",
+                padding: "10px 30px",
+                width: "185px",
+                height: "42px",
+                "@media (max-width: 480px)": {
+                  width: "169px",
+                  height: "42px",
+                  padding: "10px 10px !important",
+                  marginTop: "10px",
+                },
+              },
+            }}
+            disabled={loading}
+            onClick={handleSaveImage}
+          />
+        </div>
       </div>
       <ImageCropper
         open={files[0]}

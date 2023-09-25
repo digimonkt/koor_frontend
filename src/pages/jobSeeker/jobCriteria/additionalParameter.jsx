@@ -122,10 +122,19 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
           </Grid>
           <Grid item md={12} xs={12}>
             <Divider className="mb-3" />
-            <label className="d-block" style={{ marginBottom: "0.5rem" }}>
+            <label
+              className="d-block"
+              style={{
+                marginBottom: "0.5rem",
+                fontSize: "20px",
+                "@media(max-width: 480px)": {
+                  fontSize: "16px",
+                },
+              }}
+            >
               Job type
             </label>
-            <FormGroup row>
+            <FormGroup row className="additional-check">
               <FormControlReminder
                 control={<CheckboxInput />}
                 onChange={(e) =>
@@ -184,6 +193,17 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               fontWeight: "500",
               fontSize: "16px",
               padding: "10px 30px",
+              width: "134px",
+              height: "42px",
+              "@media(max-width: 992px)": {
+                width: "129px",
+                height: "42px",
+              },
+              "@media(max-width: 480px)": {
+                width: "129px",
+                height: "42px",
+                fontSize: "14px",
+              },
 
               "&:hover": {
                 background: "rgba(255, 165, 0, 0.1)",
