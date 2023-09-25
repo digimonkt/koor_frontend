@@ -1476,7 +1476,7 @@ span.count {
   }
 
   .add-content h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .spaceor span {
@@ -2005,6 +2005,11 @@ input.employersearch {
 }
 
 @media only screen and (max-width: 992px) {
+  .add-content label {
+    font-size: 12px;
+    line-height: 18px;
+
+}
   .saved-jobs h2 {
     font-size: 16px;
   }
@@ -2107,6 +2112,7 @@ input.employersearch {
 
   .heading {
     font-size: 20px;
+    letter-spacing: -0.4px;
   }
 
   .step-continer {
