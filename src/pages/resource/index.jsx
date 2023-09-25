@@ -39,7 +39,7 @@ const Resource = () => {
               spacing={3}
               direction={{ sm: "row-reverse", md: "row", lg: "row-reverse" }}
             >
-              <Grid item lg={7} sm={6} xs={12}>
+              <Grid item lg={5} sm={6} xs={12}>
                 <Box className={styles.resource_text_box}>
                   <Box>
                     <Typography className={styles.resource_heading}>
@@ -69,8 +69,8 @@ const Resource = () => {
                   </Box>
                 </Box>
               </Grid>
-              {
-                (resourceList?.attachment?.path) ? (<Grid item lg={5} sm={6} xs={12}>
+              {resourceList?.attachment?.path ? (
+                <Grid item lg={7} sm={6} xs={12}>
                   <Box>
                     <img
                       src={generateFileUrl(resourceList?.attachment?.path)}
@@ -79,18 +79,19 @@ const Resource = () => {
                       rel="nofollow"
                     />
                   </Box>
-                </Grid>) : ""
-              }
+                </Grid>
+              ) : (
+                ""
+              )}
             </Grid>
           </Container>
-          {
-            (resourceList) ? (
-              <Box>
-                <Content resourceList={resourceList} />
-              </Box>
-            ) : ""
-          }
-
+          {resourceList ? (
+            <Box>
+              <Content resourceList={resourceList} />
+            </Box>
+          ) : (
+            ""
+          )}
         </Box>
       </Box>
     </>

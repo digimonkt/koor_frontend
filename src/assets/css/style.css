@@ -249,7 +249,8 @@ header {
 
 .navbar-brand {
   display: inline-block;
-  width: 9%;
+  width: 10%;
+  height: 50px;
 }
 
 .menu {
@@ -408,10 +409,11 @@ header {
 }
 
 .add-content p {
-  font-size: 12px;
-  color: #848484;
+  font-size: 16px;
+  font-weight: 300;
+  color: #000000;
   margin-top: 0;
-  padding-bottom: 16px;
+  padding: 16px;
 }
 
 .saved-jobs
@@ -557,6 +559,11 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.newstabs {
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 
 .bottombar a {
@@ -760,7 +767,6 @@ hr {
   line-height: 29px;
   position: relative;
   top: 2px;
-
   color: #121212;
 }
 
@@ -822,6 +828,24 @@ hr {
   font-size: 16px;
   line-height: 24px;
   color: #121212;
+}
+
+.additional-box .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input {
+  font-size: 16px !important;
+  font-weight: 500;
+}
+
+.additional-check .MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.additional-box
+  .MuiInputBase-root
+  .MuiOutlinedInput-root
+  .MuiSelect-root
+  .MuiSelect-select {
+  font-size: 16px;
 }
 
 .arrow-color {
@@ -1242,9 +1266,9 @@ hr {
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
-
   color: #121212;
   display: flex;
+  word-break: break-all;
 }
 
 .chatuser-text h3 small {
@@ -1425,6 +1449,7 @@ span.count {
 .bottomnav {
   border-top: 1px solid #cacaca;
   padding-top: 15px;
+  text-align: center;
 }
 
 .w-25 {
@@ -1462,15 +1487,15 @@ span.count {
   }
 
   .heading {
-    font-size: 18px;
+    font-size: 24px;
   }
 
   span.later {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .add-content h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .spaceor span {
@@ -1478,7 +1503,7 @@ span.count {
   }
 
   .content-box h5 {
-    font-size: 36px;
+    font-size: 36px !important;
   }
 
   .content-box p {
@@ -1506,7 +1531,7 @@ span.count {
 
   .step-continer .MuiStepLabel-labelContainer .Mui-active,
   .step-continer .MuiStepLabel-labelContainer .Mui-completed {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 16px;
   }
 
@@ -1520,7 +1545,7 @@ span.count {
   }
 
   .according-content-box h2 {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -1794,11 +1819,6 @@ span.count {
   height: calc(100vh - 353px);
 }
 
-body {
-  padding: 0px !important;
-  overflow-y: auto !important;
-}
-
 @media (min-width: 1536px) {
   .MuiContainer-root {
     max-width: 1780px !important;
@@ -1855,6 +1875,7 @@ body {
   padding-bottom: 8px !important;
   margin-left: 10px !important;
 }
+
 ul.menu.color-change li a:hover {
   color: #274593;
 }
@@ -1894,10 +1915,10 @@ a {
 }
 
 input.employersearch {
-  padding: 0px;
+  padding: 10px 10px 10px 35px;
   background: transparent;
   border: 0;
-  width: 65%;
+  width: 100%;
   font-family: "Bahnschrift";
   font-style: normal;
   font-weight: 400;
@@ -1905,10 +1926,16 @@ input.employersearch {
   line-height: 22px;
   /* identical to box height, or 138% */
   letter-spacing: 0.03em;
-
+  position: relative;
   /* Dark grey */
   color: #848484;
   outline: none;
+}
+
+.login_header_search_icon {
+  position: absolute;
+  color: #848484;
+  left: 15.6rem;
 }
 
 .iconfooter a {
@@ -1997,8 +2024,21 @@ input.employersearch {
 }
 
 @media only screen and (max-width: 992px) {
+  .add-content label {
+    font-size: 12px;
+    line-height: 18px;
+
+}
   .saved-jobs h2 {
     font-size: 16px;
+  }
+
+  .navbar-brand {
+    height: 33px;
+  }
+
+  .login_header_search_icon {
+    left: 11.7rem;
   }
 
   .noti-mobile {
@@ -2051,7 +2091,7 @@ input.employersearch {
 
 @media only screen and (max-width: 540px) {
   .content-box h5 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
 
   .text-gray {
@@ -2072,8 +2112,69 @@ input.employersearch {
 }
 
 @media screen and (max-width: 480px) {
-  .register {
-    background: url("../images/intro.png");
+  .reset_password_btn {
+    font-size: 14px !important;
+  }
+
+  .additional-check {
+    display: grid !important;
+  }
+
+  .additional-check .MuiFormControlLabel-root .MuiFormControlLabel-label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .additional-box .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input {
+    font-size: 14px !important;
+    font-weight: 500;
+  }
+
+  .navbar-brand {
+    width: 87.7px;
+    height: 26px;
+  }
+
+  .according-content ul li {
+    font-size: 14px;
+  }
+
+  .newstabs {
+    margin-top: 20px;
+  }
+
+  .heading {
+    font-size: 20px;
+    letter-spacing: -0.4px;
+  }
+
+  span.later {
+    font-size: 14px;
+  }
+
+  .step-continer {
+    display: block !important;
+  }
+
+  .sub-step-continer {
+    margin: 10px 0px;
+  }
+
+  .step-continer .MuiStepLabel-labelContainer .Mui-active,
+  .step-continer .MuiStepLabel-labelContainer .Mui-completed {
+    font-size: 18px;
+    line-height: 16px;
+  }
+  .newstabs {
+    margin-top: 20px;
+  }
+
+  .add-content h2 {
+    font-size: 20px;
+  }
+
+  .add-content p {
+    font-size: 14px;
   }
 }
 

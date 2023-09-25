@@ -19,6 +19,7 @@ export const transformConversationResponse = (data) => {
       id: lastMessage.id,
       createdAt: lastMessage.created,
     },
+    blacklistedByEmployer: user.blacklisted // this is check job seeker is blacklisted by employer or not
   };
 };
 

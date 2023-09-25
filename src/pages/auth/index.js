@@ -26,7 +26,7 @@ const login = {
 const forgotPassword = {
   title: "Forget Password",
   subTitle: "Forget Password of...",
-  selectedRoleTitle: "Forget password",
+  selectedRoleTitle: "Forget password?",
   children: <ForgotPasswordForm />,
   isRoleSelection: true,
   options: false,
@@ -41,7 +41,7 @@ const verifyOTP = {
 };
 const resetPassword = {
   title: "Reset Password",
-  selectedRoleTitle: "Update Password of @email",
+  selectedRoleTitle: "Create a new password",
   children: <ResetPasswordComponent />,
   isRoleSelection: false,
   options: false,

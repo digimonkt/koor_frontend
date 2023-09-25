@@ -27,13 +27,15 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
     const filterNotification = (type) => {
       const notificationData = [...notification];
       let notificationResult = "";
-      if (newValue !== "message") {
-        notificationResult = notificationData.filter((notification) => notification.notificationType !== "message");
+      if (newValue === "message") {
+        notificationResult = notificationData.filter((notification) => notification.notificationType === "message");
       } else {
-        notificationResult = notificationData.filter((notification) => notification.notificationType === type);
+        notificationResult = notificationData.filter((notification) => notification.notificationType !== "message");
       }
-      const filteredData = notificationResult;
-      setFilterData(filteredData);
+      if (role === USER_ROLES.employer) {
+        notificationResult = notificationResult.filter((notification) => notification.notificationType !== "applied_tender");
+      }
+      setFilterData(notificationResult);
     };
     setSection(newValue);
     switch (newValue) {
@@ -43,8 +45,14 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       case "jobs":
         filterNotification("jobs");
         break;
+      case "tenders":
+        filterNotification("tenders");
+        break;
       case "message":
         filterNotification("message");
+        break;
+      case "clear":
+        setFilterData(notification);
         break;
       default:
         break;
@@ -66,7 +74,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   };
   useEffect(() => {
     getNotifications();
-  }, [filterByDate, section]);
+  }, [filterByDate]);
   return (
     <div style={{ width: "100%" }}>
       <Box sx={{ width: "100%", typography: "body1" }}>
@@ -85,7 +93,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
           >
             <TabList className="tab_list" onChange={handleChangeSection}>
               <Tab label="All" className={styles.tabs_btn} value="all" />
-              <Tab label={(role === "vendor") ? "Tenders" : "Jobs"} className={styles.tabs_btn} value={(role === "vendor") ? "Tenders" : "jobs"} />
+              <Tab label={(role === "vendor") ? "Tenders" : "Jobs"} className={styles.tabs_btn} value={(role === "vendor") ? "tenders" : "jobs"} />
               <Tab
                 label="Message"
                 className={styles.tabs_btn}
@@ -98,7 +106,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
 
                 <Button
                   sx={{ color: "#EEA23D", textTransform: "capitalize" }}
-                  onClick={() => { setSection("all"); setFilterByDate(dayjs().format("YYYY-MM-DD")); }}
+                  onClick={() => { setSection("all"); setFilterData(notification); setFilterByDate(dayjs().format("YYYY-MM-DD")); }}
                   className={styles.clear_btn}
                 >
                   Clear All

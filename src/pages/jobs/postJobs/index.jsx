@@ -120,7 +120,7 @@ function PostJobsComponent() {
       countryCodeContactWhatsapp: "",
       contactWhatsapp: "",
       highestEducation: "",
-      languages: [{ language: "" }, { language: "" }, { language: "" }],
+      languages: [],
       skills: [],
       attachments: [],
       attachmentsRemove: [],
@@ -160,12 +160,14 @@ function PostJobsComponent() {
         duration: values.duration,
         experience: values.experience,
       };
+      console.log(formik.values);
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "language") {
           payload.language.forEach((language) => {
-            if (language.language) {
-              newFormData.append("language", JSON.stringify(language));
+            if (language) {
+              const languageFormat = { language };
+              newFormData.append("language", JSON.stringify(languageFormat));
             }
           });
         } else if (key === "attachments") {
@@ -184,6 +186,7 @@ function PostJobsComponent() {
           }
         }
       }
+      console.log(payload);
       let res;
       if (!jobId) {
         // create
@@ -247,22 +250,9 @@ function PostJobsComponent() {
       formik.setFieldValue(
         "languages",
         data.languages.map && data.languages.length
-          ? [
-            ...data.languages.map((language) => ({
-              language: language.language.id,
-            })),
-            {
-              language: "",
-            },
-            {
-              language: "",
-            },
-          ]
-          : [1, 2, 3].map(() => ({
-            language: "",
-          }))
+          ? [...data.languages.map((language) => language.language.id)]
+          : []
       );
-      formik.setFieldValue("highestEducation", data.highestEducation.id);
       formik.setFieldValue(
         "skills",
         data.skills.map ? data.skills.map((skill) => skill.id) : []
@@ -575,7 +565,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -591,7 +581,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                            formik.values.jobCategories
+                              formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -600,7 +590,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
+                        formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -714,7 +704,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -767,13 +757,13 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
+                  {/* <Grid item xl={12} lg={12} xs={12}>
                     <label className="mb-2">
                       Required languages
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
@@ -812,63 +802,50 @@ function PostJobsComponent() {
                         );
                       })}
                     </Grid>
+                  </Grid> */}
+                  <Grid item xl={4} lg={4} xs={12}>
+                    <label>
+                      Required languages{" "}
+                      <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                      <span className="required-field">*</span>
+                    </label>
+                    <SelectInput
+                      defaultValue=""
+                      placeholder="Select a Language"
+                      multiple
+                      options={languages.data.map((language) => ({
+                        value: language.id,
+                        label: language.title,
+                      }))}
+                      {...formik.getFieldProps("languages")}
+                    />
+                    {formik.touched.languages && formik.errors.languages ? (
+                      <ErrorMessage>{formik.errors.languages}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={4} lg={4} xs={12}>
+                    <label className="mb-2">
+                      Job skills
+                      <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                      <span className="required-field">*</span>
+                    </label>
+                    <SelectInput
+                      className="mb-3"
+                      defaultValue=""
+                      placeholder="Select a Skill"
+                      options={skills.data.map((skill) => ({
+                        value: skill.id,
+                        label: skill.title,
+                      }))}
+                      multiple
+                      {...formik.getFieldProps("skills")}
+                    />
+                    {formik.touched.skills && formik.errors.skills ? (
+                      <ErrorMessage>{formik.errors.skills}</ErrorMessage>
+                    ) : null}
                   </Grid>
                 </Grid>
-                <Grid item xl={12} lg={12} xs={12}>
-                  <label className="mb-2">
-                    Job skills
-                    <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
-                    <span className="required-field">*</span>
-                  </label>
-                  <Grid container spacing={2}>
-                    <Grid item xl={4} lg={4} xs={12}>
-                      <SelectInput
-                        className="mb-3"
-                        defaultValue=""
-                        placeholder="Select a Skill"
-                        options={skills.data.map((skill) => ({
-                          value: skill.id,
-                          label: skill.title,
-                        }))}
-                        name="skills[0]"
-                        value={formik.values.skills[0] || ""}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                      {formik.touched.skills && formik.errors.skills ? (
-                        <ErrorMessage>{formik.errors.skills}</ErrorMessage>
-                      ) : null}
-                    </Grid>
-                    <Grid item xl={4} lg={4} xs={12}>
-                      <SelectInput
-                        defaultValue=""
-                        placeholder="Select a Skill"
-                        options={skills.data.map((skill) => ({
-                          value: skill.id,
-                          label: skill.title,
-                        }))}
-                        name="skills[1]"
-                        value={formik.values.skills[1] || ""}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </Grid>
-                    <Grid item xl={4} lg={4} xs={12}>
-                      <SelectInput
-                        defaultValue=""
-                        placeholder="Select a Skill"
-                        options={skills.data.map((skill) => ({
-                          value: skill.id,
-                          label: skill.title,
-                        }))}
-                        name="skills[2]"
-                        value={formik.values.skills[2] || ""}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                      />
-                    </Grid>
-                  </Grid>
-                </Grid>
+
                 <Grid item xl={12} lg={12} xs={12}>
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                 </Grid>
@@ -978,8 +955,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST THE JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST THE JOB"
                       }
                       type="submit"
                       disabled={

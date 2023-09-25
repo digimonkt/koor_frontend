@@ -90,7 +90,7 @@ function SelectInputComponent({
                 value={option.value}
                 key={option.value}
                 sx={{
-                  fontSize: "12px",
+                  fontSize: "16px",
                   fontFamily: "Poppins",
                   color: "#121212",
                 }}
