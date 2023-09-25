@@ -39,7 +39,7 @@ dayjs.extend(relativeTime);
 function ChatBox() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { role, currentUser } = useSelector((state) => state.auth);
+  const { role, currentUser, isBlackListedByEmployer } = useSelector((state) => state.auth);
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -233,7 +233,6 @@ function ChatBox() {
       newMessage,
       selectedFormat
     );
-    console.log("------");
     setNewMessage(formattedMessage);
     setAnchorEl(null); // Close the menu
   };
@@ -396,11 +395,10 @@ function ChatBox() {
                 .map((message) => {
                   return (
                     <div
-                      className={`${
-                        message.user.id === currentUser.id
-                          ? "rightside"
-                          : "leftside"
-                      } mt-3 pe-2`}
+                      className={`${message.user.id === currentUser.id
+                        ? "rightside"
+                        : "leftside"
+                        } mt-3 pe-2`}
                       key={message.id}
                     >
                       <Stack
@@ -416,25 +414,23 @@ function ChatBox() {
                           <Avatar src={message.user.image} />
                         )}
                         <div
-                          className={`w-70 ${
-                            message.user.id === currentUser.id
-                              ? "text-right"
-                              : "text-left"
-                          }`}
+                          className={`w-70 ${message.user.id === currentUser.id
+                            ? "text-right"
+                            : "text-left"
+                            }`}
                         >
                           <div
-                            className={`message-text ${
-                              message.user.id === currentUser.id
-                                ? ""
-                                : "message-tex-2"
-                            }`}
+                            className={`message-text ${message.user.id === currentUser.id
+                              ? ""
+                              : "message-tex-2"
+                              }`}
                             style={{
                               background:
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                  ? "#D5E3F7"
-                                  : "#FEEFD3",
+                                    ? "#D5E3F7"
+                                    : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -445,7 +441,7 @@ function ChatBox() {
                             <div
                               className={
                                 message.attachment ||
-                                countWords(message.message) > 10
+                                  countWords(message.message) > 10
                                   ? ""
                                   : "text-inline"
                               }
@@ -472,7 +468,7 @@ function ChatBox() {
             {/* </PerfectScrollbar> */}
           </div>
           <div className="bottomnav">
-            <Stack direction={"row"} spacing={2}>
+            {!isBlackListedByEmployer ? <Stack direction={"row"} spacing={2}>
               <div className="chatinput">
                 <span className="attachment-icon">
                   <SVG.AttachIcon style={{ position: "relative" }} />
@@ -489,7 +485,7 @@ function ChatBox() {
                   />
                 </span>
                 <LabeledInput
-                  placeholder="Write a message…"
+                  placeholder={isBlackListedByEmployer ? "You are not longer to chat with employer" : "Write a message…"}
                   style={{ background: "transparent" }}
                   type="textarea"
                   value={newMessage}
@@ -561,6 +557,7 @@ function ChatBox() {
                     <FormatUnderlinedIcon />
                   </MenuItem>
                 </Menu>
+
                 <FilledButton
                   sx={{
                     borderRadius: "35px",
@@ -569,8 +566,9 @@ function ChatBox() {
                   title={<SendIcon />}
                   onClick={sendMessage}
                 />
+
               </Stack>
-            </Stack>
+            </Stack> : <span className="text-center">You are not longer to chat with employer</span>}
           </div>
           <DialogBox open={open} handleClose={handleClose}>
             <img src={fullImg} />

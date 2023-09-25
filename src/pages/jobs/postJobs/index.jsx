@@ -170,22 +170,21 @@ function PostJobsComponent() {
               newFormData.append("language", JSON.stringify(languageFormat));
             }
           });
-        } else
-          if (key === "attachments") {
-            payload.attachments.forEach((attachment) => {
-              if (!attachment.id) {
-                newFormData.append(key, attachment);
-              }
+        } else if (key === "attachments") {
+          payload.attachments.forEach((attachment) => {
+            if (!attachment.id) {
+              newFormData.append(key, attachment);
+            }
+          });
+        } else {
+          if (payload[key].forEach) {
+            payload[key].forEach((data) => {
+              newFormData.append(key, data);
             });
           } else {
-            if (payload[key].forEach) {
-              payload[key].forEach((data) => {
-                newFormData.append(key, data);
-              });
-            } else {
-              if (payload[key]) newFormData.append(key, payload[key]);
-            }
+            if (payload[key]) newFormData.append(key, payload[key]);
           }
+        }
       }
       console.log(payload);
       let res;
@@ -251,9 +250,7 @@ function PostJobsComponent() {
       formik.setFieldValue(
         "languages",
         data.languages.map && data.languages.length
-          ? [
-            ...data.languages.map((language) => (language.language.id))
-          ]
+          ? [...data.languages.map((language) => language.language.id)]
           : []
       );
       formik.setFieldValue(
@@ -568,7 +565,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -584,7 +581,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                            formik.values.jobCategories
+                              formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -593,7 +590,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
+                        formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -707,7 +704,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -760,7 +757,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -807,8 +804,11 @@ function PostJobsComponent() {
                     </Grid>
                   </Grid> */}
                   <Grid item xl={4} lg={4} xs={12}>
-                    <label>Required languages <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
-                      <span className="required-field">*</span></label>
+                    <label>
+                      Required languages{" "}
+                      <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                      <span className="required-field">*</span>
+                    </label>
                     <SelectInput
                       defaultValue=""
                       placeholder="Select a Language"
@@ -819,11 +819,8 @@ function PostJobsComponent() {
                       }))}
                       {...formik.getFieldProps("languages")}
                     />
-                    {formik.touched.languages &&
-                      formik.errors.languages ? (
-                      <ErrorMessage>
-                        {formik.errors.languages}
-                      </ErrorMessage>
+                    {formik.touched.languages && formik.errors.languages ? (
+                      <ErrorMessage>{formik.errors.languages}</ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={4} lg={4} xs={12}>
@@ -958,8 +955,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST THE JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST THE JOB"
                       }
                       type="submit"
                       disabled={

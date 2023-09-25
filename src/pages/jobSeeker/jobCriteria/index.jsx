@@ -66,7 +66,7 @@ const JobCriteria = () => {
   return (
     <>
       <div>
-        <h1 className="heading my-4">Select your desired job criterias</h1>
+        <h1 className="heading mb-4">Select your desired job criterias</h1>
         <Card
           sx={{
             "&.MuiCard-root": {
@@ -85,10 +85,10 @@ const JobCriteria = () => {
             <Box sx={{ width: "100%" }}>
               {/* --------------- stepper slider ----------- */}
               <Stepper activeStep={activeStep} className="step-continer">
-                <Step>
+                <Step className="sub-step-continer">
                   <StepLabel icon={<SVG.OneIcon />}>Categories</StepLabel>
                 </Step>
-                <Step>
+                <Step className="sub-step-continer">
                   <StepLabel>Additional parameters</StepLabel>
                 </Step>
                 <StepConnector />

@@ -112,6 +112,7 @@ const initialState = {
   verifyEmail: "",
   // use for social login error
   socialLoginError: "",
+  isBlackListedByEmployer: false,
 };
 
 export const getUserDetails = createAsyncThunk(
@@ -156,7 +157,9 @@ export const authSlice = createSlice({
         profileImage: action.payload,
       };
     },
-
+    setIsBlackListedByEmployer: (state, action) => {
+      state.isBlackListedByEmployer = action.payload;
+    },
     updateCurrentUser: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
@@ -305,6 +308,7 @@ export const {
   updateWorkExperienceRecord,
   deleteWorkExperienceRecord,
   setCurrentLocation,
-  setSocialLoginError
+  setSocialLoginError,
+  setIsBlackListedByEmployer
 } = authSlice.actions;
 export default authSlice.reducer;
