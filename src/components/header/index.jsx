@@ -172,6 +172,7 @@ function Header() {
                   onChange={(e) => setSearchValue(e.target.value)}
                   value={searchValue}
                 />
+                <SVG.SearchIcon className="login_header_search_icon" />
               </SearchCategory>
             </Stack>
           ) : (
@@ -200,7 +201,7 @@ function Header() {
                       component={"span"}
                       sx={{ "& svg": { width: "24px", height: "24px" } }}
                     >
-                      <SVG.SearchIcon />
+                      <SVG.SearchIcon className="me-3" />
                     </Box>
                   </IconButton>
                   <IconButton
@@ -232,7 +233,7 @@ function Header() {
                   display: { lg: "none" },
                 }}
               >
-                <MenuIcon />
+                <MenuIcon className="ms-3" />
               </IconButton>
             </Stack>
             <ul

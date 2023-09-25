@@ -46,8 +46,7 @@ const UpdateProfile = () => {
     const res = await GetUserDetailsAPI();
     if (res.remote === "success") {
       setProfileCompleted(res.data.profileCompleted);
-      dispatch(
-        updateCurrentUser(res.data));
+      dispatch(updateCurrentUser(res.data));
     }
   };
   useEffect(() => {
@@ -55,13 +54,17 @@ const UpdateProfile = () => {
   }, []);
   return (
     <>
-      {!profileCompleted && <Stack direction="row" spacing={3} className="mb-3">
-        <h1 className="heading m-0">Add info to complete your profile</h1>
-        <span onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)} className="later">
-          Do it later
-        </span>
-
-      </Stack>}
+      {!profileCompleted && (
+        <Stack direction="row" spacing={3} className="mb-3">
+          <h1 className="heading m-0">Add info to complete your profile</h1>
+          <span
+            onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)}
+            className="later"
+          >
+            Do it later
+          </span>
+        </Stack>
+      )}
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>
           <AboutMe handleClickOpen={handleClickOpen} />
@@ -84,7 +87,7 @@ const UpdateProfile = () => {
                 }}
               >
                 <ProfilePicInput
-                  title="Your Profile Picture"
+                  title="Profile photo"
                   handleSave={handleProfilePicSave}
                   image={currentUser.profileImage}
                   loading={profilePicLoading === "loading"}

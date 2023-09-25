@@ -65,7 +65,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 "@media (max-width:540px)": {
                   margin: "auto",
                 },
-                cursor: "default"
+                cursor: "default",
               },
             }}
           >
@@ -92,9 +92,12 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 fontSize: "16px",
                 padding: "6px 30px",
                 width: buttonWidth,
+                height: "42px",
                 "&:hover": { background: "rgba(255, 165, 0, 0.1)" },
                 "@media (max-width: 992px)": {
                   padding: "10px 16px",
+                },
+                "@media (max-width: 480px)": {
                   fontSize: "14px",
                 },
               },
