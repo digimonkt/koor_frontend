@@ -92,7 +92,7 @@ const UpdateProfile = () => {
                 }}
               >
                 <ProfilePicInput
-                  title="Your Profile Picture"
+                  title="Profile photo"
                   handleSave={handleProfilePicSave}
                   image={currentUser.profileImage}
                   loading={profilePicLoading === "loading"}

@@ -66,7 +66,7 @@ const JobCriteria = () => {
   return (
     <>
       <div>
-        <h1 className="heading my-4">Select your desired job criterias</h1>
+        <h1 className="heading mb-4">Select your desired job criterias</h1>
         <Card
           sx={{
             "&.MuiCard-root": {
@@ -88,10 +88,8 @@ const JobCriteria = () => {
                 <Step className="sub-step-continer">
                   <StepLabel icon={<SVG.OneIcon />}>Categories</StepLabel>
                 </Step>
-                <Step>
-                  <StepLabel className="sub-step-continer">
-                    Additional parameters
-                  </StepLabel>
+                <Step className="sub-step-continer">
+                  <StepLabel>Additional parameters</StepLabel>
                 </Step>
                 <StepConnector />
               </Stepper>
