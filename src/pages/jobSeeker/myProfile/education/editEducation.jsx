@@ -118,7 +118,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
   return (
     <div>
       <div className="heading-div">
-        <h1 className="heading">Education</h1>
+        <h1 className="heading">Add education</h1>
         <SVG.CrossCircle className="cross-circle" onClick={handleClose} />
       </div>
       <div className="form-content">

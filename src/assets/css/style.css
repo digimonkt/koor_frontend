@@ -293,7 +293,7 @@ header {
   border-radius: 73px !important;
   padding: 10px 30px !important;
   color: #274593 !important;
-  /* font-size: 16px !important; */
+   font-size: 16px !important; 
   letter-spacing: 0.03em !important;
   font-family: "Bahnschrift" !important;
   /* font-weight: 600 !important; */
@@ -497,7 +497,7 @@ header {
 }
 
 .form-control {
-  height: 46px;
+  height: 54px;
   width: 100%;
   background: #f9f9f9;
   border-radius: 4px;
@@ -518,7 +518,7 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 10px;
+  top: 20px;
 }
 
 .spaceor {
@@ -1495,7 +1495,7 @@ span.count {
   }
 
   .add-content h2 {
-    font-size: 20px;
+    font-size: 24px;
   }
 
   .spaceor span {
@@ -1679,7 +1679,7 @@ span.count {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 21px;
   /* identical to box height */
   letter-spacing: 0.02em;
