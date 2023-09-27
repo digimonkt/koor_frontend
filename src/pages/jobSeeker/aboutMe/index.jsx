@@ -272,7 +272,7 @@ const AboutMe = (props) => {
                 <ErrorMessage>{formik.errors.email}</ErrorMessage>
               ) : null}
               <HorizontalPhoneInput
-                label="Mobile Number (optional)"
+                label="Mobile Number"
                 value={formik.values.mobileNumber.value}
                 onChange={(e) => formik.setFieldValue("mobileNumber", e)}
                 defaultCountry={formik.values.countryCode}
@@ -346,6 +346,9 @@ const AboutMe = (props) => {
                 maxDate={dayjs(`${currentYear}-12-31`)}
                 openTo="year"
                 className="labelbox"
+                inputProps={{
+                  placeholder: "Select year",
+                }}
               />
               {formik.touched.dob && formik.errors.dob ? (
                 <ErrorMessage>{formik.errors.dob}</ErrorMessage>
@@ -407,7 +410,7 @@ const AboutMe = (props) => {
                 <ErrorMessage>{formik.errors.experience}</ErrorMessage>
               ) : null}
               <HorizontalLabelInput
-                label="Highest education (optional)"
+                label="Highest education"
                 type="select"
                 placeholder="Select Your highest education"
                 options={educationLevels.data.map((educationLevel) => ({
@@ -421,7 +424,7 @@ const AboutMe = (props) => {
                 <ErrorMessage>{formik.errors.highestEducation}</ErrorMessage>
               ) : null}
               <HorizontalLabelInput
-                label="Introduce yourself (optional)"
+                label="Introduce yourself"
                 type="textarea"
                 placeholder="Write a few words about yourself"
                 {...formik.getFieldProps("description")}
