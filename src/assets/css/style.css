@@ -717,6 +717,10 @@ hr {
   box-sizing: border-box;
 }
 
+.savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label{
+  font-size: 12px;
+}
+
 .search-language .css-1oqqzyl-MuiContainer-root {
   padding: 0px;
   margin-bottom: 20px;
@@ -1966,7 +1970,7 @@ input.employersearch {
     width: 50px;
   }
 
-  .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
+  .savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label {
     padding-left: 6px !important;
     padding-right: 0px !important;
   }
@@ -2030,7 +2034,7 @@ input.employersearch {
 
 }
   .saved-jobs h2 {
-    font-size: 16px;
+    font-size: 24px;
   }
 
   .navbar-brand {
@@ -2116,7 +2120,15 @@ input.employersearch {
     font-size: 14px !important;
   }
 
-  .additional-check {
+  .savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label{
+    font-size: 10px;
+  }
+
+  .saved-jobs h2 {
+    font-size: 20px;
+  }
+
+ .additional-check {
     display: grid !important;
   }
 
