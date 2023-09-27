@@ -1,4 +1,4 @@
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 
 export const transformConversationResponse = (data) => {
   const user = data.chat_user[0] || {};
@@ -19,7 +19,7 @@ export const transformConversationResponse = (data) => {
       id: lastMessage.id,
       createdAt: lastMessage.created,
     },
-    blacklistedByEmployer: user.blacklisted // this is check job seeker is blacklisted by employer or not
+    blacklistedByEmployer: user.blacklisted, // this is check job seeker is blacklisted by employer or not
   };
 };
 

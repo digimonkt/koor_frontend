@@ -1,5 +1,5 @@
-import { GetUserDetailsAPI } from "@api/user";
-import { SVG } from "@assets/svg";
+import { GetUserDetailsAPI } from "../../../api/user";
+import { SVG } from "../../../assets/svg";
 
 import {
   Box,
@@ -14,11 +14,11 @@ import {
   Chip,
 } from "@mui/material";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
-import { NoRecordFoundAnimation } from "@components/animations";
+import { NoRecordFoundAnimation } from "../../../components/animations";
 
 function PublicProfileComponent() {
   const params = useParams();
@@ -191,11 +191,7 @@ function PublicProfileComponent() {
                               fontFamily: "Bahnschrift",
                             }}
                           >
-                            <Link
-                              to="#"
-                            >
-                              See All
-                            </Link>
+                            <Link to="#">See All</Link>
                           </Typography>
                         </div>
                         <ul className="listitems">
@@ -257,7 +253,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                userDetails.mobileNumber
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
@@ -402,7 +398,6 @@ function PublicProfileComponent() {
                           </Box>
                         </Stack>
                       ) : null}
-
                     </Stack>
                   </Box>
                   <Divider sx={{ borderColor: "#cacaca" }} />

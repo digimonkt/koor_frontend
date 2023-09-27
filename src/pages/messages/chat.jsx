@@ -3,7 +3,7 @@ import React from "react";
 import ChatList from "./chatList";
 import ChatBox from "./chatBoxRight";
 import { useSearchParams } from "react-router-dom";
-import { ChatNotSelected } from "@components/animations";
+import { ChatNotSelected } from "../../components/animations";
 
 function ChatComponent() {
   const [searchParams] = useSearchParams();

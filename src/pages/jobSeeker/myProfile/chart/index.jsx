@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { styled } from "@mui/material/styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { getProfileAnalyticsDataAPI } from "@api/jobSeeker";
+import { getProfileAnalyticsDataAPI } from "../../../../api/jobSeeker";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -129,7 +129,10 @@ const AreaChart = () => {
 
   currentDate.setMonth(currentDate.getMonth() - 1);
   const lastMonth = currentDate.getMonth();
-  const lastFiveYears = Array.from({ length: 5 }, (_, index) => currentYear - index);
+  const lastFiveYears = Array.from(
+    { length: 5 },
+    (_, index) => currentYear - index
+  );
   const [chartData, setChartData] = useState({
     options: OPTIONS,
     data: [],
@@ -137,7 +140,11 @@ const AreaChart = () => {
   const getLastMonthComparing = (lastMonthViews, currentMonthViews) => {
     setLastMonthComparing(0);
     if (lastMonthViews > 0 && currentMonthViews > 0) {
-      setLastMonthComparing((((currentMonthViews - lastMonthViews) / lastMonthViews) * 100).toFixed(0));
+      setLastMonthComparing(
+        (((currentMonthViews - lastMonthViews) / lastMonthViews) * 100).toFixed(
+          0
+        )
+      );
     }
   };
   const getProfileAnalyticsData = async () => {
@@ -187,11 +194,11 @@ const AreaChart = () => {
             IconComponent={KeyboardArrowDownIcon}
             displayEmpty
           >
-            {
-              lastFiveYears.map((year, index) =>
-                (<MenuItem key={index} value={year}>{year}</MenuItem>)
-              )
-            }
+            {lastFiveYears.map((year, index) => (
+              <MenuItem key={index} value={year}>
+                {year}
+              </MenuItem>
+            ))}
           </SelectBox>
         </FormControl>
       </Stack>
@@ -201,7 +208,15 @@ const AreaChart = () => {
           <p>in the last month</p>
         </div>
         <div className="chart-view">
-          <h5> {(lastMonthComparing > 0) ? "+" : (lastMonthComparing === 0) ? "" : "-"} {lastMonthComparing || 0}%</h5>
+          <h5>
+            {" "}
+            {lastMonthComparing > 0
+              ? "+"
+              : lastMonthComparing === 0
+              ? ""
+              : "-"}{" "}
+            {lastMonthComparing || 0}%
+          </h5>
           <p>comparing to previous period</p>
         </div>
       </Stack>

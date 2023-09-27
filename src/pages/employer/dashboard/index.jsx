@@ -1,23 +1,23 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { DonutChart } from "@components/charts";
+import { DonutChart } from "../../../components/charts";
 import { employerCard } from "./employerCardData";
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import {
   getDashboardActivityAPI,
   getRecentApplicationAPI,
   getShareCountDataAPI,
-} from "@api/employer";
+} from "../../../api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { NoDataFoundAnimation } from "@components/animations";
+import { NoDataFoundAnimation } from "../../../components/animations";
 import JobAnalytics from "./jobAnalytics";
-import Loader from "@components/loader";
-import ApplicantCard from "@components/applicantCard";
-import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
+import Loader from "../../../components/loader";
+import ApplicantCard from "../../../components/applicantCard";
+import ApplicantCardSkeletonLoading from "../../../components/applicantCard/skeletonLoading";
 import { useDispatch, useSelector } from "react-redux";
-import { setTotalAvailableCredits } from "@redux/slice/employer";
+import { setTotalAvailableCredits } from "../../../redux/slice/employer";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const dispatch = useDispatch();

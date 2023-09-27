@@ -2,29 +2,36 @@ import React, { useState, useEffect } from "react";
 import styles from "./applyForTender.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { FilledButton, SearchButton, SolidButton } from "@components/button";
-import { AttachmentDragNDropInput, LabeledInput } from "@components/input";
-import { ErrorMessage } from "@components/caption";
+import {
+  FilledButton,
+  SearchButton,
+  SolidButton,
+} from "../../../components/button";
+import {
+  AttachmentDragNDropInput,
+  LabeledInput,
+} from "../../../components/input";
+import { ErrorMessage } from "../../../components/caption";
 import { Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   applyForTenderAPI,
   getTenderDetailsByIdAPI,
   updateAppliedTenderAPI,
-} from "@api/tender";
+} from "../../../api/tender";
 import dayjs from "dayjs";
-import { getColorByRemainingDays } from "@utils/generateColor";
-import { generateFileUrl } from "@utils/generateFileUrl";
-import JobCostCard from "@pages/jobs/component/jobCostCard";
+import { getColorByRemainingDays } from "../../../utils/generateColor";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
+import JobCostCard from "../../../pages/jobs/component/jobCostCard";
 import { useFormik } from "formik";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import DialogBox from "@components/dialogBox";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
+import DialogBox from "../../../components/dialogBox";
 import ApplySuccessfully from "./applySuccessfully";
 import { useDispatch } from "react-redux";
-import CancelApply from "@pages/tenders/applyForTender/cancelApply";
+import CancelApply from "../../../pages/tenders/applyForTender/cancelApply";
 import { applyTenderValidationSchema } from "./validator";
-import { getApplicationDetailsAPI } from "@api/vendor";
+import { getApplicationDetailsAPI } from "../../../api/vendor";
 function ApplyForTender() {
   const navigate = useNavigate();
   const params = useParams();
@@ -82,7 +89,10 @@ function ApplyForTender() {
         short_letter: values.shortLetter,
         attachments: values.attachments,
       };
-      if (searchParams.get("applicationId") && values.attachmentsRemove.length) {
+      if (
+        searchParams.get("applicationId") &&
+        values.attachmentsRemove.length
+      ) {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
@@ -237,7 +247,9 @@ function ApplyForTender() {
                   </div>
                   {hide ? (
                     <>
-                      <p className={styles.more_text_p}>Please check out my attachements below..</p>
+                      <p className={styles.more_text_p}>
+                        Please check out my attachements below..
+                      </p>
                       {details.attachments.map((attachment) => {
                         return (
                           <div
@@ -250,7 +262,11 @@ function ApplyForTender() {
                             <span
                               className="ms-3"
                               style={{ cursor: "pointer" }}
-                              onClick={() => handleLoadImage(generateFileUrl(attachment.path))}
+                              onClick={() =>
+                                handleLoadImage(
+                                  generateFileUrl(attachment.path)
+                                )
+                              }
                             >
                               {attachment.title}
                             </span>
@@ -379,8 +395,8 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                        ? "Update"
-                        : "Apply"
+                      ? "Update"
+                      : "Apply"
                   }
                   className={`${styles.applybtn}`}
                   type="submit"

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { LabeledOtpInput } from "@components/input";
+import { LabeledOtpInput } from "../../components/input";
 import { useFormik } from "formik";
-import { FilledButton } from "@components/button";
-import { SendOtpAPI, VerifyOtpAPI } from "@api/user";
+import { FilledButton } from "../../components/button";
+import { SendOtpAPI, VerifyOtpAPI } from "../../api/user";
 import urlcat from "urlcat";
-import { setUserRole } from "@redux/slice/user";
-import { ErrorMessage } from "@components/caption";
-import { setSuccessToast } from "@redux/slice/toast";
-import Loader from "@components/loader";
+import { setUserRole } from "../../redux/slice/user";
+import { ErrorMessage } from "../../components/caption";
+import { setSuccessToast } from "../../redux/slice/toast";
+import Loader from "../../components/loader";
 function VerifyOTPForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();

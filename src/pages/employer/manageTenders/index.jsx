@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Chip, Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import AllApplication from "./components/tenderAllApplications";
 
 import Tenders from "./components/tenders";
 import { useNavigate } from "react-router-dom";
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import { AntTab, AntTabs } from "./style";
 import { useSelector } from "react-redux";
-import DialogBox from "@components/dialogBox";
+import DialogBox from "../../../components/dialogBox";
 import urlcat from "urlcat";
 const ManageTenders = () => {
   // navigate
@@ -96,13 +96,25 @@ const ManageTenders = () => {
             <tab.component />
           </div>
         ))}
-        <DialogBox open={accountVerifiedWarning} handleClose={() => setAccountVerifiedWarning(false)}>
+        <DialogBox
+          open={accountVerifiedWarning}
+          handleClose={() => setAccountVerifiedWarning(false)}
+        >
           <div>
-            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+            <SVG.Warning
+              style={{
+                marginLeft: "39%",
+                height: "50px",
+                width: "50px",
+                color: "red",
+              }}
+            />
             <h1 className="heading">Account Verification Status</h1>
             <div className="form-content">
               <p>
-                Dear {currentUser.name || currentUser.email }, your account is not verified by the administrator. Please contact the administrator for further assistance.
+                Dear {currentUser.name || currentUser.email}, your account is
+                not verified by the administrator. Please contact the
+                administrator for further assistance.
               </p>
             </div>
           </div>

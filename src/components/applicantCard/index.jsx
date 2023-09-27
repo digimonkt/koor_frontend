@@ -1,9 +1,9 @@
 import { Avatar, Chip, Divider, Stack } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
-import { SVG } from "@assets/svg";
-import ApplicationOptions from "@components/applicationOptions";
+import { SVG } from "../../assets/svg";
+import ApplicationOptions from "../../components/applicationOptions";
 
 function ApplicantCard({
   details,

@@ -11,16 +11,16 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { SVG } from "@assets/svg";
-import { getApplicationDetailsAPI } from "@api/employer";
+import { SVG } from "../../../assets/svg";
+import { getApplicationDetailsAPI } from "../../../api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import EducationCard from "@components/educationCard";
-import WorkExperienceCard from "@components/workExperienceCard";
-import LanguageCard from "@components/languageCard";
-import ApplicationOptions from "@components/applicationOptions";
-import { generateFileUrl } from "@utils/generateFileUrl";
-import { NoRecordFoundAnimation } from "@components/animations";
+import EducationCard from "../../../components/educationCard";
+import WorkExperienceCard from "../../../components/workExperienceCard";
+import LanguageCard from "../../../components/languageCard";
+import ApplicationOptions from "../../../components/applicationOptions";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
+import { NoRecordFoundAnimation } from "../../../components/animations";
 import urlcat from "urlcat";
 dayjs.extend(relativeTime);
 
@@ -86,8 +86,7 @@ const ApplicantDetails = () => {
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   <span>
-                    Applied {dayjs(applicantDetails.createdAt).fromNow()}{" "}
-                    to:{" "}
+                    Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
                   <div>{applicantDetails.job.title}</div>
                 </div>
@@ -224,7 +223,7 @@ const ApplicantDetails = () => {
                             <li key={index}>
                               <EducationCard
                                 {...item}
-                              // handleEdit={() => handleEdit(item)}
+                                // handleEdit={() => handleEdit(item)}
                               />
                             </li>
                           )

@@ -1,13 +1,13 @@
 import { Avatar, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utcPlugin from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
-import { ChipBox } from "@components/jobCard/style";
-import { SVG } from "@assets/svg";
+import { ChipBox } from "../../components/jobCard/style";
+import { SVG } from "../../assets/svg";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 dayjs.extend(utcPlugin);

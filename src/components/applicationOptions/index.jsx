@@ -1,22 +1,22 @@
-import { getConversationIdByUserIdAPI } from "@api/chat";
-import { changeApplicationStatusAPI } from "@api/employer";
-import { changeTenderApplicationStatusAPI } from "@api/tender";
-import { SVG } from "@assets/svg";
-import { FilledButton, OutlinedButton } from "@components/button";
-import DialogBox from "@components/dialogBox";
-import { LabeledInput } from "@components/input";
-import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
-import Loader from "@components/loader";
+import { getConversationIdByUserIdAPI } from "../../api/chat";
+import { changeApplicationStatusAPI } from "../../api/employer";
+import { changeTenderApplicationStatusAPI } from "../../api/tender";
+import { SVG } from "../../assets/svg";
+import { FilledButton, OutlinedButton } from "../../components/button";
+import DialogBox from "../../components/dialogBox";
+import { LabeledInput } from "../../components/input";
+import LabeledRadioInputComponent from "../../components/input/labeledRadioInput";
+import Loader from "../../components/loader";
 import { Avatar, Box, Button, Grid } from "@mui/material";
 import {
   setTotalApplicationsByJob,
   setTotalApplicationsByTender,
   setTotalBlacklist,
-} from "@redux/slice/employer";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
-import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
-import { generateFileUrl } from "@utils/generateFileUrl";
+} from "../../redux/slice/employer";
+import { setErrorToast, setSuccessToast } from "../../redux/slice/toast";
+import { BLACKLIST_REASON_LIST } from "../../utils/constants/constants";
+import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "../../utils/enum";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +43,8 @@ function ApplicationOptions({
   const [isShortlisted, setIsShortlisted] = useState(false);
 
   const [blackListReason, setBlackListReason] = useState("");
-  const [invalidPlannedInterviewAlert, setInvalidPlannedInterviewAlert] = useState("");
+  const [invalidPlannedInterviewAlert, setInvalidPlannedInterviewAlert] =
+    useState("");
   const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
   const [interviewTime, setInterviewTime] = useState("");
   const [isBlacklisting, setIsBlacklisting] = useState(false);
@@ -183,7 +184,10 @@ function ApplicationOptions({
               style={{
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
-              onClick={() => { setInvalidPlannedInterviewAlert(""); setIsInterviewPlanning(true); }}
+              onClick={() => {
+                setInvalidPlannedInterviewAlert("");
+                setIsInterviewPlanning(true);
+              }}
             >
               <SVG.EventIcon className="application-option-icon" />
               <span>
@@ -363,7 +367,7 @@ function ApplicationOptions({
             <div
               style={{
                 marginLeft: "15px",
-                wordBreak: "break-all"
+                wordBreak: "break-all",
               }}
             >
               {details.user.name || details.user.email}
@@ -415,7 +419,10 @@ function ApplicationOptions({
           <div className="dialog-reason">
             <LabeledInput
               type="datetime-local"
-              onChange={(e) => { setInterviewTime(e.target.value); setInvalidPlannedInterviewAlert(""); }}
+              onChange={(e) => {
+                setInterviewTime(e.target.value);
+                setInvalidPlannedInterviewAlert("");
+              }}
               value={interviewTime}
               min={dayjs().format("YYYY-MM-DDTHH:mm")}
             />
@@ -432,7 +439,9 @@ function ApplicationOptions({
                     JOB_APPLICATION_OPTIONS.plannedInterviews
                   );
                 } else {
-                  setInvalidPlannedInterviewAlert("Please select date and time");
+                  setInvalidPlannedInterviewAlert(
+                    "Please select date and time"
+                  );
                 }
               }}
             />

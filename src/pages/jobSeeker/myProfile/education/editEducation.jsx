@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import { OutlinedButton } from "@components/button";
+import { SVG } from "../../../../assets/svg";
+import { OutlinedButton } from "../../../../components/button";
 import {
   CheckboxInput,
   DateInput,
   LabeledInput,
   SelectInput,
-} from "@components/input";
+} from "../../../../components/input";
 import { Grid } from "@mui/material";
 import { useFormik } from "formik";
-import { FormControlReminder } from "@components/style";
+import { FormControlReminder } from "../../../../components/style";
 import { validateEditEducation } from "../validator";
-import { ErrorMessage } from "@components/caption";
+import { ErrorMessage } from "../../../../components/caption";
 import dayjs from "dayjs";
-import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
+import {
+  DATABASE_DATE_FORMAT,
+  DATE_FORMAT,
+} from "../../../../utils/constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addEducationDetailsAPI,
   updateEducationDetailsAPI,
-} from "@api/jobSeeker";
-import { setSuccessToast } from "@redux/slice/toast";
-import Loader from "@components/loader";
-import { addEducationRecord, updateEducationRecord } from "@redux/slice/user";
+} from "../../../../api/jobSeeker";
+import { setSuccessToast } from "../../../../redux/slice/toast";
+import Loader from "../../../../components/loader";
+import {
+  addEducationRecord,
+  updateEducationRecord,
+} from "../../../../redux/slice/user";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch } from "@mui/material";
-import { getSettingUpdateAPI, settingUpdateAPI } from "@api/user";
+import { getSettingUpdateAPI, settingUpdateAPI } from "../../api/user";
 
 function Settings() {
   const [notification, setNotification] = useState(false);
@@ -40,7 +40,10 @@ function Settings() {
       >
         <div>Notification</div>
         <div>
-          <Switch checked={notification} onChange={(e) => handelNotification(e)} />
+          <Switch
+            checked={notification}
+            onChange={(e) => handelNotification(e)}
+          />
         </div>
       </div>
       <div
@@ -52,7 +55,10 @@ function Settings() {
       >
         <div>Email</div>
         <div>
-          <Switch checked={email} onChange={(e) => handelEmailNotification(e)} />
+          <Switch
+            checked={email}
+            onChange={(e) => handelEmailNotification(e)}
+          />
         </div>
       </div>
     </div>

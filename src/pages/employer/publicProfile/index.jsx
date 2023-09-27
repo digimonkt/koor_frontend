@@ -1,8 +1,8 @@
-import { getEmployerActiveJobsAPI } from "@api/employer";
-import { GetUserDetailsAPI } from "@api/user";
-import { SVG } from "@assets/svg";
-import { NoRecordFoundAnimation } from "@components/animations";
-import JobCard from "@components/jobCard";
+import { getEmployerActiveJobsAPI } from "../../../api/employer";
+import { GetUserDetailsAPI } from "../../../api/user";
+import { SVG } from "../../../assets/svg";
+import { NoRecordFoundAnimation } from "../../../components/animations";
+import JobCard from "../../../components/jobCard";
 import {
   Box,
   CardContent,
@@ -15,7 +15,7 @@ import {
   Divider,
 } from "@mui/material";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";

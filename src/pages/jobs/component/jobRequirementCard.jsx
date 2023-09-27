@@ -1,4 +1,4 @@
-import { SearchButton } from "@components/button";
+import { SearchButton } from "../../../components/button";
 import React from "react";
 import styles from "./styles.module.css";
 import { Stack } from "@mui/material";

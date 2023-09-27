@@ -3,7 +3,7 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import styles from "./style.module.css";
 import React from "react";
-import { DATE_FORMAT } from "@utils/constants/constants";
+import { DATE_FORMAT } from "../../utils/constants/constants";
 
 export const DateFiled = styled("div")(() => ({
   "& .MuiTextField-root": {

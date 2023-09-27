@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
-import SearchInput from "@components/searchInput";
-import { SVG } from "@assets/svg";
+import SearchInput from "../../components/searchInput";
+import { SVG } from "../../assets/svg";
 import {
   Box,
   Chip,
@@ -20,7 +20,7 @@ import {
   JOB_SORT_BY,
   SEARCH_TYPE,
   USER_ROLES,
-} from "@utils/enum";
+} from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   searchJobs,
@@ -28,7 +28,7 @@ import {
   searchTender,
   searchVendor,
   setJobPage,
-} from "@redux/slice/search";
+} from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import urlcat from "urlcat";
 function Search() {
@@ -102,11 +102,12 @@ function Search() {
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
   useEffect(() => {
-    if (SEARCH_TYPE.talents === params.type || SEARCH_TYPE.vendors === params.type) {
+    if (
+      SEARCH_TYPE.talents === params.type ||
+      SEARCH_TYPE.vendors === params.type
+    ) {
       if (isLoggedIn && !currentUser.profile.isVerified) {
-        navigate(
-          urlcat("../employer/dashboard")
-        );
+        navigate(urlcat("../employer/dashboard"));
       }
     }
   }, []);
@@ -289,7 +290,7 @@ function Search() {
                               sx={{
                                 backgroundColor:
                                   sortBy === data.sortBy &&
-                                    orderBy === data.orderBy
+                                  orderBy === data.orderBy
                                     ? role === USER_ROLES.jobSeeker
                                       ? "#FEEFD3"
                                       : "#D5E3F7"
@@ -311,7 +312,11 @@ function Search() {
             </Box>
           </Grid>
         </Grid>
-        {totalPages > 1 ? < div className="paginations pt-4">{pagination()}</div> : <div style={{ marginTop: "20px" }}></div>}
+        {totalPages > 1 ? (
+          <div className="paginations pt-4">{pagination()}</div>
+        ) : (
+          <div style={{ marginTop: "20px" }}></div>
+        )}
       </Container>
     </Box>
   );

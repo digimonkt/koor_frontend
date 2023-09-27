@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LabeledInput, LabeledRadioInput } from "@components/input";
-import { getLanguages } from "@redux/slice/choices";
-import { LANGUAGE_PROFICIENCY } from "@utils/enum";
+import { LabeledInput, LabeledRadioInput } from "../../../../components/input";
+import { getLanguages } from "../../../../redux/slice/choices";
+import { LANGUAGE_PROFICIENCY } from "../../../../utils/enum";
 import { useFormik } from "formik";
-import { SVG } from "@assets/svg";
-import { OutlinedButton } from "@components/button";
+import { SVG } from "../../../../assets/svg";
+import { OutlinedButton } from "../../../../components/button";
 import { validateEditLanguage } from "../validator";
-import { ErrorMessage } from "@components/caption";
-import Loader from "@components/loader";
+import { ErrorMessage } from "../../../../components/caption";
+import Loader from "../../../../components/loader";
 import {
   addLanguageDetailsAPI,
   updateLanguageDetailsAPI,
-} from "@api/jobSeeker";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { addLanguageRecord, updateLanguageRecord } from "@redux/slice/user";
+} from "../../../../api/jobSeeker";
+import { setErrorToast, setSuccessToast } from "../../../../redux/slice/toast";
+import {
+  addLanguageRecord,
+  updateLanguageRecord,
+} from "../../../../redux/slice/user";
 import styles from "./styles.module.css";
 
 const color = "#EEA23D";

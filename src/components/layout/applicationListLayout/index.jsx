@@ -1,4 +1,4 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { Chip, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 

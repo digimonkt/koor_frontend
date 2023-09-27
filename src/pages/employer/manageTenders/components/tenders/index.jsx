@@ -1,14 +1,14 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Box, Card, CardContent, Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../../../assets/svg";
 
-import { getTenderAPI } from "@api/employer";
+import { getTenderAPI } from "../../../../../api/employer";
 import { useDispatch } from "react-redux";
-import { setTotalTenders } from "@redux/slice/employer";
-import TenderCard from "@components/tenderCard";
+import { setTotalTenders } from "../../../../../redux/slice/employer";
+import TenderCard from "../../../../../components/tenderCard";
 import ApplicantList from "../applicantList";
-import { NoDataFoundAnimation } from "@components/animations";
-import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
+import { NoDataFoundAnimation } from "../../../../../components/animations";
+import TenderCardSkeletonLoader from "../../../../../components/tenderCard/tenderCardSkeletonLoader";
 
 const Tenders = () => {
   const dispatch = useDispatch();
@@ -101,32 +101,34 @@ const Tenders = () => {
           >
             <NoDataFoundAnimation title="No tender found." />
           </Card>
-        ) : manageTenderList.map((tender, index) => (
-          <Card
-            key={index}
-            sx={{
-              "&.MuiCard-root": {
-                boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-                borderRadius: "10px",
-                mb: 3,
-              },
-            }}
-          >
-            <CardContent
+        ) : (
+          manageTenderList.map((tender, index) => (
+            <Card
+              key={index}
               sx={{
-                "&.MuiCardContent-root": {
-                  padding: "25px 25px 25px",
+                "&.MuiCard-root": {
+                  boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                  borderRadius: "10px",
+                  mb: 3,
                 },
               }}
             >
-              <TenderCard tenderDetails={tender} selfTender />
-              <ApplicantList
-                tenderId={tender.id}
-                totalApplications={tender.vendor}
-              />
-            </CardContent>
-          </Card>
-        ))}
+              <CardContent
+                sx={{
+                  "&.MuiCardContent-root": {
+                    padding: "25px 25px 25px",
+                  },
+                }}
+              >
+                <TenderCard tenderDetails={tender} selfTender />
+                <ApplicantList
+                  tenderId={tender.id}
+                  totalApplications={tender.vendor}
+                />
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
     </>
   );

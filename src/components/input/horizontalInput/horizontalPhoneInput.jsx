@@ -1,4 +1,4 @@
-import PhoneNumberInputComponent from "@components/phoneNumberInput";
+import PhoneNumberInputComponent from "../../../components/phoneNumberInput";
 import { Stack } from "@mui/material";
 import React from "react";
 

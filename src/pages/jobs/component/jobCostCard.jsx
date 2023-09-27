@@ -1,12 +1,12 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { Avatar } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../../utils/enum";
 import { useSelector } from "react-redux";
 function JobCostCard({ amount, payPeriod, user }) {
   const { role } = useSelector((state) => state.auth);

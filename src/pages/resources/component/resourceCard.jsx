@@ -1,10 +1,10 @@
 import React from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import { Card, CardContent, Grid } from "@mui/material";
 import styles from "../styles.module.css";
 import { useNavigate } from "react-router-dom";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 
 export const ResourceCard = ({ id, image, title, description }) => {
   const navigate = useNavigate();

@@ -1,12 +1,12 @@
-import { getApplicationOnTenderAPI } from "@api/employer";
-import { SVG } from "@assets/svg";
-import { NoDataFoundAnimation } from "@components/animations";
-import ApplicantCard from "@components/applicantCard";
-import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
-import ApplicationListLayout from "@components/layout/applicationListLayout";
+import { getApplicationOnTenderAPI } from "../../../../api/employer";
+import { SVG } from "../../../../assets/svg";
+import { NoDataFoundAnimation } from "../../../../components/animations";
+import ApplicantCard from "../../../../components/applicantCard";
+import ApplicantCardSkeletonLoading from "../../../../components/applicantCard/skeletonLoading";
+import ApplicationListLayout from "../../../../components/layout/applicationListLayout";
 import { Chip, Stack } from "@mui/material";
-import { setTotalApplicationsByTender } from "@redux/slice/employer";
-import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
+import { setTotalApplicationsByTender } from "../../../../redux/slice/employer";
+import { JOB_APPLICATION_OPTIONS } from "../../../../utils/enum";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,9 +19,7 @@ function ApplicantList({ totalApplications, tenderId }) {
   // const [totalBlacklisted, setTotalBlacklisted] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const dispatch = useDispatch();
-  const { totalApplicationsByTender } = useSelector(
-    (state) => state.employer
-  );
+  const { totalApplicationsByTender } = useSelector((state) => state.employer);
   const getTenderApplicationList = async () => {
     setIsLoading(true);
     const res = await getApplicationOnTenderAPI({ tenderId, filter });
@@ -123,15 +121,16 @@ function ApplicantList({ totalApplications, tenderId }) {
 
   useEffect(() => {
     if (filter) getTenderApplicationList(filter);
-    dispatch(setTotalApplicationsByTender(
-      {
+    dispatch(
+      setTotalApplicationsByTender({
         tenderId,
         data: {
           shortlisted: totalShortlisted,
           rejected: totalRejected,
           plannedInterview: totalPlannedInterview,
         },
-      }));
+      })
+    );
   }, [filter]);
 
   return (

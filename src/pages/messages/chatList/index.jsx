@@ -1,15 +1,15 @@
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../../utils/enum";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Divider, Stack } from "@mui/material";
 import styles from "../message.module.css";
-import { getConversationListAPI } from "@api/chat";
-import { NoDataFoundAnimation } from "@components/animations";
+import { getConversationListAPI } from "../../../api/chat";
+import { NoDataFoundAnimation } from "../../../components/animations";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { WebSocketClient } from "@utils/constants/websocket";
-import { transformConversationResponse } from "@api/transform/chat";
+import { WebSocketClient } from "../../../utils/constants/websocket";
+import { transformConversationResponse } from "../../../api/transform/chat";
 import { useDebounce } from "usehooks-ts";
-import { setIsBlackListedByEmployer } from "@redux/slice/user";
+import { setIsBlackListedByEmployer } from "../../../redux/slice/user";
 function ChatList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -62,13 +62,20 @@ function ChatList() {
     <>
       <div className="searchmessage">
         <div className="searchmessage-icon">
-          <input className="chat-search" placeholder="Search" onChange={(e) => { setSearch(e.target.value); }} />
+          <input
+            className="chat-search"
+            placeholder="Search"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
         </div>
       </div>
 
       <div
-        className={`chatbox ${role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
-          }`}
+        className={`chatbox ${
+          role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
+        }`}
         style={{ overflow: "auto" }}
         onScroll={(e) => {
           const { scrollTop, clientHeight, scrollHeight } = e.target;
@@ -89,7 +96,8 @@ function ChatList() {
                 <li
                   key={chat.id}
                   onClick={() => {
-                    handleBlacklistStatus(chat.blacklistedByEmployer); navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
+                    handleBlacklistStatus(chat.blacklistedByEmployer);
+                    navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
                   }}
                   style={{
                     background:

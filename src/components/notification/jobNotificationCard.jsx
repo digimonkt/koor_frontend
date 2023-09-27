@@ -1,7 +1,7 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { Avatar } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
-import { timeAgoFromNow } from "@utils/timeAgo";
+import { generateFileUrl } from "../../utils/generateFileUrl";
+import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";

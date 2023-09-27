@@ -1,12 +1,12 @@
-import { ErrorMessage } from "@components/caption";
-import { DateInput, SelectInput } from "@components/input";
+import { ErrorMessage } from "../../../components/caption";
+import { DateInput, SelectInput } from "../../../components/input";
 import { FormControl, Grid, Stack } from "@mui/material";
 // import { JobFormControl } from "@pages/jobs/postJobs/style";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 // import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
-import { getTenderSector } from "@redux/slice/choices";
+import { getTenderSector } from "../../../redux/slice/choices";
 
 function TenderFilter({ formik, footer, responsive }) {
   const dispatch = useDispatch();

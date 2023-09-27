@@ -2,16 +2,16 @@ import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import UpdateInfo from "./update-info";
 import ResumeUpdate from "./resume-update";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { useNavigate } from "react-router-dom";
-import DialogBox from "@components/dialogBox";
-import { USER_ROLES } from "@utils/enum";
+import DialogBox from "../../../components/dialogBox";
+import { USER_ROLES } from "../../../utils/enum";
 import AboutMe from "../aboutMe";
-import { ProfilePicInput } from "@components/input";
+import { ProfilePicInput } from "../../../components/input";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfilePic, updateCurrentUser } from "@redux/slice/user";
-import { GetUserDetailsAPI, UpdateProfileImageAPI } from "@api/user";
-import { ErrorToast, SuccessToast } from "@components/toast";
+import { setProfilePic, updateCurrentUser } from "../../../redux/slice/user";
+import { GetUserDetailsAPI, UpdateProfileImageAPI } from "../../../api/user";
+import { ErrorToast, SuccessToast } from "../../../components/toast";
 // import { resetToast } from "@redux/slice/toast";
 
 const UpdateProfile = () => {

@@ -1,16 +1,16 @@
 import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import urlcat from "urlcat";
-import { getColorByRemainingDays } from "@utils/generateColor";
-import { generateFileUrl } from "@utils/generateFileUrl";
-import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
-import { updateEmployerJobStatusAPI } from "@api/employer";
+import { getColorByRemainingDays } from "../../utils/generateColor";
+import { generateFileUrl } from "../../utils/generateFileUrl";
+import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
+import { updateEmployerJobStatusAPI } from "../../api/employer";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -58,9 +58,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-        dayjs(jobDetails.isPlannedInterview).format(
-          "MMMM D, YYYY [at] h:mm A"
-        )
+          dayjs(jobDetails.isPlannedInterview).format(
+            "MMMM D, YYYY [at] h:mm A"
+          )
       );
     }
   }, [jobDetails]);
@@ -118,7 +118,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   size="small"
                   label={applicationStatus}
                   sx={{
-                    marginLeft: "5px", textTransform: "capitalize"
+                    marginLeft: "5px",
+                    textTransform: "capitalize",
                   }}
                 />
               ) : null}
@@ -167,12 +168,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                    jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                        jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>

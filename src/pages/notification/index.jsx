@@ -1,4 +1,4 @@
-import NotificationContent from "@components/notification";
+import NotificationContent from "../../components/notification";
 import { Container } from "@mui/material";
 import React from "react";
 import styles from "./notification.module.css";

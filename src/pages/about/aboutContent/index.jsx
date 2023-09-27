@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import ScrollTabs from "../scrollTabs";
 import { TabContext } from "@mui/lab";
 import React, { useEffect, useState } from "react";
-import { getFAQCategoryAPI } from "@api/faq";
-import { USER_ROLES } from "@utils/enum";
-import { resetFAQQuestions } from "@redux/slice/faq";
+import { getFAQCategoryAPI } from "../../../api/faq";
+import { USER_ROLES } from "../../../utils/enum";
+import { resetFAQQuestions } from "../../../redux/slice/faq";
 import { useDispatch } from "react-redux";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

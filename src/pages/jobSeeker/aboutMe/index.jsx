@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { FormLabelBox } from "./style";
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,25 +18,28 @@ import {
   HorizontalDateInput,
   HorizontalLabelInput,
   HorizontalPhoneInput,
-} from "@components/input";
+} from "../../../components/input";
 import {
   getCities,
   getCountries,
   getEducationLevels,
-} from "@redux/slice/choices";
+} from "../../../redux/slice/choices";
 import { validateJobSeekerAboutMe } from "./validator";
-import { ErrorMessage } from "@components/caption";
+import { ErrorMessage } from "../../../components/caption";
 import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
-import { EMPLOYMENT_STATUS } from "@utils/enum";
-import { updateJobSeekerAboutMeAPI } from "@api/jobSeeker";
-import { FormControlReminder } from "@components/style";
-import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
-import { setErrorToast } from "@redux/slice/toast";
-import { updateCurrentUser } from "@redux/slice/user";
-import DialogBox from "@components/dialogBox";
+import { EMPLOYMENT_STATUS } from "../../../utils/enum";
+import { updateJobSeekerAboutMeAPI } from "../../../api/jobSeeker";
+import { FormControlReminder } from "../../../components/style";
+import {
+  DATABASE_DATE_FORMAT,
+  DATE_FORMAT,
+} from "../../../utils/constants/constants";
+import { setErrorToast } from "../../../redux/slice/toast";
+import { updateCurrentUser } from "../../../redux/slice/user";
+import DialogBox from "../../../components/dialogBox";
 import NoItem from "../myProfile/noItem";
 
 const AboutMe = (props) => {

@@ -1,6 +1,6 @@
-import { NoDataFoundAnimation } from "@components/animations";
-import TenderCard from "@components/tenderCard";
-import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
+import { NoDataFoundAnimation } from "../../../components/animations";
+import TenderCard from "../../../components/tenderCard";
+import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
 import { Divider } from "@mui/material";
 
 import React from "react";

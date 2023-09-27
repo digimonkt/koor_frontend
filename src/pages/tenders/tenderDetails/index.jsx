@@ -1,15 +1,15 @@
 import { Container, Grid, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import {
   FilledButton,
   OutlinedButton,
   SearchButton,
   SolidButton,
-} from "@components/button";
-import JobCostCard from "@pages/jobs/component/jobCostCard";
-import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
+} from "../../../components/button";
+import JobCostCard from "../../../pages/jobs/component/jobCostCard";
+import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getTenderDetailsByIdAPI,
@@ -17,15 +17,15 @@ import {
   saveTenderAPI,
   unSaveTenderAPI,
   withdrawTenderApplicationAPI,
-} from "@api/tender";
+} from "../../../api/tender";
 import dayjs from "dayjs";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import { useDispatch, useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
-import DialogBox from "@components/dialogBox";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { getLetLongByAddressAPI } from "@api/user";
+import { USER_ROLES } from "../../../utils/enum";
+import DialogBox from "../../../components/dialogBox";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
+import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 
 function TenderDetailsComponent() {
@@ -282,7 +282,9 @@ function TenderDetailsComponent() {
                           {<SVG.OrangeIcon />}
                         </span>
                         <span
-                          onClick={() => handleLoadImage(generateFileUrl(attachment.path))}
+                          onClick={() =>
+                            handleLoadImage(generateFileUrl(attachment.path))
+                          }
                           className="m-0"
                           style={{ cursor: "pointer" }}
                         >

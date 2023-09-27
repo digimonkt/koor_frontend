@@ -1,17 +1,17 @@
-import { SVG } from "@assets/svg";
-import { ChipBox } from "@components/jobCard/style";
+import { SVG } from "../../assets/svg";
+import { ChipBox } from "../../components/jobCard/style";
 import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { getColorByRemainingDays } from "@utils/generateColor";
-import { SolidButton } from "@components/button";
-import { capitalizeFirst } from "@utils/constants/utility";
-import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
-import { updateEmployerTenderStatusAPI } from "@api/employer";
+import { getColorByRemainingDays } from "../../utils/generateColor";
+import { SolidButton } from "../../components/button";
+import { capitalizeFirst } from "../../utils/constants/utility";
+import { saveTenderAPI, unSaveTenderAPI } from "../../api/vendor";
+import { updateEmployerTenderStatusAPI } from "../../api/employer";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn } = useSelector((state) => state.auth);

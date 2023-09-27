@@ -1,16 +1,16 @@
 /* eslint-disable react/display-name */
 import { Box, Container, Grid, Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
-import { Card, CardContent } from "@components/card";
-import { USER_ROLES } from "@utils/enum";
+import { SVG } from "../../assets/svg";
+import { Card, CardContent } from "../../components/card";
+import { USER_ROLES } from "../../utils/enum";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setSocialLoginError, setUserRole } from "@redux/slice/user";
-import { processRoleToDisplay } from "@utils/constants/utility";
-import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
-import { setErrorToast } from "@redux/slice/toast";
-import { SocialLoginAPI } from "@api/user";
+import { setSocialLoginError, setUserRole } from "../../redux/slice/user";
+import { processRoleToDisplay } from "../../utils/constants/utility";
+// import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
+import { setErrorToast } from "../../redux/slice/toast";
+import { SocialLoginAPI } from "../../api/user";
 import {
   loginWithAppleFacebookPopupProvider,
   loginWithFacebookPopupProvider,
@@ -55,35 +55,35 @@ function AuthLayout({
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const loginWithGoogle = async () => {
-      if (!role) {
-        dispatch(setErrorToast("Select Role"));
-        return;
-      }
-      setLoading(false);
-      const res = await loginWithGooglePopupProvider();
-      if (res.remote === "success") {
-        const payload = {
-          email: res.data.email,
-          role,
-          name: res.data.displayName,
-          display_image: res.data.photoURL,
-          source: "google",
-        };
-        for (const key in payload) {
-          if (!payload[key]) {
-            delete payload[key];
-          }
-        }
-        const result = await SocialLoginAPI(payload);
-        if (result.remote === "success") {
-          console.log({ result });
-        } else {
-          dispatch(setSocialLoginError(result.error.errors.message));
-        }
-      }
-      setLoading(true);
-    };
+    // const loginWithGoogle = async () => {
+    //   if (!role) {
+    //     dispatch(setErrorToast("Select Role"));
+    //     return;
+    //   }
+    //   setLoading(false);
+    //   const res = await loginWithGooglePopupProvider();
+    //   if (res.remote === "success") {
+    //     const payload = {
+    //       email: res.data.email,
+    //       role,
+    //       name: res.data.displayName,
+    //       display_image: res.data.photoURL,
+    //       source: "google",
+    //     };
+    //     for (const key in payload) {
+    //       if (!payload[key]) {
+    //         delete payload[key];
+    //       }
+    //     }
+    //     const result = await SocialLoginAPI(payload);
+    //     if (result.remote === "success") {
+    //       console.log({ result });
+    //     } else {
+    //       dispatch(setSocialLoginError(result.error.errors.message));
+    //     }
+    //   }
+    //   setLoading(true);
+    // };
     const loginWithApple = async () => {
       if (!role) {
         dispatch(setErrorToast("Select Role"));
@@ -352,7 +352,7 @@ function AuthLayout({
                               justifyContent="center"
                             >
                               <div
-                                onClick={loginWithGoogle}
+                                // onClick={loginWithGoogle}
                                 disabled={loading}
                                 style={{ cursor: "pointer" }}
                               >

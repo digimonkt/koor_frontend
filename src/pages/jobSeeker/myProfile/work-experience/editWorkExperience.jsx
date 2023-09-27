@@ -1,20 +1,27 @@
 import {
   addWorkExperienceDetailsAPI,
   updateWorkExperienceDetailsAPI,
-} from "@api/jobSeeker";
-import { SVG } from "@assets/svg";
-import { OutlinedButton } from "@components/button";
-import { ErrorMessage } from "@components/caption";
-import { CheckboxInput, DateInput, LabeledInput } from "@components/input";
-import Loader from "@components/loader";
-import { FormControlReminder } from "@components/style";
+} from "../../../../api/jobSeeker";
+import { SVG } from "../../../../assets/svg";
+import { OutlinedButton } from "../../../../components/button";
+import { ErrorMessage } from "../../../../components/caption";
+import {
+  CheckboxInput,
+  DateInput,
+  LabeledInput,
+} from "../../../../components/input";
+import Loader from "../../../../components/loader";
+import { FormControlReminder } from "../../../../components/style";
 import { Box, Grid } from "@mui/material";
-import { setSuccessToast } from "@redux/slice/toast";
+import { setSuccessToast } from "../../../../redux/slice/toast";
 import {
   addWorkExperienceRecord,
   updateWorkExperienceRecord,
-} from "@redux/slice/user";
-import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
+} from "../../../../redux/slice/user";
+import {
+  DATABASE_DATE_FORMAT,
+  DATE_FORMAT,
+} from "../../../../utils/constants/constants";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";

@@ -1,12 +1,12 @@
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../../components/button";
 import { Card, CardContent } from "@mui/material";
 import React, { useState } from "react";
-import { SVG } from "@assets/svg";
-import DialogBox from "@components/dialogBox";
+import { SVG } from "../../../../assets/svg";
+import DialogBox from "../../../../components/dialogBox";
 import EditWorkExperience from "./editWorkExperience";
 import { useSelector } from "react-redux";
 import NoItem from "../noItem";
-import WorkExperienceCard from "@components/workExperienceCard";
+import WorkExperienceCard from "../../../../components/workExperienceCard";
 const WorkExperience = () => {
   const {
     currentUser: { workExperiences },

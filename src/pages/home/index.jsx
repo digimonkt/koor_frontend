@@ -1,4 +1,4 @@
-import { IMAGES } from "@assets/images";
+import { IMAGES } from "../../assets/images";
 import {
   Box,
   Button,
@@ -9,28 +9,31 @@ import {
   Typography,
 } from "@mui/material";
 import styles from "./home.module.css";
-import { setIstHomePage } from "@redux/slice/user";
+import { setIstHomePage } from "../../redux/slice/user";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container } from "@mui/system";
-import SlickSlider from "@pages/slider";
-import InputSearch from "@components/inputSearch";
-import { SVG } from "@assets/svg";
+import SlickSlider from "../../pages/slider";
+import InputSearch from "../../components/inputSearch";
+import { SVG } from "../../assets/svg";
 // import VerticalSlider from "./verticalSlider";
 import { Link, useNavigate } from "react-router-dom";
 import TextSlide from "./textSlide";
 import HomeSection from "./homeSection";
-import { SelectInput } from "@components/input";
-import { getCountries, getJobCategories } from "@redux/slice/choices";
-import { USER_ROLES } from "@utils/enum";
+import { SelectInput } from "../../components/input";
+import { getCountries, getJobCategories } from "../../redux/slice/choices";
+import { USER_ROLES } from "../../utils/enum";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CoravImg from "../../assets/images/corav-bg.png";
-import { getTopJobCategoriesAPI } from "@api/job";
-import { getTestimonialListAPI, getTopListingCompaniesAPI } from "@api/home";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { getTopJobCategoriesAPI } from "../../api/job";
+// import { isPlatform } from "@ionic/react";
+import {
+  getTestimonialListAPI,
+  getTopListingCompaniesAPI,
+} from "../../api/home";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
-// import DialogBox from "@components/dialogBox";
-// import { OutlinedButton } from "@components/button";
+import { Capacitor } from "@capacitor/core";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -66,6 +69,8 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const platform = Capacitor.getPlatform();
+    console.log(platform);
     getTopJobCategories();
     getTopListingCompanies();
     getTestimonialList();
@@ -397,9 +402,7 @@ const Home = () => {
                 >
                   <Grid container spacing={3}>
                     <Grid item xs={12} lg={5} md={7} sm={6}>
-                      <Box
-                        className={styles.stay_text_box}
-                      >
+                      <Box className={styles.stay_text_box}>
                         <h4>Mobile app</h4>
                         <h2>Stay in touch</h2>
                         <p>

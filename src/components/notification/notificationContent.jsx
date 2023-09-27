@@ -1,16 +1,16 @@
-import { GetNotificationAPI } from "@api/user";
+import { GetNotificationAPI } from "../../api/user";
 import { TabContext, TabList } from "@mui/lab";
 import { Box, Button, Stack, Tab } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Loader from "@components/loader";
+import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
 import { getNotificationCardByType } from ".";
 import styles from "./notification.module.css";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 import { useSelector } from "react-redux";
-import { DateInput } from "@components/input";
-import { SVG } from "@assets/svg";
-import DialogBox from "@components/dialogBox";
+import { DateInput } from "../../components/input";
+import { SVG } from "../../assets/svg";
+import DialogBox from "../../components/dialogBox";
 import Settings from "./settings";
 import dayjs from "dayjs";
 
@@ -22,18 +22,26 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [filterData, setFilterData] = useState([]);
   const [section, setSection] = useState("all");
   const [settings, setSetting] = useState(false);
-  const [filterByDate, setFilterByDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [filterByDate, setFilterByDate] = useState(
+    dayjs().format("YYYY-MM-DD")
+  );
   const handleChangeSection = (event, newValue) => {
     const filterNotification = (type) => {
       const notificationData = [...notification];
       let notificationResult = "";
       if (newValue === "message") {
-        notificationResult = notificationData.filter((notification) => notification.notificationType === "message");
+        notificationResult = notificationData.filter(
+          (notification) => notification.notificationType === "message"
+        );
       } else {
-        notificationResult = notificationData.filter((notification) => notification.notificationType !== "message");
+        notificationResult = notificationData.filter(
+          (notification) => notification.notificationType !== "message"
+        );
       }
       if (role === USER_ROLES.employer) {
-        notificationResult = notificationResult.filter((notification) => notification.notificationType !== "applied_tender");
+        notificationResult = notificationResult.filter(
+          (notification) => notification.notificationType !== "applied_tender"
+        );
       }
       setFilterData(notificationResult);
     };
@@ -63,7 +71,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
     setLoading(true);
     const data = {
       type: section,
-      created: filterByDate
+      created: filterByDate,
     };
     const res = await GetNotificationAPI(data);
     if (res.remote === "success") {
@@ -93,7 +101,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
           >
             <TabList className="tab_list" onChange={handleChangeSection}>
               <Tab label="All" className={styles.tabs_btn} value="all" />
-              <Tab label={(role === "vendor") ? "Tenders" : "Jobs"} className={styles.tabs_btn} value={(role === "vendor") ? "tenders" : "jobs"} />
+              <Tab
+                label={role === "vendor" ? "Tenders" : "Jobs"}
+                className={styles.tabs_btn}
+                value={role === "vendor" ? "tenders" : "jobs"}
+              />
               <Tab
                 label="Message"
                 className={styles.tabs_btn}
@@ -102,11 +114,21 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
             </TabList>
             {header && (
               <Stack direction={"row"} spacing={2} className={styles.btn_div}>
-                <DateInput value={filterByDate} maxDate={dayjs().format("YYYY-MM-DD")} onChange={(value) => setFilterByDate(dayjs(value).format("YYYY-MM-DD"))} />
+                <DateInput
+                  value={filterByDate}
+                  maxDate={dayjs().format("YYYY-MM-DD")}
+                  onChange={(value) =>
+                    setFilterByDate(dayjs(value).format("YYYY-MM-DD"))
+                  }
+                />
 
                 <Button
                   sx={{ color: "#EEA23D", textTransform: "capitalize" }}
-                  onClick={() => { setSection("all"); setFilterData(notification); setFilterByDate(dayjs().format("YYYY-MM-DD")); }}
+                  onClick={() => {
+                    setSection("all");
+                    setFilterData(notification);
+                    setFilterByDate(dayjs().format("YYYY-MM-DD"));
+                  }}
                   className={styles.clear_btn}
                 >
                   Clear All
@@ -124,10 +146,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                     <>
                       <div
                         key={index}
-                        className={`${styles.notification_card} ${role === USER_ROLES.jobSeeker
-                          ? styles.notification_card_job_seeker
-                          : styles.notification_card_user
-                          }`}
+                        className={`${styles.notification_card} ${
+                          role === USER_ROLES.jobSeeker
+                            ? styles.notification_card_job_seeker
+                            : styles.notification_card_user
+                        }`}
                       >
                         {getNotificationCardByType(item, handleClose, role)}
                       </div>

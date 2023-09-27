@@ -1,12 +1,12 @@
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../../components/button";
 import { Card, CardContent } from "@mui/material";
 import React, { useState } from "react";
-import { SVG } from "@assets/svg";
-import DialogBox from "@components/dialogBox";
+import { SVG } from "../../../../assets/svg";
+import DialogBox from "../../../../components/dialogBox";
 import EditLanguages from "./editLanguages";
 import NoItem from "../noItem";
 import { useSelector } from "react-redux";
-import LanguageCard from "@components/languageCard";
+import LanguageCard from "../../../../components/languageCard";
 
 const Languages = () => {
   const {

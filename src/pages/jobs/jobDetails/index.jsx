@@ -2,34 +2,34 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
   withdrawJobApplicationAPI,
-} from "@api/job";
+} from "../../../api/job";
 import dayjs from "dayjs";
 import {
   SolidButton,
   SearchButton,
   OutlinedButton,
   FilledButton,
-} from "@components/button";
-import { getColorByRemainingDays } from "@utils/generateColor";
-import { generateFileUrl } from "@utils/generateFileUrl";
+} from "../../../components/button";
+import { getColorByRemainingDays } from "../../../utils/generateColor";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
-import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
+import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
-import DialogBox from "@components/dialogBox";
-import { USER_ROLES } from "@utils/enum";
-import { getLetLongByAddressAPI } from "@api/user";
-import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
+import DialogBox from "../../../components/dialogBox";
+import { USER_ROLES } from "../../../utils/enum";
+import { getLetLongByAddressAPI } from "../../../api/user";
+import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Box, Stack } from "@mui/material";
 import ShareJob from "../shareJob";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 
 const JobDetails = () => {
   const params = useParams();
@@ -320,7 +320,9 @@ const JobDetails = () => {
                           {<SVG.OrangeIcon />}
                         </span>
                         <span
-                          onClick={() => handleLoadImage(generateFileUrl(attachment.path))}
+                          onClick={() =>
+                            handleLoadImage(generateFileUrl(attachment.path))
+                          }
                           // target="_blank"
                           style={{ cursor: "pointer" }}
                           className="m-0"

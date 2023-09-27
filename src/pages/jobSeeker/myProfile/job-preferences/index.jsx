@@ -1,16 +1,16 @@
 import { FormGroup, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { FormControlReminder } from "@components/style";
-import { CheckboxInput } from "@components/input";
-import { OutlinedButton } from "@components/button";
-import { SVG } from "@assets/svg";
-import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
+import { FormControlReminder } from "../../../../components/style";
+import { CheckboxInput } from "../../../../components/input";
+import { OutlinedButton } from "../../../../components/button";
+import { SVG } from "../../../../assets/svg";
+import CurrencyInput from "../../../../pages/jobs/postJobs/currencyInput";
 import { useDispatch, useSelector } from "react-redux";
-import { UpdateJobPreferencesAPI } from "@api/jobSeeker";
-import { setSuccessToast } from "@redux/slice/toast";
-import { updateCurrentUser } from "@redux/slice/user";
+import { UpdateJobPreferencesAPI } from "../../../../api/jobSeeker";
+import { setSuccessToast } from "../../../../redux/slice/toast";
+import { updateCurrentUser } from "../../../../redux/slice/user";
 import { Link } from "react-router-dom";
-import { PAY_PERIOD } from "@utils/enum";
+import { PAY_PERIOD } from "../../../../utils/enum";
 
 const JobPreferences = () => {
   const dispatch = useDispatch();

@@ -6,14 +6,14 @@ import {
   // MenuList,
   Stack,
 } from "@mui/material";
-import { OutlinedButton, SearchButton } from "@components/button";
-import { SVG } from "@assets/svg";
+import { OutlinedButton, SearchButton } from "../../../components/button";
+import { SVG } from "../../../assets/svg";
 import {
   deleteSearchJobsFilterAPI,
   getSearchJobsFilterAPI,
   saveSearchJobsFilterAPI,
   updateSavedSearchFilterAPI,
-} from "@api/job";
+} from "../../../api/job";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -24,26 +24,26 @@ import {
   getTenderCategories,
   getTenderSector,
   getJobSubCategories,
-} from "@redux/slice/choices";
-import { setAdvanceFilter, setSearchTrue } from "@redux/slice/search";
+} from "../../../redux/slice/choices";
+import { setAdvanceFilter, setSearchTrue } from "../../../redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
 import { useFormik } from "formik";
-import DialogBox from "@components/dialogBox";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import DialogBox from "../../../components/dialogBox";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
-import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
+import { SEARCH_TYPE, USER_ROLES } from "../../../utils/enum";
 import {
   DATABASE_DATE_FORMAT,
   SALARY_MAX,
   SALARY_MIN,
-} from "@utils/constants/constants";
+} from "../../../utils/constants/constants";
 import {
   deleteSearchUserFilterAPI,
   getSearchUserFilterAPI,
   saveSearchUserFilterAPI,
   updateSavedSearchUserFilterAPI,
-} from "@api/user";
+} from "../../../api/user";
 import TenderFilter from "./tenderFilter";
 import dayjs from "dayjs";
 import {
@@ -55,7 +55,7 @@ import {
   saveSearchVendorFilterAPI,
   updateSavedSearchTenderFilterAPI,
   updateSavedSearchVendorFilterAPI,
-} from "@api/vendor";
+} from "../../../api/vendor";
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
@@ -104,7 +104,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const footer = () => {
     return (
       <>
-        <span style={{ pointer: "cursor", marginTop: "-12px" }} onClick={handleReset}>
+        <span
+          style={{ pointer: "cursor", marginTop: "-12px" }}
+          onClick={handleReset}
+        >
           {<SVG.HalfCircle />} RESET FILTER
         </span>
         {isLoggedIn && (
@@ -212,7 +215,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-      (typeof filter.country === "string" ? filter.country : "")
+        (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -328,7 +331,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       availability: rawData.available,
       salary_min: rawData.salaryMin,
       salary_max: rawData.salaryMax,
-      role: USER_ROLES.jobSeeker
+      role: USER_ROLES.jobSeeker,
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -397,7 +400,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       opportunity_type: rawData.opportunityType,
       tag: rawData.tag,
       years_in_market: rawData.yearsInMarket || null,
-      role: USER_ROLES.vendor
+      role: USER_ROLES.vendor,
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
@@ -621,10 +624,11 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                 return (
                   <MenuItem key={filter.id} style={{ marginTop: "10px" }}>
                     <SearchButton
-                      className={`${selectedFilter === filter.id
-                        ? styles.btninActive
-                        : styles.btnActive
-                        }`}
+                      className={`${
+                        selectedFilter === filter.id
+                          ? styles.btninActive
+                          : styles.btnActive
+                      }`}
                       leftIcon={
                         <div
                           onClick={() => toggleNotificationStatus(filter.id)}
@@ -719,15 +723,20 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
             handleCancel={handleToggleModel}
           />
         </DialogBox>
-        <DialogBox open={showDeleteConfirmation} handleClose={() => setShowDeleteConfirmation(!showDeleteConfirmation)} >
+        <DialogBox
+          open={showDeleteConfirmation}
+          handleClose={() => setShowDeleteConfirmation(!showDeleteConfirmation)}
+        >
           <div className="add-content">
             <h2 className="mb-4">Warning!</h2>
-            <h3>
-              Are you sure want to delete? 😉
-            </h3>
+            <h3>Are you sure want to delete? 😉</h3>
             <div className="text-center mt-4">
               <OutlinedButton
-                onClick={(e) => { handleDeleteFilter(filterId); setShowDeleteConfirmation(!showDeleteConfirmation); e.preventDefault(); }}
+                onClick={(e) => {
+                  handleDeleteFilter(filterId);
+                  setShowDeleteConfirmation(!showDeleteConfirmation);
+                  e.preventDefault();
+                }}
                 title={<>Confirm</>}
                 sx={{
                   "&.MuiButtonBase-root": {
