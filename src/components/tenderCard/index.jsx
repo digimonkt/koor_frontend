@@ -169,12 +169,12 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
               title={
-                tenderDetails?.expiredInDays > 0
+                tenderDetails?.expiredInDays > -1
                   ? `${tenderDetails?.expiredInDays} days left`
                   : "Expired"
               }
               color={getColorByRemainingDays(
-                tenderDetails?.expiredInDays > 0
+                tenderDetails?.expiredInDays > -1
                   ? tenderDetails?.expiredInDays
                   : 0
               )}
