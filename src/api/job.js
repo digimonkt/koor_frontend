@@ -150,3 +150,9 @@ export const getTopCategoriesAPI = async () => {
     method: "GET",
   });
 };
+export const getJobAttachmentAPI = async (filePath) => {
+  return await api.request({
+    url: `v1/jobs/download-image?file_path=${filePath}`,
+    method: "GET",
+  });
+};

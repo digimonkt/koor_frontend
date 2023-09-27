@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import { SVG } from "@assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
   withdrawJobApplicationAPI,
@@ -17,7 +18,7 @@ import {
   FilledButton,
 } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
-import { generateFileUrl } from "@utils/generateFileUrl";
+// import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
@@ -179,32 +180,41 @@ const JobDetails = () => {
       setRegistrationWarning(true);
     }
   };
-  function toDataURL(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        callback(reader.result);
-      };
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.open("GET", url);
-    xhr.responseType = "blob";
-    xhr.send();
-  }
-  async function loadImageToDataURL(url) {
-    return new Promise((resolve, reject) => {
-      toDataURL(url, (dataURL) => {
-        resolve(dataURL);
-      });
-    });
-  }
+  // function toDataURL(url, callback) {
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.onload = function () {
+  //     const reader = new FileReader();
+  //     reader.onloadend = function () {
+  //       callback(reader.result);
+  //     };
+  //     reader.readAsDataURL(xhr.response);
+  //   };
+  //   xhr.open("GET", url);
+  //   xhr.responseType = "blob";
+  //   xhr.send();
+  // }
+  // async function loadImageToDataURL(url) {
+  //   return new Promise((resolve, reject) => {
+  //     toDataURL(url, (dataURL) => {
+  //       resolve(dataURL);
+  //     });
+  //   });
+  // }
+  // const handleLoadImage = async (url) => {
+  //   const base64 = await loadImageToDataURL(url);
+  //   const element = document.createElement("a");
+  //   element.href = base64;
+  //   element.download = "Attachment";
+  //   element.click();
+  // };
   const handleLoadImage = async (url) => {
-    const base64 = await loadImageToDataURL(url);
-    const element = document.createElement("a");
-    element.href = base64;
-    element.download = "Attachment";
-    element.click();
+    const response = await getJobAttachmentAPI(url);
+    if (response.remote === "success") {
+      const element = document.createElement("a");
+      element.href = response.data.base_image;
+      // element.download = "Attachment";
+      element.click();
+    }
   };
   return (
     <>
@@ -320,7 +330,7 @@ const JobDetails = () => {
                           {<SVG.OrangeIcon />}
                         </span>
                         <span
-                          onClick={() => handleLoadImage(generateFileUrl(attachment.path))}
+                          onClick={() => handleLoadImage(attachment.path)}
                           // target="_blank"
                           style={{ cursor: "pointer" }}
                           className="m-0"
@@ -511,7 +521,7 @@ const JobDetails = () => {
             })}
           </div>
         </div>
-      </Container>
+      </Container >
       <DialogBox
         open={isSharing}
         handleClose={() => setIsSharing(false)}
