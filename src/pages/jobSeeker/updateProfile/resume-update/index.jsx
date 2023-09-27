@@ -80,7 +80,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 <span className="me-2 d-inline-flex">
                   <SVG.DownloadIcon />
                 </span>
-                download your resume
+                UPLOAD YOUR RESUME
               </>
             }
             onClick={() => setOpenResume(true)}

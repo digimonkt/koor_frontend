@@ -214,7 +214,7 @@ const JobPreferences = () => {
                       <span className="me-2 d-inline-flex">
                         <SVG.SaveIcon />
                       </span>
-                      Update preferences
+                      SAVE PREFERENCES
                     </>
                   )}
                 </>

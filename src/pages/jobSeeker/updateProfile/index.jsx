@@ -55,7 +55,12 @@ const UpdateProfile = () => {
   return (
     <>
       {!profileCompleted && (
-        <Stack direction="row" spacing={3} className="mb-3">
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          alignItems={{ xs: "start" }}
+          spacing={{ xs: 1, lg: 3 }}
+          className="mb-3"
+        >
           <h1 className="heading m-0">Add info to complete your profile</h1>
           <span
             onClick={() => navigate(`/${USER_ROLES.jobSeeker}/my-profile`)}

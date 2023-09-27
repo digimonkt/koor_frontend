@@ -28,7 +28,7 @@ export const DateFiled = styled("div")(() => ({
   },
   "& input": {
     "&::placeholder": {
-      fontSize: "12px",
+      fontSize: "14px",
     },
   },
 }));

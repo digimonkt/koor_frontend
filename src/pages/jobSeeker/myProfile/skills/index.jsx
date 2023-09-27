@@ -170,7 +170,7 @@ const Skills = () => {
                         <span className="me-2 d-inline-flex">
                           <SVG.SaveFile />
                         </span>
-                        Update Skills
+                        SAVE SKILLS
                       </>
                     )}
                   </>

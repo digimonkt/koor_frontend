@@ -106,7 +106,7 @@ function EditLanguages({
   return (
     <div>
       <div className="heading-div">
-        <h1 className="heading">Language</h1>
+        <h1 className="heading">Add language</h1>
         <SVG.CrossCircle className="cross-circle" onClick={handleClose} />
       </div>
       <div className="form-content">
@@ -114,7 +114,7 @@ function EditLanguages({
           <div className="mb-3 search-language">
             <LabeledInput
               icon={<SVG.HeaderSearch />}
-              placeholder="Search Language"
+              placeholder="Search languages"
               labelWeight={500}
               style={{
                 border: "1px solid #cacaca",
