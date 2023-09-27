@@ -58,9 +58,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-        dayjs(jobDetails.isPlannedInterview).format(
-          "MMMM D, YYYY [at] h:mm A"
-        )
+          dayjs(jobDetails.isPlannedInterview).format(
+            "MMMM D, YYYY [at] h:mm A"
+          )
       );
     }
   }, [jobDetails]);
@@ -118,7 +118,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   size="small"
                   label={applicationStatus}
                   sx={{
-                    marginLeft: "5px", textTransform: "capitalize"
+                    marginLeft: "5px",
+                    textTransform: "capitalize",
                   }}
                 />
               ) : null}
@@ -138,6 +139,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               />
               {jobDetails?.duration ? (
                 <ChipBox
+                  sx={{ marginBottom: "10px !important" }}
                   label={`${jobDetails?.duration} Months`}
                   icon={<>{<SVG.BegClock />}</>}
                 />
@@ -145,10 +147,18 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 ""
               )}
               {jobDetails?.isFullTime && (
-                <ChipBox label={"Full Time"} icon={<>{<SVG.MoonCircle />}</>} />
+                <ChipBox
+                  sx={{ marginBottom: "10px !important" }}
+                  label={"Full Time"}
+                  icon={<>{<SVG.MoonCircle />}</>}
+                />
               )}
               {jobDetails?.isPartTime && (
-                <ChipBox label={"Part time"} icon={<>{<SVG.MoonCircle />}</>} />
+                <ChipBox
+                  sx={{ marginBottom: "10px !important" }}
+                  label={"Part time"}
+                  icon={<>{<SVG.MoonCircle />}</>}
+                />
               )}
               {jobDetails?.hasContract && (
                 <ChipBox label={"Contract"} icon={<>{<SVG.MoonCircle />}</>} />
@@ -158,7 +168,22 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               direction="row"
               spacing={2}
               className="mt-3"
-              divider={<Divider orientation="vertical" flexItem />}
+              sx={{
+                "@media(max-width: 480px)": {
+                  display: "block",
+                },
+              }}
+              divider={
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{
+                    "@media(max-width: 480px)": {
+                      display: "none",
+                    },
+                  }}
+                />
+              }
             >
               {!selfJob && (
                 <Stack direction="row" spacing={1}>
@@ -167,19 +192,28 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                    jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                        jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>
                   </div>
                 </Stack>
               )}
-              <Stack direction="row" spacing={1}>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{
+                  "@media(max-width: 480px)": {
+                    marginLeft: "0px !important",
+                    marginTop: "10px !important",
+                  },
+                }}
+              >
                 <span>
                   <SVG.ClockIconSmall />
                 </span>{" "}
@@ -188,6 +222,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
                 </div>
               </Stack>
+              {/* <Divider
+                orientation="vertical"
+                flexItem
+                sx={{
+                  display: "none",
+                  "@media(max-width: 480px)": {
+                    display: "block",
+                    marginLeft: "0px !important",
+                  },
+                }}
+              /> */}
             </Stack>
           </div>
         </Grid>
