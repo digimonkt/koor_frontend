@@ -1,4 +1,3 @@
-
 import { getFAQQuestionsAPI } from "@api/faq";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
