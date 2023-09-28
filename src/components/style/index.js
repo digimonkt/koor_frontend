@@ -5,7 +5,7 @@ export const FormControlReminder = styled(FormControlLabel)`
     font-family: "Poppins";
     font-style: normal;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     color: #121212;
   }
 `;

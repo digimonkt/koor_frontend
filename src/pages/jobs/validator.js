@@ -19,12 +19,12 @@ export const validateCreateJobInput = Yup.object().shape({
   isContactEmail: Yup.boolean(),
   duration: Yup.number(),
   experience: Yup.number().typeError("Experience must be a number").required("Experience is required"),
-  deadline: Yup.string()
+  deadline: Yup.string().nullable()
     .required("Deadline is required")
     .test("isFuture", "Date Must be of Future", (value, context) => {
       return dayjs(value).isSameOrAfter(dayjs(), "days");
     }),
-  startDate: Yup.string()
+  startDate: Yup.string().nullable()
     .required("Start Date is required"),
   contactEmail: Yup.string()
     .email()
@@ -83,13 +83,14 @@ export const validateCreateTenderInput = Yup.object().shape({
   budgetPayPeriod: Yup.string(),
   description: Yup.string().required("Description is required"),
   country: Yup.string().required("Country is required"),
+  city: Yup.string().required("City is required"),
   categories: Yup.array()
     .of(Yup.string())
     .min(1, "At Least one category is required"),
   sectors: Yup.string().required(" Sector is required"),
   tag: Yup.string().required(" Tag is required"),
   address: Yup.string().required("Address is required"),
-  deadline: Yup.string()
+  deadline: Yup.string().nullable()
     .required("Deadline is required")
     .test("isFuture", "Date Must be of Future", (value, context) => {
       return dayjs(value).isSameOrAfter(dayjs(), "days");
@@ -106,6 +107,6 @@ export const validateCreateTenderInput = Yup.object().shape({
   //       return dayjs(value).isSameOrAfter(dayjs(), "day"); // Use "day" to compare only the date part.
   //     }
   //   ),
-  startDate: Yup.string()
+  startDate: Yup.string().nullable()
     .required("Start Date is required"),
 });

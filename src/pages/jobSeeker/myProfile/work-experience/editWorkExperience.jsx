@@ -134,7 +134,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="heading">Work Experience</h1>
+      <h1 className="heading">Add work experience</h1>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
@@ -172,7 +172,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                 Working period
               </label>
               <Grid container spacing={2}>
-                <Grid item lg={6} xs={12}>
+                <Grid item lg={6} md={6} xs={6}>
                   <Box className="work_experience_date">
                     <DateInput
                       label="Start"
@@ -187,7 +187,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                     ) : null}
                   </Box>
                 </Grid>
-                <Grid item lg={6} xs={12}>
+                <Grid item lg={6} xs={6} md={6}>
                   <Box className="work_experience_date">
                     <DateInput
                       label="End"
