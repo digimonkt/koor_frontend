@@ -293,7 +293,7 @@ header {
   border-radius: 73px !important;
   padding: 10px 30px !important;
   color: #274593 !important;
-   font-size: 16px !important; 
+  font-size: 16px !important;
   letter-spacing: 0.03em !important;
   font-family: "Bahnschrift" !important;
   /* font-weight: 600 !important; */
@@ -779,6 +779,10 @@ hr {
   border-color: #eea23d;
 }
 
+.step-continer .MuiStepConnector-line {
+  border-top-width: 2px;
+}
+
 .step-continer .Mui-disabled svg {
   width: 34px;
   height: 34px;
@@ -842,6 +846,10 @@ hr {
 .additional-check .MuiFormControlLabel-root .MuiFormControlLabel-label {
   font-size: 16px;
   font-weight: 500;
+}
+
+.addition-color {
+  color: red !important;
 }
 
 .additional-box
@@ -1023,7 +1031,6 @@ hr {
 .text-resume {
   font-weight: 500;
   font-size: 16px;
-
   color: #121212;
 }
 
@@ -1052,9 +1059,9 @@ hr {
   color: #506ebb;
 }
 
-.css-z7uhs0-MuiStepConnector-line {
+/* .e {
   border-top-width: 2px !important;
-}
+} */
 
 .form-control-area::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -1544,8 +1551,8 @@ span.count {
   }
 
   .step-continer .Mui-disabled svg {
-    width: 20px;
-    height: 20px;
+    width: 34px;
+    height: 34px;
   }
 
   .according-content-box h2 {
@@ -2031,8 +2038,7 @@ input.employersearch {
   .add-content label {
     font-size: 12px;
     line-height: 18px;
-
-}
+  }
   .saved-jobs h2 {
     font-size: 24px;
   }
@@ -2185,6 +2191,12 @@ input.employersearch {
     font-size: 20px;
   }
 
+  .css-z7uhs0-MuiStepConnector-line {
+    width: 20px;
+    transform: rotate(90deg);
+    margin: 10px 0px 16px 16px;
+  }
+
   .add-content p {
     font-size: 14px;
   }
@@ -2193,13 +2205,13 @@ input.employersearch {
 @media screen and (max-width: 768px) and (min-width: 1024px) {
   .heading {
     font-size: 28px;
-}
+  }
 
-.studying .MuiTypography-root {
-  font-size: 14px;
-}
+  .studying .MuiTypography-root {
+    font-size: 14px;
+  }
 
-.css-bb18k4-MuiButtonBase-root-MuiButton-root {
-  font-size: 16px;
-}
+  .css-bb18k4-MuiButtonBase-root-MuiButton-root {
+    font-size: 16px;
+  }
 }
