@@ -409,11 +409,10 @@ header {
 }
 
 .add-content p {
-  font-size: 16px;
-  font-weight: 300;
-  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212;
   margin-top: 0;
-  padding: 16px;
 }
 
 .saved-jobs
@@ -518,7 +517,7 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 20px;
+  top: 10px;
 }
 
 .spaceor {
@@ -717,7 +716,7 @@ hr {
   box-sizing: border-box;
 }
 
-.savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label{
+.savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label {
   font-size: 12px;
 }
 
@@ -996,7 +995,7 @@ hr {
 .modal-box .MuiPaper-root {
   border-radius: 10px;
   padding: 30px;
-  width: 500px;
+  width: 520px;
 }
 
 .dropimg-userprofile {
@@ -2126,7 +2125,7 @@ input.employersearch {
     font-size: 14px !important;
   }
 
-  .savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label{
+  .savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label {
     font-size: 10px;
   }
 
@@ -2134,7 +2133,7 @@ input.employersearch {
     font-size: 20px;
   }
 
- .additional-check {
+  .additional-check {
     display: grid !important;
   }
 
@@ -2189,6 +2188,7 @@ input.employersearch {
 
   .add-content h2 {
     font-size: 20px;
+    text-align: center;
   }
 
   .css-z7uhs0-MuiStepConnector-line {
@@ -2198,7 +2198,7 @@ input.employersearch {
   }
 
   .add-content p {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
