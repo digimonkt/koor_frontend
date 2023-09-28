@@ -296,6 +296,45 @@ function AuthLayout({
                             </Link>
                           );
                         })}
+                        {platform === "android" || platform === "ios" ? (
+                          <>
+                            <Box
+                              sx={{
+                                marginTop: "80px",
+                                textAlign: "center",
+                                color: "#848484",
+                                fontSize: "14px",
+                                fontWeight: "400",
+                                letterSpacing: " 0.14px",
+                                fontFamily: "Poppins",
+                              }}
+                            >
+                              Already have an account?{" "}
+                              <Link
+                                href="#"
+                                style={{ color: "#EEA23D", fontWeight: "600" }}
+                              >
+                                Log in
+                              </Link>
+                            </Box>
+                            <Box
+                              sx={{
+                                textAlign: "center",
+                                marginTop: "12px",
+                                "& span": {
+                                  display: "inline-block",
+                                  width: "100px",
+                                  height: "4px",
+                                  background: "#121212",
+                                },
+                              }}
+                            >
+                              <span></span>
+                            </Box>
+                          </>
+                        ) : (
+                          ""
+                        )}
                         {/* <Box
                           sx={{
                             color: "#848484",
@@ -419,45 +458,6 @@ function AuthLayout({
                         </div>
                       )}
                     </>
-                  )}
-                  {platform === "android" || platform === "ios" ? (
-                    <>
-                      <Box
-                        sx={{
-                          marginTop: "80px",
-                          textAlign: "center",
-                          color: "#848484",
-                          fontSize: "14px",
-                          fontWeight: "400",
-                          letterSpacing: " 0.14px",
-                          fontFamily: "Poppins",
-                        }}
-                      >
-                        Already have an account?{" "}
-                        <Link
-                          href="#"
-                          style={{ color: "#EEA23D", fontWeight: "600" }}
-                        >
-                          Log in
-                        </Link>
-                      </Box>
-                      <Box
-                        sx={{
-                          textAlign: "center",
-                          marginTop: "12px",
-                          "& span": {
-                            display: "inline-block",
-                            width: "100px",
-                            height: "4px",
-                            background: "#121212",
-                          },
-                        }}
-                      >
-                        <span></span>
-                      </Box>
-                    </>
-                  ) : (
-                    ""
                   )}
                 </CardContent>
               </Card>
