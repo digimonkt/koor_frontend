@@ -78,7 +78,7 @@ function Header() {
   }, [location.pathname]);
 
   return (
-    <header style={{ marginTop: 20 }}>
+    <header>
       <Container
         maxWidth={false}
         sx={{

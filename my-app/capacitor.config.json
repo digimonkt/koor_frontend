@@ -3,9 +3,6 @@
   "appName": "koor",
   "bundledWebRuntime": false,
   "webDir": "dist",
-  "android": {
-    "namespace": "org.reactjs.example.koor"
-  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0

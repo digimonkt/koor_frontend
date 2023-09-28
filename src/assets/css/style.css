@@ -293,7 +293,7 @@ header {
   border-radius: 73px !important;
   padding: 10px 30px !important;
   color: #274593 !important;
-   font-size: 16px !important; 
+  font-size: 16px !important;
   letter-spacing: 0.03em !important;
   font-family: "Bahnschrift" !important;
   /* font-weight: 600 !important; */
@@ -2027,8 +2027,7 @@ input.employersearch {
   .add-content label {
     font-size: 12px;
     line-height: 18px;
-
-}
+  }
   .saved-jobs h2 {
     font-size: 16px;
   }
@@ -2181,13 +2180,16 @@ input.employersearch {
 @media screen and (max-width: 768px) and (min-width: 1024px) {
   .heading {
     font-size: 28px;
-}
+  }
 
-.studying .MuiTypography-root {
-  font-size: 14px;
-}
+  .studying .MuiTypography-root {
+    font-size: 14px;
+  }
 
-.css-bb18k4-MuiButtonBase-root-MuiButton-root {
-  font-size: 16px;
+  .css-bb18k4-MuiButtonBase-root-MuiButton-root {
+    font-size: 16px;
+  }
 }
+.register-app > a {
+  border-radius: 16px !important;
 }

@@ -34,6 +34,7 @@ import {
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import { Capacitor } from "@capacitor/core";
+const platform = Capacitor.getPlatform();
 
 const Home = () => {
   const navigate = useNavigate();
@@ -69,8 +70,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const platform = Capacitor.getPlatform();
-    console.log(platform);
     getTopJobCategories();
     getTopListingCompanies();
     getTestimonialList();
@@ -111,8 +110,16 @@ const Home = () => {
               <Box
                 className={styles.back_img_div}
                 sx={{
-                  marginTop: "68px",
-                  "@media (max-width:992px)": { marginTop: "60px" },
+                  marginTop:
+                    platform === "android" || platform === "ios"
+                      ? "0px"
+                      : "68px",
+                  "@media (max-width:992px)": {
+                    marginTop:
+                      platform === "android" || platform === "ios"
+                        ? "0px"
+                        : "60px",
+                  },
                 }}
               >
                 <Box sx={{ width: "100%" }}>
