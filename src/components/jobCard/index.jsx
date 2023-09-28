@@ -71,6 +71,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           <Grid
             item
             xs={12}
+            sm={2}
             sx={{
               "@media (min-width: 1200px)": {
                 maxWidth: "10.555%",
@@ -100,6 +101,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           item
           // lg={logo ? 8 : 9}
           xs={12}
+          sm={8}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "72%",
@@ -173,17 +175,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   display: "block",
                 },
               }}
-              divider={
-                <Divider
-                  orientation="vertical"
-                  flexItem
-                  sx={{
-                    "@media(max-width: 480px)": {
-                      display: "none",
-                    },
-                  }}
-                />
-              }
             >
               {!selfJob && (
                 <Stack direction="row" spacing={1}>
@@ -208,7 +199,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 direction="row"
                 spacing={1}
                 sx={{
+                  borderLeft: "1px solid #ccc",
+                  paddingLeft: "15px",
                   "@media(max-width: 480px)": {
+                    borderLeft: "0px",
+                    paddingLeft: "0px",
                     marginLeft: "0px !important",
                     marginTop: "10px !important",
                   },
@@ -222,21 +217,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
                 </div>
               </Stack>
-              {/* <Divider
-                orientation="vertical"
-                flexItem
-                sx={{
-                  display: "none",
-                  "@media(max-width: 480px)": {
-                    display: "block",
-                    marginLeft: "0px !important",
-                  },
-                }}
-              /> */}
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12}>
+        <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
           <div className="text-end mb-4 text-start">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
