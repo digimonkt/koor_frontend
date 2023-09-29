@@ -175,3 +175,9 @@
     border-radius: 20px;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .content_heading {
+    font-size: 20px !important;
+  }
+}
