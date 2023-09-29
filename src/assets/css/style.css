@@ -1475,6 +1475,10 @@ span.count {
     width: 100%;
   }
 
+  .MuiFormControl-root {
+    width: 200px !important;
+  }
+
   .w-75 {
     width: 100%;
   }

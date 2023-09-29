@@ -6,8 +6,6 @@
   color: #121212 !important ;
   margin: 0px !important;
   text-transform: capitalize;
-
-
 }
 
 .notification_heading_div {
@@ -15,4 +13,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 480px) {
+  .notification_heading {
+    font-size: 20px !important;
+  }
 }
