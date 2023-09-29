@@ -157,7 +157,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               >
                 View All Notification
               </Link>
-              <div onClick={() => setSetting(true)}>Settings</div>
+              <div onClick={() => setSetting(true)} className={styles.notification_setting}>Settings</div>
             </div>
           ) : (
             ""

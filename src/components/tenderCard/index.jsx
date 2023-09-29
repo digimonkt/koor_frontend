@@ -142,7 +142,12 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               direction="row"
               spacing={2}
               className="mt-3"
-              divider={<Divider orientation="vertical" flexItem />}
+              sx={{
+                "@media (max-width: 992px)": {
+                  display: "block",
+                },
+              }}
+              // divider={<Divider orientation="vertical" flexItem />}
             >
               {!selfTender && (
                 <Stack direction="row" spacing={1}>
@@ -154,7 +159,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   </div>
                 </Stack>
               )}
-              <Stack direction="row" spacing={1}>
+              <Stack direction="row" spacing={1} className="company_textdes">
                 <span>
                   <SVG.ClockIconSmall />
                 </span>{" "}
