@@ -10,6 +10,7 @@ import { setUserRole } from "@redux/slice/user";
 import { ErrorMessage } from "@components/caption";
 import { setSuccessToast } from "@redux/slice/toast";
 import Loader from "@components/loader";
+import { validateOTPForm } from "./validator";
 function VerifyOTPForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ function VerifyOTPForm() {
     initialValues: {
       otp: "",
     },
-    // validationSchema: validateLoginForm,
+    validationSchema: validateOTPForm,
     onSubmit: async (values) => {
       //   setIsLoading(true);
       const payload = {

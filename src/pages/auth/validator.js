@@ -46,3 +46,7 @@ export const validateForgotPasswordForm = Yup.object().shape({
 export const validateResetPasswordForm = Yup.object().shape({
   ...passwordValidation,
 });
+
+export const validateOTPForm = Yup.object().shape({
+  otp: Yup.string().required("Please enter OTP"),
+});

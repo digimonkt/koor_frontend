@@ -69,7 +69,7 @@ function Blacklist() {
               <BlacklistCardSkeletonLoading key={loader} />
             ))
           ) : !blacklistData.length ? (
-            <NoDataFoundAnimation title="You haven't added any users to your blacklist yet" />
+              <NoDataFoundAnimation title="No blacklisted found" />
           ) : (
             blacklistData.map((item, index) => (
               <BlacklistCard

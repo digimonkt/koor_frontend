@@ -9,6 +9,10 @@ function NoItem({ icon, bgColor, color, description }) {
       spacing={2}
       sx={{
         alignItems: "center",
+        "@media(max-width: 480px)": {
+          display: "block",
+          textAlign: "center",
+        },
       }}
     >
       <IconButton
@@ -18,7 +22,10 @@ function NoItem({ icon, bgColor, color, description }) {
             width: "101px",
             height: "101px",
             color: { color: color || "#EEA23D" },
-            cursor: "default"
+            cursor: "default",
+          },
+          "@media (max-width: 480px)": {
+            marginBottom: "16px",
           },
         }}
       >

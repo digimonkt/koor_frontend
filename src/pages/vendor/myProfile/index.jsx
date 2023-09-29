@@ -323,7 +323,7 @@ function MyProfile() {
                   <HorizontalLabelInput
                     label="Type of the organization"
                     className="add-form-control"
-                    placeholder="Type of the organization"
+                    placeholder="Select a type of your company"
                     type="select"
                     options={sectors.data.map((sector) => ({
                       value: sector.id,
@@ -612,13 +612,14 @@ function MyProfile() {
           <>
             <div>
               <NoItem
-                bgColor="#D9D9D9"
+                bgColor="#D5e3f7"
                 color="#274593"
                 icon={<SVG.AlertCheckICon />}
                 description={
                   <p>
                     Thank you for adding this important information. Our team
                     will review it and activate your account within 24 hours.{" "}
+                    <br />
                     <br />
                     Psst, it may happen even faster, stay tuned 😉
                   </p>
