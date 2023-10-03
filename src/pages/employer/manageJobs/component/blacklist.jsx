@@ -13,6 +13,7 @@ function Blacklist() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [unBlockUserId, setUnBlockUserId] = useState(false);
   const { totalBlacklist } = useSelector((state) => state.employer);
   const getBlacklistData = useCallback(async () => {
     setIsLoading(true);
@@ -27,6 +28,12 @@ function Blacklist() {
   useEffect(() => {
     getBlacklistData();
   }, [isSearching, totalBlacklist]);
+
+  useEffect(() => {
+    const filterData = blacklistData.filter((item) => item.user.id === unBlockUserId);
+
+    setBlacklistData(filterData);
+  }, [unBlockUserId]);
 
   return (
     <div className="py-3">
@@ -69,13 +76,14 @@ function Blacklist() {
               <BlacklistCardSkeletonLoading key={loader} />
             ))
           ) : !blacklistData.length ? (
-              <NoDataFoundAnimation title="No blacklisted found" />
+            <NoDataFoundAnimation title="No blacklisted found" />
           ) : (
             blacklistData.map((item, index) => (
               <BlacklistCard
                 details={item.user}
                 reason={item.reason}
                 key={index}
+                handleUnblockUserId={(userId) => setUnBlockUserId(userId)}
               />
             ))
           )}
