@@ -115,13 +115,13 @@ iframe {
   display: none !important;
 }
 
-.attachments svg path {
+/* .attachments svg path {
   fill: #eea23d !important;
-}
+} */
 
-.attachments button {
+/* .attachments button {
   background: #eea23d52 !important;
-}
+} */
 
 .attachments {
   border-bottom: 1px solid #cacaca;
@@ -1831,6 +1831,7 @@ span.count {
 
 .sidebar-scroll {
   height: calc(100vh - 353px);
+  padding: 0px 0px 20px 0px;
 }
 
 @media (min-width: 1536px) {
@@ -1874,6 +1875,10 @@ span.count {
 
     border: 0;
   }
+}
+
+.bluebtn:hover {
+  background-color: #274593 !important;
 }
 
 .bluebtn {

@@ -24,12 +24,14 @@
 }
 .clocs p {
   margin-left: 3%;
-  font-weight: bold;
-  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif !important;
 }
 .clocs span {
+  font-size: 12px;
   font-weight: 300 !important;
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif !important;
 }
 .greenbtn {
   background-color: #4caf50 !important;
@@ -264,5 +266,28 @@
 @media screen and (max-width: 480px) {
   .contentJob p {
     font-size: 12px;
+  }
+  .clocs {
+    justify-content: flex-start;
+  }
+  .clocs p {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .clocs span {
+    font-size: 10px;
+  }
+  .postJob p {
+    font-size: 14px;
+  }
+  .contentJob h4 {
+    font-size: 16px;
+  }
+  .iconbtn {
+    display: block;
+    align-items: center;
+  }
+  .iconbutton {
+    margin-bottom: 10px !important;
   }
 }

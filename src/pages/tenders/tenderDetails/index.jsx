@@ -218,7 +218,7 @@ function TenderDetailsComponent() {
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
-              <Grid item xs={8} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <div className={`${styles.postJob}`}>
                   <span
                     style={{ paddingTop: "5px", cursor: "pointer" }}
@@ -229,7 +229,7 @@ function TenderDetailsComponent() {
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
-              <Grid item xs={4} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <div className={`${styles.clocs}`}>
                   <SVG.ClockIconSmall />
                   <p className="mb-0 mt-0 me-1">
@@ -338,6 +338,9 @@ function TenderDetailsComponent() {
                       }
                       sx={{
                         padding: "10px 0px !important",
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                        },
                       }}
                       className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}

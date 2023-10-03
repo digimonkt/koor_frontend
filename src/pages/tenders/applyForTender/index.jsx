@@ -82,7 +82,10 @@ function ApplyForTender() {
         short_letter: values.shortLetter,
         attachments: values.attachments,
       };
-      if (searchParams.get("applicationId") && values.attachmentsRemove.length) {
+      if (
+        searchParams.get("applicationId") &&
+        values.attachmentsRemove.length
+      ) {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
@@ -164,7 +167,9 @@ function ApplyForTender() {
         byteArrays[i] = byteCharacters.charCodeAt(i);
       }
 
-      const blob = new Blob([byteArrays], { type: fileType(url) || "application/octet-stream" });
+      const blob = new Blob([byteArrays], {
+        type: fileType(url) || "application/octet-stream",
+      });
 
       // Create a download link
       const downloadUrl = URL.createObjectURL(blob);
@@ -254,7 +259,9 @@ function ApplyForTender() {
                   </div>
                   {hide ? (
                     <>
-                      <p className={styles.more_text_p}>Please check out my attachements below..</p>
+                      <p className={styles.more_text_p}>
+                        Please check out my attachements below..
+                      </p>
                       {details.attachments.map((attachment) => {
                         return (
                           <div
@@ -342,7 +349,17 @@ function ApplyForTender() {
                 )}
               </div>
               <Grid item xl={12} lg={12} xs={12} className="attachments">
-                <h2 className="mt-4 mb-3">Attach files</h2>
+                <h2
+                  className="mt-4 mb-3"
+                  style={{
+                    fontSize: "28px",
+                    "@media (max-width: 480px)": {
+                      fontSize: "24px",
+                    },
+                  }}
+                >
+                  Attach files
+                </h2>
                 <AttachmentDragNDropInput
                   files={formik.getFieldProps("attachments").value}
                   handleDrop={(file) => {
@@ -396,8 +413,8 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                        ? "Update"
-                        : "Apply"
+                      ? "Update"
+                      : "Apply"
                   }
                   className={`${styles.applybtn}`}
                   type="submit"

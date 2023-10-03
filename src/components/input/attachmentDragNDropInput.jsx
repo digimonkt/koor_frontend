@@ -34,8 +34,8 @@ function AttachmentDragNDropInputComponent({
         <div className="text-tracate">
           <IconButton
             sx={{
-              background: "#D5E3F7",
-              color: "#274593",
+              background: role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
+              color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
               "&:hover": {
                 background: "#bcd2f1",
               },
@@ -44,12 +44,18 @@ function AttachmentDragNDropInputComponent({
           >
             <SVG.AttachIcon />
           </IconButton>
-          {file.title ? file.title : file.path}
+          <span
+            style={{
+              color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+            }}
+          >
+            {file.title ? file.title : file.path}
+          </span>
         </div>
         <IconButton
           onClick={() => deleteFile(file)}
           disableFocusRipple
-          sx={{ color: "#274593" }}
+          sx={{ color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593" }}
         >
           <SVG.DeleteICon />
         </IconButton>
