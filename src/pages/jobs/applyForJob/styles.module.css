@@ -1,3 +1,18 @@
+
+.cancel_card h1{
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 33.61px;
+}
+
+.cancel_card p{
+ font-size: 14px;
+ font-weight: 400;
+ font-family: "Poppins", sans-serif !important;
+ line-height: 18px;
+ letter-spacing: 1%;
+}
+
 .Jobcard {
   box-shadow: 0px 15px 40px 0px #0000000d;
   border-radius: 10px;
@@ -361,10 +376,11 @@
   cursor: pointer;
   text-transform: uppercase;
   font-family: Bahnschrift;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0.03em;
+  margin-top: 16px;
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
@@ -376,5 +392,23 @@
   .requirement {
     border-left: 0;
     padding: 0px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .cancel_card h1{
+    font-size: 24px;
+  }
+  .cancel_card p{
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cancel_card h1{
+    font-size: 20px;
+  }
+  .cancel_card p{
+    font-size: 12px;
   }
 }
