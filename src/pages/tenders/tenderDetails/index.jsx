@@ -323,7 +323,7 @@ function TenderDetailsComponent() {
                           ? details.isEditable
                             ? "Edit"
                             : "Applied"
-                          : "Apply for this Tender"
+                          : "Apply for th Tender"
                       }
                       className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
