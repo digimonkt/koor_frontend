@@ -353,3 +353,11 @@ export const buyCreditsAPI = async ({ employer, data }) => {
     };
   }
 };
+
+export const unblockUserAPI = async (userId) => {
+  const res = await api.request({
+    url: urlcat("v1/users/employer/unblock-user/:userId", { userId }),
+    method: "DELETE",
+  });
+  return res;
+};
