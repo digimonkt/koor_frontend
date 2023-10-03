@@ -183,7 +183,9 @@ function TenderDetailsComponent() {
         byteArrays[i] = byteCharacters.charCodeAt(i);
       }
 
-      const blob = new Blob([byteArrays], { type: fileType(url) || "application/octet-stream" });
+      const blob = new Blob([byteArrays], {
+        type: fileType(url) || "application/octet-stream",
+      });
 
       // Create a download link
       const downloadUrl = URL.createObjectURL(blob);
@@ -216,7 +218,7 @@ function TenderDetailsComponent() {
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
-              <Grid item xs={8}>
+              <Grid item xs={8} sm={6}>
                 <div className={`${styles.postJob}`}>
                   <span
                     style={{ paddingTop: "5px", cursor: "pointer" }}
@@ -227,7 +229,7 @@ function TenderDetailsComponent() {
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={4} sm={6}>
                 <div className={`${styles.clocs}`}>
                   <SVG.ClockIconSmall />
                   <p className="mb-0 mt-0 me-1">
@@ -239,8 +241,12 @@ function TenderDetailsComponent() {
                         ? `${details.expiredInDays} Days`
                         : "Expired"
                     }
-                    style={{ marginLeft: "20px", cursor: "default" }}
-                    color="green"
+                    style={{
+                      marginLeft: "20px",
+                      cursor: "default",
+                      color: "#ffffff",
+                    }}
+                    color="#4CAF50"
                   />
                 </div>
               </Grid>
@@ -323,8 +329,16 @@ function TenderDetailsComponent() {
                           ? details.isEditable
                             ? "Edit"
                             : "Applied"
-                          : "Apply for th Tender"
+                          : [
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for the Tender",
+                            ]
                       }
+                      sx={{
+                        padding: "10px 0px !important",
+                      }}
                       className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
@@ -359,7 +373,7 @@ function TenderDetailsComponent() {
                       />
                     )}
                     <Stack
-                      direction="row"
+                      direction="column"
                       spacing={{
                         xs: 1,
                         sm: 1,
@@ -369,17 +383,38 @@ function TenderDetailsComponent() {
                       justifyContent="center"
                     >
                       <OutlinedButton
-                        title={details.isSaved ? "Saved" : "Save Tender"}
-                        style={{ height: "44px" }}
+                        title={
+                          details.isSaved
+                            ? "Saved"
+                            : [
+                                <>
+                                  <SVG.BlueSaveIcon className="me-2" />
+                                </>,
+                                "Save Tender",
+                              ]
+                        }
+                        sx={{
+                          height: "44px",
+                          width: "256px",
+                        }}
                         vendor
                         onClick={() => {
                           handleSaveTender(params.tenderId);
                         }}
                       />
                       <OutlinedButton
-                        title={<SVG.ShareIcon />}
+                        title={[
+                          <>
+                            <SVG.ShareIcon className="me-2" />
+                          </>,
+                          "Share",
+                        ]}
                         jobSeeker
-                        style={{ height: "44px" }}
+                        sx={{
+                          height: "44px",
+                          border: "0px !important",
+                          color: "#274593 !important",
+                        }}
                         onClick={() => {
                           setIsSharing(true);
                         }}
