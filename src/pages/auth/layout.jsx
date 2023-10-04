@@ -109,7 +109,7 @@ function AuthLayout({
         if (result.remote === "success") {
           console.log({ result });
         } else {
-          console.log({ result });
+          dispatch(setSocialLoginError(result.error.errors.message));
         }
       }
       setLoading(true);

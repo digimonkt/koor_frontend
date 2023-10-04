@@ -12,6 +12,7 @@ import { SolidButton } from "@components/button";
 import { capitalizeFirst } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 import { updateEmployerTenderStatusAPI } from "@api/employer";
+import { USER_ROLES } from "@utils/enum";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn } = useSelector((state) => state.auth);
@@ -56,6 +57,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         {logo && (
           <Grid
             item
+            sm={2}
             sx={{
               "@media (min-width: 1200px)": {
                 maxWidth: "10.555%",
@@ -83,6 +85,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         )}
 
         <Grid
+          sm={8}
           item
           sx={{
             "@media (min-width: 1200px)": {
@@ -139,7 +142,12 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               direction="row"
               spacing={2}
               className="mt-3"
-              divider={<Divider orientation="vertical" flexItem />}
+              sx={{
+                "@media (max-width: 992px)": {
+                  display: "block",
+                },
+              }}
+              // divider={<Divider orientation="vertical" flexItem />}
             >
               {!selfTender && (
                 <Stack direction="row" spacing={1}>
@@ -151,7 +159,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   </div>
                 </Stack>
               )}
-              <Stack direction="row" spacing={1}>
+              <Stack direction="row" spacing={1} className="company_textdes">
                 <span>
                   <SVG.ClockIconSmall />
                 </span>{" "}
@@ -164,7 +172,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
           </div>
         </Grid>
 
-        <Grid item lg={logo ? 2 : 3} xs={12}>
+        <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
           <div className="text-end mb-4">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
@@ -230,8 +238,20 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     <div className="bookmark">
                       {isSaved ? (
                         <>
-                          <SVG.SaveIcon />
-                          <span>Saved</span>
+                          {USER_ROLES.jobSeeker ? (
+                            <SVG.BlueSaveIcon />
+                          ) : (
+                            <SVG.SaveIcon />
+                          )}
+                          <span
+                            style={{
+                              color: USER_ROLES.jobSeeker
+                                ? " #274593"
+                                : "#eea23d",
+                            }}
+                          >
+                            Saved
+                          </span>
                         </>
                       ) : (
                         <>

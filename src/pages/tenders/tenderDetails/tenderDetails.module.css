@@ -24,12 +24,14 @@
 }
 .clocs p {
   margin-left: 3%;
-  font-weight: bold;
-  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif !important;
 }
 .clocs span {
+  font-size: 12px;
   font-weight: 300 !important;
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif !important;
 }
 .greenbtn {
   background-color: #4caf50 !important;
@@ -41,7 +43,7 @@
   margin: 0 20px !important;
 }
 .contentJob p {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 300;
   font-family: "Poppins";
   margin-bottom: 10px !important;
@@ -55,7 +57,7 @@
 
 .enablebtn {
   background-color: #eea23d !important;
-  width: 250px !important;
+  width: 256px !important;
   height: 44px !important;
   font-weight: 600 !important;
   padding: 0 !important;
@@ -63,6 +65,7 @@
   margin-bottom: 7% !important;
   color: #121212 !important;
   border-radius: 60px !important;
+  white-space: nowrap;
 }
 .enablebtn span {
   position: relative;
@@ -205,7 +208,7 @@
   padding-top: 11px;
 }
 .LikeJob p a {
-  color: #eea23d;
+  color: #274593;
   font-size: 16px;
   font-family: "poppins";
   font-weight: 600;
@@ -258,4 +261,33 @@
   font-weight: 600;
   color: #121212;
   font-size: 16px;
+}
+
+@media screen and (max-width: 480px) {
+  .contentJob p {
+    font-size: 12px;
+  }
+  .clocs {
+    justify-content: flex-start;
+  }
+  .clocs p {
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .clocs span {
+    font-size: 10px;
+  }
+  .postJob p {
+    font-size: 14px;
+  }
+  .contentJob h4 {
+    font-size: 16px;
+  }
+  .iconbtn {
+    display: block;
+    align-items: center;
+  }
+  .iconbutton {
+    margin-bottom: 10px !important;
+  }
 }

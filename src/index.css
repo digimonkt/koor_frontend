@@ -32,7 +32,7 @@
 
 .content_notifi .MuiButtonBase-root.MuiTab-root.Mui-selected {
   font-family: "Poppins", sans-serif !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   font-weight: 500 !important;
   line-height: 24px !important;
   color: #eea23d !important;
@@ -314,7 +314,7 @@ textarea {
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
     left: 590px !important;
-    top: 68px !important;
+    top: 100px !important;
   }
 
   .scroll_tabs .MuiButtonBase-root.MuiTab-root {
@@ -418,10 +418,30 @@ img {
   max-width: 100%;
 }
 
+@media screen and (max-width: 992px) {
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    left: 15px !important;
+    top: 140px !important;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .verticalSlider ul.slick-dots {
     bottom: 35.6em;
     transform: none;
+  }
+
+  .tab_list .Mui-selected {
+    font-size: 14px !important;
+  }
+
+  .content_notifi .MuiButtonBase-root.MuiTab-root.Mui-selected {
+    font-size: 14px !important;
+  }
+
+  .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
+    left: 16px !important;
+    top: 140px !important;
   }
 }
 

@@ -14,7 +14,7 @@ export const SelectBox = styled(Select)`
     border-radius: 0px;
     padding: 0px;
     border: 0px;
-    color: #121212;
+    color: #848484;
   }
   & .MuiSelect-select:focus {
     border-radius: 0px;

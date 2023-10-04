@@ -22,18 +22,26 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [filterData, setFilterData] = useState([]);
   const [section, setSection] = useState("all");
   const [settings, setSetting] = useState(false);
-  const [filterByDate, setFilterByDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const [filterByDate, setFilterByDate] = useState(
+    dayjs().format("YYYY-MM-DD")
+  );
   const handleChangeSection = (event, newValue) => {
     const filterNotification = (type) => {
       const notificationData = [...notification];
       let notificationResult = "";
       if (newValue === "message") {
-        notificationResult = notificationData.filter((notification) => notification.notificationType === "message");
+        notificationResult = notificationData.filter(
+          (notification) => notification.notificationType === "message"
+        );
       } else {
-        notificationResult = notificationData.filter((notification) => notification.notificationType !== "message");
+        notificationResult = notificationData.filter(
+          (notification) => notification.notificationType !== "message"
+        );
       }
       if (role === USER_ROLES.employer) {
-        notificationResult = notificationResult.filter((notification) => notification.notificationType !== "applied_tender");
+        notificationResult = notificationResult.filter(
+          (notification) => notification.notificationType !== "applied_tender"
+        );
       }
       setFilterData(notificationResult);
     };
@@ -63,7 +71,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
     setLoading(true);
     const data = {
       type: section,
-      created: filterByDate
+      created: filterByDate,
     };
     const res = await GetNotificationAPI(data);
     if (res.remote === "success") {
@@ -80,9 +88,13 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={section}>
           <Stack
-            direction={{ xs: "column", lg: "row" }}
+            direction={{ xs: "column", sm: "row", lg: "row" }}
             spacing={{ xs: 1, lg: 2 }}
-            justifyContent={{ xs: "flex-start", lg: "space-between" }}
+            justifyContent={{
+              xs: "flex-start",
+              sm: "space-between",
+              lg: "space-between",
+            }}
             sx={{
               borderBottom: 1,
               borderColor: "divider",
@@ -93,7 +105,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
           >
             <TabList className="tab_list" onChange={handleChangeSection}>
               <Tab label="All" className={styles.tabs_btn} value="all" />
-              <Tab label={(role === "vendor") ? "Tenders" : "Jobs"} className={styles.tabs_btn} value={(role === "vendor") ? "tenders" : "jobs"} />
+              <Tab
+                label={role === "vendor" ? "Tenders" : "Jobs"}
+                className={styles.tabs_btn}
+                value={role === "vendor" ? "tenders" : "jobs"}
+              />
               <Tab
                 label="Message"
                 className={styles.tabs_btn}
@@ -102,11 +118,21 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
             </TabList>
             {header && (
               <Stack direction={"row"} spacing={2} className={styles.btn_div}>
-                <DateInput value={filterByDate} maxDate={dayjs().format("YYYY-MM-DD")} onChange={(value) => setFilterByDate(dayjs(value).format("YYYY-MM-DD"))} />
+                <DateInput
+                  value={filterByDate}
+                  maxDate={dayjs().format("YYYY-MM-DD")}
+                  onChange={(value) =>
+                    setFilterByDate(dayjs(value).format("YYYY-MM-DD"))
+                  }
+                />
 
                 <Button
                   sx={{ color: "#EEA23D", textTransform: "capitalize" }}
-                  onClick={() => { setSection("all"); setFilterData(notification); setFilterByDate(dayjs().format("YYYY-MM-DD")); }}
+                  onClick={() => {
+                    setSection("all");
+                    setFilterData(notification);
+                    setFilterByDate(dayjs().format("YYYY-MM-DD"));
+                  }}
                   className={styles.clear_btn}
                 >
                   Clear All
@@ -124,10 +150,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                     <>
                       <div
                         key={index}
-                        className={`${styles.notification_card} ${role === USER_ROLES.jobSeeker
-                          ? styles.notification_card_job_seeker
-                          : styles.notification_card_user
-                          }`}
+                        className={`${styles.notification_card} ${
+                          role === USER_ROLES.jobSeeker
+                            ? styles.notification_card_job_seeker
+                            : styles.notification_card_user
+                        }`}
                       >
                         {getNotificationCardByType(item, handleClose, role)}
                       </div>
@@ -157,7 +184,12 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               >
                 View All Notification
               </Link>
-              <div onClick={() => setSetting(true)}>Settings</div>
+              <div
+                onClick={() => setSetting(true)}
+                className={styles.notification_setting}
+              >
+                Settings
+              </div>
             </div>
           ) : (
             ""

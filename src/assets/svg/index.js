@@ -20,6 +20,7 @@ import { ReactComponent as UncheckIcon } from "./uncheckICon.svg";
 import { ReactComponent as ProfileIcon } from "./profile.svg";
 import { ReactComponent as CircleRightIcon } from "./rightCircle.svg";
 import { ReactComponent as SaveIcon } from "./save.svg";
+import { ReactComponent as BlueSaveIcon } from "./blueSave.svg";
 import { ReactComponent as MessageIcon } from "./message.svg";
 import { ReactComponent as CalenderIcon } from "./calender.svg";
 import { ReactComponent as JobsIcon } from "./jobs.svg";
@@ -111,7 +112,9 @@ import { ReactComponent as AvailableCredits } from "./generating_tokens.svg";
 import { ReactComponent as TimeIcon } from "./schedule.svg";
 import { ReactComponent as DownloadIcon } from "./download.svg";
 import { ReactComponent as HelpIcon } from "./help.svg";
+import { ReactComponent as Enable1 } from "./enable1.svg";
 export const SVG = {
+  Enable1,
   BackArrow,
   MailIcon,
   LinkedIn,
@@ -166,6 +169,7 @@ export const SVG = {
   ProfileIcon,
   CircleRightIcon,
   SaveIcon,
+  BlueSaveIcon,
   MessageIcon,
   AlertCheckICon,
   ResumeIcon,
