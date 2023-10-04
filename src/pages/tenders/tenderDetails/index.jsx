@@ -253,7 +253,7 @@ function TenderDetailsComponent() {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9}>
+              <Grid item xs={12} lg={9} sm={8}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <p className="job-description">{details.description}. </p>
@@ -316,7 +316,7 @@ function TenderDetailsComponent() {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={3}>
+              <Grid item xs={12} lg={3} sm={4}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   user={details?.user}

@@ -115,6 +115,10 @@ iframe {
   display: none !important;
 }
 
+.apply_dd_btn {
+  margin-left: 20px !important;
+}
+
 /* .attachments svg path {
   fill: #eea23d !important;
 } */
@@ -2144,6 +2148,10 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+
+  .apply_dd_btn {
+    margin-left: auto !important;
   }
 
   .savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label {

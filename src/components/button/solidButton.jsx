@@ -26,6 +26,7 @@ function SolidButtonComponent({
         },
       }}
       {...rest}
+      className={className}
     >
       {title}
     </Button>

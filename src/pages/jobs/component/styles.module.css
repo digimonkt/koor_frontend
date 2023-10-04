@@ -42,10 +42,12 @@
 .Numbers {
   text-align: center;
 }
-.Numbers span {
+.Numbers span a {
+  font-size: 14px;
   display: block;
   color: #121212;
   opacity: 0.5;
+  font-family: "Poppins";
 }
 
 .requirement {
