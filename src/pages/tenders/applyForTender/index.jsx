@@ -362,6 +362,7 @@ function ApplyForTender() {
                   Attach files
                 </h2>
                 <AttachmentDragNDropInput
+                  single
                   files={formik.getFieldProps("attachments").value}
                   handleDrop={(file) => {
                     formik.setValues({

@@ -365,6 +365,7 @@ const ApplyForJob = () => {
               >
                 <h2 className="mt-4 mb-3">Attach files</h2>
                 <AttachmentDragNDropInput
+                  single
                   files={formik.getFieldProps("attachments").value}
                   handleDrop={(file) => {
                     formik.setValues({
