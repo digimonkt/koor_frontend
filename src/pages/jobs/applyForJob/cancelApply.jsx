@@ -12,6 +12,7 @@ function CancelApply({ handleClose }) {
       </p>
       <div className={`${styles.cancel_popup}`}>
         <OutlinedButton
+          className={styles.CancelApply_button}
           title="Yes, cancel"
           jobSeeker
           onClick={() => navigate(-1)}

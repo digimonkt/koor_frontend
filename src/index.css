@@ -192,11 +192,11 @@
 
 body {
   margin: 0;
-  font-family: "Poppins";
+  font-family: "Bahnschrift";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #000;
-  font-size: 14px;
+  font-size: 16px;
   overflow-y: auto !important;
 }
 
