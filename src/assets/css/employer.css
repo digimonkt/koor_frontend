@@ -745,10 +745,13 @@ span.arrowjobs svg {
   .edit-button button {
     font-size: 11px !important;
   }
-} 
+}
 
 @media screen and (max-width: 480px) {
-  .my-jobs p{
+  .my-jobs p {
     font-size: 10px;
+  }
+  .styles_attachment {
+    padding: 20px;
   }
 }
