@@ -382,6 +382,10 @@
   font-size: 12px;
 }
 
+.cancel_popup .CancelApply_button {
+  font-size: 16px !important;
+}
+
 .cancel_popup {
   display: flex;
   align-items: center;
@@ -471,5 +475,8 @@
   }
   .clocs p span {
     font-size: 10px !important;
+  }
+  .cancel_popup .CancelApply_button {
+    font-size: 14px !important;
   }
 }
