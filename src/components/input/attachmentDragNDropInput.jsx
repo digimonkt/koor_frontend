@@ -28,9 +28,9 @@ function AttachmentDragNDropInputComponent({
     maxSize: 5 * 1024 * 1024,
     onError: (e) => console.log({ e }),
   });
-  const acceptedFileItems = (files || []).map((file) => {
+  const acceptedFileItems = (files || []).map((file, index) => {
     return (
-      <li key={file.path}>
+      <li key={index}>
         <div className="text-tracate">
           <IconButton
             sx={{
@@ -47,7 +47,7 @@ function AttachmentDragNDropInputComponent({
           {file.title ? file.title : file.path}
         </div>
         <IconButton
-          onClick={() => deleteFile(file)}
+          onClick={() => deleteFile(file, index)}
           disableFocusRipple
           sx={{ color: "#274593" }}
         >

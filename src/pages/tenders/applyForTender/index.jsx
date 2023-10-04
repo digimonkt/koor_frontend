@@ -344,6 +344,7 @@ function ApplyForTender() {
               <Grid item xl={12} lg={12} xs={12} className="attachments">
                 <h2 className="mt-4 mb-3">Attach files</h2>
                 <AttachmentDragNDropInput
+                  single
                   files={formik.getFieldProps("attachments").value}
                   handleDrop={(file) => {
                     formik.setValues({
