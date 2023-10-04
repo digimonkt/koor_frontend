@@ -112,7 +112,9 @@ import { ReactComponent as AvailableCredits } from "./generating_tokens.svg";
 import { ReactComponent as TimeIcon } from "./schedule.svg";
 import { ReactComponent as DownloadIcon } from "./download.svg";
 import { ReactComponent as HelpIcon } from "./help.svg";
+import { ReactComponent as Enable1 } from "./enable1.svg";
 export const SVG = {
+  Enable1,
   BackArrow,
   MailIcon,
   LinkedIn,

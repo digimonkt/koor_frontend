@@ -82,7 +82,10 @@ function ApplyForTender() {
         short_letter: values.shortLetter,
         attachments: values.attachments,
       };
-      if (searchParams.get("applicationId") && values.attachmentsRemove.length) {
+      if (
+        searchParams.get("applicationId") &&
+        values.attachmentsRemove.length
+      ) {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
@@ -164,7 +167,9 @@ function ApplyForTender() {
         byteArrays[i] = byteCharacters.charCodeAt(i);
       }
 
-      const blob = new Blob([byteArrays], { type: fileType(url) || "application/octet-stream" });
+      const blob = new Blob([byteArrays], {
+        type: fileType(url) || "application/octet-stream",
+      });
 
       // Create a download link
       const downloadUrl = URL.createObjectURL(blob);
@@ -191,7 +196,7 @@ function ApplyForTender() {
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
-              <Grid item xs={11}>
+              <Grid item xs={11} lg={11}>
                 <div className={`${styles.postJob}`}>
                   <span
                     style={{ cursor: "pointer" }}
@@ -203,7 +208,7 @@ function ApplyForTender() {
                   <h1>Apply for the tender</h1>
                 </div>
               </Grid>
-              <Grid item xs={1}>
+              <Grid item xs={1} lg={1}>
                 <span
                   style={{ cursor: "pointer" }}
                   onClick={() => navigate(-1)}
@@ -212,10 +217,10 @@ function ApplyForTender() {
                   {<SVG.Crossed />}
                 </span>
               </Grid>
-              <Grid item xs={9}>
+              <Grid item xs={12} lg={9} sm={7}>
                 <p className="mb-0 ">{details.title}</p>
               </Grid>
-              <Grid item xs={3} className="ps-0">
+              <Grid item xs={12} lg={3} className="ps-0" sm={5}>
                 <div className={`${styles.clocs}`}>
                   <span>{<SVG.ClockIconSmall />}</span>
                   <p className="mb-0 mt-0">
@@ -230,13 +235,14 @@ function ApplyForTender() {
                     color={getColorByRemainingDays(
                       details.expiredInDays > 0 ? details.expiredInDays : 0
                     )}
-                    style={{ marginLeft: "20px" }}
+                    className="apply_dd_btn"
                   />
                 </div>
               </Grid>
               <Grid
                 item
-                xs={9}
+                xs={12}
+                sm={7}
                 style={{
                   borderRight: "1px solid #cacaca",
                 }}
@@ -254,7 +260,9 @@ function ApplyForTender() {
                   </div>
                   {hide ? (
                     <>
-                      <p className={styles.more_text_p}>Please check out my attachements below..</p>
+                      <p className={styles.more_text_p}>
+                        Please check out my attachements below..
+                      </p>
                       {details.attachments.map((attachment) => {
                         return (
                           <div
@@ -319,7 +327,7 @@ function ApplyForTender() {
                 )}
               </Grid>
 
-              <Grid item xs={3}>
+              <Grid item xs={12} sm={5}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod || "monthly"}
@@ -342,7 +350,17 @@ function ApplyForTender() {
                 )}
               </div>
               <Grid item xl={12} lg={12} xs={12} className="attachments">
-                <h2 className="mt-4 mb-3">Attach files</h2>
+                <h2
+                  className="mt-4 mb-3"
+                  style={{
+                    fontSize: "28px",
+                    "@media (max-width: 480px)": {
+                      fontSize: "24px",
+                    },
+                  }}
+                >
+                  Attach files
+                </h2>
                 <AttachmentDragNDropInput
                   single
                   files={formik.getFieldProps("attachments").value}
@@ -389,6 +407,11 @@ function ApplyForTender() {
                 <SearchButton
                   text="Cancel"
                   className={`${styles.cancelbtn}`}
+                  sx={{
+                    "@media (max-width: 480px)": {
+                      fontSize: "14px !important",
+                    },
+                  }}
                   onClick={() => setIsCanceling(true)}
                   disabled={isSubmitting}
                 />
@@ -397,9 +420,14 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                        ? "Update"
-                        : "Apply"
+                      ? "Update"
+                      : "Apply"
                   }
+                  sx={{
+                    "@media (max-width: 480px)": {
+                      fontSize: "14px !important",
+                    },
+                  }}
                   className={`${styles.applybtn}`}
                   type="submit"
                   disabled={isSubmitting}
