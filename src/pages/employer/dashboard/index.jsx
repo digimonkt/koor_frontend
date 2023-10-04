@@ -235,7 +235,7 @@ const Dashboard = () => {
                     sx={{
                       mb: 3,
                       "@media (max-width:768px)": {
-                        "& h3": { fontSize: "20px !important" },
+                        "& h3": { fontSize: "24px !important" },
                       },
                     }}
                   >
