@@ -210,7 +210,9 @@ const JobDetails = () => {
         byteArrays[i] = byteCharacters.charCodeAt(i);
       }
 
-      const blob = new Blob([byteArrays], { type: fileType(url) || "application/octet-stream" });
+      const blob = new Blob([byteArrays], {
+        type: fileType(url) || "application/octet-stream",
+      });
 
       // Create a download link
       const downloadUrl = URL.createObjectURL(blob);
@@ -530,7 +532,7 @@ const JobDetails = () => {
             })}
           </div>
         </div>
-      </Container >
+      </Container>
       <DialogBox
         open={isSharing}
         handleClose={() => setIsSharing(false)}
