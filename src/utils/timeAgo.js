@@ -4,5 +4,5 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 export function timeAgoFromNow(date) {
-  return dayjs(date).fromNow();
+  return dayjs.utc(date).local().fromNow();
 }
