@@ -239,6 +239,7 @@ const PostTender = () => {
       navigate(urlcat("../employer/manage-tenders"));
     }
   }, []);
+  // console.log("formik_values", formik.values);
   return (
     <div className="job-application">
       <Card
@@ -570,13 +571,10 @@ const PostTender = () => {
                         formik.setFieldError("attachments", `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length} remaining`);
                       } else {
                         const filesTaken = file.slice(0, 10 - currentAttachments.length);
-                        formik.setFieldValue("attachments", [
-                          ...currentAttachments,
-                          ...filesTaken,
-                        ]);
+                        formik.setFieldValue("attachments", [...currentAttachments, ...filesTaken]);
                       }
                     }}
-                    deleteFile={(file) => {
+                    deleteFile={(file, index) => {
                       if (file.id) {
                         formik.setFieldValue("attachmentsRemove", [
                           ...formik.values.attachmentsRemove,
@@ -592,7 +590,7 @@ const PostTender = () => {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment) => attachment.path !== file.path
+                            (attachment, i) => i !== index
                           )
                         );
                       }
