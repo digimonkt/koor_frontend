@@ -60,7 +60,7 @@ function Dashboard() {
               }}
             >
               <div className="add-content">
-                <AreaChart title="Applications stats" />
+                <AreaChart title="Tender posts analytics" />
               </div>
             </CardContent>
           </Card>
@@ -90,7 +90,7 @@ function Dashboard() {
                   alignItems="center"
                   sx={{ mb: 3 }}
                 >
-                  <h3>My recent applications</h3>
+                  <h3>Recent applications</h3>
                 </Stack>
                 {isLoading ? (
                   [1, 2, 3].map((loader) => (
