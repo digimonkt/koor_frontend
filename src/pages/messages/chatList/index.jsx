@@ -62,7 +62,7 @@ function ChatList() {
     <>
       <div className="searchmessage">
         <div className="searchmessage-icon">
-          <input className="chat-search" placeholder="Search" onChange={(e) => { setSearch(e.target.value); }} />
+          <input className="chat-search" placeholder="Search messages" onChange={(e) => { setSearch(e.target.value); }} />
         </div>
       </div>
 
