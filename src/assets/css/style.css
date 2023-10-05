@@ -5,6 +5,10 @@ body {
   background-color: #e5e5e5 !important;
 }
 
+.job_card_chip .MuiChip-label {
+  font-size: 16px;
+}
+
 .job_card .MuiGrid-root {
   margin-top: 0px !important;
 }
@@ -1479,6 +1483,10 @@ span.count {
     width: 100%;
   }
 
+  .job_card_chip .MuiChip-label {
+    font-size: 12px;
+  }
+
   .MuiFormControl-root {
     width: 200px !important;
   }
@@ -1979,6 +1987,10 @@ input.employersearch {
   color: #274593;
 }
 
+.job_card_chip_box .MuiChip-root.MuiChip-root {
+  font-size: 12px;
+}
+
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
   .outline-button {
     border: 1px solid #274593 !important;
@@ -2164,7 +2176,13 @@ input.employersearch {
     font-size: 14px !important;
   }
 
+  .job_card_chip .MuiChip-label {
+    font-size: 10px;
+  }
   .job_card_chip_box .MuiChip-root.MuiChip-root {
+    font-size: 10px;
+  }
+  .textdes {
     font-size: 10px;
   }
 

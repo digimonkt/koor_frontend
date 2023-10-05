@@ -160,7 +160,6 @@ function PostJobsComponent() {
         duration: values.duration,
         experience: values.experience,
       };
-      console.log(formik.values);
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "language") {
@@ -186,7 +185,6 @@ function PostJobsComponent() {
           }
         }
       }
-      console.log(payload);
       let res;
       if (!jobId) {
         // create
@@ -299,7 +297,6 @@ function PostJobsComponent() {
     if (resp.remote === "success") {
       setBuyPackage(!buyPackage);
       dispatch(setSuccessToast("Buy Plan Successfully"));
-      console.log(resp);
     } else {
       dispatch(setErrorToast("Something Went Wrong"));
     }
