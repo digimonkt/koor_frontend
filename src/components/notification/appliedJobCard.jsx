@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { USER_ROLES } from "@utils/enum";
 
-function AppliedJobCard({ application, createdAt, handleClose, role, conversion, userId }) {
+function AppliedJobCard({ application, job, createdAt, handleClose, role, conversion, userId }) {
   const navigate = useNavigate();
   const handleLinks = () => {
     if (role === USER_ROLES.employer && application.job?.id) {
@@ -54,7 +54,7 @@ function AppliedJobCard({ application, createdAt, handleClose, role, conversion,
             {application.user?.name || application.user?.email}
           </strong>{" "}
           applied to your job post{" "}
-          <strong>"{application.job?.title}"</strong>
+          <strong>"{job?.title}"</strong>
         </h2>
         <p style={{ marginTop: "5px" }} className={styles.duration}>
           {timeAgoFromNow(createdAt)}
