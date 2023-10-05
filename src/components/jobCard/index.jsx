@@ -1,4 +1,4 @@
-import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
+import { Avatar, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SVG } from "@assets/svg";
@@ -133,6 +133,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
+              className="job_card_chip_box"
             >
               <ChipBox
                 sx={{ marginBottom: "10px" }}
@@ -220,7 +221,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
+        <Grid item lg={logo ? 2 : 3} xs={12} sm={4}>
           <div className="text-end mb-4 text-start">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
@@ -239,11 +240,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             spacing={2}
             justifyContent={{ xs: "center", lg: "end" }}
             alignItems="center"
-            divider={<Divider orientation="vertical" flexItem />}
-            className="py-2"
+            divider={<hr orientation="vertical" className="job_card_hr" />}
             sx={{ minHeight: "87%" }}
           >
-            <div className="pricebox py-3">
+            <div className="pricebox py-3 me-4">
               {jobDetails?.budgetAmount ? (
                 <>
                   <span className="d-block">UP TO</span>
@@ -285,7 +285,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     }
                   }}
                 >
-                  {<SVG.EditIcon />}
+                  {<SVG.Edit1 />}
                   <span className="d-block">Edit</span>
                 </button>
               </div>

@@ -304,7 +304,7 @@ span.arrowjobs svg {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 27px;
   /* identical to box height */
   letter-spacing: 0.02em;
@@ -716,20 +716,6 @@ span.arrowjobs svg {
   width: 100%;
 }
 
-@media screen and (max-width: 992px) {
-  .my-jobs h2 {
-    font-size: 16px;
-  }
-  .recent-content h4 {
-    white-space: normal;
-    word-break: break-all;
-  }
-
-  .form-content label {
-    font-size: 14px !important;
-  }
-}
-
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
   .recent-research span {
     border-left: none !important;
@@ -747,9 +733,28 @@ span.arrowjobs svg {
   }
 }
 
+@media screen and (max-width: 992px) {
+  .recent-content h4 {
+    white-space: normal;
+    word-break: break-all;
+  }
+  .recent-box h3 {
+    font-size: 24px;
+  }
+  .form-content label {
+    font-size: 14px !important;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .my-jobs p {
     font-size: 10px;
+  }
+  .my-jobs h2 {
+    font-size: 14px;
+  }
+  .recent-box h3 {
+    font-size: 20px;
   }
   .styles_attachment {
     padding: 20px;

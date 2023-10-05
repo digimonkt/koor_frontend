@@ -43,7 +43,7 @@ function Dashboard() {
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>
-        <Grid item xl={12} lg={12}>
+        <Grid item xl={12} lg={12} sm={12}>
           <Card
             sx={{
               "&.MuiCard-root": {
@@ -60,13 +60,13 @@ function Dashboard() {
               }}
             >
               <div className="add-content">
-                <AreaChart title="Applications stats" />
+                <AreaChart title="Tender posts analytics" />
               </div>
             </CardContent>
           </Card>
         </Grid>
 
-        <Grid item xl={12} lg={12} xs={12}>
+        <Grid item xl={12} lg={12} sm={12} xs={12}>
           <Card
             sx={{
               "&.MuiCard-root": {

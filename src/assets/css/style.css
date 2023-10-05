@@ -1955,10 +1955,24 @@ input.employersearch {
   outline: none;
 }
 
+.job_card_hr {
+  transform: rotate(90deg);
+  width: 122px;
+  position: absolute;
+  right: 92px;
+}
+
+.job_card_chip_box .MuiChip-root.MuiChip-root {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Poppins";
+  line-height: 18px;
+}
+
 .login_header_search_icon {
   position: absolute;
   color: #848484;
-  left: 15.6rem;
+  left: 16.6rem;
 }
 
 .iconfooter a {
@@ -2148,6 +2162,10 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+
+  .job_card_chip_box .MuiChip-root.MuiChip-root {
+    font-size: 10px;
   }
 
   .apply_dd_btn {

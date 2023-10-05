@@ -778,12 +778,17 @@ span.arrowjobs svg {
   .recent-content h4 {
     word-break: break-all;
     white-space: normal;
-    font-size: 18px;
   }
   .recent-research {
     font-size: 14px;
   }
   .recent-research span {
     font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .recent-content h4 {
+    font-size: 20px;
   }
 }

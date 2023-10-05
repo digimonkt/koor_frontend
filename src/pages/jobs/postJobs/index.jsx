@@ -565,7 +565,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -581,7 +581,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                            formik.values.jobCategories
+                              formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -590,7 +590,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
+                        formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -704,7 +704,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -757,7 +757,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -852,19 +852,28 @@ function PostJobsComponent() {
                 <Grid item xl={12} lg={12} xs={12}>
                   <h2 className="mt-3 mb-3">Attach files</h2>
                   {formik.errors?.attachments ? (
-                    <ErrorMessage>
-                      {formik.errors?.attachments}
-                    </ErrorMessage>
+                    <ErrorMessage>{formik.errors?.attachments}</ErrorMessage>
                   ) : null}
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
                     handleDrop={(file) => {
                       const currentAttachments = formik.values.attachments;
                       if (file.length + currentAttachments.length > 10) {
-                        formik.setFieldError("attachments", `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length} remaining`);
+                        formik.setFieldError(
+                          "attachments",
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
+                          } remaining`
+                        );
                       } else {
-                        const filesTaken = file.slice(0, 10 - currentAttachments.length);
-                        formik.setFieldValue("attachments", [...currentAttachments, ...filesTaken]);
+                        const filesTaken = file.slice(
+                          0,
+                          10 - currentAttachments.length
+                        );
+                        formik.setFieldValue("attachments", [
+                          ...currentAttachments,
+                          ...filesTaken,
+                        ]);
                       }
                     }}
                     deleteFile={(file, index) => {
@@ -960,8 +969,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST THE JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST THE JOB"
                       }
                       type="submit"
                       disabled={
