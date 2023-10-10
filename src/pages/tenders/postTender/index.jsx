@@ -260,7 +260,7 @@ const PostTender = () => {
         >
           <div className="job-content">
             <h2>
-              {tenderId ? "Update tender" : "Post a new tender"}
+              {tenderId ? "Update tender" : "Post new tender"}
               <span className="right-pull">
                 <IconButton
                   LinkComponent={Link}
@@ -423,7 +423,7 @@ const PostTender = () => {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.categories &&
-                          formik.errors.categories ? (
+                        formik.errors.categories ? (
                           <ErrorMessage>
                             {formik.errors.categories}
                           </ErrorMessage>
@@ -465,7 +465,7 @@ const PostTender = () => {
                           {...formik.getFieldProps("opportunityType")}
                         />
                         {formik.touched.opportunityType &&
-                          formik.errors.opportunityType ? (
+                        formik.errors.opportunityType ? (
                           <ErrorMessage>
                             {formik.errors.opportunityType}
                           </ErrorMessage>
@@ -512,7 +512,7 @@ const PostTender = () => {
                             minDate={dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.startDate &&
-                            formik.errors.startDate ? (
+                          formik.errors.startDate ? (
                             <ErrorMessage>
                               {formik.errors.startDate}
                             </ErrorMessage>
@@ -539,7 +539,10 @@ const PostTender = () => {
                             }
                             value={formik.values.deadline}
                             onBlur={formik.getFieldProps("deadline").onBlur}
-                            minDate={formik.values.startDate || dayjs().format("YYYY-MM-DD")}
+                            minDate={
+                              formik.values.startDate ||
+                              dayjs().format("YYYY-MM-DD")
+                            }
                           />
                           {formik.touched.deadline && formik.errors.deadline ? (
                             <ErrorMessage>
@@ -559,19 +562,28 @@ const PostTender = () => {
                 <Grid item xl={12} lg={12} xs={12}>
                   <h2 className="mt-2 mb-3">Attach files</h2>
                   {formik.errors?.attachments ? (
-                    <ErrorMessage>
-                      {formik.errors?.attachments}
-                    </ErrorMessage>
+                    <ErrorMessage>{formik.errors?.attachments}</ErrorMessage>
                   ) : null}
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
                     handleDrop={(file) => {
                       const currentAttachments = formik.values.attachments;
                       if (file.length + currentAttachments.length > 10) {
-                        formik.setFieldError("attachments", `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length} remaining`);
+                        formik.setFieldError(
+                          "attachments",
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
+                          } remaining`
+                        );
                       } else {
-                        const filesTaken = file.slice(0, 10 - currentAttachments.length);
-                        formik.setFieldValue("attachments", [...currentAttachments, ...filesTaken]);
+                        const filesTaken = file.slice(
+                          0,
+                          10 - currentAttachments.length
+                        );
+                        formik.setFieldValue("attachments", [
+                          ...currentAttachments,
+                          ...filesTaken,
+                        ]);
                       }
                     }}
                     deleteFile={(file, index) => {
@@ -614,7 +626,7 @@ const PostTender = () => {
                         "&.MuiButton-outlined": {
                           borderRadius: "73px",
                           border: "0px",
-                          color: "#848484",
+                          color: "#848484 !important",
                           fontWeight: "500",
                           fontSize: "16px",
                           fontFamily: "Bahnschrift",
@@ -640,8 +652,8 @@ const PostTender = () => {
                             ? "Updating..."
                             : "Posting..."
                           : tenderId
-                            ? "Update the tender"
-                            : "POST THE TENDER"
+                          ? "Update the tender"
+                          : "POST THE TENDER"
                       }
                       type="submit"
                       disabled={formik.isSubmitting}
