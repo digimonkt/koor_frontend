@@ -16,6 +16,7 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
           color: "black",
           lineHeight: "18px",
           letterSpacing: "0.01em",
+          fontStyle: "Poppins",
         }}
       >
         Create a short and clear name for this saved search, so it won’t take
