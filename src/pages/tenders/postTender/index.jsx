@@ -640,6 +640,9 @@ const PostTender = () => {
                             padding: "5px 15px",
                             fontSize: "14px",
                           },
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                          },
                         },
                       }}
                       disabled={formik.isSubmitting}
@@ -666,7 +669,7 @@ const PostTender = () => {
         </CardContent>
       </Card>
       <DialogBox open={open} handleClose={handleClose}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className="post_tender_done_dailog">
           <Grid item lg={7}>
             <h1 className="mb-3">Done!</h1>
             <p>
