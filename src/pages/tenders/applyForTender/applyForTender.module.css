@@ -5,6 +5,14 @@
   margin-bottom: 20px;
 }
 
+.job_done {
+  font-size: 28px;
+  font-family: "Bahnschrift";
+  font-weight: 600;
+  line-height: 33.61px;
+  color: #121212;
+}
+
 .more_text_p {
   margin-top: -34px !important;
 }
@@ -397,6 +405,15 @@
   letter-spacing: 0.03em;
 }
 
+.job_done_desc {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Poppins";
+  color: #121212;
+  line-height: 21px;
+  letter-spacing: 1%;
+}
+
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
   .requirement {
     padding: 0 8px 0 8px;
@@ -407,6 +424,9 @@
   .grids h1 {
     font-size: 24px;
   }
+  .job_done {
+    font-size: 24px;
+  }
   .iconbtn {
     display: block;
   }
@@ -415,6 +435,13 @@
 @media screen and (max-width: 480px) {
   .grids h1 {
     font-size: 20px;
+  }
+  .job_done_desc {
+    font-size: 12px;
+  }
+  .job_done {
+    font-size: 20px;
+    text-align: center;
   }
 
   .clocs {

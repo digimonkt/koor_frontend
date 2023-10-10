@@ -23,8 +23,9 @@
   justify-content: flex-end;
 }
 .clocs p {
+  font-size: 12px;
   margin-left: 3%;
-  font-weight: bold;
+  font-weight: 600;
   font-family: "Poppins";
 }
 .clocs span {
@@ -49,6 +50,7 @@
 .contentJob h4 {
   text-transform: uppercase;
   font-size: 18px;
+  font-weight: 600;
   margin-bottom: 10px !important;
   margin-top: 20px !important;
 }
@@ -99,10 +101,15 @@
   color: #000 !important;
   margin-right: 14px !important;
   cursor: default !important;
+  margin-bottom: 10px !important;
 }
 .iconbtn {
   display: flex;
   align-items: center;
+}
+.details_day_button {
+  margin-left: 20px;
+  cursor: default;
 }
 .iconbutton span {
   position: relative;
@@ -258,4 +265,44 @@ h3 {
   font-weight: 600;
   color: #121212;
   font-size: 16px;
+}
+
+.details_searchs_button {
+  flex-flow: wrap;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 480px) {
+  .clocs p {
+    font-size: 10px;
+  }
+
+  .postJob p {
+    font-size: 14px;
+  }
+
+  .contentJob h4 {
+    font-size: 16px;
+  }
+
+  .contentJob p{
+    font-size: 12px;
+  }
+
+  .details_day_button {
+    margin-left: auto;
+  }
+
+  .Jobcard {
+    padding: 20px 12px 20px 12px;
+  }
+
+  .enablebtn {
+    font-size: 14px !important;
+  }
+
+  .clocs {
+    justify-content: flex-start;
+    margin-left: 36px;
+  }
 }

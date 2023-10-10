@@ -407,6 +407,32 @@
   margin-top: 16px;
 }
 
+.job_done {
+  font-size: 28px;
+  font-family: "Bahnschrift";
+  font-weight: 600;
+  line-height: 33.61px;
+  color: #121212;
+}
+
+.job_done_desc {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Poppins";
+  color: #121212;
+  line-height: 21px;
+  letter-spacing: 1%;
+}
+
+.job_apply_icon {
+  width: 259px !important;
+  height: 240px !important;
+}
+
+.job_apply_top_icon {
+  display: none !important;
+}
+
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
   .requirement {
     padding: 0 8px 0 8px;
@@ -423,6 +449,13 @@
   .cancel_card h1 {
     font-size: 24px;
   }
+  .job_apply_icon {
+    width: 150px !important;
+    height: 155px !important;
+  }
+  .job_done {
+    font-size: 24px;
+  }
   .cancel_card p {
     font-size: 14px;
   }
@@ -437,6 +470,22 @@
 @media screen and (max-width: 480px) {
   .cancel_card h1 {
     font-size: 20px;
+  }
+  .job_done_desc {
+    font-size: 12px;
+    text-align: center;
+  }
+  .job_apply_top_icon {
+    display: block !important;
+    width: 121px !important;
+    height: 124px !important;
+  }
+  .job_apply_icon {
+    display: none !important;
+  }
+  .job_done {
+    font-size: 20px;
+    text-align: center;
   }
   .infomore h6 {
     font-size: 14px;

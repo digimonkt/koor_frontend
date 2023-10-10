@@ -60,15 +60,23 @@ function ChatList() {
   }, [debouncedSearchValue]);
   return (
     <>
+      <h3 className="chat_message_text">Messages</h3>
       <div className="searchmessage">
         <div className="searchmessage-icon">
-          <input className="chat-search" placeholder="Search messages" onChange={(e) => { setSearch(e.target.value); }} />
+          <input
+            className="chat-search"
+            placeholder="Search messages"
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
         </div>
       </div>
 
       <div
-        className={`chatbox ${role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
-          }`}
+        className={`chatbox ${
+          role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
+        }`}
         style={{ overflow: "auto" }}
         onScroll={(e) => {
           const { scrollTop, clientHeight, scrollHeight } = e.target;
@@ -89,7 +97,8 @@ function ChatList() {
                 <li
                   key={chat.id}
                   onClick={() => {
-                    handleBlacklistStatus(chat.blacklistedByEmployer); navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
+                    handleBlacklistStatus(chat.blacklistedByEmployer);
+                    navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
                   }}
                   style={{
                     background:
