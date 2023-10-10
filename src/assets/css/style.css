@@ -1511,18 +1511,36 @@ span.count {
   font-family: "Poppins";
 }
 
+.manage-jobs_tab_div {
+  display: flex;
+  align-items: center;
+}
+
+.manage-jobs_tab_div span {
+  font-size: 22px;
+}
+
+.manage-jobs_tab_button {
+  margin-left: auto;
+}
+
 @media only screen and (max-width: 992px) {
   .w-25 {
     width: 100%;
   }
 
-  .manage-jobs_tab_div {
-    display: block;
-    align-items: center;
+  .manage-jobs_tab_div span {
+    font-size: 24px;
+  }
+
+  .manage-jobs_tab_div .MuiButtonBase-root.MuiTab-root {
+    margin-right: 36px;
   }
 
   .manage-jobs_tab_button {
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px 10px 0px;
   }
 
   .message-tex-2 p {
@@ -2241,15 +2259,6 @@ input.employersearch {
   font-size: 12px;
 }
 
-.manage-jobs_tab_div {
-  display: flex;
-  align-items: center;
-}
-
-.manage-jobs_tab_button {
-  margin-left: auto;
-}
-
 @media only screen and (max-width: 540px) {
   .content-box h5 {
     font-size: 28px !important;
@@ -2277,12 +2286,16 @@ input.employersearch {
     font-size: 14px !important;
   }
 
-  .manage-jobs_tab_button {
-    margin: auto;
-  }
-
   .manage-jobs_tab_div {
     display: block;
+  }
+
+  .manage-jobs_tab_div span {
+    font-size: 16px;
+  }
+
+  .manage-jobs_tab_div .MuiButtonBase-root.MuiTab-root {
+    margin-right: 30px;
   }
 
   .tender_card_chip .MuiChip-label {

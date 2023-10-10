@@ -105,6 +105,14 @@ span.blueview {
   color: #848484;
 }
 
+.applicant_attack_anchor {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Poppins";
+  line-height: 21px;
+  color: #121212;
+}
+
 .recent-research span {
   font-family: "Poppins";
   font-style: normal;
@@ -739,6 +747,13 @@ span.arrowjobs svg {
 @media screen and (max-width: 480px) {
   .my-jobs p {
     font-size: 10px;
+  }
+  .applicant_attack_anchor {
+    font-size: 12px;
+  }
+  .blue_attach_icon {
+    width: 30px;
+    height: 30px;
   }
   .my-jobs h2 {
     font-size: 14px !important;

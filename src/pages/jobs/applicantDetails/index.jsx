@@ -86,8 +86,7 @@ const ApplicantDetails = () => {
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   <span>
-                    Applied {dayjs(applicantDetails.createdAt).fromNow()}{" "}
-                    to:{" "}
+                    Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
                   <div>{applicantDetails.job.title}</div>
                 </div>
@@ -172,13 +171,13 @@ const ApplicantDetails = () => {
                       key={attachment.id}
                     >
                       <span className="d-inline-flex">
-                        {<SVG.OrangeIcon />}
+                        {<SVG.BlueAttach className="blue_attach_icon" />}
                       </span>
                       <a
                         href={generateFileUrl(attachment.path)}
                         target="_blank"
                         rel="noreferrer"
-                        style={{ color: "#000" }}
+                        className="applicant_attack_anchor"
                       >
                         {attachment.title}
                       </a>
@@ -224,7 +223,7 @@ const ApplicantDetails = () => {
                             <li key={index}>
                               <EducationCard
                                 {...item}
-                              // handleEdit={() => handleEdit(item)}
+                                // handleEdit={() => handleEdit(item)}
                               />
                             </li>
                           )

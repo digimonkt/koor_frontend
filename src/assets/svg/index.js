@@ -115,7 +115,9 @@ import { ReactComponent as HelpIcon } from "./help.svg";
 import { ReactComponent as Enable1 } from "./enable1.svg";
 import { ReactComponent as SaveIcon1 } from "./save1.svg";
 import { ReactComponent as Edit1 } from "./edit1.svg";
+import { ReactComponent as BlueAttach } from "./blueAttach.svg";
 export const SVG = {
+  BlueAttach,
   Edit1,
   SaveIcon1,
   Enable1,
