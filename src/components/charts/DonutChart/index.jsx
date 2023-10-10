@@ -120,8 +120,7 @@ const DonutChart = ({ shareCountData }) => {
             },
           }}
           size="small"
-        >
-        </FormControl>
+        ></FormControl>
       </Stack>
 
       <Grid container spacing={2}>
@@ -140,8 +139,8 @@ const DonutChart = ({ shareCountData }) => {
               {shareCountData?.sites.map((site, i) => {
                 return (
                   <li key={i}>
-                    <b>{site.count}</b> – {site.name}
-                    ({getCountPercent(shareCountData?.total, site.count)}
+                    <b>{site.count}</b> – {site.name}(
+                    {getCountPercent(shareCountData?.total, site.count)}
                     %)
                   </li>
                 );

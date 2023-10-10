@@ -118,6 +118,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
+              className="tender_card_chip"
             >
               {tenderDetails.sector && (
                 <ChipBox
