@@ -294,7 +294,7 @@ span.arrowjobs svg {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 27px;
   /* identical to box height */
   letter-spacing: 0.02em;
@@ -509,7 +509,7 @@ span.arrowjobs svg {
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
-  color: #000000;
+  color: #121212;
   display: inline-block;
   margin-bottom: 5px;
 }
@@ -706,6 +706,21 @@ span.arrowjobs svg {
   width: 100%;
 }
 
+.post_tender_done_dailog h1{
+ font-size: 28px;
+ font-weight: 600;
+ line-height: 33.61px;
+ color: #121212;
+}
+
+.post_tender_done_dailog p{
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  font-family: "Poppins";
+  color: #121212;
+}
+
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
   .recent-research span {
     border-left: none !important;
@@ -734,6 +749,10 @@ span.arrowjobs svg {
   .form-content label {
     font-size: 14px !important;
   }
+  .post_tender_done_dailog h1 {
+    font-size: 24px;
+  }
+  
 }
 
 @media screen and (max-width: 480px) {
@@ -748,5 +767,21 @@ span.arrowjobs svg {
   }
   .styles_attachment {
     padding: 20px;
+  }
+  .job-content h2 {
+    font-size: 20px;
+  }
+  .form-content label {
+    font-size: 12px !important;
+  }
+  .attachment-box ul li {
+    font-size: 12px;
+  }
+
+  .post_tender_done_dailog h1 {
+    font-size: 20px;
+  }
+  .post_tender_done_dailog p {
+    font-size: 12px;
   }
 }
