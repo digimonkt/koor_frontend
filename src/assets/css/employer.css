@@ -104,16 +104,6 @@ span.blueview {
 
   color: #848484;
 }
-.recent-content h4 {
-  font-family: "Bahnschrift";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 29px;
-  color: #121212;
-  margin: 0px;
-  white-space: nowrap;
-}
 
 .recent-research span {
   font-family: "Poppins";
@@ -751,7 +741,7 @@ span.arrowjobs svg {
     font-size: 10px;
   }
   .my-jobs h2 {
-    font-size: 14px;
+    font-size: 14px !important;
   }
   .recent-box h3 {
     font-size: 20px;

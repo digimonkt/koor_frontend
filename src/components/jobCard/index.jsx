@@ -130,9 +130,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               {jobDetails?.description}
             </p>
             <Stack
-              direction={{ xs: "column", sm: "row" }}
+              direction="row"
               spacing={{ xs: 1, sm: 1, md: 1 }}
-              sx={{ width: "100%", flexWrap: "wrap" }}
+              sx={{
+                width: "100%",
+                "@media (max-width: 992px)": {
+                  flexWrap: "wrap",
+                },
+                "@media (max-width: 480px)": {
+                  flexWrap: "wrap",
+                },
+              }}
               className="job_card_chip"
             >
               <ChipBox

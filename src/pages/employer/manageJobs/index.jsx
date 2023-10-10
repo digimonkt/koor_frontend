@@ -58,42 +58,44 @@ function ManageJobsComponent() {
   }, [totalCreatedJobs]);
   return (
     <div className="manage-jobs">
-      <AntTabs
-        value={panel}
-        onChange={(e, newValue) => handlePageTab(newValue)}
-      >
-        <AntTab
-          label={
-            <Stack direction="row" spacing={1} alignItems="center">
-              <span>My Jobs</span>{" "}
-              <Chip label={totalCreatedJobs} className="job-count" />
-            </Stack>
-          }
-          id={`simple-tab-${0}`}
-          aria-controls={`simple-tabpanel-${0}`}
-        />
-        <AntTab
-          label={
-            <Stack direction="row" spacing={1} alignItems="center">
-              <span>All applications</span>{" "}
-              <Chip label={totalApplications} className="job-count" />
-            </Stack>
-          }
-          id={`simple-tab-${1}`}
-          aria-controls={`simple-tabpanel-${1}`}
-        />
-        <AntTab
-          label={
-            <Stack direction="row" spacing={1} alignItems="center">
-              <span>Blacklist</span>{" "}
-              <Chip label={totalBlacklist} className="job-count" />
-            </Stack>
-          }
-          id={`simple-tab-${1}`}
-          aria-controls={`simple-tabpanel-${1}`}
-        />
+      <div className="ant_tabs_div">
+        <AntTabs
+          value={panel}
+          onChange={(e, newValue) => handlePageTab(newValue)}
+        >
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>My Jobs</span>{" "}
+                <Chip label={totalCreatedJobs} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${0}`}
+            aria-controls={`simple-tabpanel-${0}`}
+          />
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>All applications</span>{" "}
+                <Chip label={totalApplications} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${1}`}
+            aria-controls={`simple-tabpanel-${1}`}
+          />
+          <AntTab
+            label={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <span>Blacklisted</span>{" "}
+                <Chip label={totalBlacklist} className="job-count" />
+              </Stack>
+            }
+            id={`simple-tab-${1}`}
+            aria-controls={`simple-tabpanel-${1}`}
+          />
+        </AntTabs>
 
-        <div className="ms-auto">
+        <div className="post_new_job_btn">
           <OutlinedButton
             onClick={() => {
               if (currentUser.profile.isVerified) {
@@ -105,14 +107,14 @@ function ManageJobsComponent() {
             title={
               <>
                 <span className="me-3 d-inline-flex">
-                  <SVG.EditIcon />
+                  <SVG.EditDashIcon />
                 </span>
                 Post new job
               </>
             }
           />
         </div>
-      </AntTabs>
+      </div>
       {tabs.map((tab, index) => (
         <div
           key={index}

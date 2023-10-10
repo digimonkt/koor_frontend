@@ -4,6 +4,9 @@
 body {
   background-color: #e5e5e5 !important;
 }
+.chat-search::placeholder {
+  font-family: "Poppins" !important;
+}
 
 .job_card_chip .MuiChip-label {
   font-size: 16px;
@@ -1262,6 +1265,10 @@ hr {
   box-sizing: border-box;
 }
 
+.chat_message_text {
+  display: none;
+}
+
 .leftchatbox {
   border-right: 1px solid #cacaca;
 }
@@ -1397,6 +1404,18 @@ span.count {
   color: #121212;
 }
 
+.message-tex-2 p {
+  background: #f0f0f0;
+  border-radius: 20px 20px 20px 0px;
+  padding: 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 18px;
+  color: #121212;
+}
+
 .meassagebox {
   padding: 15px;
 }
@@ -1407,6 +1426,13 @@ span.count {
 
 .message-text span {
   color: #848484;
+}
+
+.strong_text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #121212;
+  line-height: 21.6px;
 }
 
 .message-text p {
@@ -1478,9 +1504,29 @@ span.count {
   width: 75%;
 }
 
+.tender_card_chip .MuiChip-label {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  font-family: "Poppins";
+}
+
 @media only screen and (max-width: 992px) {
   .w-25 {
     width: 100%;
+  }
+
+  .manage-jobs_tab_div {
+    display: block;
+    align-items: center;
+  }
+
+  .manage-jobs_tab_button {
+    margin: auto;
+  }
+
+  .message-tex-2 p {
+    font-size: 12px;
   }
 
   .job_card_chip .MuiChip-label {
@@ -1965,9 +2011,9 @@ input.employersearch {
 
 .job_card_hr {
   transform: rotate(90deg);
-  width: 122px;
+  width: 123px;
   position: absolute;
-  right: 92px;
+  right: 106px;
 }
 
 .job_card_chip_box .MuiChip-root.MuiChip-root {
@@ -1980,7 +2026,7 @@ input.employersearch {
 .login_header_search_icon {
   position: absolute;
   color: #848484;
-  left: 16.6rem;
+  left: 16rem;
 }
 
 .iconfooter a {
@@ -2077,12 +2123,58 @@ input.employersearch {
   padding-left: 16px;
 }
 
+.ant_tabs_div {
+  display: flex;
+  align-items: center;
+}
+
+.post_new_job_btn {
+  margin-left: auto;
+}
+
+.post_new_job_btn_button {
+  display: none;
+}
+
 @media only screen and (max-width: 992px) {
   .add-content label {
     font-size: 12px;
     line-height: 18px;
   }
+
+  .message-text h4 {
+    font-size: 12px;
+  }
+
+  .chat_message_text {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    color: #121212;
+    padding: 0px 0px 0px 30px;
+    font-family: "Bahnschrift", sans-serif;
+  }
+
   .saved-jobs h2 {
+    font-size: 24px;
+  }
+
+  .ant_tabs_div {
+    display: block;
+  }
+  .post_new_job_btn {
+    text-align: center;
+    margin: 20px 0px 10px 0px;
+  }
+
+  .job_card_hr {
+    transform: rotate(90deg);
+    width: 117px;
+    position: absolute;
+    right: 92px;
+  }
+
+  .ant_tabs_div .MuiButtonBase-root.MuiTab-root {
     font-size: 24px;
   }
 
@@ -2114,10 +2206,6 @@ input.employersearch {
     display: none;
   }
 
-  /* .register {
-    background: url("../images/intro.png");
-  } */
-
   .register-des > a {
     padding: 12px 20px;
     border-radius: 50px;
@@ -2130,6 +2218,10 @@ input.employersearch {
   .marquee h1 {
     padding-left: 25px;
     padding-right: 25px;
+  }
+
+  .headerbox h3 {
+    font-size: 16px;
   }
 
   .vendor {
@@ -2147,6 +2239,15 @@ input.employersearch {
 
 .labelbox .MuiOutlinedInput-input {
   font-size: 12px;
+}
+
+.manage-jobs_tab_div {
+  display: flex;
+  align-items: center;
+}
+
+.manage-jobs_tab_button {
+  margin-left: auto;
 }
 
 @media only screen and (max-width: 540px) {
@@ -2176,9 +2277,66 @@ input.employersearch {
     font-size: 14px !important;
   }
 
+  .manage-jobs_tab_button {
+    margin: auto;
+  }
+
+  .manage-jobs_tab_div {
+    display: block;
+  }
+
+  .tender_card_chip .MuiChip-label {
+    font-size: 10px;
+  }
+
+  .strong_text {
+    font-size: 14px;
+  }
+
+  .message-text h4 {
+    font-size: 14px;
+  }
+
+  .chat_message_text {
+    font-size: 18px;
+    padding: 0px 0px 0px 30px;
+  }
+
+  .ant_tabs_div .MuiButtonBase-root.MuiTab-root {
+    margin: 0px;
+  }
+
+  .ant_tabs_div {
+    display: block;
+  }
+
+  .post_new_job_btn {
+    text-align: center;
+    margin: 20px 0px 10px 0px;
+  }
+
+  .ant_tabs_div .MuiButtonBase-root.MuiTab-root .MuiTabs-indicator {
+    background-color: #274593;
+    border-radius: 6px 6px 0px 0px;
+    height: 4px;
+  }
+
+  .ant_tabs_div .MuiTabs-flexContainer {
+    flex-flow: wrap;
+    justify-content: center;
+  }
+
   .job_card_chip .MuiChip-label {
     font-size: 10px;
   }
+
+  .job_card_hr {
+    transform: rotate(90deg);
+    width: 115px;
+    position: absolute;
+    right: 125px;
+  }
+
   .job_card_chip_box .MuiChip-root.MuiChip-root {
     font-size: 10px;
   }

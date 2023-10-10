@@ -300,6 +300,10 @@
     margin-top: 0px !important;
   }
 
+  .content_div span {
+    font-size: 16px;
+  }
+
   .content_heading {
     padding-top: 0px;
   }

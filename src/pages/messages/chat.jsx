@@ -18,10 +18,19 @@ function ChatComponent() {
           },
         }}
       >
-        <Box sx={{ display: "flex", height: "100%", py: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            height: "100%",
+            "@media (max-width: 480px)": {
+              display: "block",
+            },
+            py: 2,
+          }}
+        >
           <Box
             sx={{
-              width: { sm: "25%" },
+              width: { sm: "35%", lg: "30%" },
             }}
             className="leftchatbox"
           >
@@ -32,7 +41,7 @@ function ChatComponent() {
             sx={{
               flexGrow: 1,
               padding: "16px 16px 0px 16px",
-              width: { sm: "75%" },
+              width: { sm: "65%", lg: "70%" },
             }}
           >
             {searchParams.get("conversion") || searchParams.get("userId") ? (
