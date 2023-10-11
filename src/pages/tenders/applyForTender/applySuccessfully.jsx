@@ -10,8 +10,8 @@ function ApplySuccessfully() {
   return (
     <Grid container spacing={2}>
       <Grid item lg={7}>
-        <h1 className="mb-3">Done!</h1>
-        <p>
+        <h1 className={`mb-3 ${styles.job_done}`}>Done!</h1>
+        <p className={styles.job_done_desc}>
           Your application was submitted. The employer will reach out to you if
           they will find you suitable for the tender. Stay tuned.
         </p>

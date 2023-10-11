@@ -274,6 +274,9 @@ const Dashboard = () => {
                             fontSize: "16px",
                             fontFamily: "Bahnschrift",
                             padding: "10px 30px",
+                            "@media (max-width: 480px)": {
+                              fontSize: "14px !important",
+                            },
 
                             "&:hover": { background: "#1976d20a" },
                           },

@@ -34,28 +34,30 @@ const ManageTenders = () => {
   return (
     <>
       <div className="manage-jobs">
-        <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
-          <AntTab
-            label={
-              <Stack direction="row" spacing={1} alignItems="center">
-                <span>My Tenders</span>{" "}
-                <Chip label={totalTender} className="job-count" />
-              </Stack>
-            }
-            id={`simple-tab-${0}`}
-            aria-controls={`simple-tabpanel-${0}`}
-          />
-          <AntTab
-            label={
-              <Stack direction="row" spacing={1} alignItems="center">
-                <span>All Applications</span>{" "}
-                <Chip label={totalTenderApplications} className="job-count" />
-              </Stack>
-            }
-            id={`simple-tab-${1}`}
-            aria-controls={`simple-tabpanel-${1}`}
-          />
-          <div className="ms-auto">
+        <div className="manage-jobs_tab_div">
+          <AntTabs value={panel} onChange={(e, newValue) => setPanel(newValue)}>
+            <AntTab
+              label={
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <span>My tenders</span>{" "}
+                  <Chip label={totalTender} className="job-count" />
+                </Stack>
+              }
+              id={`simple-tab-${0}`}
+              aria-controls={`simple-tabpanel-${0}`}
+            />
+            <AntTab
+              label={
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <span>All applications</span>{" "}
+                  <Chip label={totalTenderApplications} className="job-count" />
+                </Stack>
+              }
+              id={`simple-tab-${1}`}
+              aria-controls={`simple-tabpanel-${1}`}
+            />
+          </AntTabs>
+          <div className="manage-jobs_tab_button">
             <OutlinedButton
               onClick={() => {
                 if (currentUser.profile.isVerified) {
@@ -85,7 +87,7 @@ const ManageTenders = () => {
               }}
             />
           </div>
-        </AntTabs>
+        </div>
         {tabsData.map((tab, index) => (
           <div
             key={index}
@@ -96,13 +98,25 @@ const ManageTenders = () => {
             <tab.component />
           </div>
         ))}
-        <DialogBox open={accountVerifiedWarning} handleClose={() => setAccountVerifiedWarning(false)}>
+        <DialogBox
+          open={accountVerifiedWarning}
+          handleClose={() => setAccountVerifiedWarning(false)}
+        >
           <div>
-            <SVG.Warning style={{ marginLeft: "39%", height: "50px", width: "50px", color: "red" }} />
+            <SVG.Warning
+              style={{
+                marginLeft: "39%",
+                height: "50px",
+                width: "50px",
+                color: "red",
+              }}
+            />
             <h1 className="heading">Account Verification Status</h1>
             <div className="form-content">
               <p>
-                Dear {currentUser.name || currentUser.email }, your account is not verified by the administrator. Please contact the administrator for further assistance.
+                Dear {currentUser.name || currentUser.email}, your account is
+                not verified by the administrator. Please contact the
+                administrator for further assistance.
               </p>
             </div>
           </div>
