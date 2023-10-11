@@ -134,6 +134,7 @@ export default function PublicProfileComponent() {
                               fontWeight: "700",
                               letterSpacing: "0.03em",
                               mb: 0,
+                              color: "#121212  !important",
                             }}
                           >
                             {userDetails.name || userDetails.email}
@@ -159,6 +160,7 @@ export default function PublicProfileComponent() {
                                 sx={{
                                   color: "rgb(18 18 18 / 50%)",
                                   fontFamily: "Poppins",
+                                  fontSize: "14px  !important",
                                 }}
                               >
                                 {userDetails.profile.city?.title},{" "}
@@ -191,9 +193,13 @@ export default function PublicProfileComponent() {
                                 fontSize: "14px",
                                 fontFamily: "Poppins",
                                 lineHeight: "12px",
+                                color: "#121212",
                               }}
                             >
-                              {userDetails.profile.experience} {userDetails.profile.experience > 1 ? "Years" : "Year"}
+                              {userDetails.profile.experience}{" "}
+                              {userDetails.profile.experience > 1
+                                ? "Years"
+                                : "Year"}
                             </Typography>
                             <Box
                               component={"span"}
@@ -212,6 +218,7 @@ export default function PublicProfileComponent() {
                           fontSize: "26px",
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
+                          color: "#121212",
                         }}
                       >
                         About
@@ -245,7 +252,7 @@ export default function PublicProfileComponent() {
                                 style={{
                                   borderBottom:
                                     index !==
-                                      userDetails.workExperiences.length - 1
+                                    userDetails.workExperiences.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
                                 }}
@@ -280,7 +287,7 @@ export default function PublicProfileComponent() {
                                 style={{
                                   borderBottom:
                                     index !==
-                                      userDetails.educationRecord.length - 1
+                                    userDetails.educationRecord.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
                                 }}
@@ -338,6 +345,7 @@ export default function PublicProfileComponent() {
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
                           mb: 2,
+                          color: "#121212",
                         }}
                       >
                         Contact info
@@ -374,7 +382,7 @@ export default function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                userDetails.mobileNumber
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
@@ -509,6 +517,8 @@ export default function PublicProfileComponent() {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
+                          fontSize: "32px",
+                          fontFamily: "Inter",
                         }}
                       >
                         ADVETRISEMENT

@@ -803,6 +803,11 @@ span.arrowjobs svg {
   .recent-research {
     font-size: 16px;
   }
+.telentsearchicon {
+  height: 14.33px;
+  width: 14.33px;
+}
+  
 }
 
 @media screen and (max-width: 480px) {
