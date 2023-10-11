@@ -71,7 +71,7 @@ function AttachmentDragNDropInputComponent({
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xl={6} lg={6} xs={12}>
+        <Grid item xl={6} lg={6} sm={6} xs={12}>
           <div {...getRootProps({ className: "dropzone styles_attachment" })}>
             <input {...getInputProps()} />
             <div className="text-center">
@@ -86,7 +86,7 @@ function AttachmentDragNDropInputComponent({
                   upload an attachment
                 </span>
               </p>
-              {!single && <small>Max 10 files, each one under 5MB</small>}
+              {!single && <small>Max 10 files, each one under 50MB</small>}
             </div>
           </div>
         </Grid>
@@ -94,6 +94,7 @@ function AttachmentDragNDropInputComponent({
           item
           xl={6}
           lg={6}
+          sm={6}
           xs={12}
           className="attachment-box inline-attacment"
         >

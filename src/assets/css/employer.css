@@ -528,7 +528,6 @@ span.arrowjobs svg {
   font-weight: 600;
   font-size: 28px;
   line-height: 34px;
-
   color: #121212;
 }
 .styles_attachment {
@@ -714,19 +713,47 @@ span.arrowjobs svg {
   width: 100%;
 }
 
-.post_tender_done_dailog h1{
- font-size: 28px;
- font-weight: 600;
- line-height: 33.61px;
- color: #121212;
+.post_tender_done_dailog h1 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 33.61px;
+  color: #121212;
 }
 
-.post_tender_done_dailog p{
+.post_tender_done_dailog p {
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
   font-family: "Poppins";
   color: #121212;
+}
+
+.job-border h4 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 28.8px;
+  color: #121212;
+  margin: 0;
+}
+
+.recent-content {
+  align-items: center !important;
+}
+
+.posting_tender_done_icon {
+  width: 150.36px;
+  height: 150.88px;
+}
+
+.posting_tender_done_icon_div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.posting_tender_done_icon_mobile_div {
+  display: none;
 }
 
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
@@ -751,6 +778,13 @@ span.arrowjobs svg {
     white-space: normal;
     word-break: break-all;
   }
+  .posting_tender_done_icon {
+    width: 87.66px;
+    height: 87.92px;
+  }
+  .job-border h4 {
+    font-size: 20px;
+  }
   .recent-box h3 {
     font-size: 24px;
   }
@@ -760,12 +794,64 @@ span.arrowjobs svg {
   .post_tender_done_dailog h1 {
     font-size: 24px;
   }
-  
+  .recent-research span {
+    font-size: 14px;
+  }
+  .job-content h2 {
+    font-size: 24px;
+  }
+  .recent-research {
+    font-size: 16px;
+  }
 }
 
 @media screen and (max-width: 480px) {
   .my-jobs p {
     font-size: 10px;
+  }
+
+  .posting_tender_done_icon_div {
+    display: none;
+  }
+
+  .posting_tender_done_icon_mobile_div {
+    display: block;
+    align-items: center;
+    text-align: center;
+  }
+
+  .posting_tender_done_icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .attachment-box ul li {
+    font-size: 12px;
+  }
+
+  .attachment-box h2 {
+    font-size: 16px;
+  }
+
+  .user-descrition p {
+    font-size: 12px;
+  }
+
+  .recent-research {
+    font-size: 14px;
+  }
+
+  .recent-research span {
+    font-size: 12px;
+  }
+  .recent-content {
+    align-items: start !important;
+  }
+  .user-application h4 {
+    font-size: 14px;
+  }
+  .job-border h4 {
+    font-size: 18px;
   }
   .applicant_attack_anchor {
     font-size: 12px;

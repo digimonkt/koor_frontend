@@ -708,6 +708,9 @@ span.arrowjobs svg {
     font-size: 16px;
     line-height: normal;
   }
+  .job-content h2 {
+    font-size: 24px;
+  }
   .card-count p {
     font-size: 10px;
   }
@@ -806,6 +809,10 @@ span.arrowjobs svg {
 
 @media screen and (max-width: 480px) {
   .recent-content h4 {
+    font-size: 20px;
+  }
+
+  .job-content h2 {
     font-size: 20px;
   }
 

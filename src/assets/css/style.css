@@ -752,7 +752,7 @@ hr {
 }
 
 .heading {
-  font-family: "Bahnschrift", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   font-size: 28px;
   color: #121212;
@@ -1524,6 +1524,13 @@ span.count {
   margin-left: auto;
 }
 
+.save_filter_popup_txt {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
+  line-height: 18px;
+}
+
 @media only screen and (max-width: 992px) {
   .w-25 {
     width: 100%;
@@ -1551,9 +1558,9 @@ span.count {
     font-size: 12px;
   }
 
-  .MuiFormControl-root {
+  /* .MuiFormControl-root {
     width: 200px !important;
-  }
+  } */
 
   .w-75 {
     width: 100%;
@@ -2286,6 +2293,10 @@ input.employersearch {
     font-size: 14px !important;
   }
 
+  .save_filter_popup_txt {
+    font-size: 14px;
+  }
+
   .manage-jobs_tab_div {
     display: block;
   }
@@ -2398,7 +2409,6 @@ input.employersearch {
 
   .heading {
     font-size: 20px;
-    letter-spacing: -0.4px;
   }
 
   span.later {
