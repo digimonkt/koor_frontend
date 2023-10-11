@@ -52,7 +52,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
     }
   }, [tenderDetails.user.image]);
   return (
-    <div className="job_card">
+    <div className="job_card tender_job_card_text">
       <Grid container spacing={1.875} {...gridProps}>
         {logo && (
           <Grid
@@ -173,7 +173,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
           </div>
         </Grid>
 
-        <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
+        <Grid item lg={logo ? 2 : 3} xs={12} sm={2} sx={{ marginLeft: "auto" }}>
           <div className="text-end mb-4">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
@@ -228,7 +228,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     }
                   }}
                 >
-                  {<SVG.EditIcon />}
+                  {<SVG.Edit1 />}
                   <span className="d-block">Edit</span>
                 </button>
               </div>

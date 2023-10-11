@@ -10,14 +10,7 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
     <div>
       <h1 className="heading">Give it a name</h1>
       <div
-        style={{
-          fontWeight: "400",
-          fontSize: "16px",
-          color: "black",
-          lineHeight: "18px",
-          letterSpacing: "0.01em",
-          fontStyle: "Poppins",
-        }}
+        className="save_filter_popup_txt"
       >
         Create a short and clear name for this saved search, so it won’t take
         too much space but is informative for you.
@@ -48,9 +41,16 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
                 title="Cancel"
                 sx={{
                   "&.MuiButtonBase-root": {
+                    fontSize: "14px !important",
+                    fontWeight: "600  !important",
                     border: "none !important",
                     background: "none !important",
                     color: "#848484 !important",
+                    padding: "10px 0px !important",
+                    fontFamily: "Poppins  !important",
+                    "@media (max-width: 480px)": {
+                      fontSize: "12px !important",
+                    },
                   },
                 }}
               />
@@ -60,6 +60,12 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
                   "&.MuiButtonBase-root": {
                     border: "1px solid #EEA23D !important",
                     color: "#EEA23D !important",
+                    width: "100px",
+                    height: "42px",
+                    "@media (max-width: 480px)": {
+                      width: "95px",
+                      height: "42px",
+                    },
                     "&:hover": { background: "#eea23d14" },
                   },
                 }}

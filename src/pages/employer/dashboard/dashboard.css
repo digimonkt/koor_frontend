@@ -9,6 +9,14 @@
   color: #ffffff;
 }
 
+.tender_job_card_text .my-jobs h2 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 27px;
+  color: #121212;
+  font-family: "Poppins";
+}
+
 .card-count p {
   margin: 0;
   font-family: "Bahnschrift";
@@ -108,6 +116,7 @@ span.blueview {
   line-height: 29px;
   color: #121212;
   margin-bottom: 5px;
+  margin-top: 0;
   white-space: nowrap;
 }
 
@@ -699,12 +708,13 @@ span.arrowjobs svg {
     font-size: 16px;
     line-height: normal;
   }
+  .job-content h2 {
+    font-size: 24px;
+  }
   .card-count p {
     font-size: 10px;
   }
   .recent-research span {
-    border-left: none;
-    padding-left: 0px;
     font-size: 16px;
   }
   .recent-research {
@@ -779,14 +789,6 @@ span.arrowjobs svg {
     font-size: 12px !important;
   }
 
-  /* .chiplabel {
-    margin-left: -15px !important;
-  } */
-
-  .recent-research span {
-    border-left: none !important;
-  }
-
   .recent-research {
     display: block;
     margin-left: 0px !important;
@@ -808,6 +810,20 @@ span.arrowjobs svg {
 @media screen and (max-width: 480px) {
   .recent-content h4 {
     font-size: 20px;
+  }
+
+  .job-content h2 {
+    font-size: 20px;
+  }
+
+  .tender_job_card_text .my-jobs h2 {
+    font-size: 16px !important;
+  }
+
+  .job-button-card {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
   }
 
   .chiplabel {
