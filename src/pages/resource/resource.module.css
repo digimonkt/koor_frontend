@@ -300,6 +300,10 @@
     margin-top: 0px !important;
   }
 
+  .content_div span {
+    font-size: 16px;
+  }
+
   .content_heading {
     padding-top: 0px;
   }
@@ -310,6 +314,10 @@
 
   .content_sub_head {
     margin-top: 24px;
+  }
+
+  .articles_heading {
+    font-size: 24px !important;
   }
 
   .articles {
@@ -422,7 +430,7 @@
 
 @media screen and (max-width: 480px) and (min-width: 320px) {
   .resource_heading {
-    font-size: 38px !important;
+    font-size: 40px !important;
   }
 
   .resource_text_box {
@@ -448,11 +456,6 @@
   .resource_heading {
     font-size: 40px !important;
   }
-
-  .articles_heading {
-    font-size: 24px !important;
-  }
-
   .text_content {
     line-height: 28px !important;
   }

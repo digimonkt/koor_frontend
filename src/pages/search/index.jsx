@@ -102,11 +102,12 @@ function Search() {
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
   useEffect(() => {
-    if (SEARCH_TYPE.talents === params.type || SEARCH_TYPE.vendors === params.type) {
+    if (
+      SEARCH_TYPE.talents === params.type ||
+      SEARCH_TYPE.vendors === params.type
+    ) {
       if (isLoggedIn && !currentUser.profile.isVerified) {
-        navigate(
-          urlcat("../employer/dashboard")
-        );
+        navigate(urlcat("../employer/dashboard"));
       }
     }
   }, []);
@@ -190,7 +191,7 @@ function Search() {
                   alignItems="center"
                 >
                   <h2 className="m-0" style={{ textTransform: "capitalize" }}>
-                    {searchType}
+                    {searchType === "jobs" ? "Job feed" : searchType}
                     <Chip
                       label={totalItems}
                       className="ms-3"
@@ -289,7 +290,7 @@ function Search() {
                               sx={{
                                 backgroundColor:
                                   sortBy === data.sortBy &&
-                                    orderBy === data.orderBy
+                                  orderBy === data.orderBy
                                     ? role === USER_ROLES.jobSeeker
                                       ? "#FEEFD3"
                                       : "#D5E3F7"
@@ -311,7 +312,11 @@ function Search() {
             </Box>
           </Grid>
         </Grid>
-        {totalPages > 1 ? < div className="paginations pt-4">{pagination()}</div> : <div style={{ marginTop: "20px" }}></div>}
+        {totalPages > 1 ? (
+          <div className="paginations pt-4">{pagination()}</div>
+        ) : (
+          <div style={{ marginTop: "20px" }}></div>
+        )}
       </Container>
     </Box>
   );

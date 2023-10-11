@@ -43,7 +43,8 @@ function ApplicationOptions({
   const [isShortlisted, setIsShortlisted] = useState(false);
 
   const [blackListReason, setBlackListReason] = useState("");
-  const [invalidPlannedInterviewAlert, setInvalidPlannedInterviewAlert] = useState("");
+  const [invalidPlannedInterviewAlert, setInvalidPlannedInterviewAlert] =
+    useState("");
   const [isInterviewPlanning, setIsInterviewPlanning] = useState(false);
   const [interviewTime, setInterviewTime] = useState("");
   const [isBlacklisting, setIsBlacklisting] = useState(false);
@@ -183,7 +184,10 @@ function ApplicationOptions({
               style={{
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
-              onClick={() => { setInvalidPlannedInterviewAlert(""); setIsInterviewPlanning(true); }}
+              onClick={() => {
+                setInvalidPlannedInterviewAlert("");
+                setIsInterviewPlanning(true);
+              }}
             >
               <SVG.EventIcon className="application-option-icon" />
               <span>
@@ -193,7 +197,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {shortlist && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{ minWidth: "auto" }}
               disabled={
@@ -217,7 +221,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {reject && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{ minWidth: "auto" }}
               variant="link"
@@ -240,7 +244,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {blacklist && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{
                 minWidth: "auto",
@@ -267,7 +271,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {view && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{
                 minWidth: "auto",
@@ -313,7 +317,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {message && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               variant="link"
               sx={{ minWidth: "auto" }}
@@ -363,7 +367,7 @@ function ApplicationOptions({
             <div
               style={{
                 marginLeft: "15px",
-                wordBreak: "break-all"
+                wordBreak: "break-all",
               }}
             >
               {details.user.name || details.user.email}
@@ -415,7 +419,10 @@ function ApplicationOptions({
           <div className="dialog-reason">
             <LabeledInput
               type="datetime-local"
-              onChange={(e) => { setInterviewTime(e.target.value); setInvalidPlannedInterviewAlert(""); }}
+              onChange={(e) => {
+                setInterviewTime(e.target.value);
+                setInvalidPlannedInterviewAlert("");
+              }}
               value={interviewTime}
               min={dayjs().format("YYYY-MM-DDTHH:mm")}
             />
@@ -432,7 +439,9 @@ function ApplicationOptions({
                     JOB_APPLICATION_OPTIONS.plannedInterviews
                   );
                 } else {
-                  setInvalidPlannedInterviewAlert("Please select date and time");
+                  setInvalidPlannedInterviewAlert(
+                    "Please select date and time"
+                  );
                 }
               }}
             />

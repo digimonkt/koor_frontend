@@ -260,7 +260,7 @@ const PostTender = () => {
         >
           <div className="job-content">
             <h2>
-              {tenderId ? "Update tender" : "Post a new tender"}
+              {tenderId ? "Update tender" : "Post new tender"}
               <span className="right-pull">
                 <IconButton
                   LinkComponent={Link}
@@ -273,7 +273,7 @@ const PostTender = () => {
             <div className="form-content">
               <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xl={8} lg={8}>
+                  <Grid item xl={8} lg={8} xs={12}>
                     <LabeledInput
                       title="Title of your tender"
                       className="add-form-control"
@@ -326,7 +326,7 @@ const PostTender = () => {
                       Location <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} sx={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           placeholder="Country"
                           defaultValue=""
@@ -340,7 +340,7 @@ const PostTender = () => {
                           <ErrorMessage>{formik.errors.country}</ErrorMessage>
                         ) : null}
                       </Grid>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           placeholder={
                             formik.values.country
@@ -362,7 +362,7 @@ const PostTender = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} sm={12} xs={12}>
                     <label>
                       Working place address{" "}
                       <span className="required-field">*</span>
@@ -405,10 +405,10 @@ const PostTender = () => {
                     ) : null}
                   </Grid>
 
-                  <Grid item xl={12} lg={12} xs={12}>
+                  <Grid item xl={12} lg={12} sm={12} xs={12}>
                     <label>Category</label>
                     <Grid container spacing={2}>
-                      <Grid item xl={5} lg={5} xs={12}>
+                      <Grid item xl={5} lg={5} sm={12} xs={12}>
                         <SelectInput
                           multiple
                           defaultValue=""
@@ -423,7 +423,7 @@ const PostTender = () => {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.categories &&
-                          formik.errors.categories ? (
+                        formik.errors.categories ? (
                           <ErrorMessage>
                             {formik.errors.categories}
                           </ErrorMessage>
@@ -433,7 +433,7 @@ const PostTender = () => {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Grid container spacing={2}>
-                      <Grid item xl={4} lg={4} xs={12}>
+                      <Grid item xl={4} lg={4} sm={6} xs={12}>
                         <label>Sector</label>
                         <SelectInput
                           defaultValue=""
@@ -451,10 +451,10 @@ const PostTender = () => {
                           <ErrorMessage>{formik.errors.sectors}</ErrorMessage>
                         ) : null}
                       </Grid>
-                      <Grid item xl={4} lg={4} xs={12}>
-                        <label>Opportunity Type</label>
+                      <Grid item xl={4} lg={4} sm={6} xs={12}>
+                        <label>Type</label>
                         <SelectInput
-                          placeholder="Select Type"
+                          placeholder="Select a type of opportunity"
                           defaultValue=""
                           options={opportunityTypes.data.map(
                             (opportunityType) => ({
@@ -465,7 +465,7 @@ const PostTender = () => {
                           {...formik.getFieldProps("opportunityType")}
                         />
                         {formik.touched.opportunityType &&
-                          formik.errors.opportunityType ? (
+                        formik.errors.opportunityType ? (
                           <ErrorMessage>
                             {formik.errors.opportunityType}
                           </ErrorMessage>
@@ -512,7 +512,7 @@ const PostTender = () => {
                             minDate={dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.startDate &&
-                            formik.errors.startDate ? (
+                          formik.errors.startDate ? (
                             <ErrorMessage>
                               {formik.errors.startDate}
                             </ErrorMessage>
@@ -539,7 +539,10 @@ const PostTender = () => {
                             }
                             value={formik.values.deadline}
                             onBlur={formik.getFieldProps("deadline").onBlur}
-                            minDate={formik.values.startDate || dayjs().format("YYYY-MM-DD")}
+                            minDate={
+                              formik.values.startDate ||
+                              dayjs().format("YYYY-MM-DD")
+                            }
                           />
                           {formik.touched.deadline && formik.errors.deadline ? (
                             <ErrorMessage>
@@ -559,19 +562,28 @@ const PostTender = () => {
                 <Grid item xl={12} lg={12} xs={12}>
                   <h2 className="mt-2 mb-3">Attach files</h2>
                   {formik.errors?.attachments ? (
-                    <ErrorMessage>
-                      {formik.errors?.attachments}
-                    </ErrorMessage>
+                    <ErrorMessage>{formik.errors?.attachments}</ErrorMessage>
                   ) : null}
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
                     handleDrop={(file) => {
                       const currentAttachments = formik.values.attachments;
                       if (file.length + currentAttachments.length > 10) {
-                        formik.setFieldError("attachments", `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length} remaining`);
+                        formik.setFieldError(
+                          "attachments",
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
+                          } remaining`
+                        );
                       } else {
-                        const filesTaken = file.slice(0, 10 - currentAttachments.length);
-                        formik.setFieldValue("attachments", [...currentAttachments, ...filesTaken]);
+                        const filesTaken = file.slice(
+                          0,
+                          10 - currentAttachments.length
+                        );
+                        formik.setFieldValue("attachments", [
+                          ...currentAttachments,
+                          ...filesTaken,
+                        ]);
                       }
                     }}
                     deleteFile={(file, index) => {
@@ -607,6 +619,7 @@ const PostTender = () => {
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
+                    style={{ flexWrap: "wrap" }}
                   >
                     <OutlinedButton
                       title="Cancel"
@@ -614,7 +627,7 @@ const PostTender = () => {
                         "&.MuiButton-outlined": {
                           borderRadius: "73px",
                           border: "0px",
-                          color: "#848484",
+                          color: "#848484 !important",
                           fontWeight: "500",
                           fontSize: "16px",
                           fontFamily: "Bahnschrift",
@@ -628,20 +641,32 @@ const PostTender = () => {
                             padding: "5px 15px",
                             fontSize: "14px",
                           },
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                            marginBottom: "10px",
+                            width: "100%",
+                          },
                         },
                       }}
                       disabled={formik.isSubmitting}
                       onClick={() => navigate("/employer/manage-tenders")}
                     />
                     <FilledButton
+                      sx={{
+                        fontSize: "16px !important",
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                          width: "100%",
+                        },
+                      }}
                       title={
                         formik.isSubmitting
                           ? tenderId
                             ? "Updating..."
                             : "Posting..."
                           : tenderId
-                            ? "Update the tender"
-                            : "POST THE TENDER"
+                          ? "Update the tender"
+                          : "POST THE TENDER"
                       }
                       type="submit"
                       disabled={formik.isSubmitting}
@@ -653,10 +678,17 @@ const PostTender = () => {
           </div>
         </CardContent>
       </Card>
-      <DialogBox open={open} handleClose={handleClose}>
-        <Grid container spacing={2}>
-          <Grid item lg={7}>
+      <DialogBox
+        open={open}
+        handleClose={handleClose}
+        className="posting_tender_done_dailog_div"
+      >
+        <Grid container spacing={2} className="post_tender_done_dailog">
+          <Grid item lg={7} sm={7} xs={12}>
             <h1 className="mb-3">Done!</h1>
+            <div className="posting_tender_done_icon_mobile_div">
+              <SVG.JobPost className="posting_tender_done_icon" />
+            </div>
             <p>
               {tenderId
                 ? "Your tender post just updated. It will be reviewed and available on Koor shortly."
@@ -669,8 +701,10 @@ const PostTender = () => {
               />
             </div>
           </Grid>
-          <Grid item lg={5}>
-            <SVG.JobPost className="w-100" />
+          <Grid item lg={5} sm={5} xs={12}>
+            <div className="posting_tender_done_icon_div">
+              <SVG.JobPost className="posting_tender_done_icon" />
+            </div>
           </Grid>
         </Grid>
       </DialogBox>
