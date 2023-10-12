@@ -528,7 +528,12 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 10px;
+  top: 20px;
+}
+
+.edit_work_experience_btn {
+  text-align: center;
+  margin-top: 50px;
 }
 
 .spaceor {
@@ -1536,6 +1541,11 @@ span.count {
     width: 100%;
   }
 
+  .edit_work_experience_btn {
+    text-align: center;
+    margin-top: 70px;
+  }
+
   .manage-jobs_tab_div span {
     font-size: 24px;
   }
@@ -2295,6 +2305,11 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+
+  .edit_work_experience_btn {
+    text-align: center;
+    margin-top: 150px;
   }
 
   .save_filter_popup_txt {

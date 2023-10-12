@@ -125,6 +125,7 @@ const WorkExperience = () => {
         <EditWorkExperience
           handleSubmit={handleSubmit}
           currentSelected={currentSelected}
+          handleClose={handleToggleModel}
         />
       </DialogBox>
     </>
