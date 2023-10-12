@@ -387,7 +387,7 @@ function PostJobsComponent() {
         >
           <div className="job-content">
             <h2>
-              {jobId ? "Update Job" : "Post a new job"}
+              {jobId ? "Update Job" : "Post new job"}
               <span className="right-pull">
                 <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
                   <CloseIcon />
@@ -424,7 +424,7 @@ function PostJobsComponent() {
                   <Grid item xl={4} lg={4}>
                     <CurrencyInput
                       currency="USD"
-                      title="Budget"
+                      title="Salary"
                       optionsValues={{
                         currency: formik.getFieldProps("budgetCurrency"),
                         input: formik.getFieldProps("budgetAmount"),
@@ -502,7 +502,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12}>
                     <label>
-                      Working place address{" "}
+                      Working place addressF{" "}
                       <span className="required-field">*</span>
                     </label>
                     <div className={styles.positionReltive}>
@@ -603,21 +603,42 @@ function PostJobsComponent() {
                     >
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
+                        control={
+                          <CheckboxInput
+                            sx={{
+                              padding: "9px 5px",
+                              fontSize: "16px !important",
+                            }}
+                          />
+                        }
                         label="Part Time"
                         checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
+                        control={
+                          <CheckboxInput
+                            sx={{
+                              padding: "9px 5px",
+                              fontSize: "16px !important",
+                            }}
+                          />
+                        }
                         label="Full Time"
                         checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
+                        control={
+                          <CheckboxInput
+                            sx={{
+                              padding: "9px 5px",
+                              fontSize: "16px !important",
+                            }}
+                          />
+                        }
                         label="Contract"
                         checked={formik.values.hasContract}
                         {...formik.getFieldProps("hasContract")}

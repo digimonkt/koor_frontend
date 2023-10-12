@@ -659,9 +659,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               style={{
                 color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                 cursor: "pointer",
+                fontSize: "12px",
               }}
             >
-              Advance filter{" "}
+              Advanced filter{" "}
               {data ? (
                 <>
                   <span

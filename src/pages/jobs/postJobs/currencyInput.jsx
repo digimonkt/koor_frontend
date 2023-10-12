@@ -32,6 +32,7 @@ function CurrencyInput({ title, optionsValues, errors, ...rest }) {
             sx={{
               "& .MuiSelect-select": {
                 paddingLeft: "0px",
+                fontSize: "10px  !important",
               },
             }}
             options={Object.keys(PAY_PERIOD).map((period) => ({
