@@ -10,13 +10,14 @@ export const SelectBox = styled(Select)`
     background: #f0f0f0;
     border-radius: 10px;
     color: #121212;
-    font-size: 12px;
+    font-size: 14px;
     font-family: "Poppins";
     font-weight: 400;
   }
   & .Mui-disabled {
-    color: #121212;
-    -webkit-text-fill-color: #121212;
+    color: #848484 !important;
+    -webkit-text-fill-color: #848484;
+    font-weight: 300;
   }
 
   & .MuiInputBase-root {
@@ -85,7 +86,11 @@ function SelectInputComponent({
           renderValue={
             value && value.length !== 0
               ? undefined
-              : () => <div className={styles.placeholder}>{placeholder}</div>
+              : () => (
+                  <div className={`selet-placeholder ${styles.placeholder}`}>
+                    {placeholder}
+                  </div>
+                )
           }
           {...rest}
         >

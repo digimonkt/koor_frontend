@@ -103,10 +103,12 @@
   margin-right: 14px !important;
   cursor: default !important;
   padding: 0px 20px !important;
+  margin-bottom: 10px !important;
 }
 .iconbtn {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 .iconbutton span {
   position: relative;
