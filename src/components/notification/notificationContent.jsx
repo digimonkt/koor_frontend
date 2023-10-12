@@ -162,8 +162,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                   ))
                 ) : (
                   <div className="text-center">
-                    <SVG.Bell />
-                    <p className={styles.text}>
+                    <SVG.Bell className={styles.no_notification_bell_icon} />
+                    <p className={styles.no_notification_text}>
                       You don’t have any notifications yet
                     </p>
                   </div>
