@@ -9,7 +9,7 @@ body {
 }
 
 .job_card_chip .MuiChip-label {
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .job_card .MuiGrid-root {
@@ -228,6 +228,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   color: #121212;
   font-size: 16px;
   font-weight: 300;
+  font-family: "Poppins !important";
 }
 
 .lables li {
@@ -920,8 +921,8 @@ hr {
   border: 0;
   font-family: "Poppins";
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 16px;
   line-height: 22px;
   height: 38px;
   letter-spacing: 0.02em;
@@ -991,9 +992,10 @@ hr {
   height: 90px;
   padding: 6px 12px;
   font-family: "Poppins";
-  font-size: 12px;
+  font-size: 16px;
   box-sizing: border-box;
   color: #121212;
+  font-weight: 300;
 }
 
 .description {
@@ -2305,6 +2307,9 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+  .lables span {
+    font-size: 14px;
   }
 
   .edit_work_experience_btn {
