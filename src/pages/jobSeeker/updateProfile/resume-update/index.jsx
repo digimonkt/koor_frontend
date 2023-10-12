@@ -75,6 +75,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
         </Stack>
         <div className="my-4 text-center">
           <OutlinedButton
+            style={{ width: "100%" }}
             title={
               <>
                 <span className="me-2 d-inline-flex">

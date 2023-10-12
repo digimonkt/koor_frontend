@@ -172,7 +172,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
             School period
           </label>
           <Grid container spacing={2}>
-            <Grid item lg={6} xs={12}>
+            <Grid item lg={6} xs={6}>
               <DateInput
                 label="Start"
                 views={["year"]}
@@ -188,7 +188,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
                 <ErrorMessage>{formik.errors.startDate}</ErrorMessage>
               ) : null}
             </Grid>
-            <Grid item lg={6} xs={12}>
+            <Grid item lg={6} xs={6}>
               <DateInput
                 label="End"
                 views={["year"]}

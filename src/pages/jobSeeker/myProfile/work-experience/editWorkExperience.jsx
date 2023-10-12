@@ -25,7 +25,7 @@ import "react-quill/dist/quill.snow.css";
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
 
-function EditWorkExperience({ handleSubmit, currentSelected }) {
+function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [descData, setDescData] = useState("");
@@ -134,7 +134,10 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
   }, [currentSelected]);
   return (
     <div>
-      <h1 className="heading">Add work experience</h1>
+      <div className="heading-div">
+        <h1 className="heading">Add work experience</h1>
+        <SVG.CrossCircle className="cross-circle" onClick={handleClose} />
+      </div>
       <div className="form-content">
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
@@ -154,7 +157,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
               <div className="form-group mb-3">
                 <LabeledInput
                   placeholder="Company name"
-                  title="Your company name"
+                  title="Company name"
                   labelWeight={500}
                   className="add-form-control"
                   {...formik.getFieldProps("companyName")}
@@ -171,7 +174,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
               >
                 Working period
               </label>
-              <Grid container spacing={2}>
+              <Grid container spacing={2} className="mb-3">
                 <Grid item lg={6} md={6} xs={6}>
                   <Box className="work_experience_date">
                     <DateInput
@@ -238,7 +241,15 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                   style={{ height: "120px" }}
                   {...formik.getFieldProps("description")}
                 /> */}
+                <label
+                  style={{
+                    fontWeight: 500,
+                  }}
+                >
+                  Job key responsibilities
+                </label>
                 <ReactQuill
+                  placeholder="Write more about your responsibilities at this role"
                   theme="snow"
                   value={descData || formik.values.description}
                   modules={{
@@ -248,7 +259,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
                   className="work-experience-text-editor"
                   style={{
                     width: "100%",
-                    marginTop: "20px",
+                    marginTop: "10px",
                     height: "170px",
                   }}
                 />
@@ -258,7 +269,7 @@ function EditWorkExperience({ handleSubmit, currentSelected }) {
               </div>
             </Grid>
           </Grid>
-          <div className="text-center mt-3">
+          <div className="edit_work_experience_btn">
             <OutlinedButton
               title={
                 <>
