@@ -441,6 +441,10 @@ const AboutMe = (props) => {
                 name="row-radio-buttons-group"
               >
                 <FormControlReminder
+                  sx={{
+                    display: "flex",
+                    alignItems: "start",
+                  }}
                   control={
                     <CheckboxInput
                       sx={{
@@ -460,6 +464,10 @@ const AboutMe = (props) => {
                   label=" I wish to receive Job Application Notifications and other Job-related information from Koor "
                 />
                 <FormControlReminder
+                  sx={{
+                    display: "flex",
+                    alignItems: "start",
+                  }}
                   control={
                     <CheckboxInput
                       sx={{

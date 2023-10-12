@@ -21,9 +21,8 @@ import {
   updateAppliedTenderAPI,
 } from "../../../api/tender";
 import dayjs from "dayjs";
-import { getColorByRemainingDays } from "../../../utils/generateColor";
-import { generateFileUrl } from "../../../utils/generateFileUrl";
-import JobCostCard from "../../../pages/jobs/component/jobCostCard";
+import { getColorByRemainingDays } from "@utils/generateColor";
+import JobCostCard from "@pages/jobs/component/jobCostCard";
 import { useFormik } from "formik";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import DialogBox from "../../../components/dialogBox";
@@ -31,7 +30,8 @@ import ApplySuccessfully from "./applySuccessfully";
 import { useDispatch } from "react-redux";
 import CancelApply from "../../../pages/tenders/applyForTender/cancelApply";
 import { applyTenderValidationSchema } from "./validator";
-import { getApplicationDetailsAPI } from "../../../api/vendor";
+import { getApplicationDetailsAPI } from "@api/vendor";
+import { getJobAttachmentAPI } from "@api/job";
 function ApplyForTender() {
   const navigate = useNavigate();
   const params = useParams();
@@ -145,32 +145,51 @@ function ApplyForTender() {
     }
   };
 
-  function toDataURL(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        callback(reader.result);
-      };
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.open("GET", url);
-    xhr.responseType = "blob";
-    xhr.send();
-  }
-  async function loadImageToDataURL(url) {
-    return new Promise((resolve, reject) => {
-      toDataURL(url, (dataURL) => {
-        resolve(dataURL);
-      });
-    });
-  }
   const handleLoadImage = async (url) => {
-    const base64 = await loadImageToDataURL(url);
-    const element = document.createElement("a");
-    element.href = base64;
-    element.download = "Attachment";
-    element.click();
+    const fileType = (url) => {
+      const extension = "." + url.split(".").pop().toLowerCase();
+      console.log({ extension });
+      const mimeTypes = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".gif": "image/gif",
+        ".pdf": "application/pdf",
+        // Add more extensions and corresponding MIME types as needed
+      };
+
+      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
+    };
+
+    const fileName = "attachment";
+    const response = await getJobAttachmentAPI(url);
+
+    if (response.remote === "success") {
+      const base64String = response.data.base_image;
+      // Convert base64 string to Blob
+      const byteCharacters = atob(base64String);
+      const byteArrays = new Uint8Array(byteCharacters.length);
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteArrays[i] = byteCharacters.charCodeAt(i);
+      }
+
+      const blob = new Blob([byteArrays], {
+        type: fileType(url) || "application/octet-stream",
+      });
+
+      // Create a download link
+      const downloadUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = fileName || "file"; // Default filename is "file"
+
+      // Append the link to the document and click it
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(downloadUrl);
+    }
   };
   useEffect(() => {
     getTenderDetails(params.tenderId);
@@ -262,11 +281,7 @@ function ApplyForTender() {
                             <span
                               className="ms-3"
                               style={{ cursor: "pointer" }}
-                              onClick={() =>
-                                handleLoadImage(
-                                  generateFileUrl(attachment.path)
-                                )
-                              }
+                              onClick={() => handleLoadImage(attachment.path)}
                             >
                               {attachment.title}
                             </span>

@@ -409,11 +409,10 @@ header {
 }
 
 .add-content p {
-  font-size: 16px;
-  font-weight: 300;
-  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212;
   margin-top: 0;
-  padding: 16px;
 }
 
 .saved-jobs
@@ -518,7 +517,7 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 20px;
+  top: 10px;
 }
 
 .spaceor {
@@ -717,6 +716,10 @@ hr {
   box-sizing: border-box;
 }
 
+.savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label {
+  font-size: 12px;
+}
+
 .search-language .css-1oqqzyl-MuiContainer-root {
   padding: 0px;
   margin-bottom: 20px;
@@ -773,6 +776,10 @@ hr {
 .step-continer .Mui-active .MuiStepConnector-line {
   border-top-width: 2px;
   border-color: #eea23d;
+}
+
+.step-continer .MuiStepConnector-line {
+  border-top-width: 2px;
 }
 
 .step-continer .Mui-disabled svg {
@@ -838,6 +845,10 @@ hr {
 .additional-check .MuiFormControlLabel-root .MuiFormControlLabel-label {
   font-size: 16px;
   font-weight: 500;
+}
+
+.addition-color {
+  color: red !important;
 }
 
 .additional-box
@@ -984,7 +995,7 @@ hr {
 .modal-box .MuiPaper-root {
   border-radius: 10px;
   padding: 30px;
-  width: 500px;
+  width: 520px;
 }
 
 .dropimg-userprofile {
@@ -1019,7 +1030,6 @@ hr {
 .text-resume {
   font-weight: 500;
   font-size: 16px;
-
   color: #121212;
 }
 
@@ -1048,9 +1058,9 @@ hr {
   color: #506ebb;
 }
 
-.css-z7uhs0-MuiStepConnector-line {
+/* .e {
   border-top-width: 2px !important;
-}
+} */
 
 .form-control-area::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -1465,6 +1475,10 @@ span.count {
     width: 100%;
   }
 
+  .MuiFormControl-root {
+    width: 200px !important;
+  }
+
   .w-75 {
     width: 100%;
   }
@@ -1540,8 +1554,8 @@ span.count {
   }
 
   .step-continer .Mui-disabled svg {
-    width: 20px;
-    height: 20px;
+    width: 34px;
+    height: 34px;
   }
 
   .according-content-box h2 {
@@ -1966,7 +1980,7 @@ input.employersearch {
     width: 50px;
   }
 
-  .savedjobs span.MuiChip-label.MuiChip-labelMedium.css-6od3lo-MuiChip-label {
+  .savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label {
     padding-left: 6px !important;
     padding-right: 0px !important;
   }
@@ -2023,13 +2037,25 @@ input.employersearch {
   color: red;
 }
 
+.company_textdes {
+  border-left: 1px solid #d9d9d9;
+  padding-left: 16px;
+}
+
 @media only screen and (max-width: 992px) {
   .add-content label {
     font-size: 12px;
     line-height: 18px;
   }
   .saved-jobs h2 {
-    font-size: 16px;
+    font-size: 24px;
+  }
+
+  .company_textdes {
+    padding: 0;
+    border-left: 0px;
+    margin-left: 0px !important;
+    margin-top: 8px !important;
   }
 
   .navbar-brand {
@@ -2115,6 +2141,14 @@ input.employersearch {
     font-size: 14px !important;
   }
 
+  .savedjobs span.MuiChip-label.MuiChip-labelMedium.MuiChip-label {
+    font-size: 10px;
+  }
+
+  .saved-jobs h2 {
+    font-size: 20px;
+  }
+
   .additional-check {
     display: grid !important;
   }
@@ -2170,10 +2204,17 @@ input.employersearch {
 
   .add-content h2 {
     font-size: 20px;
+    text-align: center;
+  }
+
+  .css-z7uhs0-MuiStepConnector-line {
+    width: 20px;
+    transform: rotate(90deg);
+    margin: 10px 0px 16px 16px;
   }
 
   .add-content p {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 

@@ -158,6 +158,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                 label="Full Time"
               />
               <FormControlReminder
+                sx={{ color: jobType.contract ? "addition-color" : "" }}
                 control={<CheckboxInput />}
                 onChange={(e) =>
                   setJobType((prevState) => ({

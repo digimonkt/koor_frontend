@@ -140,17 +140,14 @@ const PostTender = () => {
           resetForm();
         } else {
           dispatch(setErrorToast("Something went wrong"));
-          console.log(response.error);
         }
       } else {
         // Update tender
         response = await updateTenderAPI(tenderId, newFormData);
         if (response.remote === "success") {
           dispatch(setSuccessToast("Tender Updated Successfully"));
-          console.log(response.data);
         } else {
           dispatch(setErrorToast("Something went wrong"));
-          console.log(response.error);
         }
       }
       if (response.remote === "success") {
@@ -242,7 +239,6 @@ const PostTender = () => {
       navigate(urlcat("../employer/manage-tenders"));
     }
   }, []);
-  console.log(formik.values.attachmentsRemove);
   return (
     <div className="job-application">
       <Card
@@ -564,16 +560,24 @@ const PostTender = () => {
 
                 <Grid item xl={12} lg={12} xs={12}>
                   <h2 className="mt-2 mb-3">Attach files</h2>
+                  {formik.errors?.attachments ? (
+                    <ErrorMessage>
+                      {formik.errors?.attachments}
+                    </ErrorMessage>
+                  ) : null}
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
                     handleDrop={(file) => {
-                      formik.setValues({
-                        ...formik.values,
-                        attachments: [
-                          ...formik.getFieldProps("attachments").value,
-                          file[0],
-                        ],
-                      });
+                      const currentAttachments = formik.values.attachments;
+                      if (file.length + currentAttachments.length > 10) {
+                        formik.setFieldError("attachments", `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length} remaining`);
+                      } else {
+                        const filesTaken = file.slice(0, 10 - currentAttachments.length);
+                        formik.setFieldValue("attachments", [
+                          ...currentAttachments,
+                          ...filesTaken,
+                        ]);
+                      }
                     }}
                     deleteFile={(file) => {
                       if (file.id) {

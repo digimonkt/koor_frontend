@@ -19,7 +19,6 @@ import {
   withdrawTenderApplicationAPI,
 } from "../../../api/tender";
 import dayjs from "dayjs";
-import { generateFileUrl } from "../../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_ROLES } from "../../../utils/enum";
@@ -27,6 +26,7 @@ import DialogBox from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
+import { getJobAttachmentAPI } from "@api/job";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -154,32 +154,51 @@ function TenderDetailsComponent() {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
-  function toDataURL(url, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      const reader = new FileReader();
-      reader.onloadend = function () {
-        callback(reader.result);
-      };
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.open("GET", url);
-    xhr.responseType = "blob";
-    xhr.send();
-  }
-  async function loadImageToDataURL(url) {
-    return new Promise((resolve, reject) => {
-      toDataURL(url, (dataURL) => {
-        resolve(dataURL);
-      });
-    });
-  }
   const handleLoadImage = async (url) => {
-    const base64 = await loadImageToDataURL(url);
-    const element = document.createElement("a");
-    element.href = base64;
-    element.download = "Attachment";
-    element.click();
+    const fileType = (url) => {
+      const extension = "." + url.split(".").pop().toLowerCase();
+      console.log({ extension });
+      const mimeTypes = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".gif": "image/gif",
+        ".pdf": "application/pdf",
+        // Add more extensions and corresponding MIME types as needed
+      };
+
+      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
+    };
+
+    const fileName = "attachment";
+    const response = await getJobAttachmentAPI(url);
+
+    if (response.remote === "success") {
+      const base64String = response.data.base_image;
+      // Convert base64 string to Blob
+      const byteCharacters = atob(base64String);
+      const byteArrays = new Uint8Array(byteCharacters.length);
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteArrays[i] = byteCharacters.charCodeAt(i);
+      }
+
+      const blob = new Blob([byteArrays], {
+        type: fileType(url) || "application/octet-stream",
+      });
+
+      // Create a download link
+      const downloadUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = fileName || "file"; // Default filename is "file"
+
+      // Append the link to the document and click it
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(downloadUrl);
+    }
   };
   useEffect(() => {
     getTenderDetails(params.tenderId);
@@ -282,9 +301,7 @@ function TenderDetailsComponent() {
                           {<SVG.OrangeIcon />}
                         </span>
                         <span
-                          onClick={() =>
-                            handleLoadImage(generateFileUrl(attachment.path))
-                          }
+                          onClick={() => handleLoadImage(attachment.path)}
                           className="m-0"
                           style={{ cursor: "pointer" }}
                         >
@@ -308,7 +325,7 @@ function TenderDetailsComponent() {
                           ? details.isEditable
                             ? "Edit"
                             : "Applied"
-                          : "Apply for this Tender"
+                          : "Apply for th Tender"
                       }
                       className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}

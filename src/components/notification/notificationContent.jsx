@@ -88,9 +88,13 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={section}>
           <Stack
-            direction={{ xs: "column", lg: "row" }}
+            direction={{ xs: "column", sm: "row", lg: "row" }}
             spacing={{ xs: 1, lg: 2 }}
-            justifyContent={{ xs: "flex-start", lg: "space-between" }}
+            justifyContent={{
+              xs: "flex-start",
+              sm: "space-between",
+              lg: "space-between",
+            }}
             sx={{
               borderBottom: 1,
               borderColor: "divider",
@@ -180,7 +184,12 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               >
                 View All Notification
               </Link>
-              <div onClick={() => setSetting(true)}>Settings</div>
+              <div
+                onClick={() => setSetting(true)}
+                className={styles.notification_setting}
+              >
+                Settings
+              </div>
             </div>
           ) : (
             ""

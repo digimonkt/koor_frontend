@@ -32,7 +32,7 @@ function AllApplication() {
         <Stack direction="row" spacing={0} className="searchjob-box">
           <input
             className="jobsearch"
-            placeholder="Search your jobs"
+            placeholder="Search for application"
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) =>
               e.key === "Enter" ? setIsSearching(!isSearching) : null

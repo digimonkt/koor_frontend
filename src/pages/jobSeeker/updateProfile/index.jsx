@@ -146,6 +146,8 @@ const UpdateProfile = () => {
                 Thank you for adding this important information. Our team will
                 review it and activate your account within 24 hours.{" "}
               </p>
+              <br />
+              <br />
               <p>Psst, it may happen even faster, stay tuned 😉</p>
             </>,
           ]}

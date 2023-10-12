@@ -63,6 +63,9 @@ const JobCriteria = () => {
     setCity(cityVl);
   };
 
+  React.useEffect(() => {
+    console.log({ activeStep });
+  }, [activeStep]);
   return (
     <>
       <div>
@@ -91,7 +94,16 @@ const JobCriteria = () => {
                 <Step className="sub-step-continer">
                   <StepLabel>Additional parameters</StepLabel>
                 </Step>
-                <StepConnector />
+
+                <StepConnector
+                  className={
+                    activeStep === 0
+                      ? "Mui-active"
+                      : activeStep === 1
+                      ? "Mui-active"
+                      : ""
+                  }
+                />
               </Stepper>
 
               {/* -------------- main content ---------- */}
