@@ -211,24 +211,6 @@ function ChatBox() {
         );
     }
   };
-  // const formatSendMessage = () => {
-  //   if (newMessage.trim()) {
-  //     if (selectedFormat === "bold") {
-  //       // Apply bold formatting to newMessage
-  //       setNewMessage(`<strong>${newMessage}</strong>`);
-  //     } else if (selectedFormat === "italic") {
-  //       // Apply italic formatting to newMessage
-  //       setNewMessage(`<em>${newMessage}</em>`);
-  //     } else if (selectedFormat === "underline") {
-  //       // Apply underline formatting to newMessage
-  //       setNewMessage(`<u>${newMessage}</u>`);
-  //     }
-
-  //     // Reset the selected format and close the menu
-  //     setSelectedFormat(null);
-  //     setAnchorEl(null);
-  //   }
-  // };
   const applyFormatting = (value) => {
     // Apply the selected formatting to the currently selected text
     const formattedMessage = applyFormattingToSelection(

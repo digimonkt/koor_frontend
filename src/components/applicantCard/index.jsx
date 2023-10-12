@@ -38,7 +38,7 @@ function ApplicantCard({
           sx={{
             width: "70px",
             height: "70px",
-            "@media(max-width:768px)": { width: "40px", height: "40px" },
+            "@media(max-width:768px)": { width: "86px", height: "86px" },
           }}
         />
         <div className="recent-content">
@@ -59,7 +59,11 @@ function ApplicantCard({
             <h4>{details?.user?.name || details?.user?.email}</h4>
             <div
               className="recent-research"
-              style={{ flexWrap: "wrap", display: "flex" }}
+              style={{
+                flexWrap: "wrap",
+                display: "flex",
+                alignItems: "baseline",
+              }}
             >
               <span>
                 Applied{" "}
@@ -68,7 +72,7 @@ function ApplicantCard({
                 </strong>{" "}
                 to:{" "}
               </span>
-              <div>{jobOrTenderDetails.title}</div>
+              <div className="strong_text">{jobOrTenderDetails.title}</div>
             </div>
           </Stack>
           {details?.education || details?.skills || details?.language ? (

@@ -160,7 +160,6 @@ function PostJobsComponent() {
         duration: values.duration,
         experience: values.experience,
       };
-      console.log(formik.values);
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "language") {
@@ -186,7 +185,6 @@ function PostJobsComponent() {
           }
         }
       }
-      console.log(payload);
       let res;
       if (!jobId) {
         // create
@@ -299,7 +297,6 @@ function PostJobsComponent() {
     if (resp.remote === "success") {
       setBuyPackage(!buyPackage);
       dispatch(setSuccessToast("Buy Plan Successfully"));
-      console.log(resp);
     } else {
       dispatch(setErrorToast("Something Went Wrong"));
     }
@@ -851,18 +848,32 @@ function PostJobsComponent() {
                 </Grid>
                 <Grid item xl={12} lg={12} xs={12}>
                   <h2 className="mt-3 mb-3">Attach files</h2>
+                  {formik.errors?.attachments ? (
+                    <ErrorMessage>{formik.errors?.attachments}</ErrorMessage>
+                  ) : null}
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
                     handleDrop={(file) => {
-                      formik.setValues({
-                        ...formik.values,
-                        attachments: [
-                          ...formik.getFieldProps("attachments").value,
-                          file[0],
-                        ],
-                      });
+                      const currentAttachments = formik.values.attachments;
+                      if (file.length + currentAttachments.length > 10) {
+                        formik.setFieldError(
+                          "attachments",
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
+                          } remaining`
+                        );
+                      } else {
+                        const filesTaken = file.slice(
+                          0,
+                          10 - currentAttachments.length
+                        );
+                        formik.setFieldValue("attachments", [
+                          ...currentAttachments,
+                          ...filesTaken,
+                        ]);
+                      }
                     }}
-                    deleteFile={(file) => {
+                    deleteFile={(file, index) => {
                       if (file.id) {
                         formik.setFieldValue("attachmentsRemove", [
                           ...formik.values.attachmentsRemove,
@@ -878,7 +889,7 @@ function PostJobsComponent() {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment) => attachment.path !== file.path
+                            (attachment, i) => i !== index
                           )
                         );
                       }

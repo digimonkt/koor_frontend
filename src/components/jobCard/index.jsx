@@ -1,4 +1,4 @@
-import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
+import { Avatar, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SVG } from "../../assets/svg";
@@ -11,6 +11,7 @@ import { getColorByRemainingDays } from "../../utils/generateColor";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "../../api/employer";
+import useMediaQuery from "@mui/material/useMediaQuery";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -26,7 +27,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       await unSaveJobAPI(jobDetails.id);
     }
   };
-
+  // eslint-disable-next-line no-unused-vars
+  const matches = useMediaQuery("(max-width:600px)");
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
@@ -79,29 +81,126 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            <div className="squer-width">
-              <Avatar
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  margin: "auto",
-                  color: "#CACACA",
-                  "&.MuiAvatar-colorDefault": {
-                    background: "#F0F0F0",
-                  },
-                }}
-                src={generateFileUrl(jobDetails?.user?.image?.path || "")}
-              >
-                <SVG.SuitcaseJob />
-              </Avatar>
-            </div>
+            <Stack
+              direction={"row"}
+              spacing={2}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
+              <div className="squer-width">
+                <Avatar
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    margin: "auto",
+                    color: "#CACACA",
+                    "&.MuiAvatar-colorDefault": {
+                      background: "#F0F0F0",
+                    },
+                  }}
+                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}
+                >
+                  <SVG.SuitcaseJob />
+                </Avatar>
+              </div>
+              {matches ? (
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  justifyContent={{ xs: "center", lg: "end" }}
+                  alignItems="center"
+                  // divider={<hr orientation="vertical" className="job_card_hr" />}
+                  sx={{ minHeight: "87%" }}
+                >
+                  <div className="pricebox py-3 me-lg-4">
+                    {jobDetails?.budgetAmount ? (
+                      <>
+                        <span className="d-block">UP TO</span>
+                        <h4>
+                          <small>{"$"}</small>
+                          {jobDetails?.budgetAmount || "3,500"}
+                        </h4>
+                        <span>{jobDetails?.budgetPayPeriod}</span>
+                      </>
+                    ) : (
+                      <h3>-</h3>
+                    )}
+                  </div>
+                  {selfJob ? (
+                    <div className="job-button-card">
+                      <button
+                        onClick={() => {
+                          handleStartPause();
+                        }}
+                      >
+                        {isStart === "active" ? (
+                          <>
+                            <SVG.PauseIcon />
+                            <span className="d-block">Hold</span>
+                          </>
+                        ) : (
+                          <>
+                            <SVG.StartIcon />
+                            <span className="d-block">Start</span>
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (jobDetails?.id) {
+                            navigate(
+                              urlcat("/employer/jobs/post", {
+                                jobId: jobDetails?.id,
+                              })
+                            );
+                          }
+                        }}
+                      >
+                        {<SVG.Edit1 />}
+                        <span className="d-block">Edit</span>
+                      </button>
+                    </div>
+                  ) : isLoggedIn && role === "job_seeker" ? (
+                    <React.Fragment>
+                      {!applied ? (
+                        <div
+                          onClick={handleToggleSave}
+                          style={{ marginLeft: "6px", cursor: "pointer" }}
+                        >
+                          <div
+                            className="bookmark"
+                            style={{ width: matches ? "auto" : "" }}
+                          >
+                            {isSaved ? (
+                              <>
+                                <SVG.SaveIcon />
+                                <span>Saved</span>
+                              </>
+                            ) : (
+                              <>
+                                <SVG.UnSave style={{ color: "#848484" }} />
+                                <span style={{ color: "#848484" }}>Save</span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      ) : null}
+                    </React.Fragment>
+                  ) : (
+                    ""
+                  )}
+                </Stack>
+              ) : (
+                ""
+              )}
+            </Stack>
           </Grid>
         )}
         <Grid
           item
           // lg={logo ? 8 : 9}
           xs={12}
-          sm={8}
+          sm={10}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "72%",
@@ -130,18 +229,36 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               {jobDetails?.description}
             </p>
             <Stack
-              direction={{ xs: "column", sm: "row" }}
+              direction="row"
               spacing={{ xs: 1, sm: 1, md: 1 }}
-              sx={{ width: "100%", flexWrap: "wrap" }}
+              sx={{
+                width: "100%",
+                overflow: "hidden",
+                overflowX: "auto",
+                // "@media (max-width: 992px)": {
+                //   flexWrap: "wrap",
+                // },
+                // "@media (max-width: 480px)": {
+                //   flexWrap: "wrap",
+                // },
+              }}
+              className="job_card_chip"
             >
               <ChipBox
-                sx={{ marginBottom: "10px" }}
+                sx={{ marginBottom: "10px", px: 1.5 }}
                 label={jobDetails?.country.title || "Dusseldorf"}
                 icon={<>{<SVG.LocationIcon />}</>}
               />
               {jobDetails?.duration ? (
                 <ChipBox
-                  sx={{ marginBottom: "10px !important" }}
+                  sx={{
+                    marginBottom: "10px !important",
+
+                    "@media (max-width: 992px)": {
+                      paddingLeft: "12px !important",
+                      paddingRight: "12px !important",
+                    },
+                  }}
                   label={`${jobDetails?.duration} Months`}
                   icon={<>{<SVG.BegClock />}</>}
                 />
@@ -220,8 +337,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
-          <div className="text-end mb-4 text-start">
+        <Grid item lg={logo ? 2 : 3} xs={12}>
+          <div className="text-end mb-0 mb-lg-4 text-start">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
               title={
@@ -234,88 +351,93 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               )}
             />
           </div>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent={{ xs: "center", lg: "end" }}
-            alignItems="center"
-            divider={<Divider orientation="vertical" flexItem />}
-            className="py-2"
-            sx={{ minHeight: "87%" }}
-          >
-            <div className="pricebox py-3">
-              {jobDetails?.budgetAmount ? (
-                <>
-                  <span className="d-block">UP TO</span>
-                  <h4>
-                    <small>{"$"}</small>
-                    {jobDetails?.budgetAmount || "3,500"}
-                  </h4>
-                  <span>{jobDetails?.budgetPayPeriod}</span>
-                </>
-              ) : (
-                <h3>-</h3>
-              )}
-            </div>
-            {selfJob ? (
-              <div className="job-button-card">
-                <button
-                  onClick={() => {
-                    handleStartPause();
-                  }}
-                >
-                  {isStart === "active" ? (
-                    <>
-                      <SVG.PauseIcon />
-                      <span className="d-block">Hold</span>
-                    </>
-                  ) : (
-                    <>
-                      <SVG.StartIcon />
-                      <span className="d-block">Start</span>
-                    </>
-                  )}
-                </button>
-                <button
-                  onClick={() => {
-                    if (jobDetails?.id) {
-                      navigate(
-                        urlcat("/employer/jobs/post", { jobId: jobDetails?.id })
-                      );
-                    }
-                  }}
-                >
-                  {<SVG.EditIcon />}
-                  <span className="d-block">Edit</span>
-                </button>
+          {!matches ? (
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent={{ xs: "center", lg: "end" }}
+              alignItems="center"
+              // divider={<hr orientation="vertical" className="job_card_hr" />}
+              sx={{ minHeight: "87%" }}
+            >
+              <div className="pricebox py-3 me-4">
+                {jobDetails?.budgetAmount ? (
+                  <>
+                    <span className="d-block">UP TO</span>
+                    <h4>
+                      <small>{"$"}</small>
+                      {jobDetails?.budgetAmount || "3,500"}
+                    </h4>
+                    <span>{jobDetails?.budgetPayPeriod}</span>
+                  </>
+                ) : (
+                  <h3>-</h3>
+                )}
               </div>
-            ) : isLoggedIn && role === "job_seeker" ? (
-              <React.Fragment>
-                {!applied ? (
-                  <div
-                    onClick={handleToggleSave}
-                    style={{ marginLeft: "6px", cursor: "pointer" }}
+              {selfJob ? (
+                <div className="job-button-card">
+                  <button
+                    onClick={() => {
+                      handleStartPause();
+                    }}
                   >
-                    <div className="bookmark">
-                      {isSaved ? (
-                        <>
-                          <SVG.SaveIcon />
-                          <span>Saved</span>
-                        </>
-                      ) : (
-                        <>
-                          <SVG.UnSave style={{ color: "#848484" }} />
-                          <span style={{ color: "#848484" }}>Save</span>
-                        </>
-                      )}
+                    {isStart === "active" ? (
+                      <>
+                        <SVG.PauseIcon />
+                        <span className="d-block">Hold</span>
+                      </>
+                    ) : (
+                      <>
+                        <SVG.StartIcon />
+                        <span className="d-block">Start</span>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (jobDetails?.id) {
+                        navigate(
+                          urlcat("/employer/jobs/post", {
+                            jobId: jobDetails?.id,
+                          })
+                        );
+                      }
+                    }}
+                  >
+                    {<SVG.Edit1 />}
+                    <span className="d-block">Edit</span>
+                  </button>
+                </div>
+              ) : isLoggedIn && role === "job_seeker" ? (
+                <React.Fragment>
+                  {!applied ? (
+                    <div
+                      onClick={handleToggleSave}
+                      style={{ marginLeft: "6px", cursor: "pointer" }}
+                    >
+                      <div className="bookmark">
+                        {isSaved ? (
+                          <>
+                            <SVG.SaveIcon />
+                            <span>Saved</span>
+                          </>
+                        ) : (
+                          <>
+                            <SVG.UnSave style={{ color: "#848484" }} />
+                            <span style={{ color: "#848484" }}>Save</span>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ) : null}
-              </React.Fragment>
-            ) : (
-              ""
-            )}
-          </Stack>
+                  ) : null}
+                </React.Fragment>
+              ) : (
+                ""
+              )}
+            </Stack>
+          ) : (
+            ""
+          )}
         </Grid>
       </Grid>
     </div>

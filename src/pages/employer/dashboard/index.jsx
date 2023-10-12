@@ -235,7 +235,7 @@ const Dashboard = () => {
                     sx={{
                       mb: 3,
                       "@media (max-width:768px)": {
-                        "& h3": { fontSize: "20px !important" },
+                        "& h3": { fontSize: "24px !important" },
                       },
                     }}
                   >
@@ -274,6 +274,9 @@ const Dashboard = () => {
                             fontSize: "16px",
                             fontFamily: "Bahnschrift",
                             padding: "10px 30px",
+                            "@media (max-width: 480px)": {
+                              fontSize: "14px !important",
+                            },
 
                             "&:hover": { background: "#1976d20a" },
                           },

@@ -60,11 +60,12 @@ function ChatList() {
   }, [debouncedSearchValue]);
   return (
     <>
+      <h3 className="chat_message_text">Messages</h3>
       <div className="searchmessage">
         <div className="searchmessage-icon">
           <input
             className="chat-search"
-            placeholder="Search"
+            placeholder="Search messages"
             onChange={(e) => {
               setSearch(e.target.value);
             }}

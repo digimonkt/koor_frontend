@@ -9,6 +9,14 @@
   color: #ffffff;
 }
 
+.tender_job_card_text .my-jobs h2 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 27px;
+  color: #121212;
+  font-family: "Poppins";
+}
+
 .card-count p {
   margin: 0;
   font-family: "Bahnschrift";
@@ -104,10 +112,11 @@ span.blueview {
   font-family: "Bahnschrift";
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 29px;
   color: #121212;
   margin-bottom: 5px;
+  margin-top: 0;
   white-space: nowrap;
 }
 
@@ -149,17 +158,35 @@ span.blueview {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 300;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 21px;
   white-space: nowrap;
 
   color: #848484;
 }
+
+.recent-descrition {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.recent-descrition-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .recent-descrition p {
   color: #121212;
   margin: 0;
 }
 .recent-descrition p {
+  font-size: 14px;
+  font-weight: 300;
+  font-family: "Poppins";
+  line-height: 18px;
+  color: #121212;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -681,12 +708,14 @@ span.arrowjobs svg {
     font-size: 16px;
     line-height: normal;
   }
+  .job-content h2 {
+    font-size: 24px;
+  }
   .card-count p {
     font-size: 10px;
   }
   .recent-research span {
-    border-left: none;
-    padding-left: 0px;
+    font-size: 16px;
   }
   .recent-research {
     display: block;
@@ -760,14 +789,6 @@ span.arrowjobs svg {
     font-size: 12px !important;
   }
 
-  /* .chiplabel {
-    margin-left: -15px !important;
-  } */
-
-  .recent-research span {
-    border-left: none !important;
-  }
-
   .recent-research {
     display: block;
     margin-left: 0px !important;
@@ -776,14 +797,52 @@ span.arrowjobs svg {
 
 @media screen and (max-width: 992px) {
   .recent-content h4 {
+    font-size: 24px;
     word-break: break-all;
     white-space: normal;
-    font-size: 18px;
   }
+
   .recent-research {
-    font-size: 14px;
+    font-size: 14px !important;
   }
+}
+
+@media screen and (max-width: 480px) {
+  .recent-content h4 {
+    font-size: 20px;
+  }
+
+  .job-content h2 {
+    font-size: 20px;
+  }
+
+  .tender_job_card_text .my-jobs h2 {
+    font-size: 16px !important;
+  }
+
+  .job-button-card {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .chiplabel {
+    font-size: 10px !important;
+  }
+
+  .recent-descrition p {
+    font-size: 12px;
+  }
+
+  .meets {
+    font-size: 12px;
+  }
+
   .recent-research span {
-    font-size: 14px;
+    font-size: 12px;
+  }
+
+  .toggle-application {
+    margin-top: 40px;
   }
 }

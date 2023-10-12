@@ -30,7 +30,9 @@ function Blacklist() {
   }, [isSearching, totalBlacklist]);
 
   useEffect(() => {
-    const filterData = blacklistData.filter((item) => item.user.id === unBlockUserId);
+    const filterData = blacklistData.filter(
+      (item) => item.user.id === unBlockUserId
+    );
 
     setBlacklistData(filterData);
   }, [unBlockUserId]);

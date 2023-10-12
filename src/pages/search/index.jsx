@@ -191,7 +191,7 @@ function Search() {
                   alignItems="center"
                 >
                   <h2 className="m-0" style={{ textTransform: "capitalize" }}>
-                    {searchType}
+                    {searchType === "jobs" ? "Job feed" : searchType}
                     <Chip
                       label={totalItems}
                       className="ms-3"

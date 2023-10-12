@@ -152,6 +152,7 @@ function EditLanguages({
           </div>
           <div className="form-group mb-3">
             <LabeledRadioInput
+              className={"label-100"}
               title="Spoken"
               labelWeight="500"
               options={[
@@ -177,6 +178,7 @@ function EditLanguages({
           </div>
           <div className="form-group mb-3">
             <LabeledRadioInput
+              className={"label-100"}
               title="Written"
               labelWeight="500"
               options={[

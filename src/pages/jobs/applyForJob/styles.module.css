@@ -1,3 +1,19 @@
+.cancel_card h1 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 33.61px;
+}
+
+.cancel_card p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #848484;
+  font-family: "Poppins", sans-serif;
+  line-height: 18px;
+  letter-spacing: 1%;
+  margin-top: 20px;
+}
+
 .Jobcard {
   box-shadow: 0px 15px 40px 0px #0000000d;
   border-radius: 10px;
@@ -202,6 +218,8 @@
 }
 .grids h1 {
   font-size: 28px;
+  font-weight: 600;
+  line-height: 28.8px;
   margin: 0px 24px;
 }
 .grids {
@@ -212,12 +230,27 @@
   right: 0;
 }
 .grids p {
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
   margin: 0;
   font-family: "Poppins";
 }
 .clocs p {
   font-size: 12px !important;
+  font-family: "Poppins";
+  color: #121212;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 2%;
+}
+.clocs p span {
+  font-size: 12px !important;
+  font-family: "Poppins";
+  color: #121212;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 2%;
 }
 .iconbutton {
   background-color: #f0f0f0 !important;
@@ -228,6 +261,7 @@
   color: #000 !important;
   margin-right: 14px !important;
   cursor: default !important;
+  margin-bottom: 10px !important;
 }
 .iconbtn {
   display: flex;
@@ -257,8 +291,10 @@
 .infomore h6 {
   color: #eea23d;
   font-size: 16px;
+  font-weight: 500;
   margin-top: 10px;
   margin-bottom: 14px;
+  font-family: "Poppins";
 }
 .infomore h6 span svg {
   transition: all 0.5s ease;
@@ -294,6 +330,11 @@
   padding-top: 30px;
   margin-top: 14px;
 }
+.attachments_files h2 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 33.61px;
+}
 .applybtns {
   display: flex;
   align-items: center;
@@ -315,7 +356,7 @@
 .applybtn {
   background-color: #eea23d !important;
   width: 133px !important;
-  color: #121212 !important;
+  color: #ffffff !important;
   font-size: 16px !important;
   height: 42px !important;
   border-radius: 60px !important;
@@ -328,23 +369,21 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 18px;
-  /* identical to box height */
-
   text-align: center;
-
-  /* Black #121212 */
-
   color: #121212;
-
   opacity: 0.7;
 }
 .startB {
   font-family: "Poppins";
   font-weight: 600;
   color: #121212;
-  font-size: 16px;
+  font-size: 12px;
+}
+
+.cancel_popup .CancelApply_button {
+  font-size: 16px !important;
 }
 
 .cancel_popup {
@@ -356,15 +395,42 @@
 
 .cancel_popup p {
   display: block;
-  color: #121212;
+  color: #848484;
   opacity: 0.5;
   cursor: pointer;
   text-transform: uppercase;
   font-family: Bahnschrift;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0.03em;
+  margin-top: 16px;
+}
+
+.job_done {
+  font-size: 28px;
+  font-family: "Bahnschrift";
+  font-weight: 600;
+  line-height: 33.61px;
+  color: #121212;
+}
+
+.job_done_desc {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Poppins";
+  color: #121212;
+  line-height: 21px;
+  letter-spacing: 1%;
+}
+
+.job_apply_icon {
+  width: 259px !important;
+  height: 240px !important;
+}
+
+.job_apply_top_icon {
+  display: none !important;
 }
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
@@ -376,5 +442,90 @@
   .requirement {
     border-left: 0;
     padding: 0px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .cancel_card h1 {
+    font-size: 24px;
+  }
+  .job_apply_icon {
+    width: 150px !important;
+    height: 155px !important;
+  }
+  .job_done {
+    font-size: 24px;
+  }
+  .cancel_card p {
+    font-size: 14px;
+  }
+  .grids h1 {
+    font-size: 24px;
+  }
+  .iconbtn {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cancel_card h1 {
+    font-size: 20px;
+  }
+  .job_done_desc {
+    font-size: 12px;
+    text-align: center;
+  }
+  .job_apply_top_icon {
+    display: block !important;
+    width: 121px !important;
+    height: 124px !important;
+  }
+  .job_apply_icon {
+    display: none !important;
+  }
+  .job_done {
+    font-size: 20px;
+    text-align: center;
+  }
+  .infomore h6 {
+    font-size: 14px;
+  }
+  .cancel_card p {
+    font-size: 12px;
+  }
+  .grids h1 {
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .iconbtn {
+    display: block;
+  }
+  .attachments_files h2 {
+    font-size: 24px;
+  }
+  .grids p {
+    font-size: 14px;
+  }
+  .clocs {
+    justify-content: flex-start;
+    margin-left: 25px;
+  }
+  .clocs p {
+    font-size: 10px !important;
+  }
+  .requirement h5 {
+    font-size: 16px;
+  }
+  .startDate {
+    font-size: 10px;
+  }
+  .startB {
+    font-size: 10px;
+  }
+  .clocs p span {
+    font-size: 10px !important;
+  }
+  .cancel_popup .CancelApply_button {
+    font-size: 14px !important;
   }
 }

@@ -10,6 +10,7 @@ import { USER_ROLES } from "../../utils/enum";
 
 function AppliedJobCard({
   application,
+  job,
   createdAt,
   handleClose,
   role,
@@ -61,7 +62,7 @@ function AppliedJobCard({
       <div className={styles.title_text_div}>
         <h2 className={styles.title}>
           <strong>{application.user?.name || application.user?.email}</strong>{" "}
-          applied to your job post <strong>"{application.job?.title}"</strong>
+          applied to your job post <strong>"{job?.title}"</strong>
         </h2>
         <p style={{ marginTop: "5px" }} className={styles.duration}>
           {timeAgoFromNow(createdAt)}

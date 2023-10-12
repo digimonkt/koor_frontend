@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { FormControl, MenuItem, Select } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+// import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import React from "react";
 import styles from "./input.module.css";
+import { SVG } from "@assets/svg";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -32,6 +33,10 @@ export const SelectBox = styled(Select)`
   }
   & fieldset {
     display: none;
+  }
+  & .MuiSelect-icon {
+    top: calc(50% - 0.2em);
+    right: 11px;
   }
 `;
 
@@ -74,7 +79,7 @@ function SelectInputComponent({
       >
         <SelectBox
           inputProps={{ "aria-label": "Without label" }}
-          IconComponent={KeyboardArrowDownIcon}
+          IconComponent={SVG.arrowDown}
           value={value}
           displayEmpty
           renderValue={

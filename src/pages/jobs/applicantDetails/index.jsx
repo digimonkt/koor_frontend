@@ -71,11 +71,15 @@ const ApplicantDetails = () => {
               alignItems={{ xs: "start", lg: "center" }}
               className="recent-content job-border pb-2 mb-3"
             >
-              <IconButton LinkComponent={Link} onClick={() => navigate(-1)}>
+              <IconButton
+                LinkComponent={Link}
+                onClick={() => navigate(-1)}
+                style={{ padding: "0px" }}
+              >
                 <ArrowBackIcon />
               </IconButton>
               <Stack
-                direction={{ xs: "column", lg: "row" }}
+                direction={{ xs: "column", lg: "row", sm: "row" }}
                 alignItems={{ xs: "start", lg: "center" }}
                 spacing={2}
                 divider={<Divider orientation="vertical" flexItem />}
@@ -83,7 +87,11 @@ const ApplicantDetails = () => {
                 <h4>{applicantDetails.user.name}</h4>
                 <div
                   className="recent-research"
-                  style={{ display: "flex", alignItems: "center" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
                 >
                   <span>
                     Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
@@ -96,7 +104,7 @@ const ApplicantDetails = () => {
             {/* -------------- applicant basic info ---------- */}
 
             <Grid container spacing={2} sx={{ mb: 4 }}>
-              <Grid item xl={6} lg={6} xs={12}>
+              <Grid item xl={6} lg={6} xs={12} sm={6}>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Avatar
                     src={applicantDetails.user.profileImage}
@@ -124,7 +132,7 @@ const ApplicantDetails = () => {
                   </div>
                 </Stack>
               </Grid>
-              <Grid item xl={6} lg={6} xs={12}>
+              <Grid item xl={6} lg={6} xs={12} sm={6}>
                 <Stack
                   direction="row"
                   spacing={0}
@@ -143,7 +151,7 @@ const ApplicantDetails = () => {
               </Grid>
             </Grid>
             <Stack
-              direction={{ xs: "column", lg: "row" }}
+              direction={{ xs: "column", lg: "row", sm: "row" }}
               spacing={3}
               divider={<Divider orientation="vertical" flexItem />}
             >
@@ -171,13 +179,13 @@ const ApplicantDetails = () => {
                       key={attachment.id}
                     >
                       <span className="d-inline-flex">
-                        {<SVG.OrangeIcon />}
+                        {<SVG.BlueAttach className="blue_attach_icon" />}
                       </span>
                       <a
                         href={generateFileUrl(attachment.path)}
                         target="_blank"
                         rel="noreferrer"
-                        style={{ color: "#000" }}
+                        className="applicant_attack_anchor"
                       >
                         {attachment.title}
                       </a>
@@ -191,7 +199,7 @@ const ApplicantDetails = () => {
 
             <div className="user-skills">
               <Grid container spacing={2}>
-                <Grid item xl={6} lg={6}>
+                <Grid item xl={6} lg={6} xs={12}>
                   <div className="skills-card">
                     <h3>Work experience</h3>
                     <ul>
@@ -211,7 +219,7 @@ const ApplicantDetails = () => {
                     </ul>
                   </div>
                 </Grid>
-                <Grid item xl={6} lg={6}>
+                <Grid item xl={6} lg={6} xs={12}>
                   <div className="skills-card">
                     <h3>Education</h3>
                     <ul>
@@ -236,7 +244,7 @@ const ApplicantDetails = () => {
             </div>
             <div className="user-skills pb-3">
               <Grid container spacing={2}>
-                <Grid item xl={6} lg={6}>
+                <Grid item xl={6} lg={6} xs={12}>
                   <div className="skills-card">
                     <h3>Skills</h3>
                     <Stack direction="row" spacing={0} flexWrap="wrap">
@@ -260,7 +268,7 @@ const ApplicantDetails = () => {
                     </Stack>
                   </div>
                 </Grid>
-                <Grid item xl={6} lg={6}>
+                <Grid item xl={6} lg={6} xs={12}>
                   <div className="skills-card">
                     <h3>Languages</h3>
                     <ul className="list-content">

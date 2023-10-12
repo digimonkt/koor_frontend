@@ -112,7 +112,16 @@ import { ReactComponent as AvailableCredits } from "./generating_tokens.svg";
 import { ReactComponent as TimeIcon } from "./schedule.svg";
 import { ReactComponent as DownloadIcon } from "./download.svg";
 import { ReactComponent as HelpIcon } from "./help.svg";
+import { ReactComponent as Enable1 } from "./enable1.svg";
+import { ReactComponent as SaveIcon1 } from "./save1.svg";
+import { ReactComponent as Edit1 } from "./edit1.svg";
+import { ReactComponent as BlueAttach } from "./blueAttach.svg";
+import { ReactComponent as arrowDown } from "./arrowDown.svg";
 export const SVG = {
+  BlueAttach,
+  Edit1,
+  SaveIcon1,
+  Enable1,
   BackArrow,
   MailIcon,
   LinkedIn,
@@ -227,4 +236,5 @@ export const SVG = {
   TimeIcon,
   DownloadIcon,
   HelpIcon,
+  arrowDown,
 };

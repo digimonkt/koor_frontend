@@ -241,7 +241,7 @@ const JobDetails = () => {
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={8} lg={8}>
+              <Grid item xs={12} sm={7} lg={8}>
                 <div className={`${styles.postJob}`}>
                   {/* <Link to="/saved-jobs"> */}
                   <span
@@ -254,7 +254,7 @@ const JobDetails = () => {
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
-              <Grid item xs={12} sm={4} lg={4}>
+              <Grid item xs={12} sm={5} lg={4}>
                 <div className={`${styles.clocs}`}>
                   {<SVG.ClockIconSmall />}
                   <p className="mb-0 mt-0 me-1">
@@ -269,54 +269,56 @@ const JobDetails = () => {
                     color={getColorByRemainingDays(
                       details.expiredInDays > -1 ? details.expiredInDays : -1
                     )}
-                    style={{ marginLeft: "20px", cursor: "default " }}
+                    className={styles.details_day_button}
                   />
                 </div>
               </Grid>
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9}>
+              <Grid item xs={12} lg={9} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <p className="job-description">{details.description}</p>
                 </div>
                 <Stack
-                  direction={{ xs: "column", lg: "row" }}
+                  direction={{ xs: "column", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
                   spacing={2}
                 >
-                  <SearchButton
-                    text={details.country.title}
-                    leftIcon={<SVG.LocationIcon />}
-                    className={`${styles.iconbutton}`}
-                  />
-                  <SearchButton
-                    text={`${details.workingDays || 2}-Day Week`}
-                    leftIcon={<SVG.BagClock />}
-                    className={`${styles.iconbutton}`}
-                  />
-                  {details.isFullTime && (
+                  <div className={styles.details_searchs_button}>
                     <SearchButton
-                      text="Full Time"
-                      leftIcon={<SVG.MoonCircle />}
+                      text={details.country.title}
+                      leftIcon={<SVG.LocationIcon />}
                       className={`${styles.iconbutton}`}
                     />
-                  )}
-                  {details.isPartTime && (
                     <SearchButton
-                      text="Part time"
-                      leftIcon={<SVG.MoonCircle />}
+                      text={`${details.workingDays || 2}-Day Week`}
+                      leftIcon={<SVG.BagClock />}
                       className={`${styles.iconbutton}`}
                     />
-                  )}
-                  {details.hasContract && (
-                    <SearchButton
-                      text="Contract"
-                      leftIcon={<SVG.MoonCircle />}
-                      className={`${styles.iconbutton}`}
-                    />
-                  )}
+                    {details.isFullTime && (
+                      <SearchButton
+                        text="Full Time"
+                        leftIcon={<SVG.MoonCircle />}
+                        className={`${styles.iconbutton}`}
+                      />
+                    )}
+                    {details.isPartTime && (
+                      <SearchButton
+                        text="Part time"
+                        leftIcon={<SVG.MoonCircle />}
+                        className={`${styles.iconbutton}`}
+                      />
+                    )}
+                    {details.hasContract && (
+                      <SearchButton
+                        text="Contract"
+                        leftIcon={<SVG.MoonCircle />}
+                        className={`${styles.iconbutton}`}
+                      />
+                    )}
+                  </div>
                 </Stack>
                 {details.startDate && (
                   <div className={`${styles.datesatrt}`}>
@@ -354,7 +356,7 @@ const JobDetails = () => {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={3}>
+              <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
@@ -368,7 +370,12 @@ const JobDetails = () => {
                           ? details.isEditable
                             ? "Edit"
                             : "Applied"
-                          : "Apply for this job"
+                          : [
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for this job",
+                            ]
                       }
                       className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
@@ -414,7 +421,7 @@ const JobDetails = () => {
                     )}
                     {/* <div className={styles.btnGroup}> */}
                     <Stack
-                      direction="row"
+                      direction="column"
                       spacing={{
                         xs: 1,
                         sm: 2,
@@ -424,7 +431,16 @@ const JobDetails = () => {
                       justifyContent="center"
                     >
                       <OutlinedButton
-                        title={details.isSaved ? "Saved" : "Save job"}
+                        title={
+                          details.isSaved
+                            ? "Saved"
+                            : [
+                                <>
+                                  <SVG.SaveIcon1 className="me-2" />
+                                </>,
+                                "Save job",
+                              ]
+                        }
                         style={{ height: "44px" }}
                         jobSeeker
                         onClick={() => {
@@ -432,9 +448,23 @@ const JobDetails = () => {
                         }}
                       />
                       <OutlinedButton
-                        title={<SVG.ShareIcon />}
+                        title={[
+                          <>
+                            <SVG.ShareIcon className="me-2" />
+                          </>,
+                          "Share",
+                        ]}
                         jobSeeker
-                        style={{ height: "44px" }}
+                        sx={{
+                          height: "44px",
+                          border: "0px !important",
+                          padding: "0px !important",
+                          color: "#eea23d !important",
+                          marginTop: "0px !important",
+                          "&:hover": {
+                            backgroundColor: "transparent !important",
+                          },
+                        }}
                         onClick={() => {
                           setIsSharing(true);
                         }}

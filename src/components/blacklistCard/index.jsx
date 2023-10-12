@@ -1,4 +1,4 @@
-import { Avatar, Divider } from "@mui/material";
+import { Avatar, Button, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 import { generateFileUrl } from "../../utils/generateFileUrl";
@@ -6,14 +6,16 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utcPlugin from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
-import { ChipBox } from "../../components/jobCard/style";
-import { SVG } from "../../assets/svg";
-import { Link } from "react-router-dom";
+import { ChipBox } from "@components/jobCard/style";
+import { SVG } from "@assets/svg";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { unblockUserAPI } from "@api/employer";
 import { useDispatch, useSelector } from "react-redux";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { setTotalBlacklist } from "@redux/slice/employer";
+import { USER_ROLES } from "@utils/enum";
+import { getConversationIdByUserIdAPI } from "@api/chat";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -21,6 +23,7 @@ dayjs.extend(relativeTime);
 const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
   const { totalBlacklist } = useSelector((state) => state.employer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleUnblockUser = async (userId) => {
     handleUnblockUserId(userId);
     const res = await unblockUserAPI(userId);
@@ -30,22 +33,52 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
       handleUnblockUserId(userId);
     } else {
       dispatch(setErrorToast("Something went wrong"));
-    };
+    }
+  };
+  const handleMessageClick = async () => {
+    console.log("Running", details?.user.id);
+    const res = await getConversationIdByUserIdAPI({
+      userId: details?.user?.id,
+    });
+    console.log({ res });
+    if (res.remote === "success") {
+      const conversationId = res.data.conversation_id;
+      Navigate(
+        urlcat("/employer/chat", {
+          conversion: conversationId,
+          userId: details?.user?.id,
+        })
+      );
+    }
   };
   return (
     <>
       <Stack
         direction={{ xs: "column", sm: "row" }}
         spacing={{ xs: 1, sm: 1, md: 1 }}
-        sx={{ width: "100%", flexWrap: "wrap", mt: 2, justifyContent: "space-between" }}
+        sx={{
+          width: "100%",
+          flexWrap: "wrap",
+          mt: 2,
+          justifyContent: "space-between",
+        }}
       >
         <ChipBox
-          sx={{ marginBottom: "10px", backgroundColor: "#d5e3f7 !important" }}
+          sx={{
+            marginBottom: "10px",
+            backgroundColor: "#d5e3f7 !important",
+            fontSize: "14px !important",
+          }}
           label={`Blacklist Reason: ${reason || ""}`}
           icon={<>{<SVG.BlockedIcon />}</>}
         />
         <ChipBox
-          sx={{ marginBottom: "10px", backgroundColor: "#d5e3f7 !important", cursor: "pointer" }}
+          sx={{
+            marginBottom: "10px",
+            backgroundColor: "#d5e3f7 !important",
+            cursor: "pointer",
+            fontSize: "14px !important",
+          }}
           label="Unblock"
           icon={<>{<SVG.BlockedIcon />}</>}
           onClick={() => handleUnblockUser(details?.id)}
@@ -82,6 +115,61 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
             </Stack>
             <div className="recent-descrition">
               <p>{details?.description}</p>
+              <div className="recent-descrition-icon">
+                <Button
+                  sx={{
+                    minWidth: "auto",
+                    "& svg": { width: "20px", height: "20px" },
+                  }}
+                  variant="link"
+                  onClick={() => {
+                    if (details.job) {
+                      navigate(
+                        urlcat(
+                          "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+                          {
+                            applicationId: details.id,
+                            role: USER_ROLES.employer,
+                            jobId: details.job.id,
+                          }
+                        )
+                      );
+                    } else if (details.tender) {
+                      navigate(
+                        urlcat(
+                          "/:role/manage-tenders/:tenderId/applicant-details/:applicationId",
+                          {
+                            applicationId: details.id,
+                            role: USER_ROLES.employer,
+                            tenderId: details.tender.id,
+                          }
+                        )
+                      );
+                    } else {
+                      navigate(
+                        urlcat("/:role/:userId/profile", {
+                          userId: details.user.id,
+                          role: details.user.role.replace("_", "-"),
+                        })
+                      );
+                    }
+                  }}
+                >
+                  <SVG.OpenNewIcon className="blacklist-option-icon" />
+                  <span>View</span>
+                </Button>
+                <Button
+                  variant="link"
+                  sx={{ minWidth: "auto" }}
+                  onClick={handleMessageClick}
+                >
+                  <SVG.MessageIcon
+                    style={{ color: "#274593" }}
+                    className="blacklist-option-icon"
+                  />
+                  <span>Message</span>
+                </Button>
+              </div>
             </div>
           </div>
         </Stack>

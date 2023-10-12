@@ -5,6 +5,8 @@ import styles from "./style.module.css";
 import React from "react";
 import { DATE_FORMAT } from "../../utils/constants/constants";
 
+import { SVG } from "@assets/svg";
+
 export const DateFiled = styled("div")(() => ({
   "& .MuiTextField-root": {
     width: "100%",
@@ -48,6 +50,9 @@ function DateInputComponent({ renderInput, ...rest }) {
           renderInput={(params) => <TextField {...params} />}
           {...props}
           {...rest}
+          components={{
+            OpenPickerIcon: SVG.arrowDown,
+          }}
         />
       </LocalizationProvider>
     </DateFiled>

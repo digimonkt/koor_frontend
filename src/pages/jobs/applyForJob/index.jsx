@@ -227,7 +227,7 @@ const ApplyForJob = () => {
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={11} lg={11}>
+              <Grid item xs={11} sm={11} lg={11}>
                 <div className={`${styles.postJob}`}>
                   <span
                     style={{ cursor: "pointer" }}
@@ -239,7 +239,7 @@ const ApplyForJob = () => {
                   <h1>Apply for the job</h1>
                 </div>
               </Grid>
-              <Grid item xs={12} sm={1} lg={1}>
+              <Grid item xs={1} sm={1} lg={1}>
                 <span
                   style={{ cursor: "pointer" }}
                   onClick={() => navigate(-1)}
@@ -248,10 +248,10 @@ const ApplyForJob = () => {
                   {<SVG.Crossed />}
                 </span>
               </Grid>
-              <Grid item xs={12} lg={9} sm={9}>
+              <Grid item xs={12} lg={9} sm={8}>
                 <p className="mb-0 ">{details.title}</p>
               </Grid>
-              <Grid item xs={12} className="ps-0" lg={3} sm={3}>
+              <Grid item xs={12} className="ps-0" lg={3} sm={4}>
                 <div className={`${styles.clocs}`}>
                   <span>{<SVG.ClockIconSmall />}</span>
                   <p className="mb-0 mt-0">
@@ -266,7 +266,7 @@ const ApplyForJob = () => {
                     color={getColorByRemainingDays(
                       details.expiredInDays > -1 ? details.expiredInDays : -1
                     )}
-                    style={{ marginLeft: "20px" }}
+                    className="apply_dd_btn"
                   />
                 </div>
               </Grid>
@@ -359,9 +359,16 @@ const ApplyForJob = () => {
                   <ErrorMessage>{formik.errors.shortLetter}</ErrorMessage>
                 )}
               </div>
-              <Grid item xl={12} lg={12} xs={12} className="attachments">
+              <Grid
+                item
+                xl={12}
+                lg={12}
+                xs={12}
+                className={`attachments ${styles.attachments_files}`}
+              >
                 <h2 className="mt-4 mb-3">Attach files</h2>
                 <AttachmentDragNDropInput
+                  single
                   files={formik.getFieldProps("attachments").value}
                   handleDrop={(file) => {
                     formik.setValues({

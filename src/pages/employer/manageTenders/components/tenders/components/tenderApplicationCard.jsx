@@ -89,7 +89,8 @@ const TenderApplicationCard = () => {
               className="border-recent"
             >
               <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar src={item.img} sx={{ width: "70px", height: "70px" }} />{" "}
+                <Avatar src={item.img} sx={{ width: "70px", height: "70px" }} />
+
                 <div className="recent-content">
                   <Stack
                     direction="row"

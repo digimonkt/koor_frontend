@@ -197,7 +197,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {shortlist && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{ minWidth: "auto" }}
               disabled={
@@ -221,7 +221,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {reject && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{ minWidth: "auto" }}
               variant="link"
@@ -244,7 +244,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {blacklist && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{
                 minWidth: "auto",
@@ -271,7 +271,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {view && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               sx={{
                 minWidth: "auto",
@@ -317,7 +317,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {message && (
-          <Grid item>
+          <Grid item className="me-3">
             <Button
               variant="link"
               sx={{ minWidth: "auto" }}

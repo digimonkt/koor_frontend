@@ -28,28 +28,40 @@ function AttachmentDragNDropInputComponent({
     maxSize: 5 * 1024 * 1024,
     onError: (e) => console.log({ e }),
   });
-  const acceptedFileItems = (files || []).map((file) => {
+  const acceptedFileItems = (files || []).map((file, index) => {
     return (
-      <li key={file.path}>
+      <li key={index}>
         <div className="text-tracate">
           <IconButton
             sx={{
-              background: "#D5E3F7",
-              color: "#274593",
+              background: role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
+              color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
               "&:hover": {
-                background: "#bcd2f1",
+                background:
+                  role === USER_ROLES.jobSeeker ? "#FEEFD3" : "#D5E3F7",
               },
               mr: 2,
             }}
           >
             <SVG.AttachIcon />
           </IconButton>
-          {file.title ? file.title : file.path}
+          <span
+            style={{
+              color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+            }}
+          >
+            {file.title ? file.title : file.path}
+          </span>
         </div>
         <IconButton
-          onClick={() => deleteFile(file)}
+          onClick={() => deleteFile(file, index)}
           disableFocusRipple
-          sx={{ color: "#274593" }}
+          sx={{
+            color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+            "&:hover": {
+              background: "transparent",
+            },
+          }}
         >
           <SVG.DeleteICon />
         </IconButton>
@@ -59,7 +71,7 @@ function AttachmentDragNDropInputComponent({
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xl={6} lg={6} xs={12}>
+        <Grid item xl={6} lg={6} sm={6} xs={12}>
           <div {...getRootProps({ className: "dropzone styles_attachment" })}>
             <input {...getInputProps()} />
             <div className="text-center">
@@ -68,13 +80,13 @@ function AttachmentDragNDropInputComponent({
                 <span
                   style={{
                     color:
-                      role === USER_ROLES.jobSeeker ? "#274593" : "#274593",
+                      role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
                   }}
                 >
                   upload an attachment
                 </span>
               </p>
-              {!single && <small>Max 10 files, each one under 5MB</small>}
+              {!single && <small>Max 10 files, each one under 50MB</small>}
             </div>
           </div>
         </Grid>
@@ -82,6 +94,7 @@ function AttachmentDragNDropInputComponent({
           item
           xl={6}
           lg={6}
+          sm={6}
           xs={12}
           className="attachment-box inline-attacment"
         >

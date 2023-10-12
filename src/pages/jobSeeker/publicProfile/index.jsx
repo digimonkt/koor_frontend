@@ -134,6 +134,7 @@ export default function PublicProfileComponent() {
                               fontWeight: "700",
                               letterSpacing: "0.03em",
                               mb: 0,
+                              color: "#121212  !important",
                             }}
                           >
                             {userDetails.name || userDetails.email}
@@ -143,6 +144,7 @@ export default function PublicProfileComponent() {
                               color: "rgb(18 18 18 / 50%)",
                               margin: "3px 0px",
                               fontFamily: "Poppins",
+                              fontSize: "18px",
                             }}
                           >
                             {userDetails.profile.highestEducation?.title}
@@ -159,6 +161,7 @@ export default function PublicProfileComponent() {
                                 sx={{
                                   color: "rgb(18 18 18 / 50%)",
                                   fontFamily: "Poppins",
+                                  fontSize: "14px  !important",
                                 }}
                               >
                                 {userDetails.profile.city?.title},{" "}
@@ -191,6 +194,7 @@ export default function PublicProfileComponent() {
                                 fontSize: "14px",
                                 fontFamily: "Poppins",
                                 lineHeight: "12px",
+                                color: "#121212",
                               }}
                             >
                               {userDetails.profile.experience}{" "}
@@ -215,6 +219,7 @@ export default function PublicProfileComponent() {
                           fontSize: "26px",
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
+                          color: "#121212",
                         }}
                       >
                         About
@@ -341,6 +346,7 @@ export default function PublicProfileComponent() {
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
                           mb: 2,
+                          color: "#121212",
                         }}
                       >
                         Contact info
@@ -512,6 +518,8 @@ export default function PublicProfileComponent() {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
+                          fontSize: "32px",
+                          fontFamily: "Inter",
                         }}
                       >
                         ADVETRISEMENT

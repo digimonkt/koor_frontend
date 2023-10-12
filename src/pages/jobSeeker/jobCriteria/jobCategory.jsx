@@ -97,9 +97,9 @@ const JobCategory = ({ handleNext }) => {
               border: "1px solid #EEA23D !important",
               color: "#EEA23D !important",
               fontWeight: "500",
-              fontSize: "16px",
+              fontSize: "16px !important",
               "@media(max-width: 480px)": {
-                fontSize: "14px",
+                fontSize: "14px !important",
               },
               padding: "10px 30px",
               "&:hover": {

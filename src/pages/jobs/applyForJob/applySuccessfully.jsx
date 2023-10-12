@@ -9,9 +9,18 @@ function ApplySuccessfully() {
   const navigate = useNavigate();
   return (
     <Grid container spacing={2}>
-      <Grid item lg={7}>
-        <h1 className="mb-3">Done!</h1>
-        <p>
+      <Grid item lg={7} sm={6}>
+        <h1 className={`mb-3 ${styles.job_done}`}>Done!</h1>
+        <span
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "20px",
+          }}
+        >
+          <SVG.AppliedJob className={styles.job_apply_top_icon} />
+        </span>
+        <p className={styles.job_done_desc}>
           Your application was submitted. The employer will reach out to you if
           they will find you suitable for the job. Stay tuned.
         </p>
@@ -23,8 +32,18 @@ function ApplySuccessfully() {
           />
         </div>
       </Grid>
-      <Grid item lg={5}>
-        <SVG.AppliedJob className="w-100" />
+      <Grid
+        item
+        lg={5}
+        sm={6}
+        style={{
+          textAlign: "end",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+        <SVG.AppliedJob className={styles.job_apply_icon} />
       </Grid>
     </Grid>
   );

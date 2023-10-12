@@ -218,7 +218,7 @@ function TenderDetailsComponent() {
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
-              <Grid item xs={8}>
+              <Grid item xs={12} sm={6}>
                 <div className={`${styles.postJob}`}>
                   <span
                     style={{ paddingTop: "5px", cursor: "pointer" }}
@@ -229,7 +229,7 @@ function TenderDetailsComponent() {
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={6}>
                 <div className={`${styles.clocs}`}>
                   <SVG.ClockIconSmall />
                   <p className="mb-0 mt-0 me-1">
@@ -241,15 +241,19 @@ function TenderDetailsComponent() {
                         ? `${details.expiredInDays} Days`
                         : "Expired"
                     }
-                    style={{ marginLeft: "20px", cursor: "default" }}
-                    color="green"
+                    style={{
+                      marginLeft: "20px",
+                      cursor: "default",
+                      color: "#ffffff",
+                    }}
+                    color="#4CAF50"
                   />
                 </div>
               </Grid>
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9}>
+              <Grid item xs={12} lg={9} sm={8}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <p className="job-description">{details.description}. </p>
@@ -312,7 +316,7 @@ function TenderDetailsComponent() {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={3}>
+              <Grid item xs={12} lg={3} sm={4}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   user={details?.user}
@@ -325,8 +329,19 @@ function TenderDetailsComponent() {
                           ? details.isEditable
                             ? "Edit"
                             : "Applied"
-                          : "Apply for th Tender"
+                          : [
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for the Tender",
+                            ]
                       }
+                      sx={{
+                        padding: "10px 0px !important",
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                        },
+                      }}
                       className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
@@ -361,7 +376,7 @@ function TenderDetailsComponent() {
                       />
                     )}
                     <Stack
-                      direction="row"
+                      direction="column"
                       spacing={{
                         xs: 1,
                         sm: 1,
@@ -371,17 +386,38 @@ function TenderDetailsComponent() {
                       justifyContent="center"
                     >
                       <OutlinedButton
-                        title={details.isSaved ? "Saved" : "Save Tender"}
-                        style={{ height: "44px" }}
+                        title={
+                          details.isSaved
+                            ? "Saved"
+                            : [
+                                <>
+                                  <SVG.BlueSaveIcon className="me-2" />
+                                </>,
+                                "Save Tender",
+                              ]
+                        }
+                        sx={{
+                          height: "44px",
+                          width: "256px",
+                        }}
                         vendor
                         onClick={() => {
                           handleSaveTender(params.tenderId);
                         }}
                       />
                       <OutlinedButton
-                        title={<SVG.ShareIcon />}
+                        title={[
+                          <>
+                            <SVG.ShareIcon className="me-2" />
+                          </>,
+                          "Share",
+                        ]}
                         jobSeeker
-                        style={{ height: "44px" }}
+                        sx={{
+                          height: "44px",
+                          border: "0px !important",
+                          color: "#274593 !important",
+                        }}
                         onClick={() => {
                           setIsSharing(true);
                         }}

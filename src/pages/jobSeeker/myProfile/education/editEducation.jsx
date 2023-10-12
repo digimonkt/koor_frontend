@@ -179,15 +179,15 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
           </label>
           <Grid container spacing={2}>
             <Grid item lg={6} xs={12}>
+              <label className="label-edit">Start</label>
               <DateInput
-                label="Start"
                 views={["year"]}
                 onChange={(e) => formik.setFieldValue("startDate", e)}
                 maxDate={dayjs()}
                 value={formik.values.startDate}
                 onBlur={formik.getFieldProps("startDate").onBlur}
                 inputProps={{
-                  placeholder: "Select year"
+                  placeholder: "Select year",
                 }}
               />
               {formik.touched.startDate && formik.errors.startDate ? (
@@ -195,8 +195,8 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
               ) : null}
             </Grid>
             <Grid item lg={6} xs={12}>
+              <label className="label-edit">End</label>
               <DateInput
-                label="End"
                 views={["year"]}
                 placeholder={"Slect year"}
                 onChange={(e) => formik.setFieldValue("endDate", e)}
@@ -205,7 +205,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
                 maxDate={dayjs().year(dayjs().year())}
                 onBlur={formik.getFieldProps("endDate").onBlur}
                 inputProps={{
-                  placeholder: "Select year"
+                  placeholder: "Select year",
                 }}
                 disabled={formik.values.isPresent || !formik.values.startDate}
               />

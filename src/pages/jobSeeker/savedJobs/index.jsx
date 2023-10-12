@@ -169,8 +169,8 @@ function SavedJobsComponent() {
               {/* <MenuItem
                 onClick={() => {
                   handleClose();
-                  // setSortBy("workload");
-                  // handleSorting();
+                  setSortBy("workload");
+                  handleSorting();
                 }}
                 className="fillterbox"
               >
