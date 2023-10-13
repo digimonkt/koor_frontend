@@ -250,8 +250,11 @@ function ApplyForTender() {
                 item
                 xs={12}
                 sm={7}
-                style={{
+                sx={{
                   borderRight: "1px solid #cacaca",
+                  "@media (max-width:600px)": {
+                    borderRight: "0px",
+                  },
                 }}
               >
                 <div className={`${styles.contentJob}`}>
@@ -267,7 +270,10 @@ function ApplyForTender() {
                   </div>
                   {hide ? (
                     <>
-                      <p className={styles.more_text_p}>
+                      <p
+                        className={styles.more_text_p}
+                        style={{ marginBottom: "10px" }}
+                      >
                         Please check out my attachements below..
                       </p>
                       {details.attachments.map((attachment) => {

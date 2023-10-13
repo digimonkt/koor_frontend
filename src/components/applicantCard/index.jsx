@@ -52,15 +52,14 @@ function ApplicantCard({
               />
             }
             spacing={{ xs: 0, lg: 2 }}
-            flexWrap="wrap"
-            alignItems={{ xs: "flex-start", lg: "center" }}
+            alignItems={{ xs: "flex-start", lg: "flex-startr" }}
             sx={{ mb: 1, ...sx }}
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
             <div
               className="recent-research"
               style={{
-                flexWrap: "wrap",
+                whiteSpace: "nowrap",
                 display: "flex",
                 alignItems: "baseline",
               }}

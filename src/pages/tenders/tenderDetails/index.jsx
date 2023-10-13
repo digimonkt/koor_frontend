@@ -307,7 +307,11 @@ function TenderDetailsComponent() {
                         <span
                           onClick={() => handleLoadImage(attachment.path)}
                           className="m-0"
-                          style={{ cursor: "pointer" }}
+                          style={{
+                            cursor: "pointer",
+                            whiteSpace: "normal",
+                            wordBreak: "break-all",
+                          }}
                         >
                           {attachment.title}
                         </span>
@@ -338,6 +342,7 @@ function TenderDetailsComponent() {
                       }
                       sx={{
                         padding: "10px 0px !important",
+                        width: "100% !important",
                         "@media (max-width: 480px)": {
                           fontSize: "14px !important",
                         },
@@ -398,7 +403,7 @@ function TenderDetailsComponent() {
                         }
                         sx={{
                           height: "44px",
-                          width: "256px",
+                          width: "100%",
                         }}
                         vendor
                         onClick={() => {
@@ -432,7 +437,7 @@ function TenderDetailsComponent() {
           </div>
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={7}>
+              <Grid item xs={12} lg={7} md={7}>
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>

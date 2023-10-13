@@ -285,8 +285,12 @@ const JobDetails = () => {
                   direction={{ xs: "column", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
                   spacing={2}
+                  sx={{ overflow: "auto" }}
                 >
-                  <div className={styles.details_searchs_button}>
+                  <Box
+                    className={styles.details_searchs_button}
+                    sx={{ display: "flex", flexWrap: "nowrap !important" }}
+                  >
                     <SearchButton
                       text={details.country.title}
                       leftIcon={<SVG.LocationIcon />}
@@ -318,7 +322,7 @@ const JobDetails = () => {
                         className={`${styles.iconbutton}`}
                       />
                     )}
-                  </div>
+                  </Box>
                 </Stack>
                 {details.startDate && (
                   <div className={`${styles.datesatrt}`}>
@@ -339,7 +343,7 @@ const JobDetails = () => {
                         className={`${styles.downloadtext}`}
                         key={attachment.id}
                       >
-                        <span className="d-inline-flex">
+                        <span className="d-inline-flex  me-2">
                           {<SVG.OrangeIcon />}
                         </span>
                         <span
@@ -441,7 +445,7 @@ const JobDetails = () => {
                                 "Save job",
                               ]
                         }
-                        style={{ height: "44px" }}
+                        style={{ height: "44px", width: "100%" }}
                         jobSeeker
                         onClick={() => {
                           handleSaveJob(params.jobId);

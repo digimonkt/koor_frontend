@@ -1,5 +1,5 @@
 import { SVG } from "../../../assets/svg";
-import { Avatar } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
@@ -30,7 +30,15 @@ function JobCostCard({ amount, payPeriod, user }) {
       ) : (
         ""
       )}
-      <div className={`${styles.lotus}`}>
+      <Box
+        className={`${styles.lotus}`}
+        sx={{
+          "@media (max-width: 600px)": {
+            borderBottom: "0px",
+            paddingBottom: "0px",
+          },
+        }}
+      >
         <div className={`${styles.lotusimg}`}>
           <Avatar
             sx={{
@@ -76,7 +84,7 @@ function JobCostCard({ amount, payPeriod, user }) {
             <Link to={`mailto:${user.email}`}>{user.email}</Link>
           </span>
         </div>
-      </div>
+      </Box>
     </>
   );
 }
