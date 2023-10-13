@@ -483,7 +483,7 @@ function PostJobsComponent() {
                           placeholder={
                             formik.values.country
                               ? "City"
-                              : "Select Country first"
+                              : "City"
                           }
                           disabled={!formik.values.country}
                           options={(
@@ -707,7 +707,7 @@ function PostJobsComponent() {
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <h2 className="mt-3">Additional ways to apply</h2>
+                    <h2 className="mt-3">Ways to apply</h2>
                   </Grid>
                   <Grid item xl={4} lg={4} xs={12}>
                     <JobFormControl
@@ -988,7 +988,7 @@ function PostJobsComponent() {
                             : "Posting..."
                           : jobId
                           ? "UPDATE THE JOB"
-                          : "POST THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
