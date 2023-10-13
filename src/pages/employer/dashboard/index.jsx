@@ -118,7 +118,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="employer-dashboard">
-        <Grid item container spacing={2} sx={{ mb: 4 }}>
+        <Grid item container spacing={{ xs: 1, lg: 2 }} sx={{ mb: 4 }}>
           {employerCard(counts).map((item, index) => (
             <Grid item lg={3} xs={6} sm={3} key={index}>
               <Stack
@@ -134,6 +134,7 @@ const Dashboard = () => {
                   height: "100px",
                   "@media (max-width:992px)": {
                     padding: "10px 15px",
+                    height: "64px",
                     "& span svg": { width: "20px", height: "20px" },
                   },
                 }}

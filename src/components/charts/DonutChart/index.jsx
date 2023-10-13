@@ -2,7 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { styled } from "@mui/material/styles";
 // import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { FormControl, Grid, Select, Stack } from "@mui/material";
+import { Grid, Select, Stack } from "@mui/material";
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: rgba(202, 202, 202, 0.25);
@@ -79,13 +79,14 @@ const DonutChart = ({ shareCountData }) => {
 
       responsive: [
         {
-          breakpoint: 480,
+          breakpoint: 600,
           options: {
             chart: {
-              width: 200,
+              width: 110,
+              height: 110,
             },
             legend: {
-              position: "bottom",
+              // position: "right",
               show: false,
             },
           },
@@ -111,28 +112,29 @@ const DonutChart = ({ shareCountData }) => {
         sx={{ marginBottom: "0px" }}
       >
         <h2>Number of shares</h2>
-        <FormControl
-          sx={{
-            minWidth: 128,
-            "&.MuiSelect-select": {
-              fontFamily: "Poppins",
-              fontSize: "12px",
-            },
-          }}
-          size="small"
-        ></FormControl>
       </Stack>
 
-      <Grid container spacing={2}>
-        <Grid item lg={5} xl={5}>
+      <Grid container spacing={1} alignItems={"center"}>
+        <Grid
+          item
+          lg={5}
+          xl={5}
+          xs={4}
+          sx={{
+            "& .dount-chart": {
+              marginLeft: "-22px",
+            },
+          }}
+        >
           <ReactApexChart
             options={state.options}
             series={state.series}
             type="donut"
+            className="dount-chart"
             height={200}
           />
         </Grid>
-        <Grid item xl={7} lg={7} style={{ paddingTop: "0px" }}>
+        <Grid item xl={7} lg={7} xs={8} style={{ paddingTop: "0px" }}>
           <div className="series-box">
             <h2>{shareCountData?.total} Total shares:</h2>
             <ul>

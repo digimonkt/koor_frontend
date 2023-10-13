@@ -104,10 +104,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const footer = () => {
     return (
       <>
-        <span
-          style={{ pointer: "cursor", marginTop: "-12px" }}
-          onClick={handleReset}
-        >
+        <span style={{ pointer: "cursor" }} onClick={handleReset}>
           {<SVG.HalfCircle />} RESET FILTER
         </span>
         {isLoggedIn && (

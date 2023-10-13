@@ -244,13 +244,13 @@
 .iconbutton {
   background-color: #f0f0f0 !important;
   font-size: 12px !important;
-  width: 140px !important;
   height: 28px !important;
   border-radius: 60px !important;
   color: #000 !important;
   margin-right: 14px !important;
   cursor: default !important;
   margin-bottom: 10px !important;
+  padding: 0px 30px !important;
 }
 .iconbtn {
   display: flex;

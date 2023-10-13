@@ -228,7 +228,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   color: #121212;
   font-size: 16px;
   font-weight: 300;
-  font-family: "Poppins !important";
+  font-family: "Poppins" !important;
 }
 
 .lables li {
@@ -315,10 +315,10 @@ header {
   background: #eea23d !important;
   border-radius: 73px !important;
   padding: 10px 30px !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   color: #ffffff !important;
-  font-family: "Bahnschrift" !important;
+  font-family: "Poppins" !important;
   letter-spacing: 0.03em !important;
   border: 1px solid #eea23d !important;
 }
@@ -1549,6 +1549,10 @@ span.count {
     font-size: 24px;
   }
 
+  .form-control-area {
+    font-size: 14px;
+  }
+
   .manage-jobs_tab_div .MuiButtonBase-root.MuiTab-root {
     margin-right: 36px;
   }
@@ -1951,6 +1955,11 @@ span.count {
     display: block;
   }
 
+  .add-form-control {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
   .menu.menu-selected {
     visibility: visible;
     opacity: 1;
@@ -2105,7 +2114,7 @@ input.employersearch {
     border: 1px solid #274593 !important;
     border-radius: 73px !important;
     padding: 10px 30px !important;
-    color: #274593 !important;
+    color: #848484 !important;
     font-size: 16px !important;
     letter-spacing: 0.03em !important;
     font-family: "Bahnschrift" !important;
@@ -2306,6 +2315,13 @@ input.employersearch {
     font-size: 14px !important;
   }
   .lables span {
+    font-size: 14px;
+  }
+  .form-control-area {
+    font-weight: 300;
+  }
+
+  .add-form-control {
     font-size: 14px;
   }
 
