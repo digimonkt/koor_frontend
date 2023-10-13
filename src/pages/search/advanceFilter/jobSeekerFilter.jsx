@@ -27,7 +27,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={3}>
+          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
             <div>
               <FormControl
                 sx={{ m: 1, marginLeft: 0, width: 330 }}
@@ -54,7 +54,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={3}>
+          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
             <div>
               <FormControl
                 sx={{ m: 1, marginLeft: 0, width: 330 }}
@@ -89,7 +89,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={3}>
+          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -105,7 +105,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={3}>
+          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -130,7 +130,11 @@ function JobSeekerFilter({ formik, footer, responsive }) {
           </Grid>
           <Grid item xs={12} lg={responsive ? 12 : 4} sm={4}>
             <label style={{ marginBottom: "25px" }}>Job type</label>
-            <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
+            <FormGroup
+              row
+              sx={{ marginLeft: "7px", display: "grid" }}
+              className="filter_input"
+            >
               <JobFormControl
                 control={<CheckboxInput sx={{ paddingLeft: "5px" }} />}
                 label="Part Time"
