@@ -573,6 +573,7 @@ function MyProfile() {
                       type="submit"
                       variant="outlined"
                       title="update info"
+                      startIcon={<SVG.CheckIcon />}
                     />
                   </div>
                 </form>

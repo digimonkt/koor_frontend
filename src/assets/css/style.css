@@ -2485,9 +2485,15 @@ input.employersearch {
 .register-app > a {
   border-radius: 16px !important;
 }
+.upto-slide {
+  margin-right: 24px;
+}
 
 @media screen and (max-width: 992px) {
   .label-100 {
     flex-direction: column !important;
+  }
+  .upto-slide {
+    margin-right: 0px;
   }
 }

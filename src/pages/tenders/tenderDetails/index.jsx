@@ -301,7 +301,7 @@ function TenderDetailsComponent() {
                   {details.attachments.map((attachment, i) => {
                     return (
                       <div key={i} className={`${styles.downloadtext}`}>
-                        <span className="d-inline-flex">
+                        <span className="d-inline-flex me-2">
                           {<SVG.OrangeIcon />}
                         </span>
                         <span

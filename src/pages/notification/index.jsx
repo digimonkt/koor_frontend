@@ -7,12 +7,11 @@ function Notification() {
   return (
     <div className={styles.notification}>
       <Container
-        sx={{
-          "@media(min-width:992px)": {
-            paddingLeft: "100px",
-            paddingRight: "100px",
-          },
-        }}
+      // sx={{
+      //   "@media(min-width:992px)": {
+      //     maxWidth: "1240px",
+      //   },
+      // }}
       >
         <div className={styles.content}>
           <h3 className={`${styles.content_heading}`}>Notifications</h3>

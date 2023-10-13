@@ -1,11 +1,12 @@
 import { SVG } from "../../assets/svg";
-import { Avatar } from "@mui/material";
+import { Avatar, Box, IconButton } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import styles from "./notification.module.css";
+import Close from "@mui/icons-material/Close";
 function MessageNotificationCard({
   message,
   createdAt,
@@ -39,7 +40,29 @@ function MessageNotificationCard({
             <SVG.UserIcon />
           </Avatar>
         </div>
-        <div className={styles.title_text_div}>
+        <Box
+          className={styles.title_text_div}
+          sx={{
+            position: "relative",
+            "&:hover .MuiIconButton-root": {
+              display: "inline-flex",
+            },
+          }}
+        >
+          <IconButton
+            sx={{
+              width: "15px",
+              height: "15px",
+              fontSize: "15px",
+              position: "absolute",
+              top: "0",
+              right: "0",
+              display: "none",
+            }}
+            onClick={() => handleClose()}
+          >
+            <Close fontSize="inherit" />
+          </IconButton>
           <h2 className={styles.title}>New message received.</h2>
           <p
             className={`${styles.text}`}
@@ -50,7 +73,7 @@ function MessageNotificationCard({
           <p style={{ marginTop: "5px" }} className={styles.duration}>
             {timeAgoFromNow(createdAt)}
           </p>
-        </div>
+        </Box>
       </div>
     </Link>
   );

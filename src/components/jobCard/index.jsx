@@ -200,7 +200,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           item
           // lg={logo ? 8 : 9}
           xs={12}
-          sm={10}
+          sm={8}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "72%",
@@ -337,7 +337,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12}>
+        <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
           <div className="text-end mb-0 mb-lg-4 text-start">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
@@ -355,12 +355,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <Stack
               direction="row"
               spacing={2}
-              justifyContent={{ xs: "center", lg: "end" }}
+              justifyContent={{ xs: "center", lg: "end", sm: "flex-end" }}
               alignItems="center"
               // divider={<hr orientation="vertical" className="job_card_hr" />}
               sx={{ minHeight: "87%" }}
             >
-              <div className="pricebox py-3 me-4">
+              <div className="pricebox py-3 upto-slide">
                 {jobDetails?.budgetAmount ? (
                   <>
                     <span className="d-block">UP TO</span>

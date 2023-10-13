@@ -15,7 +15,7 @@ function JobCostCard({ amount, payPeriod, user }) {
       {amount ? (
         <div className={`${styles.monthBox}`}>
           <>
-            {payPeriod ? <h4>UP TO</h4> : ""}
+            {payPeriod ? <h4>UP TO</h4> : "BUDGET"}
             <p
               className="m-0"
               style={{
@@ -24,7 +24,7 @@ function JobCostCard({ amount, payPeriod, user }) {
             >
               $ <span>{amount}</span>
             </p>
-            {payPeriod ? <h5 className="mt-0">/ {payPeriod}</h5> : ""}
+            {payPeriod ? <h5 className="mt-0">/ {payPeriod}</h5> : "/ month"}
           </>
         </div>
       ) : (

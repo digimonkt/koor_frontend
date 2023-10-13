@@ -28,9 +28,9 @@
 
 .no_notification_text {
   font-family: "Poppins", sans-serif !important;
-  font-size: 14px !important;
+  font-size: 20px !important;
   font-weight: 400 !important;
-  line-height: 16px !important;
+
   color: #cacaca !important;
   margin-top: 10px !important;
   white-space: normal !important;
@@ -162,6 +162,9 @@
 
 @media screen and (max-width: 480px) {
   .tabs_btn {
+    font-size: 14px !important;
+  }
+  .no_notification_text {
     font-size: 14px !important;
   }
 

@@ -1,6 +1,6 @@
 import { GetNotificationAPI } from "../../api/user";
 import { TabContext, TabList } from "@mui/lab";
-import { Box, Button, Stack, Tab } from "@mui/material";
+import { Box, Button, Stack, Tab, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
@@ -148,6 +148,9 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                 {filterData.length ? (
                   filterData.map((item, index) => (
                     <>
+                      <Typography sx={{ padding: "10px", fontWeight: "500" }}>
+                        Today
+                      </Typography>
                       <div
                         key={index}
                         className={`${styles.notification_card} ${
@@ -161,12 +164,21 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                     </>
                   ))
                 ) : (
-                  <div className="text-center">
-                    <SVG.Bell className={styles.no_notification_bell_icon} />
-                    <p className={styles.no_notification_text}>
-                      You don’t have any notifications yet
-                    </p>
-                  </div>
+                  <Box
+                    sx={{
+                      minHeight: "610px",
+                      alignItems: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <div className="text-center">
+                      <SVG.Bell className={styles.no_notification_bell_icon} />
+                      <p className={styles.no_notification_text}>
+                        You don’t have any notifications yet
+                      </p>
+                    </div>
+                  </Box>
                 )}
               </div>
             )}
