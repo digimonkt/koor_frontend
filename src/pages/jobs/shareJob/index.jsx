@@ -1,8 +1,8 @@
-import { SVG } from "@assets/svg";
-import { LabeledInput } from "@components/input";
+import { SVG } from "../../../assets/svg";
+import { LabeledInput } from "../../../components/input";
 import React, { useState } from "react";
 import styles from "./shareJobs.module.css";
-import { FilledButton } from "@components/button";
+import { FilledButton } from "../../../components/button";
 import {
   generateFacebookShareUrl,
   generateLinkedinShareUrl,
@@ -11,9 +11,9 @@ import {
   generateWhatsappShareUrl,
 } from "./urlGenerator";
 import { useDispatch } from "react-redux";
-import { setSuccessToast } from "@redux/slice/toast";
-import { updateJobShareCountAPI } from "@api/job";
-import { SHARE_PLATFORM } from "@utils/enum";
+import { setSuccessToast } from "../../../redux/slice/toast";
+import { updateJobShareCountAPI } from "../../../api/job";
+import { SHARE_PLATFORM } from "../../../utils/enum";
 import { useParams } from "react-router-dom";
 function ShareJob() {
   const dispatch = useDispatch();

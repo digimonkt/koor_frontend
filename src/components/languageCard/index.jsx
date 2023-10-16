@@ -1,13 +1,13 @@
 import { Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SVG } from "@assets/svg";
-import { USER_ROLES } from "@utils/enum";
-import { deleteLanguageDetailsAPI } from "@api/jobSeeker";
-import { deleteLanguageRecord } from "@redux/slice/user";
-import { setSuccessToast } from "@redux/slice/toast";
-import DialogBox from "@components/dialogBox";
-import DeleteCard from "@components/deleteCard";
+import { SVG } from "../../assets/svg";
+import { USER_ROLES } from "../../utils/enum";
+import { deleteLanguageDetailsAPI } from "../../api/jobSeeker";
+import { deleteLanguageRecord } from "../../redux/slice/user";
+import { setSuccessToast } from "../../redux/slice/toast";
+import DialogBox from "../../components/dialogBox";
+import DeleteCard from "../../components/deleteCard";
 
 function LanguageCard({ id, language, spoken, written, handleEdit }) {
   const dispatch = useDispatch();

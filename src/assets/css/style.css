@@ -32,17 +32,41 @@ body {
 .credits_title {
   font-size: 18px;
   font-weight: 400;
-  letter-spacing: 2%;
+  letter-spacing: 0.28px;
   color: #121212;
   margin: 0;
+}
+
+.credits_li {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.28px;
+  color: #848484;
+  text-decoration: none;
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.attachment_delete_icon {
+  width: 15px;
+  height: 16.88px;
 }
 
 .credits_head_credit {
   font-size: 32px;
   font-weight: 700;
-  letter-spacing: 2%;
+  letter-spacing: 0.28px;
   color: #121212;
   margin: 0;
+}
+
+.credits_button {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #000000 !important;
+  letter-spacing: 0.28px !important;
+  font-family: "Poppins" !important;
+  background-color: #d5e3f7 !important;
 }
 
 .work-experience-text-editor .ql-snow .ql-tooltip {
@@ -545,12 +569,8 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 20px;
-}
-
-.edit_work_experience_btn {
-  text-align: center;
-  margin-top: 50px;
+  top: 50%;
+  transform: translate(0%, -50%);
 }
 
 .spaceor {
@@ -1030,6 +1050,7 @@ hr {
   border-radius: 10px;
   padding: 30px;
   width: 520px;
+  margin: 15px;
 }
 
 .dropimg-userprofile {
@@ -2008,7 +2029,7 @@ span.count {
 
 .bluebtn {
   background: #274593 !important;
-  color: #000000 !important;
+  color: #fff !important;
   border: 1px solid #274593 !important;
 }
 
@@ -2522,5 +2543,20 @@ input.employersearch {
 
   .css-bb18k4-MuiButtonBase-root-MuiButton-root {
     font-size: 16px;
+  }
+}
+.register-app > a {
+  border-radius: 16px !important;
+}
+.upto-slide {
+  margin-right: 24px;
+}
+
+@media screen and (max-width: 992px) {
+  .label-100 {
+    flex-direction: column !important;
+  }
+  .upto-slide {
+    margin-right: 0px;
   }
 }

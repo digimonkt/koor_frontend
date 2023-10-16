@@ -1,5 +1,5 @@
 import { Loader } from "@googlemaps/js-api-loader";
-import env from "@utils/validateEnv";
+import env from "../../utils/validateEnv";
 import { useEffect, useState } from "react";
 
 const Status = {

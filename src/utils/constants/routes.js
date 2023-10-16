@@ -1,161 +1,171 @@
-import { ChatBox } from "@pages/messages";
-import Resource from "@pages/resource";
-import TermsCondition from "@pages/termsCondition";
-import Home from "@pages/home";
+import { ChatBox } from "../../pages/messages";
+import Resource from "../../pages/resource";
+import TermsCondition from "../../pages/termsCondition";
+import Home from "../../pages/home";
 import AboutUs from "../../pages/about";
-import { PostTender } from "@pages/tenders"; // need to relocate to employer folder
+import { PostTender } from "../../pages/tenders"; // need to relocate to employer folder
 import { lazy } from "react";
-import PrivacyPolicy from "@pages/privacyPolicy";
+import PrivacyPolicy from "../../pages/privacyPolicy";
 // resources
 const Resources = lazy(() =>
-  import("@pages/resources").then((module) => ({ default: module.Resources }))
+  import("../../pages/resources").then((module) => ({
+    default: module.Resources,
+  }))
 );
 // auth
 const Logout = lazy(() =>
-  import("@pages/auth").then((module) => ({ default: module.Logout }))
+  import("../../pages/auth").then((module) => ({ default: module.Logout }))
 );
 const Login = lazy(() =>
-  import("@pages/auth").then((module) => ({ default: module.Login }))
+  import("../../pages/auth").then((module) => ({ default: module.Login }))
 );
 const Registration = lazy(() =>
-  import("@pages/auth").then((module) => ({ default: module.Registration }))
+  import("../../pages/auth").then((module) => ({
+    default: module.Registration,
+  }))
 );
 const ForgotPassword = lazy(() =>
-  import("@pages/auth").then((module) => ({ default: module.ForgotPassword }))
+  import("../../pages/auth").then((module) => ({
+    default: module.ForgotPassword,
+  }))
 );
 const VerifyOTP = lazy(() =>
-  import("@pages/auth").then((module) => ({ default: module.VerifyOTP }))
+  import("../../pages/auth").then((module) => ({ default: module.VerifyOTP }))
 );
 const ResetPassword = lazy(() =>
-  import("@pages/auth").then((module) => ({ default: module.ResetPassword }))
+  import("../../pages/auth").then((module) => ({
+    default: module.ResetPassword,
+  }))
 );
 const TenderDetails = lazy(() =>
-  import("@pages/tenders").then((module) => ({ default: module.TenderDetails }))
+  import("../../pages/tenders").then((module) => ({
+    default: module.TenderDetails,
+  }))
 );
 
 // notification
-const Notification = lazy(() => import("@pages/notification"));
+const Notification = lazy(() => import("../../pages/notification"));
 
 // job Seeker
 const JobSeekerProfile = lazy(() =>
-  import("@pages/jobSeeker").then((module) => ({
+  import("../../pages/jobSeeker").then((module) => ({
     default: module.MyProfile,
   }))
 );
 const JobSeekerCriteria = lazy(() =>
-  import("@pages/jobSeeker").then((module) => ({
+  import("../../pages/jobSeeker").then((module) => ({
     default: module.JobCriteria,
   }))
 );
 const JobSeekerUpdateProfile = lazy(() =>
-  import("@pages/jobSeeker").then((module) => ({
+  import("../../pages/jobSeeker").then((module) => ({
     default: module.UpdateProfile,
   }))
 );
 const AppliedJobs = lazy(() =>
-  import("@pages/jobSeeker").then((module) => ({
+  import("../../pages/jobSeeker").then((module) => ({
     default: module.AppliedJobs,
   }))
 );
 const SavedJobs = lazy(() =>
-  import("@pages/jobSeeker").then((module) => ({
+  import("../../pages/jobSeeker").then((module) => ({
     default: module.SavedJobs,
   }))
 );
 const JobSeekerPublicProfile = lazy(() =>
-  import("@pages/jobSeeker").then((module) => ({
+  import("../../pages/jobSeeker").then((module) => ({
     default: module.JobSeekerPublicProfile,
   }))
 );
 // employer
 const EmployerPublicProfile = lazy(() =>
-  import("@pages/employer").then((module) => ({
+  import("../../pages/employer").then((module) => ({
     default: module.EmployerPublicProfile,
   }))
 );
 // employer
 const VendorPublicProfile = lazy(() =>
-  import("@pages/vendor").then((module) => ({
+  import("../../pages/vendor").then((module) => ({
     default: module.VendorPublicProfile,
   }))
 );
 const ManageJobs = lazy(() =>
-  import("@pages/employer").then((module) => ({
+  import("../../pages/employer").then((module) => ({
     default: module.ManageJobs,
   }))
 );
 const EmployerProfile = lazy(() =>
-  import("@pages/employer").then((module) => ({
+  import("../../pages/employer").then((module) => ({
     default: module.MyProfile,
   }))
 );
 const EmployerDashboard = lazy(() =>
-  import("@pages/employer").then((module) => ({
+  import("../../pages/employer").then((module) => ({
     default: module.Dashboard,
   }))
 );
 const EmployerManageTenders = lazy(() =>
-  import("@pages/employer").then((module) => ({
+  import("../../pages/employer").then((module) => ({
     default: module.ManageTenders,
   }))
 );
 // vendor
 const VendorMyProfile = lazy(() =>
-  import("@pages/vendor").then((module) => ({
+  import("../../pages/vendor").then((module) => ({
     default: module.VendorMyProfile,
   }))
 );
 const VendorDashboard = lazy(() =>
-  import("@pages/vendor").then((module) => ({
+  import("../../pages/vendor").then((module) => ({
     default: module.VendorDashboard,
   }))
 );
 const VendorSavedTenders = lazy(() =>
-  import("@pages/vendor").then((module) => ({
+  import("../../pages/vendor").then((module) => ({
     default: module.VendorSavedTenders,
   }))
 );
 
 // jobs
 const PostJobs = lazy(() =>
-  import("@pages/jobs").then((module) => ({
+  import("../../pages/jobs").then((module) => ({
     default: module.PostJobs,
   }))
 );
 
 const ApplicantDetails = lazy(() =>
-  import("@pages/jobs").then((module) => ({
+  import("../../pages/jobs").then((module) => ({
     default: module.ApplicantDetails,
   }))
 );
 
 const tenderApplicantDetails = lazy(() =>
-  import("@pages/tenders").then((module) => ({
+  import("../../pages/tenders").then((module) => ({
     default: module.ApplicantDetails,
   }))
 );
 
 const JobDetails = lazy(() =>
-  import("@pages/jobs").then((module) => ({
+  import("../../pages/jobs").then((module) => ({
     default: module.JobDetails,
   }))
 );
 const ApplyForJob = lazy(() =>
-  import("@pages/jobs").then((module) => ({
+  import("../../pages/jobs").then((module) => ({
     default: module.ApplyForJob,
   }))
 );
 const ApplyForTender = lazy(() =>
-  import("@pages/tenders").then((module) => ({
+  import("../../pages/tenders").then((module) => ({
     default: module.ApplyForTender,
   }))
 );
 const AppliedTender = lazy(() =>
-  import("@pages/vendor").then((module) => ({
+  import("../../pages/vendor").then((module) => ({
     default: module.AppliedTender,
   }))
 );
-const Search = lazy(() => import("@pages/search"));
+const Search = lazy(() => import("../../pages/search"));
 // prefix => `/`
 export const ROUTES = [
   {

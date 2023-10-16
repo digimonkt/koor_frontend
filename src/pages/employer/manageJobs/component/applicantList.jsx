@@ -1,16 +1,16 @@
 import { Chip } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import { getApplicationOnJobAPI } from "@api/employer";
+import { SVG } from "../../../../assets/svg";
+import { getApplicationOnJobAPI } from "../../../../api/employer";
 
-import { JOB_APPLICATION_OPTIONS } from "@utils/enum";
-import { NoDataFoundAnimation } from "@components/animations";
-import ApplicationListLayout from "@components/layout/applicationListLayout";
-import ApplicantCard from "@components/applicantCard";
-import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
+import { JOB_APPLICATION_OPTIONS } from "../../../../utils/enum";
+import { NoDataFoundAnimation } from "../../../../components/animations";
+import ApplicationListLayout from "../../../../components/layout/applicationListLayout";
+import ApplicantCard from "../../../../components/applicantCard";
+import ApplicantCardSkeletonLoading from "../../../../components/applicantCard/skeletonLoading";
 import { useDispatch, useSelector } from "react-redux";
-import { setTotalApplicationsByJob } from "@redux/slice/employer";
+import { setTotalApplicationsByJob } from "../../../../redux/slice/employer";
 const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   const { totalApplicationsByJob } = useSelector((state) => state.employer);
   const [applicants, setApplicants] = useState([]);
@@ -37,15 +37,16 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
 
   useEffect(() => {
     if (filter) getApplicationList(filter);
-    dispatch(setTotalApplicationsByJob(
-      {
+    dispatch(
+      setTotalApplicationsByJob({
         jobId,
         data: {
           shortlisted: totalShortlisted,
           rejected: totalRejected,
           plannedInterview: totalPlannedInterview,
         },
-      }));
+      })
+    );
   }, [filter]);
 
   useEffect(() => {
@@ -122,11 +123,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           onClick={() => {
             handleGetApplicationByStatus(JOB_APPLICATION_OPTIONS.blacklisted);
           }}
-          label={
-            <>
-              Blacklisted
-            </>
-          }
+          label={<>Blacklisted</>}
           icon={<SVG.RejectIcon />}
         />
       </Stack>
@@ -148,8 +145,9 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           })
         ) : !applicants.length ? (
           <NoDataFoundAnimation
-            title={`There are currently no applications for your ${jobId ? "job" : "tender"
-              } posting.`}
+            title={`There are currently no applications for your ${
+              jobId ? "job" : "tender"
+            } posting.`}
           />
         ) : (
           applicants.map((item, index) => {

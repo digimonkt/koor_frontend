@@ -756,18 +756,18 @@ span.arrowjobs svg {
   display: none;
 }
 
-@media screen and (max-width: 1536px) and (min-width: 1440px) {
+/* @media screen and (max-width: 1536px) and (min-width: 1440px) {
   .recent-research span {
     border-left: none !important;
     padding-left: 0px !important;
   }
-}
+} */
 
 @media screen and (max-width: 1440px) and (min-width: 1200px) {
-  .recent-research span {
+  /* .recent-research span {
     border-left: none !important;
     padding-left: 0px !important;
-  }
+  } */
   .edit-button button {
     font-size: 11px !important;
   }
@@ -790,7 +790,6 @@ span.arrowjobs svg {
   }
   .form-content label {
     font-size: 14px !important;
-    color: #848484;
   }
   .post_tender_done_dailog h1 {
     font-size: 24px;
@@ -804,11 +803,10 @@ span.arrowjobs svg {
   .recent-research {
     font-size: 16px;
   }
-.telentsearchicon {
-  height: 14.33px;
-  width: 14.33px;
-}
-  
+  .telentsearchicon {
+    height: 14.33px;
+    width: 14.33px;
+  }
 }
 
 @media screen and (max-width: 480px) {

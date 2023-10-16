@@ -1,10 +1,10 @@
 import { Grid, IconButton } from "@mui/material";
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { SVG } from "@assets/svg";
-import { setErrorToast } from "@redux/slice/toast";
+import { SVG } from "../../assets/svg";
+import { setErrorToast } from "../../redux/slice/toast";
 import { useDispatch, useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 
 function AttachmentDragNDropInputComponent({
   files,
@@ -63,7 +63,7 @@ function AttachmentDragNDropInputComponent({
             },
           }}
         >
-          <SVG.DeleteICon />
+          <SVG.DeleteICon className="attachment_delete_icon" />
         </IconButton>
       </li>
     );

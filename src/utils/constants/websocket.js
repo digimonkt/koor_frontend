@@ -1,6 +1,6 @@
 import urlcat from "urlcat";
 import { WEBSOCKET_URL } from "./serverUrl";
-import { store } from "@redux/store";
+import { store } from "../../redux/store";
 /**
  * data = {
  *       url: "ws/chat",

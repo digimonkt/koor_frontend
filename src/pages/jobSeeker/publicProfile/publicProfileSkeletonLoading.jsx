@@ -1,6 +1,6 @@
-import EducationCardSkeletonLoading from "@components/educationCard/educationCardSkeletonLoading";
-import LanguageCardSkeletonLoading from "@components/languageCard/languageCardSkeletonLoading";
-import WorkExperienceCardSkeletonLoading from "@components/workExperienceCard/workExperienceCardSkeletonLoading";
+import EducationCardSkeletonLoading from "../../../components/educationCard/educationCardSkeletonLoading";
+import LanguageCardSkeletonLoading from "../../../components/languageCard/languageCardSkeletonLoading";
+import WorkExperienceCardSkeletonLoading from "../../../components/workExperienceCard/workExperienceCardSkeletonLoading";
 import {
   Box,
   Card,

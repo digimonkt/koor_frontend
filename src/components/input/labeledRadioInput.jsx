@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 import React from "react";
 import { useSelector } from "react-redux";
 const FormLabelBox = styled(FormControlLabel)`

@@ -1,13 +1,13 @@
 import { Card, CardContent, Stack } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import JobCard from "@components/jobCard";
+import { SVG } from "../../../../assets/svg";
+import JobCard from "../../../../components/jobCard";
 import ApplicantList from "./applicantList";
-import { getEmployerJobsAPI } from "@api/employer";
+import { getEmployerJobsAPI } from "../../../../api/employer";
 import { useDispatch } from "react-redux";
-import { setTotalCreatedJobs } from "@redux/slice/employer";
-import { NoDataFoundAnimation } from "@components/animations";
-import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
+import { setTotalCreatedJobs } from "../../../../redux/slice/employer";
+import { NoDataFoundAnimation } from "../../../../components/animations";
+import JobCardSkeletonLoader from "../../../../components/jobCard/jobCardSkeletonLoader";
 
 function MyJobs() {
   const dispatch = useDispatch();

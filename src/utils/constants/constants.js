@@ -1,4 +1,4 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 
 export const DATE_FORMAT = "MM-DD-YYYY";
 export const DATABASE_DATE_FORMAT = "YYYY-MM-DD";

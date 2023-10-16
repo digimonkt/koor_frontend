@@ -1,4 +1,4 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import {
   Box,
   Button,
@@ -11,9 +11,9 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./resource.module.css";
-import { getResourcesSuggestionAPI } from "@api/common";
+import { getResourcesSuggestionAPI } from "../../api/common";
 import { useNavigate } from "react-router-dom";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 const Articles = ({ resourcesId }) => {
   const [resourceList, setResourceList] = useState([]);
   const navigate = useNavigate();
@@ -43,14 +43,16 @@ const Articles = ({ resourcesId }) => {
                     <Grid item lg={4} xs={12} sm={6}>
                       <Card className={styles.div_card} key={index}>
                         <div>
-                          <img src={generateFileUrl(item.attachment.path)} className={styles.card_img} />
+                          <img
+                            src={generateFileUrl(item.attachment.path)}
+                            className={styles.card_img}
+                          />
                         </div>
                         <CardContent className="m-0 p-0">
                           <Typography className={styles.card_title}>
                             {item.title}
                           </Typography>
                           <Typography className={styles.card_text}>
-
                             {removeImagesFromHTMLArray(item.description)?.map(
                               (html, innerIndex) => (
                                 <div
@@ -64,7 +66,10 @@ const Articles = ({ resourcesId }) => {
                           </Typography>
                         </CardContent>
                         <CardActions className="px-0">
-                          <Button className={styles.card_btn} onClick={() => navigate(`/resources/${item.id}`)}>
+                          <Button
+                            className={styles.card_btn}
+                            onClick={() => navigate(`/resources/${item.id}`)}
+                          >
                             <SVG.RightArrow />
                             Read More
                           </Button>

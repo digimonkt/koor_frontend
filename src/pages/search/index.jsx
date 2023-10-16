@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
-import SearchInput from "@components/searchInput";
-import { SVG } from "@assets/svg";
+import SearchInput from "../../components/searchInput";
+import { SVG } from "../../assets/svg";
 import {
   Box,
   Chip,
@@ -20,7 +20,7 @@ import {
   JOB_SORT_BY,
   SEARCH_TYPE,
   USER_ROLES,
-} from "@utils/enum";
+} from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   searchJobs,
@@ -28,7 +28,7 @@ import {
   searchTender,
   searchVendor,
   setJobPage,
-} from "@redux/slice/search";
+} from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import urlcat from "urlcat";
 function Search() {

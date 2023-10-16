@@ -1,15 +1,15 @@
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../../utils/enum";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Divider, Stack } from "@mui/material";
 import styles from "../message.module.css";
-import { getConversationListAPI } from "@api/chat";
-import { NoDataFoundAnimation } from "@components/animations";
+import { getConversationListAPI } from "../../../api/chat";
+import { NoDataFoundAnimation } from "../../../components/animations";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { WebSocketClient } from "@utils/constants/websocket";
-import { transformConversationResponse } from "@api/transform/chat";
+import { WebSocketClient } from "../../../utils/constants/websocket";
+import { transformConversationResponse } from "../../../api/transform/chat";
 import { useDebounce } from "usehooks-ts";
-import { setIsBlackListedByEmployer } from "@redux/slice/user";
+import { setIsBlackListedByEmployer } from "../../../redux/slice/user";
 function ChatList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

@@ -1,7 +1,7 @@
-import { SearchButton } from "@components/button";
+import { SearchButton } from "../../../components/button";
 import React from "react";
 import styles from "./styles.module.css";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 function JobRequirementCard({ highestEducation, languages, skills }) {
   return (
@@ -29,26 +29,24 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
         })}
         <div className={`${styles.skills}`}>
           <h6 className="mb-2  mt-3">Skills</h6>
-          <Stack
-            direction={{ xs: "column", lg: "row" }}
-            spacing={2}
-            alignItems={"center"}
-          >
-            {skills.map((skill) => {
-              return (
-                <>
-                  <div style={{ marginTop: "20px" }}>
-                    <SearchButton
-                      key={skill.id}
-                      text={skill.title}
-                      className={`${styles.grybtn}`}
-                      sx={{ minWidth: "100%" }}
-                    />
-                  </div>
-                </>
-              );
-            })}
-          </Stack>
+          <Box sx={{ overflow: "auto" }}>
+            <Stack direction={"row"} spacing={2} alignItems={"center"}>
+              {skills.map((skill) => {
+                return (
+                  <>
+                    <div style={{ marginTop: "20px" }}>
+                      <SearchButton
+                        key={skill.id}
+                        text={skill.title}
+                        className={`${styles.grybtn}`}
+                        sx={{ minWidth: "100%", whiteSpace: "nowrap" }}
+                      />
+                    </div>
+                  </>
+                );
+              })}
+            </Stack>
+          </Box>
         </div>
       </div>
     </div>

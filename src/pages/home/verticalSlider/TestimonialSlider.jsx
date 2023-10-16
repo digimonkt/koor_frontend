@@ -2,10 +2,10 @@ import { Box, Grid, Typography } from "@mui/material";
 
 import React, { useState } from "react";
 import Slider from "react-slick";
-import { generateFileUrl } from "@utils/generateFileUrl";
-import { TESTIMONIAL_MAX_WORD } from "@utils/constants/constants";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
+import { TESTIMONIAL_MAX_WORD } from "../../../utils/constants/constants";
 import styles from "./verticalslider.module.css";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 function TestimonialSlider({ testimonialList }) {
   const [nav1, setNav1] = React.useState(null);
   const [nav2, setNav2] = React.useState(null);

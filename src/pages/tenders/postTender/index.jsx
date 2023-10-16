@@ -2,17 +2,17 @@ import { useState, useEffect, useCallback } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { createTenderAPI, updateTenderAPI } from "@api/employer";
+import { createTenderAPI, updateTenderAPI } from "../../../api/employer";
 import dayjs from "dayjs";
-import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
-import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
-import { ErrorMessage } from "@components/caption";
+import { setSuccessToast, setErrorToast } from "../../../redux/slice/toast";
+import { DATABASE_DATE_FORMAT } from "../../../utils/constants/constants";
+import { ErrorMessage } from "../../../components/caption";
 import {
   AttachmentDragNDropInput,
   LabeledInput,
   DateInput,
   SelectInput,
-} from "@components/input";
+} from "../../../components/input";
 import {
   getCountries,
   getCities,
@@ -20,10 +20,10 @@ import {
   getTenderSector,
   getTenderCategories,
   getTenderOpportunityType,
-} from "@redux/slice/choices";
-import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
-import { FilledButton, OutlinedButton } from "@components/button";
-import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
+} from "../../../redux/slice/choices";
+import CurrencyInput from "../../../pages/jobs/postJobs/currencyInput";
+import { FilledButton, OutlinedButton } from "../../../components/button";
+import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import {
   Card,
   CardContent,
@@ -33,13 +33,13 @@ import {
   Stack,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { validateCreateTenderInput } from "@pages/jobs/validator";
-import { getTenderDetailsByIdAPI } from "@api/tender";
-import DialogBox from "@components/dialogBox";
-import { SVG } from "@assets/svg";
+import { validateCreateTenderInput } from "../../../pages/jobs/validator";
+import { getTenderDetailsByIdAPI } from "../../../api/tender";
+import DialogBox from "../../../components/dialogBox";
+import { SVG } from "../../../assets/svg";
 import styles from "./postTender.module.css";
 import { useDebounce } from "usehooks-ts";
-import { GetSuggestedAddressAPI } from "@api/user";
+import { GetSuggestedAddressAPI } from "../../../api/user";
 import urlcat from "urlcat";
 const PostTender = () => {
   const { currentUser } = useSelector((state) => state.auth);

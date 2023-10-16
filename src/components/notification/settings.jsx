@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Switch } from "@mui/material";
-import { getSettingUpdateAPI, settingUpdateAPI } from "@api/user";
+import { getSettingUpdateAPI, settingUpdateAPI } from "../../api/user";
 
 function Settings() {
   const [notification, setNotification] = useState(false);

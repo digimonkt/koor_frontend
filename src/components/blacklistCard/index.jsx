@@ -1,7 +1,7 @@
 import { Avatar, Button, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utcPlugin from "dayjs/plugin/utc";

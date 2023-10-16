@@ -1,11 +1,11 @@
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import {
   AttachmentDragNDropInput,
   CheckboxInput,
   HorizontalLabelInput,
   HorizontalPhoneInput,
   ProfilePicInput,
-} from "@components/input";
+} from "../../../components/input";
 import {
   Card,
   CardContent,
@@ -17,27 +17,34 @@ import {
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { validateEmployerAboutMe } from "../validator";
-import { ErrorMessage } from "@components/caption";
-import { updateEmployerAboutMe } from "@api/employer";
+import { ErrorMessage } from "../../../components/caption";
+import { updateEmployerAboutMe } from "../../../api/employer";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
-import Loader from "@components/loader";
-import { GetSuggestedAddressAPI, UpdateProfileImageAPI } from "@api/user";
-import { ErrorToast, SuccessToast } from "@components/toast";
-import { setProfilePic, updateCurrentUser } from "@redux/slice/user";
-import { FormControlReminder } from "@components/style";
+import Loader from "../../../components/loader";
+import {
+  GetSuggestedAddressAPI,
+  UpdateProfileImageAPI,
+} from "../../../api/user";
+import { ErrorToast, SuccessToast } from "../../../components/toast";
+import { setProfilePic, updateCurrentUser } from "../../../redux/slice/user";
+import { FormControlReminder } from "../../../components/style";
 // import { setSuccessToast } from "@redux/slice/toast";
-import DialogBox from "@components/dialogBox";
-import NoItem from "@pages/jobSeeker/myProfile/noItem";
-import { SVG } from "@assets/svg";
-import { getCities, getCountries, getTenderSector } from "@redux/slice/choices";
+import DialogBox from "../../../components/dialogBox";
+import NoItem from "../../../pages/jobSeeker/myProfile/noItem";
+import { SVG } from "../../../assets/svg";
+import {
+  getCities,
+  getCountries,
+  getTenderSector,
+} from "../../../redux/slice/choices";
 import { useDebounce } from "usehooks-ts";
 import styles from "./myProfile.module.css";
-import { setErrorToast } from "@redux/slice/toast";
+import { setErrorToast } from "../../../redux/slice/toast";
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);

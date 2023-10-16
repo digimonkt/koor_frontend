@@ -1,6 +1,6 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { Avatar, Chip, Divider, Stack } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import React from "react";
 import urlcat from "urlcat";
 import { Link } from "react-router-dom";

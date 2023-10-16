@@ -16,13 +16,13 @@ import {
   DateInput,
   LabeledInput,
   SelectInput,
-} from "@components/input";
+} from "../../../components/input";
 import CurrencyInput from "./currencyInput";
-import { FilledButton, OutlinedButton } from "@components/button";
+import { FilledButton, OutlinedButton } from "../../../components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
-import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
+import { ErrorMessage } from "../../../components/caption";
+import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -32,33 +32,33 @@ import {
   getJobSubCategories,
   getLanguages,
   getSkills,
-} from "@redux/slice/choices";
+} from "../../../redux/slice/choices";
 import {
   buyCreditsAPI,
   createJobAPI,
   getDashboardActivityAPI,
   getMinimumCreditForJobPostAPI,
   updateEmployerJobAPI,
-} from "@api/employer";
-import { ErrorToast, SuccessToast } from "@components/toast";
+} from "../../../api/employer";
+import { ErrorToast, SuccessToast } from "../../../components/toast";
 import dayjs from "dayjs";
-import { getJobDetailsByIdAPI } from "@api/job";
-import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
+import { getJobDetailsByIdAPI } from "../../../api/job";
+import { DATABASE_DATE_FORMAT } from "../../../utils/constants/constants";
 import { useDebounce } from "usehooks-ts";
-import { GetSuggestedAddressAPI } from "@api/user";
+import { GetSuggestedAddressAPI } from "../../../api/user";
 import styles from "./postJobs.module.css";
 import { JobFormControl } from "./style";
-import DialogBox from "@components/dialogBox";
-import { SVG } from "@assets/svg";
+import DialogBox from "../../../components/dialogBox";
+import { SVG } from "../../../assets/svg";
 import urlcat from "urlcat";
 import {
   setJobPostUpdate,
   setMinimumCreditJobPost,
   setTotalAvailableCredits,
-} from "@redux/slice/employer";
-import { getPackageAPI } from "@api/choices";
-import { Package } from "@components/package";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+} from "../../../redux/slice/employer";
+import { getPackageAPI } from "../../../api/choices";
+import { Package } from "../../../components/package";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -458,12 +458,12 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.description}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={9} lg={9} xs={12}>
+                  <Grid item xl={9} lg={9} sm={8} xs={12}>
                     <label>
                       Location<span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           className="location-select"
                           placeholder="Country"
@@ -478,7 +478,7 @@ function PostJobsComponent() {
                           <ErrorMessage>{formik.errors.country}</ErrorMessage>
                         ) : null}
                       </Grid>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           placeholder={formik.values.country ? "City" : "City"}
                           disabled={!formik.values.country}
@@ -496,7 +496,7 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12}>
+                  <Grid item xl={3} lg={3} sm={4} xs={12}>
                     <label>
                       Working place address{" "}
                       <span className="required-field">*</span>
@@ -945,32 +945,34 @@ function PostJobsComponent() {
                     handleBuyPackage={handleBuyPackage}
                   />
                 </Grid>
+                <hr className="mt-3" />
                 <Grid item xl={12} lg={12} xs={12}>
                   <Stack
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
+                    style={{ marginTop: "40px" }}
                   >
                     <OutlinedButton
                       title="Cancel"
                       disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                       sx={{
                         "&.MuiButton-outlined": {
-                          borderRadius: "73px",
-                          border: "0px",
-                          color: "#848484",
-                          fontWeight: "500",
-                          fontSize: "16px",
-                          fontFamily: "Bahnschrift",
-                          padding: "6px 50px",
+                          borderRadius: "73px !important",
+                          border: "1px solid #848484 !important",
+                          color: "#848484 !important",
+                          fontWeight: "600 !important",
+                          fontSize: "16px !important",
+                          fontFamily: "Bahnschrift !important",
+                          padding: "6px 50px !important",
 
                           "&:hover": {
-                            background: "rgba(40, 71, 146, 0.1)",
-                            color: "#274593",
+                            background: "rgba(40, 71, 146, 0.1) !important",
+                            color: "#848484 !important",
                           },
                           "@media (max-width: 992px)": {
-                            padding: "5px 15px",
-                            fontSize: "14px",
+                            padding: "5px 15px !important",
+                            fontSize: "14px !important",
                           },
                         },
                       }}
@@ -991,6 +993,26 @@ function PostJobsComponent() {
                         submitting === SUBMITTING_STATUS_ENUM.loading ||
                         (!jobId && totalAvailableCredits < minimumCreditJobPost)
                       }
+                      sx={{
+                        "&.MuiButton-outlined": {
+                          borderRadius: "73px !important",
+                          border: "1px solid #848484 !important",
+                          color: "#ffffff !important",
+                          fontWeight: "600 !important",
+                          fontSize: "16px !important",
+                          fontFamily: "Bahnschrift !important",
+                          padding: "6px 50px !important",
+                          background: "#274593 !important",
+
+                          "&:hover": {
+                            color: "#848484 !important",
+                          },
+                          "@media (max-width: 992px)": {
+                            padding: "5px 15px !important",
+                            fontSize: "14px !important",
+                          },
+                        },
+                      }}
                     />
                   </Stack>
                 </Grid>

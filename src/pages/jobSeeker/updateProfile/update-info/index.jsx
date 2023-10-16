@@ -1,4 +1,4 @@
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../../components/button";
 import { IconButton, Stack } from "@mui/material";
 import React from "react";
 

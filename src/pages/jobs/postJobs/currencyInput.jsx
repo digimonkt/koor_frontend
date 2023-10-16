@@ -1,8 +1,8 @@
 import { Divider, Stack } from "@mui/material";
 import React from "react";
-import { SelectInput } from "@components/input";
-import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD } from "@utils/enum";
+import { SelectInput } from "../../../components/input";
+import { ErrorMessage } from "../../../components/caption";
+import { PAY_PERIOD } from "../../../utils/enum";
 // input onChange, name and onBlur must be present in optionsValues or else it will not work
 function CurrencyInput({ title, optionsValues, errors, ...rest }) {
   return (

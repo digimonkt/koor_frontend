@@ -12,7 +12,8 @@ function HorizontalDateInputComponent({ label, ...rest }) {
     >
       <label className="w-30">{label}</label>
       <div className="w-70">
-        <DateInputComponent label={label} {...rest} />
+        <DateInputComponent {...rest} />
+        {/* label={label} */}
       </div>
     </Stack>
   );

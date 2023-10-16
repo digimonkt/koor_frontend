@@ -6,14 +6,14 @@ import {
   // MenuList,
   Stack,
 } from "@mui/material";
-import { OutlinedButton, SearchButton } from "@components/button";
-import { SVG } from "@assets/svg";
+import { OutlinedButton, SearchButton } from "../../../components/button";
+import { SVG } from "../../../assets/svg";
 import {
   deleteSearchJobsFilterAPI,
   getSearchJobsFilterAPI,
   saveSearchJobsFilterAPI,
   updateSavedSearchFilterAPI,
-} from "@api/job";
+} from "../../../api/job";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -24,26 +24,26 @@ import {
   getTenderCategories,
   getTenderSector,
   getJobSubCategories,
-} from "@redux/slice/choices";
-import { setAdvanceFilter, setSearchTrue } from "@redux/slice/search";
+} from "../../../redux/slice/choices";
+import { setAdvanceFilter, setSearchTrue } from "../../../redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
 import { useFormik } from "formik";
-import DialogBox from "@components/dialogBox";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import DialogBox from "../../../components/dialogBox";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import SaveFilter from "./saveFilter";
 import TalentFilter from "./talentFilter";
-import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
+import { SEARCH_TYPE, USER_ROLES } from "../../../utils/enum";
 import {
   DATABASE_DATE_FORMAT,
   SALARY_MAX,
   SALARY_MIN,
-} from "@utils/constants/constants";
+} from "../../../utils/constants/constants";
 import {
   deleteSearchUserFilterAPI,
   getSearchUserFilterAPI,
   saveSearchUserFilterAPI,
   updateSavedSearchUserFilterAPI,
-} from "@api/user";
+} from "../../../api/user";
 import TenderFilter from "./tenderFilter";
 import dayjs from "dayjs";
 import {
@@ -55,7 +55,7 @@ import {
   saveSearchVendorFilterAPI,
   updateSavedSearchTenderFilterAPI,
   updateSavedSearchVendorFilterAPI,
-} from "@api/vendor";
+} from "../../../api/vendor";
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {

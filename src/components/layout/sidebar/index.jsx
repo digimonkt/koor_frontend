@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { SVG } from "@assets/svg";
-import { USER_ROLES } from "@utils/enum";
+import { SVG } from "../../../assets/svg";
+import { USER_ROLES } from "../../../utils/enum";
 import { navigationOptions } from "./navigation";
 import "./styles.css";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
-import { LogoutUserAPI } from "@api/user";
-import { globalLocalStorage } from "@utils/localStorage";
-import { setIsLoggedIn } from "@redux/slice/user";
+import { LogoutUserAPI } from "../../../api/user";
+import { globalLocalStorage } from "../../../utils/localStorage";
+import { setIsLoggedIn } from "../../../redux/slice/user";
 
 const drawerWidth = 300;
 
@@ -33,8 +33,8 @@ function Sidebar(props) {
     const currentUserMobileNumber =
       currentUser.countryCode && currentUser.mobileNumber
         ? formatPhoneNumberIntl(
-          currentUser.countryCode + currentUser.mobileNumber
-        )
+            currentUser.countryCode + currentUser.mobileNumber
+          )
         : "";
     setMobileNumber(currentUserMobileNumber);
   }, [currentUser]);
@@ -73,8 +73,9 @@ function Sidebar(props) {
       <div className="sidebar-scroll">
         <PerfectScrollbar component="div">
           <ul
-            className={`sidebar-menu ${role !== USER_ROLES.jobSeeker ? "activemenu" : ""
-              }`}
+            className={`sidebar-menu ${
+              role !== USER_ROLES.jobSeeker ? "activemenu" : ""
+            }`}
           >
             <li>
               {navigationOptions(role).map((option) => (
@@ -111,8 +112,8 @@ function Sidebar(props) {
               role === USER_ROLES.employer
                 ? "#274593"
                 : role === USER_ROLES.vendor
-                  ? "#274593"
-                  : null,
+                ? "#274593"
+                : null,
           }}
         >
           <Stack direction="row" spacing={2} alignItems="center">

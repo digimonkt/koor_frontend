@@ -12,15 +12,15 @@ import {
 
 import { Link, useLocation } from "react-router-dom";
 import { menu } from "./helper";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { useState, useEffect } from "react";
-import { getTopCategoriesAPI } from "@api/job";
-import { storeNewsletterAPI } from "@api/home";
-import { ErrorToast, SuccessToast } from "@components/toast";
+import { getTopCategoriesAPI } from "../../api/job";
+import { storeNewsletterAPI } from "../../api/home";
+import { ErrorToast, SuccessToast } from "../../components/toast";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
-import DialogBox from "@components/dialogBox";
+import { USER_ROLES } from "../../utils/enum";
+import DialogBox from "../../components/dialogBox";
 
 const InnerFooter = () => {
   const currentURL = window.location.pathname;
