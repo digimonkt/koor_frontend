@@ -23,7 +23,7 @@ export const SelectBox = styled(Select)`
     border-radius: 0px;
     font-family: "Poppins";
     font-style: normal;
-    font-weight: 500;
+    font-weight: 300;
     font-size: 16px;
     line-height: 22px;
 

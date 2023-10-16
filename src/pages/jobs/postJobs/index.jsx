@@ -591,7 +591,7 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12} className="mt-2">
+                  <Grid item xl={5} lg={5} xs={12} className="mt-2">
                     <label>Job type</label>
                     <FormGroup
                       row
@@ -641,7 +641,7 @@ function PostJobsComponent() {
                       />
                     </FormGroup>
                   </Grid>
-                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
+                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
                     <LabeledInput
                       title="Duration in Month"
                       className="add-form-control"
@@ -653,7 +653,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.duration}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"
@@ -676,7 +676,7 @@ function PostJobsComponent() {
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"

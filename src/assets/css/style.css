@@ -29,6 +29,22 @@ body {
   margin: 0 !important;
 }
 
+.credits_title {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 2%;
+  color: #121212;
+  margin: 0;
+}
+
+.credits_head_credit {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2%;
+  color: #121212;
+  margin: 0;
+}
+
 .work-experience-text-editor .ql-snow .ql-tooltip {
   position: fixed !important;
   left: 44rem !important;
