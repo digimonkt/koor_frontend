@@ -39,6 +39,7 @@ const Dashboard = () => {
     sites: [],
     total: 0,
   });
+  console.log("----env------", process.env.REACT_APP_BACKEND_URL);
   const { jobPostUpdate } = useSelector((state) => state.employer);
   const getRecentApplications = async () => {
     setIsLoading(true);
