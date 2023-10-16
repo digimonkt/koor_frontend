@@ -1,6 +1,6 @@
-import { GetUserDetailsAPI } from "@api/user";
+import { GetUserDetailsAPI } from "../../api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { EMPLOYMENT_STATUS, GENDER, PAY_PERIOD } from "@utils/enum";
+import { EMPLOYMENT_STATUS, GENDER, PAY_PERIOD } from "../../utils/enum";
 
 /**
  * **NOTE**: Vendor is pending.
@@ -52,7 +52,7 @@ const initialState = {
       isFullTime: false,
       hasContract: false,
       expectedSalary: 0,
-      payPeriod: PAY_PERIOD.month
+      payPeriod: PAY_PERIOD.month,
     },
     /**
      *  {
@@ -309,6 +309,6 @@ export const {
   deleteWorkExperienceRecord,
   setCurrentLocation,
   setSocialLoginError,
-  setIsBlackListedByEmployer
+  setIsBlackListedByEmployer,
 } = authSlice.actions;
 export default authSlice.reducer;

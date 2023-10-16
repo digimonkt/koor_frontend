@@ -1,5 +1,5 @@
 import { IMAGES } from "@assets/images";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { Chip } from "@mui/material";
 export const RECENT_ITEMS = [
   {

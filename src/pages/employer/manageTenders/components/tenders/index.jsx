@@ -1,14 +1,14 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Box, Card, CardContent, Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../../../assets/svg";
 
-import { getTenderAPI } from "@api/employer";
+import { getTenderAPI } from "../../../../../api/employer";
 import { useDispatch } from "react-redux";
-import { setTotalTenders } from "@redux/slice/employer";
-import TenderCard from "@components/tenderCard";
+import { setTotalTenders } from "../../../../../redux/slice/employer";
+import TenderCard from "../../../../../components/tenderCard";
 import ApplicantList from "../applicantList";
-import { NoDataFoundAnimation } from "@components/animations";
-import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
+import { NoDataFoundAnimation } from "../../../../../components/animations";
+import TenderCardSkeletonLoader from "../../../../../components/tenderCard/tenderCardSkeletonLoader";
 
 const Tenders = () => {
   const dispatch = useDispatch();

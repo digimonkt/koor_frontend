@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getUserRightsAPI } from "@api/common";
-import ShowContent from "@components/showContent";
+import { getUserRightsAPI } from "../../api/common";
+import ShowContent from "../../components/showContent";
 const TermsCondition = () => {
   const [userRightData, setUserRightData] = useState("");
 

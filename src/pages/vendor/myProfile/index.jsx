@@ -10,32 +10,39 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import { styled } from "@mui/material/styles";
 
-import { OutlinedButton } from "@components/button";
-import DialogBox from "@components/dialogBox";
+import { OutlinedButton } from "../../../components/button";
+import DialogBox from "../../../components/dialogBox";
 import {
   AttachmentDragNDropInput,
   CheckboxInput,
   HorizontalLabelInput,
   HorizontalPhoneInput,
   ProfilePicInput,
-} from "@components/input";
-import { SVG } from "@assets/svg";
-import { FormControlReminder } from "@components/style";
+} from "../../../components/input";
+import { SVG } from "../../../assets/svg";
+import { FormControlReminder } from "../../../components/style";
 import { useDispatch, useSelector } from "react-redux";
-import { getCities, getCountries, getTenderSector } from "@redux/slice/choices";
-import NoItem from "@pages/jobSeeker/myProfile/noItem";
+import {
+  getCities,
+  getCountries,
+  getTenderSector,
+} from "../../../redux/slice/choices";
+import NoItem from "../../../pages/jobSeeker/myProfile/noItem";
 import { useFormik } from "formik";
 import { useDebounce } from "usehooks-ts";
-import { GetSuggestedAddressAPI, UpdateProfileImageAPI } from "@api/user";
+import {
+  GetSuggestedAddressAPI,
+  UpdateProfileImageAPI,
+} from "../../../api/user";
 import styles from "./myProfile.module.css";
-import { ErrorMessage } from "@components/caption";
+import { ErrorMessage } from "../../../components/caption";
 import { validateVendorAboutMe } from "../validate";
-import { updateVendorAboutMeAPI } from "@api/vendor";
+import { updateVendorAboutMeAPI } from "../../../api/vendor";
 import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
-import { updateCurrentUser, setProfilePic } from "@redux/slice/user";
+import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
 
@@ -566,6 +573,7 @@ function MyProfile() {
                       type="submit"
                       variant="outlined"
                       title="update info"
+                      startIcon={<SVG.CheckIcon />}
                     />
                   </div>
                 </form>

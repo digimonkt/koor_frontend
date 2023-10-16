@@ -1,7 +1,7 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React, { useState } from "react";
 // import ModalView from "../updateProfile/modal";
-import DialogBox from "@components/dialogBox";
+import DialogBox from "../../../components/dialogBox";
 import UpdateInfo from "../updateProfile/update-info";
 import AreaChart from "../myProfile/chart";
 import ResumeUpdate from "../updateProfile/resume-update";

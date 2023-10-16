@@ -1,16 +1,10 @@
-import {
-  Card,
-  CardContent,
-  Chip,
-  Divider,
-  Stack,
-} from "@mui/material";
+import { Card, CardContent, Chip, Divider, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-import { getAppliedTendersAPI } from "@api/vendor";
-import { NoDataFoundAnimation } from "@components/animations";
-import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
-import TenderCard from "@components/tenderCard";
+import { getAppliedTendersAPI } from "../../../api/vendor";
+import { NoDataFoundAnimation } from "../../../components/animations";
+import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
+import TenderCard from "../../../components/tenderCard";
 
 function AppliedTenderComponent() {
   const [appliedTenderList, setAppliedTenderList] = useState([]);

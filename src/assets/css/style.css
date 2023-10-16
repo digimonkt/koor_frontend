@@ -9,7 +9,7 @@ body {
 }
 
 .job_card_chip .MuiChip-label {
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .job_card .MuiGrid-root {
@@ -228,6 +228,7 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   color: #121212;
   font-size: 16px;
   font-weight: 300;
+  font-family: "Poppins" !important;
 }
 
 .lables li {
@@ -314,10 +315,10 @@ header {
   background: #eea23d !important;
   border-radius: 73px !important;
   padding: 10px 30px !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   color: #ffffff !important;
-  font-family: "Bahnschrift" !important;
+  font-family: "Poppins" !important;
   letter-spacing: 0.03em !important;
   border: 1px solid #eea23d !important;
 }
@@ -528,7 +529,8 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 10px;
+  top: 50%;
+  transform: translate(0%, -50%);
 }
 
 .spaceor {
@@ -915,8 +917,8 @@ hr {
   border: 0;
   font-family: "Poppins";
   font-style: normal;
-  font-weight: 400;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 16px;
   line-height: 22px;
   height: 38px;
   letter-spacing: 0.02em;
@@ -986,9 +988,10 @@ hr {
   height: 90px;
   padding: 6px 12px;
   font-family: "Poppins";
-  font-size: 12px;
+  font-size: 16px;
   box-sizing: border-box;
   color: #121212;
+  font-weight: 300;
 }
 
 .description {
@@ -1007,6 +1010,7 @@ hr {
   border-radius: 10px;
   padding: 30px;
   width: 520px;
+  margin: 15px;
 }
 
 .dropimg-userprofile {
@@ -1536,8 +1540,17 @@ span.count {
     width: 100%;
   }
 
+  .edit_work_experience_btn {
+    text-align: center;
+    margin-top: 70px;
+  }
+
   .manage-jobs_tab_div span {
     font-size: 24px;
+  }
+
+  .form-control-area {
+    font-size: 14px;
   }
 
   .manage-jobs_tab_div .MuiButtonBase-root.MuiTab-root {
@@ -1942,6 +1955,11 @@ span.count {
     display: block;
   }
 
+  .add-form-control {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
   .menu.menu-selected {
     visibility: visible;
     opacity: 1;
@@ -2096,7 +2114,7 @@ input.employersearch {
     border: 1px solid #274593 !important;
     border-radius: 73px !important;
     padding: 10px 30px !important;
-    color: #274593 !important;
+    color: #848484 !important;
     font-size: 16px !important;
     letter-spacing: 0.03em !important;
     font-family: "Bahnschrift" !important;
@@ -2296,6 +2314,21 @@ input.employersearch {
   .reset_password_btn {
     font-size: 14px !important;
   }
+  .lables span {
+    font-size: 14px;
+  }
+  .form-control-area {
+    font-weight: 300;
+  }
+
+  .add-form-control {
+    font-size: 14px;
+  }
+
+  .edit_work_experience_btn {
+    text-align: center;
+    margin-top: 150px;
+  }
 
   .save_filter_popup_txt {
     font-size: 14px;
@@ -2463,5 +2496,20 @@ input.employersearch {
 
   .css-bb18k4-MuiButtonBase-root-MuiButton-root {
     font-size: 16px;
+  }
+}
+.register-app > a {
+  border-radius: 16px !important;
+}
+.upto-slide {
+  margin-right: 24px;
+}
+
+@media screen and (max-width: 992px) {
+  .label-100 {
+    flex-direction: column !important;
+  }
+  .upto-slide {
+    margin-right: 0px;
   }
 }

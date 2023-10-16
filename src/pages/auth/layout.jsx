@@ -1,22 +1,24 @@
 /* eslint-disable react/display-name */
 import { Box, Container, Grid, Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
-import { Card, CardContent } from "@components/card";
-import { USER_ROLES } from "@utils/enum";
+import { SVG } from "../../assets/svg";
+import { Card, CardContent } from "../../components/card";
+import { USER_ROLES } from "../../utils/enum";
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setSocialLoginError, setUserRole } from "@redux/slice/user";
-import { processRoleToDisplay } from "@utils/constants/utility";
-import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
-import { setErrorToast } from "@redux/slice/toast";
-import { SocialLoginAPI } from "@api/user";
+import { setSocialLoginError, setUserRole } from "../../redux/slice/user";
+import { processRoleToDisplay } from "../../utils/constants/utility";
+// import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
+import { setErrorToast } from "../../redux/slice/toast";
+import { SocialLoginAPI } from "../../api/user";
 import {
   loginWithAppleFacebookPopupProvider,
   loginWithFacebookPopupProvider,
 } from "src/firebaseProvider/auth";
 import Marquee from "react-fast-marquee";
-
+// import { platform } from "os";
+import { Capacitor } from "@capacitor/core";
+const platform = Capacitor.getPlatform();
 const AuthOptions = [
   {
     id: "jobSeeker",
@@ -55,35 +57,35 @@ function AuthLayout({
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const loginWithGoogle = async () => {
-      if (!role) {
-        dispatch(setErrorToast("Select Role"));
-        return;
-      }
-      setLoading(false);
-      const res = await loginWithGooglePopupProvider();
-      if (res.remote === "success") {
-        const payload = {
-          email: res.data.email,
-          role,
-          name: res.data.displayName,
-          display_image: res.data.photoURL,
-          source: "google",
-        };
-        for (const key in payload) {
-          if (!payload[key]) {
-            delete payload[key];
-          }
-        }
-        const result = await SocialLoginAPI(payload);
-        if (result.remote === "success") {
-          console.log({ result });
-        } else {
-          dispatch(setSocialLoginError(result.error.errors.message));
-        }
-      }
-      setLoading(true);
-    };
+    // const loginWithGoogle = async () => {
+    //   if (!role) {
+    //     dispatch(setErrorToast("Select Role"));
+    //     return;
+    //   }
+    //   setLoading(false);
+    //   const res = await loginWithGooglePopupProvider();
+    //   if (res.remote === "success") {
+    //     const payload = {
+    //       email: res.data.email,
+    //       role,
+    //       name: res.data.displayName,
+    //       display_image: res.data.photoURL,
+    //       source: "google",
+    //     };
+    //     for (const key in payload) {
+    //       if (!payload[key]) {
+    //         delete payload[key];
+    //       }
+    //     }
+    //     const result = await SocialLoginAPI(payload);
+    //     if (result.remote === "success") {
+    //       console.log({ result });
+    //     } else {
+    //       dispatch(setSocialLoginError(result.error.errors.message));
+    //     }
+    //   }
+    //   setLoading(true);
+    // };
     const loginWithApple = async () => {
       if (!role) {
         dispatch(setErrorToast("Select Role"));
@@ -153,11 +155,11 @@ function AuthLayout({
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
       <div
-        className={`register pb-0 pt-5 py-lg-5 ${
+        className={`register pb-0 py-lg-5 ${
           role === USER_ROLES.employer || role === USER_ROLES.vendor
             ? "vendor"
             : ""
-        }`}
+        }${platform === "andriod" || platform === "ios" ? null : "pt-5"}`}
       >
         <Container
           sx={{
@@ -175,17 +177,17 @@ function AuthLayout({
             sx={{
               fontFamily: "Bahnschrift",
               textAlign: "center",
-              marginBottom: "25px",
+              padding: "50px 0px 40px",
               color: "#fff",
               "& h5": { fontSize: "40px", color: "#fff", margin: "0px" },
               "& p": { fontSize: "16px", margin: "0px" },
-              "@media(min-width:992px)": {
+              "@media(min-width:600px)": {
                 display: "none",
               },
             }}
           >
-            {/* <h5>Welcome!</h5> */}
-            {/* <p>I want to register as...</p> */}
+            <h5>Welcome!</h5>
+            <p>I want to register as...</p>
           </Box>
           <Box
             sx={{
@@ -252,15 +254,22 @@ function AuthLayout({
                     <div className="content-box">
                       <Box
                         sx={{
-                          "@media(max-width:992px)": {
-                            display: "",
+                          "@media(max-width:600px)": {
+                            display: "none",
                           },
                         }}
                       >
                         <h5 data-cy="title">{title}</h5>
                         <p data-cy="subTitle">{subTitle}</p>
                       </Box>
-                      <div className="register-des" data-cy="authOptions">
+                      <div
+                        className={`register-des ${
+                          platform === "android" || platform === "ios"
+                            ? "register-app"
+                            : ""
+                        }`}
+                        data-cy="authOptions"
+                      >
                         {AuthOptions.map((option) => {
                           return (
                             <Link
@@ -287,6 +296,45 @@ function AuthLayout({
                             </Link>
                           );
                         })}
+                        {platform === "android" || platform === "ios" ? (
+                          <>
+                            <Box
+                              sx={{
+                                marginTop: "80px",
+                                textAlign: "center",
+                                color: "#848484",
+                                fontSize: "14px",
+                                fontWeight: "400",
+                                letterSpacing: " 0.14px",
+                                fontFamily: "Poppins",
+                              }}
+                            >
+                              Already have an account?{" "}
+                              <Link
+                                href="#"
+                                style={{ color: "#EEA23D", fontWeight: "600" }}
+                              >
+                                Log in
+                              </Link>
+                            </Box>
+                            <Box
+                              sx={{
+                                textAlign: "center",
+                                marginTop: "12px",
+                                "& span": {
+                                  display: "inline-block",
+                                  width: "100px",
+                                  height: "4px",
+                                  background: "#121212",
+                                },
+                              }}
+                            >
+                              <span></span>
+                            </Box>
+                          </>
+                        ) : (
+                          ""
+                        )}
                         {/* <Box
                           sx={{
                             color: "#848484",
@@ -352,7 +400,7 @@ function AuthLayout({
                               justifyContent="center"
                             >
                               <div
-                                onClick={loginWithGoogle}
+                                // onClick={loginWithGoogle}
                                 disabled={loading}
                                 style={{ cursor: "pointer" }}
                               >

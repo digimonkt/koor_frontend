@@ -1,9 +1,9 @@
-import { getTenderSearchAPI } from "@api/tender";
-import { getSearchJobsAPI } from "@api/job";
-import { searchUserByRole } from "@api/user";
+import { getTenderSearchAPI } from "../../api/tender";
+import { getSearchJobsAPI } from "../../api/job";
+import { searchUserByRole } from "../../api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { SALARY_MAX, SALARY_MIN } from "@utils/constants/constants";
-import { USER_ROLES } from "@utils/enum";
+import { SALARY_MAX, SALARY_MIN } from "../../utils/constants/constants";
+import { USER_ROLES } from "../../utils/enum";
 
 const initialState = {
   jobs: [],

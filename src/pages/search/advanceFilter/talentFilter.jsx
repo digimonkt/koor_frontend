@@ -1,16 +1,16 @@
-import { ErrorMessage } from "@components/caption";
+import { ErrorMessage } from "../../../components/caption";
 import {
   CheckboxInput,
   HorizontalLabelInput,
   LabeledInput,
   SelectInput,
-} from "@components/input";
+} from "../../../components/input";
 import { FormControl, FormGroup, Grid } from "@mui/material";
-import { JobFormControl } from "@pages/jobs/postJobs/style";
+import { JobFormControl } from "../../../pages/jobs/postJobs/style";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
-import { getJobSubCategories } from "@redux/slice/choices";
+import { getJobSubCategories } from "../../../redux/slice/choices";
 
 function TalentFilter({ formik, footer, responsive }) {
   const dispatch = useDispatch();

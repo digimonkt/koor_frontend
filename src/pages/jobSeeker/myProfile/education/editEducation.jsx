@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import { OutlinedButton } from "@components/button";
+import { SVG } from "../../../../assets/svg";
+import { OutlinedButton } from "../../../../components/button";
 import {
   CheckboxInput,
   DateInput,
   LabeledInput,
   SelectInput,
-} from "@components/input";
+} from "../../../../components/input";
 import { Grid } from "@mui/material";
 import { useFormik } from "formik";
-import { FormControlReminder } from "@components/style";
+import { FormControlReminder } from "../../../../components/style";
 import { validateEditEducation } from "../validator";
-import { ErrorMessage } from "@components/caption";
+import { ErrorMessage } from "../../../../components/caption";
 import dayjs from "dayjs";
-import { DATABASE_DATE_FORMAT, DATE_FORMAT } from "@utils/constants/constants";
+import {
+  DATABASE_DATE_FORMAT,
+  DATE_FORMAT,
+} from "../../../../utils/constants/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addEducationDetailsAPI,
   updateEducationDetailsAPI,
-} from "@api/jobSeeker";
-import { setSuccessToast } from "@redux/slice/toast";
-import Loader from "@components/loader";
-import { addEducationRecord, updateEducationRecord } from "@redux/slice/user";
+} from "../../../../api/jobSeeker";
+import { setSuccessToast } from "../../../../redux/slice/toast";
+import Loader from "../../../../components/loader";
+import {
+  addEducationRecord,
+  updateEducationRecord,
+} from "../../../../redux/slice/user";
 
 const color = "#EEA23D";
 const buttonHover = "#eea23d14";
@@ -173,15 +179,15 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
           </label>
           <Grid container spacing={2}>
             <Grid item lg={6} xs={12}>
+              <label className="label-edit">Start</label>
               <DateInput
-                label="Start"
                 views={["year"]}
                 onChange={(e) => formik.setFieldValue("startDate", e)}
                 maxDate={dayjs()}
                 value={formik.values.startDate}
                 onBlur={formik.getFieldProps("startDate").onBlur}
                 inputProps={{
-                  placeholder: "Select year"
+                  placeholder: "Select year",
                 }}
               />
               {formik.touched.startDate && formik.errors.startDate ? (
@@ -189,8 +195,8 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
               ) : null}
             </Grid>
             <Grid item lg={6} xs={12}>
+              <label className="label-edit">End</label>
               <DateInput
-                label="End"
                 views={["year"]}
                 placeholder={"Slect year"}
                 onChange={(e) => formik.setFieldValue("endDate", e)}
@@ -199,7 +205,7 @@ function EditEducation({ handleSubmit, currentSelected, handleClose }) {
                 maxDate={dayjs().year(dayjs().year())}
                 onBlur={formik.getFieldProps("endDate").onBlur}
                 inputProps={{
-                  placeholder: "Select year"
+                  placeholder: "Select year",
                 }}
                 disabled={formik.values.isPresent || !formik.values.startDate}
               />

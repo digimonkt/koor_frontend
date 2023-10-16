@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./inputsearch.module.css";
 
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 
 const InputSearch = ({ placeholder, svg, ...rest }) => {
   return (

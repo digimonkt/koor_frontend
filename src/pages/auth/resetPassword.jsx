@@ -1,10 +1,10 @@
-import { ResetPasswordAPI } from "@api/user";
-import { FilledButton } from "@components/button";
-import { ErrorMessage } from "@components/caption";
-import { LabeledInput } from "@components/input";
-import Loader from "@components/loader";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { setUserRole } from "@redux/slice/user";
+import { ResetPasswordAPI } from "../../api/user";
+import { FilledButton } from "../../components/button";
+import { ErrorMessage } from "../../components/caption";
+import { LabeledInput } from "../../components/input";
+import Loader from "../../components/loader";
+import { setErrorToast, setSuccessToast } from "../../redux/slice/toast";
+import { setUserRole } from "../../redux/slice/user";
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

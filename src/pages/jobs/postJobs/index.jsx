@@ -16,13 +16,13 @@ import {
   DateInput,
   LabeledInput,
   SelectInput,
-} from "@components/input";
+} from "../../../components/input";
 import CurrencyInput from "./currencyInput";
-import { FilledButton, OutlinedButton } from "@components/button";
+import { FilledButton, OutlinedButton } from "../../../components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
-import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
+import { ErrorMessage } from "../../../components/caption";
+import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -32,33 +32,33 @@ import {
   getJobSubCategories,
   getLanguages,
   getSkills,
-} from "@redux/slice/choices";
+} from "../../../redux/slice/choices";
 import {
   buyCreditsAPI,
   createJobAPI,
   getDashboardActivityAPI,
   getMinimumCreditForJobPostAPI,
   updateEmployerJobAPI,
-} from "@api/employer";
-import { ErrorToast, SuccessToast } from "@components/toast";
+} from "../../../api/employer";
+import { ErrorToast, SuccessToast } from "../../../components/toast";
 import dayjs from "dayjs";
-import { getJobDetailsByIdAPI } from "@api/job";
-import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
+import { getJobDetailsByIdAPI } from "../../../api/job";
+import { DATABASE_DATE_FORMAT } from "../../../utils/constants/constants";
 import { useDebounce } from "usehooks-ts";
-import { GetSuggestedAddressAPI } from "@api/user";
+import { GetSuggestedAddressAPI } from "../../../api/user";
 import styles from "./postJobs.module.css";
 import { JobFormControl } from "./style";
-import DialogBox from "@components/dialogBox";
-import { SVG } from "@assets/svg";
+import DialogBox from "../../../components/dialogBox";
+import { SVG } from "../../../assets/svg";
 import urlcat from "urlcat";
 import {
   setJobPostUpdate,
   setMinimumCreditJobPost,
   setTotalAvailableCredits,
-} from "@redux/slice/employer";
-import { getPackageAPI } from "@api/choices";
-import { Package } from "@components/package";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+} from "../../../redux/slice/employer";
+import { getPackageAPI } from "../../../api/choices";
+import { Package } from "../../../components/package";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -387,7 +387,7 @@ function PostJobsComponent() {
         >
           <div className="job-content">
             <h2>
-              {jobId ? "Update Job" : "Post a new job"}
+              {jobId ? "Update Job" : "Post new job"}
               <span className="right-pull">
                 <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
                   <CloseIcon />
@@ -424,7 +424,7 @@ function PostJobsComponent() {
                   <Grid item xl={4} lg={4}>
                     <CurrencyInput
                       currency="USD"
-                      title="Budget"
+                      title="Salary"
                       optionsValues={{
                         currency: formik.getFieldProps("budgetCurrency"),
                         input: formik.getFieldProps("budgetAmount"),
@@ -483,7 +483,7 @@ function PostJobsComponent() {
                           placeholder={
                             formik.values.country
                               ? "City"
-                              : "Select Country first"
+                              : "City"
                           }
                           disabled={!formik.values.country}
                           options={(
@@ -502,7 +502,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12}>
                     <label>
-                      Working place address{" "}
+                      Working place addressF{" "}
                       <span className="required-field">*</span>
                     </label>
                     <div className={styles.positionReltive}>
@@ -603,21 +603,42 @@ function PostJobsComponent() {
                     >
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
+                        control={
+                          <CheckboxInput
+                            sx={{
+                              padding: "9px 5px",
+                              fontSize: "16px !important",
+                            }}
+                          />
+                        }
                         label="Part Time"
                         checked={formik.values.isPartTime}
                         {...formik.getFieldProps("isPartTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
+                        control={
+                          <CheckboxInput
+                            sx={{
+                              padding: "9px 5px",
+                              fontSize: "16px !important",
+                            }}
+                          />
+                        }
                         label="Full Time"
                         checked={formik.values.isFullTime}
                         {...formik.getFieldProps("isFullTime")}
                       />
                       <JobFormControl
                         className="update_checkbox"
-                        control={<CheckboxInput sx={{ padding: "9px 5px" }} />}
+                        control={
+                          <CheckboxInput
+                            sx={{
+                              padding: "9px 5px",
+                              fontSize: "16px !important",
+                            }}
+                          />
+                        }
                         label="Contract"
                         checked={formik.values.hasContract}
                         {...formik.getFieldProps("hasContract")}
@@ -686,7 +707,7 @@ function PostJobsComponent() {
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <h2 className="mt-3">Additional ways to apply</h2>
+                    <h2 className="mt-3">Ways to apply</h2>
                   </Grid>
                   <Grid item xl={4} lg={4} xs={12}>
                     <JobFormControl
@@ -967,7 +988,7 @@ function PostJobsComponent() {
                             : "Posting..."
                           : jobId
                           ? "UPDATE THE JOB"
-                          : "POST THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={

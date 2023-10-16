@@ -1,4 +1,4 @@
-import { getJobAnalyticsAPI } from "@api/employer";
+import { getJobAnalyticsAPI } from "../../../../api/employer";
 import { Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";

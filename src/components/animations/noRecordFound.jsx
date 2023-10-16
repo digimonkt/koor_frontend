@@ -1,4 +1,4 @@
-import { ANIMATIONS } from "@assets/animation";
+import { ANIMATIONS } from "../../assets/animation";
 import React from "react";
 import Lottie from "react-lottie";
 import styles from "./animations.module.css";

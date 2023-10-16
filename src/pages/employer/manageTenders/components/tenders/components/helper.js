@@ -1,5 +1,5 @@
 import { Chip } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { IMAGES } from "@assets/images";
 
 export const MANAGE_TENDERS_ITEMS = [

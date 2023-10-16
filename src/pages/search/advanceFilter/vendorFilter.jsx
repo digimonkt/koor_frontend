@@ -1,10 +1,10 @@
-import { ErrorMessage } from "@components/caption";
-import { LabeledInput, SelectInput } from "@components/input";
+import { ErrorMessage } from "../../../components/caption";
+import { LabeledInput, SelectInput } from "../../../components/input";
 import { FormControl, Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
-import { getTenderSector } from "@redux/slice/choices";
+import { getTenderSector } from "../../../redux/slice/choices";
 
 function VendorFilter({ formik, footer, responsive }) {
   const dispatch = useDispatch();

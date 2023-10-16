@@ -4,12 +4,12 @@ import {
   EMPLOYER_ROUTES,
   JOB_SEEKER_ROUTES,
   VENDOR_ROUTES,
-} from "@utils/constants/routes";
-import { EmployerRoute, JobSeekerRoute, VendorRoute } from "@utils/routes";
+} from "../../utils/constants/routes";
+import { EmployerRoute, JobSeekerRoute, VendorRoute } from "../../utils/routes";
 import Sidebar from "./sidebar";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 import { Suspense, useState } from "react";
-import { FallbackLoading } from "@components/loader/fallbackLoader";
+import { FallbackLoading } from "../../components/loader/fallbackLoader";
 import MenuIcon from "@mui/icons-material/Menu";
 
 function Layout() {

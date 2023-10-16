@@ -1,8 +1,8 @@
 import { Divider, Stack } from "@mui/material";
 import React from "react";
-import { SelectInput } from "@components/input";
-import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD } from "@utils/enum";
+import { SelectInput } from "../../../components/input";
+import { ErrorMessage } from "../../../components/caption";
+import { PAY_PERIOD } from "../../../utils/enum";
 // input onChange, name and onBlur must be present in optionsValues or else it will not work
 function CurrencyInput({ title, optionsValues, errors, ...rest }) {
   return (
@@ -32,11 +32,12 @@ function CurrencyInput({ title, optionsValues, errors, ...rest }) {
             sx={{
               "& .MuiSelect-select": {
                 paddingLeft: "0px",
+                fontSize: "10px  !important",
               },
             }}
             options={Object.keys(PAY_PERIOD).map((period) => ({
               value: PAY_PERIOD[period],
-              label: `per ${period}`,
+              label: `Per ${period}`,
             }))}
             style={{ width: "42%" }}
             {...((optionsValues && optionsValues.payPeriod) || {})}

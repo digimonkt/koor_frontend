@@ -1,5 +1,5 @@
-import { GetUserDetailsAPI, storeProfileAnalyticsAPI } from "@api/user";
-import { SVG } from "@assets/svg";
+import { GetUserDetailsAPI, storeProfileAnalyticsAPI } from "../../../api/user";
+import { SVG } from "../../../assets/svg";
 import {
   Box,
   CardContent,
@@ -12,16 +12,16 @@ import {
   Divider,
   Chip,
 } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import WorkExperienceCard from "@components/workExperienceCard";
-import { NoRecordFoundAnimation } from "@components/animations";
-import EducationCard from "@components/educationCard";
+import WorkExperienceCard from "../../../components/workExperienceCard";
+import { NoRecordFoundAnimation } from "../../../components/animations";
+import EducationCard from "../../../components/educationCard";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
-import LanguageCard from "@components/languageCard";
+import LanguageCard from "../../../components/languageCard";
 import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
-import { FilledButton } from "@components/button";
+import { FilledButton } from "../../../components/button";
 import html2pdf from "html2pdf.js";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 
@@ -144,6 +144,7 @@ export default function PublicProfileComponent() {
                               color: "rgb(18 18 18 / 50%)",
                               margin: "3px 0px",
                               fontFamily: "Poppins",
+                              fontSize: "18px",
                             }}
                           >
                             {userDetails.profile.highestEducation?.title}
