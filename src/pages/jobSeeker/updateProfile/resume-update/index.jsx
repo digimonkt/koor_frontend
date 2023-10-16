@@ -81,7 +81,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 <span className="me-2 d-inline-flex">
                   <SVG.DownloadIcon />
                 </span>
-                UPLOAD YOUR RESUME
+                DOWNLOAD YOUR RESUME
               </>
             }
             onClick={() => setOpenResume(true)}
@@ -135,6 +135,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
             disabled={isDownloadingPDF || isDownloadingDocs}
           />
           <FilledButton
+            sx={{ marginLeft: "10px" }}
             title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
             onClick={downloadDocs}
             style={{ marginBottom: "10px" }}
