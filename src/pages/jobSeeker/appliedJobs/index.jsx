@@ -134,7 +134,7 @@ function AppliedJobsComponent() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
+              <h5 className="px-3 mt-0 mb-1">Sort by :</h5>
               <MenuItem
                 onClick={() => {
                   // handleClose();
