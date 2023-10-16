@@ -1,5 +1,5 @@
-import { FilledButton, OutlinedButton } from "@components/button";
-import Loader from "@components/loader";
+import { FilledButton, OutlinedButton } from "../../components/button";
+import Loader from "../../components/loader";
 import { Grid, Stack } from "@mui/material";
 import React from "react";
 

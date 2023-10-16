@@ -1,0 +1,7 @@
+{
+  "name": "koor",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

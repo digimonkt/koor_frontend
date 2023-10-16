@@ -1,15 +1,15 @@
 import { Card, CardContent, Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import { getSkills } from "@redux/slice/choices";
-import { OutlinedButton } from "@components/button";
+import { SVG } from "../../../../assets/svg";
+import { getSkills } from "../../../../redux/slice/choices";
+import { OutlinedButton } from "../../../../components/button";
 import { useDebounce } from "usehooks-ts";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import NoItem from "../noItem";
-import { addSkillsDetailsAPI } from "@api/jobSeeker";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import Loader from "@components/loader";
+import { addSkillsDetailsAPI } from "../../../../api/jobSeeker";
+import { setErrorToast, setSuccessToast } from "../../../../redux/slice/toast";
+import Loader from "../../../../components/loader";
 
 const Skills = () => {
   const dispatch = useDispatch();
@@ -115,7 +115,7 @@ const Skills = () => {
                 ))
               ) : (
                 <NoItem
-                    icon={<SVG.SkillsIcon />}
+                  icon={<SVG.SkillsIcon />}
                   description={
                     <p>
                       List your skills that you think will be useful for a jobs

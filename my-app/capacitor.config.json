@@ -1,0 +1,11 @@
+{
+  "appId": "org.reactjs.example.koor",
+  "appName": "koor",
+  "bundledWebRuntime": false,
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

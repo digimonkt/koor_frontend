@@ -1,10 +1,10 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { Avatar, Button, Chip, Divider, Stack } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import React from "react";
 import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
-import { getConversationIdByUserIdAPI } from "@api/chat";
+import { getConversationIdByUserIdAPI } from "../../api/chat";
 
 function TalentCard({ talentDetails }) {
   const navigate = useNavigate();

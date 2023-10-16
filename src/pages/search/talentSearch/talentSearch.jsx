@@ -1,6 +1,6 @@
-import { NoDataFoundAnimation } from "@components/animations";
-import TalentCard from "@components/talentCard";
-import TalentCardSkeletonLoader from "@components/talentCard/talentCardSkeletonLoader";
+import { NoDataFoundAnimation } from "../../../components/animations";
+import TalentCard from "../../../components/talentCard";
+import TalentCardSkeletonLoader from "../../../components/talentCard/talentCardSkeletonLoader";
 import React from "react";
 import { useSelector } from "react-redux";
 

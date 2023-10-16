@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 // import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./styles.module.css";
 
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 
 export default function SearchInput({
   handleSearch,

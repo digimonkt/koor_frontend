@@ -1,22 +1,22 @@
-import { getConversationIdByUserIdAPI } from "@api/chat";
-import { changeApplicationStatusAPI } from "@api/employer";
-import { changeTenderApplicationStatusAPI } from "@api/tender";
-import { SVG } from "@assets/svg";
-import { FilledButton, OutlinedButton } from "@components/button";
-import DialogBox from "@components/dialogBox";
-import { LabeledInput } from "@components/input";
-import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
-import Loader from "@components/loader";
+import { getConversationIdByUserIdAPI } from "../../api/chat";
+import { changeApplicationStatusAPI } from "../../api/employer";
+import { changeTenderApplicationStatusAPI } from "../../api/tender";
+import { SVG } from "../../assets/svg";
+import { FilledButton, OutlinedButton } from "../../components/button";
+import DialogBox from "../../components/dialogBox";
+import { LabeledInput } from "../../components/input";
+import LabeledRadioInputComponent from "../../components/input/labeledRadioInput";
+import Loader from "../../components/loader";
 import { Avatar, Box, Button, Grid } from "@mui/material";
 import {
   setTotalApplicationsByJob,
   setTotalApplicationsByTender,
   setTotalBlacklist,
-} from "@redux/slice/employer";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { BLACKLIST_REASON_LIST } from "@utils/constants/constants";
-import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "@utils/enum";
-import { generateFileUrl } from "@utils/generateFileUrl";
+} from "../../redux/slice/employer";
+import { setErrorToast, setSuccessToast } from "../../redux/slice/toast";
+import { BLACKLIST_REASON_LIST } from "../../utils/constants/constants";
+import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "../../utils/enum";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

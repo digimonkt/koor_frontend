@@ -1,5 +1,5 @@
-import { SVG } from "@assets/svg";
-import NotificationContent from "@components/notification";
+import { SVG } from "../../assets/svg";
+import NotificationContent from "../../components/notification";
 import { Menu, MenuItem } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import styles from "./notificationPopup.module.css";

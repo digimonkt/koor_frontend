@@ -1,5 +1,5 @@
-import { OutlinedButton } from "@components/button";
-import { LabeledInput } from "@components/input";
+import { OutlinedButton } from "../../../components/button";
+import { LabeledInput } from "../../../components/input";
 import { Grid, Stack } from "@mui/material";
 import React, { useState } from "react";
 

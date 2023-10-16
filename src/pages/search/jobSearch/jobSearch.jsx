@@ -1,6 +1,6 @@
-import { NoDataFoundAnimation } from "@components/animations";
-import JobCard from "@components/jobCard";
-import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
+import { NoDataFoundAnimation } from "../../../components/animations";
+import JobCard from "../../../components/jobCard";
+import JobCardSkeletonLoader from "../../../components/jobCard/jobCardSkeletonLoader";
 import { Divider } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";

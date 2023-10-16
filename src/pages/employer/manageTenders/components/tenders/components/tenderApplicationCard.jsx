@@ -1,4 +1,4 @@
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { Avatar, Button, Chip, Stack, Divider } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -89,7 +89,8 @@ const TenderApplicationCard = () => {
               className="border-recent"
             >
               <Stack direction="row" spacing={2} alignItems="center">
-                <Avatar src={item.img} sx={{ width: "70px", height: "70px" }} />{" "}
+                <Avatar src={item.img} sx={{ width: "70px", height: "70px" }} />
+
                 <div className="recent-content">
                   <Stack
                     direction="row"

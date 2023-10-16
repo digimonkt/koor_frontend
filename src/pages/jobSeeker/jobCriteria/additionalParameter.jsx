@@ -1,15 +1,15 @@
 import { Divider, FormControl, FormGroup, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import { OutlinedButton } from "@components/button";
-import { CheckboxInput, SelectInput } from "@components/input";
+import { SVG } from "../../../assets/svg";
+import { OutlinedButton } from "../../../components/button";
+import { CheckboxInput, SelectInput } from "../../../components/input";
 import { useDispatch, useSelector } from "react-redux";
-import { getCities, getCountries } from "@redux/slice/choices";
-import { FormControlReminder } from "@components/style";
-import { UpdateJobSeekerAdditionalParametersAPI } from "@api/jobSeeker";
+import { getCities, getCountries } from "../../../redux/slice/choices";
+import { FormControlReminder } from "../../../components/style";
+import { UpdateJobSeekerAdditionalParametersAPI } from "../../../api/jobSeeker";
 import { useNavigate } from "react-router-dom";
-import { USER_ROLES } from "@utils/enum";
-import { updateCurrentUser } from "@redux/slice/user";
+import { USER_ROLES } from "../../../utils/enum";
+import { updateCurrentUser } from "../../../redux/slice/user";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   const dispatch = useDispatch();
