@@ -480,11 +480,7 @@ function PostJobsComponent() {
                       </Grid>
                       <Grid item xl={6} lg={6} xs={12}>
                         <SelectInput
-                          placeholder={
-                            formik.values.country
-                              ? "City"
-                              : "City"
-                          }
+                          placeholder={formik.values.country ? "City" : "City"}
                           disabled={!formik.values.country}
                           options={(
                             cities.data[formik.values.country] || []
@@ -502,7 +498,7 @@ function PostJobsComponent() {
                   </Grid>
                   <Grid item xl={3} lg={3} xs={12}>
                     <label>
-                      Working place addressF{" "}
+                      Working place address{" "}
                       <span className="required-field">*</span>
                     </label>
                     <div className={styles.positionReltive}>

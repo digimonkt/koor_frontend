@@ -9,9 +9,9 @@ export const SelectBox = styled(Select)`
     background: #f0f0f0;
     border-radius: 10px;
     color: #121212;
-    font-size: 14px;
+    font-size: 16px;
     font-family: "Poppins";
-    font-weight: 400;
+    font-weight: 500;
   }
   & .Mui-disabled {
     color: #848484 !important;
@@ -23,8 +23,8 @@ export const SelectBox = styled(Select)`
     border-radius: 0px;
     font-family: "Poppins";
     font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
+    font-weight: 500;
+    font-size: 16px;
     line-height: 22px;
 
     letter-spacing: 0.02em;

@@ -1543,6 +1543,10 @@ span.count {
     width: 100%;
   }
 
+  .SelectDropdown label {
+    font-size: 14px;
+  }
+
   .edit_work_experience_btn {
     text-align: center;
     margin-top: 70px;
@@ -1550,7 +1554,6 @@ span.count {
 
   .manage-jobs_tab_div span {
     font-size: 24px;
-  
   }
 
   .form-control-area {
@@ -1959,7 +1962,7 @@ span.count {
     display: block;
   }
 
-  .add-form-control{
+  .add-form-control {
     font-size: 14px;
     font-weight: 500;
   }
@@ -2118,7 +2121,7 @@ input.employersearch {
     border: 1px solid #274593 !important;
     border-radius: 73px !important;
     padding: 10px 30px !important;
-    color: #848484 !important;
+    color: #274593 !important;
     font-size: 16px !important;
     letter-spacing: 0.03em !important;
     font-family: "Bahnschrift" !important;
@@ -2321,11 +2324,14 @@ input.employersearch {
   .lables span {
     font-size: 14px;
   }
+  .SelectDropdown label {
+    font-size: 12px;
+  }
   .form-control-area {
     font-weight: 300;
   }
 
-  .add-form-control{
+  .add-form-control {
     font-size: 14px;
   }
 
