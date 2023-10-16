@@ -6,8 +6,8 @@ import {
   transformSearchUserByRoleResponse,
   transformSearchUserFilterResponse,
 } from "./transform/user";
-import env from "@utils/validateEnv";
-import { USER_ROLES } from "@utils/enum";
+import env from "../utils/validateEnv";
+import { USER_ROLES } from "../utils/enum";
 export const CreateUserAPI = async (data) => {
   return await api.request({
     url: "/v1/users",
@@ -250,15 +250,17 @@ export const storeProfileAnalyticsAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/analytic"),
     method: "POST",
-    data
+    data,
   });
   return res;
 };
 
 export const settingUpdateAPI = async (notificationType) => {
   const res = await api.request({
-    url: urlcat("v1/users/notification/settings/:notificationType", { notificationType }),
-    method: "PUT"
+    url: urlcat("v1/users/notification/settings/:notificationType", {
+      notificationType,
+    }),
+    method: "PUT",
   });
   return res;
 };
@@ -266,7 +268,7 @@ export const settingUpdateAPI = async (notificationType) => {
 export const getSettingUpdateAPI = async () => {
   const res = await api.request({
     url: urlcat("v1/users/notification/settings"),
-    method: "GET"
+    method: "GET",
   });
   return res;
 };

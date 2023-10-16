@@ -4,8 +4,8 @@ import { TabContext, TabList } from "@mui/lab";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getFAQQuestions } from "@redux/slice/faq";
-import { OutlinedButton } from "@components/button";
+import { getFAQQuestions } from "../../../redux/slice/faq";
+import { OutlinedButton } from "../../../components/button";
 import classes from "./scroll-tabs.module.css";
 
 function TabPanel(props) {

@@ -10,7 +10,7 @@ import {
   getTenderOpportunityTypeAPI,
   getTenderSectorAPI,
   getTenderTagsAPI,
-} from "@api/choices";
+} from "../../api/choices";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

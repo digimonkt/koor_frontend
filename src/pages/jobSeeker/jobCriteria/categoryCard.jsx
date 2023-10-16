@@ -1,5 +1,5 @@
-import { SVG } from "@assets/svg";
-import { CheckboxInput } from "@components/input";
+import { SVG } from "../../../assets/svg";
+import { CheckboxInput } from "../../../components/input";
 import { Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
@@ -55,13 +55,16 @@ function CategoryCard({ item, handleSelectedCategories }) {
             {item.subCategories.map((subCategory) => {
               return (
                 <li key={subCategory.id}>
+                  <label htmlFor={`checkbox-${subCategory.id}`} style={{ cursor: "pointer" }}>
                   <CheckboxInput
+                      id={`checkbox-${subCategory.id}`}
                     onChange={(e) =>
                       handleSelect(subCategory.id, e.target.checked)
                     }
                     checked={subCategory.status}
                   />
                   <span className="ms-2">{subCategory.title}</span>
+                </label>
                 </li>
               );
             })}

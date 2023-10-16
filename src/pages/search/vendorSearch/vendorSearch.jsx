@@ -1,6 +1,6 @@
-import { NoDataFoundAnimation } from "@components/animations";
-import VendorCard from "@components/vendorCard";
-import VendorCardSkeletonLoader from "@components/vendorCard/vendorCardSkeletonLoader";
+import { NoDataFoundAnimation } from "../../../components/animations";
+import VendorCard from "../../../components/vendorCard";
+import VendorCardSkeletonLoader from "../../../components/vendorCard/vendorCardSkeletonLoader";
 import React from "react";
 import { useSelector } from "react-redux";
 

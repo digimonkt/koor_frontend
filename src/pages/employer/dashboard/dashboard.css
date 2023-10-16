@@ -65,6 +65,7 @@ span.blueview {
   line-height: 21px;
   letter-spacing: 0.02em;
   color: rgb(18 18 18 / 75%);
+  white-space: nowrap;
 }
 
 .series-box ul li {
@@ -333,7 +334,7 @@ span.arrowjobs svg {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 27px;
   /* identical to box height */
   letter-spacing: 0.02em;

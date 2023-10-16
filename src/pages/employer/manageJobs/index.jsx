@@ -1,16 +1,16 @@
 import { Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SVG } from "@assets/svg";
-import { OutlinedButton } from "@components/button";
+import { SVG } from "../../../assets/svg";
+import { OutlinedButton } from "../../../components/button";
 import AllApplication from "./component/allApplication";
 import MyJobs from "./component/myJobs";
 import { AntTab, AntTabs } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import Blacklist from "./component/blacklist";
 import urlcat from "urlcat";
-import DialogBox from "@components/dialogBox";
-import { setManageJobActiveTab } from "@redux/slice/employer";
+import DialogBox from "../../../components/dialogBox";
+import { setManageJobActiveTab } from "../../../redux/slice/employer";
 function ManageJobsComponent() {
   const { totalCreatedJobs } = useSelector((state) => state.employer);
   const { totalApplications } = useSelector((state) => state.employer);

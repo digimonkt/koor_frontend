@@ -4,6 +4,9 @@
   "private": true,
   "sideEffects": false,
   "dependencies": {
+    "@capacitor/android": "^5.4.1",
+    "@capacitor/core": "^4.8.1",
+    "@capacitor/ios": "^5.4.1",
     "@craco/craco": "^7.0.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -86,6 +89,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-react": "^7.18.6",
+    "@capacitor/cli": "^5.4.1",
     "@faker-js/faker": "^7.6.0",
     "cypress": "^12.3.0",
     "eslint": "^8.0.1",

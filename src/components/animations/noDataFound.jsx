@@ -1,9 +1,9 @@
-import { ANIMATIONS } from "@assets/animation";
+import { ANIMATIONS } from "../../assets/animation";
 import React from "react";
 import Lottie from "react-lottie";
 import styles from "./animations.module.css";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 function NoDataFoundComponent({ title }) {
   const { role } = useSelector((state) => state.auth);
   const defaultOptions = {

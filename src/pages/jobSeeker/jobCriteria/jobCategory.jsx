@@ -1,10 +1,10 @@
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import {
   GetJobSeekerCategoriesAPI,
   UpdateJobSeekerCategoriesAPI,
-} from "@api/jobSeeker";
+} from "../../../api/jobSeeker";
 import CategoryCard from "./categoryCard";
 
 const JobCategory = ({ handleNext }) => {

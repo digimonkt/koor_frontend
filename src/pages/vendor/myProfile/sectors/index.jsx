@@ -1,15 +1,15 @@
 import { Card, CardContent, Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import { getTenderSector } from "@redux/slice/choices";
-import { OutlinedButton } from "@components/button";
+import { SVG } from "../../../../assets/svg";
+import { getTenderSector } from "../../../../redux/slice/choices";
+import { OutlinedButton } from "../../../../components/button";
 import { useDebounce } from "usehooks-ts";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles.module.css";
 import NoItem from "../noItem";
-import { addSectorsDetailsAPI } from "@api/vendor";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import Loader from "@components/loader";
+import { addSectorsDetailsAPI } from "../../../../api/vendor";
+import { setErrorToast, setSuccessToast } from "../../../../redux/slice/toast";
+import Loader from "../../../../components/loader";
 
 const Sectors = () => {
   const dispatch = useDispatch();
@@ -117,9 +117,9 @@ const Sectors = () => {
                   icon={<SVG.SkillsIcon />}
                   description={
                     <p>
-                      List your sectors that you think will be useful for a tender
-                      you’re looking for. Highlight your strengths and remember
-                      to be honest.
+                      List your sectors that you think will be useful for a
+                      tender you’re looking for. Highlight your strengths and
+                      remember to be honest.
                     </p>
                   }
                 />

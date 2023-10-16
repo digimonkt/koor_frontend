@@ -1,5 +1,5 @@
-import { FilledButton } from "@components/button";
-import DialogBox from "@components/dialogBox";
+import { FilledButton } from "../../components/button";
+import DialogBox from "../../components/dialogBox";
 import { Slider } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import Cropper from "react-easy-crop";

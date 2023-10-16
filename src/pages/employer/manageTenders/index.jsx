@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Chip, Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import AllApplication from "./components/tenderAllApplications";
 
 import Tenders from "./components/tenders";
 import { useNavigate } from "react-router-dom";
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import { AntTab, AntTabs } from "./style";
 import { useSelector } from "react-redux";
-import DialogBox from "@components/dialogBox";
+import DialogBox from "../../../components/dialogBox";
 import urlcat from "urlcat";
 const ManageTenders = () => {
   // navigate

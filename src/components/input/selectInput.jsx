@@ -1,21 +1,23 @@
 import styled from "@emotion/styled";
 import { FormControl, MenuItem, Select } from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+// import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import React from "react";
 import styles from "./input.module.css";
+import { SVG } from "@assets/svg";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
     background: #f0f0f0;
     border-radius: 10px;
     color: #121212;
-    font-size: 12px;
+    font-size: 14px;
     font-family: "Poppins";
     font-weight: 400;
   }
   & .Mui-disabled {
-    color: #121212;
-    -webkit-text-fill-color: #121212;
+    color: #848484 !important;
+    -webkit-text-fill-color: #848484;
+    font-weight: 300;
   }
 
   & .MuiInputBase-root {
@@ -32,6 +34,10 @@ export const SelectBox = styled(Select)`
   }
   & fieldset {
     display: none;
+  }
+  & .MuiSelect-icon {
+    top: calc(50% - 0.2em);
+    right: 11px;
   }
 `;
 
@@ -74,13 +80,17 @@ function SelectInputComponent({
       >
         <SelectBox
           inputProps={{ "aria-label": "Without label" }}
-          IconComponent={KeyboardArrowDownIcon}
+          IconComponent={SVG.arrowDown}
           value={value}
           displayEmpty
           renderValue={
             value && value.length !== 0
               ? undefined
-              : () => <div className={styles.placeholder}>{placeholder}</div>
+              : () => (
+                  <div className={`selet-placeholder ${styles.placeholder}`}>
+                    {placeholder}
+                  </div>
+                )
           }
           {...rest}
         >

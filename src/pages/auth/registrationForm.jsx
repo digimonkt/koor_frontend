@@ -1,17 +1,17 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { CreateUserAPI } from "@api/user";
+import { CreateUserAPI } from "../../api/user";
 import { useNavigate } from "react-router-dom";
-import { FilledButton } from "@components/button";
-import { LabeledInput, LabeledPhoneInput } from "@components/input";
-import { USER_ROLES } from "@utils/enum";
+import { FilledButton } from "../../components/button";
+import { LabeledInput, LabeledPhoneInput } from "../../components/input";
+import { USER_ROLES } from "../../utils/enum";
 import { useFormik } from "formik";
 import { validateRegistrationForm } from "./validator";
-import { ErrorMessage } from "@components/caption";
+import { ErrorMessage } from "../../components/caption";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "@components/loader";
-import { setSocialLoginError } from "@redux/slice/user";
-import { setErrorToast } from "@redux/slice/toast";
+import Loader from "../../components/loader";
+import { setSocialLoginError } from "../../redux/slice/user";
+import { setErrorToast } from "../../redux/slice/toast";
 
 function RegistrationForm() {
   // navigate

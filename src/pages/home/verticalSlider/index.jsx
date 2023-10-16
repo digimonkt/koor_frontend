@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import styles from "./verticalslider.module.css";
 import { generateFileUrl } from "@utils/generateFileUrl";
 import { TESTIMONIAL_MAX_WORD } from "@utils/constants/constants";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 const VerticalSlider = ({ testimonialList }) => {
   const settings = {
     dots: true,

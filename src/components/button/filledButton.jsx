@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 import { useSelector } from "react-redux";
 
 function FilledButtonComponent({ className, title, onClick, ...rest }) {

@@ -1,5 +1,5 @@
-import { SVG } from "@assets/svg";
-import { OutlinedButton } from "@components/button";
+import { SVG } from "../../../assets/svg";
+import { OutlinedButton } from "../../../components/button";
 import { Grid } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import styles from "./resource.module.css";
 import { Link, useParams } from "react-router-dom";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import Content from "./Content";
-import { getResourceDetailsAPI } from "@api/common";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { getResourceDetailsAPI } from "../../api/common";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 
 const Resource = () => {
   const { id } = useParams();

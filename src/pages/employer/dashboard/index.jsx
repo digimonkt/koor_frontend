@@ -1,23 +1,23 @@
 import { Card, CardContent, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
-import { DonutChart } from "@components/charts";
+import { DonutChart } from "../../../components/charts";
 import { employerCard } from "./employerCardData";
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../components/button";
 import {
   getDashboardActivityAPI,
   getRecentApplicationAPI,
   getShareCountDataAPI,
-} from "@api/employer";
+} from "../../../api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { NoDataFoundAnimation } from "@components/animations";
+import { NoDataFoundAnimation } from "../../../components/animations";
 import JobAnalytics from "./jobAnalytics";
-import Loader from "@components/loader";
-import ApplicantCard from "@components/applicantCard";
-import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
+import Loader from "../../../components/loader";
+import ApplicantCard from "../../../components/applicantCard";
+import ApplicantCardSkeletonLoading from "../../../components/applicantCard/skeletonLoading";
 import { useDispatch, useSelector } from "react-redux";
-import { setTotalAvailableCredits } from "@redux/slice/employer";
+import { setTotalAvailableCredits } from "../../../redux/slice/employer";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -118,7 +118,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="employer-dashboard">
-        <Grid item container spacing={2} sx={{ mb: 4 }}>
+        <Grid item container spacing={{ xs: 1, lg: 2 }} sx={{ mb: 4 }}>
           {employerCard(counts).map((item, index) => (
             <Grid item lg={3} xs={6} sm={3} key={index}>
               <Stack
@@ -134,6 +134,7 @@ const Dashboard = () => {
                   height: "100px",
                   "@media (max-width:992px)": {
                     padding: "10px 15px",
+                    height: "64px",
                     "& span svg": { width: "20px", height: "20px" },
                   },
                 }}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { LabeledOtpInput } from "@components/input";
+import { LabeledOtpInput } from "../../components/input";
 import { useFormik } from "formik";
-import { FilledButton } from "@components/button";
-import { SendOtpAPI, VerifyOtpAPI } from "@api/user";
+import { FilledButton } from "../../components/button";
+import { SendOtpAPI, VerifyOtpAPI } from "../../api/user";
 import urlcat from "urlcat";
 import { setUserRole } from "@redux/slice/user";
 import { ErrorMessage } from "@components/caption";

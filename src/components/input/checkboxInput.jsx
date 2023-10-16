@@ -1,8 +1,8 @@
 import { Checkbox } from "@mui/material";
 import React from "react";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../utils/enum";
 
 function CheckboxInputComponent({ sx, ...rest }) {
   const { role } = useSelector((state) => state.auth);

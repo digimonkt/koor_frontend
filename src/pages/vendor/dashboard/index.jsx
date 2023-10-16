@@ -1,9 +1,9 @@
-import { getAppliedTendersAPI } from "@api/vendor";
-import { NoDataFoundAnimation } from "@components/animations";
-import { OutlinedButton } from "@components/button";
-import { AreaChart } from "@components/charts";
-import TenderCard from "@components/tenderCard";
-import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
+import { getAppliedTendersAPI } from "../../../api/vendor";
+import { NoDataFoundAnimation } from "../../../components/animations";
+import { OutlinedButton } from "../../../components/button";
+import { AreaChart } from "../../../components/charts";
+import TenderCard from "../../../components/tenderCard";
+import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
 import { Card, CardContent, Divider, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 

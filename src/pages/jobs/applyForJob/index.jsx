@@ -2,31 +2,34 @@ import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 // import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { SearchButton, SolidButton } from "@components/button";
+import { SearchButton, SolidButton } from "../../../components/button";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { useFormik } from "formik";
 import { applyJobValidationSchema } from "./validator";
-import { AttachmentDragNDropInput, LabeledInput } from "@components/input";
-import { ErrorMessage } from "@components/caption";
+import {
+  AttachmentDragNDropInput,
+  LabeledInput,
+} from "../../../components/input";
+import { ErrorMessage } from "../../../components/caption";
 import {
   applyForJobAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   updateAppliedJobAPI,
-} from "@api/job";
+} from "../../../api/job";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { useDispatch } from "react-redux";
 import JobRequirementCard from "../component/jobRequirementCard";
 import JobCostCard from "../component/jobCostCard";
-import DialogBox from "@components/dialogBox";
+import DialogBox from "../../../components/dialogBox";
 import CancelApply from "./cancelApply";
 import ApplySuccessfully from "./applySuccessfully";
-import { getApplicationDetailsAPI } from "@api/employer";
+import { getApplicationDetailsAPI } from "../../../api/employer";
 import urlcat from "urlcat";
 const ApplyForJob = () => {
   const dispatch = useDispatch();

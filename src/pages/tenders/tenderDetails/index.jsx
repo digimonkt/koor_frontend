@@ -1,15 +1,15 @@
 import { Container, Grid, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import {
   FilledButton,
   OutlinedButton,
   SearchButton,
   SolidButton,
-} from "@components/button";
-import JobCostCard from "@pages/jobs/component/jobCostCard";
-import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
+} from "../../../components/button";
+import JobCostCard from "../../../pages/jobs/component/jobCostCard";
+import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getTenderDetailsByIdAPI,
@@ -17,14 +17,14 @@ import {
   saveTenderAPI,
   unSaveTenderAPI,
   withdrawTenderApplicationAPI,
-} from "@api/tender";
+} from "../../../api/tender";
 import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { useDispatch, useSelector } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
-import DialogBox from "@components/dialogBox";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { getLetLongByAddressAPI } from "@api/user";
+import { USER_ROLES } from "../../../utils/enum";
+import DialogBox from "../../../components/dialogBox";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
+import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
 
@@ -301,13 +301,17 @@ function TenderDetailsComponent() {
                   {details.attachments.map((attachment, i) => {
                     return (
                       <div key={i} className={`${styles.downloadtext}`}>
-                        <span className="d-inline-flex">
+                        <span className="d-inline-flex me-2">
                           {<SVG.OrangeIcon />}
                         </span>
                         <span
                           onClick={() => handleLoadImage(attachment.path)}
                           className="m-0"
-                          style={{ cursor: "pointer" }}
+                          style={{
+                            cursor: "pointer",
+                            whiteSpace: "normal",
+                            wordBreak: "break-all",
+                          }}
                         >
                           {attachment.title}
                         </span>
@@ -338,6 +342,7 @@ function TenderDetailsComponent() {
                       }
                       sx={{
                         padding: "10px 0px !important",
+                        width: "100% !important",
                         "@media (max-width: 480px)": {
                           fontSize: "14px !important",
                         },
@@ -398,7 +403,7 @@ function TenderDetailsComponent() {
                         }
                         sx={{
                           height: "44px",
-                          width: "256px",
+                          width: "100%",
                         }}
                         vendor
                         onClick={() => {
@@ -432,7 +437,7 @@ function TenderDetailsComponent() {
           </div>
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={7}>
+              <Grid item xs={12} lg={7} md={7}>
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>

@@ -2,26 +2,33 @@ import React, { useState, useEffect } from "react";
 import styles from "./applyForTender.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { FilledButton, SearchButton, SolidButton } from "@components/button";
-import { AttachmentDragNDropInput, LabeledInput } from "@components/input";
-import { ErrorMessage } from "@components/caption";
+import {
+  FilledButton,
+  SearchButton,
+  SolidButton,
+} from "../../../components/button";
+import {
+  AttachmentDragNDropInput,
+  LabeledInput,
+} from "../../../components/input";
+import { ErrorMessage } from "../../../components/caption";
 import { Stack } from "@mui/material";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   applyForTenderAPI,
   getTenderDetailsByIdAPI,
   updateAppliedTenderAPI,
-} from "@api/tender";
+} from "../../../api/tender";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import JobCostCard from "@pages/jobs/component/jobCostCard";
 import { useFormik } from "formik";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import DialogBox from "@components/dialogBox";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
+import DialogBox from "../../../components/dialogBox";
 import ApplySuccessfully from "./applySuccessfully";
 import { useDispatch } from "react-redux";
-import CancelApply from "@pages/tenders/applyForTender/cancelApply";
+import CancelApply from "../../../pages/tenders/applyForTender/cancelApply";
 import { applyTenderValidationSchema } from "./validator";
 import { getApplicationDetailsAPI } from "@api/vendor";
 import { getJobAttachmentAPI } from "@api/job";
@@ -243,8 +250,11 @@ function ApplyForTender() {
                 item
                 xs={12}
                 sm={7}
-                style={{
+                sx={{
                   borderRight: "1px solid #cacaca",
+                  "@media (max-width:600px)": {
+                    borderRight: "0px",
+                  },
                 }}
               >
                 <div className={`${styles.contentJob}`}>
@@ -260,7 +270,10 @@ function ApplyForTender() {
                   </div>
                   {hide ? (
                     <>
-                      <p className={styles.more_text_p}>
+                      <p
+                        className={styles.more_text_p}
+                        style={{ marginBottom: "10px" }}
+                      >
                         Please check out my attachements below..
                       </p>
                       {details.attachments.map((attachment) => {
