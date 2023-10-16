@@ -4,7 +4,7 @@ import styles from "./about.module.css";
 import { IMAGES } from "../../assets/images";
 import { Link } from "react-router-dom";
 import AboutContent from "./aboutContent";
-import { OTHER_BUTTON } from "@utils/constants/constants";
+import { OTHER_BUTTON } from "../../utils/constants/constants";
 const aboutImg = [
   {
     img: IMAGES.AboutBanner,

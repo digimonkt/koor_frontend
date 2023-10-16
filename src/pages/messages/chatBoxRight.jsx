@@ -1,5 +1,5 @@
-import { SVG } from "@assets/svg";
-import ApplicationOptions from "@components/applicationOptions";
+import { SVG } from "../../assets/svg";
+import ApplicationOptions from "../../components/applicationOptions";
 import { Avatar, IconButton, Menu, MenuItem, Stack } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 // import PerfectScrollbar from "react-perfect-scrollbar";
@@ -7,28 +7,28 @@ import InfiniteScroll from "react-infinite-scroller";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SendIcon from "@mui/icons-material/Send";
-import { FilledButton } from "@components/button";
-import { USER_ROLES } from "@utils/enum";
+import { FilledButton } from "../../components/button";
+import { USER_ROLES } from "../../utils/enum";
 import { useSelector } from "react-redux";
 import {
   getConversationIdByUserIdAPI,
   getConversationMessageHistoryAPI,
   sendAttachmentAPI,
-} from "@api/chat";
+} from "../../api/chat";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import utcPlugin from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
 import urlcat from "urlcat";
-import { WebSocketClient } from "@utils/constants/websocket";
-import { LabeledInput } from "@components/input";
-import { transformMessageResponse } from "@api/transform/chat";
+import { WebSocketClient } from "../../utils/constants/websocket";
+import { LabeledInput } from "../../components/input";
+import { transformMessageResponse } from "../../api/transform/chat";
 import styles from "./message.module.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import { GetUserDetailsAPI } from "@api/user";
-import { generateFileUrl } from "@utils/generateFileUrl";
-import DialogBox from "@components/dialogBox";
+import { GetUserDetailsAPI } from "../../api/user";
+import { generateFileUrl } from "../../utils/generateFileUrl";
+import DialogBox from "../../components/dialogBox";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
@@ -39,7 +39,9 @@ dayjs.extend(relativeTime);
 function ChatBox() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { role, currentUser, isBlackListedByEmployer } = useSelector((state) => state.auth);
+  const { role, currentUser, isBlackListedByEmployer } = useSelector(
+    (state) => state.auth
+  );
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -377,10 +379,11 @@ function ChatBox() {
                 .map((message) => {
                   return (
                     <div
-                      className={`${message.user.id === currentUser.id
-                        ? "rightside"
-                        : "leftside"
-                        } mt-3 pe-2`}
+                      className={`${
+                        message.user.id === currentUser.id
+                          ? "rightside"
+                          : "leftside"
+                      } mt-3 pe-2`}
                       key={message.id}
                     >
                       <Stack
@@ -396,23 +399,25 @@ function ChatBox() {
                           <Avatar src={message.user.image} />
                         )}
                         <div
-                          className={`w-70 ${message.user.id === currentUser.id
-                            ? "text-right"
-                            : "text-left"
-                            }`}
+                          className={`w-70 ${
+                            message.user.id === currentUser.id
+                              ? "text-right"
+                              : "text-left"
+                          }`}
                         >
                           <div
-                            className={`message-text ${message.user.id === currentUser.id
-                              ? ""
-                              : "message-tex-2"
-                              }`}
+                            className={`message-text ${
+                              message.user.id === currentUser.id
+                                ? ""
+                                : "message-tex-2"
+                            }`}
                             style={{
                               background:
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                    ? "#D5E3F7"
-                                    : "#FEEFD3",
+                                  ? "#D5E3F7"
+                                  : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -423,7 +428,7 @@ function ChatBox() {
                             <div
                               className={
                                 message.attachment ||
-                                  countWords(message.message) > 10
+                                countWords(message.message) > 10
                                   ? ""
                                   : "text-inline"
                               }
@@ -450,107 +455,116 @@ function ChatBox() {
             {/* </PerfectScrollbar> */}
           </div>
           <div className="bottomnav">
-            {!isBlackListedByEmployer ? <Stack direction={"row"} spacing={2}>
-              <div className="chatinput">
-                <span className="attachment-icon">
-                  <SVG.AttachIcon style={{ position: "relative" }} />
-                  <input
-                    type="file"
-                    onChange={handleAttachment}
-                    value={""}
-                    style={{
-                      position: "absolute",
-                      opacity: "0",
-                      right: "45.5rem",
-                      width: "35px",
+            {!isBlackListedByEmployer ? (
+              <Stack direction={"row"} spacing={2}>
+                <div className="chatinput">
+                  <span className="attachment-icon">
+                    <SVG.AttachIcon style={{ position: "relative" }} />
+                    <input
+                      type="file"
+                      onChange={handleAttachment}
+                      value={""}
+                      style={{
+                        position: "absolute",
+                        opacity: "0",
+                        right: "45.5rem",
+                        width: "35px",
+                      }}
+                    />
+                  </span>
+                  <LabeledInput
+                    placeholder={
+                      isBlackListedByEmployer
+                        ? "You are not longer to chat with employer"
+                        : "Write a message…"
+                    }
+                    style={{ background: "transparent" }}
+                    type="textarea"
+                    value={newMessage}
+                    onChange={(e) => {
+                      if (selectedFormat) {
+                        const formattedText = applyFormattingToAll(
+                          e.target.value,
+                          selectedFormat
+                        );
+                        setNewMessage(formattedText);
+                      } else {
+                        setNewMessage(e.target.value);
+                      }
+                    }}
+                    onKeyPress={(e) => {
+                      if (newMessage && newMessage.trim()) {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          sendMessage(e);
+                        }
+                      }
                     }}
                   />
-                </span>
-                <LabeledInput
-                  placeholder={isBlackListedByEmployer ? "You are not longer to chat with employer" : "Write a message…"}
-                  style={{ background: "transparent" }}
-                  type="textarea"
-                  value={newMessage}
-                  onChange={(e) => {
-                    if (selectedFormat) {
-                      const formattedText = applyFormattingToAll(
-                        e.target.value,
-                        selectedFormat
-                      );
-                      setNewMessage(formattedText);
-                    } else {
-                      setNewMessage(e.target.value);
-                    }
-                  }}
-                  onKeyPress={(e) => {
-                    if (newMessage && newMessage.trim()) {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        sendMessage(e);
-                      }
-                    }
-                  }}
-                />
-              </div>
-              <Stack direction="row" spacing={2}>
-                <IconButton
-                  sx={{ border: "1px solid #848484" }}
-                  id="basic-button"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  style={{
-                    border: "1px solid",
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "100%",
-                    marginTop: "3px",
-                  }}
-                  onClick={handleMenuOpen} // Open the menu when the IconButton is clicked
-                >
-                  <MoreHorizIcon />
-                </IconButton>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      setSelectedFormat("bold");
-                      setAnchorEl(null);
+                </div>
+                <Stack direction="row" spacing={2}>
+                  <IconButton
+                    sx={{ border: "1px solid #848484" }}
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    style={{
+                      border: "1px solid",
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "100%",
+                      marginTop: "3px",
                     }}
+                    onClick={handleMenuOpen} // Open the menu when the IconButton is clicked
                   >
-                    <FormatBoldIcon />
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      setSelectedFormat("italic");
-                      setAnchorEl(null);
-                    }}
+                    <MoreHorizIcon />
+                  </IconButton>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
                   >
-                    <FormatItalicIcon />
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      setSelectedFormat("underline");
-                      setAnchorEl(null);
-                    }}
-                  >
-                    <FormatUnderlinedIcon />
-                  </MenuItem>
-                </Menu>
+                    <MenuItem
+                      onClick={() => {
+                        setSelectedFormat("bold");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      <FormatBoldIcon />
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setSelectedFormat("italic");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      <FormatItalicIcon />
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setSelectedFormat("underline");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      <FormatUnderlinedIcon />
+                    </MenuItem>
+                  </Menu>
 
-                <FilledButton
-                  sx={{
-                    borderRadius: "35px",
-                  }}
-                  variant="contained"
-                  title={<SendIcon />}
-                  onClick={sendMessage}
-                />
-
+                  <FilledButton
+                    sx={{
+                      borderRadius: "35px",
+                    }}
+                    variant="contained"
+                    title={<SendIcon />}
+                    onClick={sendMessage}
+                  />
+                </Stack>
               </Stack>
-            </Stack> : <span className="text-center">You are not longer to chat with employer</span>}
+            ) : (
+              <span className="text-center">
+                You are not longer to chat with employer
+              </span>
+            )}
           </div>
           <DialogBox open={open} handleClose={handleClose}>
             <img src={fullImg} />

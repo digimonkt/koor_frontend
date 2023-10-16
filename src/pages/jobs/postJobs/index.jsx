@@ -16,13 +16,13 @@ import {
   DateInput,
   LabeledInput,
   SelectInput,
-} from "@components/input";
+} from "../../../components/input";
 import CurrencyInput from "./currencyInput";
-import { FilledButton, OutlinedButton } from "@components/button";
+import { FilledButton, OutlinedButton } from "../../../components/button";
 import { useFormik } from "formik";
 import { validateCreateJobInput } from "../validator";
-import { ErrorMessage } from "@components/caption";
-import { PAY_PERIOD, USER_ROLES } from "@utils/enum";
+import { ErrorMessage } from "../../../components/caption";
+import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
@@ -32,33 +32,33 @@ import {
   getJobSubCategories,
   getLanguages,
   getSkills,
-} from "@redux/slice/choices";
+} from "../../../redux/slice/choices";
 import {
   buyCreditsAPI,
   createJobAPI,
   getDashboardActivityAPI,
   getMinimumCreditForJobPostAPI,
   updateEmployerJobAPI,
-} from "@api/employer";
-import { ErrorToast, SuccessToast } from "@components/toast";
+} from "../../../api/employer";
+import { ErrorToast, SuccessToast } from "../../../components/toast";
 import dayjs from "dayjs";
-import { getJobDetailsByIdAPI } from "@api/job";
-import { DATABASE_DATE_FORMAT } from "@utils/constants/constants";
+import { getJobDetailsByIdAPI } from "../../../api/job";
+import { DATABASE_DATE_FORMAT } from "../../../utils/constants/constants";
 import { useDebounce } from "usehooks-ts";
-import { GetSuggestedAddressAPI } from "@api/user";
+import { GetSuggestedAddressAPI } from "../../../api/user";
 import styles from "./postJobs.module.css";
 import { JobFormControl } from "./style";
-import DialogBox from "@components/dialogBox";
-import { SVG } from "@assets/svg";
+import DialogBox from "../../../components/dialogBox";
+import { SVG } from "../../../assets/svg";
 import urlcat from "urlcat";
 import {
   setJobPostUpdate,
   setMinimumCreditJobPost,
   setTotalAvailableCredits,
-} from "@redux/slice/employer";
-import { getPackageAPI } from "@api/choices";
-import { Package } from "@components/package";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+} from "../../../redux/slice/employer";
+import { getPackageAPI } from "../../../api/choices";
+import { Package } from "../../../components/package";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",

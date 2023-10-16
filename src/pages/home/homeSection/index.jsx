@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid } from "@mui/material";
-import { IMAGES } from "@assets/images";
+import { IMAGES } from "../../../assets/images";
 import styles from "./home_section.module.css";
 
 const sectionItem = [

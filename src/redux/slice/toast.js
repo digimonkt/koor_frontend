@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { MESSAGE_TYPE } from "@utils/enum";
+import { MESSAGE_TYPE } from "../../utils/enum";
 
 const initialState = {
   message: "",

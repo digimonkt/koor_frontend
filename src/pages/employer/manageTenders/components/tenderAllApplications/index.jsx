@@ -1,12 +1,12 @@
 import { Card, CardContent, Stack } from "@mui/material";
 import React, { useEffect, useState, useCallback } from "react";
-import { SVG } from "@assets/svg";
-import { getRecentTenderApplicationAPI } from "@api/employer";
-import { setTotalTenderApplications } from "@redux/slice/employer";
+import { SVG } from "../../../../../assets/svg";
+import { getRecentTenderApplicationAPI } from "../../../../../api/employer";
+import { setTotalTenderApplications } from "../../../../../redux/slice/employer";
 import { useDispatch } from "react-redux";
-import { NoDataFoundAnimation } from "@components/animations";
-import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
-import ApplicantCard from "@components/applicantCard";
+import { NoDataFoundAnimation } from "../../../../../components/animations";
+import ApplicantCardSkeletonLoading from "../../../../../components/applicantCard/skeletonLoading";
+import ApplicantCard from "../../../../../components/applicantCard";
 function AllApplication() {
   const dispatch = useDispatch();
   const [recentApplication, setRecentApplication] = useState([]);

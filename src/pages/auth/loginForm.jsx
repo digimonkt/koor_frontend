@@ -1,21 +1,21 @@
-import { FilledButton } from "@components/button";
-import { LabeledInput } from "@components/input";
-import { LoginUserAPI } from "@api/user";
+import { FilledButton } from "../../components/button";
+import { LabeledInput } from "../../components/input";
+import { LoginUserAPI } from "../../api/user";
 // import { useNavigate } from "react-router-dom";
 import { validateLoginForm } from "./validator";
 import { useFormik } from "formik";
-import { ErrorMessage } from "@components/caption";
+import { ErrorMessage } from "../../components/caption";
 import { useState, useEffect } from "react";
-import Loader from "@components/loader";
+import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import urlcat from "urlcat";
-import { setSocialLoginError } from "@redux/slice/user";
-import { REGEX } from "@utils/constants/regex";
-import { setErrorToast } from "@redux/slice/toast";
+import { setSocialLoginError } from "../../redux/slice/user";
+import { REGEX } from "../../utils/constants/regex";
+import { setErrorToast } from "../../redux/slice/toast";
 import { parsePhoneNumber } from "react-phone-number-input";
-import { SVG } from "@assets/svg";
-import { USER_ROLES } from "@utils/enum";
+import { SVG } from "../../assets/svg";
+import { USER_ROLES } from "../../utils/enum";
 
 function LoginForm() {
   // const navigate = useNavigate();

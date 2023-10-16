@@ -1,7 +1,7 @@
-import { getSaveTenderAPI } from "@api/vendor";
-import { NoDataFoundAnimation } from "@components/animations";
-import TenderCard from "@components/tenderCard";
-import TenderCardSkeletonLoader from "@components/tenderCard/tenderCardSkeletonLoader";
+import { getSaveTenderAPI } from "../../../api/vendor";
+import { NoDataFoundAnimation } from "../../../components/animations";
+import TenderCard from "../../../components/tenderCard";
+import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
 import { Card, CardContent, Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 

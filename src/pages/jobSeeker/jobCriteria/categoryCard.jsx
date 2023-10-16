@@ -1,5 +1,5 @@
-import { SVG } from "@assets/svg";
-import { CheckboxInput } from "@components/input";
+import { SVG } from "../../../assets/svg";
+import { CheckboxInput } from "../../../components/input";
 import { Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 

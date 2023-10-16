@@ -1,12 +1,12 @@
 import { Card, CardContent, Stack } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import { getBlacklistAPI } from "@api/employer";
-import { setTotalBlacklist } from "@redux/slice/employer";
+import { SVG } from "../../../../assets/svg";
+import { getBlacklistAPI } from "../../../../api/employer";
+import { setTotalBlacklist } from "../../../../redux/slice/employer";
 import { useDispatch, useSelector } from "react-redux";
-import { NoDataFoundAnimation } from "@components/animations";
-import BlacklistCardSkeletonLoading from "@components/blacklistCard/blacklistCardSkeletonLoading";
-import BlacklistCard from "@components/blacklistCard";
+import { NoDataFoundAnimation } from "../../../../components/animations";
+import BlacklistCardSkeletonLoading from "../../../../components/blacklistCard/blacklistCardSkeletonLoading";
+import BlacklistCard from "../../../../components/blacklistCard";
 function Blacklist() {
   const dispatch = useDispatch();
   const [blacklistData, setBlacklistData] = useState([]);

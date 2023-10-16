@@ -529,12 +529,8 @@ header {
   position: absolute;
   width: 20px;
   right: 14px;
-  top: 20px;
-}
-
-.edit_work_experience_btn {
-  text-align: center;
-  margin-top: 50px;
+  top: 50%;
+  transform: translate(0%, -50%);
 }
 
 .spaceor {
@@ -1014,6 +1010,7 @@ hr {
   border-radius: 10px;
   padding: 30px;
   width: 520px;
+  margin: 15px;
 }
 
 .dropimg-userprofile {
@@ -1550,7 +1547,6 @@ span.count {
 
   .manage-jobs_tab_div span {
     font-size: 24px;
-  
   }
 
   .form-control-area {
@@ -1959,7 +1955,7 @@ span.count {
     display: block;
   }
 
-  .add-form-control{
+  .add-form-control {
     font-size: 14px;
     font-weight: 500;
   }
@@ -1989,7 +1985,7 @@ span.count {
 
 .bluebtn {
   background: #274593 !important;
-  color: #000000 !important;
+  color: #fff !important;
   border: 1px solid #274593 !important;
 }
 
@@ -2325,7 +2321,7 @@ input.employersearch {
     font-weight: 300;
   }
 
-  .add-form-control{
+  .add-form-control {
     font-size: 14px;
   }
 
@@ -2500,5 +2496,20 @@ input.employersearch {
 
   .css-bb18k4-MuiButtonBase-root-MuiButton-root {
     font-size: 16px;
+  }
+}
+.register-app > a {
+  border-radius: 16px !important;
+}
+.upto-slide {
+  margin-right: 24px;
+}
+
+@media screen and (max-width: 992px) {
+  .label-100 {
+    flex-direction: column !important;
+  }
+  .upto-slide {
+    margin-right: 0px;
   }
 }

@@ -1,9 +1,9 @@
 import { Avatar, Chip, Divider, Stack } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
-import { SVG } from "@assets/svg";
-import ApplicationOptions from "@components/applicationOptions";
+import { SVG } from "../../assets/svg";
+import ApplicationOptions from "../../components/applicationOptions";
 
 function ApplicantCard({
   details,
@@ -38,7 +38,7 @@ function ApplicantCard({
           sx={{
             width: "70px",
             height: "70px",
-            "@media(max-width:768px)": { width: "40px", height: "40px" },
+            "@media(max-width:768px)": { width: "86px", height: "86px" },
           }}
         />
         <div className="recent-content">
@@ -52,15 +52,14 @@ function ApplicantCard({
               />
             }
             spacing={{ xs: 0, lg: 2 }}
-            flexWrap="wrap"
-            alignItems={{ xs: "flex-start", lg: "center" }}
+            alignItems={{ xs: "flex-start", lg: "flex-startr" }}
             sx={{ mb: 1, ...sx }}
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
             <div
               className="recent-research"
               style={{
-                flexWrap: "wrap",
+                whiteSpace: "nowrap",
                 display: "flex",
                 alignItems: "baseline",
               }}

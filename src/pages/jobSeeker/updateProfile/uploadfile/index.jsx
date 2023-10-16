@@ -1,8 +1,8 @@
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../../../components/button";
 import { Avatar, Stack } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../../assets/svg";
 
 const UploadFile = ({ title, color, bgcolor, textcolor }) => {
   const [files, setFiles] = useState([]);
