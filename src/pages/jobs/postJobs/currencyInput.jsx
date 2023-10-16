@@ -37,7 +37,7 @@ function CurrencyInput({ title, optionsValues, errors, ...rest }) {
             }}
             options={Object.keys(PAY_PERIOD).map((period) => ({
               value: PAY_PERIOD[period],
-              label: `per ${period}`,
+              label: `Per ${period}`,
             }))}
             style={{ width: "42%" }}
             {...((optionsValues && optionsValues.payPeriod) || {})}

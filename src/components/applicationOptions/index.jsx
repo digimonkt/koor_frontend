@@ -444,6 +444,7 @@ function ApplicationOptions({
                   );
                 }
               }}
+              sx={{ marginTop: "10px" }}
             />
           </div>
         </div>

@@ -88,7 +88,7 @@ function ChatList() {
       >
         <ul>
           {initialLoading ? (
-            "Loading..."
+            <li style={{ textAlign: "center" }}>Loading...</li>
           ) : !chatList.length ? (
             <NoDataFoundAnimation title="No conversation found." />
           ) : (
