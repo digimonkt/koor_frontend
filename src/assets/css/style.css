@@ -29,6 +29,12 @@ body {
   margin: 0 !important;
 }
 
+.credits_cards_div {
+  border: 1px solid #d5e3f7;
+  border-radius: 20px;
+  padding: 20px 40px 20px 40px;
+}
+
 .credits_title {
   font-size: 18px;
   font-weight: 400;
@@ -1578,6 +1584,26 @@ span.count {
 @media only screen and (max-width: 992px) {
   .w-25 {
     width: 100%;
+  }
+
+  .credits_cards_div {
+    border: 1px solid #d5e3f7;
+    border-radius: 20px;
+    padding: 20px 20px 20px 20px;
+  }
+
+  .credits_title {
+    font-size: 16px;
+  }
+
+  .credits_li {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .credits_head_credit {
+    font-size: 24px;
   }
 
   .SelectDropdown label {

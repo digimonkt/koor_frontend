@@ -397,7 +397,7 @@ function PostJobsComponent() {
             <div className="form-content">
               <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xl={5} lg={5}>
+                  <Grid item xl={5} lg={5} sm={6}>
                     <LabeledInput
                       title="Title of your job"
                       className="add-form-control"
@@ -409,7 +409,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.title}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={3}>
+                  <Grid item xl={3} lg={3} sm={6}>
                     <LabeledInput
                       title="Experience in Years"
                       className="add-form-control"
@@ -421,7 +421,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.experience}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4}>
+                  <Grid item xl={4} lg={4} sm={12}>
                     <CurrencyInput
                       currency="USD"
                       title="Salary"
@@ -544,7 +544,7 @@ function PostJobsComponent() {
                       <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Job category"
@@ -564,7 +564,7 @@ function PostJobsComponent() {
                           </ErrorMessage>
                         ) : null}
                       </Grid>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           defaultValue=""
                           placeholder={
@@ -641,7 +641,7 @@ function PostJobsComponent() {
                       />
                     </FormGroup>
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                  <Grid item xl={3} lg={3} sm={4} xs={12} className="mt-2">
                     <LabeledInput
                       title="Duration in Month"
                       className="add-form-control"
@@ -653,7 +653,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.duration}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} sm={4} xs={12} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"
@@ -676,7 +676,7 @@ function PostJobsComponent() {
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} xs={12} sm={4} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"
@@ -705,7 +705,7 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-3">Ways to apply</h2>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <JobFormControl
                       control={<CheckboxInput />}
                       label="Apply by email"
@@ -727,6 +727,7 @@ function PostJobsComponent() {
                     item
                     xl={4}
                     lg={4}
+                    sm={4}
                     xs={12}
                     sx={{
                       marginTop: "41px",
@@ -742,6 +743,7 @@ function PostJobsComponent() {
                     item
                     xl={4}
                     lg={4}
+                    sm={4}
                     xs={12}
                     sx={{
                       marginTop: "41px",
@@ -820,7 +822,7 @@ function PostJobsComponent() {
                   <Grid item xl={4} lg={4} xs={12}>
                     <label>
                       Required languages{" "}
-                      <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                      <span style={{ color: "#848484" }}>(Maximum 3)</span>
                       <span className="required-field">*</span>
                     </label>
                     <SelectInput
