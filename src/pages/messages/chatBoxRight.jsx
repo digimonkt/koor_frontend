@@ -1,7 +1,7 @@
 import { SVG } from "../../assets/svg";
 import ApplicationOptions from "../../components/applicationOptions";
 import { Avatar, IconButton, Menu, MenuItem, Stack } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // import PerfectScrollbar from "react-perfect-scrollbar";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -22,7 +22,7 @@ import utcPlugin from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
 import urlcat from "urlcat";
 import { WebSocketClient } from "../../utils/constants/websocket";
-import { LabeledInput } from "../../components/input";
+// import { LabeledInput } from "../../components/input";
 import { transformMessageResponse } from "../../api/transform/chat";
 import styles from "./message.module.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -32,6 +32,7 @@ import DialogBox from "../../components/dialogBox";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -54,6 +55,7 @@ function ChatBox() {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFormat, setSelectedFormat] = useState(null);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
@@ -211,51 +213,42 @@ function ChatBox() {
         );
     }
   };
-  const applyFormatting = (value) => {
-    // Apply the selected formatting to the currently selected text
-    const formattedMessage = applyFormattingToSelection(
-      newMessage,
-      selectedFormat
-    );
-    setNewMessage(formattedMessage);
-    setAnchorEl(null); // Close the menu
-  };
-
-  const applyFormattingToAll = (text) => {
-    if (text) {
-      switch (selectedFormat) {
-        case "bold":
-          return `<strong>${text}</strong>`;
-        case "italic":
-          return `<em>${text}</em>`;
-        case "underline":
-          return `<u>${text}</u>`;
-        default:
-          return text;
-      }
-    }
-  };
-  // Helper function to apply formatting to selected text
-  const applyFormattingToSelection = (text, format) => {
-    const selectedText = window.getSelection().toString();
-    if (selectedText) {
-      switch (format) {
-        case "bold":
-          return text.replace(selectedText, `<strong>${selectedText}</strong>`);
-        case "italic":
-          return text.replace(selectedText, `<em>${selectedText}</em>`);
-        case "underline":
-          return text.replace(selectedText, `<u>${selectedText}</u>`);
-        default:
-          return text;
-      }
-    }
-    return text;
-  };
+  // Start Draft JS Implement
+  const _onBoldClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
+  });
+  const _onItalicClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+  });
+  const _onUnderLineClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+  });
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const handleKeyCommand = useCallback((command, editorState) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      setEditorState(newState);
 
+      return "handled";
+    }
+    return "not-handled";
+  });
+  const getHTML = () => {
+    const contentState = editorState.getCurrentContent();
+    const rawContentState = convertToRaw(contentState);
+    return rawContentState.blocks.map(block => {
+      return block.text;
+    }).join("<br>"); // Use <br> to separate lines
+  };
+  // Function to extract plain text from editorState
+  const getPlainText = () => {
+    const contentState = editorState.getCurrentContent();
+    return contentState.getPlainText("\u0001"); // '\u0001' is used as a separator between blocks
+  };
+  console.log({ getHTML, getPlainText });
+  // End Draft Js
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -313,11 +306,7 @@ function ChatBox() {
   useEffect(() => {
     scrollToBottom();
   });
-  useEffect(() => {
-    if (newMessage !== "") {
-      applyFormatting();
-    }
-  }, [selectedFormat]);
+
   return (
     <>
       {isLoading ? (
@@ -472,25 +461,13 @@ function ChatBox() {
                       }}
                     />
                   </span>
-                  <LabeledInput
-                    placeholder={
-                      isBlackListedByEmployer
-                        ? "You are not longer to chat with employer"
-                        : "Write a message…"
-                    }
+                  {/* <LabeledInput
+                    placeholder="Write a message…"
                     style={{ background: "transparent" }}
                     type="textarea"
                     value={newMessage}
                     onChange={(e) => {
-                      if (selectedFormat) {
-                        const formattedText = applyFormattingToAll(
-                          e.target.value,
-                          selectedFormat
-                        );
-                        setNewMessage(formattedText);
-                      } else {
-                        setNewMessage(e.target.value);
-                      }
+                      setNewMessage(e.target.value);
                     }}
                     onKeyPress={(e) => {
                       if (newMessage && newMessage.trim()) {
@@ -499,7 +476,8 @@ function ChatBox() {
                         }
                       }
                     }}
-                  />
+                  /> */}
+                    <Editor editorState={editorState} handleKeyCommand={handleKeyCommand} onChange={setEditorState} />
                 </div>
                 <Stack direction="row" spacing={2}>
                   <IconButton
@@ -524,30 +502,24 @@ function ChatBox() {
                     open={Boolean(anchorEl)}
                     onClose={handleMenuClose}
                   >
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("bold");
-                        setAnchorEl(null);
-                      }}
-                    >
-                      <FormatBoldIcon />
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("italic");
-                        setAnchorEl(null);
-                      }}
-                    >
-                      <FormatItalicIcon />
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("underline");
-                        setAnchorEl(null);
-                      }}
-                    >
-                      <FormatUnderlinedIcon />
-                    </MenuItem>
+                      <MenuItem
+                        onClick={() => { _onBoldClick(); setAnchorEl(null); setSelectedFormat("bold"); }}
+                        className={selectedFormat === "bold" ? "highlighted-menu-item" : ""}
+                      >
+                        <FormatBoldIcon />
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => { _onItalicClick(); setAnchorEl(null); setSelectedFormat("italic"); }}
+                        className={selectedFormat === "italic" ? "highlighted-menu-item" : ""}
+                      >
+                        <FormatItalicIcon />
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => { _onUnderLineClick(); setAnchorEl(null); setSelectedFormat("underline"); }}
+                        className={selectedFormat === "underline" ? "highlighted-menu-item" : ""}
+                      >
+                        <FormatUnderlinedIcon />
+                      </MenuItem>
                   </Menu>
 
                   <FilledButton
