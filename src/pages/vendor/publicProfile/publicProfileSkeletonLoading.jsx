@@ -1,4 +1,4 @@
-import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
+import JobCardSkeletonLoader from "../../../components/jobCard/jobCardSkeletonLoader";
 import {
   Box,
   CardContent,

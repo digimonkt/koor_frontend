@@ -1,12 +1,12 @@
-import { OutlinedButton } from "@components/button";
+import { OutlinedButton } from "../../components/button";
 import { Avatar, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { SVG } from "@assets/svg";
-import ImageCropper from "@components/imageCropper";
+import { SVG } from "../../assets/svg";
+import ImageCropper from "../../components/imageCropper";
 import { useSelector, useDispatch } from "react-redux";
-import { USER_ROLES } from "@utils/enum";
-import { setErrorToast } from "@redux/slice/toast";
+import { USER_ROLES } from "../../utils/enum";
+import { setErrorToast } from "../../redux/slice/toast";
 
 const ProfilePicInputComponent = ({ title, handleSave, image, loading }) => {
   const dispatch = useDispatch();

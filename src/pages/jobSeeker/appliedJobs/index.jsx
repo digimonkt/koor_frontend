@@ -9,12 +9,12 @@ import {
   Stack,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
-import JobCard from "@components/jobCard";
-import { getAppliedJobsAPI } from "@api/jobSeeker";
-import { JOB_ORDER_BY, JOB_SORT_BY } from "@utils/enum";
-import JobCardSkeletonLoader from "@components/jobCard/jobCardSkeletonLoader";
-import { NoDataFoundAnimation } from "@components/animations";
+import { SVG } from "../../../assets/svg";
+import JobCard from "../../../components/jobCard";
+import { getAppliedJobsAPI } from "../../../api/jobSeeker";
+import { JOB_ORDER_BY, JOB_SORT_BY } from "../../../utils/enum";
+import JobCardSkeletonLoader from "../../../components/jobCard/jobCardSkeletonLoader";
+import { NoDataFoundAnimation } from "../../../components/animations";
 
 function AppliedJobsComponent() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -134,7 +134,7 @@ function AppliedJobsComponent() {
               transformOrigin={{ horizontal: "right", vertical: "top" }}
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
-              <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
+              <h5 className="px-3 mt-0 mb-1">Sort by :</h5>
               <MenuItem
                 onClick={() => {
                   // handleClose();

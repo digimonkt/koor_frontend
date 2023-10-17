@@ -65,6 +65,7 @@ span.blueview {
   line-height: 21px;
   letter-spacing: 0.02em;
   color: rgb(18 18 18 / 75%);
+  white-space: nowrap;
 }
 
 .series-box ul li {

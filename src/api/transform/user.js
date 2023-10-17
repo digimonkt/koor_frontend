@@ -1,4 +1,4 @@
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 
 export const transformGetUserDetails = (data) => {
   return {
@@ -40,15 +40,15 @@ export const transformGetUserDetails = (data) => {
     },
     jobPreferences: data.job_preferences
       ? {
-        id: data.job_preferences.id,
-        isAvailable: data.job_preferences.is_available,
-        displayInSearch: data.job_preferences.display_in_search,
-        isPartTime: data.job_preferences.is_part_time,
-        isFullTime: data.job_preferences.is_full_time,
-        hasContract: data.job_preferences.has_contract,
-        expectedSalary: data.job_preferences.expected_salary,
-        payPeriod: data.job_preferences.pay_period,
-      }
+          id: data.job_preferences.id,
+          isAvailable: data.job_preferences.is_available,
+          displayInSearch: data.job_preferences.display_in_search,
+          isPartTime: data.job_preferences.is_part_time,
+          isFullTime: data.job_preferences.is_full_time,
+          hasContract: data.job_preferences.has_contract,
+          expectedSalary: data.job_preferences.expected_salary,
+          payPeriod: data.job_preferences.pay_period,
+        }
       : {},
     educationRecord: (data.education_record || []).map((record) => ({
       id: record.id,

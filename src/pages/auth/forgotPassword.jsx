@@ -1,10 +1,10 @@
-import { SendOtpAPI } from "@api/user";
-import { FilledButton } from "@components/button";
-import { ErrorMessage } from "@components/caption";
-import { LabeledInput } from "@components/input";
-import Loader from "@components/loader";
-import { setSuccessToast } from "@redux/slice/toast";
-import { setVerifyEmail } from "@redux/slice/user";
+import { SendOtpAPI } from "../../api/user";
+import { FilledButton } from "../../components/button";
+import { ErrorMessage } from "../../components/caption";
+import { LabeledInput } from "../../components/input";
+import Loader from "../../components/loader";
+import { setSuccessToast } from "../../redux/slice/toast";
+import { setVerifyEmail } from "../../redux/slice/user";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";

@@ -15,13 +15,13 @@ import {
 } from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../assets/svg";
 import MenuIcon from "@mui/icons-material/Menu";
-import { SEARCH_TYPE, USER_ROLES } from "@utils/enum";
+import { SEARCH_TYPE, USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserRole } from "@redux/slice/user";
+import { setUserRole } from "../../redux/slice/user";
 import NotificationPopup from "./notificationPopup";
-import DialogBox from "@components/dialogBox";
+import DialogBox from "../../components/dialogBox";
 
 // const ismenu = false;
 

@@ -1,12 +1,12 @@
-import { SVG } from "@assets/svg";
-import { Avatar } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { SVG } from "../../../assets/svg";
+import { Avatar, Box } from "@mui/material";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
-import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "../../../utils/enum";
 import { useSelector } from "react-redux";
 function JobCostCard({ amount, payPeriod, user }) {
   const { role } = useSelector((state) => state.auth);
@@ -15,7 +15,7 @@ function JobCostCard({ amount, payPeriod, user }) {
       {amount ? (
         <div className={`${styles.monthBox}`}>
           <>
-            {payPeriod ? <h4>UP TO</h4> : ""}
+            {payPeriod ? <h4>UP TO</h4> : "BUDGET"}
             <p
               className="m-0"
               style={{
@@ -24,13 +24,21 @@ function JobCostCard({ amount, payPeriod, user }) {
             >
               $ <span>{amount}</span>
             </p>
-            {payPeriod ? <h5 className="mt-0">/ {payPeriod}</h5> : ""}
+            {payPeriod ? <h5 className="mt-0">/ {payPeriod}</h5> : "/ month"}
           </>
         </div>
       ) : (
         ""
       )}
-      <div className={`${styles.lotus}`}>
+      <Box
+        className={`${styles.lotus}`}
+        sx={{
+          "@media (max-width: 600px)": {
+            borderBottom: "0px",
+            paddingBottom: "0px",
+          },
+        }}
+      >
         <div className={`${styles.lotusimg}`}>
           <Avatar
             sx={{
@@ -76,7 +84,7 @@ function JobCostCard({ amount, payPeriod, user }) {
             <Link to={`mailto:${user.email}`}>{user.email}</Link>
           </span>
         </div>
-      </div>
+      </Box>
     </>
   );
 }

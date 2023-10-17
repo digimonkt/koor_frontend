@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
-import SearchInput from "@components/searchInput";
-import { SVG } from "@assets/svg";
+import SearchInput from "../../components/searchInput";
+import { SVG } from "../../assets/svg";
 import {
   Box,
   Chip,
@@ -20,7 +20,7 @@ import {
   JOB_SORT_BY,
   SEARCH_TYPE,
   USER_ROLES,
-} from "@utils/enum";
+} from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   searchJobs,
@@ -28,7 +28,7 @@ import {
   searchTender,
   searchVendor,
   setJobPage,
-} from "@redux/slice/search";
+} from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import urlcat from "urlcat";
 function Search() {
@@ -38,6 +38,7 @@ function Search() {
     auth: { role },
     search: { totalItems, totalPages, page, advanceFilter },
   } = useSelector((state) => state);
+  const { jobs } = useSelector((state) => state.search);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState("");
   const [searchPlaceHolder, setSearchPlaceHolder] = useState("Jobs");
@@ -171,6 +172,7 @@ function Search() {
               placeholder={`Search ${searchPlaceHolder}`}
               handleSearch={handleSearch}
               value={search}
+              maxLength={50}
             />
             <Box sx={{ display: { xs: "block", lg: "none" } }}>
               <AdvanceFilter searchType={searchType} />
@@ -205,7 +207,7 @@ function Search() {
                       }}
                     />
                   </h2>
-                  {searchType === SEARCH_TYPE.jobs ? (
+                  {searchType === SEARCH_TYPE.jobs && jobs.length ? (
                     <>
                       <IconButton
                         sx={{ width: "50px", height: "50px" }}
@@ -256,7 +258,7 @@ function Search() {
                           vertical: "bottom",
                         }}
                       >
-                        <h5 className="px-3 mt-0 mb-1">Sort by:</h5>
+                        <h5 className="px-3 mt-0 mb-1">Sort by :</h5>
                         {[
                           {
                             label: "Newest",
@@ -290,7 +292,7 @@ function Search() {
                               sx={{
                                 backgroundColor:
                                   sortBy === data.sortBy &&
-                                  orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                     ? role === USER_ROLES.jobSeeker
                                       ? "#FEEFD3"
                                       : "#D5E3F7"

@@ -10,12 +10,12 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { SVG } from "@assets/svg";
-import { getTenderApplicationDetailsAPI } from "@api/employer";
+import { SVG } from "../../../assets/svg";
+import { getTenderApplicationDetailsAPI } from "../../../api/employer";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import ApplicationOptions from "@components/applicationOptions";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import ApplicationOptions from "../../../components/applicationOptions";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 import urlcat from "urlcat";
 dayjs.extend(relativeTime);
 const ApplicantDetails = () => {
@@ -81,8 +81,7 @@ const ApplicantDetails = () => {
                   style={{ display: "flex", alignItems: "center" }}
                 >
                   <span>
-                    Applied {dayjs(applicantDetails.createdAt).fromNow()}{" "}
-                    to:{" "}
+                    Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
                   <div>{applicantDetails.tender.title}</div>
                 </div>

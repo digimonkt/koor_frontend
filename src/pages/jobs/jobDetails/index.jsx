@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { SVG } from "@assets/svg";
+import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
   withdrawJobApplicationAPI,
-} from "@api/job";
+} from "../../../api/job";
 import dayjs from "dayjs";
 import {
   SolidButton,
@@ -22,15 +22,15 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
-import { saveJobAPI, unSaveJobAPI } from "@api/jobSeeker";
+import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
-import DialogBox from "@components/dialogBox";
-import { USER_ROLES } from "@utils/enum";
-import { getLetLongByAddressAPI } from "@api/user";
-import { GoogleMapWrapper, GoogleMap } from "@components/googleMap";
+import DialogBox from "../../../components/dialogBox";
+import { USER_ROLES } from "../../../utils/enum";
+import { getLetLongByAddressAPI } from "../../../api/user";
+import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Box, Stack } from "@mui/material";
 import ShareJob from "../shareJob";
-import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 
 const JobDetails = () => {
   const params = useParams();
@@ -285,8 +285,12 @@ const JobDetails = () => {
                   direction={{ xs: "column", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
                   spacing={2}
+                  sx={{ overflow: "auto" }}
                 >
-                  <div className={styles.details_searchs_button}>
+                  <Box
+                    className={styles.details_searchs_button}
+                    sx={{ display: "flex", flexWrap: "nowrap !important" }}
+                  >
                     <SearchButton
                       text={details.country.title}
                       leftIcon={<SVG.LocationIcon />}
@@ -318,7 +322,7 @@ const JobDetails = () => {
                         className={`${styles.iconbutton}`}
                       />
                     )}
-                  </div>
+                  </Box>
                 </Stack>
                 {details.startDate && (
                   <div className={`${styles.datesatrt}`}>
@@ -339,7 +343,7 @@ const JobDetails = () => {
                         className={`${styles.downloadtext}`}
                         key={attachment.id}
                       >
-                        <span className="d-inline-flex">
+                        <span className="d-inline-flex  me-2">
                           {<SVG.OrangeIcon />}
                         </span>
                         <span
@@ -441,7 +445,7 @@ const JobDetails = () => {
                                 "Save job",
                               ]
                         }
-                        style={{ height: "44px" }}
+                        style={{ height: "44px", width: "100%" }}
                         jobSeeker
                         onClick={() => {
                           handleSaveJob(params.jobId);

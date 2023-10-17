@@ -10,21 +10,22 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthorizedRoute, UnauthorizedRoute } from "./utils/routes";
-import { globalLocalStorage } from "@utils/localStorage";
+import { globalLocalStorage } from "./utils/localStorage";
 import {
   getUserDetails,
   setCurrentLocation,
   setIsLoggedIn,
-} from "@redux/slice/user";
-import { ErrorToast, SuccessToast } from "@components/toast";
-import { MESSAGE_TYPE } from "@utils/enum";
-import { resetToast } from "@redux/slice/toast";
-import { FallbackLoading } from "@components/loader/fallbackLoader";
+} from "./redux/slice/user";
+import { ErrorToast, SuccessToast } from "./components/toast";
+import { MESSAGE_TYPE } from "./utils/enum";
+import { resetToast } from "./redux/slice/toast";
+import { FallbackLoading } from "./components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
 // eslint-disable-next-line no-unused-vars
-import { getUserCountryByIpAPI, getUserIpAPI } from "@api/user";
-import InnerFooter from "@components/footer/innerfooter";
-
+import { getUserCountryByIpAPI, getUserIpAPI } from "./api/user";
+import InnerFooter from "./components/footer/innerfooter";
+import { Capacitor } from "@capacitor/core";
+const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
   const {
@@ -76,6 +77,8 @@ function App() {
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
       <div style={{ display: isGlobalLoading ? "none" : "" }}>
+        {/* {platform === "android" || platform === "ios" ? null : <Header />} */}
+
         <Header />
         <Routes>
           {ROUTES.map((route) => {
@@ -109,7 +112,9 @@ function App() {
                       </UnauthorizedRoute>
                     </Suspense>
                     {/* <Footer /> */}
-                    <InnerFooter />
+                    {platform === "android" || platform === "ios" ? null : (
+                      <InnerFooter />
+                    )}
                   </>
                 }
               />

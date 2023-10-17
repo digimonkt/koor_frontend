@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getPrivacyAPI } from "@api/common";
-import ShowContent from "@components/showContent";
+import { getPrivacyAPI } from "../../api/common";
+import ShowContent from "../../components/showContent";
 
 const PrivacyPolicy = () => {
   const [privacyPolicy, setPrivacyPolicy] = useState("");

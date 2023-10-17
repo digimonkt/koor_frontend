@@ -1,15 +1,15 @@
 import { Stack } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SVG } from "@assets/svg";
-import { USER_ROLES } from "@utils/enum";
+import { SVG } from "../../assets/svg";
+import { USER_ROLES } from "../../utils/enum";
 import dayjs from "dayjs";
-import { YEAR_FORMAT } from "@utils/constants/constants";
-import { deleteEducationDetailsAPI } from "@api/jobSeeker";
-import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
-import { deleteEducationRecord } from "@redux/slice/user";
-import DialogBox from "@components/dialogBox";
-import DeleteCard from "@components/deleteCard";
+import { YEAR_FORMAT } from "../../utils/constants/constants";
+import { deleteEducationDetailsAPI } from "../../api/jobSeeker";
+import { setSuccessToast, setErrorToast } from "../../redux/slice/toast";
+import { deleteEducationRecord } from "../../redux/slice/user";
+import DialogBox from "../../components/dialogBox";
+import DeleteCard from "../../components/deleteCard";
 
 function EducationCard({
   id,

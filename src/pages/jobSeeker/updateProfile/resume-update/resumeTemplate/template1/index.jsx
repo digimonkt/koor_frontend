@@ -1,4 +1,7 @@
-import { MONTH_YEAR_FORMAT, YEAR_FORMAT } from "@utils/constants/constants";
+import {
+  MONTH_YEAR_FORMAT,
+  YEAR_FORMAT,
+} from "../../../../../../utils/constants/constants";
 import dayjs from "dayjs";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
@@ -21,8 +24,8 @@ function ResumeTemplate({ user }) {
           <span className="phone-val">
             {showUser.countryCode && showUser.mobileNumber
               ? formatPhoneNumberIntl(
-                showUser.countryCode + showUser.mobileNumber
-              )
+                  showUser.countryCode + showUser.mobileNumber
+                )
               : ""}
           </span>
           <br />
@@ -45,8 +48,7 @@ function ResumeTemplate({ user }) {
 
       <div className="knowledge">
         {/* also known as skills */}
-        <p className="title">KNOWLEDGE AND EXPERTISE
-        </p>
+        <p className="title">KNOWLEDGE AND EXPERTISE</p>
         <ul>
           {showUser.skills.map((skill) => (
             <li key={skill.id}>{skill.skill.title}</li>
@@ -79,12 +81,15 @@ function ResumeTemplate({ user }) {
                 {dayjs(experience.startDate).format(MONTH_YEAR_FORMAT)} -{" "}
                 {experience.present
                   ? "Present"
-                  : dayjs(experience.endDate).format(MONTH_YEAR_FORMAT)}:{" "}
+                  : dayjs(experience.endDate).format(MONTH_YEAR_FORMAT)}
+                :{" "}
               </span>
-              <span className="title">{experience.title}</span> {" "}-{" "}
-              <span className="responsibility">{experience.organization}</span>
-              {" "}
-              <p className="mt-3" dangerouslySetInnerHTML={{ __html: experience.description }}></p>
+              <span className="title">{experience.title}</span> -{" "}
+              <span className="responsibility">{experience.organization}</span>{" "}
+              <p
+                className="mt-3"
+                dangerouslySetInnerHTML={{ __html: experience.description }}
+              ></p>
             </React.Fragment>
           );
         })}

@@ -1,7 +1,7 @@
-import { SVG } from "@assets/svg";
-import { ChipBox } from "@components/jobCard/style";
+import { SVG } from "../../assets/svg";
+import { ChipBox } from "../../components/jobCard/style";
 import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";

@@ -1,13 +1,13 @@
-import { FilledButton, OutlinedButton } from "@components/button";
+import { FilledButton, OutlinedButton } from "../../../../components/button";
 import { IconButton, Stack } from "@mui/material";
 import React, { useState } from "react";
-import { SVG } from "@assets/svg";
-import DialogBox from "@components/dialogBox";
+import { SVG } from "../../../../assets/svg";
+import DialogBox from "../../../../components/dialogBox";
 import ResumeTemplate from "./resumeTemplate/template1";
 import html2pdf from "html2pdf.js";
 import { useSelector } from "react-redux";
-import { DownloadResumeAPI } from "@api/jobSeeker";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { DownloadResumeAPI } from "../../../../api/jobSeeker";
+import { generateFileUrl } from "../../../../utils/generateFileUrl";
 const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
   const [openResume, setOpenResume] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
@@ -81,7 +81,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
                 <span className="me-2 d-inline-flex">
                   <SVG.DownloadIcon />
                 </span>
-                UPLOAD YOUR RESUME
+                DOWNLOAD YOUR RESUME
               </>
             }
             onClick={() => setOpenResume(true)}
@@ -135,6 +135,7 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
             disabled={isDownloadingPDF || isDownloadingDocs}
           />
           <FilledButton
+            sx={{ marginLeft: "10px" }}
             title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
             onClick={downloadDocs}
             style={{ marginBottom: "10px" }}
