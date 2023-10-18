@@ -1,5 +1,7 @@
 import { SVG } from "@assets/svg";
 import { faker } from "@faker-js/faker";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import FormatQuoteOutlinedIcon from "@mui/icons-material/FormatQuoteOutlined";
 
 export const GenerateFakeChatList = (size) => {
   const users = [];
@@ -18,6 +20,21 @@ export const GenerateFakeChatList = (size) => {
   return users;
 };
 export const ImageDataDelete = [
+  {
+    option: "Edit",
+    icon: <SVG.Edit1 />,
+    color: "#121212",
+  },
+  {
+    option: "Copy",
+    icon: <ContentCopyOutlinedIcon />,
+    color: "#121212",
+  },
+  {
+    option: "Quote",
+    icon: <FormatQuoteOutlinedIcon />,
+    color: "#121212",
+  },
   {
     option: "Delete",
     icon: <SVG.DeleteICon />,
