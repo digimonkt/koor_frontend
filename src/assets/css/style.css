@@ -1471,7 +1471,7 @@ span.count {
 
 .chatinput {
   display: flex;
-  align-items: center;
+  align-items: start;
   width: 100%;
 }
 
@@ -1501,7 +1501,11 @@ span.count {
   padding-top: 15px;
   text-align: center;
 }
-
+.chatSection {
+  border-top: 1px solid #cacaca;
+  padding-top: 15px;
+  text-align: left;
+}
 .w-25 {
   width: 25%;
 }
@@ -2531,4 +2535,27 @@ input.employersearch {
   width: 1px;
   height: 75px;
   background: #ccc;
+}
+.DraftEditor-root {
+  margin-left: 10px;
+  position: relative;
+  width: 100%;
+  border-bottom: 0;
+}
+
+.public-DraftEditorPlaceholder-inner {
+  color: #848484;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.editor-warp .DraftEditor-editorContainer {
+  position: absolute;
+  width: 100%;
+  top: 3px;
+  min-height: 25px;
+  z-index: 1;
 }

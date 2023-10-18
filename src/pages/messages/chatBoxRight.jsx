@@ -1,7 +1,7 @@
 import { SVG } from "../../assets/svg";
 import ApplicationOptions from "../../components/applicationOptions";
-import { Avatar, IconButton, Menu, MenuItem, Stack } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import { Avatar, Box, IconButton, Menu, MenuItem, Stack } from "@mui/material";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // import PerfectScrollbar from "react-perfect-scrollbar";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -22,7 +22,7 @@ import utcPlugin from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
 import urlcat from "urlcat";
 import { WebSocketClient } from "../../utils/constants/websocket";
-import { LabeledInput } from "../../components/input";
+// import { LabeledInput } from "../../components/input";
 import { transformMessageResponse } from "../../api/transform/chat";
 import styles from "./message.module.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -32,6 +32,10 @@ import DialogBox from "../../components/dialogBox";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import MediaControl from "./meidaControl";
+import { ImageDataDelete } from "./helper";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -54,6 +58,17 @@ function ChatBox() {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFormat, setSelectedFormat] = useState(null);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const [anchorElMedia, setAnchorElMedia] = useState(null);
+
+  const handleClickMedia = (event) => {
+    setAnchorElMedia(event.currentTarget);
+  };
+  const handleMenuCloseMedia = () => {
+    setAnchorElMedia(null);
+  };
+
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
@@ -166,16 +181,40 @@ function ChatBox() {
     switch (attachment.type) {
       case "image":
         return (
-          <img
-            alt="attachment"
-            src={generateFileUrl(attachment.path)}
-            width={"400px"}
-            rel="nofollow"
-            onClick={() => {
-              setFullImg(generateFileUrl(attachment.path));
-              setOpen(true);
-            }}
-          />
+          <Box sx={{ position: "relative" }}>
+            <img
+              alt="attachment"
+              src={generateFileUrl(attachment.path)}
+              width={"400px"}
+              rel="nofollow"
+              onClick={() => {
+                setFullImg(generateFileUrl(attachment.path));
+                setOpen(true);
+              }}
+            />
+            <IconButton
+              size="small"
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClickMedia} // Open the menu when the IconButton is clicked
+              sx={{
+                position: "absolute",
+                top: "15px",
+                right: "15px",
+                zIndex: 1,
+                background: "#f5f5f5",
+              }}
+            >
+              <MoreHorizIcon />
+            </IconButton>
+            <MediaControl
+              anchorElMedia={anchorElMedia}
+              handleMenuCloseMedia={handleMenuCloseMedia}
+              option={ImageDataDelete}
+            />
+          </Box>
         );
       case "video":
         return (
@@ -211,51 +250,39 @@ function ChatBox() {
         );
     }
   };
-  const applyFormatting = (value) => {
-    // Apply the selected formatting to the currently selected text
-    const formattedMessage = applyFormattingToSelection(
-      newMessage,
-      selectedFormat
-    );
-    setNewMessage(formattedMessage);
-    setAnchorEl(null); // Close the menu
-  };
-
-  const applyFormattingToAll = (text) => {
-    if (text) {
-      switch (selectedFormat) {
-        case "bold":
-          return `<strong>${text}</strong>`;
-        case "italic":
-          return `<em>${text}</em>`;
-        case "underline":
-          return `<u>${text}</u>`;
-        default:
-          return text;
-      }
-    }
-  };
-  // Helper function to apply formatting to selected text
-  const applyFormattingToSelection = (text, format) => {
-    const selectedText = window.getSelection().toString();
-    if (selectedText) {
-      switch (format) {
-        case "bold":
-          return text.replace(selectedText, `<strong>${selectedText}</strong>`);
-        case "italic":
-          return text.replace(selectedText, `<em>${selectedText}</em>`);
-        case "underline":
-          return text.replace(selectedText, `<u>${selectedText}</u>`);
-        default:
-          return text;
-      }
-    }
-    return text;
-  };
+  // Start Draft JS Implement
+  const _onBoldClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
+  });
+  const _onItalicClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+  });
+  const _onUnderLineClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+  });
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  // const handleKeyCommand = useCallback((command, editorState) => {
+  //   const newState = RichUtils.handleKeyCommand(editorState, command);
+  //   if (newState) {
+  //     setEditorState(newState);
 
+  //     return "handled";
+  //   }
+  //   return "not-handled";
+  // });
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+    const chatHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+
+    // if (user && user.organization && html.includes("@{{")) {
+    //   html = html.replace(/<\/?a[^>]*>/g, "");
+    //   html = html.replaceAll("@{{", "{{");
+    // }
+    setNewMessage(chatHtml);
+  };
+  // End Draft Js
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -313,11 +340,7 @@ function ChatBox() {
   useEffect(() => {
     scrollToBottom();
   });
-  useEffect(() => {
-    if (newMessage !== "") {
-      applyFormatting();
-    }
-  }, [selectedFormat]);
+
   return (
     <>
       {isLoading ? (
@@ -341,6 +364,7 @@ function ChatBox() {
               // display: "flex",
               // flexDirection: "column-reverse",
               overflow: "auto",
+              overflowX: "hidden",
             }}
             ref={scrollbarRef}
             id="chat-box-scroll-box"
@@ -438,9 +462,14 @@ function ChatBox() {
                                 {message.attachment
                                   ? renderAttachment(message.attachment)
                                   : ""}
-                                <p style={{ wordBreak: "break-word" }}>
+                                {/* <p style={{ wordBreak: "break-word" }}>
                                   {message.message}
-                                </p>
+                                </p> */}
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html: message.message,
+                                  }}
+                                />
                               </div>
                               <div className={`ms-2 ${styles.chatTime}`}>
                                 {dayjs.utc(message.createdAt).local().fromNow()}
@@ -455,9 +484,9 @@ function ChatBox() {
             </InfiniteScroll>
             {/* </PerfectScrollbar> */}
           </div>
-          <div className="bottomnav">
+          <div className="chatSection">
             {!isBlackListedByEmployer ? (
-              <Stack direction={"row"} spacing={2}>
+              <Stack direction={"row"} spacing={2} alignItems="start">
                 <div className="chatinput">
                   <span className="attachment-icon">
                     <SVG.AttachIcon style={{ position: "relative" }} />
@@ -473,25 +502,13 @@ function ChatBox() {
                       }}
                     />
                   </span>
-                  <LabeledInput
-                    placeholder={
-                      isBlackListedByEmployer
-                        ? "You are not longer to chat with employer"
-                        : "Write a message…"
-                    }
+                  {/* <LabeledInput
+                    placeholder="Write a message…"
                     style={{ background: "transparent" }}
                     type="textarea"
                     value={newMessage}
                     onChange={(e) => {
-                      if (selectedFormat) {
-                        const formattedText = applyFormattingToAll(
-                          e.target.value,
-                          selectedFormat
-                        );
-                        setNewMessage(formattedText);
-                      } else {
-                        setNewMessage(e.target.value);
-                      }
+                      setNewMessage(e.target.value);
                     }}
                     onKeyPress={(e) => {
                       if (newMessage && newMessage.trim()) {
@@ -500,7 +517,28 @@ function ChatBox() {
                         }
                       }
                     }}
-                  />
+                  /> */}
+                  <div className="editor-warp w-100">
+                    <Editor
+                      // handleKeyCommand={handleKeyCommand}
+                      onChange={onEditorStateChange}
+                      editorState={editorState}
+                      onEditorStateChange={onEditorStateChange}
+                      mention={{
+                        trigger: "@",
+                        separator: " ",
+                        // suggestions: mentions,
+                      }}
+                      onKeyPress={(e) => {
+                        if (newMessage && newMessage.trim()) {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            sendMessage(e);
+                          }
+                        }
+                      }}
+                      placeholder="Write a message…"
+                    />
+                  </div>
                 </div>
                 <Stack direction="row" spacing={2}>
                   <IconButton
@@ -530,29 +568,53 @@ function ChatBox() {
                       horizontal: "center",
                     }}
                     className="menufloting"
+                    sx={{
+                      "& .MuiMenuItem-root": {
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                      },
+                    }}
                   >
                     <Stack direction="row" spacing={0.4} className="format-box">
                       <MenuItem
                         onClick={() => {
-                          setSelectedFormat("bold");
+                          _onBoldClick();
                           setAnchorEl(null);
+                          setSelectedFormat("bold");
                         }}
+                        className={
+                          selectedFormat === "bold"
+                            ? "highlighted-menu-item"
+                            : ""
+                        }
                       >
                         <FormatBoldIcon />
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          setSelectedFormat("italic");
+                          _onItalicClick();
                           setAnchorEl(null);
+                          setSelectedFormat("italic");
                         }}
+                        className={
+                          selectedFormat === "italic"
+                            ? "highlighted-menu-item"
+                            : ""
+                        }
                       >
                         <FormatItalicIcon />
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          setSelectedFormat("underline");
+                          _onUnderLineClick();
                           setAnchorEl(null);
+                          setSelectedFormat("underline");
                         }}
+                        className={
+                          selectedFormat === "underline"
+                            ? "highlighted-menu-item"
+                            : ""
+                        }
                       >
                         <FormatUnderlinedIcon />
                       </MenuItem>

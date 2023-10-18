@@ -1,3 +1,4 @@
+import { SVG } from "@assets/svg";
 import { faker } from "@faker-js/faker";
 
 export const GenerateFakeChatList = (size) => {
@@ -16,3 +17,10 @@ export const GenerateFakeChatList = (size) => {
   }
   return users;
 };
+export const ImageDataDelete = [
+  {
+    option: "Delete",
+    icon: <SVG.DeleteICon />,
+    color: "#E8473D",
+  },
+];
