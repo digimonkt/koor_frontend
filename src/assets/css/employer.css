@@ -814,6 +814,14 @@ span.arrowjobs svg {
     font-size: 10px;
   }
 
+  .styles_attachment {
+    font-size: 12px;
+  }
+
+  .styles_attachment small {
+    font-size: 12px;
+  }
+
   .posting_tender_done_icon_div {
     display: none;
   }

@@ -397,7 +397,7 @@ function PostJobsComponent() {
             <div className="form-content">
               <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xl={5} lg={5} sm={6}>
+                  <Grid item xl={5} xs={12} lg={5} sm={6}>
                     <LabeledInput
                       title="Title of your job"
                       className="add-form-control"
@@ -409,7 +409,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.title}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={3} sm={6}>
+                  <Grid item xl={3} xs={12} lg={3} sm={6}>
                     <LabeledInput
                       title="Experience in Years"
                       className="add-form-control"
@@ -591,11 +591,15 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={5} lg={5} xs={12} className="mt-2">
+                  <Grid item xl={5} lg={5} xs={12} className="jobtype_grid">
                     <label>Job type</label>
                     <FormGroup
                       row
-                      sx={{ marginLeft: "7px", display: "flex", mt: 1 }}
+                      sx={{
+                        marginLeft: "7px",
+                        display: "flex",
+                        marginTop: "8px",
+                      }}
                     >
                       <JobFormControl
                         className="update_checkbox"
@@ -653,7 +657,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.duration}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={2} lg={2} sm={4} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} sm={4} xs={6} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"
@@ -676,7 +680,7 @@ function PostJobsComponent() {
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xl={2} lg={2} xs={12} sm={4} className="mt-2">
+                  <Grid item xl={2} lg={2} xs={6} sm={4} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"
@@ -731,6 +735,9 @@ function PostJobsComponent() {
                     xs={12}
                     sx={{
                       marginTop: "41px",
+                      "@media (max-width: 480px)": {
+                        marginTop: "0px",
+                      },
                     }}
                   >
                     <input
@@ -747,6 +754,9 @@ function PostJobsComponent() {
                     xs={12}
                     sx={{
                       marginTop: "41px",
+                      "@media (max-width: 480px)": {
+                        marginTop: "0px",
+                      },
                     }}
                   >
                     <input
@@ -959,23 +969,21 @@ function PostJobsComponent() {
                       title="Cancel"
                       disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                       sx={{
-                        "&.MuiButton-outlined": {
-                          borderRadius: "73px !important",
-                          border: "1px solid #848484 !important",
-                          color: "#848484 !important",
-                          fontWeight: "600 !important",
-                          fontSize: "16px !important",
-                          fontFamily: "Bahnschrift !important",
-                          padding: "6px 50px !important",
+                        borderRadius: "73px !important",
+                        border: "1px solid #848484 !important",
+                        color: "#848484 !important",
+                        fontWeight: "600 !important",
+                        fontSize: "16px !important",
+                        fontFamily: "Bahnschrift !important",
+                        padding: "10px 50px !important",
 
-                          "&:hover": {
-                            background: "rgba(40, 71, 146, 0.1) !important",
-                            color: "#848484 !important",
-                          },
-                          "@media (max-width: 992px)": {
-                            padding: "5px 15px !important",
-                            fontSize: "14px !important",
-                          },
+                        "&:hover": {
+                          background: "rgba(40, 71, 146, 0.1) !important",
+                          color: "#848484 !important",
+                        },
+                        "@media (max-width: 480px)": {
+                          padding: "10px 50px !important",
+                          fontSize: "14px !important",
                         },
                       }}
                       onClick={() => navigate("/employer/manage-jobs")}
@@ -996,23 +1004,21 @@ function PostJobsComponent() {
                         (!jobId && totalAvailableCredits < minimumCreditJobPost)
                       }
                       sx={{
-                        "&.MuiButton-outlined": {
-                          borderRadius: "73px !important",
-                          border: "1px solid #848484 !important",
-                          color: "#ffffff !important",
-                          fontWeight: "600 !important",
-                          fontSize: "16px !important",
-                          fontFamily: "Bahnschrift !important",
-                          padding: "6px 50px !important",
-                          background: "#274593 !important",
+                        borderRadius: "73px !important",
+                        border: "1px solid #848484 !important",
+                        color: "#ffffff !important",
+                        fontWeight: "600 !important",
+                        fontSize: "16px !important",
+                        fontFamily: "Bahnschrift !important",
+                        padding: "10px 50px !important",
+                        background: "#274593 !important",
 
-                          "&:hover": {
-                            color: "#848484 !important",
-                          },
-                          "@media (max-width: 992px)": {
-                            padding: "5px 15px !important",
-                            fontSize: "14px !important",
-                          },
+                        "&:hover": {
+                          color: "#848484 !important",
+                        },
+                        "@media (max-width: 480px)": {
+                          padding: "10px 50px !important",
+                          fontSize: "14px !important",
                         },
                       }}
                     />

@@ -817,6 +817,14 @@ span.arrowjobs svg {
     font-size: 20px;
   }
 
+  .styles_attachment {
+    font-size: 12px;
+  }
+
+  .styles_attachment small {
+    font-size: 12px;
+  }
+
   .tender_job_card_text .my-jobs h2 {
     font-size: 16px !important;
   }

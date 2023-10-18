@@ -16,4 +16,9 @@ export const JobFormControl = styled(FormControlLabel)`
       font-size: 14px;
     }
   }
+  @media screen and (max-width: 480px) {
+    & .MuiFormControlLabel-label {
+      font-size: 12px;
+    }
+  }
 `;
