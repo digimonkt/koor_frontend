@@ -1412,7 +1412,7 @@ span.count {
 .message-tex-2 p {
   /* background: #f0f0f0; */
   border-radius: 20px 20px 20px 0px;
-  padding: 10px;
+  padding: 0px;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 300;
@@ -1445,7 +1445,7 @@ span.count {
 }
 
 .message-text h4 {
-  margin: 0px;
+  margin: 0px 0px 5px;
   font-family: "Bahnschrift";
   font-style: normal;
   font-weight: 600;
@@ -1458,7 +1458,7 @@ span.count {
 .text-inline {
   display: inline-flex;
   align-items: flex-end;
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 
 .text-right {
