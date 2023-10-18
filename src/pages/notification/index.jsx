@@ -17,7 +17,7 @@ function Notification() {
           <h3 className={`${styles.content_heading}`}>Notifications</h3>
           <div className={styles.content_tabs} style={{ marginTop: "15px" }}>
             <div className="content_notifi">
-              <NotificationContent header />
+              <NotificationContent header handleClose={() => { }} />
             </div>
           </div>
         </div>
