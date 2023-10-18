@@ -7,5 +7,6 @@
     "labelledby",
     "Partime",
     "urlcat"
-  ]
+  ],
+  "eslint.format.enable": true
 }

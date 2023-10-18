@@ -1,6 +1,6 @@
 import { GetNotificationAPI } from "../../api/user";
 import { TabContext, TabList } from "@mui/lab";
-import { Box, Button, Stack, Tab, Typography } from "@mui/material";
+import { Box, Button, Stack, Tab } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
@@ -148,9 +148,9 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                 {filterData.length ? (
                   filterData.map((item, index) => (
                     <>
-                      <Typography sx={{ padding: "10px", fontWeight: "500" }}>
+                      {/* <Typography sx={{ padding: "10px", fontWeight: "500" }}>
                         Today
-                      </Typography>
+                      </Typography> */}
                       <div
                         key={index}
                         className={`${styles.notification_card} ${

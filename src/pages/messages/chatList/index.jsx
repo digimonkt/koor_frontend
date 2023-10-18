@@ -2,7 +2,7 @@ import { USER_ROLES } from "../../../utils/enum";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Divider, Stack } from "@mui/material";
-import styles from "../message.module.css";
+// import styles from "../message.module.css";
 import { getConversationListAPI } from "../../../api/chat";
 import { NoDataFoundAnimation } from "../../../components/animations";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -131,9 +131,10 @@ function ChatList() {
                         </span> */}
                       </h3>
                       <h6>{chat.jobTitle}</h6>
-                      <p className={`${styles.lastMessage}`}>
+                      {/* <p className={`${styles.lastMessage}`}>
                         {chat.lastMessage.message.slice(0, 15)}
-                      </p>
+                      </p> */}
+                      <div dangerouslySetInnerHTML={{ __html: chat.lastMessage.message }} />
                     </div>
                   </Stack>
                   <Divider className="mb-2" />
