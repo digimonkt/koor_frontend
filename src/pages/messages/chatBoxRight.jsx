@@ -98,13 +98,13 @@ function ChatBox() {
         content_type: "text",
       });
       setNewMessage("");
+      setEditorState(EditorState.createEmpty());
       // Scroll to the bottom after sending the message
       scrollToBottom();
     }
   };
 
   const onMessageReceive = async (message) => {
-    console.log({ message });
     const transformedMessage = transformMessageResponse(message);
     setMessage((prevMessage) => [transformedMessage, ...prevMessage]);
     if (!searchParams.get("conversion")) {
@@ -217,12 +217,18 @@ function ChatBox() {
   // Start Draft JS Implement
   const _onBoldClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
+    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "BOLD").getCurrentContent()));
+    setNewMessage(chatHtml);
   });
   const _onItalicClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "ITALIC").getCurrentContent()));
+    setNewMessage(chatHtml);
   });
   const _onUnderLineClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "UNDERLINE").getCurrentContent()));
+    setNewMessage(chatHtml);
   });
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -264,6 +270,7 @@ function ChatBox() {
 
   useEffect(() => {
     setMessage([]);
+    // const hashId = window.location.hash ?? true;
     if (!searchParams.get("conversion") && searchParams.get("userId")) {
       checkExistingConversation(searchParams.get("userId"));
     }
@@ -367,10 +374,11 @@ function ChatBox() {
                   return (
                     <div
                       className={`${message.user.id === currentUser.id
-                          ? "rightside"
-                          : "leftside"
+                        ? "rightside"
+                        : "leftside"
                         } mt-3 pe-2`}
                       key={message.id}
+                      id={message.id}
                     >
                       <Stack
                         direction="row"
@@ -386,14 +394,14 @@ function ChatBox() {
                         )}
                         <div
                           className={`w-70 ${message.user.id === currentUser.id
-                              ? "text-right"
-                              : "text-left"
+                            ? "text-right"
+                            : "text-left"
                             }`}
                         >
                           <div
                             className={`message-text ${message.user.id === currentUser.id
-                                ? ""
-                                : "message-tex-2"
+                              ? ""
+                              : "message-tex-2"
                               }`}
                             style={{
                               background:
@@ -486,14 +494,14 @@ function ChatBox() {
                       separator: " ",
                       // suggestions: mentions,
                     }}
-                      onKeyPress={(e) => {
-                        if (newMessage && newMessage.trim()) {
-                          if (e.key === "Enter" && !e.shiftKey) {
-                            sendMessage(e);
-                          }
+                    onKeyPress={(e) => {
+                      if (newMessage && newMessage.trim()) {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          sendMessage(e);
                         }
-                      }}
-                     />
+                      }
+                    }}
+                  />
                 </div>
                 <Stack direction="row" spacing={2}>
                   <IconButton
