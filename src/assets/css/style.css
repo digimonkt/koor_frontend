@@ -1499,7 +1499,11 @@ span.count {
   padding-top: 15px;
   text-align: center;
 }
-
+.chatSection{
+  border-top: 1px solid #cacaca;
+    padding-top: 15px;
+    text-align: left;
+}
 .w-25 {
   width: 25%;
 }
@@ -2512,4 +2516,10 @@ input.employersearch {
   .upto-slide {
     margin-right: 0px;
   }
+}
+.DraftEditor-root {
+  margin-left:10px;
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid;
 }

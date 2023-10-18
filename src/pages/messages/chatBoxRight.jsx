@@ -1,7 +1,7 @@
 import { SVG } from "../../assets/svg";
 import ApplicationOptions from "../../components/applicationOptions";
 import { Avatar, IconButton, Menu, MenuItem, Stack } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // import PerfectScrollbar from "react-perfect-scrollbar";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -22,7 +22,7 @@ import utcPlugin from "dayjs/plugin/utc";
 import timezonePlugin from "dayjs/plugin/timezone";
 import urlcat from "urlcat";
 import { WebSocketClient } from "../../utils/constants/websocket";
-import { LabeledInput } from "../../components/input";
+// import { LabeledInput } from "../../components/input";
 import { transformMessageResponse } from "../../api/transform/chat";
 import styles from "./message.module.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -32,6 +32,8 @@ import DialogBox from "../../components/dialogBox";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
+import draftToHtml from "draftjs-to-html";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -54,6 +56,7 @@ function ChatBox() {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFormat, setSelectedFormat] = useState(null);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
@@ -211,51 +214,39 @@ function ChatBox() {
         );
     }
   };
-  const applyFormatting = (value) => {
-    // Apply the selected formatting to the currently selected text
-    const formattedMessage = applyFormattingToSelection(
-      newMessage,
-      selectedFormat
-    );
-    setNewMessage(formattedMessage);
-    setAnchorEl(null); // Close the menu
-  };
-
-  const applyFormattingToAll = (text) => {
-    if (text) {
-      switch (selectedFormat) {
-        case "bold":
-          return `<strong>${text}</strong>`;
-        case "italic":
-          return `<em>${text}</em>`;
-        case "underline":
-          return `<u>${text}</u>`;
-        default:
-          return text;
-      }
-    }
-  };
-  // Helper function to apply formatting to selected text
-  const applyFormattingToSelection = (text, format) => {
-    const selectedText = window.getSelection().toString();
-    if (selectedText) {
-      switch (format) {
-        case "bold":
-          return text.replace(selectedText, `<strong>${selectedText}</strong>`);
-        case "italic":
-          return text.replace(selectedText, `<em>${selectedText}</em>`);
-        case "underline":
-          return text.replace(selectedText, `<u>${selectedText}</u>`);
-        default:
-          return text;
-      }
-    }
-    return text;
-  };
+  // Start Draft JS Implement
+  const _onBoldClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
+  });
+  const _onItalicClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+  });
+  const _onUnderLineClick = useCallback(() => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+  });
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  // const handleKeyCommand = useCallback((command, editorState) => {
+  //   const newState = RichUtils.handleKeyCommand(editorState, command);
+  //   if (newState) {
+  //     setEditorState(newState);
 
+  //     return "handled";
+  //   }
+  //   return "not-handled";
+  // });
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+    const chatHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+
+    // if (user && user.organization && html.includes("@{{")) {
+    //   html = html.replace(/<\/?a[^>]*>/g, "");
+    //   html = html.replaceAll("@{{", "{{");
+    // }
+    setNewMessage(chatHtml);
+  };
+  // End Draft Js
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -313,11 +304,7 @@ function ChatBox() {
   useEffect(() => {
     scrollToBottom();
   });
-  useEffect(() => {
-    if (newMessage !== "") {
-      applyFormatting();
-    }
-  }, [selectedFormat]);
+
   return (
     <>
       {isLoading ? (
@@ -379,11 +366,10 @@ function ChatBox() {
                 .map((message) => {
                   return (
                     <div
-                      className={`${
-                        message.user.id === currentUser.id
+                      className={`${message.user.id === currentUser.id
                           ? "rightside"
                           : "leftside"
-                      } mt-3 pe-2`}
+                        } mt-3 pe-2`}
                       key={message.id}
                     >
                       <Stack
@@ -399,25 +385,23 @@ function ChatBox() {
                           <Avatar src={message.user.image} />
                         )}
                         <div
-                          className={`w-70 ${
-                            message.user.id === currentUser.id
+                          className={`w-70 ${message.user.id === currentUser.id
                               ? "text-right"
                               : "text-left"
-                          }`}
+                            }`}
                         >
                           <div
-                            className={`message-text ${
-                              message.user.id === currentUser.id
+                            className={`message-text ${message.user.id === currentUser.id
                                 ? ""
                                 : "message-tex-2"
-                            }`}
+                              }`}
                             style={{
                               background:
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                  ? "#D5E3F7"
-                                  : "#FEEFD3",
+                                    ? "#D5E3F7"
+                                    : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -428,7 +412,7 @@ function ChatBox() {
                             <div
                               className={
                                 message.attachment ||
-                                countWords(message.message) > 10
+                                  countWords(message.message) > 10
                                   ? ""
                                   : "text-inline"
                               }
@@ -437,9 +421,10 @@ function ChatBox() {
                                 {message.attachment
                                   ? renderAttachment(message.attachment)
                                   : ""}
-                                <p style={{ wordBreak: "break-word" }}>
+                                {/* <p style={{ wordBreak: "break-word" }}>
                                   {message.message}
-                                </p>
+                                </p> */}
+                                <div dangerouslySetInnerHTML={{ __html: message.message }} />
                               </div>
                               <div className={`ms-2 ${styles.chatTime}`}>
                                 {dayjs.utc(message.createdAt).local().fromNow()}
@@ -454,7 +439,7 @@ function ChatBox() {
             </InfiniteScroll>
             {/* </PerfectScrollbar> */}
           </div>
-          <div className="bottomnav">
+          <div className="chatSection">
             {!isBlackListedByEmployer ? (
               <Stack direction={"row"} spacing={2}>
                 <div className="chatinput">
@@ -472,25 +457,13 @@ function ChatBox() {
                       }}
                     />
                   </span>
-                  <LabeledInput
-                    placeholder={
-                      isBlackListedByEmployer
-                        ? "You are not longer to chat with employer"
-                        : "Write a message…"
-                    }
+                  {/* <LabeledInput
+                    placeholder="Write a message…"
                     style={{ background: "transparent" }}
                     type="textarea"
                     value={newMessage}
                     onChange={(e) => {
-                      if (selectedFormat) {
-                        const formattedText = applyFormattingToAll(
-                          e.target.value,
-                          selectedFormat
-                        );
-                        setNewMessage(formattedText);
-                      } else {
-                        setNewMessage(e.target.value);
-                      }
+                      setNewMessage(e.target.value);
                     }}
                     onKeyPress={(e) => {
                       if (newMessage && newMessage.trim()) {
@@ -499,7 +472,28 @@ function ChatBox() {
                         }
                       }
                     }}
-                  />
+                  /> */}
+                  <Editor
+                    // handleKeyCommand={handleKeyCommand}
+                    onChange={onEditorStateChange}
+                    editorState={editorState}
+                    onEditorStateChange={onEditorStateChange}
+                    wrapperClassName="wrapper-class"
+                    editorClassName="editor-class"
+                    toolbarClassName="toolbar-class"
+                    mention={{
+                      trigger: "@",
+                      separator: " ",
+                      // suggestions: mentions,
+                    }}
+                      onKeyPress={(e) => {
+                        if (newMessage && newMessage.trim()) {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            sendMessage(e);
+                          }
+                        }
+                      }}
+                     />
                 </div>
                 <Stack direction="row" spacing={2}>
                   <IconButton
@@ -525,26 +519,20 @@ function ChatBox() {
                     onClose={handleMenuClose}
                   >
                     <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("bold");
-                        setAnchorEl(null);
-                      }}
+                      onClick={() => { _onBoldClick(); setAnchorEl(null); setSelectedFormat("bold"); }}
+                      className={selectedFormat === "bold" ? "highlighted-menu-item" : ""}
                     >
                       <FormatBoldIcon />
                     </MenuItem>
                     <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("italic");
-                        setAnchorEl(null);
-                      }}
+                      onClick={() => { _onItalicClick(); setAnchorEl(null); setSelectedFormat("italic"); }}
+                      className={selectedFormat === "italic" ? "highlighted-menu-item" : ""}
                     >
                       <FormatItalicIcon />
                     </MenuItem>
                     <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("underline");
-                        setAnchorEl(null);
-                      }}
+                      onClick={() => { _onUnderLineClick(); setAnchorEl(null); setSelectedFormat("underline"); }}
+                      className={selectedFormat === "underline" ? "highlighted-menu-item" : ""}
                     >
                       <FormatUnderlinedIcon />
                     </MenuItem>

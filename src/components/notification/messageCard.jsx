@@ -68,7 +68,7 @@ function MessageNotificationCard({
             className={`${styles.text}`}
             //   style={{ background: jobDetails.background }}
           >
-            {message}
+            <div dangerouslySetInnerHTML={{ __html: message }} />
           </p>
           <p style={{ marginTop: "5px" }} className={styles.duration}>
             {timeAgoFromNow(createdAt)}
