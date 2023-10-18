@@ -62,6 +62,9 @@ function ManageJobsComponent() {
         <AntTabs
           value={panel}
           onChange={(e, newValue) => handlePageTab(newValue)}
+          variant="scrollable"
+          scrollButtons
+          allowScrollButtonsMobile
         >
           <AntTab
             label={
@@ -97,6 +100,7 @@ function ManageJobsComponent() {
 
         <div className="post_new_job_btn">
           <OutlinedButton
+            sx={{ whiteSpace: "nowrap" }}
             onClick={() => {
               if (currentUser.profile.isVerified) {
                 navigate(urlcat("../employer/jobs/post"));
