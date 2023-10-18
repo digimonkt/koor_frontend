@@ -1362,6 +1362,7 @@ span.count {
 
 .buttonbox p {
   margin: 0px;
+  color: #274593;
 }
 
 .headerbox h3 {
@@ -1374,7 +1375,7 @@ span.count {
 
 .headerbox p {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0px;
   color: #121212;
   opacity: 0.5;
@@ -1409,7 +1410,7 @@ span.count {
 }
 
 .message-tex-2 p {
-  background: #f0f0f0;
+  /* background: #f0f0f0; */
   border-radius: 20px 20px 20px 0px;
   padding: 10px;
   font-family: "Poppins";
@@ -1457,6 +1458,7 @@ span.count {
 .text-inline {
   display: inline-flex;
   align-items: flex-end;
+  flex-direction: column;
 }
 
 .text-right {
@@ -2207,11 +2209,12 @@ input.employersearch {
   }
 
   .ant_tabs_div {
-    display: block;
+    display: flex;
+    align-items: center;
   }
   .post_new_job_btn {
     text-align: center;
-    margin: 20px 0px 10px 0px;
+    /* margin: 20px 0px 10px 0px; */
   }
 
   .job_card_hr {
@@ -2364,7 +2367,7 @@ input.employersearch {
   }
 
   .ant_tabs_div .MuiButtonBase-root.MuiTab-root {
-    margin: 0px;
+    margin: 0px 10px 0px 0px;
   }
 
   .ant_tabs_div {
@@ -2382,10 +2385,10 @@ input.employersearch {
     height: 4px;
   }
 
-  .ant_tabs_div .MuiTabs-flexContainer {
+  /* .ant_tabs_div .MuiTabs-flexContainer {
     flex-flow: wrap;
     justify-content: center;
-  }
+  } */
 
   .job_card_chip .MuiChip-label {
     font-size: 10px;
@@ -2512,4 +2515,20 @@ input.employersearch {
   .upto-slide {
     margin-right: 0px;
   }
+}
+.searchvs {
+  color: var(--black-121212, #121212);
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.28px;
+  opacity: 0.5;
+}
+
+.hr-border {
+  width: 1px;
+  height: 75px;
+  background: #ccc;
 }

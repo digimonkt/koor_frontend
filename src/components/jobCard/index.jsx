@@ -338,7 +338,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           </div>
         </Grid>
         <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
-          <div className="text-end mb-0 mb-lg-4 text-start">
+          <div className="text-lg-end mb-0 mb-lg-4 text-start">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
               title={
@@ -374,6 +374,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <h3>-</h3>
                 )}
               </div>
+              <div className="hr-border"></div>
               {selfJob ? (
                 <div className="job-button-card">
                   <button

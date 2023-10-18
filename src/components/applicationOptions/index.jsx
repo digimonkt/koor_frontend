@@ -178,6 +178,7 @@ function ApplicationOptions({
         {interviewPlanned && !details.tender && (
           <Grid item>
             <Button
+              className="buttonbox"
               sx={{ minWidth: "auto" }}
               fullWidth
               disabled={isInterviewPlanned || isBlacklisted || isRejected}
@@ -189,16 +190,19 @@ function ApplicationOptions({
                 setIsInterviewPlanning(true);
               }}
             >
-              <SVG.EventIcon className="application-option-icon" />
-              <span>
-                {!isInterviewPlanned ? "Plan Interview" : "Interview Planned"}
-              </span>
+              <div>
+                <SVG.EventIcon className="application-option-icon" />
+                <p>
+                  {!isInterviewPlanned ? "Plan Interview" : "Interview Planned"}
+                </p>
+              </div>
             </Button>
           </Grid>
         )}
         {shortlist && (
           <Grid item className="me-3">
             <Button
+              className="buttonbox"
               sx={{ minWidth: "auto" }}
               disabled={
                 isInterviewPlanned ||
@@ -215,8 +219,10 @@ function ApplicationOptions({
                 )
               }
             >
-              <SVG.StarIcon className="application-option-icon" />
-              <span>{!isShortlisted ? "Shortlist" : "Shortlisted"}</span>
+              <div>
+                <SVG.StarIcon className="application-option-icon" />
+                <p>{!isShortlisted ? "Shortlist" : "Shortlisted"}</p>
+              </div>
             </Button>
           </Grid>
         )}
@@ -224,6 +230,7 @@ function ApplicationOptions({
           <Grid item className="me-3">
             <Button
               sx={{ minWidth: "auto" }}
+              className="buttonbox"
               variant="link"
               disabled={
                 isInterviewPlanned ||
@@ -238,14 +245,17 @@ function ApplicationOptions({
                 handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.rejected)
               }
             >
-              <SVG.RejectIcon className="application-option-icon" />
-              <span> {!isRejected ? "Reject" : "Rejected"}</span>
+              <div>
+                <SVG.RejectIcon className="application-option-icon" />
+                <p> {!isRejected ? "Reject" : "Rejected"}</p>
+              </div>
             </Button>
           </Grid>
         )}
         {blacklist && (
           <Grid item className="me-3">
             <Button
+              className="buttonbox"
               sx={{
                 minWidth: "auto",
                 "& svg": { width: "20px", height: "20px" },
@@ -265,14 +275,17 @@ function ApplicationOptions({
                 // handlerChangeApplicationStatus(JOB_APPLICATION_OPTIONS.blacklisted);
               }}
             >
-              <SVG.BlockedIcon className="application-option-icon" />
-              <span>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</span>
+              <div>
+                <SVG.BlockedIcon className="application-option-icon" />
+                <p>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</p>
+              </div>
             </Button>
           </Grid>
         )}
         {view && (
           <Grid item className="me-3">
             <Button
+              className="buttonbox"
               sx={{
                 minWidth: "auto",
                 "& svg": { width: "20px", height: "20px" },
@@ -311,8 +324,10 @@ function ApplicationOptions({
                 }
               }}
             >
-              <SVG.OpenNewIcon className="application-option-icon" />
-              <span>View</span>
+              <div>
+                <SVG.OpenNewIcon className="application-option-icon" />
+                <p>View</p>
+              </div>
             </Button>
           </Grid>
         )}

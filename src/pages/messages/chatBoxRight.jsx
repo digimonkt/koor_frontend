@@ -328,6 +328,7 @@ function ChatBox() {
             <Stack direction="row" spacing={2} justifyContent="space-between">
               <div className="headerbox">
                 <h3>{userDetails.name || userDetails.email}</h3>
+                {/* <p className="mb-2">Online Research Participant</p> */}
               </div>
               <div>
                 <ApplicationOptions details={{ user: userDetails }} view />
@@ -523,31 +524,39 @@ function ChatBox() {
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleMenuClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    transformOrigin={{
+                      vertical: "bottom",
+                      horizontal: "center",
+                    }}
+                    className="menufloting"
                   >
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("bold");
-                        setAnchorEl(null);
-                      }}
-                    >
-                      <FormatBoldIcon />
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("italic");
-                        setAnchorEl(null);
-                      }}
-                    >
-                      <FormatItalicIcon />
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        setSelectedFormat("underline");
-                        setAnchorEl(null);
-                      }}
-                    >
-                      <FormatUnderlinedIcon />
-                    </MenuItem>
+                    <Stack direction="row" spacing={0.4} className="format-box">
+                      <MenuItem
+                        onClick={() => {
+                          setSelectedFormat("bold");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        <FormatBoldIcon />
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          setSelectedFormat("italic");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        <FormatItalicIcon />
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          setSelectedFormat("underline");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        <FormatUnderlinedIcon />
+                      </MenuItem>
+                    </Stack>
                   </Menu>
 
                   <FilledButton
