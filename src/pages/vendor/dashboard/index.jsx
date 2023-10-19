@@ -4,7 +4,15 @@ import { OutlinedButton } from "../../../components/button";
 import { AreaChart } from "../../../components/charts";
 import TenderCard from "../../../components/tenderCard";
 import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
-import { Card, CardContent, Divider, Grid, Stack } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Grid,
+  Stack,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 function Dashboard() {
@@ -59,6 +67,38 @@ function Dashboard() {
                 },
               }}
             >
+              <Stack
+                direction={"row"}
+                alignItems={"center"}
+                spacing={1}
+                sx={{ mb: 2, pb: 1, borderBottom: "1px solid #CACACA" }}
+              >
+                <span className="searchvs">Search visibility:</span>{" "}
+                <FormControlLabel
+                  sx={{
+                    "& .MuiTypography-root": {
+                      fontSize: "14px",
+                      fontFamily: "Poppins",
+                      color: "#121212",
+                      letterSpacing: "0.28px",
+                    },
+                  }}
+                  control={
+                    <Checkbox
+                      sx={{
+                        color: "#274593",
+                        transition: "all 0.5s ease-out",
+                        padding: "2px 10px",
+                        "&.Mui-checked": {
+                          color: "#274593",
+                          transition: "all 0.5s ease-out",
+                        },
+                      }}
+                    />
+                  }
+                  label="Display my profile in search"
+                />
+              </Stack>
               <div className="add-content">
                 <AreaChart title="Tender posts analytics" />
               </div>
