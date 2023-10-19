@@ -50,7 +50,9 @@ function LoginForm() {
 
       if (!values.email.trim()) {
         setIsLoading(false);
-        formik.setErrors({ email: "It's not seems like a Email or Phone number" });
+        formik.setErrors({
+          email: "It's not seems like a Email or Phone number",
+        });
         return; // Exit early if there's an error
       }
 
@@ -68,7 +70,7 @@ function LoginForm() {
           return; // Exit early if there's an error
         }
       }
-            // Now the payload only contains non-null properties: email, password, phone, and role
+      // Now the payload only contains non-null properties: email, password, phone, and role
       const res = await LoginUserAPI(payload);
       if (res.remote === "success") {
         setIsLoading(false);
@@ -96,7 +98,7 @@ function LoginForm() {
               title="Login"
               subtitle={
                 // role !== USER_ROLES.jobSeeker &&
-                 [
+                [
                   <>
                     <SVG.HelpIcon className="Question-mark-icon" />
                   </>,
@@ -127,14 +129,14 @@ function LoginForm() {
             ) : null}
             {/* {socialLoginError !== "" && <ErrorMessage>{socialLoginError}</ErrorMessage>} */}
           </div>
-          <Link
-            to={urlcat("/forgot-password", { role })}
-            style={{ position: "relative", zIndex: 5 }}
-          >
-            <div className="text-end forgots">
+          <div className="text-end forgots">
+            <Link
+              to={urlcat("/forgot-password", { role })}
+              style={{ position: "relative", zIndex: 5 }}
+            >
               <span>Forgot password?</span>
-            </div>
-          </Link>
+            </Link>
+          </div>
 
           <div className="my-4 text-center">
             <FilledButton

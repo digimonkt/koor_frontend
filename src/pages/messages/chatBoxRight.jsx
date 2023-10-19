@@ -110,13 +110,13 @@ function ChatBox() {
         content_type: "text",
       });
       setNewMessage("");
+      setEditorState(EditorState.createEmpty());
       // Scroll to the bottom after sending the message
       scrollToBottom();
     }
   };
 
   const onMessageReceive = async (message) => {
-    console.log({ message });
     const transformedMessage = transformMessageResponse(message);
     setMessage((prevMessage) => [transformedMessage, ...prevMessage]);
     if (!searchParams.get("conversion")) {
@@ -253,12 +253,18 @@ function ChatBox() {
   // Start Draft JS Implement
   const _onBoldClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
+    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "BOLD").getCurrentContent()));
+    setNewMessage(chatHtml);
   });
   const _onItalicClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "ITALIC").getCurrentContent()));
+    setNewMessage(chatHtml);
   });
   const _onUnderLineClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "UNDERLINE").getCurrentContent()));
+    setNewMessage(chatHtml);
   });
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -300,6 +306,7 @@ function ChatBox() {
 
   useEffect(() => {
     setMessage([]);
+    // const hashId = window.location.hash ?? true;
     if (!searchParams.get("conversion") && searchParams.get("userId")) {
       checkExistingConversation(searchParams.get("userId"));
     }
@@ -404,12 +411,12 @@ function ChatBox() {
                 .map((message) => {
                   return (
                     <div
-                      className={`${
-                        message.user.id === currentUser.id
-                          ? "rightside"
-                          : "leftside"
-                      } mt-3 pe-2`}
+                      className={`${message.user.id === currentUser.id
+                        ? "rightside"
+                        : "leftside"
+                        } mt-3 pe-2`}
                       key={message.id}
+                      id={message.id}
                     >
                       <Stack
                         direction="row"
@@ -424,25 +431,23 @@ function ChatBox() {
                           <Avatar src={message.user.image} />
                         )}
                         <div
-                          className={`w-70 ${
-                            message.user.id === currentUser.id
-                              ? "text-right"
-                              : "text-left"
-                          }`}
+                          className={`w-70 ${message.user.id === currentUser.id
+                            ? "text-right"
+                            : "text-left"
+                            }`}
                         >
                           <div
-                            className={`message-text ${
-                              message.user.id === currentUser.id
-                                ? ""
-                                : "message-tex-2"
-                            }`}
+                            className={`message-text ${message.user.id === currentUser.id
+                              ? ""
+                              : "message-tex-2"
+                              }`}
                             style={{
                               background:
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                  ? "#D5E3F7"
-                                  : "#FEEFD3",
+                                    ? "#D5E3F7"
+                                    : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -453,7 +458,7 @@ function ChatBox() {
                             <div
                               className={
                                 message.attachment ||
-                                countWords(message.message) > 10
+                                  countWords(message.message) > 10
                                   ? ""
                                   : "text-inline"
                               }
@@ -488,7 +493,7 @@ function ChatBox() {
             {!isBlackListedByEmployer ? (
               <Stack direction={"row"} spacing={2} alignItems="start">
                 <div className="chatinput">
-                  <span className="attachment-icon">
+                  <span className="attachment-icon" style={{ position: "relative" }}>
                     <SVG.AttachIcon style={{ position: "relative" }} />
                     <input
                       type="file"
@@ -497,7 +502,7 @@ function ChatBox() {
                       style={{
                         position: "absolute",
                         opacity: "0",
-                        right: "45.5rem",
+                        right: "0",
                         width: "35px",
                       }}
                     />

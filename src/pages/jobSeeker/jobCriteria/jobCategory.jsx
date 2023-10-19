@@ -95,13 +95,13 @@ const JobCategory = ({ handleNext }) => {
           sx={{
             "&.MuiButton-outlined": {
               border: "1px solid #EEA23D !important",
+              padding: "10px 30px 8px 30px !important",
               color: "#EEA23D !important",
               fontWeight: "500",
               fontSize: "16px !important",
               "@media(max-width: 480px)": {
                 fontSize: "14px !important",
               },
-              padding: "10px 30px",
               "&:hover": {
                 background: "rgba(255, 165, 0, 0.1)",
               },

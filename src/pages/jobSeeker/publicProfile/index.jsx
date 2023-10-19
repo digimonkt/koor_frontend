@@ -100,6 +100,7 @@ export default function PublicProfileComponent() {
                 <Grid
                   item
                   lg={8}
+                  sm={7}
                   xs={12}
                   sx={{
                     borderRight: "1px solid #CACACA",
@@ -220,6 +221,12 @@ export default function PublicProfileComponent() {
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
                           color: "#121212",
+                          "@media (max-width: 992px)": {
+                            fontSize: "24px",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "18px",
+                          },
                         }}
                       >
                         About
@@ -336,7 +343,7 @@ export default function PublicProfileComponent() {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item lg={4} xs={12}>
+                <Grid item lg={4} sm={5} xs={12}>
                   <Box>
                     <Stack direction={"column"} spacing={2}>
                       <Typography
@@ -346,7 +353,7 @@ export default function PublicProfileComponent() {
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
                           mb: 2,
-                          color: "#121212",
+                          color: "#121212 !important",
                         }}
                       >
                         Contact info
@@ -422,9 +429,13 @@ export default function PublicProfileComponent() {
                           <Typography
                             variant="h6"
                             sx={{
-                              fontSize: "16px",
-                              fontFamily: "Poppins",
-                              fontWeight: "600",
+                              fontSize: "16px !important",
+                              fontFamily: "Poppins !important",
+                              fontWeight: "600 !important",
+                              color: "#121212 !important",
+                              "@media (max-width: 992px)": {
+                                fontSize: "14px !important",
+                              },
                             }}
                           >
                             {userDetails.email}
