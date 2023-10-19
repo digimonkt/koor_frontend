@@ -726,6 +726,9 @@ span.arrowjobs svg {
   .recent-descrition {
     display: none;
   }
+  .recent-descrition.manage-jobs {
+    display: block;
+  }
   .mobile-recent-descrition {
     display: block;
   }

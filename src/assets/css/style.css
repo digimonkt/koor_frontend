@@ -1353,7 +1353,7 @@ span.count {
 
 .buttonbox {
   text-transform: capitalize !important;
-  color: #274593 !important;
+
   font-family: "Poppins" !important;
 
   font-weight: 400 !important;
@@ -1362,7 +1362,6 @@ span.count {
 
 .buttonbox p {
   margin: 0px;
-  color: #274593;
 }
 
 .headerbox h3 {

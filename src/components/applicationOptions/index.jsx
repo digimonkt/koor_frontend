@@ -36,7 +36,9 @@ function ApplicationOptions({
   const navigate = useNavigate();
   const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } =
     useSelector((state) => state.employer);
-
+  const {
+    auth: { role },
+  } = useSelector((state) => state);
   const [isInterviewPlanned, setIsInterviewPlanned] = useState(false);
   const [isBlacklisted, setIsBlacklisted] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
@@ -174,7 +176,7 @@ function ApplicationOptions({
   }, [details]);
   return (
     <Box sx={{ width: "100%" }}>
-      <Grid container spacing={0}>
+      <Grid container spacing={0} flexWrap={"nowrap"}>
         {interviewPlanned && !details.tender && (
           <Grid item>
             <Button
@@ -200,7 +202,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {shortlist && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
               sx={{ minWidth: "auto" }}
@@ -227,7 +229,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {reject && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               sx={{ minWidth: "auto" }}
               className="buttonbox"
@@ -253,7 +255,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {blacklist && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
               sx={{
@@ -283,10 +285,11 @@ function ApplicationOptions({
           </Grid>
         )}
         {view && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
               sx={{
+                color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
                 minWidth: "auto",
                 "& svg": { width: "20px", height: "20px" },
               }}
@@ -332,7 +335,7 @@ function ApplicationOptions({
           </Grid>
         )}
         {message && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               variant="link"
               sx={{ minWidth: "auto" }}
