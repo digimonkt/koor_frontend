@@ -194,9 +194,9 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.EventIcon className="application-option-icon" />
-                <p>
+                <span>
                   {!isInterviewPlanned ? "Plan Interview" : "Interview Planned"}
-                </p>
+                </span>
               </div>
             </Button>
           </Grid>
@@ -223,7 +223,7 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.StarIcon className="application-option-icon" />
-                <p>{!isShortlisted ? "Shortlist" : "Shortlisted"}</p>
+                <span>{!isShortlisted ? "Shortlist" : "Shortlisted"}</span>
               </div>
             </Button>
           </Grid>
@@ -249,7 +249,7 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.RejectIcon className="application-option-icon" />
-                <p> {!isRejected ? "Reject" : "Rejected"}</p>
+                <span> {!isRejected ? "Reject" : "Rejected"}</span>
               </div>
             </Button>
           </Grid>
@@ -279,7 +279,7 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.BlockedIcon className="application-option-icon" />
-                <p>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</p>
+                <span>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</span>
               </div>
             </Button>
           </Grid>
@@ -329,7 +329,7 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.OpenNewIcon className="application-option-icon" />
-                <p>View</p>
+                <span>View</span>
               </div>
             </Button>
           </Grid>

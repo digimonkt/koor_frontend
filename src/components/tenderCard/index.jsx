@@ -89,7 +89,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   <SVG.SuitcaseJob />
                 </Avatar>
               </div>
-              ddd
+
               {matches ? (
                 <div>
                   <div className="text-end w-100 mb-4">
@@ -235,7 +235,13 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
-              sx={{ width: "100%", overflow: "hidden", overflowX: "auto" }}
+              sx={{
+                width: "100%",
+                "@media (max-width: 667px)": {
+                  overflow: "hidden",
+                  overflowX: "auto",
+                },
+              }}
               className="tender_card_chip"
             >
               {tenderDetails.sector && (

@@ -30,7 +30,7 @@ body {
 }
 
 .credits_cards_div {
-  border: 1px solid #d5e3f7;
+  /* border: 1px solid #d5e3f7; */
   border-radius: 20px;
   padding: 20px 40px 20px 40px;
 }
@@ -1416,6 +1416,9 @@ span.count {
 .buttonbox p {
   margin: 0px;
 }
+.buttonbox span {
+  display: block;
+}
 
 .headerbox h3 {
   font-family: "Bahnschrift";
@@ -2672,4 +2675,22 @@ input.employersearch {
   top: 3px;
   min-height: 25px;
   z-index: 1;
+}
+
+.package-active {
+  background: #002c6a;
+  box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.25);
+  color: #fff;
+}
+
+.package-active h5 {
+  color: #fff;
+}
+
+.package-active p {
+  color: #fff;
+}
+
+.package-active ul li {
+  color: #fff;
 }
