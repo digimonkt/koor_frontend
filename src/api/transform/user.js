@@ -107,6 +107,7 @@ export const transformNotificationResponse = (data) => {
     jobFilter: data.job_filter,
     seen: data.seen,
     message: data?.message || "",
+    messageId: data?.message_id || "",
     conversion: data?.conversation_id,
     userId: data?.message_sender,
     tender: data.tender,

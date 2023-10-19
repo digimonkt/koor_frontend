@@ -805,6 +805,7 @@ span.arrowjobs svg {
 
   .recent-research {
     font-size: 14px !important;
+    flex-wrap: wrap;
   }
 }
 
