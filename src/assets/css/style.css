@@ -121,6 +121,7 @@ body {
   font-family: "Poppins";
   font-size: 16px;
   font-weight: 500;
+  color: #121212;
 }
 
 .paginations .MuiButtonBase-root.MuiPaginationItem-root.Mui-disabled {
@@ -248,8 +249,13 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   margin-top: 15px;
 }
 
+.filter_input .MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-size: 14px !important;
+}
+
 .SelectDropdown .filter_input {
   width: 100% !important;
+  display: grid;
 }
 
 .Tenderinput .MuiFormControl-root.MuiTextField-root {
@@ -1551,6 +1557,11 @@ span.count {
   margin-top: 8px !important;
 }
 
+.chatSection {
+  border-top: 1px solid #cacaca;
+  padding-top: 15px;
+  text-align: left;
+}
 .w-25 {
   width: 25%;
 }
@@ -1880,11 +1891,8 @@ span.count {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  /* identical to box height, or 133% */
   letter-spacing: 0.02em;
   margin-bottom: 5px;
-  /* Dark grey */
-  /*color: #848484;*/
   color: #121212;
 }
 
@@ -2156,6 +2164,22 @@ input.employersearch {
   font-size: 12px;
 }
 
+.jobs_dailog_content {
+  font-size: 16px;
+  font-weight: 400;
+  color: #121212;
+  letter-spacing: 0.14px;
+  font-family: "Poppins";
+}
+
+.jobs_dailog_login_line {
+  font-size: 14px;
+  font-weight: 400;
+  color: #848484;
+  letter-spacing: 0.28px;
+  font-family: "Poppins";
+}
+
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
   .outline-button {
     border: 1px solid #274593 !important;
@@ -2313,6 +2337,8 @@ input.employersearch {
 
   .login_header_search_icon {
     left: 11.7rem;
+    width: 14.33px;
+    height: 14.33px;
   }
 
   .noti-mobile {
@@ -2388,6 +2414,18 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+  .filter_input .MuiFormControlLabel-root .MuiFormControlLabel-label {
+    font-size: 12px !important;
+  }
+  .jobs_dailog_content {
+    font-size: 14px;
+  }
+  .jobs_dailog_login_line {
+    font-size: 12px;
+  }
+  .list-content span {
+    font-size: 10px;
   }
   .jobtype_grid {
     margin-top: 0px !important;
@@ -2593,4 +2631,10 @@ input.employersearch {
   .upto-slide {
     margin-right: 0px;
   }
+}
+.DraftEditor-root {
+  margin-left: 10px;
+  position: relative;
+  width: 100%;
+  border-bottom: 1px solid;
 }

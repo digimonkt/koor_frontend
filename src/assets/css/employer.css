@@ -169,6 +169,9 @@ span.blueview {
 }
 .recent-descrition p {
   color: #121212;
+  font-size: 12px;
+  font-weight: 300;
+  font-family: "Poppins";
   margin: 0;
 }
 .border-recent {
@@ -184,7 +187,7 @@ span.blueview {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 10px;
   line-height: 16px;
   text-align: center;
   letter-spacing: 0.02em;
@@ -369,6 +372,9 @@ span.arrowjobs svg {
 .recent-content a {
   text-decoration: none;
   color: #121212;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Poppins";
 }
 .job-border {
   border-bottom: 1px solid #cacaca;
@@ -756,23 +762,6 @@ span.arrowjobs svg {
   display: none;
 }
 
-/* @media screen and (max-width: 1536px) and (min-width: 1440px) {
-  .recent-research span {
-    border-left: none !important;
-    padding-left: 0px !important;
-  }
-} */
-
-@media screen and (max-width: 1440px) and (min-width: 1200px) {
-  /* .recent-research span {
-    border-left: none !important;
-    padding-left: 0px !important;
-  } */
-  .edit-button button {
-    font-size: 11px !important;
-  }
-}
-
 @media screen and (max-width: 992px) {
   .recent-content h4 {
     white-space: normal;
@@ -812,6 +801,10 @@ span.arrowjobs svg {
 @media screen and (max-width: 480px) {
   .my-jobs p {
     font-size: 10px;
+  }
+
+  .recent-content a {
+    font-size: 14px;
   }
 
   .styles_attachment {

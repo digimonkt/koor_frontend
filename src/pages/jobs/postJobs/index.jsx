@@ -963,8 +963,47 @@ function PostJobsComponent() {
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
+                    flexWrap="wrap"
                     style={{ marginTop: "40px" }}
                   >
+                    <FilledButton
+                      title={
+                        submitting === SUBMITTING_STATUS_ENUM.loading
+                          ? jobId
+                            ? "Updating..."
+                            : "Posting..."
+                          : jobId
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
+                      }
+                      type="submit"
+                      disabled={
+                        submitting === SUBMITTING_STATUS_ENUM.loading ||
+                        (!jobId && totalAvailableCredits < minimumCreditJobPost)
+                      }
+                      sx={{
+                        borderRadius: "73px !important",
+                        border: "1px solid #848484 !important",
+                        color: "#ffffff !important",
+                        fontWeight: "600 !important",
+                        fontSize: "16px !important",
+                        fontFamily: "Bahnschrift !important",
+                        padding: "10px 50px !important",
+                        background: "#274593 !important",
+                        display: "none",
+
+                        "&:hover": {
+                          color: "#848484 !important",
+                        },
+                        "@media (max-width: 480px)": {
+                          padding: "10px 50px !important",
+                          width: "100%",
+                          display: "block",
+                          marginBottom: "10px",
+                          fontSize: "14px !important",
+                        },
+                      }}
+                    />
                     <OutlinedButton
                       title="Cancel"
                       disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
@@ -983,6 +1022,7 @@ function PostJobsComponent() {
                         },
                         "@media (max-width: 480px)": {
                           padding: "10px 50px !important",
+                          width: "100%",
                           fontSize: "14px !important",
                         },
                       }}
@@ -1012,13 +1052,17 @@ function PostJobsComponent() {
                         fontFamily: "Bahnschrift !important",
                         padding: "10px 50px !important",
                         background: "#274593 !important",
+                        display: "block",
 
                         "&:hover": {
                           color: "#848484 !important",
                         },
                         "@media (max-width: 480px)": {
                           padding: "10px 50px !important",
+                          width: "100%",
+                          marginTop: "10px",
                           fontSize: "14px !important",
+                          display: "none",
                         },
                       }}
                     />
