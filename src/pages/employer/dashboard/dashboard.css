@@ -537,7 +537,7 @@ span.arrowjobs svg {
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
-  color: #000000;
+  color: #121212;
   display: inline-block;
   margin-bottom: 5px;
 }
@@ -576,7 +576,7 @@ span.arrowjobs svg {
 }
 
 .styles_attachment p span {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .styles_attachment small {
@@ -816,6 +816,14 @@ span.arrowjobs svg {
 
   .job-content h2 {
     font-size: 20px;
+  }
+
+  .styles_attachment {
+    font-size: 12px;
+  }
+
+  .styles_attachment small {
+    font-size: 12px;
   }
 
   .tender_job_card_text .my-jobs h2 {

@@ -105,13 +105,16 @@ function TalentFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
+
           <Grid item xs={12} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
                   title="City"
                   placeholder={
-                    formik.values.country ? "City" : "Select Country first"
+                    formik.values.country
+                      ? "Choose city"
+                      : "Select Country first"
                   }
                   disabled={!formik.values.country}
                   options={(cities.data[formik.values.country] || []).map(
@@ -127,6 +130,15 @@ function TalentFilter({ formik, footer, responsive }) {
                 ) : null}
               </FormControl>
             </div>
+          </Grid>
+          <Grid item xs={12} lg={responsive ? 12 : 3}>
+            <label>Years of experience</label>
+            <LabeledInput
+              // title="Duration in Month"
+              className="add-form-control"
+              placeholder="Number of years of experience"
+              {...formik.getFieldProps("experience")}
+            />
           </Grid>
           <Grid item xs={12} lg={responsive ? 12 : 3}>
             <label>Preferred job type</label>
@@ -150,15 +162,6 @@ function TalentFilter({ formik, footer, responsive }) {
                 checked={formik.values.hasContract}
               />
             </FormGroup>
-          </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
-            <label>Min Experience (In years)</label>
-            <LabeledInput
-              // title="Duration in Month"
-              className="add-form-control"
-              placeholder="Years"
-              {...formik.getFieldProps("experience")}
-            />
           </Grid>
           <Grid item xs={12} lg={responsive ? 12 : 3}>
             <label>Expected salary</label>
@@ -192,7 +195,7 @@ function TalentFilter({ formik, footer, responsive }) {
       </div>
       <div className={`${styles.historySearch}`}>
         <h5>
-          <b>{totalItems}</b> jobs found
+          <b>{totalItems}</b> Talents found
         </h5>
         <div className={`${styles.savesearch}`}>{footer}</div>
       </div>

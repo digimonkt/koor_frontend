@@ -23,6 +23,12 @@ body {
   position: relative;
   top: 3px;
 }
+
+.jobseekerColor {
+  background: #feefd3 !important;
+  border: 1px solid #eea23d !important;
+}
+
 .btninActive {
   background: #feefd3 !important;
   border: 1px solid #eea23d !important;
@@ -31,14 +37,18 @@ body {
   color: #000 !important;
   font-weight: 400 !important;
   height: 42px !important;
+  width: auto !important;
+  font-family: "Poppins" !important;
+  text-transform: capitalize !important;
 }
 .btnActive {
   background: #f0f0f0 !important;
+  border: 1px solid #f0f0f0 !important;
   width: auto !important;
   height: 42px !important;
   border-radius: 64px !important;
   color: #848484 !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
   font-family: "Poppins" !important;
   font-weight: 400 !important;
   text-transform: capitalize !important;
@@ -103,8 +113,8 @@ body {
   right: 10px;
 }
 .savesearch button {
-  color: #eea23d !important;
-  border: 1px solid #eea23d !important;
+  /* color: #eea23d !important; */
+  /* border: 1px solid #eea23d !important; */
   border-radius: 70px !important;
   padding: 5px 16px;
 }

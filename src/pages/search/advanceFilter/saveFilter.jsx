@@ -9,9 +9,7 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
   return (
     <div>
       <h1 className="heading">Give it a name</h1>
-      <div
-        className="save_filter_popup_txt"
-      >
+      <div className="save_filter_popup_txt">
         Create a short and clear name for this saved search, so it won’t take
         too much space but is informative for you.
       </div>
