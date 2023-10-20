@@ -36,7 +36,9 @@ function ApplicationOptions({
   const navigate = useNavigate();
   const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } =
     useSelector((state) => state.employer);
-
+  const {
+    auth: { role },
+  } = useSelector((state) => state);
   const [isInterviewPlanned, setIsInterviewPlanned] = useState(false);
   const [isBlacklisted, setIsBlacklisted] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
@@ -174,7 +176,7 @@ function ApplicationOptions({
   }, [details]);
   return (
     <Box sx={{ width: "100%" }}>
-      <Grid container spacing={0}>
+      <Grid container spacing={0} flexWrap={"nowrap"}>
         {interviewPlanned && !details.tender && (
           <Grid item>
             <Button
@@ -192,15 +194,15 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.EventIcon className="application-option-icon" />
-                <p>
+                <span>
                   {!isInterviewPlanned ? "Plan Interview" : "Interview Planned"}
-                </p>
+                </span>
               </div>
             </Button>
           </Grid>
         )}
         {shortlist && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
               sx={{ minWidth: "auto" }}
@@ -221,13 +223,13 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.StarIcon className="application-option-icon" />
-                <p>{!isShortlisted ? "Shortlist" : "Shortlisted"}</p>
+                <span>{!isShortlisted ? "Shortlist" : "Shortlisted"}</span>
               </div>
             </Button>
           </Grid>
         )}
         {reject && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               sx={{ minWidth: "auto" }}
               className="buttonbox"
@@ -247,13 +249,13 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.RejectIcon className="application-option-icon" />
-                <p> {!isRejected ? "Reject" : "Rejected"}</p>
+                <span> {!isRejected ? "Reject" : "Rejected"}</span>
               </div>
             </Button>
           </Grid>
         )}
         {blacklist && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
               sx={{
@@ -277,16 +279,17 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.BlockedIcon className="application-option-icon" />
-                <p>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</p>
+                <span>{!isBlacklisted ? "Blacklist" : "Blacklisted"}</span>
               </div>
             </Button>
           </Grid>
         )}
         {view && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
               sx={{
+                color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
                 minWidth: "auto",
                 "& svg": { width: "20px", height: "20px" },
               }}
@@ -326,13 +329,13 @@ function ApplicationOptions({
             >
               <div>
                 <SVG.OpenNewIcon className="application-option-icon" />
-                <p>View</p>
+                <span>View</span>
               </div>
             </Button>
           </Grid>
         )}
         {message && (
-          <Grid item className="me-3">
+          <Grid item className="me-0 me-lg-3">
             <Button
               variant="link"
               sx={{ minWidth: "auto" }}

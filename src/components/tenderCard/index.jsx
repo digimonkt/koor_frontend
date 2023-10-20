@@ -89,9 +89,10 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   <SVG.SuitcaseJob />
                 </Avatar>
               </div>
+
               {matches ? (
                 <div>
-                  <div className="text-end mb-4 w-100">
+                  <div className="text-end w-100 mb-4">
                     <SolidButton
                       style={{ textTransform: "lowercase", cursor: "default" }}
                       title={
@@ -115,78 +116,82 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     className="py-2"
                     sx={{ minHeight: "87%" }}
                   >
-                    {selfTender ? (
-                      <div className="job-button-card">
-                        <button
-                          onClick={() => {
-                            handleStartPause();
-                          }}
-                        >
-                          {isStart === "active" ? (
-                            <>
-                              <SVG.PauseIcon />
-                              <span className="d-block">Hold</span>
-                            </>
-                          ) : (
-                            <>
-                              <SVG.StartIcon />
-                              <span className="d-block">Start</span>
-                            </>
-                          )}
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (tenderDetails?.id) {
-                              navigate(
-                                urlcat("/employer/tender/post", {
-                                  tenderId: tenderDetails?.id,
-                                })
-                              );
-                            }
-                          }}
-                        >
-                          {<SVG.Edit1 />}
-                          <span className="d-block">Edit</span>
-                        </button>
-                      </div>
-                    ) : isLoggedIn ? (
-                      <React.Fragment>
-                        {!applied ? (
-                          <div
-                            onClick={handleToggleSave}
-                            style={{ marginLeft: "6px" }}
+                    <div>
+                      {selfTender ? (
+                        <div className="job-button-card">
+                          <button
+                            onClick={() => {
+                              handleStartPause();
+                            }}
                           >
-                            <div className="bookmark">
-                              {isSaved ? (
-                                <>
-                                  {USER_ROLES.jobSeeker ? (
-                                    <SVG.BlueSaveIcon />
-                                  ) : (
-                                    <SVG.SaveIcon />
-                                  )}
-                                  <span
-                                    style={{
-                                      color: USER_ROLES.jobSeeker
-                                        ? " #274593"
-                                        : "#eea23d",
-                                    }}
-                                  >
-                                    Saved
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <SVG.UnSave style={{ color: "#848484" }} />
-                                  <span style={{ color: "#848484" }}>Save</span>
-                                </>
-                              )}
+                            {isStart === "active" ? (
+                              <>
+                                <SVG.PauseIcon />
+                                <span className="d-block">Hold</span>
+                              </>
+                            ) : (
+                              <>
+                                <SVG.StartIcon />
+                                <span className="d-block">Start</span>
+                              </>
+                            )}
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (tenderDetails?.id) {
+                                navigate(
+                                  urlcat("/employer/tender/post", {
+                                    tenderId: tenderDetails?.id,
+                                  })
+                                );
+                              }
+                            }}
+                          >
+                            {<SVG.Edit1 />}
+                            <span className="d-block">Edit</span>
+                          </button>
+                        </div>
+                      ) : isLoggedIn ? (
+                        <React.Fragment>
+                          {!applied ? (
+                            <div
+                              onClick={handleToggleSave}
+                              style={{ marginLeft: "6px" }}
+                            >
+                              <div className="bookmark">
+                                {isSaved ? (
+                                  <>
+                                    {USER_ROLES.jobSeeker ? (
+                                      <SVG.BlueSaveIcon />
+                                    ) : (
+                                      <SVG.SaveIcon />
+                                    )}
+                                    <span
+                                      style={{
+                                        color: USER_ROLES.jobSeeker
+                                          ? " #274593"
+                                          : "#eea23d",
+                                      }}
+                                    >
+                                      Saved
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <SVG.UnSave style={{ color: "#848484" }} />
+                                    <span style={{ color: "#848484" }}>
+                                      Save
+                                    </span>
+                                  </>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        ) : null}
-                      </React.Fragment>
-                    ) : (
-                      ""
-                    )}
+                          ) : null}
+                        </React.Fragment>
+                      ) : (
+                        ""
+                      )}
+                    </div>
                   </Stack>
                 </div>
               ) : (
@@ -230,7 +235,13 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
-              sx={{ width: "100%", overflow: "hidden", overflowX: "auto" }}
+              sx={{
+                width: "100%",
+                "@media (max-width: 667px)": {
+                  overflow: "hidden",
+                  overflowX: "auto",
+                },
+              }}
               className="tender_card_chip"
             >
               {tenderDetails.sector && (
@@ -293,7 +304,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             sm={2}
             sx={{ marginLeft: "auto" }}
           >
-            <div className="text-end mb-4">
+            <div className="text-end">
               <SolidButton
                 style={{ textTransform: "lowercase", cursor: "default" }}
                 title={
@@ -313,82 +324,83 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               spacing={2}
               justifyContent="end"
               alignItems="center"
-              divider={<Divider orientation="vertical" flexItem />}
-              className="py-2"
+              className="py-2 mt-2"
               sx={{ minHeight: "87%" }}
             >
-              {selfTender ? (
-                <div className="job-button-card">
-                  <button
-                    onClick={() => {
-                      handleStartPause();
-                    }}
-                  >
-                    {isStart === "active" ? (
-                      <>
-                        <SVG.PauseIcon />
-                        <span className="d-block">Hold</span>
-                      </>
-                    ) : (
-                      <>
-                        <SVG.StartIcon />
-                        <span className="d-block">Start</span>
-                      </>
-                    )}
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (tenderDetails?.id) {
-                        navigate(
-                          urlcat("/employer/tender/post", {
-                            tenderId: tenderDetails?.id,
-                          })
-                        );
-                      }
-                    }}
-                  >
-                    {<SVG.Edit1 />}
-                    <span className="d-block">Edit</span>
-                  </button>
-                </div>
-              ) : isLoggedIn ? (
-                <React.Fragment>
-                  {!applied ? (
-                    <div
-                      onClick={handleToggleSave}
-                      style={{ marginLeft: "6px" }}
+              <div className="py-4 border-left-1 border-left py-4 ps-3">
+                {selfTender ? (
+                  <div className="job-button-card">
+                    <button
+                      onClick={() => {
+                        handleStartPause();
+                      }}
                     >
-                      <div className="bookmark">
-                        {isSaved ? (
-                          <>
-                            {USER_ROLES.jobSeeker ? (
-                              <SVG.BlueSaveIcon />
-                            ) : (
-                              <SVG.SaveIcon />
-                            )}
-                            <span
-                              style={{
-                                color: USER_ROLES.jobSeeker
-                                  ? " #274593"
-                                  : "#eea23d",
-                              }}
-                            >
-                              Saved
-                            </span>
-                          </>
-                        ) : (
-                          <>
-                            <SVG.UnSave style={{ color: "#848484" }} />
-                            <span style={{ color: "#848484" }}>Save</span>
-                          </>
-                        )}
+                      {isStart === "active" ? (
+                        <>
+                          <SVG.PauseIcon />
+                          <span className="d-block">Hold</span>
+                        </>
+                      ) : (
+                        <>
+                          <SVG.StartIcon />
+                          <span className="d-block">Start</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (tenderDetails?.id) {
+                          navigate(
+                            urlcat("/employer/tender/post", {
+                              tenderId: tenderDetails?.id,
+                            })
+                          );
+                        }
+                      }}
+                    >
+                      {<SVG.Edit1 />}
+                      <span className="d-block">Edit</span>
+                    </button>
+                  </div>
+                ) : isLoggedIn ? (
+                  <React.Fragment>
+                    {!applied ? (
+                      <div
+                        onClick={handleToggleSave}
+                        style={{ marginLeft: "6px" }}
+                      >
+                        <div className="bookmark">
+                          {isSaved ? (
+                            <>
+                              {USER_ROLES.jobSeeker ? (
+                                <SVG.BlueSaveIcon />
+                              ) : (
+                                <SVG.SaveIcon />
+                              )}
+                              <span
+                                style={{
+                                  color: USER_ROLES.jobSeeker
+                                    ? " #274593"
+                                    : "#eea23d",
+                                }}
+                              >
+                                Saved
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <SVG.UnSave style={{ color: "#848484" }} />
+                              <span style={{ color: "#848484" }}>Save</span>
+                            </>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ) : null}
-                </React.Fragment>
-              ) : (
-                ""
-              )}
+                    ) : null}
+                  </React.Fragment>
+                ) : (
+                  ""
+                )}
+              </div>
             </Stack>
           </Grid>
         ) : (

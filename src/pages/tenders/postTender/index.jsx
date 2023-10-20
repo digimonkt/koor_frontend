@@ -406,7 +406,9 @@ const PostTender = () => {
                   </Grid>
 
                   <Grid item xl={12} lg={12} sm={12} xs={12}>
-                    <label>Category</label>
+                    <label>
+                      Category <span className="required-field">*</span>
+                    </label>
                     <Grid container spacing={2}>
                       <Grid item xl={5} lg={5} sm={12} xs={12}>
                         <SelectInput
@@ -434,7 +436,9 @@ const PostTender = () => {
                   <Grid item xl={12} lg={12} xs={12}>
                     <Grid container spacing={2}>
                       <Grid item xl={4} lg={4} sm={6} xs={12}>
-                        <label>Sector</label>
+                        <label>
+                          Sector <span className="required-field">*</span>
+                        </label>
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Sector"
@@ -452,7 +456,9 @@ const PostTender = () => {
                         ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} sm={6} xs={12}>
-                        <label>Type</label>
+                        <label>
+                          Type <span className="required-field">*</span>
+                        </label>
                         <SelectInput
                           placeholder="Select a type of opportunity"
                           defaultValue=""
@@ -472,7 +478,9 @@ const PostTender = () => {
                         ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>
-                        <label>Tag</label>
+                        <label>
+                          Tag <span className="required-field">*</span>
+                        </label>
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Tag"
@@ -500,7 +508,8 @@ const PostTender = () => {
                             className="mb-2"
                           >
                             <label className="mb-1 d-inline-block">
-                              Start Date
+                              Start Date{" "}
+                              <span className="required-field">*</span>
                             </label>
                           </Stack>
                           <DateInput

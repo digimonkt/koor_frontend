@@ -82,7 +82,6 @@ const ApplicantDetails = () => {
                 direction={{ xs: "column", lg: "row", sm: "row" }}
                 alignItems={{ xs: "start", lg: "center" }}
                 spacing={2}
-                divider={<Divider orientation="vertical" flexItem />}
               >
                 <h4>{applicantDetails.user.name}</h4>
                 <div
@@ -199,7 +198,7 @@ const ApplicantDetails = () => {
 
             <div className="user-skills">
               <Grid container spacing={2}>
-                <Grid item xl={6} lg={6} xs={12}>
+                <Grid item xl={6} lg={6} xs={12} md={6} sm={6}>
                   <div className="skills-card">
                     <h3>Work experience</h3>
                     <ul>
@@ -219,7 +218,7 @@ const ApplicantDetails = () => {
                     </ul>
                   </div>
                 </Grid>
-                <Grid item xl={6} lg={6} xs={12}>
+                <Grid item xl={6} lg={6} xs={12} md={6} sm={6}>
                   <div className="skills-card">
                     <h3>Education</h3>
                     <ul>
@@ -244,7 +243,7 @@ const ApplicantDetails = () => {
             </div>
             <div className="user-skills pb-3">
               <Grid container spacing={2}>
-                <Grid item xl={6} lg={6} xs={12}>
+                <Grid item xl={6} lg={6} xs={12} md={6} sm={6}>
                   <div className="skills-card">
                     <h3>Skills</h3>
                     <Stack direction="row" spacing={0} flexWrap="wrap">
@@ -268,7 +267,7 @@ const ApplicantDetails = () => {
                     </Stack>
                   </div>
                 </Grid>
-                <Grid item xl={6} lg={6} xs={12}>
+                <Grid item xl={6} lg={6} xs={12} md={6} sm={6}>
                   <div className="skills-card">
                     <h3>Languages</h3>
                     <ul className="list-content">

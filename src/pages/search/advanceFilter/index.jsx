@@ -118,13 +118,33 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           </span>
         )}
         <OutlinedButton
-          style={{ pointer: "cursor", marginTop: "5px" }}
+          style={{
+            pointer: "cursor",
+            marginTop: "5px",
+            color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+            border:
+              role === USER_ROLES.jobSeeker
+                ? "1px solid #eea23d"
+                : "1px solid #274593",
+          }}
           title={
             <>
               <span>
-                <SVG.SearchIcon style={{ color: "#EEA23D" }} />
+                <SVG.SearchIcon
+                  style={{
+                    marginRight: "5px",
+                    color:
+                      role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+                  }}
+                />
               </span>
-              {formik.isSubmitting ? "Searching..." : "Search"}
+              <span
+                style={{
+                  color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+                }}
+              >
+                {formik.isSubmitting ? "Searching..." : "Search"}
+              </span>
             </>
           }
           type="submit"

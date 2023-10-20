@@ -29,6 +29,53 @@ body {
   margin: 0 !important;
 }
 
+.credits_cards_div {
+  /* border: 1px solid #d5e3f7; */
+  border-radius: 20px;
+  padding: 20px 40px 20px 40px;
+}
+
+.credits_title {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.28px;
+  color: #121212;
+  margin: 0;
+}
+
+.credits_li {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.28px;
+  color: #848484;
+  text-decoration: none;
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.attachment_delete_icon {
+  width: 15px;
+  height: 16.88px;
+}
+
+.credits_head_credit {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.28px;
+  font-family: "Bahnschrift";
+  color: #121212;
+  margin: 0;
+}
+
+.credits_button {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #000000 !important;
+  letter-spacing: 0.28px !important;
+  font-family: "Poppins" !important;
+  background-color: #d5e3f7 !important;
+}
+
 .work-experience-text-editor .ql-snow .ql-tooltip {
   position: fixed !important;
   left: 44rem !important;
@@ -74,6 +121,7 @@ body {
   font-family: "Poppins";
   font-size: 16px;
   font-weight: 500;
+  color: #121212;
 }
 
 .paginations .MuiButtonBase-root.MuiPaginationItem-root.Mui-disabled {
@@ -201,8 +249,13 @@ span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
   margin-top: 15px;
 }
 
+.filter_input .MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-size: 14px !important;
+}
+
 .SelectDropdown .filter_input {
   width: 100% !important;
+  display: grid;
 }
 
 .Tenderinput .MuiFormControl-root.MuiTextField-root {
@@ -1353,7 +1406,7 @@ span.count {
 
 .buttonbox {
   text-transform: capitalize !important;
-  color: #274593 !important;
+
   font-family: "Poppins" !important;
 
   font-weight: 400 !important;
@@ -1362,7 +1415,9 @@ span.count {
 
 .buttonbox p {
   margin: 0px;
-  color: #274593;
+}
+.buttonbox span {
+  display: block;
 }
 
 .headerbox h3 {
@@ -1501,6 +1556,11 @@ span.count {
   padding-top: 15px;
   text-align: center;
 }
+
+.jobtype_grid {
+  margin-top: 8px !important;
+}
+
 .chatSection {
   border-top: 1px solid #cacaca;
   padding-top: 15px;
@@ -1544,6 +1604,30 @@ span.count {
 @media only screen and (max-width: 992px) {
   .w-25 {
     width: 100%;
+  }
+
+  .credits_cards_div {
+    border: 1px solid #d5e3f7;
+    border-radius: 20px;
+    padding: 20px 20px 20px 20px;
+  }
+
+  .credits_title {
+    font-size: 16px;
+  }
+
+  .credits_li {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+
+  .credits_head_credit {
+    font-size: 24px;
+  }
+
+  .SelectDropdown label {
+    font-size: 14px;
   }
 
   .edit_work_experience_btn {
@@ -1811,11 +1895,8 @@ span.count {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  /* identical to box height, or 133% */
   letter-spacing: 0.02em;
   margin-bottom: 5px;
-  /* Dark grey */
-  /*color: #848484;*/
   color: #121212;
 }
 
@@ -2087,6 +2168,22 @@ input.employersearch {
   font-size: 12px;
 }
 
+.jobs_dailog_content {
+  font-size: 16px;
+  font-weight: 400;
+  color: #121212;
+  letter-spacing: 0.14px;
+  font-family: "Poppins";
+}
+
+.jobs_dailog_login_line {
+  font-size: 14px;
+  font-weight: 400;
+  color: #848484;
+  letter-spacing: 0.28px;
+  font-family: "Poppins";
+}
+
 @media screen and (max-width: 1536px) and (min-width: 1440px) {
   .outline-button {
     border: 1px solid #274593 !important;
@@ -2120,7 +2217,7 @@ input.employersearch {
     border: 1px solid #274593 !important;
     border-radius: 73px !important;
     padding: 10px 30px !important;
-    color: #848484 !important;
+    color: #274593 !important;
     font-size: 16px !important;
     letter-spacing: 0.03em !important;
     font-family: "Bahnschrift" !important;
@@ -2245,6 +2342,8 @@ input.employersearch {
 
   .login_header_search_icon {
     left: 11.7rem;
+    width: 14.33px;
+    height: 14.33px;
   }
 
   .noti-mobile {
@@ -2321,8 +2420,26 @@ input.employersearch {
   .reset_password_btn {
     font-size: 14px !important;
   }
+  .filter_input .MuiFormControlLabel-root .MuiFormControlLabel-label {
+    font-size: 12px !important;
+  }
+  .jobs_dailog_content {
+    font-size: 14px;
+  }
+  .jobs_dailog_login_line {
+    font-size: 12px;
+  }
+  .list-content span {
+    font-size: 10px;
+  }
+  .jobtype_grid {
+    margin-top: 0px !important;
+  }
   .lables span {
     font-size: 14px;
+  }
+  .SelectDropdown label {
+    font-size: 12px;
   }
   .form-control-area {
     font-weight: 300;
@@ -2558,4 +2675,22 @@ input.employersearch {
   top: 3px;
   min-height: 25px;
   z-index: 1;
+}
+
+.package-active {
+  background: #002c6a;
+  box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.25);
+  color: #fff;
+}
+
+.package-active h5 {
+  color: #fff;
+}
+
+.package-active p {
+  color: #fff;
+}
+
+.package-active ul li {
+  color: #fff;
 }

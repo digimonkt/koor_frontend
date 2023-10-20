@@ -517,21 +517,28 @@ const JobDetails = () => {
               <div>
                 <h1 className="heading">Register as jobseeker</h1>
                 <div className="form-content">
-                  <p>
+                  <p className="jobs_dailog_content">
                     To apply for the job and have many other useful features to
                     find a job, please register on Koor.
                   </p>
                   <div style={{ textAlign: "center", lineHeight: "40px" }}>
                     <Link to="/register?role=job_seeker">
                       <OutlinedButton
-                        title="Register as jobseeker"
+                        title="Register"
                         jobSeeker
-                        style={{
+                        sx={{
                           width: "100%",
+                          fontSize: "16px !important",
+                          "@media (max-width: 992px)": {
+                            fontSize: "16px !important",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                          },
                         }}
                       />
                     </Link>
-                    <span>
+                    <span className="jobs_dailog_login_line">
                       Already have an account?{" "}
                       <Link
                         to={`/login?role=${USER_ROLES.jobSeeker}`}
