@@ -269,23 +269,11 @@ function ChatBox() {
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  // const handleKeyCommand = useCallback((command, editorState) => {
-  //   const newState = RichUtils.handleKeyCommand(editorState, command);
-  //   if (newState) {
-  //     setEditorState(newState);
 
-  //     return "handled";
-  //   }
-  //   return "not-handled";
-  // });
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
     const chatHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
-    // if (user && user.organization && html.includes("@{{")) {
-    //   html = html.replace(/<\/?a[^>]*>/g, "");
-    //   html = html.replaceAll("@{{", "{{");
-    // }
     setNewMessage(chatHtml);
   };
   // End Draft Js
