@@ -1450,6 +1450,7 @@ span.count {
   font-size: 14px;
   line-height: 18px;
   color: #121212;
+  word-break: break-all;
 }
 
 .message-tex-2 {
@@ -2693,4 +2694,9 @@ input.employersearch {
 
 .package-active ul li {
   color: #fff;
+}
+.edit-message{
+    margin-left: 12px;
+      font-size: 8px;
+      margin-top: 4px;
 }

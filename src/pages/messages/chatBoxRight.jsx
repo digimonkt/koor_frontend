@@ -9,11 +9,13 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SendIcon from "@mui/icons-material/Send";
 import { FilledButton } from "../../components/button";
 import { USER_ROLES } from "../../utils/enum";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteMessageAttachmentAPI,
   getConversationIdByUserIdAPI,
   getConversationMessageHistoryAPI,
   sendAttachmentAPI,
+  updateMessageAttachmentAPI,
 } from "../../api/chat";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -36,12 +38,17 @@ import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import MediaControl from "./meidaControl";
 import { ImageDataDelete } from "./helper";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
+import ReactQuill from "react-quill";
+import Loader from "@components/loader";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
 
 function ChatBox() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { role, currentUser, isBlackListedByEmployer } = useSelector(
     (state) => state.auth
@@ -56,19 +63,96 @@ function ChatBox() {
   const scrollbarRef = useRef();
   const [fullImg, setFullImg] = useState(false);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [openEditMessage, setOpenEditMessage] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFormat, setSelectedFormat] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
+  const [messageIsMedia, setMessageIsMedia] = useState("text");
   const [anchorElMedia, setAnchorElMedia] = useState(null);
-
-  const handleClickMedia = (event) => {
+  const [selectedMessage, setSelectedMessage] = useState("");
+  const [messageForUpdate, setMessageForUpdate] = useState("");
+  const handleClickMedia = (event, type) => {
+    // console.log("trigger--------", event.currentTarget);
+    setMessageIsMedia(type);
     setAnchorElMedia(event.currentTarget);
   };
-  const handleMenuCloseMedia = () => {
+  const handleMenuCloseMedia = (action) => {
     setAnchorElMedia(null);
+    console.log(action, { selectedMessage });
+    if (action === "delete") {
+      deleteMessageAttachment(selectedMessage.id);
+    } else if (action === "copy") {
+      handleCopyText(selectedMessage.message);
+    } else if (action === "edit") {
+      setOpenEditMessage(true);
+      console.log({ messages });
+    }
+  };
+  const handleCopyText = (message) => {
+    // HTML content to copy
+    const htmlContent = message;
+
+    // Create a temporary div element
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlContent;
+
+    // Get the text content of the div (without HTML tags)
+    const textToCopy = tempDiv.textContent;
+
+    // Copy the text to the clipboard
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        dispatch(setSuccessToast("Message Copied successfully"));
+      })
+      .catch((error) => {
+        console.error("Failed to copy HTML content: ", error);
+      });
   };
 
+  const deleteMessageAttachment = async (messageId) => {
+    const res = await deleteMessageAttachmentAPI(messageId);
+    if (res.remote === "success") {
+      dispatch(setSuccessToast("Message deleted successfully"));
+      // Filter out the deleted message from the message list
+      const updatedMessages = messages.filter((msg) => msg.id !== messageId);
+      setMessage(updatedMessages);
+    } else {
+      dispatch(setErrorToast("Something went wrong"));
+    }
+  };
+  const modules = {
+    toolbar: [
+      // [{ header: "1" }, { header: "2" }, { font: [] }],
+      ["bold", "italic", "underline"], // Restrict the formats to bold, italic, and underline
+      // ["link"],
+      // ["clean"],
+    ],
+  };
+  const formats = ["header", "font", "bold", "italic", "underline", "link"];
+
+  const updateMessage = async () => {
+    setLoading(true);
+    console.log({ messageForUpdate });
+    const res = await updateMessageAttachmentAPI(selectedMessage.id, messageForUpdate);
+    if (res.remote === "success") {
+      setMessage(updateMessageInArray());
+      setOpenEditMessage(false);
+      setLoading(false);
+      setMessageForUpdate("");
+      updateMessageInArray();
+      dispatch(setSuccessToast("Message Updated successfully"));
+    } else {
+      dispatch(setErrorToast("Something went wrong"));
+    }
+  };
+  const updateMessageInArray = () => {
+    return messages.map(message =>
+      message.id === selectedMessage.id
+        ? { ...message, message: messageForUpdate }
+        : message
+    );
+  };
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
@@ -173,10 +257,10 @@ function ChatBox() {
       setUserDetails(res.data);
     }
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+  const messageType = (message) => !!message.attachment;
   const renderAttachment = (attachment) => {
     switch (attachment.type) {
       case "image":
@@ -191,28 +275,6 @@ function ChatBox() {
                 setFullImg(generateFileUrl(attachment.path));
                 setOpen(true);
               }}
-            />
-            <IconButton
-              size="small"
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleClickMedia} // Open the menu when the IconButton is clicked
-              sx={{
-                position: "absolute",
-                top: "15px",
-                right: "15px",
-                zIndex: 1,
-                background: "#f5f5f5",
-              }}
-            >
-              <MoreHorizIcon />
-            </IconButton>
-            <MediaControl
-              anchorElMedia={anchorElMedia}
-              handleMenuCloseMedia={handleMenuCloseMedia}
-              option={ImageDataDelete}
             />
           </Box>
         );
@@ -334,7 +396,7 @@ function ChatBox() {
   }, [searchParams.get("conversion"), searchParams.get("userId")]);
   useEffect(() => {
     scrollToBottom();
-  });
+  }, []);
 
   return (
     <>
@@ -467,6 +529,28 @@ function ChatBox() {
                               <div className={`ms-2 ${styles.chatTime}`}>
                                 {dayjs.utc(message.createdAt).local().fromNow()}
                               </div>
+                              <div className="edit-message">{message.isEdited && "Edited"}</div>
+                              {message.user.id === currentUser.id && <>
+                                <IconButton
+                                  size="small"
+                                  id="basic-button"
+                                  aria-controls={open ? "basic-menu" : undefined}
+                                  aria-haspopup="true"
+                                  aria-expanded={open ? "true" : undefined}
+                                  onClick={(e) => { handleClickMedia(e, messageType(message)); setSelectedMessage(message); }} // Open the menu when the IconButton is clicked
+                                  sx={{
+                                    position: "absolute",
+                                    top: "-5px",
+                                    right: "7px",
+                                    zIndex: 1,
+                                    width: "25px",
+                                    height: "25px",
+                                    color: "#274593"
+                                  }}
+                                >
+                                  <MoreHorizIcon />
+                                </IconButton>
+                              </>}
                             </div>
                           </div>
                         </div>
@@ -476,6 +560,14 @@ function ChatBox() {
                 })}
             </InfiniteScroll>
             {/* </PerfectScrollbar> */}
+          </div>
+          <div>
+            <MediaControl
+              anchorElMedia={anchorElMedia}
+              handleMenuCloseMedia={handleMenuCloseMedia}
+              option={ImageDataDelete(messageIsMedia)}
+              message={selectedMessage}
+            />
           </div>
           <div className="chatSection">
             {!isBlackListedByEmployer ? (
@@ -632,6 +724,22 @@ function ChatBox() {
           </div>
           <DialogBox open={open} handleClose={handleClose}>
             <img src={fullImg} />
+          </DialogBox>
+          <DialogBox open={openEditMessage} handleClose={handleClose}>
+          <h3>Edit Message</h3>
+            <ReactQuill value={messageForUpdate || selectedMessage.message} onChange={(value) => { setMessageForUpdate(value); }} modules={modules}
+              formats={formats} />
+            <FilledButton
+              title={loading ? <Loader loading={loading} /> : "update"}
+              disabled={loading}
+              onClick={() => { updateMessage(); }}
+              sx={{ marginTop: "10px" }}
+            />
+            <FilledButton
+              title="Cancel"
+                onClick={() => { setOpenEditMessage(false); setMessageForUpdate(""); }}
+              sx={{ marginTop: "10px" }}
+            />
           </DialogBox>
         </>
       )}
