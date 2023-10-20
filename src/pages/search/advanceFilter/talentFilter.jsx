@@ -1,11 +1,18 @@
 import { ErrorMessage } from "../../../components/caption";
 import {
   CheckboxInput,
-  HorizontalLabelInput,
   LabeledInput,
   SelectInput,
 } from "../../../components/input";
-import { FormControl, FormGroup, Grid } from "@mui/material";
+import {
+  FormControl,
+  FormGroup,
+  Grid,
+  Button,
+  Input,
+  InputAdornment,
+  Stack,
+} from "@mui/material";
 import { JobFormControl } from "../../../pages/jobs/postJobs/style";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +40,7 @@ function TalentFilter({ formik, footer, responsive }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
@@ -57,7 +64,7 @@ function TalentFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
@@ -89,7 +96,7 @@ function TalentFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
@@ -106,7 +113,7 @@ function TalentFilter({ formik, footer, responsive }) {
             </div>
           </Grid>
 
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <div>
               <FormControl sx={{ m: 1 }} className="filter_input">
                 <SelectInput
@@ -131,16 +138,16 @@ function TalentFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <label>Years of experience</label>
             <LabeledInput
               // title="Duration in Month"
-              className="add-form-control"
+              className="add-form-control mt-3"
               placeholder="Number of years of experience"
               {...formik.getFieldProps("experience")}
             />
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <label>Preferred job type</label>
             <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
               <JobFormControl
@@ -163,24 +170,93 @@ function TalentFilter({ formik, footer, responsive }) {
               />
             </FormGroup>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <label>Expected salary</label>
-            <div style={{ display: "flex", marginLeft: "7px" }}>
+
+            <Stack
+              direction={"row"}
+              spacing={2}
+              alignItems={"center"}
+              sx={{ marginTop: "10px" }}
+            >
+              <Input
+                placeholder="From"
+                fullWidth
+                {...formik.getFieldProps("salaryMin")}
+                sx={{
+                  "&.MuiInput-root": {
+                    background: "#F0F0F0",
+                    height: "44px",
+                    borderRadius: "10px",
+                    fontSize: "16px",
+                    fontFamily: "Poppins",
+                    fontWeight: "500",
+                    color: "#000",
+                    "&:after": { display: "none" },
+                    "&:before": { display: "none" },
+                  },
+                }}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Button
+                      sx={{
+                        padding: "10px",
+                        minWidth: "auto",
+                        borderRadius: "10px",
+                        background: "#CACACA",
+                        fontSize: "14px",
+                        fontFamily: "Poppins",
+                        fontWeight: "400",
+                        color: "rgb(18 18 18 / 50%)",
+                        "&:hover": {
+                          background: "#CACACA",
+                        },
+                      }}
+                    >
+                      USD
+                    </Button>
+                  </InputAdornment>
+                }
+              />
+              <Input
+                placeholder="To"
+                {...formik.getFieldProps("salaryMax")}
+                fullWidth
+                sx={{
+                  "&.MuiInput-root": {
+                    background: "#F0F0F0",
+                    height: "44px",
+                    borderRadius: "10px",
+                    fontSize: "16px",
+                    fontFamily: "Poppins",
+                    fontWeight: "500",
+                    color: "#000",
+                    padding: "0px 0px 0px 10px",
+                    "&:after": { display: "none" },
+                    "&:before": { display: "none" },
+                  },
+                }}
+              />
+            </Stack>
+
+            {/* <div style={{ display: "flex", marginLeft: "7px" }}>
               <div>
                 <HorizontalLabelInput
                   label="From"
+                  placeholder="USD"
                   {...formik.getFieldProps("salaryMin")}
                 />
               </div>
               <div style={{ marginLeft: "20px" }}>
                 <HorizontalLabelInput
                   label="To"
+                  placeholder="To"
                   {...formik.getFieldProps("salaryMax")}
                 />
               </div>
-            </div>
+            </div> */}
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3}>
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <label>Availability</label>
             <FormGroup row sx={{ marginLeft: "7px" }} className="filter_input">
               <JobFormControl

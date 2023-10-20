@@ -684,7 +684,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                                 : "#274593",
                           }}
                         >
-                          {<SVG.Downarrow />}
+                          {<SVG.AdvancedDown />}
                         </span>
                       )}
                     </div>
@@ -759,7 +759,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     fontSize: "12px",
                   }}
                 >
-                  Advanced filter{" "}
+                  Advanced filter
                   {data ? (
                     <>
                       <span
