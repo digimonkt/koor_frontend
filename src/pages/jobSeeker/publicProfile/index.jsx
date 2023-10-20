@@ -433,6 +433,8 @@ export default function PublicProfileComponent() {
                               fontFamily: "Poppins !important",
                               fontWeight: "600 !important",
                               color: "#121212 !important",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
                               "@media (max-width: 992px)": {
                                 fontSize: "14px !important",
                               },
@@ -530,7 +532,7 @@ export default function PublicProfileComponent() {
                           justifyContent: "center",
                           alignItems: "center",
                           fontSize: "32px",
-                          fontFamily: "Inter",
+                          fontWeight: "600",
                         }}
                       >
                         ADVETRISEMENT

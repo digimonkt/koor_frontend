@@ -5,8 +5,9 @@ export const SearchCategory = styled(Stack)(() => ({
   border: "1px solid #CACACA",
   background: "#fff",
   borderRadius: "50px",
-  height: "37px",
+  // height: "37px",
   width: "320px",
+  paddingLeft: "15px",
 }));
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {

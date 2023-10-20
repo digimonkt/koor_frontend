@@ -101,7 +101,9 @@ function Header() {
               direction={"row"}
               alignItems={"center"}
               spacing={2}
-              sx={{ display: { xs: "none", sm: "block" } }}
+              sx={{
+                display: { xs: "none", sm: "block", position: "relative" },
+              }}
             >
               <SearchCategory direction="row" spacing={0} alignItems="center">
                 {role === "employer" ? (

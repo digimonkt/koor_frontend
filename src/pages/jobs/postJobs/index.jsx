@@ -670,6 +670,7 @@ function PostJobsComponent() {
                         </label>
                       </Stack>
                       <DateInput
+                        className="smallfont"
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
                         minDate={dayjs().format("YYYY-MM-DD")}
@@ -693,6 +694,7 @@ function PostJobsComponent() {
                         </label>
                       </Stack>
                       <DateInput
+                        className="smallfont"
                         onChange={(e) => formik.setFieldValue("deadline", e)}
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
@@ -771,7 +773,7 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Preferences</h2>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label>Education level</label>
                     <SelectInput
                       defaultValue=""
@@ -829,7 +831,7 @@ function PostJobsComponent() {
                       })}
                     </Grid>
                   </Grid> */}
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label>
                       Required languages{" "}
                       <span style={{ color: "#848484" }}>(Maximum 3)</span>
@@ -849,7 +851,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.languages}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label className="mb-2">
                       Job skills
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
