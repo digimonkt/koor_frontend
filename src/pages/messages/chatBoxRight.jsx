@@ -73,20 +73,17 @@ function ChatBox() {
   const [selectedMessage, setSelectedMessage] = useState("");
   const [messageForUpdate, setMessageForUpdate] = useState("");
   const handleClickMedia = (event, type) => {
-    // console.log("trigger--------", event.currentTarget);
     setMessageIsMedia(type);
     setAnchorElMedia(event.currentTarget);
   };
   const handleMenuCloseMedia = (action) => {
     setAnchorElMedia(null);
-    console.log(action, { selectedMessage });
     if (action === "delete") {
       deleteMessageAttachment(selectedMessage.id);
     } else if (action === "copy") {
       handleCopyText(selectedMessage.message);
     } else if (action === "edit") {
       setOpenEditMessage(true);
-      console.log({ messages });
     }
   };
   const handleCopyText = (message) => {
@@ -133,7 +130,6 @@ function ChatBox() {
 
   const updateMessage = async () => {
     setLoading(true);
-    console.log({ messageForUpdate });
     const res = await updateMessageAttachmentAPI(selectedMessage.id, messageForUpdate);
     if (res.remote === "success") {
       setMessage(updateMessageInArray());
