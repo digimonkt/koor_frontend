@@ -622,15 +622,65 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       <div className={`${styles.searchResult}`}>
         <div className={`${styles.label} lables`}>
           <Box
-            sx={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-              flexDirection: "column",
-              maxWidth: { xs: "85%", lg: "100%" },
-            }}
+          // sx={{
+          //   display: "flex",
+          //   alignItems: "flex-start",
+          //   justifyContent: "flex-start",
+          //   flexDirection: "column",
+
+          // }}
           >
-            <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
+            <span>
+              <Box>Saved searches: </Box>
+              <Box>
+                {!defaultOpen && (
+                  <Box
+                    onClick={() => setData(!data)}
+                    sx={{
+                      color:
+                        role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                      cursor: "pointer",
+                      fontSize: "12px",
+                      fontFamily: "Poppins",
+                      marginRight: "auto",
+                    }}
+                  >
+                    Advanced filter{" "}
+                    {data ? (
+                      <>
+                        <span
+                          style={{
+                            marginLeft: "10px",
+                            width: "18px",
+                            display: "inline-block",
+                            color:
+                              role === USER_ROLES.jobSeeker
+                                ? "#FFA500"
+                                : "#274593",
+                          }}
+                        >
+                          {<SVG.AdvancedDown />}
+                        </span>
+                      </>
+                    ) : (
+                      <span
+                        style={{
+                          marginLeft: "10px",
+                          width: "18px",
+                          display: "inline-block",
+                          color:
+                            role === USER_ROLES.jobSeeker
+                              ? "#FFA500"
+                              : "#274593",
+                        }}
+                      >
+                        {<SVG.Downarrow />}
+                      </span>
+                    )}
+                  </Box>
+                )}
+              </Box>
+            </span>
             <Stack
               direction={"row"}
               spacing={{ xs: 1, lg: 0 }}
@@ -674,13 +724,19 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
             </Stack>
           </Box>
 
-          {!defaultOpen && (
-            <div
+          {/* {!defaultOpen && (
+            <Box
               onClick={() => setData(!data)}
-              style={{
+              sx={{
                 color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                 cursor: "pointer",
-                fontSize: "12px",
+                fontSize: "14px",
+                fontFamily: "Poppins",
+                display: "block",
+                "@media (max-width: 480px)": {
+                  fontSize: "12px",
+                  display: "none",
+                },
               }}
             >
               Advanced filter{" "}
@@ -711,8 +767,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                   {<SVG.Downarrow />}
                 </span>
               )}
-            </div>
-          )}
+            </Box>
+          )} */}
         </div>
         {data ? <>{searchFilter()}</> : null}
         <DialogBox open={open} handleClose={handleToggleModel}>
