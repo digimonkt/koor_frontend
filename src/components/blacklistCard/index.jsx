@@ -16,6 +16,7 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { setTotalBlacklist } from "@redux/slice/employer";
 import { USER_ROLES } from "@utils/enum";
 import { getConversationIdByUserIdAPI } from "@api/chat";
+import useMediaQuery from "@mui/material/useMediaQuery";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -51,6 +52,8 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
       );
     }
   };
+  const matches = useMediaQuery("(max-width:600px)");
+
   return (
     <>
       <Stack
@@ -113,12 +116,91 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
                 <h4>{details?.name || details?.email}</h4>
               </Link>
             </Stack>
-            <div className="recent-descrition">
-              <p>{details?.description}</p>
+            {!matches ? (
+              <div className="recent-descrition manage-jobs">
+                <p>{details?.description}</p>
+                <div className="recent-descrition-icon">
+                  <Button
+                    sx={{
+                      minWidth: "auto",
+                      color: "#274593",
+                      textTransform: "capitalize",
+                      "& p": { color: "#274593 !important" },
+                      "& svg": { width: "20px", height: "20px" },
+                    }}
+                    variant="link"
+                    onClick={() => {
+                      if (details.job) {
+                        navigate(
+                          urlcat(
+                            "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+                            {
+                              applicationId: details.id,
+                              role: USER_ROLES.employer,
+                              jobId: details.job.id,
+                            }
+                          )
+                        );
+                      } else if (details.tender) {
+                        navigate(
+                          urlcat(
+                            "/:role/manage-tenders/:tenderId/applicant-details/:applicationId",
+                            {
+                              applicationId: details.id,
+                              role: USER_ROLES.employer,
+                              tenderId: details.tender.id,
+                            }
+                          )
+                        );
+                      } else {
+                        navigate(
+                          urlcat("/:role/:userId/profile", {
+                            userId: details.user.id,
+                            role: details.user.role.replace("_", "-"),
+                          })
+                        );
+                      }
+                    }}
+                  >
+                    <div>
+                      <SVG.OpenNewIcon />
+                      <p>View</p>
+                    </div>
+                  </Button>
+                  <Button
+                    variant="link"
+                    sx={{
+                      minWidth: "auto",
+                      color: "#274593",
+                      textTransform: "capitalize",
+                      "& p": { color: "#274593 !important" },
+                      "& svg": { width: "20px", height: "20px" },
+                    }}
+                    onClick={handleMessageClick}
+                  >
+                    <div>
+                      <SVG.MessageIcon />
+                      <p>Message</p>
+                    </div>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </Stack>
+        <div className="recent-content">
+          {matches ? (
+            <div className="recent-descrition manage-jobs">
+              <p className="mb-3">{details?.description}</p>
               <div className="recent-descrition-icon">
                 <Button
                   sx={{
                     minWidth: "auto",
+                    color: "#274593",
+                    textTransform: "capitalize",
+                    "& p": { color: "#274593 !important" },
                     "& svg": { width: "20px", height: "20px" },
                   }}
                   variant="link"
@@ -155,24 +237,33 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
                     }
                   }}
                 >
-                  <SVG.OpenNewIcon className="blacklist-option-icon" />
-                  <span>View</span>
+                  <div>
+                    <SVG.OpenNewIcon />
+                    <p>View</p>
+                  </div>
                 </Button>
                 <Button
                   variant="link"
-                  sx={{ minWidth: "auto" }}
+                  sx={{
+                    minWidth: "auto",
+                    color: "#274593",
+                    textTransform: "capitalize",
+                    "& p": { color: "#274593 !important" },
+                    "& svg": { width: "20px", height: "20px" },
+                  }}
                   onClick={handleMessageClick}
                 >
-                  <SVG.MessageIcon
-                    style={{ color: "#274593" }}
-                    className="blacklist-option-icon"
-                  />
-                  <span>Message</span>
+                  <div>
+                    <SVG.MessageIcon />
+                    <p>Message</p>
+                  </div>
                 </Button>
               </div>
             </div>
-          </div>
-        </Stack>
+          ) : (
+            ""
+          )}
+        </div>
       </Stack>
     </>
   );

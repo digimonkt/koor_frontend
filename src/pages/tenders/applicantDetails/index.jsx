@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Card,
   CardContent,
   Divider,
@@ -72,19 +73,23 @@ const ApplicantDetails = () => {
               <Stack
                 direction={{ xs: "column", lg: "row" }}
                 alignItems={{ xs: "start", lg: "center" }}
-                spacing={2}
-                divider={<Divider orientation="vertical" flexItem />}
+                spacing={{ xs: 0, lg: 2 }}
               >
                 <h4>{applicantDetails.user.name}</h4>
-                <div
+                <Box
                   className="recent-research"
-                  style={{ display: "flex", alignItems: "center" }}
+                  sx={{
+                    flexWrap: "wrap",
+                    "@media (max-width:768px)": {
+                      "& span": { border: "0px", paddingLeft: "0px" },
+                    },
+                  }}
                 >
                   <span>
                     Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
                   <div>{applicantDetails.tender.title}</div>
-                </div>
+                </Box>
               </Stack>
             </Stack>
 

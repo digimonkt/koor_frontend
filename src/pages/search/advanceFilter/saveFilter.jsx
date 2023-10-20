@@ -1,6 +1,6 @@
 import { OutlinedButton } from "../../../components/button";
 import { LabeledInput } from "../../../components/input";
-import { Grid, Stack } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import React, { useState } from "react";
 
 function SaveFilter({ handleSaveSearch, handleCancel }) {
@@ -26,6 +26,16 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+            <Box
+              sx={{
+                textAlign: "right",
+                mt: 1,
+                color: "#848484",
+                fontSize: "16px",
+              }}
+            >
+              0/40 characters
+            </Box>
           </div>
 
           <Grid item xl={12} lg={12} xs={12}>
