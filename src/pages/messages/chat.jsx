@@ -22,7 +22,7 @@ function ChatComponent() {
           sx={{
             display: "flex",
             height: "100%",
-            "@media (max-width: 480px)": {
+            "@media (max-width: 667px)": {
               display: "block",
             },
             py: 2,

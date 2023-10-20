@@ -230,14 +230,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </p>
             <Stack
               direction="row"
+              flexWrap="wrap"
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{
                 width: "100%",
-                overflow: "hidden",
-                overflowX: "auto",
-                // "@media (max-width: 992px)": {
-                //   flexWrap: "wrap",
-                // },
+
+                "@media (max-width: 992px)": {
+                  overflow: "hidden",
+                  overflowX: "auto",
+                },
                 // "@media (max-width: 480px)": {
                 //   flexWrap: "wrap",
                 // },

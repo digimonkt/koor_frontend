@@ -43,6 +43,7 @@ function ApplicantCard({
         />
         <div className="recent-content">
           <Stack
+            flexWrap={"wrap"}
             direction={{ xs: "column", lg: "row" }}
             divider={
               <Divider
@@ -62,6 +63,7 @@ function ApplicantCard({
                 whiteSpace: "nowrap",
                 display: "flex",
                 alignItems: "baseline",
+                flexWrap: "wrap",
               }}
             >
               <span>
@@ -76,6 +78,7 @@ function ApplicantCard({
           </Stack>
           {details?.education || details?.skills || details?.language ? (
             <Stack
+              flexWrap={"wrap"}
               direction={"row"}
               spacing={1}
               alignItems={"center"}
@@ -125,6 +128,7 @@ function ApplicantCard({
 
       {details?.education || details?.skills || details?.language ? (
         <Stack
+          flexWrap={"wrap"}
           direction={{ xs: "column", lg: "row" }}
           spacing={1}
           alignItems={{ xs: "flex-start", lg: "center" }}
