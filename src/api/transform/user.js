@@ -40,15 +40,15 @@ export const transformGetUserDetails = (data) => {
     },
     jobPreferences: data.job_preferences
       ? {
-          id: data.job_preferences.id,
-          isAvailable: data.job_preferences.is_available,
-          displayInSearch: data.job_preferences.display_in_search,
-          isPartTime: data.job_preferences.is_part_time,
-          isFullTime: data.job_preferences.is_full_time,
-          hasContract: data.job_preferences.has_contract,
-          expectedSalary: data.job_preferences.expected_salary,
-          payPeriod: data.job_preferences.pay_period,
-        }
+        id: data.job_preferences.id,
+        isAvailable: data.job_preferences.is_available,
+        displayInSearch: data.job_preferences.display_in_search,
+        isPartTime: data.job_preferences.is_part_time,
+        isFullTime: data.job_preferences.is_full_time,
+        hasContract: data.job_preferences.has_contract,
+        expectedSalary: data.job_preferences.expected_salary,
+        payPeriod: data.job_preferences.pay_period,
+      }
       : {},
     educationRecord: (data.education_record || []).map((record) => ({
       id: record.id,
@@ -136,6 +136,7 @@ export const transformSearchUserByRoleResponse = (data) => {
     country: data.country || "",
     city: data.city || "",
     highestEducation: data.highest_education || "",
+    readyForChat: data.ready_for_chat
   };
 };
 

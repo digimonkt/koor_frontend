@@ -41,7 +41,7 @@ function TalentCard({ talentDetails }) {
 
           width: {
             xs: "100%",
-            sm: "auto",
+            sm: "100%",
             lg: "auto",
             "@media (max-width:600px)": { flex: "1 1 0%" },
           },
@@ -60,17 +60,21 @@ function TalentCard({ talentDetails }) {
             sx={{ width: "70px", height: "70px" }}
           />
           {matches ? (
-            <Stack direction="row" spacing={0} className="edit-button">
-              <Button variant="link" onClick={handleMessageClick}>
-                <SVG.MessageIcon
-                  style={{
-                    color: "#274593",
-                  }}
-                  className="application-option-icon"
-                />
-                <span>Message</span>
-              </Button>
-            </Stack>
+            <>
+              {talentDetails.readyForChat && (
+                <Stack direction="row" spacing={0} className="edit-button">
+                  <Button variant="link" onClick={handleMessageClick}>
+                    <SVG.MessageIcon
+                      style={{
+                        color: "#274593",
+                      }}
+                      className="application-option-icon"
+                    />
+                    <span>Message</span>
+                  </Button>
+                </Stack>
+              )}
+            </>
           ) : (
             ""
           )}
@@ -147,17 +151,19 @@ function TalentCard({ talentDetails }) {
       </Stack>
       {!matches ? (
         <Stack direction="row" spacing={2} alignItems="center">
-          <Stack direction="row" spacing={0} className="edit-button">
-            <Button variant="link" onClick={handleMessageClick}>
-              <SVG.MessageIcon
-                style={{
-                  color: "#274593",
-                }}
-                className="application-option-icon"
-              />
-              <span>Message</span>
-            </Button>
-          </Stack>
+          {talentDetails.readyForChat && (
+            <Stack direction="row" spacing={0} className="edit-button">
+              <Button variant="link" onClick={handleMessageClick}>
+                <SVG.MessageIcon
+                  style={{
+                    color: "#274593",
+                  }}
+                  className="application-option-icon"
+                />
+                <span>Message</span>
+              </Button>
+            </Stack>
+          )}
         </Stack>
       ) : (
         ""
