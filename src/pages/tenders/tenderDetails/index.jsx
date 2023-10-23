@@ -462,27 +462,35 @@ function TenderDetailsComponent() {
               <div>
                 <h1 className="heading">Register as vendor</h1>
                 <div className="form-content">
-                  <p>
+                  <p className="jobs_dailog_content">
                     To apply for the vendor and have many other useful features
                     to find a tender, please register on Koor.
                   </p>
                   <div style={{ textAlign: "center", lineHeight: "40px" }}>
                     <Link to="/register?role=vendor">
                       <OutlinedButton
-                        title="Register as vendor"
+                        title="Register"
                         jobSeeker
-                        style={{
+                        sx={{
+                          fontSize: "16px !important",
                           width: "100%",
+                          color: "#274593 !important",
+                          "@media (max-width: 992px)": {
+                            fontSize: "16px !important",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                          },
                         }}
                       />
                     </Link>
-                    <span>
+                    <span className="jobs_dailog_login_line">
                       Already have an account?{" "}
                       <Link
                         to={`/login?role=${USER_ROLES.vendor}`}
                         style={{
                           textDecoration: "none",
-                          color: "#EEA23D",
+                          color: "#274593",
                           fontWeight: 600,
                         }}
                       >

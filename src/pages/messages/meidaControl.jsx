@@ -27,8 +27,8 @@ const MediaControl = (props) => {
       >
         {props.option.map((option) => (
           <MenuItem
-            key={option}
-            onClick={props.handleMenuCloseMedia}
+            key={option.id}
+            onClick={() => { props.handleMenuCloseMedia(option.id); }}
             sx={{
               color: option.color,
               borderBottom: "1px solid #F0F0F0",

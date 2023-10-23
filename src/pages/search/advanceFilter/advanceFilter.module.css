@@ -23,6 +23,12 @@ body {
   position: relative;
   top: 3px;
 }
+
+.jobseekerColor {
+  background: #feefd3 !important;
+  border: 1px solid #eea23d !important;
+}
+
 .btninActive {
   background: #feefd3 !important;
   border: 1px solid #eea23d !important;
@@ -31,14 +37,18 @@ body {
   color: #000 !important;
   font-weight: 400 !important;
   height: 42px !important;
+  width: auto !important;
+  font-family: "Poppins" !important;
+  text-transform: capitalize !important;
 }
 .btnActive {
   background: #f0f0f0 !important;
+  border: 1px solid #f0f0f0 !important;
   width: auto !important;
   height: 42px !important;
   border-radius: 64px !important;
   color: #848484 !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
   font-family: "Poppins" !important;
   font-weight: 400 !important;
   text-transform: capitalize !important;
@@ -97,14 +107,16 @@ body {
   color: #848484;
   margin: 0 16px;
   cursor: pointer;
+  font-weight: 600;
+  font-family: "Bahnschrift";
 }
 .savesearch span svg {
   position: relative;
   right: 10px;
 }
 .savesearch button {
-  color: #eea23d !important;
-  border: 1px solid #eea23d !important;
+  /* color: #eea23d !important; */
+  /* border: 1px solid #eea23d !important; */
   border-radius: 70px !important;
   padding: 5px 16px;
 }
@@ -116,11 +128,7 @@ body {
 }
 
 .label {
-  display: flex;
-  justify-content: space-between;
   text-align: center;
-  align-items: center;
-  /* height: 54px; */
 }
 
 .label ul::-webkit-scrollbar {
@@ -161,5 +169,11 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
+  }
+  .historySearch h5 {
+    font-size: 12px;
+  }
+  .savesearch span{
+    font-size: 14px;
   }
 }

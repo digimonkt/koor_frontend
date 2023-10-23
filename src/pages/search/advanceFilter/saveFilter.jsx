@@ -1,6 +1,6 @@
 import { OutlinedButton } from "../../../components/button";
 import { LabeledInput } from "../../../components/input";
-import { Grid, Stack } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import React, { useState } from "react";
 
 function SaveFilter({ handleSaveSearch, handleCancel }) {
@@ -9,9 +9,7 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
   return (
     <div>
       <h1 className="heading">Give it a name</h1>
-      <div
-        className="save_filter_popup_txt"
-      >
+      <div className="save_filter_popup_txt">
         Create a short and clear name for this saved search, so it won’t take
         too much space but is informative for you.
       </div>
@@ -28,6 +26,16 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+            <Box
+              sx={{
+                textAlign: "right",
+                mt: 1,
+                color: "#848484",
+                fontSize: "16px",
+              }}
+            >
+              0/40 characters
+            </Box>
           </div>
 
           <Grid item xl={12} lg={12} xs={12}>

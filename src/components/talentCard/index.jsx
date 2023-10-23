@@ -1,5 +1,5 @@
 import { SVG } from "../../assets/svg";
-import { Avatar, Button, Chip, Divider, Stack } from "@mui/material";
+import { Avatar, Button, Chip, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import React from "react";
 import urlcat from "urlcat";
@@ -34,6 +34,7 @@ function TalentCard({ talentDetails }) {
         direction="row"
         spacing={2}
         alignItems={{ xs: "flex-start", lg: "row" }}
+        sx={{ display: "flex", alignItems: "center" }}
       >
         <Avatar
           src={generateFileUrl(talentDetails.profilePicture?.path || "")}
@@ -42,7 +43,6 @@ function TalentCard({ talentDetails }) {
         <div className="recent-content">
           <Stack
             direction={{ xs: "column", lg: "row" }}
-            divider={<Divider orientation="vertical" flexItem />}
             spacing={2}
             flexWrap="wrap"
             alignItems={{ xs: "flex-start", lg: "center" }}
@@ -57,7 +57,7 @@ function TalentCard({ talentDetails }) {
                 {talentDetails.name || talentDetails.email}
               </Link>
             </h4>
-            <p className="job-description card-description mt-1 mb-3">
+            <p className="job-description card-description mt-1 mb-2">
               {talentDetails?.profile?.description}
             </p>
             <div className="recent-research" style={{ flexWrap: "wrap" }}>

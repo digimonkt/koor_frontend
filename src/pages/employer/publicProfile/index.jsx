@@ -241,6 +241,7 @@ function PublicProfileComponent() {
                           fontSize: "26px",
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
+                          color: "#121212",
                           mb: 2,
                         }}
                       >

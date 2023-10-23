@@ -106,8 +106,15 @@ function PublicProfileComponent() {
                               fontFamily: "Bahnschrift",
                               fontSize: "24px",
                               fontWeight: "700",
+                              color: "#121212",
                               letterSpacing: "0.03em",
                               mb: 0,
+                              "@media(max-width: 992px)": {
+                                fontSize: "20px",
+                              },
+                              "@media(max-width: 480px)": {
+                                fontSize: "16px",
+                              },
                             }}
                           >
                             {userDetails.name || userDetails.email}
@@ -133,6 +140,15 @@ function PublicProfileComponent() {
                                 sx={{
                                   color: "rgb(18 18 18 / 50%)",
                                   fontFamily: "Poppins",
+                                  fontSize: "14px",
+                                  fontWeight: "400",
+                                  letterSpacing: "0.42px",
+                                  "@media(max-width: 992px)": {
+                                    fontSize: "12px",
+                                  },
+                                  "@media(max-width: 480px)": {
+                                    fontSize: "10px",
+                                  },
                                 }}
                               >
                                 {userDetails.profile.city?.title},{" "}
@@ -180,6 +196,7 @@ function PublicProfileComponent() {
                               fontSize: "26px",
                               fontFamily: "Bahnschrift",
                               fontWeight: "600",
+                              color: "#121212",
                             }}
                           >
                             Contracts Experience
@@ -187,11 +204,14 @@ function PublicProfileComponent() {
                           <Typography
                             variant="string"
                             sx={{
-                              fontSize: "15px",
+                              fontSize: "14px",
                               fontFamily: "Bahnschrift",
+                              color: "#274593",
                             }}
                           >
-                            <Link to="#">See All</Link>
+                            <Link to="#" style={{ color: "#274593" }}>
+                              See All
+                            </Link>
                           </Typography>
                         </div>
                         <ul className="listitems">
@@ -216,6 +236,7 @@ function PublicProfileComponent() {
                           fontSize: "26px",
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
+                          color: "#121212",
                           mb: 2,
                         }}
                       >
@@ -275,10 +296,10 @@ function PublicProfileComponent() {
                       >
                         <Box
                           sx={{
-                            background: "#FEEFD3",
+                            background: "#D5E3F7",
                             borderRadius: "5px",
                             p: 1,
-                            color: "#EEA23D",
+                            color: "#274593",
                             width: "40px",
                             height: "40px",
                             display: "inline-flex",
@@ -294,7 +315,7 @@ function PublicProfileComponent() {
                             sx={{
                               fontSize: "16px",
                               fontFamily: "Poppins",
-                              fontWeight: "600",
+                              fontWeight: "500",
                             }}
                           >
                             {userDetails.email}
@@ -318,10 +339,10 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#FEEFD3",
+                              background: "#D5E3F7",
                               borderRadius: "5px",
                               p: 1,
-                              color: "#EEA23D",
+                              color: "#274593",
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
@@ -362,10 +383,10 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#FEEFD3",
+                              background: "#D5E3F7",
                               borderRadius: "5px",
                               p: 1,
-                              color: "#EEA23D",
+                              color: "#274593",
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
@@ -375,7 +396,7 @@ function PublicProfileComponent() {
                           >
                             <SVG.LocationIcon />
                           </Box>
-                          <Box>
+                          <Box sx={{ flex: "1 1 0%" }}>
                             <Typography
                               variant="h6"
                               sx={{
@@ -408,6 +429,7 @@ function PublicProfileComponent() {
                       fontFamily: "Bahnschrift",
                       fontWeight: "600",
                       mb: 2,
+                      color: "#121212",
                     }}
                   >
                     Sectors
