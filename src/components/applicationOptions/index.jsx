@@ -354,14 +354,21 @@ function ApplicationOptions({
         open={isBlacklisting}
         handleClose={() => setIsBlacklisting(false)}
       >
-        <div>
+        <Box className="manage_job_black_pop">
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               fontSize: "28px",
-              fontWeight: 700,
+              fontWeight: 600,
+              color: "#121212",
+              "@media (max-width: 992px)": {
+                fontSize: "24px",
+              },
+              "@media (max-width: 480px)": {
+                fontSize: "20px",
+              },
             }}
           >
             <div
@@ -399,11 +406,13 @@ function ApplicationOptions({
           </p>
           <div className="dialog-reason">
             <LabeledRadioInputComponent
-              title="Select Reason: "
+              title="Select reason: "
               options={BLACKLIST_REASON_LIST}
               onChange={(e) => setBlackListReason(e.target.value)}
               value={blackListReason}
-              style={{
+              sx={{
+                "& .MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
+                  { fontWeight: 500 },
                 display: "flex",
                 flexDirection: "column",
                 color: "black",
@@ -418,7 +427,7 @@ function ApplicationOptions({
             }}
           >
             <OutlinedButton
-              title="Blacklist"
+              title="Block the user"
               onClick={() =>
                 handlerChangeApplicationStatus(
                   JOB_APPLICATION_OPTIONS.blacklisted
@@ -426,7 +435,7 @@ function ApplicationOptions({
               }
             />
           </div>
-        </div>
+        </Box>
       </DialogBox>
       <DialogBox
         open={isInterviewPlanning}

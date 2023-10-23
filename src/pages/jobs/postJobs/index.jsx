@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardContent,
   Divider,
@@ -1089,8 +1090,12 @@ function PostJobsComponent() {
         message="Some thing went wrong!"
       />
       <DialogBox open={open} handleClose={handleClose}>
-        <Grid container spacing={2}>
-          <Grid item lg={7}>
+        <Box className="new_post_dailog">
+          <Box
+            sx={{
+              width: "70%",
+            }}
+          >
             <h1 className="mb-3">Done!</h1>
             <p>
               {jobId
@@ -1101,13 +1106,24 @@ function PostJobsComponent() {
               <OutlinedButton
                 title="Go to my jobs"
                 onClick={() => handleRedirect()}
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  "@madia (max-width: 480px)": {
+                    fontSize: "14px",
+                  },
+                }}
               />
             </div>
-          </Grid>
-          <Grid item lg={5}>
+          </Box>
+          <Box
+            sx={{
+              width: "30%",
+            }}
+          >
             <SVG.JobPost className="w-100" />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </DialogBox>
     </div>
   );

@@ -82,6 +82,9 @@ function Search() {
       case "talents":
         setSearchName("Browse talents");
         break;
+      case "vendors":
+        setSearchName("Search vendors");
+        break;
       default:
         setSearchName(searchType);
         return "Unknown search type"; // Adding a defaultcase

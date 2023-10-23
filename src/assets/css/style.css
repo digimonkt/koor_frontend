@@ -104,6 +104,57 @@ body {
   font-family: "Poppins";
 }
 
+.manage_job_black_pop p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212;
+  text-align: center;
+  font-family: "Poppins";
+}
+
+.manage_job_black_pop label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #121212;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+}
+
+.manage_job_black_pop
+  .MuiButtonBase-root-MuiRadio-root
+  .Mui-checked.MuiFormControlLabel-root
+  .MuiFormControlLabel-label {
+  font-weight: 500;
+}
+
+.manage_job_black_pop .MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-size: 16px;
+  font-weight: 400;
+  color: #121212;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+}
+
+.new_post_dailog {
+  display: flex;
+  align-items: center;
+}
+
+.new_post_dailog h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #121212;
+  font-family: "Bahnschrift";
+}
+
+.new_post_dailog p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+}
+
 .lables .MuiList-root.MuiList-padding.css-h4y409-MuiList-root {
   display: flex;
   justify-content: flex-start;
@@ -122,6 +173,9 @@ body {
   font-size: 16px;
   font-weight: 500;
   color: #121212;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .paginations .MuiButtonBase-root.MuiPaginationItem-root.Mui-disabled {
@@ -2290,6 +2344,15 @@ input.employersearch {
     line-height: 18px;
   }
 
+  .new_post_dailog h1 {
+    font-size: 24px;
+  }
+
+  .SelectDropdown .filter_input {
+    margin-top: 16px;
+    display: flex;
+  }
+
   input.employersearch {
     font-size: 14px;
   }
@@ -2421,6 +2484,31 @@ input.employersearch {
   .reset_password_btn {
     font-size: 14px !important;
   }
+
+  .manage_job_black_pop p {
+    font-size: 12px;
+  }
+
+  .new_post_dailog{
+    display: block;
+  }
+
+  .new_post_dailog h1 {
+    font-size: 20px;
+  }
+
+  .new_post_dailog p {
+    font-size: 12px;
+  }
+
+  .manage_job_black_pop label {
+    font-size: 16px;
+  }
+
+  .manage_job_black_pop .MuiFormControlLabel-root .MuiFormControlLabel-label {
+    font-size: 14px;
+  }
+
   .filter_input .MuiFormControlLabel-root .MuiFormControlLabel-label {
     font-size: 12px !important;
   }

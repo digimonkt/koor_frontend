@@ -151,7 +151,7 @@ span.blueview {
   font-family: "Poppins" !important;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px !important;
+  font-size: 12px !important;
   line-height: 18px;
   color: #121212 !important;
   opacity: 0.75;
@@ -801,6 +801,14 @@ span.arrowjobs svg {
 @media screen and (max-width: 480px) {
   .my-jobs p {
     font-size: 10px;
+  }
+
+  .telentsearchicon {
+    top: 17px;
+  }
+
+  .chiplabel {
+    font-size: 10px !important;
   }
 
   .recent-content a {

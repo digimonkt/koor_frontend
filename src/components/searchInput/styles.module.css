@@ -28,11 +28,9 @@
   padding: 10px 10px 10px 55px;
   outline: none;
   width: 100%;
-  /* background: #fff url('../../../assert/images/search.png') no-repeat 22px 18px; */
   box-sizing: border-box;
 }
 .searchbox::-webkit-input-placeholder {
-  /* Chrome/Opera/Safari */
   color: #848484;
 }
 .searchbox::-moz-placeholder {
@@ -55,13 +53,14 @@
 } */
 
 @media screen and (max-width: 992px) {
-  /* .searchbox{
-   padding: 10px 12px 10px 30px;
-  } */
+  .searchInput input {
+    font-size: 16px !important;
+  }
 }
 
 @media screen and (max-width: 480px) {
-  /* .searchbox {
-   padding: 10px 16px 10px 16px !important;
-  }  */
+  .searchInput input {
+    font-size: 14px !important;
+    height: 50px;
+  }
 }
