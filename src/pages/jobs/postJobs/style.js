@@ -11,6 +11,7 @@ export const JobFormControl = styled(FormControlLabel)`
     color: #121212;
     marginleft: "0px";
   }
+
   @media screen and (max-width: 992px) {
     & .MuiFormControlLabel-label {
       font-size: 14px;

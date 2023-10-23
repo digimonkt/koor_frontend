@@ -200,7 +200,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           item
           // lg={logo ? 8 : 9}
           xs={12}
-          sm={8}
+          sm={7}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "72%",
@@ -230,6 +230,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </p>
             <Stack
               direction="row"
+              useFlexGap
               flexWrap="wrap"
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{
@@ -246,15 +247,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               className="job_card_chip"
             >
               <ChipBox
-                sx={{ marginBottom: "10px", px: 1.5 }}
+                sx={{ px: 1.5 }}
                 label={jobDetails?.country.title || "Dusseldorf"}
                 icon={<>{<SVG.LocationIcon />}</>}
               />
               {jobDetails?.duration ? (
                 <ChipBox
                   sx={{
-                    marginBottom: "10px !important",
-
                     "@media (max-width: 992px)": {
                       paddingLeft: "12px !important",
                       paddingRight: "12px !important",
@@ -338,8 +337,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12} sm={2}>
-          <div className="text-lg-end mb-0 mb-lg-4 text-start">
+        <Grid item lg={logo ? 2 : 3} xs={12} sm={3}>
+          <div className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
             <SolidButton
               style={{ textTransform: "lowercase", cursor: "default" }}
               title={
@@ -355,11 +354,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           {!matches ? (
             <Stack
               direction="row"
-              spacing={2}
+              spacing={1}
               justifyContent={{ xs: "center", lg: "end", sm: "flex-end" }}
               alignItems="center"
               // divider={<hr orientation="vertical" className="job_card_hr" />}
-              sx={{ minHeight: "87%" }}
+              sx={{
+                minHeight: "87%",
+                "@media (max-width:768px)": {
+                  marginTop: "58px",
+                  "& .bookmark": { width: "auto", marginLeft: "0px" },
+                },
+              }}
             >
               <div className="pricebox py-3 upto-slide">
                 {jobDetails?.budgetAmount ? (
@@ -415,7 +420,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   {!applied ? (
                     <div
                       onClick={handleToggleSave}
-                      style={{ marginLeft: "6px", cursor: "pointer" }}
+                      style={{ cursor: "pointer" }}
                     >
                       <div className="bookmark">
                         {isSaved ? (

@@ -1580,7 +1580,7 @@ span.count {
 
 .chatinput {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
 }
 
@@ -2184,7 +2184,7 @@ input.employersearch {
   font-family: "Bahnschrift";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 22px;
   /* identical to box height, or 138% */
   letter-spacing: 0.03em;
@@ -2211,7 +2211,10 @@ input.employersearch {
 .login_header_search_icon {
   position: absolute;
   color: #848484;
-  left: 16rem;
+  left: 17px;
+  width: 24px;
+  height: 24px;
+  top: 10px;
 }
 
 .iconfooter a {
@@ -2403,11 +2406,9 @@ input.employersearch {
     height: 33px;
   }
 
-  .login_header_search_icon {
-    left: 11.7rem;
-    width: 14.33px;
-    height: 14.33px;
-  }
+  /* .login_header_search_icon {
+    left: 12px;
+  } */
 
   .noti-mobile {
     display: none !important;
@@ -2781,4 +2782,13 @@ input.employersearch {
 
 .package-active ul li {
   color: #fff;
+}
+
+.smallfont input {
+  padding: 8.5px 10px !important;
+}
+
+.telentsearchicon svg {
+  width: 24px;
+  height: 24px;
 }

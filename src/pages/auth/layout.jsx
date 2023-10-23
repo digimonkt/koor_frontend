@@ -163,7 +163,7 @@ function AuthLayout({
       >
         <Container
           sx={{
-            "@media(max-width:992px)": {
+            "@media(max-width:480px)": {
               padding: "0px",
             },
             "@media(min-width:992px)": {
@@ -226,11 +226,13 @@ function AuthLayout({
             <Grid
               item
               md={5}
-              sx={{
-                "@media(max-width:992px)": {
-                  width: "100%",
-                },
-              }}
+              sm={7}
+              xs={12}
+              // sx={{
+              //   "@media(max-width:992px)": {
+              //     width: "100%",
+              //   },
+              // }}
             >
               <Card
                 sx={{
@@ -238,7 +240,11 @@ function AuthLayout({
                   zIndex: 2,
                   borderRadius: "25px",
                   "@media(max-width:992px)": {
+                    marginBottom: "100px",
+                  },
+                  "@media(max-width:480px)": {
                     borderRadius: "25px 25px 0px 0px",
+                    marginBottom: "0px !important",
                   },
                 }}
               >
@@ -464,6 +470,8 @@ function AuthLayout({
             </Grid>
             <Grid
               md={7}
+              sm={7}
+              xs={12}
               sx={{
                 "@media(max-width:992px)": {
                   overflow: "hidden",
