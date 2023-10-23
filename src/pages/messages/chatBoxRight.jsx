@@ -169,6 +169,7 @@ function ChatBox() {
           setIsScrollToBottom(true);
         }, 100);
       }
+      scrollToBottom();
     }
     setIsLoading(false);
   };
@@ -352,7 +353,7 @@ function ChatBox() {
 
   useEffect(() => {
     setMessage([]);
-    // const hashId = window.location.hash ?? true;
+
     if (!searchParams.get("conversion") && searchParams.get("userId")) {
       checkExistingConversation(searchParams.get("userId"));
     }
@@ -390,10 +391,6 @@ function ChatBox() {
       ws.close();
     };
   }, [searchParams.get("conversion"), searchParams.get("userId")]);
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
-
   return (
     <>
       {isLoading ? (
@@ -722,7 +719,7 @@ function ChatBox() {
             <img src={fullImg} />
           </DialogBox>
           <DialogBox open={openEditMessage} handleClose={handleClose}>
-          <h3>Edit Message</h3>
+            <h3>Edit Message</h3>
             <ReactQuill value={messageForUpdate || selectedMessage.message} onChange={(value) => { setMessageForUpdate(value); }} modules={modules}
               formats={formats} />
             <FilledButton
@@ -733,7 +730,7 @@ function ChatBox() {
             />
             <FilledButton
               title="Cancel"
-                onClick={() => { setOpenEditMessage(false); setMessageForUpdate(""); }}
+              onClick={() => { setOpenEditMessage(false); setMessageForUpdate(""); }}
               sx={{ marginTop: "10px" }}
             />
           </DialogBox>
