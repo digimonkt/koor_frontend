@@ -110,17 +110,19 @@ function TalentCard({ talentDetails }) {
         </div>
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
-        <Stack direction="row" spacing={0} className="edit-button">
-          <Button variant="link" onClick={handleMessageClick}>
-            <SVG.MessageIcon
-              style={{
-                color: "#274593",
-              }}
-              className="application-option-icon"
-            />
-            <span>Message</span>
-          </Button>
-        </Stack>
+        {talentDetails.readyForChat &&
+          <Stack direction="row" spacing={0} className="edit-button">
+            <Button variant="link" onClick={handleMessageClick}>
+              <SVG.MessageIcon
+                style={{
+                  color: "#274593",
+                }}
+                className="application-option-icon"
+              />
+              <span>Message</span>
+            </Button>
+          </Stack>
+        }
       </Stack>
     </Stack>
   );

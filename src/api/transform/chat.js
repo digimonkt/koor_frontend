@@ -38,5 +38,8 @@ export const transformMessageResponse = (data) => {
     isSeen: data.is_seen,
     isEdited: data.is_edited,
     createdAt: data.created,
+    reply: data.reply_to || null,
+    replyUserId: data?.reply_to?.user_id || null,
+    replyUserName: data?.reply_to?.user_name || null
   };
 };
