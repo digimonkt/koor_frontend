@@ -1092,10 +1092,21 @@ function PostJobsComponent() {
         message="Some thing went wrong!"
       />
       <DialogBox open={open} handleClose={handleClose}>
-        <Box className="new_post_dailog">
+        <Box
+          className="new_post_dailog"
+          sx={{
+            "@media (max-width:600px)": {
+              flexDirection: "column-reverse",
+            },
+          }}
+        >
           <Box
             sx={{
               width: "70%",
+              "@media (max-width:600px)": {
+                width: "100%",
+                textAlign: "center",
+              },
             }}
           >
             <h1 className="mb-3">Done!</h1>
@@ -1104,23 +1115,30 @@ function PostJobsComponent() {
                 ? "Your job post just updated. It will be reviewed and available on Koor shortly."
                 : "Your new job post just submitted. It will be reviewed and available on Koor shortly."}
             </p>
-            <div className={`${styles.cancel_popup}`}>
+            <Box className={`${styles.cancel_popup}`}>
               <OutlinedButton
                 title="Go to my jobs"
                 onClick={() => handleRedirect()}
                 sx={{
                   fontSize: "16px",
                   fontWeight: "600",
+
                   "@madia (max-width: 480px)": {
                     fontSize: "14px",
+                    width: "100%",
                   },
                 }}
               />
-            </div>
+            </Box>
           </Box>
           <Box
             sx={{
               width: "30%",
+              "& svg": { width: "150.36px", height: "150.88px" },
+              "@media (max-width:600px)": {
+                width: "100%",
+                textAlign: "center",
+              },
             }}
           >
             <SVG.JobPost className="w-100" />

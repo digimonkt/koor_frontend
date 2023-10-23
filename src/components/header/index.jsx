@@ -101,80 +101,90 @@ function Header() {
               alignItems={"center"}
               spacing={2}
               sx={{
-                display: { xs: "none", sm: "block", position: "relative" },
+                display: {
+                  xs: "none",
+                  sm: "flex",
+                  position: "relative",
+                  "@media (max-width:768px)": {
+                    justifyContent: "flex-end",
+                    flex: "1 1 0%",
+                  },
+                },
               }}
             >
-              <SearchCategory direction="row" spacing={0} alignItems="center">
-                {role === "employer" ? (
-                  <FormControl
-                    sx={{
-                      "&.MuiSelect-select": {
-                        fontFamily: "Poppins",
-                        fontSize: "16px",
-                      },
-                    }}
-                    size="small"
-                  >
-                    <SelectBox
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                      inputProps={{ "aria-label": "Without label" }}
-                      displayEmpty
-                      sx={{ width: "102px", marginLeft: "35px" }}
+              <Box sx={{ position: "relative" }}>
+                <SearchCategory direction="row" spacing={0} alignItems="center">
+                  {role === "employer" ? (
+                    <FormControl
+                      sx={{
+                        "&.MuiSelect-select": {
+                          fontFamily: "Poppins",
+                          fontSize: "16px",
+                        },
+                      }}
+                      size="small"
                     >
-                      <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
-                      <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
-                    </SelectBox>
-                  </FormControl>
-                ) : (
-                  ""
-                )}
-                <input
-                  onKeyDown={(e) => {
-                    if (e.key === "enter" || e.key === "Enter") {
-                      switch (search) {
-                        case SEARCH_TYPE.jobs:
-                          navigate(
-                            role === USER_ROLES.jobSeeker
-                              ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
-                              : "/"
-                          );
-                          break;
-                        case SEARCH_TYPE.talents:
-                          navigate(
-                            role === USER_ROLES.employer
-                              ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
-                              : "/"
-                          );
-                          break;
-                        case SEARCH_TYPE.vendors:
-                          navigate(
-                            role === USER_ROLES.employer
-                              ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
-                              : "/"
-                          );
-                          break;
-                        case SEARCH_TYPE.tenders:
-                          navigate(
-                            role === USER_ROLES.vendor
-                              ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
-                              : "/"
-                          );
-                          break;
-                        default:
-                          break;
+                      <SelectBox
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        inputProps={{ "aria-label": "Without label" }}
+                        displayEmpty
+                        sx={{ width: "102px", marginLeft: "35px" }}
+                      >
+                        <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
+                        <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
+                      </SelectBox>
+                    </FormControl>
+                  ) : (
+                    ""
+                  )}
+                  <input
+                    onKeyDown={(e) => {
+                      if (e.key === "enter" || e.key === "Enter") {
+                        switch (search) {
+                          case SEARCH_TYPE.jobs:
+                            navigate(
+                              role === USER_ROLES.jobSeeker
+                                ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
+                                : "/"
+                            );
+                            break;
+                          case SEARCH_TYPE.talents:
+                            navigate(
+                              role === USER_ROLES.employer
+                                ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
+                                : "/"
+                            );
+                            break;
+                          case SEARCH_TYPE.vendors:
+                            navigate(
+                              role === USER_ROLES.employer
+                                ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
+                                : "/"
+                            );
+                            break;
+                          case SEARCH_TYPE.tenders:
+                            navigate(
+                              role === USER_ROLES.vendor
+                                ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
+                                : "/"
+                            );
+                            break;
+                          default:
+                            break;
+                        }
                       }
+                    }}
+                    className="employersearch"
+                    placeholder={
+                      role === USER_ROLES.employer ? "" : searchPlaceholder
                     }
-                  }}
-                  className="employersearch"
-                  placeholder={
-                    role === USER_ROLES.employer ? "" : searchPlaceholder
-                  }
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  value={searchValue}
-                />
-                <SVG.SearchIcon className="login_header_search_icon" />
-              </SearchCategory>
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    value={searchValue}
+                  />
+                  <SVG.SearchIcon className="login_header_search_icon" />
+                </SearchCategory>
+              </Box>
             </Stack>
           ) : (
             ""
