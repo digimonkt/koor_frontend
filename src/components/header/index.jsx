@@ -16,7 +16,6 @@ import {
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "../../assets/svg";
-import MenuIcon from "@mui/icons-material/Menu";
 import { SEARCH_TYPE, USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserRole } from "../../redux/slice/user";
@@ -101,7 +100,9 @@ function Header() {
               direction={"row"}
               alignItems={"center"}
               spacing={2}
-              sx={{ display: { xs: "none", sm: "block" } }}
+              sx={{
+                display: { xs: "none", sm: "block", position: "relative" },
+              }}
             >
               <SearchCategory direction="row" spacing={0} alignItems="center">
                 {role === "employer" ? (
@@ -201,7 +202,7 @@ function Header() {
                       component={"span"}
                       sx={{ "& svg": { width: "24px", height: "24px" } }}
                     >
-                      <SVG.SearchIcon className="me-3" />
+                      <SVG.SearchIcon className="me-3 header_icon_search" />
                     </Box>
                   </IconButton>
                   <IconButton
@@ -233,7 +234,7 @@ function Header() {
                   display: { lg: "none" },
                 }}
               >
-                <MenuIcon className="ms-3" />
+                <SVG.HamburgerMenu className="ms-3" />
               </IconButton>
             </Stack>
             <ul

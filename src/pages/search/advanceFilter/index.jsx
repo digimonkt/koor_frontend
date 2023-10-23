@@ -58,7 +58,9 @@ import {
 } from "../../../api/vendor";
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
+  const matches = useMediaQuery("(max-width:768px)");
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const {
@@ -118,13 +120,33 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           </span>
         )}
         <OutlinedButton
-          style={{ pointer: "cursor", marginTop: "5px" }}
+          style={{
+            pointer: "cursor",
+            marginTop: "5px",
+            color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+            border:
+              role === USER_ROLES.jobSeeker
+                ? "1px solid #eea23d"
+                : "1px solid #274593",
+          }}
           title={
             <>
               <span>
-                <SVG.SearchIcon style={{ color: "#EEA23D" }} />
+                <SVG.SearchIcon
+                  style={{
+                    marginRight: "5px",
+                    color:
+                      role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+                  }}
+                />
               </span>
-              {formik.isSubmitting ? "Searching..." : "Search"}
+              <span
+                style={{
+                  color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+                }}
+              >
+                {formik.isSubmitting ? "Searching..." : "Search"}
+              </span>
             </>
           }
           type="submit"
@@ -607,19 +629,91 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               alignItems: "flex-start",
               justifyContent: "flex-start",
               flexDirection: "column",
-              maxWidth: { xs: "85%", lg: "100%" },
+              maxWidth: { xs: "100%", lg: "100%" },
             }}
           >
-            <span style={{ whiteSpace: "nowrap" }}>Saved searches:</span>
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                marginBottom: "10px",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              Saved searches:
+              {matches ? (
+                <>
+                  {!defaultOpen && (
+                    <div
+                      onClick={() => setData(!data)}
+                      style={{
+                        color:
+                          role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                        cursor: "pointer",
+                        fontSize: "12px",
+                      }}
+                    >
+                      Advanced filter{" "}
+                      {data ? (
+                        <>
+                          <span
+                            style={{
+                              marginLeft: "10px",
+                              width: "18px",
+                              display: "inline-block",
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#FFA500"
+                                  : "#274593",
+                            }}
+                          >
+                            {<SVG.ArrowUpIcon />}
+                          </span>
+                        </>
+                      ) : (
+                        <span
+                          style={{
+                            marginLeft: "10px",
+                            width: "18px",
+                            display: "inline-block",
+                            color:
+                              role === USER_ROLES.jobSeeker
+                                ? "#FFA500"
+                                : "#274593",
+                          }}
+                        >
+                          {<SVG.AdvancedDown />}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </>
+              ) : (
+                ""
+              )}
+            </span>
             <Stack
               direction={"row"}
-              spacing={{ xs: 1, lg: 0 }}
+              spacing={1}
               overflow={responsive ? "" : "auto"}
-              flexWrap={responsive ? "wrap" : "wrap"}
+              flexWrap={"wrap"}
+              useFlexGap
+              component={"ul"}
+              sx={{ p: 0, m: 0 }}
             >
               {allFilters.map((filter) => {
                 return (
-                  <MenuItem key={filter.id} style={{ marginTop: "10px" }}>
+                  <MenuItem
+                    key={filter.id}
+                    sx={{
+                      "&.MuiButtonBase-root": {
+                        padding: "0px !important",
+                        "&:hover": { background: "transperant" },
+                      },
+                    }}
+                  >
                     <SearchButton
                       className={`${
                         selectedFilter === filter.id
@@ -653,45 +747,53 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               })}
             </Stack>
           </Box>
-
-          {!defaultOpen && (
-            <div
-              onClick={() => setData(!data)}
-              style={{
-                color: role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
-                cursor: "pointer",
-                fontSize: "12px",
-              }}
-            >
-              Advanced filter{" "}
-              {data ? (
-                <>
-                  <span
-                    style={{
-                      marginLeft: "10px",
-                      width: "18px",
-                      display: "inline-block",
-                      color:
-                        role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
-                    }}
-                  >
-                    {<SVG.ArrowUpIcon />}
-                  </span>
-                </>
-              ) : (
-                <span
+          {!matches ? (
+            <>
+              {!defaultOpen && (
+                <div
+                  onClick={() => setData(!data)}
                   style={{
-                    marginLeft: "10px",
-                    width: "18px",
-                    display: "inline-block",
                     color:
                       role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                    cursor: "pointer",
+                    fontSize: "12px",
                   }}
                 >
-                  {<SVG.Downarrow />}
-                </span>
+                  Advanced filter
+                  {data ? (
+                    <>
+                      <span
+                        style={{
+                          marginLeft: "10px",
+                          width: "18px",
+                          display: "inline-block",
+                          color:
+                            role === USER_ROLES.jobSeeker
+                              ? "#FFA500"
+                              : "#274593",
+                        }}
+                      >
+                        {<SVG.ArrowUpIcon />}
+                      </span>
+                    </>
+                  ) : (
+                    <span
+                      style={{
+                        marginLeft: "10px",
+                        width: "18px",
+                        display: "inline-block",
+                        color:
+                          role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                      }}
+                    >
+                      {<SVG.Downarrow />}
+                    </span>
+                  )}
+                </div>
               )}
-            </div>
+            </>
+          ) : (
+            ""
           )}
         </div>
         {data ? <>{searchFilter()}</> : null}

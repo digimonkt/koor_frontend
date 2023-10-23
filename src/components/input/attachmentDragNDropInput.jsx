@@ -63,7 +63,7 @@ function AttachmentDragNDropInputComponent({
             },
           }}
         >
-          <SVG.DeleteICon />
+          <SVG.DeleteICon className="attachment_delete_icon" />
         </IconButton>
       </li>
     );

@@ -1,6 +1,6 @@
 import { ErrorMessage } from "../../../components/caption";
 import { CheckboxInput, SelectInput } from "../../../components/input";
-import { FormControl, FormGroup, Grid } from "@mui/material";
+import { Box, FormControl, Grid } from "@mui/material";
 import { JobFormControl } from "../../../pages/jobs/postJobs/style";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -128,32 +128,91 @@ function JobSeekerFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 4} sm={4}>
+          <Grid item xs={12} lg={responsive ? 12 : 4} sm={12} md={4}>
             <label style={{ marginBottom: "25px" }}>Job type</label>
-            <FormGroup
-              row
-              sx={{ marginLeft: "7px", display: "grid" }}
-              className="filter_input"
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: { xs: "center", lg: "flex-start" },
+                flexDirection: { xs: "row", lg: "column" },
+              }}
             >
               <JobFormControl
-                control={<CheckboxInput sx={{ paddingLeft: "5px" }} />}
+                sx={{
+                  "&.MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
+                    { fontWeight: 500 },
+                  "&.MuiFormControlLabel-root": {
+                    "@media (max-width:768px)": {
+                      marginLeft: "-5px",
+                      marginRight: "5px",
+                    },
+                  },
+                }}
+                control={
+                  <CheckboxInput
+                    sx={{
+                      "@media (max-width:768px)": {
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                      },
+                    }}
+                  />
+                }
                 label="Part Time"
                 {...formik.getFieldProps("isPartTime")}
                 checked={formik.values.isPartTime}
               />
               <JobFormControl
-                control={<CheckboxInput style={{ paddingLeft: "5px" }} />}
+                sx={{
+                  "&.MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
+                    { fontWeight: 500 },
+                  "&.MuiFormControlLabel-root": {
+                    "@media (max-width:768px)": {
+                      marginLeft: "-5px",
+                      marginRight: "5px",
+                    },
+                  },
+                }}
+                control={
+                  <CheckboxInput
+                    sx={{
+                      "@media (max-width:768px)": {
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                      },
+                    }}
+                  />
+                }
                 label="Full Time"
                 {...formik.getFieldProps("isFullTime")}
                 checked={formik.values.isFullTime}
               />
               <JobFormControl
-                control={<CheckboxInput style={{ paddingLeft: "5px" }} />}
+                sx={{
+                  "&.MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
+                    { fontWeight: 500 },
+                  "&.MuiFormControlLabel-root": {
+                    "@media (max-width:768px)": {
+                      marginLeft: "-5px",
+                      marginRight: "5px",
+                    },
+                  },
+                }}
+                control={
+                  <CheckboxInput
+                    sx={{
+                      "@media (max-width:768px)": {
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                      },
+                    }}
+                  />
+                }
                 label="Contract"
                 {...formik.getFieldProps("hasContract")}
                 checked={formik.values.hasContract}
               />
-            </FormGroup>
+            </Box>
           </Grid>
         </Grid>
       </div>

@@ -117,7 +117,11 @@ import { ReactComponent as SaveIcon1 } from "./save1.svg";
 import { ReactComponent as Edit1 } from "./edit1.svg";
 import { ReactComponent as BlueAttach } from "./blueAttach.svg";
 import { ReactComponent as arrowDown } from "./arrowDown.svg";
+import { ReactComponent as HamburgerMenu } from "./hamburger_menu.svg";
+import { ReactComponent as AdvancedDown } from "./advanced_down.svg";
 export const SVG = {
+  AdvancedDown,
+  HamburgerMenu,
   BlueAttach,
   Edit1,
   SaveIcon1,

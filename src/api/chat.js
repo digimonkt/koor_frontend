@@ -67,3 +67,26 @@ export const sendAttachmentAPI = async (data) => {
     data,
   });
 };
+
+export const deleteMessageAttachmentAPI = async (messageId) => {
+  const res = await api.request({
+    url: urlcat("v1/chat/message/:messageId", { messageId }),
+    method: "DELETE",
+  });
+  if (res.remote === "success") {
+    return res;
+  }
+  return res;
+};
+export const updateMessageAttachmentAPI = async (messageId, messageForUpdate) => {
+  console.log({ messageId, messageForUpdate });
+  const res = await api.request({
+    url: urlcat("v1/chat/message/:messageId", { messageId }),
+    method: "PUT",
+    data: { message: messageForUpdate }
+  });
+  if (res.remote === "success") {
+    return res;
+  }
+  return res;
+};

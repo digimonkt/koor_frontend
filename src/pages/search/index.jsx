@@ -41,6 +41,7 @@ function Search() {
   const { jobs } = useSelector((state) => state.search);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState("");
+  const [searchName, setSearchName] = useState("");
   const [searchPlaceHolder, setSearchPlaceHolder] = useState("Jobs");
   const Component = ComponentSelector(searchType);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -70,10 +71,30 @@ function Search() {
   const handlePageChange = (page) => {
     dispatch(setJobPage(page));
   };
+  const pageName = (searchType) => {
+    switch (searchType) {
+      case "jobs":
+        setSearchName("Job feed");
+        break;
+      case "tenders":
+        setSearchName("Browse tenders");
+        break;
+      case "talents":
+        setSearchName("Browse talents");
+        break;
+      case "vendors":
+        setSearchName("Search vendors");
+        break;
+      default:
+        setSearchName(searchType);
+        return "Unknown search type"; // Adding a defaultcase
+    }
+  };
 
   useEffect(() => {
     setSearchType(params.type);
     const search = searchParams.get("search");
+    pageName(params.type);
     if (search) {
       setSearch(search);
     }
@@ -87,15 +108,15 @@ function Search() {
         dispatch(searchJobs(payload));
         break;
       case SEARCH_TYPE.talents:
-        setSearchPlaceHolder("Talents");
+        setSearchPlaceHolder("talents");
         dispatch(searchTalent(payload));
         break;
       case SEARCH_TYPE.tenders:
-        setSearchPlaceHolder("Tenders");
+        setSearchPlaceHolder("tenders");
         dispatch(searchTender(payload));
         break;
       case SEARCH_TYPE.vendors:
-        setSearchPlaceHolder("Vendors");
+        setSearchPlaceHolder("vendors");
         dispatch(searchVendor(payload));
         break;
       default:
@@ -192,8 +213,8 @@ function Search() {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <h2 className="m-0" style={{ textTransform: "capitalize" }}>
-                    {searchType === "jobs" ? "Job feed" : searchType}
+                  <h2 className="m-0">
+                    {searchName}
                     <Chip
                       label={totalItems}
                       className="ms-3"
@@ -204,6 +225,7 @@ function Search() {
                           role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
                         fontFamily: "Bahnschrift",
                         fontSize: "16px",
+                        padding: "5px 4px !important",
                       }}
                     />
                   </h2>
@@ -292,7 +314,7 @@ function Search() {
                               sx={{
                                 backgroundColor:
                                   sortBy === data.sortBy &&
-                                    orderBy === data.orderBy
+                                  orderBy === data.orderBy
                                     ? role === USER_ROLES.jobSeeker
                                       ? "#FEEFD3"
                                       : "#D5E3F7"

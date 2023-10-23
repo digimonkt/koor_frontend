@@ -152,7 +152,7 @@ function PublicProfileComponent() {
                       mb: 2,
                     }}
                   >
-                    Contact info
+                    Contact infodsfdfghgh
                   </Typography>
                   <Stack direction={"row"} spacing={2} alignItems={"center"}>
                     <Box

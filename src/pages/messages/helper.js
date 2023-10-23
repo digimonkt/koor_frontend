@@ -19,25 +19,44 @@ export const GenerateFakeChatList = (size) => {
   }
   return users;
 };
-export const ImageDataDelete = [
-  {
-    option: "Edit",
-    icon: <SVG.Edit1 />,
-    color: "#121212",
-  },
-  {
-    option: "Copy",
-    icon: <ContentCopyOutlinedIcon />,
-    color: "#121212",
-  },
-  {
-    option: "Quote",
-    icon: <FormatQuoteOutlinedIcon />,
-    color: "#121212",
-  },
-  {
-    option: "Delete",
-    icon: <SVG.DeleteICon />,
-    color: "#E8473D",
-  },
-];
+export const ImageDataDelete = (messageIsMedia) => {
+  const baseData = [
+    {
+      id: "edit",
+      option: "Edit",
+      icon: <SVG.Edit1 />,
+      color: "#121212",
+    },
+    {
+      id: "copy",
+      option: "Copy",
+      icon: <ContentCopyOutlinedIcon />,
+      color: "#121212",
+    },
+    {
+      id: "quote",
+      option: "Quote",
+      icon: <FormatQuoteOutlinedIcon />,
+      color: "#121212",
+    },
+    {
+      id: "delete",
+      option: "Delete",
+      icon: <SVG.DeleteICon />,
+      color: "#E8473D",
+    },
+  ];
+
+  if (messageIsMedia) {
+    return [
+      {
+        id: "delete",
+        option: "Delete",
+        icon: <SVG.DeleteICon />,
+        color: "#E8473D",
+      },
+    ];
+  } else {
+    return baseData;
+  }
+};

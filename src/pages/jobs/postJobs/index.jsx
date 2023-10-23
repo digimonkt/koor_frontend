@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardContent,
   Divider,
@@ -397,7 +398,7 @@ function PostJobsComponent() {
             <div className="form-content">
               <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xl={5} lg={5}>
+                  <Grid item xl={5} xs={12} lg={5} sm={6}>
                     <LabeledInput
                       title="Title of your job"
                       className="add-form-control"
@@ -409,7 +410,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.title}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={3}>
+                  <Grid item xl={3} xs={12} lg={3} sm={6}>
                     <LabeledInput
                       title="Experience in Years"
                       className="add-form-control"
@@ -421,7 +422,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.experience}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4}>
+                  <Grid item xl={4} lg={4} sm={12}>
                     <CurrencyInput
                       currency="USD"
                       title="Salary"
@@ -458,12 +459,12 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.description}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={9} lg={9} xs={12}>
+                  <Grid item xl={9} lg={9} sm={8} xs={12}>
                     <label>
                       Location<span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           className="location-select"
                           placeholder="Country"
@@ -478,13 +479,9 @@ function PostJobsComponent() {
                           <ErrorMessage>{formik.errors.country}</ErrorMessage>
                         ) : null}
                       </Grid>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
-                          placeholder={
-                            formik.values.country
-                              ? "City"
-                              : "City"
-                          }
+                          placeholder={formik.values.country ? "City" : "City"}
                           disabled={!formik.values.country}
                           options={(
                             cities.data[formik.values.country] || []
@@ -500,9 +497,9 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12}>
+                  <Grid item xl={3} lg={3} sm={4} xs={12}>
                     <label>
-                      Working place addressF{" "}
+                      Working place address{" "}
                       <span className="required-field">*</span>
                     </label>
                     <div className={styles.positionReltive}>
@@ -548,7 +545,7 @@ function PostJobsComponent() {
                       <span className="required-field">*</span>
                     </label>
                     <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Job category"
@@ -568,7 +565,7 @@ function PostJobsComponent() {
                           </ErrorMessage>
                         ) : null}
                       </Grid>
-                      <Grid item xl={6} lg={6} xs={12}>
+                      <Grid item xl={6} lg={6} sm={6} xs={12}>
                         <SelectInput
                           defaultValue=""
                           placeholder={
@@ -595,11 +592,15 @@ function PostJobsComponent() {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12} className="mt-2">
+                  <Grid item xl={5} lg={5} xs={12} className="jobtype_grid">
                     <label>Job type</label>
                     <FormGroup
                       row
-                      sx={{ marginLeft: "7px", display: "flex", mt: 1 }}
+                      sx={{
+                        marginLeft: "7px",
+                        display: "flex",
+                        marginTop: "8px",
+                      }}
                     >
                       <JobFormControl
                         className="update_checkbox"
@@ -645,7 +646,7 @@ function PostJobsComponent() {
                       />
                     </FormGroup>
                   </Grid>
-                  <Grid item xl={2} lg={2} xs={12} className="mt-2">
+                  <Grid item xl={3} lg={3} sm={4} xs={12} className="mt-2">
                     <LabeledInput
                       title="Duration in Month"
                       className="add-form-control"
@@ -657,7 +658,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.duration}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} sm={4} xs={6} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"
@@ -670,6 +671,7 @@ function PostJobsComponent() {
                         </label>
                       </Stack>
                       <DateInput
+                        className="smallfont"
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
                         minDate={dayjs().format("YYYY-MM-DD")}
@@ -680,7 +682,7 @@ function PostJobsComponent() {
                       ) : null}
                     </div>
                   </Grid>
-                  <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                  <Grid item xl={2} lg={2} xs={6} sm={4} className="mt-2">
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <Stack
                         direction="row"
@@ -693,6 +695,7 @@ function PostJobsComponent() {
                         </label>
                       </Stack>
                       <DateInput
+                        className="smallfont"
                         onChange={(e) => formik.setFieldValue("deadline", e)}
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
@@ -709,7 +712,7 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-3">Ways to apply</h2>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <JobFormControl
                       control={<CheckboxInput />}
                       label="Apply by email"
@@ -731,9 +734,13 @@ function PostJobsComponent() {
                     item
                     xl={4}
                     lg={4}
+                    sm={4}
                     xs={12}
                     sx={{
                       marginTop: "41px",
+                      "@media (max-width: 480px)": {
+                        marginTop: "0px",
+                      },
                     }}
                   >
                     <input
@@ -746,9 +753,13 @@ function PostJobsComponent() {
                     item
                     xl={4}
                     lg={4}
+                    sm={4}
                     xs={12}
                     sx={{
                       marginTop: "41px",
+                      "@media (max-width: 480px)": {
+                        marginTop: "0px",
+                      },
                     }}
                   >
                     <input
@@ -763,7 +774,7 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Preferences</h2>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label>Education level</label>
                     <SelectInput
                       defaultValue=""
@@ -821,10 +832,10 @@ function PostJobsComponent() {
                       })}
                     </Grid>
                   </Grid> */}
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label>
                       Required languages{" "}
-                      <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
+                      <span style={{ color: "#848484" }}>(Maximum 3)</span>
                       <span className="required-field">*</span>
                     </label>
                     <SelectInput
@@ -841,7 +852,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.languages}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label className="mb-2">
                       Job skills
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
@@ -949,33 +960,73 @@ function PostJobsComponent() {
                     handleBuyPackage={handleBuyPackage}
                   />
                 </Grid>
+                <hr className="mt-3" />
                 <Grid item xl={12} lg={12} xs={12}>
                   <Stack
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
+                    flexWrap="wrap"
+                    style={{ marginTop: "40px" }}
                   >
+                    <FilledButton
+                      title={
+                        submitting === SUBMITTING_STATUS_ENUM.loading
+                          ? jobId
+                            ? "Updating..."
+                            : "Posting..."
+                          : jobId
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
+                      }
+                      type="submit"
+                      disabled={
+                        submitting === SUBMITTING_STATUS_ENUM.loading ||
+                        (!jobId && totalAvailableCredits < minimumCreditJobPost)
+                      }
+                      sx={{
+                        borderRadius: "73px !important",
+                        border: "1px solid #848484 !important",
+                        color: "#ffffff !important",
+                        fontWeight: "600 !important",
+                        fontSize: "16px !important",
+                        fontFamily: "Bahnschrift !important",
+                        padding: "10px 50px !important",
+                        background: "#274593 !important",
+                        display: "none",
+
+                        "&:hover": {
+                          color: "#848484 !important",
+                        },
+                        "@media (max-width: 480px)": {
+                          padding: "10px 50px !important",
+                          width: "100%",
+                          display: "block",
+                          marginBottom: "10px",
+                          fontSize: "14px !important",
+                        },
+                      }}
+                    />
                     <OutlinedButton
                       title="Cancel"
                       disabled={submitting === SUBMITTING_STATUS_ENUM.loading}
                       sx={{
-                        "&.MuiButton-outlined": {
-                          borderRadius: "73px",
-                          border: "0px",
-                          color: "#848484",
-                          fontWeight: "500",
-                          fontSize: "16px",
-                          fontFamily: "Bahnschrift",
-                          padding: "6px 50px",
+                        borderRadius: "73px !important",
+                        border: "1px solid #848484 !important",
+                        color: "#848484 !important",
+                        fontWeight: "600 !important",
+                        fontSize: "16px !important",
+                        fontFamily: "Bahnschrift !important",
+                        padding: "10px 50px !important",
 
-                          "&:hover": {
-                            background: "rgba(40, 71, 146, 0.1)",
-                            color: "#274593",
-                          },
-                          "@media (max-width: 992px)": {
-                            padding: "5px 15px",
-                            fontSize: "14px",
-                          },
+                        "&:hover": {
+                          background: "rgba(40, 71, 146, 0.1) !important",
+                          color: "#848484 !important",
+                        },
+                        "@media (max-width: 480px)": {
+                          padding: "10px 50px !important",
+                          width: "100%",
+                          fontSize: "14px !important",
                         },
                       }}
                       onClick={() => navigate("/employer/manage-jobs")}
@@ -995,6 +1046,28 @@ function PostJobsComponent() {
                         submitting === SUBMITTING_STATUS_ENUM.loading ||
                         (!jobId && totalAvailableCredits < minimumCreditJobPost)
                       }
+                      sx={{
+                        borderRadius: "73px !important",
+                        border: "1px solid #848484 !important",
+                        color: "#ffffff !important",
+                        fontWeight: "600 !important",
+                        fontSize: "16px !important",
+                        fontFamily: "Bahnschrift !important",
+                        padding: "10px 50px !important",
+                        background: "#274593 !important",
+                        display: "block",
+
+                        "&:hover": {
+                          color: "#848484 !important",
+                        },
+                        "@media (max-width: 480px)": {
+                          padding: "10px 50px !important",
+                          width: "100%",
+                          marginTop: "10px",
+                          fontSize: "14px !important",
+                          display: "none",
+                        },
+                      }}
                     />
                   </Stack>
                 </Grid>
@@ -1019,8 +1092,12 @@ function PostJobsComponent() {
         message="Some thing went wrong!"
       />
       <DialogBox open={open} handleClose={handleClose}>
-        <Grid container spacing={2}>
-          <Grid item lg={7}>
+        <Box className="new_post_dailog">
+          <Box
+            sx={{
+              width: "70%",
+            }}
+          >
             <h1 className="mb-3">Done!</h1>
             <p>
               {jobId
@@ -1031,13 +1108,24 @@ function PostJobsComponent() {
               <OutlinedButton
                 title="Go to my jobs"
                 onClick={() => handleRedirect()}
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: "600",
+                  "@madia (max-width: 480px)": {
+                    fontSize: "14px",
+                  },
+                }}
               />
             </div>
-          </Grid>
-          <Grid item lg={5}>
+          </Box>
+          <Box
+            sx={{
+              width: "30%",
+            }}
+          >
             <SVG.JobPost className="w-100" />
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </DialogBox>
     </div>
   );

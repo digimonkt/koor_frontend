@@ -12,7 +12,7 @@ export const DateFiled = styled("div")(() => ({
     width: "100%",
   },
   "& .MuiInputBase-root": {
-    borderRadius: "10px",
+    borderRadius: "50px",
     background: "#f0f0f0",
   },
   "& fieldset": {
@@ -20,6 +20,10 @@ export const DateFiled = styled("div")(() => ({
   },
   "& .MuiOutlinedInput-input": {
     padding: "8.5px 14px",
+    "@media (max-width: 480px)": {
+      padding: "8.5px 8px",
+      fontSize: "14px",
+    },
   },
   "& .MuiInputLabel-formControl": {
     transform: "translate(14px, 9px) scale(1)",
