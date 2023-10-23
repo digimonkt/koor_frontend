@@ -27,7 +27,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       await unSaveJobAPI(jobDetails.id);
     }
   };
-  // eslint-disable-next-line no-unused-vars
   const matches = useMediaQuery("(max-width:600px)");
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
