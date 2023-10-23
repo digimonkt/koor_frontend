@@ -1,5 +1,5 @@
 import { SVG } from "../../assets/svg";
-import { Avatar, Button, Chip, Stack } from "@mui/material";
+import { Avatar, Box, Button, Chip, Stack, useMediaQuery } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import React from "react";
 import urlcat from "urlcat";
@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getConversationIdByUserIdAPI } from "../../api/chat";
 
 function TalentCard({ talentDetails }) {
+  const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const handleMessageClick = async () => {
     const res = await getConversationIdByUserIdAPI({
@@ -24,22 +25,60 @@ function TalentCard({ talentDetails }) {
   };
   return (
     <Stack
-      direction={{ xs: "column", lg: "row" }}
-      spacing={{ xs: "2", lg: "2" }}
-      alignItems={{ xs: "start", lg: "center" }}
-      justifyContent={{ xs: "center", lg: "space-between" }}
       className="border-recent"
+      direction={{ xs: "column", lg: "row", sm: "row" }}
+      spacing={{ xs: 2, lg: 2 }}
+      alignItems={{ xs: "start", lg: "center", sm: "center" }}
+      justifyContent={{ xs: "flex-start", lg: "space-between" }}
     >
       <Stack
-        direction="row"
-        spacing={2}
-        alignItems={{ xs: "flex-start", lg: "row" }}
-        sx={{ display: "flex", alignItems: "center" }}
+        direction={{ xs: "column", lg: "row", sm: "row" }}
+        spacing={{ xs: 2, lg: 2 }}
+        alignItems={{ xs: "start", lg: "center", sm: "center" }}
+        justifyContent={{ xs: "flex-start", lg: "space-between" }}
+        sx={{
+          display: "flex",
+
+          width: {
+            xs: "100%",
+            sm: "100%",
+            lg: "auto",
+            "@media (max-width:600px)": { flex: "1 1 0%" },
+          },
+        }}
       >
-        <Avatar
-          src={generateFileUrl(talentDetails.profilePicture?.path || "")}
-          sx={{ width: "70px", height: "70px" }}
-        />
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            "@media (max-width:600px)": { width: "100%" },
+          }}
+        >
+          <Avatar
+            src={generateFileUrl(talentDetails.profilePicture?.path || "")}
+            sx={{ width: "70px", height: "70px" }}
+          />
+          {matches ? (
+            <>
+              {talentDetails.readyForChat && (
+                <Stack direction="row" spacing={0} className="edit-button">
+                  <Button variant="link" onClick={handleMessageClick}>
+                    <SVG.MessageIcon
+                      style={{
+                        color: "#274593",
+                      }}
+                      className="application-option-icon"
+                    />
+                    <span>Message</span>
+                  </Button>
+                </Stack>
+              )}
+            </>
+          ) : (
+            ""
+          )}
+        </Box>
         <div className="recent-content">
           <Stack
             direction={{ xs: "column", lg: "row" }}
@@ -89,16 +128,17 @@ function TalentCard({ talentDetails }) {
             <p>{talentDetails.description}</p>
           </div>
           <Stack
-            direction={{ xs: "column", lg: "row" }}
+            direction={"row"}
             spacing={1}
-            alignItems={{ xs: "flex-start", lg: "center" }}
+            alignItems={"center"}
             sx={{ mb: 1, mt: 2 }}
             className="meets_div"
+            flexWrap={"wrap"}
+            useFlexGap
           >
             <>
               {talentDetails.skills.map((skill) => (
                 <Chip
-                  sx={{ width: { xs: "100%" } }}
                   key={skill.id}
                   label={skill.skill.title}
                   className="chiplabel"
@@ -109,21 +149,25 @@ function TalentCard({ talentDetails }) {
           </Stack>
         </div>
       </Stack>
-      <Stack direction="row" spacing={2} alignItems="center">
-        {talentDetails.readyForChat &&
-          <Stack direction="row" spacing={0} className="edit-button">
-            <Button variant="link" onClick={handleMessageClick}>
-              <SVG.MessageIcon
-                style={{
-                  color: "#274593",
-                }}
-                className="application-option-icon"
-              />
-              <span>Message</span>
-            </Button>
-          </Stack>
-        }
-      </Stack>
+      {!matches ? (
+        <Stack direction="row" spacing={2} alignItems="center">
+          {talentDetails.readyForChat && (
+            <Stack direction="row" spacing={0} className="edit-button">
+              <Button variant="link" onClick={handleMessageClick}>
+                <SVG.MessageIcon
+                  style={{
+                    color: "#274593",
+                  }}
+                  className="application-option-icon"
+                />
+                <span>Message</span>
+              </Button>
+            </Stack>
+          )}
+        </Stack>
+      ) : (
+        ""
+      )}
     </Stack>
   );
 }

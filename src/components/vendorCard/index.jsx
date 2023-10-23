@@ -6,7 +6,6 @@ import urlcat from "urlcat";
 import { Link } from "react-router-dom";
 
 function VendorCard({ vendorDetails }) {
-  console.log({ vendorDetails });
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
