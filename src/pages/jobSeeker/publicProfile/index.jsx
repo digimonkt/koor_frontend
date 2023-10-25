@@ -110,23 +110,35 @@ export default function PublicProfileComponent() {
                     },
                   }}
                 >
-                  <Box sx={{ paddingRight: "45px" }}>
+                  <Box
+                    sx={{
+                      paddingRight: "45px",
+                      "@media (max-width:992px)": {
+                        paddingRight: "0px",
+                      },
+                    }}
+                  >
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
                       justifyContent={{ xs: "start", lg: "space-between" }}
-                      alignItems={"center"}
+                      alignItems={{ xs: "start", lg: "center" }}
                     >
-                      <Stack direction={"row"} spacing={2}>
+                      <Stack
+                        direction={"row"}
+                        spacing={2}
+                        alignItems={"center"}
+                        sx={{ width: "100%" }}
+                      >
                         <Avatar
                           src={generateFileUrl(userDetails.profileImage || "")}
                           sx={{
-                            width: "88px",
-                            height: "88px",
+                            // width: "88px",
+                            // height: "88px",
                             boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
                           }}
                         />
-                        <Box>
+                        <Box sx={{ flex: "1 1 0%" }}>
                           <Typography
                             variant="h4"
                             sx={{
@@ -182,52 +194,49 @@ export default function PublicProfileComponent() {
                             ""
                           )}
                         </Box>
-                      </Stack>
-                      {userDetails.profile.experience ? (
-                        <Stack
-                          direction={"row"}
-                          spacing={1}
-                          alignItems={"center"}
-                          sx={{
-                            border: "1px solid #CACACA",
-                            borderRadius: "5px",
-                            p: 1,
-                          }}
-                        >
-                          <SVG.ClockIconSmall />{" "}
-                          <Box>
-                            <Typography
-                              variant="h6"
-                              sx={{
-                                fontWeight: "500",
-                                mb: 0,
-                                fontSize: "14px",
-                                fontFamily: "Poppins",
-                                lineHeight: "12px",
-                                color: "#121212",
-                                "@media (max-width: 992px)": {
-                                  fontSize: "12px",
-                                },
-                              }}
-                            >
-                              {userDetails.profile.experience}{" "}
-                              {userDetails.profile.experience > 1
-                                ? "Years"
-                                : "Year"}
-                            </Typography>
-                            <Box
-                              component={"span"}
-                              sx={{
-                                fontSize: "10px",
-                                color: "#848484",
-                                fontFamily: "Poppins",
-                              }}
-                            >
-                              Experience
+                        {userDetails.profile.experience ? (
+                          <Stack
+                            direction={"row"}
+                            spacing={1}
+                            alignItems={"center"}
+                            sx={{
+                              border: "1px solid #CACACA",
+                              borderRadius: "5px",
+                              p: 1,
+                            }}
+                          >
+                            <SVG.ClockIconSmall />{" "}
+                            <Box>
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontWeight: "500",
+                                  mb: 0,
+                                  fontSize: "14px",
+                                  fontFamily: "Poppins",
+                                  lineHeight: "12px",
+                                  color: "#121212",
+                                  "@media (max-width:480px)": {
+                                    fontSize: "12px",
+                                  },
+                                }}
+                              >
+                                {userDetails.profile.experience}{" "}
+                                {userDetails.profile.experience > 1
+                                  ? "Years"
+                                  : "Year"}
+                              </Typography>
+
+                              <Box
+                                component={"span"}
+                                sx={{ fontSize: "10px", color: "#848484" }}
+                              >
+                                Experience
+                              </Box>
                             </Box>
-                          </Box>
-                        </Stack>
-                      ) : null}
+                          </Stack>
+                        ) : null}
+                      </Stack>
                     </Stack>
                     <Box sx={{ mt: 3 }}>
                       <Typography
@@ -478,6 +487,8 @@ export default function PublicProfileComponent() {
                               fontFamily: "Poppins !important",
                               fontWeight: "500 !important",
                               color: "#121212 !important",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
                               "@media (max-width: 992px)": {
                                 fontSize: "14px !important",
                               },
@@ -598,7 +609,10 @@ export default function PublicProfileComponent() {
                           justifyContent: "center",
                           alignItems: "center",
                           fontSize: "32px",
-                          fontFamily: "Inter",
+                          fontWeight: "600",
+                          "@media (max-width:768px)": {
+                            fontSize: "18px",
+                          },
                         }}
                       >
                         ADVETRISEMENT

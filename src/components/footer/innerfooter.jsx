@@ -151,7 +151,7 @@ const InnerFooter = () => {
               {(isLoggedIn &&
                 (role === USER_ROLES.employer ||
                   role === USER_ROLES.jobSeeker)) ||
-              !isLoggedIn ? (
+                !isLoggedIn ? (
                 <Grid item lg={3} xs={6} sm={3}>
                   <Typography
                     sx={{
@@ -192,7 +192,7 @@ const InnerFooter = () => {
                             }}
                             className={
                               currentURL === "/search/jobs" &&
-                              jobCategoryId === child.id
+                                jobCategoryId === child.id
                                 ? "active-footer"
                                 : "not-active-footer"
                             }
@@ -213,7 +213,7 @@ const InnerFooter = () => {
               )}
               <Grid item lg={3} xs={6} sm={3}>
                 {(isLoggedIn && role !== USER_ROLES.jobSeeker) ||
-                !isLoggedIn ? (
+                  !isLoggedIn ? (
                   <>
                     <Typography
                       sx={{
@@ -317,7 +317,7 @@ const InnerFooter = () => {
                             }}
                             className={
                               currentURL === "/search/talents" &&
-                              talentCategoryId === child.id
+                                talentCategoryId === child.id
                                 ? "active-footer"
                                 : "not-active-footer"
                             }
@@ -346,7 +346,7 @@ const InnerFooter = () => {
             </Grid>
           </Grid>
           <Grid item lg={4} xs={12} sm={12}>
-            <Box
+            {!isLoggedIn && <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -424,6 +424,7 @@ const InnerFooter = () => {
                 </Stack>
               </Box>
             </Box>
+            }
           </Grid>
         </Grid>
         <Stack

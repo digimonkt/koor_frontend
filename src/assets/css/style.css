@@ -4,6 +4,7 @@
 body {
   background-color: #e5e5e5 !important;
 }
+
 .chat-search::placeholder {
   font-family: "Poppins" !important;
 }
@@ -1470,6 +1471,7 @@ span.count {
 .buttonbox p {
   margin: 0px;
 }
+
 .buttonbox span {
   display: block;
 }
@@ -1504,6 +1506,7 @@ span.count {
   font-size: 14px;
   line-height: 18px;
   color: #121212;
+  word-break: break-all;
 }
 
 .message-tex-2 {
@@ -1580,7 +1583,7 @@ span.count {
 
 .chatinput {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   width: 100%;
 }
 
@@ -1620,6 +1623,7 @@ span.count {
   padding-top: 15px;
   text-align: left;
 }
+
 .w-25 {
   width: 25%;
 }
@@ -2182,7 +2186,7 @@ input.employersearch {
   font-family: "Bahnschrift";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 22px;
   /* identical to box height, or 138% */
   letter-spacing: 0.03em;
@@ -2209,7 +2213,10 @@ input.employersearch {
 .login_header_search_icon {
   position: absolute;
   color: #848484;
-  left: 16rem;
+  left: 17px;
+  width: 24px;
+  height: 24px;
+  top: 10px;
 }
 
 .iconfooter a {
@@ -2353,6 +2360,7 @@ input.employersearch {
   input.employersearch {
     font-size: 14px;
   }
+
   .message-text h4 {
     font-size: 12px;
   }
@@ -2374,6 +2382,7 @@ input.employersearch {
     display: flex;
     align-items: center;
   }
+
   .post_new_job_btn {
     text-align: center;
     /* margin: 20px 0px 10px 0px; */
@@ -2401,11 +2410,9 @@ input.employersearch {
     height: 33px;
   }
 
-  .login_header_search_icon {
-    left: 11.7rem;
-    width: 14.33px;
-    height: 14.33px;
-  }
+  /* .login_header_search_icon {
+    left: 12px;
+  } */
 
   .noti-mobile {
     display: none !important;
@@ -2486,9 +2493,9 @@ input.employersearch {
     font-size: 12px;
   }
 
-  .new_post_dailog {
+  /* .new_post_dailog {
     display: block;
-  }
+  } */
 
   .new_post_dailog h1 {
     font-size: 20px;
@@ -2509,24 +2516,31 @@ input.employersearch {
   .filter_input .MuiFormControlLabel-root .MuiFormControlLabel-label {
     font-size: 12px !important;
   }
+
   .jobs_dailog_content {
     font-size: 14px;
   }
+
   .jobs_dailog_login_line {
     font-size: 12px;
   }
+
   .list-content span {
     font-size: 10px;
   }
+
   .jobtype_grid {
     margin-top: 0px !important;
   }
+
   .lables span {
     font-size: 14px;
   }
+
   .SelectDropdown label {
     font-size: 12px;
   }
+
   .form-control-area {
     font-weight: 300;
   }
@@ -2611,6 +2625,7 @@ input.employersearch {
   .job_card_chip_box .MuiChip-root.MuiChip-root {
     font-size: 10px;
   }
+
   .textdes {
     font-size: 10px;
   }
@@ -2675,6 +2690,7 @@ input.employersearch {
     font-size: 18px;
     line-height: 16px;
   }
+
   .newstabs {
     margin-top: 20px;
   }
@@ -2708,9 +2724,11 @@ input.employersearch {
     font-size: 16px;
   }
 }
+
 .register-app > a {
   border-radius: 16px !important;
 }
+
 .upto-slide {
   margin-right: 24px;
 }
@@ -2719,10 +2737,12 @@ input.employersearch {
   .label-100 {
     flex-direction: column !important;
   }
+
   .upto-slide {
     margin-right: 0px;
   }
 }
+
 .searchvs {
   color: var(--black-121212, #121212);
   font-family: Poppins;
@@ -2739,6 +2759,7 @@ input.employersearch {
   height: 75px;
   background: #ccc;
 }
+
 .DraftEditor-root {
   margin-left: 10px;
   position: relative;
@@ -2779,4 +2800,45 @@ input.employersearch {
 
 .package-active ul li {
   color: #fff;
+}
+
+.edit-message {
+  margin-left: 12px;
+  font-size: 8px;
+  margin-top: 4px;
+}
+
+.smallfont input {
+  padding: 8.5px 10px !important;
+}
+
+.telentsearchicon svg {
+  width: 24px;
+  height: 24px;
+}
+.d-flex-img {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.old-message {
+  flex-direction: column;
+  /* align-items: start; */
+}
+
+.reply-message {
+  background: #d1f4cc;
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 5px solid #274593;
+  font-size: 13px;
+  text-align: left;
+}
+
+.reply-attachment img {
+  width: 124px;
+  height: 70px;
+  object-fit: cover;
 }

@@ -671,6 +671,7 @@ function PostJobsComponent() {
                         </label>
                       </Stack>
                       <DateInput
+                        className="smallfont"
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
                         minDate={dayjs().format("YYYY-MM-DD")}
@@ -694,6 +695,7 @@ function PostJobsComponent() {
                         </label>
                       </Stack>
                       <DateInput
+                        className="smallfont"
                         onChange={(e) => formik.setFieldValue("deadline", e)}
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
@@ -772,7 +774,7 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Preferences</h2>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label>Education level</label>
                     <SelectInput
                       defaultValue=""
@@ -830,7 +832,7 @@ function PostJobsComponent() {
                       })}
                     </Grid>
                   </Grid> */}
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label>
                       Required languages{" "}
                       <span style={{ color: "#848484" }}>(Maximum 3)</span>
@@ -850,7 +852,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.languages}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12} sm={6}>
                     <label className="mb-2">
                       Job skills
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
@@ -1090,10 +1092,21 @@ function PostJobsComponent() {
         message="Some thing went wrong!"
       />
       <DialogBox open={open} handleClose={handleClose}>
-        <Box className="new_post_dailog">
+        <Box
+          className="new_post_dailog"
+          sx={{
+            "@media (max-width:600px)": {
+              flexDirection: "column-reverse",
+            },
+          }}
+        >
           <Box
             sx={{
               width: "70%",
+              "@media (max-width:600px)": {
+                width: "100%",
+                textAlign: "center",
+              },
             }}
           >
             <h1 className="mb-3">Done!</h1>
@@ -1102,23 +1115,30 @@ function PostJobsComponent() {
                 ? "Your job post just updated. It will be reviewed and available on Koor shortly."
                 : "Your new job post just submitted. It will be reviewed and available on Koor shortly."}
             </p>
-            <div className={`${styles.cancel_popup}`}>
+            <Box className={`${styles.cancel_popup}`}>
               <OutlinedButton
                 title="Go to my jobs"
                 onClick={() => handleRedirect()}
                 sx={{
                   fontSize: "16px",
                   fontWeight: "600",
+
                   "@madia (max-width: 480px)": {
                     fontSize: "14px",
+                    width: "100%",
                   },
                 }}
               />
-            </div>
+            </Box>
           </Box>
           <Box
             sx={{
               width: "30%",
+              "& svg": { width: "150.36px", height: "150.88px" },
+              "@media (max-width:600px)": {
+                width: "100%",
+                textAlign: "center",
+              },
             }}
           >
             <SVG.JobPost className="w-100" />

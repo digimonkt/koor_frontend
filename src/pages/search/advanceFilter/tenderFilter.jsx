@@ -35,6 +35,7 @@ function TenderFilter({ formik, footer, responsive }) {
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
+                  sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
                   multiple
                   title="Category"
                   placeholder="Select a Tender category"
@@ -59,6 +60,7 @@ function TenderFilter({ formik, footer, responsive }) {
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
+                  sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
                   multiple
                   title="Sector"
                   defaultValue=""
@@ -84,6 +86,7 @@ function TenderFilter({ formik, footer, responsive }) {
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
+                  sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
                   multiple
                   title="Opportunity Type"
                   defaultValue=""
@@ -112,6 +115,7 @@ function TenderFilter({ formik, footer, responsive }) {
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
+                  sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
                   multiple
                   title="Tag"
                   defaultValue=""
@@ -137,6 +141,7 @@ function TenderFilter({ formik, footer, responsive }) {
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
+                  sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
                   title="Country"
                   placeholder="Country"
                   defaultValue=""
@@ -153,6 +158,7 @@ function TenderFilter({ formik, footer, responsive }) {
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
+                  sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
                   title="City"
                   placeholder={
                     formik.values.country ? "City" : "Select Country first"
