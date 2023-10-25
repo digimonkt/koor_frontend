@@ -75,6 +75,7 @@ function PublicProfileComponent() {
                   item
                   lg={8}
                   xs={12}
+                  sm={6}
                   sx={{
                     borderRight: "1px solid #CACACA",
 
@@ -83,12 +84,17 @@ function PublicProfileComponent() {
                     },
                   }}
                 >
-                  <Box sx={{ paddingRight: "45px" }}>
+                  <Box
+                    sx={{
+                      paddingRight: "45px",
+                      "@media (max-width:992px)": { paddingRight: "0px" },
+                    }}
+                  >
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
                       justifyContent={{ xs: "start", lg: "space-between" }}
-                      alignItems={"center"}
+                      alignItems={{ xs: "start", lg: "center" }}
                     >
                       <Stack direction={"row"} spacing={2}>
                         <Avatar
@@ -97,6 +103,14 @@ function PublicProfileComponent() {
                             width: "88px",
                             height: "88px",
                             boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
+                            "@media (max-width:768px)": {
+                              width: "60px",
+                              height: "60px",
+                            },
+                            "@media (max-width:480px)": {
+                              width: "40px !important",
+                              height: "40px !important",
+                            },
                           }}
                         />
                         <Box>
@@ -133,6 +147,7 @@ function PublicProfileComponent() {
                               direction={"row"}
                               spacing={1}
                               alignItems={"center"}
+                              sx={{ color: "rgb(18 18 18 / 50%)" }}
                             >
                               <SVG.LocationIcon />
                               <Box
@@ -227,7 +242,7 @@ function PublicProfileComponent() {
                     </Box>
                   </Box>
                 </Grid>
-                <Grid item lg={4} xs={12}>
+                <Grid item lg={4} xs={12} sm={6}>
                   <Box>
                     <Stack direction={"column"} spacing={2}>
                       <Typography

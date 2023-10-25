@@ -49,6 +49,12 @@
   margin-top: 30px;
 }
 
+@media screen and (max-width: 540px) {
+  .cancel_popup {
+    justify-content: center;
+  }
+}
+
 .cancel_popup p {
   display: block;
   color: #121212;
