@@ -65,6 +65,7 @@ function ChatBox() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openEditMessage, setOpenEditMessage] = useState(false);
+  const [openReplyMessage, setOpenReplyMessage] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedFormat, setSelectedFormat] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -72,6 +73,7 @@ function ChatBox() {
   const [anchorElMedia, setAnchorElMedia] = useState(null);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [messageForUpdate, setMessageForUpdate] = useState("");
+  const [messageReplayId, setMessageReplayId] = useState(null);
   const handleClickMedia = (event, type) => {
     setMessageIsMedia(type);
     setAnchorElMedia(event.currentTarget);
@@ -84,6 +86,9 @@ function ChatBox() {
       handleCopyText(selectedMessage.message);
     } else if (action === "edit") {
       setOpenEditMessage(true);
+    } else if (action === "quote") {
+      console.log("");
+      setOpenReplyMessage(true);
     }
   };
   const handleCopyText = (message) => {
@@ -142,6 +147,17 @@ function ChatBox() {
       dispatch(setErrorToast("Something went wrong"));
     }
   };
+
+  const replyMessage = async () => {
+    setLoading(true);
+    sendMessage();
+    setLoading(false);
+    getMessageHistory({
+      data: {},
+      isScrollToBottom: true,
+      initialLoad: true,
+    });
+  };
   const updateMessageInArray = () => {
     return messages.map(message =>
       message.id === selectedMessage.id
@@ -186,10 +202,17 @@ function ChatBox() {
       event.stopPropagation();
     }
     if (newMessage.trim()) {
-      ws.sendMessage({
+      const payload = {
         message: newMessage.trim(),
+        reply_to: messageReplayId,
         content_type: "text",
-      });
+      };
+      for (const key in payload) {
+        if (payload[key] === "" || payload[key] === null) {
+          delete payload[key];
+        }
+      }
+      ws.sendMessage(payload);
       setNewMessage("");
       setEditorState(EditorState.createEmpty());
       // Scroll to the bottom after sending the message
@@ -503,9 +526,22 @@ function ChatBox() {
                                 message.attachment ||
                                   countWords(message.message) > 10
                                   ? ""
-                                  : "text-inline"
+                                  : "text-inline old-message"
                               }
                             >
+                              {message.reply.id &&
+                                <div className="reply-message">
+                                  <b className="d-block">{message.replyUserId === currentUser.id ? "You" : message.replyUserName}</b>
+                                  {message.reply.attachment
+                                    ? <div className="reply-attachment"> {renderAttachment(message.reply.attachment)}</div>
+                                    : ""}
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html: message.reply.message,
+                                    }}
+                                  />
+                                </div>
+                              }
                               <div>
                                 {message.attachment
                                   ? renderAttachment(message.attachment)
@@ -523,27 +559,27 @@ function ChatBox() {
                                 {dayjs.utc(message.createdAt).local().fromNow()}
                               </div>
                               <div className="edit-message">{message.isEdited && "Edited"}</div>
-                              {message.user.id === currentUser.id && <>
-                                <IconButton
-                                  size="small"
-                                  id="basic-button"
-                                  aria-controls={open ? "basic-menu" : undefined}
-                                  aria-haspopup="true"
-                                  aria-expanded={open ? "true" : undefined}
-                                  onClick={(e) => { handleClickMedia(e, messageType(message)); setSelectedMessage(message); }} // Open the menu when the IconButton is clicked
-                                  sx={{
-                                    position: "absolute",
-                                    top: "-5px",
-                                    right: "7px",
-                                    zIndex: 1,
-                                    width: "25px",
-                                    height: "25px",
-                                    color: "#274593"
-                                  }}
-                                >
-                                  <MoreHorizIcon />
-                                </IconButton>
-                              </>}
+
+                              <IconButton
+                                size="small"
+                                id="basic-button"
+                                aria-controls={open ? "basic-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                                onClick={(e) => { handleClickMedia(e, messageType(message)); setSelectedMessage(message); setMessageReplayId(message.id); }} // Open the menu when the IconButton is clicked
+                                sx={{
+                                  position: "absolute",
+                                  top: "-5px",
+                                  right: "7px",
+                                  zIndex: 1,
+                                  width: "25px",
+                                  height: "25px",
+                                  color: "#274593"
+                                }}
+                              >
+                                <MoreHorizIcon />
+                              </IconButton>
+
                             </div>
                           </div>
                         </div>
@@ -558,7 +594,8 @@ function ChatBox() {
             <MediaControl
               anchorElMedia={anchorElMedia}
               handleMenuCloseMedia={handleMenuCloseMedia}
-              option={ImageDataDelete(messageIsMedia)}
+              option={ImageDataDelete(messageIsMedia,
+                (selectedMessage?.user?.id === currentUser?.id))}
               message={selectedMessage}
             />
           </div>
@@ -580,22 +617,6 @@ function ChatBox() {
                       }}
                     />
                   </span>
-                  {/* <LabeledInput
-                    placeholder="Write a message…"
-                    style={{ background: "transparent" }}
-                    type="textarea"
-                    value={newMessage}
-                    onChange={(e) => {
-                      setNewMessage(e.target.value);
-                    }}
-                    onKeyPress={(e) => {
-                      if (newMessage && newMessage.trim()) {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          sendMessage(e);
-                        }
-                      }
-                    }}
-                  /> */}
                   <div className="editor-warp w-100">
                     <Editor
                       // handleKeyCommand={handleKeyCommand}
@@ -731,6 +752,22 @@ function ChatBox() {
             <FilledButton
               title="Cancel"
               onClick={() => { setOpenEditMessage(false); setMessageForUpdate(""); }}
+              sx={{ marginTop: "10px" }}
+            />
+          </DialogBox>
+          <DialogBox open={openReplyMessage} handleClose={handleClose}>
+            <h3>Reply Message</h3>
+            <ReactQuill onChange={(value) => { setNewMessage(value); }} modules={modules}
+              formats={formats} />
+            <FilledButton
+              title={loading ? <Loader loading={loading} /> : "Reply"}
+              disabled={loading}
+              onClick={() => { replyMessage(); setOpenReplyMessage(false); }}
+              sx={{ marginTop: "10px" }}
+            />
+            <FilledButton
+              title="Cancel"
+              onClick={() => { setOpenReplyMessage(false); setNewMessage(""); }}
               sx={{ marginTop: "10px" }}
             />
           </DialogBox>
