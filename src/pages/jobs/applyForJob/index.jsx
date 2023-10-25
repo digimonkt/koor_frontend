@@ -219,7 +219,9 @@ const ApplyForJob = () => {
     getJobDetails(params.jobId);
   }, [params.jobId]);
   useEffect(() => {
-    getApplicantDetails();
+    if (searchParams.get("applicationId")) {
+      getApplicantDetails();
+    }
   }, [searchParams.get("applicationId")]);
   return (
     <div>
@@ -421,8 +423,8 @@ const ApplyForJob = () => {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                      ? "Update"
-                      : "Apply"
+                        ? "Update"
+                        : "Apply"
                   }
                   className={`${styles.applybtn}`}
                   type="submit"
