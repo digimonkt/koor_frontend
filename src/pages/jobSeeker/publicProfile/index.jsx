@@ -148,11 +148,11 @@ export default function PublicProfileComponent() {
                               letterSpacing: "0.03em",
                               mb: 0,
                               color: "#121212  !important",
-                              "@media (max-width:768px)": {
+                              "@media (max-width: 992px)": {
                                 fontSize: "20px",
                               },
-                              "@media (max-width:600px)": {
-                                fontSize: "16px !important",
+                              "@media (max-width: 480px)": {
+                                fontSize: "16px",
                               },
                             }}
                           >
@@ -164,6 +164,9 @@ export default function PublicProfileComponent() {
                               margin: "3px 0px",
                               fontFamily: "Poppins",
                               fontSize: "18px",
+                              "@media (max-width: 480px)": {
+                                fontSize: "14px",
+                              },
                             }}
                           >
                             {userDetails.profile.highestEducation?.title}
@@ -191,7 +194,6 @@ export default function PublicProfileComponent() {
                             ""
                           )}
                         </Box>
-
                         {userDetails.profile.experience ? (
                           <Stack
                             direction={"row"}
@@ -214,6 +216,9 @@ export default function PublicProfileComponent() {
                                   fontFamily: "Poppins",
                                   lineHeight: "12px",
                                   color: "#121212",
+                                  "@media (max-width:480px)": {
+                                    fontSize: "12px",
+                                  },
                                 }}
                               >
                                 {userDetails.profile.experience}{" "}
@@ -221,6 +226,7 @@ export default function PublicProfileComponent() {
                                   ? "Years"
                                   : "Year"}
                               </Typography>
+
                               <Box
                                 component={"span"}
                                 sx={{ fontSize: "10px", color: "#848484" }}
@@ -255,6 +261,10 @@ export default function PublicProfileComponent() {
                           fontSize: "14px",
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
+                          color: "#121212",
+                          "@media (max-width: 480px)": {
+                            fontSize: "12px",
+                          },
                         }}
                       >
                         {userDetails.profile.description}
@@ -267,6 +277,9 @@ export default function PublicProfileComponent() {
                             fontSize: "26px",
                             fontFamily: "Bahnschrift",
                             fontWeight: "600",
+                            "@media (max-width: 480px)": {
+                              fontSize: "24px",
+                            },
                           }}
                         >
                           Work experience
@@ -302,6 +315,9 @@ export default function PublicProfileComponent() {
                             fontSize: "26px",
                             fontFamily: "Bahnschrift",
                             fontWeight: "600",
+                            "@media (max-width: 480px)": {
+                              fontSize: "24px",
+                            },
                           }}
                         >
                           Education
@@ -373,6 +389,12 @@ export default function PublicProfileComponent() {
                           fontWeight: "600",
                           mb: 2,
                           color: "#121212 !important",
+                          "@media (max-width: 992px)": {
+                            fontSize: "24px",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "20px",
+                          },
                         }}
                       >
                         Contact info
@@ -404,7 +426,14 @@ export default function PublicProfileComponent() {
                               sx={{
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
-                                fontWeight: "600",
+                                fontWeight: "500",
+                                color: "#121212",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "14px",
+                                },
+                                // "@media (max-width: 480px)": {
+                                //   fontSize: "12px",
+                                // },
                               }}
                             >
                               {formatPhoneNumberIntl(
@@ -417,6 +446,12 @@ export default function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "10px",
+                                },
+                                "@media (max-width: 480px)": {
+                                  fontSize: "10px",
+                                },
                               }}
                             >
                               Mobile
@@ -450,12 +485,15 @@ export default function PublicProfileComponent() {
                             sx={{
                               fontSize: "16px !important",
                               fontFamily: "Poppins !important",
-                              fontWeight: "600 !important",
+                              fontWeight: "500 !important",
                               color: "#121212 !important",
                               whiteSpace: "normal",
                               wordBreak: "break-all",
                               "@media (max-width: 992px)": {
                                 fontSize: "14px !important",
+                              },
+                              "@media (max-width: 480px)": {
+                                fontSize: "12px !important",
                               },
                             }}
                           >
@@ -466,6 +504,12 @@ export default function PublicProfileComponent() {
                               color: "#848484",
                               fontFamily: "Poppins",
                               fontSize: "12px",
+                              "@media (max-width: 992px)": {
+                                fontSize: "10px",
+                              },
+                              "@media (max-width: 480px)": {
+                                fontSize: "10px",
+                              },
                             }}
                           >
                             Email
@@ -480,6 +524,13 @@ export default function PublicProfileComponent() {
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
                           mb: 2,
+                          color: "#121212",
+                          "@media (max-width: 992px)": {
+                            fontSize: "24px",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "20px",
+                          },
                         }}
                       >
                         Skills
@@ -516,6 +567,13 @@ export default function PublicProfileComponent() {
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
                           mb: 2,
+                          color: "#121212",
+                          "@media (max-width: 992px)": {
+                            fontSize: "24px",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "20px",
+                          },
                         }}
                       >
                         Languages
