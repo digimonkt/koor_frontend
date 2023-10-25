@@ -83,7 +83,12 @@ function PublicProfileComponent() {
                     },
                   }}
                 >
-                  <Box sx={{ paddingRight: "45px" }}>
+                  <Box
+                    sx={{
+                      paddingRight: "45px",
+                      "@media (max-width: 480px)": { paddingRight: "0px" },
+                    }}
+                  >
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
@@ -168,6 +173,12 @@ function PublicProfileComponent() {
                           fontSize: "26px",
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
+                          "@media (max-width: 992px)": {
+                            fontSize: "24px",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "20px",
+                          },
                         }}
                       >
                         About
@@ -197,6 +208,12 @@ function PublicProfileComponent() {
                               fontFamily: "Bahnschrift",
                               fontWeight: "600",
                               color: "#121212",
+                              "@media (max-width: 992px)": {
+                                fontSize: "24px",
+                              },
+                              "@media (max-width: 480px)": {
+                                fontSize: "20px",
+                              },
                             }}
                           >
                             Contracts Experience
@@ -238,6 +255,12 @@ function PublicProfileComponent() {
                           fontWeight: "600",
                           color: "#121212",
                           mb: 2,
+                          "@media (max-width: 992px)": {
+                            fontSize: "24px",
+                          },
+                          "@media (max-width: 480px)": {
+                            fontSize: "20px",
+                          },
                         }}
                       >
                         Contact info
@@ -269,7 +292,13 @@ function PublicProfileComponent() {
                               sx={{
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
-                                fontWeight: "600",
+                                fontWeight: "500",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "14px",
+                                },
+                                "@media (max-width: 480px)": {
+                                  fontSize: "12px",
+                                },
                               }}
                             >
                               {formatPhoneNumberIntl(
@@ -282,6 +311,9 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "10px",
+                                },
                               }}
                             >
                               Mobile
@@ -316,6 +348,12 @@ function PublicProfileComponent() {
                               fontSize: "16px",
                               fontFamily: "Poppins",
                               fontWeight: "500",
+                              "@media (max-width: 992px)": {
+                                fontSize: "14px",
+                              },
+                              "@media (max-width: 480px)": {
+                                fontSize: "12px",
+                              },
                             }}
                           >
                             {userDetails.email}
@@ -325,6 +363,9 @@ function PublicProfileComponent() {
                               color: "#848484",
                               fontFamily: "Poppins",
                               fontSize: "12px",
+                              "@media (max-width: 992px)": {
+                                fontSize: "10px",
+                              },
                             }}
                           >
                             Email
@@ -358,7 +399,13 @@ function PublicProfileComponent() {
                               sx={{
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
-                                fontWeight: "600",
+                                fontWeight: "500",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "14px",
+                                },
+                                "@media (max-width: 480px)": {
+                                  fontSize: "12px",
+                                },
                               }}
                             >
                               {userDetails.profile.website}
@@ -368,6 +415,9 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "10px",
+                                },
                               }}
                             >
                               Website
@@ -402,7 +452,13 @@ function PublicProfileComponent() {
                               sx={{
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
-                                fontWeight: "600",
+                                fontWeight: "500",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "14px",
+                                },
+                                "@media (max-width: 480px)": {
+                                  fontSize: "12px",
+                                },
                               }}
                             >
                               {userDetails.profile.address}
@@ -412,6 +468,10 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
+                                fontWeight: "400",
+                                "@media (max-width: 992px)": {
+                                  fontSize: "10px",
+                                },
                               }}
                             >
                               Address
@@ -430,6 +490,12 @@ function PublicProfileComponent() {
                       fontWeight: "600",
                       mb: 2,
                       color: "#121212",
+                      "@media (max-width: 992px)": {
+                        fontSize: "24px",
+                      },
+                      "@media (max-width: 480px)": {
+                        fontSize: "20px",
+                      },
                     }}
                   >
                     Sectors

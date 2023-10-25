@@ -50,7 +50,7 @@ function EducationCard({
         <div className="list-content">
           <h5>{title}</h5>
           <h6>{institute}</h6>
-          <span>{educationLevel.title}</span> <br />
+          <h6>{educationLevel.title}</h6>
           <span>
             {dayjs(startDate).format(YEAR_FORMAT)} -{" "}
             {present ? "Present" : dayjs(endDate).format(YEAR_FORMAT)}
