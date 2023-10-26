@@ -31,7 +31,11 @@ function ApplicationOptions({
   blacklist,
   view,
   message,
+  applicationList,
+  handleOpenList,
+  isApplicationSelect,
 }) {
+  console.log({ details });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } =
@@ -177,6 +181,29 @@ function ApplicationOptions({
   return (
     <Box sx={{ width: "100%" }}>
       <Grid container spacing={0} flexWrap={"nowrap"}>
+        {
+          (applicationList && applicationList.length > 1) &&
+          <Grid item className="me-0 me-lg-3">
+            <Button
+              className="buttonbox"
+              sx={{ minWidth: "auto" }}
+              fullWidth
+              onClick={() => handleOpenList(true)}
+              style={{
+                fontWeight: 700,
+              }}
+
+            >
+              <div>
+                <SVG.HamburgerMenu className="application-option-icon" />
+                <span>
+                  {"Applications"}
+                </span>
+              </div>
+            </Button>
+          </Grid>
+        }
+
         {interviewPlanned && !details.tender && (
           <Grid item>
             <Button
@@ -188,8 +215,12 @@ function ApplicationOptions({
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
               onClick={() => {
-                setInvalidPlannedInterviewAlert("");
-                setIsInterviewPlanning(true);
+                if (!isApplicationSelect && applicationList && applicationList.length > 1) {
+                  handleOpenList(true);
+                } else {
+                  setInvalidPlannedInterviewAlert("");
+                  setIsInterviewPlanning(true);
+                }
               }}
             >
               <div>
@@ -380,7 +411,7 @@ function ApplicationOptions({
             </div>
             <div>
               <Avatar
-                src={generateFileUrl(details.user.image?.path || "")}
+                src={generateFileUrl(details.user?.image?.path || "")}
                 sx={{
                   width: "40px",
                   height: "40px",
@@ -476,6 +507,7 @@ function ApplicationOptions({
           </div>
         </div>
       </DialogBox>
+
     </Box>
   );
 }

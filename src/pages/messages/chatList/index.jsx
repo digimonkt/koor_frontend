@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Divider, Stack } from "@mui/material";
 // import styles from "../message.module.css";
-import { getConversationListAPI } from "../../../api/chat";
+import { getConversationListAPI, getJobSeekerJobApplicationAPI } from "../../../api/chat";
 import { NoDataFoundAnimation } from "../../../components/animations";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { WebSocketClient } from "../../../utils/constants/websocket";
 import { transformConversationResponse } from "../../../api/transform/chat";
 import { useDebounce } from "usehooks-ts";
 import { setIsBlackListedByEmployer } from "../../../redux/slice/user";
+import { setJobSeekerJobApplication } from "@redux/slice/employer";
 function ChatList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -33,11 +34,27 @@ function ChatList() {
     const updatedConversations = data.content.map((conversation) =>
       transformConversationResponse(conversation)
     );
+    console.log({ updatedConversations });
     setChatList([...updatedConversations]);
   };
   const handleBlacklistStatus = (status) => {
     dispatch(setIsBlackListedByEmployer(status));
   };
+  const handleJobSeekerJobApplication = (user) => {
+    if (user.role === USER_ROLES.jobSeeker) {
+      getJobSeekerJobApplication(user.id);
+    }
+  };
+
+  const getJobSeekerJobApplication = async (jobSeekerId) => {
+    const res = await getJobSeekerJobApplicationAPI(jobSeekerId);
+    if (res.remote === "success") {
+      dispatch(setJobSeekerJobApplication(res.data.results));
+    } else {
+      dispatch(setJobSeekerJobApplication([]));
+    }
+  };
+
   useEffect(() => {
     const data = {
       url: "ws/chat_activity",
@@ -74,9 +91,8 @@ function ChatList() {
       </div>
 
       <div
-        className={`chatbox ${
-          role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
-        }`}
+        className={`chatbox ${role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
+          }`}
         style={{ overflow: "auto" }}
         onScroll={(e) => {
           const { scrollTop, clientHeight, scrollHeight } = e.target;
@@ -98,6 +114,7 @@ function ChatList() {
                   key={chat.id}
                   onClick={() => {
                     handleBlacklistStatus(chat.blacklistedByEmployer);
+                    handleJobSeekerJobApplication(chat.user);
                     navigate(`?conversion=${chat.id}&userId=${chat.user.id}`);
                   }}
                   style={{

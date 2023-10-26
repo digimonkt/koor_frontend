@@ -2,12 +2,36 @@ import api from ".";
 import urlcat from "urlcat";
 import {
   transformConversationResponse,
+  transformJobApplicationResponse,
   transformMessageResponse,
 } from "./transform/chat";
 
 export const getConversationListAPI = async (search) => {
   const res = await api.request({
     url: urlcat("v1/chat/conversations", { search }),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    console.log();
+    return {
+      remote: "success",
+      data: {
+        count: res.data.count,
+        next: res.data.next,
+        previous: res.data.previous,
+        results:
+          res.data.results?.map((data) =>
+            transformConversationResponse(data)
+          ) || [],
+      },
+    };
+  }
+  return res;
+};
+
+export const getJobSeekerJobApplicationAPI = async (jobSeekerId) => {
+  const res = await api.request({
+    url: urlcat("v1/users/employer/job-application/:jobSeekerId", { jobSeekerId, limit: 500 }),
     method: "GET",
   });
   if (res.remote === "success") {
@@ -19,7 +43,7 @@ export const getConversationListAPI = async (search) => {
         previous: res.data.previous,
         results:
           res.data.results?.map((data) =>
-            transformConversationResponse(data)
+            transformJobApplicationResponse(data)
           ) || [],
       },
     };
