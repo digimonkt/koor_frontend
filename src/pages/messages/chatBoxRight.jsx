@@ -84,6 +84,7 @@ function ChatBox() {
   const [openSelectApplicationModal, setOpenSelectApplicationModal] = useState(false);
   const [totalShortlisted, setTotalShortlisted] = useState(0);
   const [totalRejected, setTotalRejected] = useState(0);
+  const [applicationId, setApplicationId] = useState(0);
   const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const handleClickMedia = (event, type) => {
     setMessageIsMedia(type);
@@ -352,7 +353,6 @@ function ChatBox() {
     }
   };
   const handleOpenList = (action) => {
-    console.log("check----", action);
     setOpenSelectApplicationModal(action);
   };
   // Start Draft JS Implement
@@ -464,28 +464,28 @@ function ChatBox() {
     } else {
       dispatch(setJobSeekerJobApplication([]));
     }
-    console.log({ applicationList });
     setApplicationDetails("");
   }, [userDetails]);
   useEffect(() => {
-    if (applicationDetails?.job.id) {
+    if (applicationDetails?.job?.id) {
       getApplicationList(applicationDetails.job.id);
     }
   }, [applicationDetails]);
 
   useEffect(() => {
-    dispatch(
-      setTotalApplicationsByJob({
-        jobId: applicationDetails.job.id,
-        data: {
-          shortlisted: totalShortlisted,
-          rejected: totalRejected,
-          plannedInterview: totalPlannedInterview,
-        },
-      })
-    );
+    if (applicationDetails?.job?.id) {
+      dispatch(
+        setTotalApplicationsByJob({
+          jobId: applicationDetails.job.id,
+          data: {
+            shortlisted: totalShortlisted,
+            rejected: totalRejected,
+            plannedInterview: totalPlannedInterview,
+          },
+        })
+      );
+    }
   }, [applicationDetails]);
-  console.log({ applicationDetails });
   return (
     <>
       {isLoading ? (
@@ -851,8 +851,8 @@ function ChatBox() {
                 <LabeledRadioInputComponent
                   title="Please select application: "
                   options={applicationList}
-                  onChange={(e) => setApplicationDetails(jobSeekerJobApplication.find((application) => application.id === e.target.value))}
-                  value={applicationDetails?.id}
+                  onChange={(e) => setApplicationId(e.target.value)}
+                  value={applicationId}
                   sx={{
                     "& .MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
                       { fontWeight: 500 },
@@ -872,8 +872,17 @@ function ChatBox() {
               >
                 <OutlinedButton
                   title="Click"
-                  onClick={() =>
-                    setOpenSelectApplicationModal(false)
+                  onClick={() => {
+                    setApplicationDetails(jobSeekerJobApplication.find((application) => application.id === applicationId));
+                    setOpenSelectApplicationModal(false);
+                  }
+                  }
+                />
+                <OutlinedButton
+                  title="Cancel"
+                  onClick={() => {
+                    setOpenSelectApplicationModal(false);
+                  }
                   }
                 />
               </div></>

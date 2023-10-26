@@ -35,7 +35,6 @@ function ApplicationOptions({
   handleOpenList,
   isApplicationSelect,
 }) {
-  console.log({ details });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } =
@@ -76,7 +75,6 @@ function ApplicationOptions({
     }
   };
   const handlerChangeApplicationStatus = async (action) => {
-    console.log({ interviewTime });
     const data = { reason: blackListReason, interview_at: interviewTime };
     for (const key in data) {
       if (!data[key]) {
@@ -210,16 +208,18 @@ function ApplicationOptions({
               className="buttonbox"
               sx={{ minWidth: "auto" }}
               fullWidth
-              disabled={isInterviewPlanned || isBlacklisted || isRejected}
+              disabled={(isInterviewPlanned && !isApplicationSelect) || isBlacklisted || isRejected}
               style={{
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
               onClick={() => {
                 if (!isApplicationSelect && applicationList && applicationList.length > 1) {
                   handleOpenList(true);
-                } else {
+                } else if (details.id) {
                   setInvalidPlannedInterviewAlert("");
                   setIsInterviewPlanning(true);
+                } else {
+                  dispatch(setErrorToast("No Application Found"));
                 }
               }}
             >
@@ -246,10 +246,15 @@ function ApplicationOptions({
               style={{
                 fontWeight: isShortlisted ? 700 : "",
               }}
-              onClick={() =>
-                handlerChangeApplicationStatus(
-                  JOB_APPLICATION_OPTIONS.shortlisted
-                )
+              onClick={() => {
+                if (details.id) {
+                  handlerChangeApplicationStatus(
+                    JOB_APPLICATION_OPTIONS.shortlisted
+                  );
+                } else {
+                  dispatch(setErrorToast("No Application Found"));
+                }
+              }
               }
             >
               <div>
