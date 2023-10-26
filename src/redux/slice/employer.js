@@ -12,6 +12,7 @@ const initialState = {
   totalAvailableCredits: 0,
   minimumCreditJobPost: 10,
   manageJobActiveTab: 0,
+  jobSeekerJobApplication: [],
 };
 
 export const employerSlice = createSlice({
@@ -63,7 +64,11 @@ export const employerSlice = createSlice({
     },
     setMinimumCreditJobPost: (state, action) => {
       state.minimumCreditJobPost = action.payload;
+    },
+    setJobSeekerJobApplication: (state, action) => {
+      state.jobSeekerJobApplication = action.payload;
     }
+
   },
 });
 export const {
@@ -77,6 +82,7 @@ export const {
   setJobPostUpdate,
   setTotalAvailableCredits,
   setMinimumCreditJobPost,
+  setJobSeekerJobApplication,
   setManageJobActiveTab
 } = employerSlice.actions;
 export default employerSlice.reducer;

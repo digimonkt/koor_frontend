@@ -7,13 +7,14 @@ import InfiniteScroll from "react-infinite-scroller";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SendIcon from "@mui/icons-material/Send";
-import { FilledButton } from "../../components/button";
+import { FilledButton, OutlinedButton } from "../../components/button";
 import { USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteMessageAttachmentAPI,
   getConversationIdByUserIdAPI,
   getConversationMessageHistoryAPI,
+  getJobSeekerJobApplicationAPI,
   sendAttachmentAPI,
   updateMessageAttachmentAPI,
 } from "../../api/chat";
@@ -42,6 +43,9 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import ReactQuill from "react-quill";
 import Loader from "@components/loader";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import { setJobSeekerJobApplication, setTotalApplicationsByJob } from "@redux/slice/employer";
+import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
+import { getApplicationOnJobAPI } from "@api/employer";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -53,6 +57,7 @@ function ChatBox() {
   const { role, currentUser, isBlackListedByEmployer } = useSelector(
     (state) => state.auth
   );
+  const { jobSeekerJobApplication } = useSelector((state) => state.employer);
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +65,8 @@ function ChatBox() {
   const [hasMore, setHasMore] = useState(false);
   const [ws, setWs] = useState(null);
   const [userDetails, setUserDetails] = useState({});
+  const [applicationDetails, setApplicationDetails] = useState(null);
+  const [applicationList, setApplicationList] = useState({});
   const scrollbarRef = useRef();
   const [fullImg, setFullImg] = useState(false);
   const [open, setOpen] = useState(false);
@@ -74,6 +81,11 @@ function ChatBox() {
   const [selectedMessage, setSelectedMessage] = useState("");
   const [messageForUpdate, setMessageForUpdate] = useState("");
   const [messageReplayId, setMessageReplayId] = useState(null);
+  const [openSelectApplicationModal, setOpenSelectApplicationModal] = useState(false);
+  const [totalShortlisted, setTotalShortlisted] = useState(0);
+  const [totalRejected, setTotalRejected] = useState(0);
+  const [applicationId, setApplicationId] = useState(0);
+  const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const handleClickMedia = (event, type) => {
     setMessageIsMedia(type);
     setAnchorElMedia(event.currentTarget);
@@ -277,6 +289,14 @@ function ChatBox() {
       setUserDetails(res.data);
     }
   };
+  const getJobSeekerJobApplication = async (jobSeekerId) => {
+    const res = await getJobSeekerJobApplicationAPI(jobSeekerId);
+    if (res.remote === "success") {
+      dispatch(setJobSeekerJobApplication(res.data.results));
+    } else {
+      dispatch(setJobSeekerJobApplication([]));
+    }
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -332,6 +352,9 @@ function ChatBox() {
         );
     }
   };
+  const handleOpenList = (action) => {
+    setOpenSelectApplicationModal(action);
+  };
   // Start Draft JS Implement
   const _onBoldClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
@@ -367,7 +390,17 @@ function ChatBox() {
     const words = text.trim().split(/\s+/);
     return words.length;
   };
-
+  const getApplicationList = async () => {
+    setIsLoading(true);
+    const filter = "";
+    const res = await getApplicationOnJobAPI({ jobId: applicationDetails.job.id, filter });
+    if (res.remote === "success") {
+      setTotalRejected(res.data.rejectedCount);
+      setTotalShortlisted(res.data.shortlistedCount);
+      setTotalPlannedInterview(res.data.plannedInterviewCount);
+    }
+    setIsLoading(false);
+  };
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -391,7 +424,18 @@ function ChatBox() {
       getUserDetails();
     }
   }, [searchParams.get("conversion")]);
-
+  useEffect(() => {
+    if (jobSeekerJobApplication.length === 1) {
+      setApplicationDetails(jobSeekerJobApplication[0]);
+    }
+    const listForShow = jobSeekerJobApplication.map(application => {
+      return {
+        label: application.job.title,
+        value: application.id
+      };
+    });
+    setApplicationList(listForShow);
+  }, [jobSeekerJobApplication]);
   useEffect(() => {
     const queryParams = {};
     if (searchParams.get("conversion")) {
@@ -414,6 +458,34 @@ function ChatBox() {
       ws.close();
     };
   }, [searchParams.get("conversion"), searchParams.get("userId")]);
+  useEffect(() => {
+    if (userDetails.role === USER_ROLES.jobSeeker) {
+      getJobSeekerJobApplication(userDetails.id);
+    } else {
+      dispatch(setJobSeekerJobApplication([]));
+    }
+    setApplicationDetails("");
+  }, [userDetails]);
+  useEffect(() => {
+    if (applicationDetails?.job?.id) {
+      getApplicationList(applicationDetails.job.id);
+    }
+  }, [applicationDetails]);
+
+  useEffect(() => {
+    if (applicationDetails?.job?.id) {
+      dispatch(
+        setTotalApplicationsByJob({
+          jobId: applicationDetails.job.id,
+          data: {
+            shortlisted: totalShortlisted,
+            rejected: totalRejected,
+            plannedInterview: totalPlannedInterview,
+          },
+        })
+      );
+    }
+  }, [applicationDetails]);
   return (
     <>
       {isLoading ? (
@@ -426,9 +498,11 @@ function ChatBox() {
                 <h3>{userDetails.name || userDetails.email}</h3>
                 {/* <p className="mb-2">Online Research Participant</p> */}
               </div>
+
               <div>
-                <ApplicationOptions details={{ user: userDetails }} view />
+                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned shortlist applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
               </div>
+
             </Stack>
           </div>
           <div
@@ -770,6 +844,49 @@ function ChatBox() {
               onClick={() => { setOpenReplyMessage(false); setNewMessage(""); }}
               sx={{ marginTop: "10px" }}
             />
+          </DialogBox>
+          <DialogBox open={openSelectApplicationModal} handleClose={() => setOpenSelectApplicationModal(false)}>
+            {(applicationList.length > 0) ? <>
+              <div className="dialog-reason">
+                <LabeledRadioInputComponent
+                  title="Please select application: "
+                  options={applicationList}
+                  onChange={(e) => setApplicationId(e.target.value)}
+                  value={applicationId}
+                  sx={{
+                    "& .MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
+                      { fontWeight: 500 },
+                    display: "flex",
+                    flexDirection: "column",
+                    color: "black",
+                    fontWeight: "500",
+                  }}
+                />
+
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <OutlinedButton
+                  title="Click"
+                  onClick={() => {
+                    setApplicationDetails(jobSeekerJobApplication.find((application) => application.id === applicationId));
+                    setOpenSelectApplicationModal(false);
+                  }
+                  }
+                />
+                <OutlinedButton
+                  title="Cancel"
+                  onClick={() => {
+                    setOpenSelectApplicationModal(false);
+                  }
+                  }
+                />
+              </div></>
+              : "No Application Found"}
           </DialogBox>
         </>
       )}
