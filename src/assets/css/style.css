@@ -1937,25 +1937,23 @@ span.count {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 21px;
-  /* identical to box height */
   letter-spacing: 0.02em;
-
-  /* Black #121212 */
   color: #121212;
   margin-bottom: 5px;
+  margin-top: 0px;
 }
 
 .list-content span {
   font-family: "Poppins";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.02em;
   margin-bottom: 5px;
-  color: #121212;
+  color: #848484;
 }
 
 .list-content h6 {
