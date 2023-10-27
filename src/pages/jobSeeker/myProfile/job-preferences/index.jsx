@@ -1,4 +1,4 @@
-import { FormGroup, Stack } from "@mui/material";
+import { FormGroup, IconButton, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { FormControlReminder } from "../../../../components/style";
 import { CheckboxInput } from "../../../../components/input";
@@ -11,8 +11,10 @@ import { setSuccessToast } from "../../../../redux/slice/toast";
 import { updateCurrentUser } from "../../../../redux/slice/user";
 import { Link } from "react-router-dom";
 import { PAY_PERIOD } from "../../../../utils/enum";
+import { Capacitor } from "@capacitor/core";
 
-const JobPreferences = () => {
+const JobPreferences = (props) => {
+  const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
@@ -79,149 +81,307 @@ const JobPreferences = () => {
     <>
       <div className="add-content">
         <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingRight: "15px",
-          }}
+          style={
+            {
+              // display: "flex",
+              // // justifyContent: "space-between",
+              // paddingRight: "15px",
+            }
+          }
         >
-          <h2>Job preferences</h2>
-          <Link
-            to="/job_seeker/my-profile/job-criteria"
-            style={{ height: "20px" }}
+          <Stack
+            spacing={2}
+            direction={"row"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
           >
-            <span>More</span>
-          </Link>
+            <h2 className="mb-0">Job preferences</h2>
+            {platform === "android" || platform === "ios" ? (
+              <IconButton size="small" onClick={() => props.fun()}>
+                <SVG.ArrowUpIcon />
+              </IconButton>
+            ) : null}
+          </Stack>
+          {platform === "android" || platform === "ios" ? null : (
+            <Link
+              to="/job_seeker/my-profile/job-criteria"
+              style={{ height: "20px" }}
+            >
+              <span>More</span>
+            </Link>
+          )}
         </div>
-        <Stack
-          direction={{ xs: "column", lg: "row" }}
-          spacing={{ xs: 2, lg: 2, md: 2 }}
-          alignItems={{ xs: "start", lg: "center" }}
-        >
-          <label className="w-25">Availability:</label>
-          <div className="w-75">
-            <FormGroup row>
-              <FormControlReminder
-                control={<CheckboxInput />}
-                onChange={handleChangeCheckbox("isAvailable")}
-                checked={jobPreferences.isAvailable}
-                label="I’m available right now"
-              />
-            </FormGroup>
-          </div>
-        </Stack>
-        <div className="job-text">
-          This will automatically turned OFF every week. Remember to turn it ON
-          to keep employer informed of your availability.
-        </div>
-        <Stack
-          className="mb-3"
-          direction={{ xs: "column", lg: "row" }}
-          spacing={{ xs: 2, lg: 2, md: 2 }}
-          alignItems={{ xs: "start", lg: "center" }}
-        >
-          <label className="w-25">Search visibility:</label>
-          <div className="w-75">
-            <FormGroup row>
-              <FormControlReminder
-                control={<CheckboxInput />}
-                onChange={handleChangeCheckbox("displayInSearch")}
-                checked={jobPreferences.displayInSearch}
-                label="Display my profile in Talents search"
-              />
-            </FormGroup>
-          </div>
-        </Stack>
-        <Stack
-          className="mb-3"
-          direction={{ xs: "column", lg: "row" }}
-          spacing={{ xs: 2, lg: 2, md: 2 }}
-          alignItems={{ xs: "start", lg: "center" }}
-        >
-          <label className="w-25">Job type:</label>
-          <div className="w-75">
-            <FormGroup row>
-              <FormControlReminder
-                control={<CheckboxInput />}
-                onChange={handleChangeCheckbox("isPartTime")}
-                checked={jobPreferences.isPartTime}
-                label="Part Time"
-              />
-              <FormControlReminder
-                control={<CheckboxInput />}
-                onChange={handleChangeCheckbox("isFullTime")}
-                checked={jobPreferences.isFullTime}
-                label="Full Time"
-              />
-              <FormControlReminder
-                control={<CheckboxInput />}
-                onChange={handleChangeCheckbox("hasContract")}
-                checked={jobPreferences.hasContract}
-                label="Contract"
-              />
-            </FormGroup>
-          </div>
-        </Stack>
+        {platform === "android" || platform === "ios" ? (
+          <>
+            {props.toggle === false ? (
+              <div>
+                <Stack
+                  direction={{ xs: "column", lg: "row" }}
+                  spacing={{ xs: 2, lg: 2, md: 2 }}
+                  alignItems={{ xs: "start", lg: "center" }}
+                >
+                  <label className="w-25">Availability:</label>
+                  <div className="w-75">
+                    <FormGroup row>
+                      <FormControlReminder
+                        control={<CheckboxInput />}
+                        onChange={handleChangeCheckbox("isAvailable")}
+                        checked={jobPreferences.isAvailable}
+                        label="I’m available right now"
+                      />
+                    </FormGroup>
+                  </div>
+                </Stack>
+                <div className="job-text">
+                  This will automatically turned OFF every week. Remember to
+                  turn it ON to keep employer informed of your availability.
+                </div>
+                <Stack
+                  className="mb-3"
+                  direction={{ xs: "column", lg: "row" }}
+                  spacing={{ xs: 2, lg: 2, md: 2 }}
+                  alignItems={{ xs: "start", lg: "center" }}
+                >
+                  <label className="w-25">Search visibility:</label>
+                  <div className="w-75">
+                    <FormGroup row>
+                      <FormControlReminder
+                        control={<CheckboxInput />}
+                        onChange={handleChangeCheckbox("displayInSearch")}
+                        checked={jobPreferences.displayInSearch}
+                        label="Display my profile in Talents search"
+                      />
+                    </FormGroup>
+                  </div>
+                </Stack>
+                <Stack
+                  className="mb-3"
+                  direction={{ xs: "column", lg: "row" }}
+                  spacing={{ xs: 2, lg: 2, md: 2 }}
+                  alignItems={{ xs: "start", lg: "center" }}
+                >
+                  <label className="w-25">Job type:</label>
+                  <div className="w-75">
+                    <FormGroup row>
+                      <FormControlReminder
+                        control={<CheckboxInput />}
+                        onChange={handleChangeCheckbox("isPartTime")}
+                        checked={jobPreferences.isPartTime}
+                        label="Part Time"
+                      />
+                      <FormControlReminder
+                        control={<CheckboxInput />}
+                        onChange={handleChangeCheckbox("isFullTime")}
+                        checked={jobPreferences.isFullTime}
+                        label="Full Time"
+                      />
+                      <FormControlReminder
+                        control={<CheckboxInput />}
+                        onChange={handleChangeCheckbox("hasContract")}
+                        checked={jobPreferences.hasContract}
+                        label="Contract"
+                      />
+                    </FormGroup>
+                  </div>
+                </Stack>
 
-        <Stack
-          direction={{ xs: "column", lg: "row" }}
-          spacing={{ xs: 2, lg: 2, md: 2 }}
-          alignItems={{ xs: "start", lg: "start" }}
-          className="mt-3"
-        >
-          <label className="w-25">Expected salary:</label>
-          <div className="w-55">
-            <CurrencyInput
-              optionsValues={{
-                currency: { value: "usd" },
-                input: {
-                  value: Number(jobPreferences.expectedSalary || 0),
-                  onChange: handleChangeInput("expectedSalary"),
-                },
-                payPeriod: {
-                  value: jobPreferences.payPeriod || PAY_PERIOD.month,
-                  onChange: handleChangeInput("payPeriod"),
-                },
-              }}
-              errors={{
-                currency: "",
-                input: "",
-                payPeriod: "",
-              }}
-            />
-          </div>
-        </Stack>
-        <Stack
-          direction={{ xs: "column", lg: "row" }}
-          spacing={{ xs: 2, lg: 2, md: 2 }}
-          alignItems={{ xs: "start", lg: "center" }}
-          justifyContent="center"
-          className="mt-3"
-        >
-          <div
-            className="text-center"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <OutlinedButton
-              disabled={loading}
-              onClick={handleSubmit}
-              title={
-                <>
-                  {loading ? (
-                    "Updating..."
-                  ) : (
+                <Stack
+                  direction={{ xs: "column", lg: "row" }}
+                  spacing={{ xs: 2, lg: 2, md: 2 }}
+                  alignItems={{ xs: "start", lg: "start" }}
+                  className="mt-3"
+                >
+                  <label className="w-25">Expected salary:</label>
+                  <div className="w-55">
+                    <CurrencyInput
+                      optionsValues={{
+                        currency: { value: "usd" },
+                        input: {
+                          value: Number(jobPreferences.expectedSalary || 0),
+                          onChange: handleChangeInput("expectedSalary"),
+                        },
+                        payPeriod: {
+                          value: jobPreferences.payPeriod || PAY_PERIOD.month,
+                          onChange: handleChangeInput("payPeriod"),
+                        },
+                      }}
+                      errors={{
+                        currency: "",
+                        input: "",
+                        payPeriod: "",
+                      }}
+                    />
+                  </div>
+                </Stack>
+                <Stack
+                  direction={{ xs: "column", lg: "row" }}
+                  spacing={{ xs: 2, lg: 2, md: 2 }}
+                  alignItems={{ xs: "start", lg: "center" }}
+                  justifyContent="center"
+                  className="mt-3"
+                >
+                  <div
+                    className="text-center"
+                    style={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <OutlinedButton
+                      disabled={loading}
+                      onClick={handleSubmit}
+                      title={
+                        <>
+                          {loading ? (
+                            "Updating..."
+                          ) : (
+                            <>
+                              <span className="me-2 d-inline-flex">
+                                <SVG.SaveIcon />
+                              </span>
+                              SAVE PREFERENCES
+                            </>
+                          )}
+                        </>
+                      }
+                    />
+                  </div>
+                </Stack>
+              </div>
+            ) : (
+              ""
+            )}
+          </>
+        ) : (
+          <div>
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2, md: 2 }}
+              alignItems={{ xs: "start", lg: "center" }}
+            >
+              <label className="w-25">Availability:</label>
+              <div className="w-75">
+                <FormGroup row>
+                  <FormControlReminder
+                    control={<CheckboxInput />}
+                    onChange={handleChangeCheckbox("isAvailable")}
+                    checked={jobPreferences.isAvailable}
+                    label="I’m available right now"
+                  />
+                </FormGroup>
+              </div>
+            </Stack>
+            <div className="job-text">
+              This will automatically turned OFF every week. Remember to turn it
+              ON to keep employer informed of your availability.
+            </div>
+            <Stack
+              className="mb-3"
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2, md: 2 }}
+              alignItems={{ xs: "start", lg: "center" }}
+            >
+              <label className="w-25">Search visibility:</label>
+              <div className="w-75">
+                <FormGroup row>
+                  <FormControlReminder
+                    control={<CheckboxInput />}
+                    onChange={handleChangeCheckbox("displayInSearch")}
+                    checked={jobPreferences.displayInSearch}
+                    label="Display my profile in Talents search"
+                  />
+                </FormGroup>
+              </div>
+            </Stack>
+            <Stack
+              className="mb-3"
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2, md: 2 }}
+              alignItems={{ xs: "start", lg: "center" }}
+            >
+              <label className="w-25">Job type:</label>
+              <div className="w-75">
+                <FormGroup row>
+                  <FormControlReminder
+                    control={<CheckboxInput />}
+                    onChange={handleChangeCheckbox("isPartTime")}
+                    checked={jobPreferences.isPartTime}
+                    label="Part Time"
+                  />
+                  <FormControlReminder
+                    control={<CheckboxInput />}
+                    onChange={handleChangeCheckbox("isFullTime")}
+                    checked={jobPreferences.isFullTime}
+                    label="Full Time"
+                  />
+                  <FormControlReminder
+                    control={<CheckboxInput />}
+                    onChange={handleChangeCheckbox("hasContract")}
+                    checked={jobPreferences.hasContract}
+                    label="Contract"
+                  />
+                </FormGroup>
+              </div>
+            </Stack>
+
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2, md: 2 }}
+              alignItems={{ xs: "start", lg: "start" }}
+              className="mt-3"
+            >
+              <label className="w-25">Expected salary:</label>
+              <div className="w-55">
+                <CurrencyInput
+                  optionsValues={{
+                    currency: { value: "usd" },
+                    input: {
+                      value: Number(jobPreferences.expectedSalary || 0),
+                      onChange: handleChangeInput("expectedSalary"),
+                    },
+                    payPeriod: {
+                      value: jobPreferences.payPeriod || PAY_PERIOD.month,
+                      onChange: handleChangeInput("payPeriod"),
+                    },
+                  }}
+                  errors={{
+                    currency: "",
+                    input: "",
+                    payPeriod: "",
+                  }}
+                />
+              </div>
+            </Stack>
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={{ xs: 2, lg: 2, md: 2 }}
+              alignItems={{ xs: "start", lg: "center" }}
+              justifyContent="center"
+              className="mt-3"
+            >
+              <div
+                className="text-center"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                <OutlinedButton
+                  disabled={loading}
+                  onClick={handleSubmit}
+                  title={
                     <>
-                      <span className="me-2 d-inline-flex">
-                        <SVG.SaveIcon />
-                      </span>
-                      SAVE PREFERENCES
+                      {loading ? (
+                        "Updating..."
+                      ) : (
+                        <>
+                          <span className="me-2 d-inline-flex">
+                            <SVG.SaveIcon />
+                          </span>
+                          SAVE PREFERENCES
+                        </>
+                      )}
                     </>
-                  )}
-                </>
-              }
-            />
+                  }
+                />
+              </div>
+            </Stack>
           </div>
-        </Stack>
+        )}
       </div>
     </>
   );
