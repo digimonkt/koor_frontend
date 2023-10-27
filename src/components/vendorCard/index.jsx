@@ -1,11 +1,27 @@
 import { SVG } from "../../assets/svg";
-import { Avatar, Chip, Divider, Stack } from "@mui/material";
+import { Avatar, Button, Chip, Divider, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import React from "react";
 import urlcat from "urlcat";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getConversationIdByUserIdAPI } from "@api/chat";
 
 function VendorCard({ vendorDetails }) {
+  const navigate = useNavigate();
+  const handleMessageClick = async () => {
+    const res = await getConversationIdByUserIdAPI({
+      userId: vendorDetails?.id,
+    });
+    if (res.remote === "success") {
+      const conversationId = res.data.conversation_id;
+      navigate(
+        urlcat("/employer/chat", {
+          conversion: conversationId,
+          userId: vendorDetails?.id,
+        })
+      );
+    }
+  };
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -90,15 +106,17 @@ function VendorCard({ vendorDetails }) {
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
         <Stack direction="row" spacing={0} className="edit-button">
-          {/* <Button variant="link">
-            <SVG.MessageIcon
-              style={{
-                color: "#274593",
-              }}
-              className="application-option-icon"
-            />
-            <span>Message</span>
-          </Button> */}
+          {vendorDetails.readyForChat &&
+            <Button variant="link" onClick={handleMessageClick}>
+              <SVG.MessageIcon
+                style={{
+                  color: "#274593",
+                }}
+                className="application-option-icon"
+              />
+              <span>Message</span>
+            </Button>
+          }
         </Stack>
       </Stack>
     </Stack>
