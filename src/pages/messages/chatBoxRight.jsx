@@ -15,6 +15,7 @@ import {
   getConversationIdByUserIdAPI,
   getConversationMessageHistoryAPI,
   getJobSeekerJobApplicationAPI,
+  getVendorTenderApplicationAPI,
   sendAttachmentAPI,
   updateMessageAttachmentAPI,
 } from "../../api/chat";
@@ -43,9 +44,9 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import ReactQuill from "react-quill";
 import Loader from "@components/loader";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import { setJobSeekerJobApplication, setTotalApplicationsByJob } from "@redux/slice/employer";
+import { setJobSeekerJobApplication, setTotalApplicationsByJob, setTotalApplicationsByTender, setVendorTenderApplication } from "@redux/slice/employer";
 import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
-import { getApplicationOnJobAPI } from "@api/employer";
+import { getApplicationOnJobAPI, getApplicationOnTenderAPI } from "@api/employer";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -57,7 +58,7 @@ function ChatBox() {
   const { role, currentUser, isBlackListedByEmployer } = useSelector(
     (state) => state.auth
   );
-  const { jobSeekerJobApplication } = useSelector((state) => state.employer);
+  const { jobSeekerJobApplication, vendorTenderApplication } = useSelector((state) => state.employer);
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -297,6 +298,14 @@ function ChatBox() {
       dispatch(setJobSeekerJobApplication([]));
     }
   };
+  const getVendorTenderApplication = async (vendorId) => {
+    const res = await getVendorTenderApplicationAPI(vendorId);
+    if (res.remote === "success") {
+      dispatch(setVendorTenderApplication(res.data.results));
+    } else {
+      dispatch(setVendorTenderApplication([]));
+    }
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -401,6 +410,18 @@ function ChatBox() {
     }
     setIsLoading(false);
   };
+
+  const getTenderApplicationList = async () => {
+    setIsLoading(true);
+    const filter = "";
+    const res = await getApplicationOnTenderAPI({ tenderId: applicationDetails.tender.id, filter });
+    if (res.remote === "success") {
+      setTotalRejected(res.data.rejectedCount);
+      setTotalShortlisted(res.data.shortlistedCount);
+      setTotalPlannedInterview(res.data.plannedInterviewCount);
+    }
+    setIsLoading(false);
+  };
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -436,6 +457,19 @@ function ChatBox() {
     });
     setApplicationList(listForShow);
   }, [jobSeekerJobApplication]);
+
+  useEffect(() => {
+    if (vendorTenderApplication.length === 1) {
+      setApplicationDetails(vendorTenderApplication[0]);
+    }
+    const listForShow = vendorTenderApplication.map(application => {
+      return {
+        label: application.tender.title,
+        value: application.id
+      };
+    });
+    setApplicationList(listForShow);
+  }, [vendorTenderApplication]);
   useEffect(() => {
     const queryParams = {};
     if (searchParams.get("conversion")) {
@@ -458,32 +492,54 @@ function ChatBox() {
       ws.close();
     };
   }, [searchParams.get("conversion"), searchParams.get("userId")]);
+
   useEffect(() => {
     if (userDetails.role === USER_ROLES.jobSeeker) {
       getJobSeekerJobApplication(userDetails.id);
+    } else if (userDetails.role === USER_ROLES.vendor) {
+      getVendorTenderApplication(userDetails.id);
     } else {
       dispatch(setJobSeekerJobApplication([]));
     }
     setApplicationDetails("");
   }, [userDetails]);
   useEffect(() => {
-    if (applicationDetails?.job?.id) {
+    if (applicationDetails && applicationDetails?.job?.id) {
       getApplicationList(applicationDetails.job.id);
+    }
+
+    if (applicationDetails && applicationDetails?.tender?.id) {
+      getTenderApplicationList(applicationDetails.tender.id);
     }
   }, [applicationDetails]);
 
   useEffect(() => {
-    if (applicationDetails?.job?.id) {
-      dispatch(
-        setTotalApplicationsByJob({
-          jobId: applicationDetails.job.id,
-          data: {
-            shortlisted: totalShortlisted,
-            rejected: totalRejected,
-            plannedInterview: totalPlannedInterview,
-          },
-        })
-      );
+    if (userDetails.role === USER_ROLES.jobSeeker) {
+      if (applicationDetails?.job?.id) {
+        dispatch(
+          setTotalApplicationsByJob({
+            jobId: applicationDetails.job.id,
+            data: {
+              shortlisted: totalShortlisted,
+              rejected: totalRejected,
+              plannedInterview: totalPlannedInterview,
+            },
+          })
+        );
+      }
+    } else if (userDetails.role === USER_ROLES.vendor) {
+      if (applicationDetails?.tender?.id) {
+        dispatch(
+          setTotalApplicationsByTender({
+            tenderId: applicationDetails.tender.id,
+            data: {
+              shortlisted: totalShortlisted,
+              rejected: totalRejected,
+              plannedInterview: totalPlannedInterview,
+            },
+          })
+        );
+      }
     }
   }, [applicationDetails]);
   return (
@@ -500,7 +556,7 @@ function ChatBox() {
               </div>
 
               <div>
-                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned shortlist applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
+                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned={userDetails.role === USER_ROLES.job} shortlist applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
               </div>
 
             </Stack>
@@ -849,7 +905,7 @@ function ChatBox() {
             {(applicationList.length > 0) ? <>
               <div className="dialog-reason">
                 <LabeledRadioInputComponent
-                  title="Please select application: "
+                  title={`Please select ${(userDetails.role === USER_ROLES.jobSeeker) ? "job" : "tender"} application:`}
                   options={applicationList}
                   onChange={(e) => setApplicationId(e.target.value)}
                   value={applicationId}
@@ -873,7 +929,11 @@ function ChatBox() {
                 <OutlinedButton
                   title="Click"
                   onClick={() => {
-                    setApplicationDetails(jobSeekerJobApplication.find((application) => application.id === applicationId));
+                    if (userDetails.role === USER_ROLES.jobSeeker) {
+                      setApplicationDetails(jobSeekerJobApplication.find((application) => application.id === applicationId));
+                    } else {
+                      setApplicationDetails(vendorTenderApplication.find((application) => application.id === applicationId));
+                    }
                     setOpenSelectApplicationModal(false);
                   }
                   }

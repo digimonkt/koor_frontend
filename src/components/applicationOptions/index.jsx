@@ -59,11 +59,9 @@ function ApplicationOptions({
   );
 
   const handleMessageClick = async () => {
-    console.log("Running", details?.user.id);
     const res = await getConversationIdByUserIdAPI({
       userId: details?.user?.id,
     });
-    console.log({ res });
     if (res.remote === "success") {
       const conversationId = res.data.conversation_id;
       navigate(
@@ -83,7 +81,6 @@ function ApplicationOptions({
     }
 
     let applicationStatus = {};
-
     const applicationsStatusCount = details.job
       ? totalApplicationsByJob.data[details.job?.id]
       : totalApplicationsByTender.data[details.tender?.id];
