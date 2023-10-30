@@ -40,6 +40,7 @@ body {
   width: auto !important;
   font-family: "Poppins" !important;
   text-transform: capitalize !important;
+  white-space: break-spaces;
 }
 .btnActive {
   background: #f0f0f0 !important;
@@ -52,6 +53,7 @@ body {
   font-family: "Poppins" !important;
   font-weight: 400 !important;
   text-transform: capitalize !important;
+  white-space: break-spaces;
 }
 
 .MuiList-root.MuiList-padding.css-h4y409-MuiList-root {
@@ -173,7 +175,7 @@ body {
   .historySearch h5 {
     font-size: 12px;
   }
-  .savesearch span{
+  .savesearch span {
     font-size: 14px;
   }
 }
