@@ -133,10 +133,13 @@ export const transformSearchUserByRoleResponse = (data) => {
     profilePicture: data.image || {},
     description: data.profile.description || "",
     skills: data.skills || [],
-    country: data.country || "",
-    city: data.city || "",
+    country: data.profile?.country?.title || "",
+    address: data.profile?.address || "",
+    city: data.profile?.city?.title || "",
     highestEducation: data.highest_education || "",
-    readyForChat: data.ready_for_chat
+    readyForChat: data.ready_for_chat,
+    sectors: (data.sector || []).map((item) => item.sector),
+    tags: (data.tag || []).map((item) => item.tag),
   };
 };
 

@@ -69,3 +69,26 @@ export const transformJobApplicationResponse = (result) => {
     skills: result.skill,
   };
 };
+export const transformTenderApplicationResponse = (result) => {
+  return {
+    id: result.id,
+    shortlistedAt: result.shortlisted_at,
+    rejectedAt: result.rejected_at,
+    createdAt: result.created,
+    shortLetter: result.short_letter,
+    user: {
+      id: result.user.id,
+      name: result.user.name,
+      email: result.user.email,
+      countryCode: result.user.country_code,
+      mobileNumber: result.user.mobile_number,
+      image: result.user.image,
+      description: result.user.description,
+      isBlacklisted: result.user.is_blacklisted,
+    },
+    tender: {
+      id: result.tender.id,
+      title: result.tender.title,
+    },
+  };
+};
