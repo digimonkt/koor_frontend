@@ -2842,3 +2842,11 @@ input.employersearch {
   height: 70px;
   object-fit: cover;
 }
+
+/* android css */
+.labell-aap {
+  width: 25%;
+}
+.field-app {
+  width: 75%;
+}

@@ -11,8 +11,11 @@ import { USER_ROLES } from "../../utils/enum";
 import { Suspense, useState } from "react";
 import { FallbackLoading } from "../../components/loader/fallbackLoader";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Capacitor } from "@capacitor/core";
+import BottomBar from "./bottom-navigation";
 
 function Layout() {
+  const platform = Capacitor.getPlatform();
   const [SidebarMenu, setSideBarMenu] = useState(false);
   const toggleDrawer = () => {
     setSideBarMenu(true);
@@ -31,11 +34,14 @@ function Layout() {
         },
       }}
     >
-      <Sidebar
-        SidebarMenu={SidebarMenu}
-        toggleDrawer={toggleDrawer}
-        handleDrawerClose={handleDrawerClose}
-      />
+      {platform === "android" || platform === "ios" ? null : (
+        <Sidebar
+          SidebarMenu={SidebarMenu}
+          toggleDrawer={toggleDrawer}
+          handleDrawerClose={handleDrawerClose}
+        />
+      )}
+
       <Box
         component="main"
         sx={{
@@ -44,17 +50,22 @@ function Layout() {
           width: { lg: `calc(100% - ${"300"}px)` },
           background: "#E5E5E5",
           minHeight: "544px",
+          paddingBottom:
+            platform === "android" || platform === "ios" ? "150px" : "",
         }}
       >
-        <IconButton
-          color="inherit"
-          onClick={toggleDrawer}
-          aria-label="open drawer"
-          edge="start"
-          sx={{ mr: 2, display: { sm: "none" } }}
-        >
-          <MenuIcon />
-        </IconButton>
+        {platform === "android" || platform === "ios" ? null : (
+          <IconButton
+            color="inherit"
+            onClick={toggleDrawer}
+            aria-label="open drawer"
+            edge="start"
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+
         {/* {role === USER_ROLES.jobSeeker ? ( */}
         <Routes>
           {JOB_SEEKER_ROUTES.map((route) => {
@@ -113,6 +124,34 @@ function Layout() {
           ""
         )} */}
       </Box>
+      {platform === "android" || platform === "ios" ? <BottomBar /> : null}
+      {platform === "android" || platform === "ios" ? (
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: "0px",
+            left: 0,
+            right: 0,
+            background: "#fff",
+            textAlign: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "20px",
+          }}
+        >
+          <Box
+            component={"span"}
+            sx={{
+              borderRadius: "10px",
+              width: "100px",
+              height: "4px",
+              background: "#121212",
+              display: "block",
+            }}
+          ></Box>
+        </Box>
+      ) : null}
     </Box>
   );
 }

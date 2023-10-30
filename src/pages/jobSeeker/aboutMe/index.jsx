@@ -272,7 +272,7 @@ const AboutMe = (props) => {
             </Stack>
             {platform === "android" || platform === "ios" ? (
               <>
-                {props.toggle === true ? (
+                {props.toggle ? (
                   <form onSubmit={formik.handleSubmit} className="mt-4">
                     <HorizontalLabelInput
                       placeholder="Full Name"
@@ -317,47 +317,49 @@ const AboutMe = (props) => {
                       <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
                     ) : null}
                     <Stack
-                      direction={{ xs: "column", lg: "row" }}
+                      direction={{ xs: "row", lg: "row" }}
                       spacing={{ xs: 2, lg: 2, md: 2 }}
-                      alignItems={{ xs: "start", lg: "center" }}
+                      alignItems={{ xs: "center", lg: "center" }}
                       className="mb-3"
                     >
-                      <label className="w-30">Gender</label>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                        {...formik.getFieldProps("gender")}
-                      >
-                        <FormLabelBox
-                          value="male"
-                          control={
-                            <Radio
-                              sx={{
-                                color: "#CACACA",
-                                "&.Mui-checked": {
-                                  color: "#EEA23D",
-                                },
-                              }}
-                            />
-                          }
-                          label="Male"
-                        />
-                        <FormLabelBox
-                          value="female"
-                          control={
-                            <Radio
-                              sx={{
-                                color: "#CACACA",
-                                "&.Mui-checked": {
-                                  color: "#EEA23D",
-                                },
-                              }}
-                            />
-                          }
-                          label="Female"
-                        />
-                      </RadioGroup>
+                      <label style={{ width: "30%" }}>Gender</label>
+                      <div style={{ width: "70%" }}>
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                          {...formik.getFieldProps("gender")}
+                        >
+                          <FormLabelBox
+                            value="male"
+                            control={
+                              <Radio
+                                sx={{
+                                  color: "#CACACA",
+                                  "&.Mui-checked": {
+                                    color: "#EEA23D",
+                                  },
+                                }}
+                              />
+                            }
+                            label="Male"
+                          />
+                          <FormLabelBox
+                            value="female"
+                            control={
+                              <Radio
+                                sx={{
+                                  color: "#CACACA",
+                                  "&.Mui-checked": {
+                                    color: "#EEA23D",
+                                  },
+                                }}
+                              />
+                            }
+                            label="Female"
+                          />
+                        </RadioGroup>
+                      </div>
                     </Stack>
                     {formik.touched.gender && formik.errors.gender ? (
                       <ErrorMessage>{formik.errors.gender}</ErrorMessage>

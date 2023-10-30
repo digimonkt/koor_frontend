@@ -96,32 +96,40 @@ const JobPreferences = (props) => {
             justifyContent={"space-between"}
           >
             <h2 className="mb-0">Job preferences</h2>
+
             {platform === "android" || platform === "ios" ? (
-              <IconButton size="small" onClick={() => props.fun()}>
-                <SVG.ArrowUpIcon />
-              </IconButton>
-            ) : null}
+              <Stack direction={"row"} spacing={2} alignItems={"center"}>
+                <Link
+                  to="/job_seeker/my-profile/job-criteria"
+                  style={{ height: "20px" }}
+                >
+                  <span>More</span>
+                </Link>
+                <IconButton size="small" onClick={() => props.fun()}>
+                  <SVG.ArrowUpIcon />
+                </IconButton>
+              </Stack>
+            ) : (
+              <Link
+                to="/job_seeker/my-profile/job-criteria"
+                style={{ height: "20px" }}
+              >
+                <span>More</span>
+              </Link>
+            )}
           </Stack>
-          {platform === "android" || platform === "ios" ? null : (
-            <Link
-              to="/job_seeker/my-profile/job-criteria"
-              style={{ height: "20px" }}
-            >
-              <span>More</span>
-            </Link>
-          )}
         </div>
         {platform === "android" || platform === "ios" ? (
           <>
-            {props.toggle === false ? (
-              <div>
+            {props.toggle ? (
+              <div className="mt-4">
                 <Stack
-                  direction={{ xs: "column", lg: "row" }}
+                  direction={{ xs: "row", lg: "row" }}
                   spacing={{ xs: 2, lg: 2, md: 2 }}
-                  alignItems={{ xs: "start", lg: "center" }}
+                  alignItems={{ xs: "center", lg: "center" }}
                 >
-                  <label className="w-25">Availability:</label>
-                  <div className="w-75">
+                  <label className="labell-aap">Availability:</label>
+                  <div className="field-app">
                     <FormGroup row>
                       <FormControlReminder
                         control={<CheckboxInput />}
@@ -138,13 +146,13 @@ const JobPreferences = (props) => {
                 </div>
                 <Stack
                   className="mb-3"
-                  direction={{ xs: "column", lg: "row" }}
+                  direction={{ xs: "row", lg: "row" }}
                   spacing={{ xs: 2, lg: 2, md: 2 }}
-                  alignItems={{ xs: "start", lg: "center" }}
+                  alignItems={{ xs: "center", lg: "center" }}
                 >
-                  <label className="w-25">Search visibility:</label>
-                  <div className="w-75">
-                    <FormGroup row>
+                  <label className="labell-aap">Search visibility:</label>
+                  <div className="field-app">
+                    <FormGroup>
                       <FormControlReminder
                         control={<CheckboxInput />}
                         onChange={handleChangeCheckbox("displayInSearch")}
@@ -156,13 +164,13 @@ const JobPreferences = (props) => {
                 </Stack>
                 <Stack
                   className="mb-3"
-                  direction={{ xs: "column", lg: "row" }}
+                  direction={{ xs: "row", lg: "row" }}
                   spacing={{ xs: 2, lg: 2, md: 2 }}
-                  alignItems={{ xs: "start", lg: "center" }}
+                  alignItems={{ xs: "center", lg: "center" }}
                 >
-                  <label className="w-25">Job type:</label>
-                  <div className="w-75">
-                    <FormGroup row>
+                  <label className="labell-aap">Job type:</label>
+                  <div className="field-app">
+                    <FormGroup>
                       <FormControlReminder
                         control={<CheckboxInput />}
                         onChange={handleChangeCheckbox("isPartTime")}
@@ -186,13 +194,13 @@ const JobPreferences = (props) => {
                 </Stack>
 
                 <Stack
-                  direction={{ xs: "column", lg: "row" }}
+                  direction={{ xs: "row", lg: "row" }}
                   spacing={{ xs: 2, lg: 2, md: 2 }}
-                  alignItems={{ xs: "start", lg: "start" }}
+                  alignItems={{ xs: "center", lg: "start" }}
                   className="mt-3"
                 >
-                  <label className="w-25">Expected salary:</label>
-                  <div className="w-55">
+                  <label className="labell-aap">Expected salary:</label>
+                  <div className="field-app">
                     <CurrencyInput
                       optionsValues={{
                         currency: { value: "usd" },
@@ -216,7 +224,7 @@ const JobPreferences = (props) => {
                 <Stack
                   direction={{ xs: "column", lg: "row" }}
                   spacing={{ xs: 2, lg: 2, md: 2 }}
-                  alignItems={{ xs: "start", lg: "center" }}
+                  alignItems={{ xs: "center", lg: "center" }}
                   justifyContent="center"
                   className="mt-3"
                 >
@@ -250,7 +258,7 @@ const JobPreferences = (props) => {
             )}
           </>
         ) : (
-          <div>
+          <div className="mt-4">
             <Stack
               direction={{ xs: "column", lg: "row" }}
               spacing={{ xs: 2, lg: 2, md: 2 }}

@@ -18,10 +18,12 @@ import { SVG } from "@assets/svg";
 const MyProfile = () => {
   const [open, setOpen] = useState(false);
   const platform = Capacitor.getPlatform();
-  const [toggle, setToggle] = useState(true);
+  const [toggle, setToggle] = useState(["job"]);
 
-  const handleToggleModel = () => {
-    setToggle(!toggle);
+  const handleToggleModel = (type) => {
+    setToggle((prev) =>
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+    );
   };
 
   const handleClickOpen = () => {
@@ -103,107 +105,235 @@ const MyProfile = () => {
                   </Box>
                 </Stack>
               </Grid>
-            </>
-          ) : null}
-          <Grid item xl={6} lg={6} xs={12}>
-            <Stack direction="column" spacing={2}>
-              <Card
-                sx={{
-                  "&.MuiCard-root": {
-                    boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-                    borderRadius: "10px",
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    "&.MuiCardContent-root": {
-                      padding: "25px 25px 5px",
-                    },
-                  }}
-                >
-                  <div className="add-content">
-                    <AreaChart />
-                  </div>
-                </CardContent>
-              </Card>
-              <div className="add-content">
-                <AboutMe
-                  handleClickOpen={handleClickOpen}
-                  fun={handleToggleModel}
-                  toggle={toggle}
-                />
-              </div>
-              <div className="education-card">
-                <Education fun={handleToggleModel} toggle={toggle} />
-              </div>
-              <div className="education-card">
-                <Languages fun={handleToggleModel} toggle={toggle} />
-              </div>
-            </Stack>
-          </Grid>
-          <Grid xl={6} lg={6} item xs={12}>
-            <Stack direction="column" spacing={2}>
-              <Card
-                sx={{
-                  "&.MuiCard-root": {
-                    boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-                    borderRadius: "10px",
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    "&.MuiCardContent-root": {
-                      padding: "25px",
-                    },
-                  }}
-                >
-                  <JobPreferences fun={handleToggleModel} toggle={toggle} />
-                </CardContent>
-              </Card>
-              <Card
-                sx={{
-                  "&.MuiCard-root": {
-                    boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-                    borderRadius: "10px",
-                  },
-                }}
-              >
-                <CardContent
-                  sx={{
-                    "&.MuiCardContent-root": {
-                      padding: "25px",
-                    },
-                  }}
-                >
-                  <ResumeUpdate
-                    fun={handleToggleModel}
-                    toggle={toggle}
-                    title="Resume"
-                    bgcolor="#FEEFD3"
-                    color="#EEA23D"
-                    description={
-                      <>
-                        <p>
-                          Uploading a resume speeds up your job application
-                          process. It also helps the employer to know more about
-                          your strengths. Job seekers with resume usually find a
-                          job faster 😉
-                        </p>
-                      </>
-                    }
+              <Grid item xl={6} lg={6} xs={12}>
+                <Stack direction="column" spacing={2}>
+                  <Card
+                    sx={{
+                      "&.MuiCard-root": {
+                        boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                        borderRadius: "10px",
+                      },
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        "&.MuiCardContent-root": {
+                          padding: "25px 25px 5px",
+                        },
+                      }}
+                    >
+                      <div className="add-content">
+                        <AreaChart />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card
+                    sx={{
+                      "&.MuiCard-root": {
+                        boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                        borderRadius: "10px",
+                      },
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        "&.MuiCardContent-root": {
+                          padding: "25px",
+                        },
+                      }}
+                    >
+                      <JobPreferences
+                        fun={() => handleToggleModel("job")}
+                        toggle={toggle.includes("job")}
+                      />
+                    </CardContent>
+                  </Card>
+                  <AboutMe
+                    handleClickOpen={handleClickOpen}
+                    fun={() => handleToggleModel("about")}
+                    toggle={toggle.includes("about")}
                   />
-                </CardContent>
-              </Card>
-              <div className="education-card">
-                <WorkExperience fun={handleToggleModel} toggle={toggle} />
-              </div>
-              <div className="education-card">
-                <Skills />
-              </div>
-            </Stack>
-          </Grid>
+
+                  <Card
+                    sx={{
+                      "&.MuiCard-root": {
+                        boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                        borderRadius: "10px",
+                      },
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        "&.MuiCardContent-root": {
+                          padding: "25px",
+                        },
+                      }}
+                    >
+                      <ResumeUpdate
+                        fun={() => handleToggleModel("resume")}
+                        toggle={toggle.includes("resume")}
+                        title="Resume"
+                        bgcolor="#FEEFD3"
+                        color="#EEA23D"
+                        description={
+                          <>
+                            <p>
+                              Uploading a resume speeds up your job application
+                              process. It also helps the employer to know more
+                              about your strengths. Job seekers with resume
+                              usually find a job faster 😉
+                            </p>
+                          </>
+                        }
+                      />
+                    </CardContent>
+                  </Card>
+                  <div className="education-card">
+                    <WorkExperience
+                      fun={() => handleToggleModel("work")}
+                      toggle={toggle.includes("work")}
+                    />
+                  </div>
+                  <div className="education-card">
+                    <Education
+                      fun={() => handleToggleModel("edu")}
+                      toggle={toggle.includes("edu")}
+                    />
+                  </div>
+                  <div className="education-card">
+                    <Skills
+                      fun={() => handleToggleModel("skills")}
+                      toggle={toggle.includes("skills")}
+                    />
+                  </div>
+                  <div className="education-card">
+                    <Languages
+                      fun={() => handleToggleModel("lang")}
+                      toggle={toggle.includes("lang")}
+                    />
+                  </div>
+                </Stack>
+              </Grid>
+            </>
+          ) : (
+            <>
+              <Grid item xl={6} lg={6} xs={12}>
+                <Stack direction="column" spacing={2}>
+                  <Card
+                    sx={{
+                      "&.MuiCard-root": {
+                        boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                        borderRadius: "10px",
+                      },
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        "&.MuiCardContent-root": {
+                          padding: "25px 25px 5px",
+                        },
+                      }}
+                    >
+                      <div className="add-content">
+                        <AreaChart />
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <div className="add-content">
+                    <AboutMe
+                      handleClickOpen={handleClickOpen}
+                      fun={() => handleToggleModel("about")}
+                      toggle={toggle.includes("about")}
+                    />
+                  </div>
+                  <div className="education-card">
+                    <Education
+                      fun={() => handleToggleModel("edu")}
+                      toggle={toggle.includes("edu")}
+                    />
+                  </div>
+                  <div className="education-card">
+                    <Languages
+                      fun={() => handleToggleModel("lang")}
+                      toggle={toggle.includes("lang")}
+                    />
+                  </div>
+                </Stack>
+              </Grid>
+              <Grid xl={6} lg={6} item xs={12}>
+                <Stack direction="column" spacing={2}>
+                  <Card
+                    sx={{
+                      "&.MuiCard-root": {
+                        boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                        borderRadius: "10px",
+                      },
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        "&.MuiCardContent-root": {
+                          padding: "25px",
+                        },
+                      }}
+                    >
+                      <JobPreferences
+                        fun={() => handleToggleModel("job")}
+                        toggle={toggle.includes("job")}
+                      />
+                    </CardContent>
+                  </Card>
+                  <Card
+                    sx={{
+                      "&.MuiCard-root": {
+                        boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
+                        borderRadius: "10px",
+                      },
+                    }}
+                  >
+                    <CardContent
+                      sx={{
+                        "&.MuiCardContent-root": {
+                          padding: "25px",
+                        },
+                      }}
+                    >
+                      <ResumeUpdate
+                        fun={handleToggleModel}
+                        toggle={toggle}
+                        title="Resume"
+                        bgcolor="#FEEFD3"
+                        color="#EEA23D"
+                        description={
+                          <>
+                            <p>
+                              Uploading a resume speeds up your job application
+                              process. It also helps the employer to know more
+                              about your strengths. Job seekers with resume
+                              usually find a job faster 😉
+                            </p>
+                          </>
+                        }
+                      />
+                    </CardContent>
+                  </Card>
+                  <div className="education-card">
+                    <WorkExperience
+                      fun={() => handleToggleModel("work")}
+                      toggle={toggle.includes("work")}
+                    />
+                  </div>
+                  <div className="education-card">
+                    <Skills
+                      fun={() => handleToggleModel("skills")}
+                      toggle={toggle.includes("skills")}
+                    />
+                  </div>
+                </Stack>
+              </Grid>
+            </>
+          )}
         </Grid>
       </div>
       <DialogBox open={open} handleClose={handleClose}>

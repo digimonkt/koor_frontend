@@ -1,9 +1,11 @@
+import { Capacitor } from "@capacitor/core";
 import { SVG } from "../../../assets/svg";
 import { CheckboxInput } from "../../../components/input";
 import { Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 function CategoryCard({ item, handleSelectedCategories }) {
+  const platform = Capacitor.getPlatform();
   const [showOptions, setShowOptions] = useState(true);
   const [isAllSubCategoriesSelected, setIsAllSubCategoriesSelected] =
     useState(false);
@@ -34,8 +36,20 @@ function CategoryCard({ item, handleSelectedCategories }) {
     setIsAllSubCategoriesSelected(isAllSelected);
   }, [item]);
   return (
-    <div className="according-content-box border-top py-3">
-      <Stack direction="row" spacing={1} alignItems="center">
+    <div
+      className={`according-content-box py-3 ${
+        platform === "android" || platform === "ios" ? "pt-0" : "border-top"
+      }`}
+    >
+      <Stack
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        sx={{
+          marginBottom:
+            platform === "android" || platform === "ios" ? "10px" : "",
+        }}
+      >
         <CheckboxInput
           onChange={(e) => handleSelectAll(e.target.checked)}
           checked={isAllSubCategoriesSelected}
@@ -55,16 +69,19 @@ function CategoryCard({ item, handleSelectedCategories }) {
             {item.subCategories.map((subCategory) => {
               return (
                 <li key={subCategory.id}>
-                  <label htmlFor={`checkbox-${subCategory.id}`} style={{ cursor: "pointer" }}>
-                  <CheckboxInput
+                  <label
+                    htmlFor={`checkbox-${subCategory.id}`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <CheckboxInput
                       id={`checkbox-${subCategory.id}`}
-                    onChange={(e) =>
-                      handleSelect(subCategory.id, e.target.checked)
-                    }
-                    checked={subCategory.status}
-                  />
-                  <span className="ms-2">{subCategory.title}</span>
-                </label>
+                      onChange={(e) =>
+                        handleSelect(subCategory.id, e.target.checked)
+                      }
+                      checked={subCategory.status}
+                    />
+                    <span className="ms-2">{subCategory.title}</span>
+                  </label>
                 </li>
               );
             })}

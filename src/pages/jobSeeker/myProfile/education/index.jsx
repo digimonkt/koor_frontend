@@ -67,7 +67,7 @@ const Education = (props) => {
             </Stack>
             {platform === "android" || platform === "ios" ? (
               <>
-                {props.toggle === false ? (
+                {props.toggle ? (
                   <div>
                     <>
                       {educationRecord.length ? (

@@ -10,8 +10,10 @@ import { UpdateJobSeekerAdditionalParametersAPI } from "../../../api/jobSeeker";
 import { useNavigate } from "react-router-dom";
 import { USER_ROLES } from "../../../utils/enum";
 import { updateCurrentUser } from "../../../redux/slice/user";
+import { Capacitor } from "@capacitor/core";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
+  const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -85,10 +87,19 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   }, [selectedCountry]);
   return (
     <div className="p-3">
-      <Divider />
-      <div className="py-3 additional-box">
+      {platform === "android" || platform === "ios" ? null : <Divider />}
+
+      <div
+        className={`additional-box ${
+          platform === "android" || platform === "ios" ? "pt-0" : "py-3"
+        }`}
+      >
         <Grid container spacing={2} item>
-          <Grid item md={6} xs={12}>
+          <Grid
+            item
+            md={6}
+            xs={platform === "android" || platform === "ios" ? "6" : "12"}
+          >
             <FormControl fullWidth size="small">
               <label className="d-block mb-2">Country</label>
               <SelectInput
@@ -103,7 +114,11 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               />
             </FormControl>
           </Grid>
-          <Grid item md={6} xs={12}>
+          <Grid
+            item
+            md={6}
+            xs={platform === "android" || platform === "ios" ? "6" : "12"}
+          >
             <FormControl fullWidth size="small">
               <label className="d-block mb-2">City</label>
               <SelectInput

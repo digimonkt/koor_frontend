@@ -121,6 +121,9 @@ import { ReactComponent as HamburgerMenu } from "./hamburger_menu.svg";
 import { ReactComponent as AdvancedDown } from "./advanced_down.svg";
 import { ReactComponent as AppGroup } from "./app-group.svg";
 import { ReactComponent as Settings } from "./settings.svg";
+import { ReactComponent as JobsSeekerIcon } from "./jobseeker.svg";
+import { ReactComponent as UserProfile } from "./userProfile.svg";
+import { ReactComponent as SplashLogo } from "./splash-logo.svg";
 export const SVG = {
   AdvancedDown,
   HamburgerMenu,
@@ -245,4 +248,7 @@ export const SVG = {
   arrowDown,
   AppGroup,
   Settings,
+  JobsSeekerIcon,
+  UserProfile,
+  SplashLogo,
 };

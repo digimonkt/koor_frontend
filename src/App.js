@@ -77,9 +77,8 @@ function App() {
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
       <div style={{ display: isGlobalLoading ? "none" : "" }}>
-        {/* {platform === "android" || platform === "ios" ? null : <Header />} */}
+        {platform === "android" || platform === "ios" ? <Header /> : <Header />}
 
-        <Header />
         <Routes>
           {ROUTES.map((route) => {
             return (

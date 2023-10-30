@@ -65,7 +65,7 @@ const Languages = (props) => {
             </Stack>
             {platform === "android" || platform === "ios" ? (
               <>
-                {props.toggle === false ? (
+                {props.toggle ? (
                   <>
                     <ul className="listitems mt-4">
                       {languages.length ? (

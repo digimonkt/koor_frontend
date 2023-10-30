@@ -74,19 +74,15 @@ const ResumeUpdate = ({
         </Stack>
         {platform === "android" || platform === "ios" ? (
           <>
-            {toggle === false ? (
+            {toggle ? (
               <div>
-                <Stack
-                  direction={{ xs: "column", lg: "row" }}
-                  spacing={2}
-                  className="mt-4"
-                >
+                <Stack direction={"row"} spacing={2} className="mt-4">
                   <IconButton
                     sx={{
                       "&.MuiIconButton-root": {
                         backgroundColor: bgcolor,
-                        width: "101px",
-                        height: "101px",
+                        width: "60px",
+                        height: "60px",
                         color,
                         "@media (max-width:540px)": {
                           margin: "auto",

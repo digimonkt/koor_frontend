@@ -64,7 +64,7 @@ const WorkExperience = (props) => {
             </Stack>
             {platform === "android" || platform === "ios" ? (
               <div>
-                {props.toggle === false ? (
+                {props.toggle ? (
                   <>
                     <ul className="listitems mt-4">
                       {workExperiences.length ? (
