@@ -17,6 +17,15 @@ export const validateCreateJobInput = Yup.object().shape({
   isPartTime: Yup.boolean(),
   hasContract: Yup.boolean(),
   isContactEmail: Yup.boolean(),
+  isApplyThroughKoor: Yup.boolean(),
+  isApplyThroughEmail: Yup.boolean(),
+  isApplyThroughWebsite: Yup.boolean(),
+  applicationInstruction: Yup.string().required("Application instructions are required"),
+  websiteLink: Yup.string().when("isApplyThroughWebsite", {
+    is: true,
+    then: Yup.string().required("Website link is required"),
+    otherwise: Yup.string() // Not required when isApplyThroughWebsite is false
+  }),
   duration: Yup.number(),
   experience: Yup.number().typeError("Experience must be a number").required("Experience is required"),
   deadline: Yup.string().nullable()
@@ -26,15 +35,24 @@ export const validateCreateJobInput = Yup.object().shape({
     }),
   startDate: Yup.string().nullable()
     .required("Start Date is required"),
+  // contactEmail: Yup.string()
+  //   .email()
+  //   .test("ifPresent", "Contact Email is required", (value, context) => {
+  //     const { parent } = context;
+  //     if (parent.isContactEmail) {
+  //       return parent.contactEmail;
+  //     } else {
+  //       return true;
+  //     }
+  //   }),
   contactEmail: Yup.string()
-    .email()
-    .test("ifPresent", "Contact Email is required", (value, context) => {
-      const { parent } = context;
-      if (parent.isContactEmail) {
-        return parent.contactEmail;
-      } else {
-        return true;
+    .email("Invalid Email")
+    .test("atLeastOneContactMethod", "At least one email is required", function (value) {
+      const { isApplyThroughEmail } = this.parent;
+      if (isApplyThroughEmail) {
+        return value || this.parent.cc1 || this.parent.cc2;
       }
+      return true; // Not required when isApplyThroughEmail is false
     }),
   cc1: Yup.string().email("Invalid Email"),
   cc2: Yup.string().email("Invalid Email"),
@@ -52,25 +70,6 @@ export const validateCreateJobInput = Yup.object().shape({
     }
   ),
   highestEducation: Yup.string(),
-  // languages: Yup.array()
-  //   .of(
-  //     Yup.object().shape({
-  //       id: Yup.string(),
-  //     })
-  //   )
-  //   .test(
-  //     "atLeastOneLanguage",
-  //     "At Least one Language required",
-  //     (value, context) => {
-  //       let isPresent = false;
-  //       value.forEach((val) => {
-  //         if (val.language) {
-  //           isPresent = true;
-  //         }
-  //       });
-  //       return isPresent;
-  //     }
-  //   ),
   languages: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Language is required"),
   skills: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Skill is required"),
 });

@@ -48,6 +48,7 @@ function Dashboard() {
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
+  console.log({ isMoreApplicationsAvailable });
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>
@@ -156,29 +157,30 @@ function Dashboard() {
                     );
                   })
                 )}
-
-                <div className="text-center mt-4">
-                  <OutlinedButton
-                    title="Show more"
-                    sx={{
-                      "&.MuiButton-outlined": {
-                        borderRadius: "73px",
-                        border: "1px solid #274593",
-                        color: "#274593",
-                        fontWeight: "500",
-                        fontSize: "16px",
-                        fontFamily: "Bahnschrift",
-                        padding: "10px 30px",
-                        background: !isMoreApplicationsAvailable
-                          ? "#e3e3e3"
-                          : "",
-                        "&:hover": { background: "#1976d20a" },
-                      },
-                    }}
-                    onClick={handleShowMore}
-                    disabled={!isMoreApplicationsAvailable}
-                  />
-                </div>
+                {isMoreApplicationsAvailable && (
+                  <div className="text-center mt-4">
+                    <OutlinedButton
+                      title="Show more"
+                      sx={{
+                        "&.MuiButton-outlined": {
+                          borderRadius: "73px",
+                          border: "1px solid #274593",
+                          color: "#274593",
+                          fontWeight: "500",
+                          fontSize: "16px",
+                          fontFamily: "Bahnschrift",
+                          padding: "10px 30px",
+                          background: !isMoreApplicationsAvailable
+                            ? "#e3e3e3"
+                            : "",
+                          "&:hover": { background: "#1976d20a" },
+                        },
+                      }}
+                      onClick={handleShowMore}
+                      disabled={!isMoreApplicationsAvailable}
+                    />
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

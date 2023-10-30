@@ -156,3 +156,9 @@ export const getJobAttachmentAPI = async (filePath) => {
     method: "GET",
   });
 };
+export const getApplyJobByEmailAPI = async (jobId) => {
+  return await api.request({
+    url: urlcat("v1/users/job-seeker/jobs/apply/by_email/:jobId", { jobId }),
+    method: "POST",
+  });
+};
