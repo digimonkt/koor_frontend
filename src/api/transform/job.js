@@ -82,6 +82,11 @@ export const transformFullJobDetails = (data) => {
     status: data.status,
     applicant: data.applicant,
     createdAt: data.created,
+    isApplyThroughKoor: data.apply_through_koor,
+    isApplyThroughEmail: data.apply_through_email,
+    isApplyThroughWebsite: data.apply_through_website,
+    applicationInstruction: data.application_instruction,
+    websiteLink: data.website_link,
     expiredInDays: dayjs(data.deadline).diff(
       dayjs(new Date().toISOString().split("T")[0]),
       "day",
