@@ -11,7 +11,9 @@ function VendorCard({ vendorDetails }) {
   const [showFullText, setShowFullText] = useState(false);
   const [description, setDescription] = useState("");
   const maxLength = 300;
-  const textToShow = showFullText ? description : description.slice(0, maxLength);
+  const textToShow = showFullText
+    ? description
+    : description.slice(0, maxLength);
   const handleMessageClick = async () => {
     const res = await getConversationIdByUserIdAPI({
       userId: vendorDetails?.id,
@@ -94,12 +96,12 @@ function VendorCard({ vendorDetails }) {
           </Stack>
           <div className="recent-descrition">
             <p>{textToShow}</p>
-            {description.length > maxLength && (
-              <a onClick={toggleText}>
-                {showFullText ? "See less" : "See more"}
-              </a>
-            )}
           </div>
+          {description.length > maxLength && (
+            <a onClick={toggleText} className="see_more_anchor">
+              {showFullText ? "See less" : "See more"}
+            </a>
+          )}
           <Stack
             direction="row"
             spacing={2}
@@ -132,7 +134,7 @@ function VendorCard({ vendorDetails }) {
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
         <Stack direction="row" spacing={0} className="edit-button">
-          {vendorDetails.readyForChat &&
+          {vendorDetails.readyForChat && (
             <Button variant="link" onClick={handleMessageClick}>
               <SVG.MessageIcon
                 style={{
@@ -142,7 +144,7 @@ function VendorCard({ vendorDetails }) {
               />
               <span>Message</span>
             </Button>
-          }
+          )}
         </Stack>
       </Stack>
     </Stack>

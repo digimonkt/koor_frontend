@@ -70,6 +70,7 @@
   display: flex !important;
   justify-content: space-between;
   align-items: center;
+  cursor: default;
 }
 
 .settings {
@@ -96,6 +97,7 @@
   line-height: 24px !important;
   color: #848484 !important;
   text-align: right;
+  cursor: pointer;
 }
 
 .notification_card {
