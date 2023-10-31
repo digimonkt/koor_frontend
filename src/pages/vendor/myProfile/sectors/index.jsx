@@ -37,20 +37,31 @@ const Sectors = () => {
       prevState.filter((state) => state.id !== id)
     );
   };
-
+  const checkIfEmpty = (tagAdd, tagRemove) => {
+    // Check if both sector_add and sector_remove are empty arrays
+    return tagAdd.length !== 0 || tagRemove.length !== 0;
+  };
   const updateSectors = async () => {
     setLoading(true);
     const payload = {
       sector_add: newSelectedSectors.map((sector) => sector.id),
       sector_remove: removedSectors,
     };
-    const res = await addSectorsDetailsAPI(payload);
-    if (res.remote === "success") {
-      dispatch(setSuccessToast("Sectors updated successfully"));
+    const shouldDispatch = checkIfEmpty(payload.sector_add, payload.sector_remove);
+    if (shouldDispatch) {
+      const res = await addSectorsDetailsAPI(payload);
+      if (res.remote === "success") {
+        setNewSelectedSectors([]);
+        setRemovedSectors([]);
+        dispatch(setSuccessToast("Sectors updated successfully"));
+      } else {
+        dispatch(setErrorToast("Something went wrong"));
+      }
+      setLoading(false);
     } else {
-      dispatch(setErrorToast("Something went wrong"));
+      dispatch(setErrorToast("Please select at least one sector"));
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
