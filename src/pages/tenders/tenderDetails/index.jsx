@@ -27,6 +27,7 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
+import { getColorByRemainingDays } from "@utils/generateColor";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -244,9 +245,13 @@ function TenderDetailsComponent() {
                     style={{
                       marginLeft: "20px",
                       cursor: "default",
-                      color: "#ffffff",
+                      // color: "#ffffff",
                     }}
-                    color="#4CAF50"
+                    color={getColorByRemainingDays(
+                      details?.expiredInDays > -1
+                        ? details?.expiredInDays
+                        : 0
+                    )}
                   />
                 </div>
               </Grid>
@@ -334,11 +339,11 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for the Tender",
-                            ]
+                            <>
+                              <SVG.Enable1 className="me-2" />
+                            </>,
+                            "Apply for the Tender",
+                          ]
                       }
                       sx={{
                         padding: "10px 0px !important",
@@ -395,11 +400,11 @@ function TenderDetailsComponent() {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.BlueSaveIcon className="me-2" />
-                                </>,
-                                "Save Tender",
-                              ]
+                              <>
+                                <SVG.BlueSaveIcon className="me-2" />
+                              </>,
+                              "Save Tender",
+                            ]
                         }
                         sx={{
                           height: "44px",
