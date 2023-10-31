@@ -32,6 +32,7 @@ import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Box, Divider, Stack } from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
+import { showDay } from "@utils/constants/utility";
 
 const JobDetails = () => {
   const params = useParams();
@@ -267,15 +268,19 @@ const JobDetails = () => {
                     <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
                   </p>
                   <SolidButton
+                    className={details?.expiredInDays > 0
+                      ? "btn_font_lower"
+                      : "btn_font_capitalize"}
                     title={
-                      details.expiredInDays > -1
-                        ? `${details.expiredInDays} Days`
+                      details?.expiredInDays > 0
+                        ? showDay(details?.expiredInDays)
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details.expiredInDays > -1 ? details.expiredInDays : -1
+                      details?.expiredInDays > 0
+                        ? details?.expiredInDays
+                        : 0
                     )}
-                    className={styles.details_day_button}
                   />
                 </div>
               </Grid>
