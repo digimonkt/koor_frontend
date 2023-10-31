@@ -638,12 +638,13 @@ header {
   position: relative;
 }
 
-.showpassword>div>svg {
+.showpassword .password_svg {
   cursor: pointer;
   position: absolute;
-  width: 20px;
+  width: 24px;
+  height: 24px;
   right: 14px;
-  top: 50%;
+  top: 52%;
   transform: translate(0%, -50%);
 }
 
@@ -2181,7 +2182,7 @@ a {
 }
 
 input.employersearch {
-  padding: 10px 10px 10px 35px;
+  padding: 10px 10px 10px 50px;
   background: transparent;
   border: 0;
   width: 100%;
@@ -2196,6 +2197,7 @@ input.employersearch {
   /* Dark grey */
   color: #848484;
   outline: none;
+  z-index: 9999;
 }
 
 .job_card_hr {
