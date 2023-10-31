@@ -124,7 +124,11 @@ import { ReactComponent as Settings } from "./settings.svg";
 import { ReactComponent as JobsSeekerIcon } from "./jobseeker.svg";
 import { ReactComponent as UserProfile } from "./userProfile.svg";
 import { ReactComponent as SplashLogo } from "./splash-logo.svg";
+import { ReactComponent as Sector } from "./sector.svg";
+import { ReactComponent as Tag } from "./tag.svg";
+import { ReactComponent as ArrowOutward } from "./arrow_outward.svg";
 export const SVG = {
+  ArrowOutward,
   AdvancedDown,
   HamburgerMenu,
   BlueAttach,
@@ -251,4 +255,6 @@ export const SVG = {
   JobsSeekerIcon,
   UserProfile,
   SplashLogo,
+  Sector,
+  Tag,
 };

@@ -3,10 +3,12 @@ import {
   Card,
   CardContent,
   Divider,
+  FormControlLabel,
   FormGroup,
   Grid,
   IconButton,
   Stack,
+  Switch,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -112,6 +114,11 @@ function PostJobsComponent() {
       deadline: "",
       startDate: "",
       isContactEmail: false,
+      isApplyThroughKoor: false,
+      isApplyThroughEmail: false,
+      isApplyThroughWebsite: false,
+      websiteLink: "",
+      applicationInstruction: "",
       contactEmail: "",
       cc1: "",
       cc2: "",
@@ -147,9 +154,9 @@ function PostJobsComponent() {
         start_date: values.startDate
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
-        contact_email: values.isContactEmail ? values.contactEmail : "",
-        cc1: values.isContactEmail ? values.cc1 : "",
-        cc2: values.isContactEmail ? values.cc2 : "",
+        contact_email: values.isApplyThroughEmail ? values.contactEmail : "",
+        cc1: values.isApplyThroughEmail ? values.cc1 : "",
+        cc2: values.isApplyThroughEmail ? values.cc2 : "",
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
@@ -160,6 +167,11 @@ function PostJobsComponent() {
         attachments_remove: values.attachmentsRemove,
         duration: values.duration,
         experience: values.experience,
+        apply_through_koor: values.isApplyThroughKoor || false,
+        apply_through_email: values.isApplyThroughEmail || false,
+        apply_through_website: values.isApplyThroughWebsite || "false",
+        application_instruction: values.applicationInstruction,
+        website_link: values.websiteLink
       };
       const newFormData = new FormData();
       for (const key in payload) {
@@ -244,6 +256,11 @@ function PostJobsComponent() {
       formik.setFieldValue("cc2", data.cc2);
       formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
+      formik.setFieldValue("isApplyThroughKoor", Boolean(data.isApplyThroughKoor));
+      formik.setFieldValue("isApplyThroughEmail", Boolean(data.isApplyThroughEmail));
+      formik.setFieldValue("isApplyThroughWebsite", Boolean(data.isApplyThroughWebsite));
+      formik.setFieldValue("applicationInstruction", data.applicationInstruction);
+      formik.setFieldValue("websiteLink", data.websiteLink);
       formik.setFieldValue("highestEducation", data.highestEducation.id || "");
       // !TEMPORARY SOLUTION
       formik.setFieldValue(
@@ -559,7 +576,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                        formik.errors.jobCategories ? (
+                          formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -575,7 +592,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                              formik.values.jobCategories
+                            formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -584,7 +601,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                        formik.errors.jobSubCategory ? (
+                          formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -712,24 +729,35 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-3">Ways to apply</h2>
                   </Grid>
+                  <Grid item xl={12} lg={12} sm={12} xs={12}>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Switch />}
+                        label="Apply through Koor"
+                        checked={formik.values.isApplyThroughKoor}
+                        {...formik.getFieldProps("isApplyThroughKoor")}
+                      />
+                    </FormGroup>
+                  </Grid>
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
-                    <JobFormControl
-                      control={<CheckboxInput />}
-                      label="Apply by email"
-                      checked={formik.values.isContactEmail}
-                      {...formik.getFieldProps("isContactEmail")}
-                    />
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Switch />}
+                        label="Apply by email"
+                        checked={formik.values.isApplyThroughEmail}
+                        {...formik.getFieldProps("isApplyThroughEmail")}
+                      />
+                    </FormGroup>
                     <input
                       className="add-form-control"
                       placeholder="Your email address"
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                    formik.errors.contactEmail ? (
+                      formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
-
                   <Grid
                     item
                     xl={4}
@@ -769,6 +797,38 @@ function PostJobsComponent() {
                     />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
+                    <LabeledInput
+                      title="Application Instructions"
+                      className="add-form-control"
+                      placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
+                      required
+                      {...formik.getFieldProps("applicationInstruction")}
+                    />
+                    {formik.touched.applicationInstruction && formik.errors.applicationInstruction ? (
+                      <ErrorMessage>{formik.errors.applicationInstruction}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={12} lg={12} xs={12}>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Switch />}
+                        label="Apply through your website"
+                        checked={formik.values.isApplyThroughWebsite}
+                        {...formik.getFieldProps("isApplyThroughWebsite")}
+                      />
+                    </FormGroup>
+                    <LabeledInput
+                      title=""
+                      className="add-form-control"
+                      placeholder="Paste a link to your website’s application form"
+                      required
+                      {...formik.getFieldProps("websiteLink")}
+                    />
+                    {formik.touched.websiteLink && formik.errors.websiteLink ? (
+                      <ErrorMessage>{formik.errors.websiteLink}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
@@ -786,7 +846,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                    formik.errors.highestEducation ? (
+                      formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -890,8 +950,7 @@ function PostJobsComponent() {
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
-                          `Maximum 10 files allowed. you can upload only ${
-                            10 - currentAttachments.length
+                          `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length
                           } remaining`
                         );
                       } else {
@@ -976,8 +1035,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                          ? "UPDATE THE JOB"
-                          : "POST NEW JOB"
+                            ? "UPDATE THE JOB"
+                            : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1038,8 +1097,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                          ? "UPDATE THE JOB"
-                          : "POST NEW JOB"
+                            ? "UPDATE THE JOB"
+                            : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
