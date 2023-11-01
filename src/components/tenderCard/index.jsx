@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
-import { capitalizeFirst } from "@utils/constants/utility";
+import { capitalizeFirst, showDay } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 import { updateEmployerTenderStatusAPI } from "@api/employer";
 import { USER_ROLES } from "@utils/enum";
@@ -94,14 +94,16 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 <div>
                   <div className="text-end w-100 mb-4">
                     <SolidButton
-                      style={{ textTransform: "lowercase", cursor: "default" }}
+                      className={tenderDetails?.expiredInDays > 0
+                        ? "btn_font_lower"
+                        : "btn_font_capitalize"}
                       title={
-                        tenderDetails?.expiredInDays > -1
-                          ? `${tenderDetails?.expiredInDays} days left`
+                        tenderDetails?.expiredInDays > 0
+                          ? showDay(tenderDetails?.expiredInDays)
                           : "Expired"
                       }
                       color={getColorByRemainingDays(
-                        tenderDetails?.expiredInDays > -1
+                        tenderDetails?.expiredInDays > 0
                           ? tenderDetails?.expiredInDays
                           : 0
                       )}
@@ -273,7 +275,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   display: "block",
                 },
               }}
-              // divider={<Divider orientation="vertical" flexItem />}
+            // divider={<Divider orientation="vertical" flexItem />}
             >
               {!selfTender && (
                 <Stack direction="row" spacing={1}>
@@ -307,14 +309,17 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
           >
             <div className="text-end">
               <SolidButton
-                style={{ textTransform: "lowercase", cursor: "default" }}
+                // style={{ textTransform: "capitalize", cursor: "default" }}
+                className={tenderDetails?.expiredInDays > 0
+                  ? "btn_font_lower"
+                  : "btn_font_capitalize"}
                 title={
-                  tenderDetails?.expiredInDays > -1
-                    ? `${tenderDetails?.expiredInDays} days left`
+                  tenderDetails?.expiredInDays > 0
+                    ? showDay(tenderDetails?.expiredInDays)
                     : "Expired"
                 }
                 color={getColorByRemainingDays(
-                  tenderDetails?.expiredInDays > -1
+                  tenderDetails?.expiredInDays > 0
                     ? tenderDetails?.expiredInDays
                     : 0
                 )}

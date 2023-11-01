@@ -1,36 +1,36 @@
 import dayjs from "dayjs";
-
 export const transformTenderResponse = (data) => {
   return {
     count: data.count,
     next: data.next,
     previous: data.previous,
-    results: data.results.map((res) => ({
-      id: res.id,
-      title: res.title,
-      description: res.description,
-      sector: res.sector,
-      isApplied: res.is_applied,
-      isSaved: res.is_saved,
-      vendor: res.vendor,
-      status: res.status,
-      createdAt: res.created,
-      expiredInDays: dayjs(res.deadline).diff(
-        dayjs(new Date().toISOString().split("T")[0]),
-        "day",
-        true
-      ),
-      tenderCategory: (res.tender_category || []).map((category) => ({
-        id: category.id,
-        title: category.title,
-      })),
-      user: {
-        id: res.user.id,
-        name: res.user.name,
-        email: res.user.email,
-        image: res.user.image,
-      },
-    })),
+    results: data.results.map((res) => {
+      const today = dayjs(new Date().toISOString().split("T")[0]);
+      const tomorrow = today.add(-1, "day");
+      const deadline = dayjs(res.deadline);
+      return {
+        id: res.id,
+        title: res.title,
+        description: res.description,
+        sector: res.sector,
+        isApplied: res.is_applied,
+        isSaved: res.is_saved,
+        vendor: res.vendor,
+        status: res.status,
+        createdAt: res.created,
+        expiredInDays: deadline.diff(tomorrow, "day", true),
+        tenderCategory: (res.tender_category || []).map((category) => ({
+          id: category.id,
+          title: category.title,
+        })),
+        user: {
+          id: res.user.id,
+          name: res.user.name,
+          email: res.user.email,
+          image: res.user.image,
+        },
+      };
+    }),
   };
 };
 export const transformFullTenderDetails = (data) => {
