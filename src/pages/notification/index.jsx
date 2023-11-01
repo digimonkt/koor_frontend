@@ -10,15 +10,34 @@ function Notification() {
   const navigate = useNavigate();
   const platform = Capacitor.getPlatform();
   return (
-    <div className={styles.notification}>
+    <div
+      style={{
+        paddingTop:
+          platform === "android" || platform === "ios" ? "0px ! important" : "",
+      }}
+    >
       <Container
-      // sx={{
-      //   "@media(min-width:992px)": {
-      //     maxWidth: "1240px",
-      //   },
-      // }}
+        sx={{
+          padding:
+            platform === "android" || platform === "ios"
+              ? "0px ! important"
+              : "",
+        }}
+        // sx={{
+        //   "@media(min-width:992px)": {
+        //     maxWidth: "1240px",
+        //   },
+        // }}
       >
-        <div className={styles.content}>
+        <div
+          className={styles.content}
+          style={{
+            borderRadius:
+              platform === "android" || platform === "ios"
+                ? "0px !important"
+                : "",
+          }}
+        >
           <h3 className={`${styles.content_heading}`}>
             {platform === "android" || platform === "ios" ? (
               <IconButton onClick={() => navigate(-1)}>
