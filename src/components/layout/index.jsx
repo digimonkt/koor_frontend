@@ -25,7 +25,7 @@ function Layout() {
       sx={{
         display: "flex",
         marginTop: "80px",
-        minHeight: "93vh",
+        minHeight: "calc(100vh - 100px)",
         "@media(max-width:992px)": {
           display: "block",
         },
@@ -40,11 +40,9 @@ function Layout() {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
           width: { lg: `calc(100% - ${"300"}px)` },
-          background: "#E5E5E5",
-          minHeight: "544px",
         }}
+        className="main_component_class"
       >
         <IconButton
           color="inherit"

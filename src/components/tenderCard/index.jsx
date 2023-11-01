@@ -215,8 +215,8 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
           }}
         >
           <div className="my-jobs">
-            <Link to={`/tender/details/${tenderDetails?.id || "tenderId"}`}>
-              <h2>
+            <h2>
+              <Link to={`/tender/details/${tenderDetails?.id || "tenderId"}`}>
                 {tenderDetails?.title || ""}
                 {tenderDetails.isApplied ? (
                   <Chip
@@ -229,8 +229,8 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     }}
                   />
                 ) : null}
-              </h2>
-            </Link>
+              </Link>
+            </h2>
             <p className="job-description card-description mt-1 mb-3">
               {tenderDetails?.description}
             </p>
@@ -239,6 +239,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{
                 width: "100%",
+                flexWrap: "wrap",
                 "@media (max-width: 667px)": {
                   overflow: "hidden",
                   overflowX: "auto",

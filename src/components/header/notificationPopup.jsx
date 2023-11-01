@@ -79,7 +79,10 @@ function NotificationPopup() {
               </div>
             </div>
           </MenuItem>
-          <MenuItem className="w-100" sx={{ padding: "0px 0px 0px 15px" }}>
+          <MenuItem
+            className="w-100"
+            sx={{ padding: "0px", cursor: "default" }}
+          >
             <NotificationContent footer handleClose={handleClose} />
           </MenuItem>
         </div>
