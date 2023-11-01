@@ -1,9 +1,14 @@
 import NotificationContent from "../../components/notification";
-import { Container } from "@mui/material";
+import { Container, IconButton } from "@mui/material";
 import React from "react";
 import styles from "./notification.module.css";
+import { SVG } from "@assets/svg";
+import { Capacitor } from "@capacitor/core";
+import { useNavigate } from "react-router-dom";
 
 function Notification() {
+  const navigate = useNavigate();
+  const platform = Capacitor.getPlatform();
   return (
     <div className={styles.notification}>
       <Container
@@ -14,10 +19,19 @@ function Notification() {
       // }}
       >
         <div className={styles.content}>
-          <h3 className={`${styles.content_heading}`}>Notifications</h3>
+          <h3 className={`${styles.content_heading}`}>
+            {platform === "android" || platform === "ios" ? (
+              <IconButton onClick={() => navigate(-1)}>
+                <SVG.BackArrow />
+              </IconButton>
+            ) : (
+              ""
+            )}
+            Notifications
+          </h3>
           <div className={styles.content_tabs} style={{ marginTop: "15px" }}>
             <div className="content_notifi">
-              <NotificationContent header handleClose={() => { }} />
+              <NotificationContent header handleClose={() => {}} />
             </div>
           </div>
         </div>

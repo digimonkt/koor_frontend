@@ -112,7 +112,10 @@ const ResumeUpdate = ({
                         border: "1px solid #EEA23D !important",
                         color: "#EEA23D !important",
                         fontWeight: "500",
-                        fontSize: "16px",
+                        fontSize:
+                          platform === "android" || platform === "ios"
+                            ? "15px !important"
+                            : "16px",
                         padding: "6px 30px",
                         width: buttonWidth,
                         height: "42px",

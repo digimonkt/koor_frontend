@@ -856,7 +856,15 @@ const AboutMe = (props) => {
       </Card>
       <DialogBox open={open} handleClose={handleToggleModel}>
         <div className="add-content">
-          <h2 className="mb-4">Great!</h2>
+          <h2
+            className={`mb-4 ${
+              platform === "android" || platform === "ios"
+                ? "text-start"
+                : "text-center"
+            }`}
+          >
+            Great!
+          </h2>
           <>
             <div>
               <NoItem

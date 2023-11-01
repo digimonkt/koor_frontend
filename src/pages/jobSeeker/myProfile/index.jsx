@@ -14,6 +14,7 @@ import AboutMe from "../aboutMe";
 import { Capacitor } from "@capacitor/core";
 import { IMAGES } from "@assets/images";
 import { SVG } from "@assets/svg";
+import { Link } from "react-router-dom";
 
 const MyProfile = () => {
   const [open, setOpen] = useState(false);
@@ -62,7 +63,7 @@ const MyProfile = () => {
                     <IconButton>
                       <SVG.Settings />
                     </IconButton>
-                    <IconButton>
+                    <IconButton LinkComponent={Link} to="/notification">
                       <SVG.NotificationIcon />
                     </IconButton>
                   </Stack>

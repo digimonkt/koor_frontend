@@ -231,7 +231,8 @@ function Search() {
                       }}
                     />
                   </h2>
-                  {(searchType === SEARCH_TYPE.jobs && jobs.length) || (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
+                  {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
+                  (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                     <>
                       <IconButton
                         sx={{ width: "50px", height: "50px" }}
@@ -317,7 +318,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                      orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                       ? role === USER_ROLES.jobSeeker
                                         ? "#FEEFD3"
                                         : "#D5E3F7"
@@ -363,7 +364,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                      orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                       ? role === USER_ROLES.vendors
                                         ? "#FEEFD3"
                                         : "#D5E3F7"
