@@ -16,11 +16,10 @@ function MessageNotificationCard({
   conversion,
   userId,
 }) {
-  // + `#${messageId}`
   return (
     <Link
       onClick={() => handleClose()}
-      to={urlcat(`/${role}/chat`, { conversion, userId })}
+      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}
     >
       <div
         className={`${styles.content_div}`}
@@ -77,7 +76,7 @@ function MessageNotificationCard({
           </p>
         </Box>
       </div>
-    </Link>
+    </ Link>
   );
 }
 
