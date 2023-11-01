@@ -121,6 +121,7 @@
   font-family: "poppins";
   margin-right: 15px !important;
   cursor: default !important;
+  position: unset !important;
 }
 
 @media screen and (max-width: 540px) {

@@ -97,7 +97,10 @@ function LabeledInputComponent({
           />
           {icon && <div>{icon}</div>}
           {type === "password" ? (
-            <div onClick={handleChangePasswordVisibility}>
+            <div
+              onClick={handleChangePasswordVisibility}
+              className="password_svg"
+            >
               {!isVisiblePassword ? <SVG.EyeOpen /> : <SVG.EyeOff />}
             </div>
           ) : (

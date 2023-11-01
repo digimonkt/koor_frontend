@@ -15,11 +15,25 @@ import { Capacitor } from "@capacitor/core";
 import { IMAGES } from "@assets/images";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
+import { setIsLoggedIn } from "../../../redux/slice/user";
+import { LogoutUserAPI } from "@api/user";
+import { globalLocalStorage } from "@utils/localStorage";
+import { useDispatch } from "react-redux";
 
 const MyProfile = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const platform = Capacitor.getPlatform();
   const [toggle, setToggle] = useState(["job"]);
+
+  const userLogout = async () => {
+    await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
+  };
+  const logoutHandle = () => {
+    userLogout();
+    dispatch(setIsLoggedIn(false));
+  };
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
@@ -57,10 +71,10 @@ const MyProfile = () => {
                 >
                   <h1>My profile</h1>
                   <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
-                    <IconButton>
+                    <IconButton onClick={() => logoutHandle()}>
                       <SVG.AppGroup />
                     </IconButton>
-                    <IconButton>
+                    <IconButton LinkComponent={Link} to="/Setting">
                       <SVG.Settings />
                     </IconButton>
                     <IconButton LinkComponent={Link} to="/notification">

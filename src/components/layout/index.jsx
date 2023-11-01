@@ -27,7 +27,8 @@ function Layout() {
     <Box
       sx={{
         display: "flex",
-        marginTop: "80px",
+        marginTop:
+          platform === "android" || platform === "ios" ? "0px" : "80px",
         minHeight: "93vh",
         "@media(max-width:992px)": {
           display: "block",

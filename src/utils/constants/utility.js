@@ -12,3 +12,11 @@ export const processRoleToDisplay = (role) => {
 export const capitalizeFirst = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const showDay = (days) => {
+  if (days > 1) {
+    return days + " days left";
+  } else {
+    return days + " day left";
+  }
+};

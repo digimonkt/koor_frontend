@@ -159,7 +159,7 @@ function AuthLayout({
           role === USER_ROLES.employer || role === USER_ROLES.vendor
             ? "vendor"
             : ""
-        }${platform === "andriod" || platform === "ios" ? null : "pt-5"}`}
+        }${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
       >
         <Container
           sx={{
@@ -177,7 +177,10 @@ function AuthLayout({
             sx={{
               fontFamily: "Bahnschrift",
               textAlign: "center",
-              padding: "50px 0px 40px",
+              padding:
+                platform === "android" || platform === "ios"
+                  ? "142px 0px 60px"
+                  : "50px 0px 40px",
               color: "#fff",
               "& h5": { fontSize: "40px", color: "#fff", margin: "0px" },
               "& p": { fontSize: "16px", margin: "0px" },
