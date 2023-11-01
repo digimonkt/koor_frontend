@@ -11,6 +11,7 @@ import { ErrorMessage } from "@components/caption";
 import { setSuccessToast } from "@redux/slice/toast";
 import Loader from "@components/loader";
 import { validateOTPForm } from "./validator";
+import { Box } from "@mui/material";
 function VerifyOTPForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -79,11 +80,11 @@ function VerifyOTPForm() {
             onChange={(e) => formik.setFieldValue("otp", e)}
             value={formik.values.otp}
           />
-          <div>
+          <Box sx={{ marginBottom: "10px" }}>
             {formik.errors.otp ? (
               <ErrorMessage>{formik.errors.otp}</ErrorMessage>
             ) : null}
-          </div>
+          </Box>
           <FilledButton
             type="submit"
             title="Submit"

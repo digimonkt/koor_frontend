@@ -118,7 +118,9 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
             </Stack>
             {!matches ? (
               <div className="recent-descrition manage-jobs">
-                <p>{details?.description}</p>
+                <div>
+                  <p>{details?.description}</p>
+                </div>
                 <div className="recent-descrition-icon">
                   <Button
                     sx={{
@@ -193,7 +195,9 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
         <div className="recent-content">
           {matches ? (
             <div className="recent-descrition manage-jobs">
-              <p className="mb-3">{details?.description}</p>
+              <div>
+                <p className="mb-3">{details?.description}</p>
+              </div>
               <div className="recent-descrition-icon">
                 <Button
                   sx={{
