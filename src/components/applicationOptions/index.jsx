@@ -176,8 +176,7 @@ function ApplicationOptions({
   return (
     <Box sx={{ width: "100%" }}>
       <Grid container spacing={0} flexWrap={"nowrap"}>
-        {
-          (applicationList && applicationList.length > 1) &&
+        {applicationList && applicationList.length > 1 && (
           <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
@@ -187,17 +186,14 @@ function ApplicationOptions({
               style={{
                 fontWeight: 700,
               }}
-
             >
               <div>
                 <SVG.HamburgerMenu className="application-option-icon" />
-                <span>
-                  {"Applications"}
-                </span>
+                <span>{"Applications"}</span>
               </div>
             </Button>
           </Grid>
-        }
+        )}
 
         {interviewPlanned && !details.tender && (
           <Grid item>
@@ -205,12 +201,20 @@ function ApplicationOptions({
               className="buttonbox"
               sx={{ minWidth: "auto" }}
               fullWidth
-              disabled={(isInterviewPlanned && !isApplicationSelect) || isBlacklisted || isRejected}
+              disabled={
+                (isInterviewPlanned && !isApplicationSelect) ||
+                isBlacklisted ||
+                isRejected
+              }
               style={{
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
               onClick={() => {
-                if (!isApplicationSelect && applicationList && applicationList.length > 1) {
+                if (
+                  !isApplicationSelect &&
+                  applicationList &&
+                  applicationList.length > 1
+                ) {
                   handleOpenList(true);
                 } else if (details.id) {
                   setInvalidPlannedInterviewAlert("");
@@ -251,8 +255,7 @@ function ApplicationOptions({
                 } else {
                   dispatch(setErrorToast("No Application Found"));
                 }
-              }
-              }
+              }}
             >
               <div>
                 <SVG.StarIcon className="application-option-icon" />
@@ -476,7 +479,7 @@ function ApplicationOptions({
       >
         <div>
           <h3>Plan this Interview</h3>
-          <div className="dialog-reason">
+          <div className="dialog-reason dialog-reason-plan-inter">
             <LabeledInput
               type="datetime-local"
               onChange={(e) => {
@@ -504,12 +507,11 @@ function ApplicationOptions({
                   );
                 }
               }}
-              sx={{ marginTop: "10px" }}
+              sx={{ marginTop: "20px" }}
             />
           </div>
         </div>
       </DialogBox>
-
     </Box>
   );
 }

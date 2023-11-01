@@ -188,7 +188,7 @@ span.blueview {
   font-family: "Poppins";
   line-height: 18px;
   color: #121212;
-  /* overflow: hidden; */
+  overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   line-clamp: 3;

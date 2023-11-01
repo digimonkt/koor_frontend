@@ -5,6 +5,12 @@ body {
   background-color: #e5e5e5 !important;
 }
 
+.main_component_class {
+  background: #e5e5e5;
+  min-height: 544px;
+  padding: 17px;
+}
+
 .chat-search::placeholder {
   font-family: "Poppins" !important;
 }
@@ -229,13 +235,9 @@ iframe {
   margin-left: 20px !important;
 }
 
-/* .attachments svg path {
-  fill: #eea23d !important;
-} */
-
-/* .attachments button {
-  background: #eea23d52 !important;
-} */
+.bookmark > svg {
+  cursor: pointer;
+}
 
 .attachments {
   border-bottom: 1px solid #cacaca;
@@ -285,7 +287,7 @@ iframe {
   color: #848484;
 }
 
-span.MuiTouchRipple-root.css-8je8zh-MuiTouchRipple-root {
+#notificationPopup .MuiTouchRipple-root {
   display: none;
 }
 
@@ -613,6 +615,11 @@ header {
   font-weight: 300;
   display: flex;
   align-items: center;
+}
+
+.dialog-reason-plan-inter
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer !important;
 }
 
 .form-control {

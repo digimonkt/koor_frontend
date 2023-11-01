@@ -20,6 +20,7 @@ function JobNotificationCard({ job, jobFilter, createdAt }) {
               height: 50,
               margin: "auto",
               color: "#CACACA",
+              cursor: "pointer",
               "&.MuiAvatar-colorDefault": {
                 background: "#F0F0F0",
               },

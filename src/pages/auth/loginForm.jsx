@@ -15,7 +15,7 @@ import { REGEX } from "../../utils/constants/regex";
 import { setErrorToast } from "../../redux/slice/toast";
 import { parsePhoneNumber } from "react-phone-number-input";
 import { SVG } from "@assets/svg";
-// import { USER_ROLES } from "@utils/enum";
+import { USER_ROLES } from "@utils/enum";
 
 function LoginForm() {
   // const navigate = useNavigate();
@@ -97,8 +97,7 @@ function LoginForm() {
               placeholder="your Email or Phone number"
               title="Login"
               subtitle={
-                // role !== USER_ROLES.jobSeeker &&
-                [
+                role !== USER_ROLES.jobSeeker && [
                   <>
                     <SVG.HelpIcon className="Question-mark-icon" />
                   </>,
