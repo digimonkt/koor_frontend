@@ -119,7 +119,11 @@ import { ReactComponent as BlueAttach } from "./blueAttach.svg";
 import { ReactComponent as arrowDown } from "./arrowDown.svg";
 import { ReactComponent as HamburgerMenu } from "./hamburger_menu.svg";
 import { ReactComponent as AdvancedDown } from "./advanced_down.svg";
+import { ReactComponent as Sector } from "./sector.svg";
+import { ReactComponent as Tag } from "./tag.svg";
+import { ReactComponent as ArrowOutward } from "./arrow_outward.svg";
 export const SVG = {
+  ArrowOutward,
   AdvancedDown,
   HamburgerMenu,
   BlueAttach,
@@ -241,4 +245,6 @@ export const SVG = {
   DownloadIcon,
   HelpIcon,
   arrowDown,
+  Sector,
+  Tag
 };

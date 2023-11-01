@@ -1,11 +1,40 @@
 import { SVG } from "../../assets/svg";
-import { Avatar, Chip, Divider, Stack } from "@mui/material";
+import { Avatar, Button, Chip, Divider, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getConversationIdByUserIdAPI } from "@api/chat";
 
 function VendorCard({ vendorDetails }) {
+  const navigate = useNavigate();
+  const [showFullText, setShowFullText] = useState(false);
+  const [description, setDescription] = useState("");
+  const maxLength = 300;
+  const textToShow = showFullText
+    ? description
+    : description.slice(0, maxLength);
+  const handleMessageClick = async () => {
+    const res = await getConversationIdByUserIdAPI({
+      userId: vendorDetails?.id,
+    });
+    if (res.remote === "success") {
+      const conversationId = res.data.conversation_id;
+      navigate(
+        urlcat("/employer/chat", {
+          conversion: conversationId,
+          userId: vendorDetails?.id,
+        })
+      );
+    }
+  };
+  const toggleText = () => {
+    setShowFullText(!showFullText);
+  };
+  console.log({ vendorDetails });
+  useEffect(() => {
+    setDescription(vendorDetails.description);
+  }, [vendorDetails]);
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -66,8 +95,13 @@ function VendorCard({ vendorDetails }) {
             )}
           </Stack>
           <div className="recent-descrition">
-            <p>{vendorDetails.description}</p>
+            <p>{textToShow}</p>
           </div>
+          {description.length > maxLength && (
+            <a onClick={toggleText} className="see_more_anchor">
+              {showFullText ? "See less" : "See more"}
+            </a>
+          )}
           <Stack
             direction="row"
             spacing={2}
@@ -76,12 +110,22 @@ function VendorCard({ vendorDetails }) {
             className="meets_div"
           >
             <div>
-              {vendorDetails.skills.map((skill) => (
+              {vendorDetails.sectors.map((sector) => (
                 <Chip
-                  key={skill.id}
-                  label={skill.skill.title}
+                  key={sector.id}
+                  label={`Sector: ${sector.title}`}
                   className="chiplabel"
-                  icon={<SVG.SchoolIcon />}
+                  icon={<SVG.Sector />}
+                />
+              ))}
+            </div>
+            <div>
+              {vendorDetails.tags.map((tag) => (
+                <Chip
+                  key={tag.id}
+                  label={`Tag: ${tag.title}`}
+                  className="chiplabel"
+                  icon={<SVG.Tag />}
                 />
               ))}
             </div>
@@ -90,15 +134,17 @@ function VendorCard({ vendorDetails }) {
       </Stack>
       <Stack direction="row" spacing={2} alignItems="center">
         <Stack direction="row" spacing={0} className="edit-button">
-          {/* <Button variant="link">
-            <SVG.MessageIcon
-              style={{
-                color: "#274593",
-              }}
-              className="application-option-icon"
-            />
-            <span>Message</span>
-          </Button> */}
+          {vendorDetails.readyForChat && (
+            <Button variant="link" onClick={handleMessageClick}>
+              <SVG.MessageIcon
+                style={{
+                  color: "#274593",
+                }}
+                className="application-option-icon"
+              />
+              <span>Message</span>
+            </Button>
+          )}
         </Stack>
       </Stack>
     </Stack>

@@ -710,7 +710,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     sx={{
                       "&.MuiButtonBase-root": {
                         padding: "0px !important",
-                        "&:hover": { background: "transperant" },
+                        "&:hover": { background: "#fff" },
                       },
                     }}
                   >

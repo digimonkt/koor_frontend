@@ -37,6 +37,10 @@ const Tags = () => {
       prevState.filter((state) => state.id !== id)
     );
   };
+  const checkIfEmpty = (tagAdd, tagRemove) => {
+    // Check if both tag_add and tag_remove are empty arrays
+    return tagAdd.length !== 0 || tagRemove.length !== 0;
+  };
 
   const updateTags = async () => {
     setLoading(true);
@@ -44,13 +48,21 @@ const Tags = () => {
       tag_add: newSelectedTags.map((tag) => tag.id),
       tag_remove: removedTags,
     };
-    const res = await addTagsDetailsAPI(payload);
-    if (res.remote === "success") {
-      dispatch(setSuccessToast("Tags updated successfully"));
+    const shouldDispatch = checkIfEmpty(payload.tag_add, payload.tag_remove);
+    if (shouldDispatch) {
+      const res = await addTagsDetailsAPI(payload);
+      if (res.remote === "success") {
+        setNewSelectedTags([]);
+        setRemovedTags([]);
+        dispatch(setSuccessToast("Tags updated successfully"));
+      } else {
+        dispatch(setErrorToast("Something went wrong"));
+      }
+      setLoading(false);
     } else {
-      dispatch(setErrorToast("Something went wrong"));
+      dispatch(setErrorToast("Please select at least one tag"));
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {

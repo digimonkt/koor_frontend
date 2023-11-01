@@ -195,7 +195,9 @@ function ApplyForTender() {
     getTenderDetails(params.tenderId);
   }, [params.tenderId]);
   useEffect(() => {
-    getApplicantDetails();
+    if (searchParams.get("applicationId")) {
+      getApplicantDetails();
+    }
   }, [searchParams.get("applicationId")]);
   return (
     <div>
@@ -433,8 +435,8 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                      ? "Update"
-                      : "Apply"
+                        ? "Update"
+                        : "Apply"
                   }
                   sx={{
                     "@media (max-width: 480px)": {

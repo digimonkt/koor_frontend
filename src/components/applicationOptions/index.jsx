@@ -31,6 +31,9 @@ function ApplicationOptions({
   blacklist,
   view,
   message,
+  applicationList,
+  handleOpenList,
+  isApplicationSelect,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,11 +59,9 @@ function ApplicationOptions({
   );
 
   const handleMessageClick = async () => {
-    console.log("Running", details?.user.id);
     const res = await getConversationIdByUserIdAPI({
       userId: details?.user?.id,
     });
-    console.log({ res });
     if (res.remote === "success") {
       const conversationId = res.data.conversation_id;
       navigate(
@@ -72,7 +73,6 @@ function ApplicationOptions({
     }
   };
   const handlerChangeApplicationStatus = async (action) => {
-    console.log({ interviewTime });
     const data = { reason: blackListReason, interview_at: interviewTime };
     for (const key in data) {
       if (!data[key]) {
@@ -81,7 +81,6 @@ function ApplicationOptions({
     }
 
     let applicationStatus = {};
-
     const applicationsStatusCount = details.job
       ? totalApplicationsByJob.data[details.job?.id]
       : totalApplicationsByTender.data[details.tender?.id];
@@ -177,19 +176,48 @@ function ApplicationOptions({
   return (
     <Box sx={{ width: "100%" }}>
       <Grid container spacing={0} flexWrap={"nowrap"}>
+        {
+          (applicationList && applicationList.length > 1) &&
+          <Grid item className="me-0 me-lg-3">
+            <Button
+              className="buttonbox"
+              sx={{ minWidth: "auto" }}
+              fullWidth
+              onClick={() => handleOpenList(true)}
+              style={{
+                fontWeight: 700,
+              }}
+
+            >
+              <div>
+                <SVG.HamburgerMenu className="application-option-icon" />
+                <span>
+                  {"Applications"}
+                </span>
+              </div>
+            </Button>
+          </Grid>
+        }
+
         {interviewPlanned && !details.tender && (
           <Grid item>
             <Button
               className="buttonbox"
               sx={{ minWidth: "auto" }}
               fullWidth
-              disabled={isInterviewPlanned || isBlacklisted || isRejected}
+              disabled={(isInterviewPlanned && !isApplicationSelect) || isBlacklisted || isRejected}
               style={{
                 fontWeight: isInterviewPlanned ? 700 : "",
               }}
               onClick={() => {
-                setInvalidPlannedInterviewAlert("");
-                setIsInterviewPlanning(true);
+                if (!isApplicationSelect && applicationList && applicationList.length > 1) {
+                  handleOpenList(true);
+                } else if (details.id) {
+                  setInvalidPlannedInterviewAlert("");
+                  setIsInterviewPlanning(true);
+                } else {
+                  dispatch(setErrorToast("No Application Found"));
+                }
               }}
             >
               <div>
@@ -215,10 +243,15 @@ function ApplicationOptions({
               style={{
                 fontWeight: isShortlisted ? 700 : "",
               }}
-              onClick={() =>
-                handlerChangeApplicationStatus(
-                  JOB_APPLICATION_OPTIONS.shortlisted
-                )
+              onClick={() => {
+                if (details.id) {
+                  handlerChangeApplicationStatus(
+                    JOB_APPLICATION_OPTIONS.shortlisted
+                  );
+                } else {
+                  dispatch(setErrorToast("No Application Found"));
+                }
+              }
               }
             >
               <div>
@@ -380,7 +413,7 @@ function ApplicationOptions({
             </div>
             <div>
               <Avatar
-                src={generateFileUrl(details.user.image?.path || "")}
+                src={generateFileUrl(details.user?.image?.path || "")}
                 sx={{
                   width: "40px",
                   height: "40px",
@@ -476,6 +509,7 @@ function ApplicationOptions({
           </div>
         </div>
       </DialogBox>
+
     </Box>
   );
 }
