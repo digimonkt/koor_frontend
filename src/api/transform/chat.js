@@ -35,6 +35,7 @@ export const transformMessageResponse = (data) => {
     },
     conversation: data.conversation.id,
     message: data.message,
+    messageId: data.id,
     attachment: data.attachment,
     isSeen: data.is_seen,
     isEdited: data.is_edited,
