@@ -177,7 +177,7 @@ function ApplicationOptions({
     <Box sx={{ width: "100%" }}>
       <Grid container spacing={0} flexWrap={"nowrap"}>
         {
-          (applicationList && applicationList.length > 1) &&
+          (applicationList && applicationList.length > 1 && role === USER_ROLES.employer) &&
           <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"
