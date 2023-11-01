@@ -5,49 +5,53 @@ export const transformJobListResponse = (data) => {
     count: data.count,
     next: data.next,
     previous: data.previous,
-    results: data.results.map((res) => ({
-      id: res.id,
-      title: res.title,
-      description: res.description,
-      budgetCurrency: res.budget_currency,
-      budgetAmount: Number(res.budget_amount)
-        ? Number(res.budget_amount).toLocaleString()
-        : 0,
-      budgetPayPeriod: res.budget_pay_period,
-      country: res.country,
-      city: res.city,
-      duration: res.duration,
-      experience: res.experience,
-      isFullTime: res.is_full_time,
-      isPartTime: res.is_part_time,
-      isSaved: res.is_saved,
-      isApplied: res.is_applied,
-      isShortlisted: res.is_shortlisted,
-      isRejected: res.is_rejected,
-      isPlannedInterview: res.interview_at,
-      hasContract: res.has_contract,
-      workingDays: res.working_days,
-      deadline: res.deadline,
-      company: res.company,
-      companyLogo: res.company_logo,
-      expiredInDays: dayjs(res.deadline).diff(
-        dayjs(new Date().toISOString().split("T")[0]),
-        "day",
-        true
-      ),
-      status: res.status,
-      createdAt: res.created,
-      applicantCount: res.applicant,
-      user: {
-        id: res.user.id,
-        name: res.user.name,
-        email: res.user.email,
-        image: res.user.image || res.company_logo,
-      },
-    })),
+    results: data.results.map((res) => {
+      const today = dayjs(new Date().toISOString().split("T")[0]);
+      const tomorrow = today.add(-1, "day");
+      const deadline = dayjs(res.deadline);
+      return {
+        id: res.id,
+        title: res.title,
+        description: res.description,
+        budgetCurrency: res.budget_currency,
+        budgetAmount: Number(res.budget_amount)
+          ? Number(res.budget_amount).toLocaleString()
+          : 0,
+        budgetPayPeriod: res.budget_pay_period,
+        country: res.country,
+        city: res.city,
+        duration: res.duration,
+        experience: res.experience,
+        isFullTime: res.is_full_time,
+        isPartTime: res.is_part_time,
+        isSaved: res.is_saved,
+        isApplied: res.is_applied,
+        isShortlisted: res.is_shortlisted,
+        isRejected: res.is_rejected,
+        isPlannedInterview: res.interview_at,
+        hasContract: res.has_contract,
+        workingDays: res.working_days,
+        deadline: res.deadline,
+        company: res.company,
+        companyLogo: res.company_logo,
+        expiredInDays: deadline.diff(tomorrow, "day", true),
+        status: res.status,
+        createdAt: res.created,
+        applicantCount: res.applicant,
+        user: {
+          id: res.user.id,
+          name: res.user.name,
+          email: res.user.email,
+          image: res.user.image || res.company_logo,
+        },
+      };
+    }),
   };
 };
 export const transformFullJobDetails = (data) => {
+  const today = dayjs(new Date().toISOString().split("T")[0]);
+  const tomorrow = today.add(-1, "day");
+  const deadline = dayjs(data.deadline);
   return {
     id: data.id,
     title: data.title,
@@ -82,11 +86,12 @@ export const transformFullJobDetails = (data) => {
     status: data.status,
     applicant: data.applicant,
     createdAt: data.created,
-    expiredInDays: dayjs(data.deadline).diff(
-      dayjs(new Date().toISOString().split("T")[0]),
-      "day",
-      true
-    ),
+    isApplyThroughKoor: data.apply_through_koor,
+    isApplyThroughEmail: data.apply_through_email,
+    isApplyThroughWebsite: data.apply_through_website,
+    applicationInstruction: data.application_instruction,
+    websiteLink: data.website_link,
+    expiredInDays: deadline.diff(tomorrow, "day", true),
     user: {
       id: data.user.id,
       name: data.user.name || data.company,

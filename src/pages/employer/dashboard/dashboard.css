@@ -188,12 +188,13 @@ span.blueview {
   font-family: "Poppins";
   line-height: 18px;
   color: #121212;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
 .border-recent {
   border-bottom: 1px solid #cacaca;
   padding: 16px 0px;

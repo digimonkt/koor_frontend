@@ -18,6 +18,8 @@ import { ComponentSelector } from "./helper";
 import {
   JOB_ORDER_BY,
   JOB_SORT_BY,
+  TENDER_ORDER_BY,
+  TENDER_SORT_BY,
   SEARCH_TYPE,
   USER_ROLES,
 } from "../../utils/enum";
@@ -38,7 +40,7 @@ function Search() {
     auth: { role },
     search: { totalItems, totalPages, page, advanceFilter },
   } = useSelector((state) => state);
-  const { jobs } = useSelector((state) => state.search);
+  const { jobs, tenders } = useSelector((state) => state.search);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState("");
   const [searchName, setSearchName] = useState("");
@@ -229,7 +231,7 @@ function Search() {
                       }}
                     />
                   </h2>
-                  {searchType === SEARCH_TYPE.jobs && jobs.length ? (
+                  {(searchType === SEARCH_TYPE.jobs && jobs.length) || (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                     <>
                       <IconButton
                         sx={{ width: "50px", height: "50px" }}
@@ -281,50 +283,97 @@ function Search() {
                         }}
                       >
                         <h5 className="px-3 mt-0 mb-1">Sort by :</h5>
-                        {[
-                          {
-                            label: "Newest",
-                            sortBy: JOB_SORT_BY.created,
-                            orderBy: JOB_ORDER_BY.descending,
-                          },
-                          {
-                            label: "Oldest",
-                            sortBy: JOB_SORT_BY.created,
-                            orderBy: JOB_ORDER_BY.ascending,
-                          },
-                          {
-                            label: "Salary: Low to High",
-                            sortBy: JOB_SORT_BY.salary,
-                            orderBy: JOB_ORDER_BY.ascending,
-                          },
-                          {
-                            label: "Salary: High to Low",
-                            sortBy: JOB_SORT_BY.salary,
-                            orderBy: JOB_ORDER_BY.descending,
-                          },
-                        ].map((data) => {
-                          return (
-                            <MenuItem
-                              key={data.label}
-                              onClick={() => {
-                                handleClose();
-                                handleSorting(data.sortBy, data.orderBy);
-                              }}
-                              className="fillterbox"
-                              sx={{
-                                backgroundColor:
-                                  sortBy === data.sortBy &&
-                                  orderBy === data.orderBy
-                                    ? role === USER_ROLES.jobSeeker
-                                      ? "#FEEFD3"
-                                      : "#D5E3F7"
-                                    : "",
-                              }}
-                            >
-                              {data.label}
-                            </MenuItem>
-                          );
-                        })}
+                        {SEARCH_TYPE.jobs === searchType &&
+                          [
+                            {
+                              label: "Newest",
+                              sortBy: JOB_SORT_BY.created,
+                              orderBy: JOB_ORDER_BY.descending,
+                            },
+                            {
+                              label: "Oldest",
+                              sortBy: JOB_SORT_BY.created,
+                              orderBy: JOB_ORDER_BY.ascending,
+                            },
+                            {
+                              label: "Salary: Low to High",
+                              sortBy: JOB_SORT_BY.salary,
+                              orderBy: JOB_ORDER_BY.ascending,
+                            },
+                            {
+                              label: "Salary: High to Low",
+                              sortBy: JOB_SORT_BY.salary,
+                              orderBy: JOB_ORDER_BY.descending,
+                            },
+                          ].map((data) => {
+                            return (
+                              <MenuItem
+                                key={data.label}
+                                onClick={() => {
+                                  handleClose();
+                                  handleSorting(data.sortBy, data.orderBy);
+                                }}
+                                className="fillterbox"
+                                sx={{
+                                  backgroundColor:
+                                    sortBy === data.sortBy &&
+                                      orderBy === data.orderBy
+                                      ? role === USER_ROLES.jobSeeker
+                                        ? "#FEEFD3"
+                                        : "#D5E3F7"
+                                      : "",
+                                }}
+                              >
+                                {data.label}
+                              </MenuItem>
+                            );
+                          })}
+
+                        {SEARCH_TYPE.tenders === searchType &&
+                          [
+                            {
+                              label: "Newest",
+                              sortBy: TENDER_SORT_BY.created,
+                              orderBy: TENDER_ORDER_BY.descending,
+                            },
+                            {
+                              label: "Oldest",
+                              sortBy: TENDER_SORT_BY.created,
+                              orderBy: TENDER_ORDER_BY.ascending,
+                            },
+                            {
+                              label: "Budget: Low to High",
+                              sortBy: TENDER_SORT_BY.budget,
+                              orderBy: TENDER_ORDER_BY.ascending,
+                            },
+                            {
+                              label: "Budget: High to Low",
+                              sortBy: TENDER_SORT_BY.budget,
+                              orderBy: TENDER_ORDER_BY.descending,
+                            },
+                          ].map((data) => {
+                            return (
+                              <MenuItem
+                                key={data.label}
+                                onClick={() => {
+                                  handleClose();
+                                  handleSorting(data.sortBy, data.orderBy);
+                                }}
+                                className="fillterbox"
+                                sx={{
+                                  backgroundColor:
+                                    sortBy === data.sortBy &&
+                                      orderBy === data.orderBy
+                                      ? role === USER_ROLES.vendors
+                                        ? "#FEEFD3"
+                                        : "#D5E3F7"
+                                      : "",
+                                }}
+                              >
+                                {data.label}
+                              </MenuItem>
+                            );
+                          })}
                       </Menu>
                     </>
                   ) : (

@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  getApplyJobByEmailAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
@@ -28,9 +29,10 @@ import DialogBox from "../../../components/dialogBox";
 import { USER_ROLES } from "../../../utils/enum";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
-import { Box, Stack } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
+import { showDay } from "@utils/constants/utility";
 
 const JobDetails = () => {
   const params = useParams();
@@ -132,29 +134,34 @@ const JobDetails = () => {
     }
   };
 
-  function handleSendEmail() {
-    const email = details.contactEmail;
-    const ccEmail1 = details.cc1;
-    const ccEmail2 = details.cc2;
-    const subject = `Job Application for ${details.title}`;
-    const body = `Here is the my job application for this job \n ${window.location.href}`;
-    let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-    if (ccEmail1) {
-      link += `&cc=${ccEmail1}`;
-    }
-    if (ccEmail1 && ccEmail2) {
-      link += `,${ccEmail2}`;
-    }
-    const tag = document.createElement("a");
-    tag.href = link;
-    tag.target = "_blank";
-    document.body.appendChild(tag);
-    tag.click();
-    document.body.removeChild(tag);
+  function handleSendEmail(jobId) {
+    getApplyJobByEmail(jobId);
+    // const email = details.contactEmail;
+    // const ccEmail1 = details.cc1;
+    // const ccEmail2 = details.cc2;
+    // const subject = `Job Application for ${details.title}`;
+    // const body = `Here is the my job application for this job \n ${window.location.href}`;
+    // let link = `mailto:${email}?&subject=${encodeURIComponent(
+    //   subject
+    // )}&body=${encodeURIComponent(body)}`;
+    // if (ccEmail1) {
+    //   link += `&cc=${ccEmail1}`;
+    // }
+    // if (ccEmail1 && ccEmail2) {
+    //   link += `,${ccEmail2}`;
+    // }
+    // const tag = document.createElement("a");
+    // tag.href = link;
+    // tag.target = "_blank";
+    // document.body.appendChild(tag);
+    // tag.click();
+    // document.body.removeChild(tag);
   }
-
+  const getApplyJobByEmail = async (jobId) => {
+    dispatch(setSuccessToast("Job apply by email successfully"));
+    const res = await getApplyJobByEmailAPI(jobId);
+    console.log({ res });
+  };
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
@@ -261,15 +268,19 @@ const JobDetails = () => {
                     <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
                   </p>
                   <SolidButton
+                    className={details?.expiredInDays > 0
+                      ? "btn_font_lower"
+                      : "btn_font_capitalize"}
                     title={
-                      details.expiredInDays > -1
-                        ? `${details.expiredInDays} Days`
+                      details?.expiredInDays > 0
+                        ? showDay(details?.expiredInDays)
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details.expiredInDays > -1 ? details.expiredInDays : -1
+                      details?.expiredInDays > 0
+                        ? details?.expiredInDays
+                        : 0
                     )}
-                    className={styles.details_day_button}
                   />
                 </div>
               </Grid>
@@ -375,11 +386,11 @@ const JobDetails = () => {
                             ? "Edit"
                             : "Applied"
                           : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for this job",
-                            ]
+                            <>
+                              <SVG.Enable1 className="me-2" />
+                            </>,
+                            "Apply for this job",
+                          ]
                       }
                       className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
@@ -414,7 +425,7 @@ const JobDetails = () => {
                         }}
                       />
                     )}
-                    {!details.isApplied && details.contactEmail && (
+                    {/* {!details.isApplied && details.contactEmail && (
                       <FilledButton
                         title="Apply via Mail"
                         className={`${styles.enablebtn}`}
@@ -422,7 +433,7 @@ const JobDetails = () => {
                           handleSendEmail();
                         }}
                       />
-                    )}
+                    )} */}
                     {/* <div className={styles.btnGroup}> */}
                     <Stack
                       direction="column"
@@ -439,11 +450,11 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.SaveIcon1 className="me-2" />
-                                </>,
-                                "Save job",
-                              ]
+                              <>
+                                <SVG.SaveIcon1 className="me-2" />
+                              </>,
+                              "Save job",
+                            ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -557,6 +568,58 @@ const JobDetails = () => {
             </DialogBox>
           </div>
           <div className={`${styles.LikeJob}`}>
+            <h2>Application Instructions:</h2>
+            {details.applicationInstruction}
+          </div>
+          {role === USER_ROLES.jobSeeker || role === "" ? (
+            <div className={`${styles.jobpostbtn} `}>
+              <Box sx={{ textAlign: "start", display: "flex" }}>
+                {!details.isApplied && details.isApplyThroughWebsite && (
+
+                  <OutlinedButton
+                    sx={{ color: "#eea23d !important", borderColor: "#eea23d !important" }}
+                    title={
+                      [
+                        <>
+                          <SVG.ArrowOutward className="me-2" />
+                        </>,
+                        "Apply on employer's website",
+                      ]
+                    }
+                    // className={`${styles.enablebtn}`}
+                    disabled={details.isApplied && !details.isEditable}
+                    onClick={() => {
+                      if (isLoggedIn) {
+                        window.open(details.websiteLink, "_blank");
+                      } else {
+                        setRegistrationWarning(true);
+                      }
+                    }}
+                  />
+
+                )}
+                {!details.isApplied && details.isApplyThroughEmail && (
+                  <OutlinedButton
+                    sx={{ color: "#eea23d !important", borderColor: "#eea23d !important" }}
+                    title={
+                      [
+                        <>
+                          <SVG.ArrowOutward className="me-2" />
+                        </>,
+                        "Apply by email",
+                      ]
+                    }
+                    className="ms-3"
+                    onClick={() => {
+                      handleSendEmail(details.id);
+                    }}
+                  />
+                )}
+              </Box>
+            </div>
+          ) : null}
+          <Divider />
+          <div className={`${styles.LikeJob}`}>
             <h2>more jobs like this:</h2>
             {suggestionJobs.map((item, key) => {
               return (
@@ -586,6 +649,51 @@ const JobDetails = () => {
         }}
       >
         <ShareJob />
+      </DialogBox>
+      <DialogBox
+        open={registrationWarning}
+        handleClose={() => setRegistrationWarning(false)}
+      >
+        <div>
+          <h1 className="heading">Register as jobseeker</h1>
+          <div className="form-content">
+            <p className="jobs_dailog_content">
+              To apply for the job and have many other useful features to
+              find a job, please register on Koor.
+            </p>
+            <div style={{ textAlign: "center", lineHeight: "40px" }}>
+              <Link to="/register?role=job_seeker">
+                <OutlinedButton
+                  title="Register"
+                  jobSeeker
+                  sx={{
+                    width: "100%",
+                    fontSize: "16px !important",
+                    "@media (max-width: 992px)": {
+                      fontSize: "16px !important",
+                    },
+                    "@media (max-width: 480px)": {
+                      fontSize: "14px !important",
+                    },
+                  }}
+                />
+              </Link>
+              <span className="jobs_dailog_login_line">
+                Already have an account?{" "}
+                <Link
+                  to={`/login?role=${USER_ROLES.jobSeeker}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "#EEA23D",
+                    fontWeight: 600,
+                  }}
+                >
+                  Login
+                </Link>
+              </span>
+            </div>
+          </div>
+        </div>
       </DialogBox>
     </>
   );

@@ -129,7 +129,7 @@ function Header() {
                         onChange={(e) => setSearch(e.target.value)}
                         inputProps={{ "aria-label": "Without label" }}
                         displayEmpty
-                        sx={{ width: "102px", marginLeft: "35px" }}
+                        sx={{ width: "102px", marginLeft: "50px" }}
                       >
                         <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
                         <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
@@ -424,7 +424,11 @@ function Header() {
             alignItems={"center"}
             spacing={2}
             sx={{
-              display: { xs: isMobileSearch ? "block" : "none", sm: "none" },
+              display: {
+                xs: isMobileSearch ? "block" : "none",
+                sm: "none",
+                paddingLeft: "0px !important",
+              },
             }}
           >
             <SearchCategory

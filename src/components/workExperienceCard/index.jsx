@@ -52,15 +52,14 @@ function WorkExperienceCard({
           <h6>{organization}</h6>
           {description ? (
             <>
-              <p
+              {/* <p
                 dangerouslySetInnerHTML={{
                   __html: description,
                 }}
                 style={{
                   wordBreak: "break-all",
                 }}
-              />
-              {/* <p className="job-description">{description}</p> */}
+              /> */}
               <br />
             </>
           ) : (

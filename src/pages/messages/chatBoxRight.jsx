@@ -7,13 +7,15 @@ import InfiniteScroll from "react-infinite-scroller";
 
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SendIcon from "@mui/icons-material/Send";
-import { FilledButton } from "../../components/button";
+import { FilledButton, OutlinedButton } from "../../components/button";
 import { USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteMessageAttachmentAPI,
   getConversationIdByUserIdAPI,
   getConversationMessageHistoryAPI,
+  getJobSeekerJobApplicationAPI,
+  getVendorTenderApplicationAPI,
   sendAttachmentAPI,
   updateMessageAttachmentAPI,
 } from "../../api/chat";
@@ -42,6 +44,9 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import ReactQuill from "react-quill";
 import Loader from "@components/loader";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import { setJobSeekerJobApplication, setTotalApplicationsByJob, setTotalApplicationsByTender, setVendorTenderApplication } from "@redux/slice/employer";
+import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
+import { getApplicationOnJobAPI, getApplicationOnTenderAPI } from "@api/employer";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -53,13 +58,17 @@ function ChatBox() {
   const { role, currentUser, isBlackListedByEmployer } = useSelector(
     (state) => state.auth
   );
+  const { jobSeekerJobApplication, vendorTenderApplication } = useSelector((state) => state.employer);
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [hashId, setHashId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isScrollToBottom, setIsScrollToBottom] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [ws, setWs] = useState(null);
   const [userDetails, setUserDetails] = useState({});
+  const [applicationDetails, setApplicationDetails] = useState(null);
+  const [applicationList, setApplicationList] = useState({});
   const scrollbarRef = useRef();
   const [fullImg, setFullImg] = useState(false);
   const [open, setOpen] = useState(false);
@@ -74,6 +83,11 @@ function ChatBox() {
   const [selectedMessage, setSelectedMessage] = useState("");
   const [messageForUpdate, setMessageForUpdate] = useState("");
   const [messageReplayId, setMessageReplayId] = useState(null);
+  const [openSelectApplicationModal, setOpenSelectApplicationModal] = useState(false);
+  const [totalShortlisted, setTotalShortlisted] = useState(0);
+  const [totalRejected, setTotalRejected] = useState(0);
+  const [applicationId, setApplicationId] = useState(0);
+  const [totalPlannedInterview, setTotalPlannedInterview] = useState(0);
   const handleClickMedia = (event, type) => {
     setMessageIsMedia(type);
     setAnchorElMedia(event.currentTarget);
@@ -132,7 +146,6 @@ function ChatBox() {
     ],
   };
   const formats = ["header", "font", "bold", "italic", "underline", "link"];
-
   const updateMessage = async () => {
     setLoading(true);
     const res = await updateMessageAttachmentAPI(selectedMessage.id, messageForUpdate);
@@ -168,7 +181,7 @@ function ChatBox() {
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
-      limit: 20,
+      limit: 50,
       ...(data || {}),
     });
     if (res.remote === "success") {
@@ -277,6 +290,22 @@ function ChatBox() {
       setUserDetails(res.data);
     }
   };
+  const getJobSeekerJobApplication = async (jobSeekerId) => {
+    const res = await getJobSeekerJobApplicationAPI(jobSeekerId);
+    if (res.remote === "success") {
+      dispatch(setJobSeekerJobApplication(res.data.results));
+    } else {
+      dispatch(setJobSeekerJobApplication([]));
+    }
+  };
+  const getVendorTenderApplication = async (vendorId) => {
+    const res = await getVendorTenderApplicationAPI(vendorId);
+    if (res.remote === "success") {
+      dispatch(setVendorTenderApplication(res.data.results));
+    } else {
+      dispatch(setVendorTenderApplication([]));
+    }
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -332,6 +361,9 @@ function ChatBox() {
         );
     }
   };
+  const handleOpenList = (action) => {
+    setOpenSelectApplicationModal(action);
+  };
   // Start Draft JS Implement
   const _onBoldClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
@@ -367,7 +399,29 @@ function ChatBox() {
     const words = text.trim().split(/\s+/);
     return words.length;
   };
+  const getApplicationList = async () => {
+    setIsLoading(true);
+    const filter = "";
+    const res = await getApplicationOnJobAPI({ jobId: applicationDetails.job.id, filter });
+    if (res.remote === "success") {
+      setTotalRejected(res.data.rejectedCount);
+      setTotalShortlisted(res.data.shortlistedCount);
+      setTotalPlannedInterview(res.data.plannedInterviewCount);
+    }
+    setIsLoading(false);
+  };
 
+  const getTenderApplicationList = async () => {
+    setIsLoading(true);
+    const filter = "";
+    const res = await getApplicationOnTenderAPI({ tenderId: applicationDetails.tender.id, filter });
+    if (res.remote === "success") {
+      setTotalRejected(res.data.rejectedCount);
+      setTotalShortlisted(res.data.shortlistedCount);
+      setTotalPlannedInterview(res.data.plannedInterviewCount);
+    }
+    setIsLoading(false);
+  };
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -391,8 +445,38 @@ function ChatBox() {
       getUserDetails();
     }
   }, [searchParams.get("conversion")]);
+  useEffect(() => {
+    if (jobSeekerJobApplication.length === 1) {
+      setApplicationDetails(jobSeekerJobApplication[0]);
+    }
+    const listForShow = jobSeekerJobApplication.map(application => {
+      return {
+        label: application.job.title,
+        value: application.id
+      };
+    });
+    setApplicationList(listForShow);
+  }, [jobSeekerJobApplication]);
 
   useEffect(() => {
+    if (vendorTenderApplication.length === 1) {
+      setApplicationDetails(vendorTenderApplication[0]);
+    }
+    const listForShow = vendorTenderApplication.map(application => {
+      return {
+        label: application.tender.title,
+        value: application.id
+      };
+    });
+    setApplicationList(listForShow);
+  }, [vendorTenderApplication]);
+  useEffect(() => {
+    const fragmentIdentifier = window.location.hash;
+    if (fragmentIdentifier) {
+      // Remove the '#' symbol from the fragment identifier, if present
+      const cleanIdentifier = fragmentIdentifier.slice(1);
+      setHashId(cleanIdentifier);
+    }
     const queryParams = {};
     if (searchParams.get("conversion")) {
       queryParams.conversation_id = searchParams.get("conversion");
@@ -414,6 +498,74 @@ function ChatBox() {
       ws.close();
     };
   }, [searchParams.get("conversion"), searchParams.get("userId")]);
+
+  useEffect(() => {
+    if (userDetails.role === USER_ROLES.jobSeeker) {
+      getJobSeekerJobApplication(userDetails.id);
+    } else if (userDetails.role === USER_ROLES.vendor) {
+      getVendorTenderApplication(userDetails.id);
+    } else {
+      dispatch(setJobSeekerJobApplication([]));
+    }
+    setApplicationDetails("");
+  }, [userDetails]);
+  useEffect(() => {
+    if (applicationDetails && applicationDetails?.job?.id) {
+      getApplicationList(applicationDetails.job.id);
+    }
+
+    if (applicationDetails && applicationDetails?.tender?.id) {
+      getTenderApplicationList(applicationDetails.tender.id);
+    }
+  }, [applicationDetails]);
+
+  useEffect(() => {
+    if (userDetails.role === USER_ROLES.jobSeeker) {
+      if (applicationDetails?.job?.id) {
+        dispatch(
+          setTotalApplicationsByJob({
+            jobId: applicationDetails.job.id,
+            data: {
+              shortlisted: totalShortlisted,
+              rejected: totalRejected,
+              plannedInterview: totalPlannedInterview,
+            },
+          })
+        );
+      }
+    } else if (userDetails.role === USER_ROLES.vendor) {
+      if (applicationDetails?.tender?.id) {
+        dispatch(
+          setTotalApplicationsByTender({
+            tenderId: applicationDetails.tender.id,
+            data: {
+              shortlisted: totalShortlisted,
+              rejected: totalRejected,
+              plannedInterview: totalPlannedInterview,
+            },
+          })
+        );
+      }
+    }
+  }, [applicationDetails]);
+  useEffect(() => {
+    // Add a delay (in milliseconds) before scrolling
+    const delayInMilliseconds = 3000; // 2 seconds
+
+    // Function to scroll to the element
+    function scrollToElement() {
+      const element = document.getElementById(hashId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    // Use setTimeout to introduce a delay before scrolling
+    const scrollTimeout = setTimeout(scrollToElement, delayInMilliseconds);
+
+    // Clean up the timeout to avoid memory leaks
+    return () => clearTimeout(scrollTimeout);
+  }, [hashId]); // The empty dependency array ensures this effect runs once
   return (
     <>
       {isLoading ? (
@@ -426,9 +578,11 @@ function ChatBox() {
                 <h3>{userDetails.name || userDetails.email}</h3>
                 {/* <p className="mb-2">Online Research Participant</p> */}
               </div>
+
               <div>
-                <ApplicationOptions details={{ user: userDetails }} view />
+                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned={userDetails.role === USER_ROLES.jobSeeker} shortlist applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
               </div>
+
             </Stack>
           </div>
           <div
@@ -770,6 +924,53 @@ function ChatBox() {
               onClick={() => { setOpenReplyMessage(false); setNewMessage(""); }}
               sx={{ marginTop: "10px" }}
             />
+          </DialogBox>
+          <DialogBox open={openSelectApplicationModal} handleClose={() => setOpenSelectApplicationModal(false)}>
+            {(applicationList.length > 0) ? <>
+              <div className="dialog-reason">
+                <LabeledRadioInputComponent
+                  title={`Please select ${(userDetails.role === USER_ROLES.jobSeeker) ? "job" : "tender"} application:`}
+                  options={applicationList}
+                  onChange={(e) => setApplicationId(e.target.value)}
+                  value={applicationId}
+                  sx={{
+                    "& .MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
+                      { fontWeight: 500 },
+                    display: "flex",
+                    flexDirection: "column",
+                    color: "black",
+                    fontWeight: "500",
+                  }}
+                />
+
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <OutlinedButton
+                  title="Click"
+                  onClick={() => {
+                    if (userDetails.role === USER_ROLES.jobSeeker) {
+                      setApplicationDetails(jobSeekerJobApplication.find((application) => application.id === applicationId));
+                    } else {
+                      setApplicationDetails(vendorTenderApplication.find((application) => application.id === applicationId));
+                    }
+                    setOpenSelectApplicationModal(false);
+                  }
+                  }
+                />
+                <OutlinedButton
+                  title="Cancel"
+                  onClick={() => {
+                    setOpenSelectApplicationModal(false);
+                  }
+                  }
+                />
+              </div></>
+              : "No Application Found"}
           </DialogBox>
         </>
       )}

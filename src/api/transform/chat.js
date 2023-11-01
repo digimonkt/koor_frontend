@@ -9,6 +9,7 @@ export const transformConversationResponse = (data) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      role: user.role,
       image: generateFileUrl(user.image?.path || ""),
     },
     lastMessage: {
@@ -34,6 +35,7 @@ export const transformMessageResponse = (data) => {
     },
     conversation: data.conversation.id,
     message: data.message,
+    messageId: data.id,
     attachment: data.attachment,
     isSeen: data.is_seen,
     isEdited: data.is_edited,
@@ -41,5 +43,53 @@ export const transformMessageResponse = (data) => {
     reply: data.reply_to || null,
     replyUserId: data?.reply_to?.user_id || null,
     replyUserName: data?.reply_to?.user_name || null
+  };
+};
+
+export const transformJobApplicationResponse = (result) => {
+  return {
+    id: result.id,
+    shortlistedAt: result.shortlisted_at,
+    rejectedAt: result.rejected_at,
+    createdAt: result.created,
+    shortLetter: result.short_letter,
+    interviewAt: result.interview_at,
+    job: result.job,
+    user: {
+      id: result.user.id,
+      name: result.user.name,
+      email: result.user.email,
+      countryCode: result.user.country_code,
+      mobileNumber: result.user.mobile_number,
+      image: result.user.image,
+      description: result.user.description,
+      isBlacklisted: result.user.is_blacklisted,
+    },
+    education: result.education,
+    language: result.language,
+    skills: result.skill,
+  };
+};
+export const transformTenderApplicationResponse = (result) => {
+  return {
+    id: result.id,
+    shortlistedAt: result.shortlisted_at,
+    rejectedAt: result.rejected_at,
+    createdAt: result.created,
+    shortLetter: result.short_letter,
+    user: {
+      id: result.user.id,
+      name: result.user.name,
+      email: result.user.email,
+      countryCode: result.user.country_code,
+      mobileNumber: result.user.mobile_number,
+      image: result.user.image,
+      description: result.user.description,
+      isBlacklisted: result.user.is_blacklisted,
+    },
+    tender: {
+      id: result.tender.id,
+      title: result.tender.title,
+    },
   };
 };
