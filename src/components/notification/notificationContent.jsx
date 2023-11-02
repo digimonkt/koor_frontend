@@ -99,6 +99,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               borderBottom: 1,
               borderColor: "divider",
               pe: 4,
+              mx: 2,
               cursor: "default",
               "@media(max-width:600px)": { pe: 0 },
             }}
@@ -140,11 +141,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               </Stack>
             )}
           </Stack>
-          <div className={footer ? `pe-3 ${styles.scrollbarNotification}` : ""}>
+          <div className={footer ? `${styles.scrollbarNotification}` : ""}>
             {loading ? (
               <Loader loading={loading} />
             ) : (
-              <div style={{ marginBottom: "16px" }}>
+              <Box sx={{ marginBottom: "16px", mx: 2 }}>
                 {filterData.length ? (
                   filterData.map((item, index) => (
                     <>
@@ -180,11 +181,11 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                     </div>
                   </Box>
                 )}
-              </div>
+              </Box>
             )}
           </div>
           {footer ? (
-            <div className={`pe-4 border-top pt-3 ${styles.view_div}`}>
+            <div className={`px-3 border-top pt-3 ${styles.view_div}`}>
               <Link
                 to="/notification"
                 className={styles.view_all}
