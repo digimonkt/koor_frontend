@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./notification.module.css";
-import { Avatar } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
@@ -36,7 +36,10 @@ function AppliedJobCard({
     }
   };
   return (
-    <div
+    <Box
+      sx={{
+        cursor: "pointer",
+      }}
       className={`${styles.content_div}`}
       onClick={() => {
         handleClose();
@@ -68,8 +71,7 @@ function AppliedJobCard({
           {timeAgoFromNow(createdAt)}
         </p>
       </div>
-    </div>
-    // </Link >
+    </Box>
   );
 }
 

@@ -24,8 +24,12 @@ function OtpInputComponent({ title, labelWeight, ...rest }) {
           ""
         )}
       </Stack>
-      <div className="showpassword" style={{ marginBottom: "20px" }}>
-        <MuiOtpInput className="form-control" {...rest} />
+      <div className="showpassword" style={{ marginBottom: "5px" }}>
+        <MuiOtpInput
+          className="form-control"
+          sx={{ padding: "0px", backgroundColor: "transparent" }}
+          {...rest}
+        />
       </div>
     </>
   );

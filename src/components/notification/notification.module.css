@@ -18,7 +18,6 @@
   display: flex !important;
   padding: 10px;
   border-radius: 12px;
-  /* align-items: center !important; */
 }
 
 .no_notification_bell_icon {
@@ -43,8 +42,14 @@
   line-height: 16px !important;
   color: #121212 !important;
   opacity: 45% !important;
-  margin-top: 3px !important;
+  margin-top: 5px !important;
+  margin-bottom: 0px !important;
   white-space: normal !important;
+}
+
+.text p {
+  margin: 3px 0px;
+  padding: 0;
 }
 
 .title {

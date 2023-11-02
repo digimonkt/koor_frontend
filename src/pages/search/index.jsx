@@ -182,7 +182,17 @@ function Search() {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item lg={3.5} sx={{ display: { xs: "none", lg: "block" } }}>
+          <Grid
+            item
+            lg={3.5}
+            sx={{
+              display: { xs: "none", lg: "block" },
+              // position: "sticky",
+              // top: "60px",
+              // height: "580px",
+              // overflow: "hidden",
+            }}
+          >
             <AdvanceFilter searchType={searchType} defaultOpen responsive />
           </Grid>
           <Grid item lg={8.5} xs={12}>
@@ -231,7 +241,8 @@ function Search() {
                       }}
                     />
                   </h2>
-                  {(searchType === SEARCH_TYPE.jobs && jobs.length) || (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
+                  {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
+                  (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                     <>
                       <IconButton
                         sx={{ width: "50px", height: "50px" }}
@@ -317,7 +328,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                      orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                       ? role === USER_ROLES.jobSeeker
                                         ? "#FEEFD3"
                                         : "#D5E3F7"
@@ -363,7 +374,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                      orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                       ? role === USER_ROLES.vendors
                                         ? "#FEEFD3"
                                         : "#D5E3F7"
@@ -383,13 +394,13 @@ function Search() {
               </div>
               <Component />
             </Box>
+            {totalPages > 1 ? (
+              <div className="paginations pt-4">{pagination()}</div>
+            ) : (
+              <div style={{ marginTop: "20px" }}></div>
+            )}
           </Grid>
         </Grid>
-        {totalPages > 1 ? (
-          <div className="paginations pt-4">{pagination()}</div>
-        ) : (
-          <div style={{ marginTop: "20px" }}></div>
-        )}
       </Container>
     </Box>
   );

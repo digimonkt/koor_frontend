@@ -580,7 +580,7 @@ function ChatBox() {
               </div>
 
               <div>
-                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned={userDetails.role === USER_ROLES.jobSeeker} shortlist applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
+                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned={userDetails.role === USER_ROLES.jobSeeker && role === USER_ROLES.employer} shortlist={role === USER_ROLES.employer} applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
               </div>
 
             </Stack>
