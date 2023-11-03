@@ -94,12 +94,17 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
         justifyContent={{ xs: "center", lg: "space-between" }}
         className="border-recent"
       >
-        <Stack direction="row" spacing={2} alignItems="center">
+        <Stack
+          direction="row"
+          spacing={2}
+          alignItems="center"
+          sx={{ width: "100%" }}
+        >
           <Avatar
             src={generateFileUrl(details?.image || "")}
             sx={{ width: "70px", height: "70px" }}
           />{" "}
-          <div className="recent-content">
+          <div className="recent-content" style={{ width: "100%" }}>
             <Stack
               direction="row"
               divider={<Divider orientation="vertical" flexItem />}
