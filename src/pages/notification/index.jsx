@@ -30,13 +30,11 @@ function Notification() {
         // }}
       >
         <div
-          className={styles.content}
-          style={{
-            borderRadius:
-              platform === "android" || platform === "ios"
-                ? "0px !important"
-                : "",
-          }}
+          className={`${styles.content} ${
+            platform === "android" || platform === "ios"
+              ? styles.contentapp
+              : ""
+          }`}
         >
           <h3 className={`${styles.content_heading}`}>
             {platform === "android" || platform === "ios" ? (

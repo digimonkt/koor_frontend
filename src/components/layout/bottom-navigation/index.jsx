@@ -27,7 +27,7 @@ const BottomBar = () => {
         <BottomNavigationAction
           label="Jobs"
           LinkComponent={Link}
-          to="job_seeker/jobs/applied"
+          to="job_seeker/job-feed"
           icon={<SVG.JobsSeekerIcon />}
         />
         <BottomNavigationAction

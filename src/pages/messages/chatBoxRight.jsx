@@ -61,6 +61,7 @@ function ChatBox() {
   const { jobSeekerJobApplication, vendorTenderApplication } = useSelector((state) => state.employer);
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [hashId, setHashId] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isScrollToBottom, setIsScrollToBottom] = useState(false);
   const [hasMore, setHasMore] = useState(false);
@@ -145,7 +146,6 @@ function ChatBox() {
     ],
   };
   const formats = ["header", "font", "bold", "italic", "underline", "link"];
-
   const updateMessage = async () => {
     setLoading(true);
     const res = await updateMessageAttachmentAPI(selectedMessage.id, messageForUpdate);
@@ -181,7 +181,7 @@ function ChatBox() {
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
     const res = await getConversationMessageHistoryAPI({
       conversationId: searchParams.get("conversion"),
-      limit: 20,
+      limit: 50,
       ...(data || {}),
     });
     if (res.remote === "success") {
@@ -471,6 +471,12 @@ function ChatBox() {
     setApplicationList(listForShow);
   }, [vendorTenderApplication]);
   useEffect(() => {
+    const fragmentIdentifier = window.location.hash;
+    if (fragmentIdentifier) {
+      // Remove the '#' symbol from the fragment identifier, if present
+      const cleanIdentifier = fragmentIdentifier.slice(1);
+      setHashId(cleanIdentifier);
+    }
     const queryParams = {};
     if (searchParams.get("conversion")) {
       queryParams.conversation_id = searchParams.get("conversion");
@@ -542,6 +548,24 @@ function ChatBox() {
       }
     }
   }, [applicationDetails]);
+  useEffect(() => {
+    // Add a delay (in milliseconds) before scrolling
+    const delayInMilliseconds = 3000; // 2 seconds
+
+    // Function to scroll to the element
+    function scrollToElement() {
+      const element = document.getElementById(hashId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    // Use setTimeout to introduce a delay before scrolling
+    const scrollTimeout = setTimeout(scrollToElement, delayInMilliseconds);
+
+    // Clean up the timeout to avoid memory leaks
+    return () => clearTimeout(scrollTimeout);
+  }, [hashId]); // The empty dependency array ensures this effect runs once
   return (
     <>
       {isLoading ? (
@@ -556,7 +580,7 @@ function ChatBox() {
               </div>
 
               <div>
-                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned={userDetails.role === USER_ROLES.jobSeeker} shortlist applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
+                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned={userDetails.role === USER_ROLES.jobSeeker && role === USER_ROLES.employer} shortlist={role === USER_ROLES.employer} applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
               </div>
 
             </Stack>

@@ -89,7 +89,9 @@ function App() {
                     <Suspense fallback={<FallbackLoading />}>
                       <route.component />
                     </Suspense>
-                    <InnerFooter />
+                    {platform === "android" || platform === "ios" ? (
+                      <InnerFooter />
+                    ) : null}
                     {/* <Footer /> */}
                   </>
                 }
@@ -111,9 +113,9 @@ function App() {
                       </UnauthorizedRoute>
                     </Suspense>
                     {/* <Footer /> */}
-                    {platform === "android" || platform === "ios" ? null : (
+                    {platform === "android" || platform === "ios" ? (
                       <InnerFooter />
-                    )}
+                    ) : null}
                   </>
                 }
               />

@@ -16,15 +16,14 @@ function MessageNotificationCard({
   conversion,
   userId,
 }) {
-  // + `#${messageId}`
   return (
     <Link
       onClick={() => handleClose()}
-      to={urlcat(`/${role}/chat`, { conversion, userId })}
+      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}
     >
       <div
         className={`${styles.content_div}`}
-      //   style={{ background: item.color }}
+        //   style={{ background: item.color }}
       >
         <div>
           <Avatar
@@ -66,10 +65,7 @@ function MessageNotificationCard({
             <Close fontSize="inherit" />
           </IconButton>
           <h2 className={styles.title}>New message received.</h2>
-          <p
-            className={`${styles.text}`}
-          //   style={{ background: jobDetails.background }}
-          >
+          <p className={`${styles.text}`}>
             <div dangerouslySetInnerHTML={{ __html: message }} />
           </p>
           <p style={{ marginTop: "5px" }} className={styles.duration}>
@@ -77,7 +73,7 @@ function MessageNotificationCard({
           </p>
         </Box>
       </div>
-    </Link>
+    </ Link>
   );
 }
 

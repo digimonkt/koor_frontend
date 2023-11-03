@@ -29,7 +29,7 @@ function Layout() {
         display: "flex",
         marginTop:
           platform === "android" || platform === "ios" ? "0px" : "80px",
-        minHeight: "93vh",
+        minHeight: "calc(100vh - 100px)",
         "@media(max-width:992px)": {
           display: "block",
         },
@@ -47,13 +47,13 @@ function Layout() {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
           width: { lg: `calc(100% - ${"300"}px)` },
           background: "#E5E5E5",
           minHeight: "544px",
           paddingBottom:
             platform === "android" || platform === "ios" ? "150px" : "",
         }}
+        className="main_component_class"
       >
         {platform === "android" || platform === "ios" ? null : (
           <IconButton

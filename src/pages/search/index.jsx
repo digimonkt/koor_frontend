@@ -33,7 +33,7 @@ import {
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import urlcat from "urlcat";
-function Search() {
+function Search({ searchTypeForJob }) {
   const params = useParams();
   const dispatch = useDispatch();
   const {
@@ -45,7 +45,7 @@ function Search() {
   const [searchType, setSearchType] = useState("");
   const [searchName, setSearchName] = useState("");
   const [searchPlaceHolder, setSearchPlaceHolder] = useState("Jobs");
-  const Component = ComponentSelector(searchType);
+  const Component = ComponentSelector(searchType || searchTypeForJob);
   const [anchorEl, setAnchorEl] = useState(null);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
@@ -103,8 +103,12 @@ function Search() {
   }, [params]);
 
   useEffect(() => {
-    const payload = { search, order_by: orderBy, search_by: sortBy };
-    switch (searchType) {
+    const payload = {
+      search,
+      order_by: orderBy,
+      search_by: sortBy,
+    };
+    switch (searchType || searchTypeForJob) {
       case SEARCH_TYPE.jobs:
         setSearchPlaceHolder("Jobs");
         dispatch(searchJobs(payload));
@@ -135,6 +139,7 @@ function Search() {
       }
     }
   }, []);
+
   const pagination = () => {
     return (
       <Pagination
@@ -182,8 +187,22 @@ function Search() {
         }}
       >
         <Grid container spacing={2}>
-          <Grid item lg={3.5} sx={{ display: { xs: "none", lg: "block" } }}>
-            <AdvanceFilter searchType={searchType} defaultOpen responsive />
+          <Grid
+            item
+            lg={3.5}
+            sx={{
+              display: { xs: "none", lg: "block" },
+              // position: "sticky",
+              // top: "60px",
+              // height: "580px",
+              // overflow: "hidden",
+            }}
+          >
+            <AdvanceFilter
+              searchType={searchType || searchTypeForJob}
+              defaultOpen
+              responsive
+            />
           </Grid>
           <Grid item lg={8.5} xs={12}>
             <SearchInput
@@ -384,13 +403,13 @@ function Search() {
               </div>
               <Component />
             </Box>
+            {totalPages > 1 ? (
+              <div className="paginations pt-4">{pagination()}</div>
+            ) : (
+              <div style={{ marginTop: "20px" }}></div>
+            )}
           </Grid>
         </Grid>
-        {totalPages > 1 ? (
-          <div className="paginations pt-4">{pagination()}</div>
-        ) : (
-          <div style={{ marginTop: "20px" }}></div>
-        )}
       </Container>
     </Box>
   );

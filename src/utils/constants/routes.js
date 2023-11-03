@@ -9,6 +9,7 @@ import PrivacyPolicy from "../../pages/privacyPolicy";
 import Setting from "@pages/setting";
 import { Capacitor } from "@capacitor/core";
 import Spalsh from "@pages/splash";
+import BrowserJob from "@pages/jobs/app";
 const platform = Capacitor.getPlatform();
 // resources
 const Resources = lazy(() =>
@@ -219,6 +220,7 @@ export const ROUTES = [
     path: "/search/:type",
     component: Search,
   },
+
   {
     id: "jobDetails",
     name: "Job Details",
@@ -372,6 +374,19 @@ export const JOB_SEEKER_ROUTES = [
     path: "/chat",
     component: ChatBox,
   },
+  platform === "android" || platform === "ios"
+    ? {
+        id: "browseJob",
+        name: "browserJob",
+        path: "/job-feed",
+        component: BrowserJob,
+      }
+    : {
+        id: "browseJob",
+        name: "browserJob",
+        path: "/job-feed",
+        component: BrowserJob,
+      },
 ];
 
 // prefix => `/vendor`
