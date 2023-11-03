@@ -6,6 +6,7 @@ import {
   IconButton,
   MenuItem,
   Stack,
+  useMediaQuery,
 } from "@mui/material";
 import {
   Link,
@@ -75,7 +76,7 @@ function Header() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-
+  const matches = useMediaQuery("(min-width: 600px) and (max-width: 992px)");
   return (
     <header>
       <Container
@@ -231,7 +232,42 @@ function Header() {
               ) : (
                 ""
               )}
+              {matches ? (
+                <>
+                  {isLoggedIn ? (
+                    <>
+                      {/* <Link to={`/${role}/my-profile`}>
+                        <FilledButton title="My Profile" />
+                      </Link> */}
+                    </>
+                  ) : (
+                    <>
+                      <Box
+                        className="d-lg-none"
+                        onClick={() => {
+                          dispatch(setUserRole(""));
+                          navigate("/register");
+                        }}
+                      >
+                        <OutlinedButton title="Register" />
+                      </Box>
 
+                      <Box
+                        className="d-lg-none"
+                        data-cy="login-nav"
+                        onClick={() => {
+                          dispatch(setUserRole(""));
+                          navigate("/login");
+                        }}
+                      >
+                        <FilledButton title="Log in" />
+                      </Box>
+                    </>
+                  )}
+                </>
+              ) : (
+                ""
+              )}
               <IconButton
                 onClick={() => setIsmenu(!ismenu)}
                 color="inherit"
@@ -369,6 +405,7 @@ function Header() {
                   Resources
                 </Link>
               </li>
+
               {isLoggedIn ? (
                 <>
                   <li className="noti-mobile" onClick={() => setIsmenu(false)}>
@@ -392,27 +429,33 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <li onClick={() => setIsmenu(false)}>
-                    <div
-                      onClick={() => {
-                        dispatch(setUserRole(""));
-                        navigate("/register");
-                      }}
-                    >
-                      <OutlinedButton title="Register" />
-                    </div>
-                  </li>
-                  <li onClick={() => setIsmenu(false)}>
-                    <div
-                      data-cy="login-nav"
-                      onClick={() => {
-                        dispatch(setUserRole(""));
-                        navigate("/login");
-                      }}
-                    >
-                      <FilledButton title="Log in" />
-                    </div>
-                  </li>
+                  {!matches ? (
+                    <>
+                      <li onClick={() => setIsmenu(false)}>
+                        <Box
+                          onClick={() => {
+                            dispatch(setUserRole(""));
+                            navigate("/register");
+                          }}
+                        >
+                          <OutlinedButton title="Register" />
+                        </Box>
+                      </li>
+                      <li onClick={() => setIsmenu(false)}>
+                        <Box
+                          data-cy="login-nav"
+                          onClick={() => {
+                            dispatch(setUserRole(""));
+                            navigate("/login");
+                          }}
+                        >
+                          <FilledButton title="Log in" />
+                        </Box>
+                      </li>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </>
               )}
             </ul>

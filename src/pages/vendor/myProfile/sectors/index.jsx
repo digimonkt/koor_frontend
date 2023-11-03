@@ -47,7 +47,10 @@ const Sectors = () => {
       sector_add: newSelectedSectors.map((sector) => sector.id),
       sector_remove: removedSectors,
     };
-    const shouldDispatch = checkIfEmpty(payload.sector_add, payload.sector_remove);
+    const shouldDispatch = checkIfEmpty(
+      payload.sector_add,
+      payload.sector_remove
+    );
     if (shouldDispatch) {
       const res = await addSectorsDetailsAPI(payload);
       if (res.remote === "success") {
@@ -118,7 +121,7 @@ const Sectors = () => {
                       fontFamily: "Poppins",
                       color: "#121212",
                       fontWeight: "400",
-                      padding: "5px 10px 5px 20px",
+                      padding: "5px 10px 5px 6px",
                       margin: "0px 8px 8px 0px",
                     }}
                   />
