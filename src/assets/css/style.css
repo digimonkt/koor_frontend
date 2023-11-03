@@ -428,7 +428,7 @@ header {
   font-size: 16px !important;
   letter-spacing: 0.03em !important;
   font-family: "Bahnschrift" !important;
-  /* font-weight: 600 !important; */
+  height: 42px;
 }
 
 .outline-login {
@@ -441,6 +441,7 @@ header {
   font-family: "Poppins" !important;
   letter-spacing: 0.03em !important;
   border: 1px solid #eea23d !important;
+  height: 42px;
 }
 
 .footer {
