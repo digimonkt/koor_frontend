@@ -127,6 +127,7 @@ import { ReactComponent as SplashLogo } from "./splash-logo.svg";
 import { ReactComponent as Sector } from "./sector.svg";
 import { ReactComponent as Tag } from "./tag.svg";
 import { ReactComponent as ArrowOutward } from "./arrow_outward.svg";
+import { ReactComponent as ArrowAngle } from "./angleArrow.svg";
 export const SVG = {
   ArrowOutward,
   AdvancedDown,
@@ -257,4 +258,5 @@ export const SVG = {
   SplashLogo,
   Sector,
   Tag,
+  ArrowAngle,
 };

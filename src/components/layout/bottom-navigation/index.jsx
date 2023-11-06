@@ -13,6 +13,8 @@ const BottomBar = () => {
           right: 0,
           height: "auto",
           padding: "15px 0px",
+          borderTop: "1px solid #848484",
+          zIndex: 999,
 
           "& .MuiBottomNavigationAction-label": {
             color: "#848484",

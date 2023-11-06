@@ -381,12 +381,7 @@ export const JOB_SEEKER_ROUTES = [
         path: "/job-feed",
         component: BrowserJob,
       }
-    : {
-        id: "browseJob",
-        name: "browserJob",
-        path: "/job-feed",
-        component: BrowserJob,
-      },
+    : "",
 ];
 
 // prefix => `/vendor`

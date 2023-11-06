@@ -2,7 +2,6 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import AppliedJobsComponent from "@pages/jobSeeker/appliedJobs";
 import Search from "@pages/search";
-import JobSearchComponent from "@pages/search/jobSearch/jobSearch";
 import { useState } from "react";
 
 const BrowserJob = () => {
@@ -40,11 +39,10 @@ const BrowserJob = () => {
           <Tab label="Job feed" value="1" disableRipple={true} />
           <Tab label="Applied jobs" value="2" disableRipple={true} />
         </TabList>
-        <TabPanel value="1">
+        <TabPanel value="1" sx={{ p: 0 }}>
           <Search searchTypeForJob={"jobs"} />
-          <JobSearchComponent />
         </TabPanel>
-        <TabPanel value="2">
+        <TabPanel value="2" sx={{ px: 0 }}>
           <AppliedJobsComponent />
         </TabPanel>
       </TabContext>

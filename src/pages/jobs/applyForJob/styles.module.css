@@ -529,3 +529,7 @@
     font-size: 14px !important;
   }
 }
+
+.applybtn.applybtnapp {
+  width: 100% !important;
+}

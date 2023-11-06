@@ -6,8 +6,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "../../../redux/slice/choices";
+import { Capacitor } from "@capacitor/core";
 
 function JobSeekerFilter({ formik, footer, responsive }) {
+  const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const {
     choices: { countries, cities, jobCategories, jobSubCategories },
@@ -27,7 +29,12 @@ function JobSeekerFilter({ formik, footer, responsive }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
+          <Grid
+            item
+            xs={platform === "android" || platform === "ios" ? 6 : 12}
+            lg={responsive ? 12 : 3}
+            sm={6}
+          >
             <div>
               <FormControl
                 sx={{ m: 1, marginLeft: 0, width: 330 }}
@@ -36,7 +43,11 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                 <SelectInput
                   title="Category"
                   defaultValue=""
-                  placeholder="Select a Job category"
+                  placeholder={
+                    platform === "android" || platform === "ios"
+                      ? "Select category"
+                      : "Select a Job category"
+                  }
                   options={jobCategories.data.map((jobCategory) => ({
                     value: jobCategory.id,
                     label: jobCategory.title,
@@ -54,7 +65,12 @@ function JobSeekerFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
+          <Grid
+            item
+            xs={platform === "android" || platform === "ios" ? 6 : 12}
+            lg={responsive ? 12 : 3}
+            sm={6}
+          >
             <div>
               <FormControl
                 sx={{ m: 1, marginLeft: 0, width: 330 }}
@@ -65,7 +81,11 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                   title="SubCategory"
                   defaultValue=""
                   placeholder={
-                    formik.values.jobCategories
+                    platform === "android" || platform === "ios"
+                      ? formik.values.jobCategories
+                        ? "Job Sub Category"
+                        : "Select Category"
+                      : formik.values.jobCategories
                       ? "Job Sub Category"
                       : "Select Category first"
                   }
@@ -89,7 +109,12 @@ function JobSeekerFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
+          <Grid
+            item
+            xs={platform === "android" || platform === "ios" ? 6 : 12}
+            lg={responsive ? 12 : 3}
+            sm={6}
+          >
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -105,13 +130,24 @@ function JobSeekerFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} lg={responsive ? 12 : 3} sm={6}>
+          <Grid
+            item
+            xs={platform === "android" || platform === "ios" ? 6 : 12}
+            lg={responsive ? 12 : 3}
+            sm={6}
+          >
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="City"
                   placeholder={
-                    formik.values.country ? "City" : "Select Country first"
+                    platform === "android" || platform === "ios"
+                      ? formik.values.country
+                        ? "City"
+                        : "Select Country "
+                      : formik.values.country
+                      ? "City"
+                      : "Select Country first"
                   }
                   disabled={!formik.values.country}
                   options={(cities.data[formik.values.country] || []).map(
@@ -220,7 +256,19 @@ function JobSeekerFilter({ formik, footer, responsive }) {
         <h5 style={{ margin: "20px" }}>
           <b>{totalItems}</b> jobs found
         </h5>
-        <div style={{ marginTop: "0px" }} className={`${styles.savesearch}`}>
+        <div
+          style={{
+            marginTop: "0px",
+            width: platform === "android" || platform === "ios" ? "100%" : null,
+            flexDirection:
+              platform === "android" || platform === "ios" ? "row" : null,
+            flexWrap:
+              platform === "android" || platform === "ios" ? "wrap" : null,
+            justifyContent:
+              platform === "android" || platform === "ios" ? "center" : null,
+          }}
+          className={`${styles.savesearch}`}
+        >
           {footer}
         </div>
       </div>

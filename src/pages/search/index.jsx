@@ -33,7 +33,9 @@ import {
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import urlcat from "urlcat";
+import { Capacitor } from "@capacitor/core";
 function Search({ searchTypeForJob }) {
+  const platform = Capacitor.getPlatform();
   const params = useParams();
   const dispatch = useDispatch();
   const {
@@ -176,10 +178,17 @@ function Search({ searchTypeForJob }) {
   };
 
   return (
-    <Box className={`${styles.body}`} sx={{ marginTop: "118px" }}>
+    <Box
+      className={`${styles.body}`}
+      sx={{
+        marginTop: platform === "android" || platform === "ios" ? "" : "118px",
+      }}
+    >
       <Container
         maxWidth={false}
         sx={{
+          padding:
+            platform === "android" || platform === "ios" ? "0px" : "0px 16px",
           "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
@@ -217,7 +226,7 @@ function Search({ searchTypeForJob }) {
               maxLength={50}
             />
             <Box sx={{ display: { xs: "block", lg: "none" } }}>
-              <AdvanceFilter searchType={searchType} />
+              <AdvanceFilter searchType={searchType || searchTypeForJob} />
             </Box>
 
             <Box
