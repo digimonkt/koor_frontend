@@ -90,9 +90,9 @@ export const SocialLoginAPI = async (data) => {
   });
 };
 
-export const GetNotificationAPI = async ({ type, created }) => {
+export const GetNotificationAPI = async ({ type, created, exactDate }) => {
   const res = await api.request({
-    url: urlcat("v1/users/notification", { type, created }),
+    url: urlcat("v1/users/notification", { type, created, exact_date: exactDate }),
     method: "GET",
   });
   if (res.remote === "success") {

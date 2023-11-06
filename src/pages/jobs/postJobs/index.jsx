@@ -188,7 +188,7 @@ function PostJobsComponent() {
               newFormData.append(key, attachment);
             }
           });
-        } else {
+        } else if (payload[key]) {
           if (payload[key].forEach) {
             payload[key].forEach((data) => {
               newFormData.append(key, data);
