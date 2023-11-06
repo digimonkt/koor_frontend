@@ -23,7 +23,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [section, setSection] = useState("all");
   const [settings, setSetting] = useState(false);
   const [filterByDate, setFilterByDate] = useState(
-    dayjs().format("YYYY-MM-DD")
+    // dayjs().format("YYYY-MM-DD")
+    null
   );
   const handleChangeSection = (event, newValue) => {
     const filterNotification = (type) => {
@@ -69,10 +70,17 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
 
   const getNotifications = async () => {
     setLoading(true);
-    const data = {
+    let data = {
       type: section,
       created: filterByDate,
     };
+    if (header) {
+      data = {
+        type: section,
+        exactDate: filterByDate,
+      };
+    }
+    console.log({ data });
     const res = await GetNotificationAPI(data);
     if (res.remote === "success") {
       setNotification(res.data.results);
@@ -154,11 +162,10 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                       </Typography> */}
                       <div
                         key={index}
-                        className={`${styles.notification_card} ${
-                          role === USER_ROLES.jobSeeker
-                            ? styles.notification_card_job_seeker
-                            : styles.notification_card_user
-                        }`}
+                        className={`${styles.notification_card} ${role === USER_ROLES.jobSeeker
+                          ? styles.notification_card_job_seeker
+                          : styles.notification_card_user
+                          }`}
                       >
                         {getNotificationCardByType(item, handleClose, role)}
                       </div>
