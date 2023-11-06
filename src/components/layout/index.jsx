@@ -49,7 +49,7 @@ function Layout() {
           onClick={toggleDrawer}
           aria-label="open drawer"
           edge="start"
-          sx={{ mr: 2, display: { sm: "none" } }}
+          sx={{ mr: 2, display: { lg: "none" } }}
         >
           <MenuIcon />
         </IconButton>

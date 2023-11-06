@@ -94,9 +94,11 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 <div>
                   <div className="text-end w-100 mb-4">
                     <SolidButton
-                      className={tenderDetails?.expiredInDays > 0
-                        ? "btn_font_lower"
-                        : "btn_font_capitalize"}
+                      className={
+                        tenderDetails?.expiredInDays > 0
+                          ? "btn_font_lower"
+                          : "btn_font_capitalize"
+                      }
                       title={
                         tenderDetails?.expiredInDays > 0
                           ? showDay(tenderDetails?.expiredInDays)
@@ -245,6 +247,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   overflowX: "auto",
                 },
               }}
+              useFlexGap
               className="tender_card_chip"
             >
               {tenderDetails.sector && (
@@ -275,7 +278,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   display: "block",
                 },
               }}
-            // divider={<Divider orientation="vertical" flexItem />}
+              // divider={<Divider orientation="vertical" flexItem />}
             >
               {!selfTender && (
                 <Stack direction="row" spacing={1}>
@@ -310,9 +313,11 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             <div className="text-end">
               <SolidButton
                 // style={{ textTransform: "capitalize", cursor: "default" }}
-                className={tenderDetails?.expiredInDays > 0
-                  ? "btn_font_lower"
-                  : "btn_font_capitalize"}
+                className={
+                  tenderDetails?.expiredInDays > 0
+                    ? "btn_font_lower"
+                    : "btn_font_capitalize"
+                }
                 title={
                   tenderDetails?.expiredInDays > 0
                     ? showDay(tenderDetails?.expiredInDays)
