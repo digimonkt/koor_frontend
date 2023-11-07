@@ -1,6 +1,6 @@
 import { GetNotificationAPI } from "../../api/user";
 import { TabContext, TabList } from "@mui/lab";
-import { Box, Button, Stack, Tab } from "@mui/material";
+import { Box, Button, Stack, Tab, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
@@ -80,13 +80,28 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
         exactDate: filterByDate,
       };
     }
-    console.log({ data });
     const res = await GetNotificationAPI(data);
     if (res.remote === "success") {
       setNotification(res.data.results);
       setFilterData(res.data.results);
     }
     setLoading(false);
+  };
+
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    if (date.toDateString() === today.toDateString()) {
+      return "Today";
+    } else if (date.toDateString() === yesterday.toDateString()) {
+      return "Yesterday";
+    } else {
+      const options = { month: "long", day: "numeric" };
+      return date.toLocaleDateString("en-US", options);
+    }
   };
   useEffect(() => {
     getNotifications();
@@ -112,20 +127,22 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               "@media(max-width:600px)": { pe: 0 },
             }}
           >
-            <TabList className="tab_list" onChange={handleChangeSection}>
-              <Tab label="All" className={styles.tabs_btn} value="all" />
-              <Tab
-                label={role === "vendor" ? "Tenders" : "Jobs"}
-                className={styles.tabs_btn}
-                value={role === "vendor" ? "tenders" : "jobs"}
-              />
-              <Tab
-                label="Message"
-                className={styles.tabs_btn}
-                value="message"
-              />
-            </TabList>
-            {header && (
+            {notification.length > 1 &&
+              <TabList className="tab_list" onChange={handleChangeSection}>
+                <Tab label="All" className={styles.tabs_btn} value="all" />
+                <Tab
+                  label={role === "vendor" ? "Tenders" : "Jobs"}
+                  className={styles.tabs_btn}
+                  value={role === "vendor" ? "tenders" : "jobs"}
+                />
+                <Tab
+                  label="Message"
+                  className={styles.tabs_btn}
+                  value="message"
+                />
+              </TabList>
+            }
+            {header && notification.length > 1 && (
               <Stack direction={"row"} spacing={2} className={styles.btn_div}>
                 <DateInput
                   value={filterByDate}
@@ -157,9 +174,9 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                 {filterData.length ? (
                   filterData.map((item, index) => (
                     <>
-                      {/* <Typography sx={{ padding: "10px", fontWeight: "500" }}>
-                        Today
-                      </Typography> */}
+                      <Typography sx={{ padding: "10px", fontWeight: "500" }}>
+                        {formatDate(item.createdAt)}
+                      </Typography>
                       <div
                         key={index}
                         className={`${styles.notification_card} ${role === USER_ROLES.jobSeeker

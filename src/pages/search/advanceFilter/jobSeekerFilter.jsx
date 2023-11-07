@@ -83,7 +83,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.jobSubCategories &&
-                formik.errors.jobSubCategories ? (
+                  formik.errors.jobSubCategories ? (
                   <ErrorMessage>{formik.errors.jobSubCategories}</ErrorMessage>
                 ) : null}
               </FormControl>

@@ -33,6 +33,7 @@ function CategoryCard({ item, handleSelectedCategories }) {
     }
     setIsAllSubCategoriesSelected(isAllSelected);
   }, [item]);
+
   return (
     <div className="according-content-box border-top py-3">
       <Stack direction="row" spacing={1} alignItems="center">
@@ -56,15 +57,15 @@ function CategoryCard({ item, handleSelectedCategories }) {
               return (
                 <li key={subCategory.id}>
                   <label htmlFor={`checkbox-${subCategory.id}`} style={{ cursor: "pointer" }}>
-                  <CheckboxInput
+                    <CheckboxInput
                       id={`checkbox-${subCategory.id}`}
-                    onChange={(e) =>
-                      handleSelect(subCategory.id, e.target.checked)
-                    }
-                    checked={subCategory.status}
-                  />
-                  <span className="ms-2">{subCategory.title}</span>
-                </label>
+                      onChange={(e) =>
+                        handleSelect(subCategory.id, e.target.checked)
+                      }
+                      checked={subCategory.status}
+                    />
+                    <span className="ms-2">{subCategory.title}</span>
+                  </label>
                 </li>
               );
             })}
