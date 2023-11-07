@@ -248,6 +248,7 @@ function AuthLayout({
                   "@media(max-width:480px)": {
                     borderRadius: "25px 25px 0px 0px",
                     marginBottom: "0px !important",
+                    minHeight: "423px",
                   },
                 }}
               >

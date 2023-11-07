@@ -129,6 +129,7 @@ import { ReactComponent as Tag } from "./tag.svg";
 import { ReactComponent as ArrowOutward } from "./arrow_outward.svg";
 import { ReactComponent as ArrowAngle } from "./angleArrow.svg";
 export const SVG = {
+  KoorLogo,
   ArrowOutward,
   AdvancedDown,
   HamburgerMenu,
@@ -168,7 +169,6 @@ export const SVG = {
   CalenderIcon,
   JobsIcon,
   TendersIcon,
-  KoorLogo,
   SearchIcon,
   NotificationIcon,
   ArrowIcon,
