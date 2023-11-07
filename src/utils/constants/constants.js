@@ -7,6 +7,7 @@ export const MONTH_YEAR_FORMAT = "MMMM YYYY";
 export const SALARY_MIN = "";
 export const SALARY_MAX = "";
 export const TESTIMONIAL_MAX_WORD = 450;
+export const AD_AFTER_RECORDS = 5;
 export const BLACKLIST_REASON_LIST = [
   { label: "Spam", value: "Spam" },
   { label: "Offensive Behavior", value: "Offensive Behavior" },
