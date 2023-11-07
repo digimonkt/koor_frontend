@@ -33,6 +33,8 @@ import {
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import urlcat from "urlcat";
+import { getAdSenseAPI } from "@api/adSense";
+import { setAdSense } from "@redux/slice/adSense";
 function Search() {
   const params = useParams();
   const dispatch = useDispatch();
@@ -51,6 +53,7 @@ function Search() {
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
   const [search, setSearch] = useState("");
   const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
+  const { adSense } = useSelector((state) => state.adSense);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -92,7 +95,20 @@ function Search() {
         return "Unknown search type"; // Adding a defaultcase
     }
   };
+  const getAdSenseList = async () => {
+    const response = await getAdSenseAPI();
+    if (response.remote === "success") {
+      dispatch(setAdSense(response.data));
+    } else {
+      console.log(response.error);
+    }
+  };
 
+  useEffect(() => {
+    if (adSense.data.length < 1) {
+      getAdSenseList();
+    }
+  }, [adSense]);
   useEffect(() => {
     setSearchType(params.type);
     const search = searchParams.get("search");
@@ -242,7 +258,7 @@ function Search() {
                     />
                   </h2>
                   {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
-                  (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
+                    (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                     <>
                       <IconButton
                         sx={{ width: "50px", height: "50px" }}
@@ -328,7 +344,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                    orderBy === data.orderBy
+                                      orderBy === data.orderBy
                                       ? role === USER_ROLES.jobSeeker
                                         ? "#FEEFD3"
                                         : "#D5E3F7"
@@ -374,7 +390,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                    orderBy === data.orderBy
+                                      orderBy === data.orderBy
                                       ? role === USER_ROLES.vendors
                                         ? "#FEEFD3"
                                         : "#D5E3F7"
