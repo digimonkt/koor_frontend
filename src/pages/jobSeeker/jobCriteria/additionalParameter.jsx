@@ -136,6 +136,11 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             </label>
             <FormGroup row className="additional-check">
               <FormControlReminder
+                sx={{
+
+                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": { fontWeight: jobType.partTime ? 500 : 400 },
+
+                }}
                 control={<CheckboxInput />}
                 onChange={(e) =>
                   setJobType((prevState) => ({
@@ -147,6 +152,11 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                 label="Part Time"
               />
               <FormControlReminder
+                sx={{
+
+                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": { fontWeight: jobType.fullTime ? 500 : 400 },
+
+                }}
                 control={<CheckboxInput />}
                 onChange={(e) =>
                   setJobType((prevState) => ({
@@ -158,7 +168,11 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                 label="Full Time"
               />
               <FormControlReminder
-                sx={{ color: jobType.contract ? "addition-color" : "" }}
+                sx={{
+
+                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": { fontWeight: jobType.contract ? 500 : 400 },
+
+                }}
                 control={<CheckboxInput />}
                 onChange={(e) =>
                   setJobType((prevState) => ({
