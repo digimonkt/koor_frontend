@@ -153,7 +153,6 @@ function MyProfile() {
         delete payload.mobile_number;
         delete payload.country_code;
       }
-      console.log({ payload });
       const newFormData = new FormData();
       for (const keys in payload) {
         // using only for files only !
@@ -324,7 +323,7 @@ function MyProfile() {
                     {...formik.getFieldProps("organizationName")}
                   />
                   {formik.touched.organizationName &&
-                  formik.errors.organizationName ? (
+                    formik.errors.organizationName ? (
                     <ErrorMessage>
                       {formik.errors.organizationName}
                     </ErrorMessage>
@@ -341,7 +340,7 @@ function MyProfile() {
                     {...formik.getFieldProps("organizationType")}
                   />
                   {formik.touched.organizationType &&
-                  formik.errors.organizationType ? (
+                    formik.errors.organizationType ? (
                     <ErrorMessage>
                       {formik.errors.organizationType}
                     </ErrorMessage>
@@ -456,7 +455,7 @@ function MyProfile() {
                     {...formik.getFieldProps("businessLicenseId")}
                   />
                   {formik.touched.businessLicenseId &&
-                  formik.errors.businessLicenseId ? (
+                    formik.errors.businessLicenseId ? (
                     <ErrorMessage>
                       {formik.errors.businessLicenseId}
                     </ErrorMessage>
@@ -479,7 +478,7 @@ function MyProfile() {
                     />
                   </Stack>
                   {formik.touched.businessLicense &&
-                  formik.errors.businessLicense ? (
+                    formik.errors.businessLicense ? (
                     <ErrorMessage>{formik.errors.businessLicense}</ErrorMessage>
                   ) : null}
                   <HorizontalLabelInput
@@ -488,7 +487,7 @@ function MyProfile() {
                     {...formik.getFieldProps("certificationNumber")}
                   />
                   {formik.touched.certificationNumber &&
-                  formik.errors.certificationNumber ? (
+                    formik.errors.certificationNumber ? (
                     <ErrorMessage>
                       {formik.errors.certificationNumber}
                     </ErrorMessage>
@@ -511,7 +510,7 @@ function MyProfile() {
                     />
                   </Stack>
                   {formik.touched.certification &&
-                  formik.errors.certification ? (
+                    formik.errors.certification ? (
                     <ErrorMessage>{formik.errors.certification}</ErrorMessage>
                   ) : null}
                   <HorizontalLabelInput
@@ -520,7 +519,7 @@ function MyProfile() {
                     {...formik.getFieldProps("yearsOfOperating")}
                   />
                   {formik.touched.yearsOfOperating &&
-                  formik.errors.yearsOfOperating ? (
+                    formik.errors.yearsOfOperating ? (
                     <ErrorMessage>
                       {formik.errors.yearsOfOperating}
                     </ErrorMessage>
@@ -531,7 +530,7 @@ function MyProfile() {
                     {...formik.getFieldProps("noOfJobsAsExperience")}
                   />
                   {formik.touched.noOfJobsAsExperience &&
-                  formik.errors.noOfJobsAsExperience ? (
+                    formik.errors.noOfJobsAsExperience ? (
                     <ErrorMessage>
                       {formik.errors.noOfJobsAsExperience}
                     </ErrorMessage>
