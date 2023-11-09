@@ -155,8 +155,10 @@ function PostJobsComponent() {
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
         contact_email: values.isApplyThroughEmail ? values.contactEmail : "",
-        cc1: values.isApplyThroughEmail ? values.cc1 : "",
-        cc2: values.isApplyThroughEmail ? values.cc2 : "",
+        // cc1: values.isApplyThroughEmail ? values.cc1 : "",
+        // cc2: values.isApplyThroughEmail ? values.cc2 : "",
+        cc1: values.cc1,
+        cc2: values.cc2,
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
@@ -167,11 +169,11 @@ function PostJobsComponent() {
         attachments_remove: values.attachmentsRemove,
         duration: values.duration,
         experience: values.experience,
-        apply_through_koor: values.isApplyThroughKoor || false,
-        apply_through_email: values.isApplyThroughEmail || false,
+        apply_through_koor: values.isApplyThroughKoor || "false",
+        apply_through_email: values.isApplyThroughEmail || "false",
         apply_through_website: values.isApplyThroughWebsite || "false",
         application_instruction: values.applicationInstruction,
-        website_link: values.websiteLink
+        website_link: values.websiteLink,
       };
       const newFormData = new FormData();
       for (const key in payload) {
@@ -256,10 +258,22 @@ function PostJobsComponent() {
       formik.setFieldValue("cc2", data.cc2);
       formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
-      formik.setFieldValue("isApplyThroughKoor", Boolean(data.isApplyThroughKoor));
-      formik.setFieldValue("isApplyThroughEmail", Boolean(data.isApplyThroughEmail));
-      formik.setFieldValue("isApplyThroughWebsite", Boolean(data.isApplyThroughWebsite));
-      formik.setFieldValue("applicationInstruction", data.applicationInstruction);
+      formik.setFieldValue(
+        "isApplyThroughKoor",
+        Boolean(data.isApplyThroughKoor)
+      );
+      formik.setFieldValue(
+        "isApplyThroughEmail",
+        Boolean(data.isApplyThroughEmail)
+      );
+      formik.setFieldValue(
+        "isApplyThroughWebsite",
+        Boolean(data.isApplyThroughWebsite)
+      );
+      formik.setFieldValue(
+        "applicationInstruction",
+        data.applicationInstruction
+      );
       formik.setFieldValue("websiteLink", data.websiteLink);
       formik.setFieldValue("highestEducation", data.highestEducation.id || "");
       // !TEMPORARY SOLUTION
@@ -385,6 +399,7 @@ function PostJobsComponent() {
   useEffect(() => {
     getPackageData();
   }, []);
+  console.log(formik.values);
   return (
     <div className="job-application">
       <Card
@@ -576,7 +591,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -592,7 +607,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                            formik.values.jobCategories
+                              formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -601,7 +616,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
+                        formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -754,7 +769,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -804,8 +819,11 @@ function PostJobsComponent() {
                       required
                       {...formik.getFieldProps("applicationInstruction")}
                     />
-                    {formik.touched.applicationInstruction && formik.errors.applicationInstruction ? (
-                      <ErrorMessage>{formik.errors.applicationInstruction}</ErrorMessage>
+                    {formik.touched.applicationInstruction &&
+                    formik.errors.applicationInstruction ? (
+                      <ErrorMessage>
+                        {formik.errors.applicationInstruction}
+                      </ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
@@ -846,7 +864,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -950,7 +968,8 @@ function PostJobsComponent() {
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
-                          `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
                           } remaining`
                         );
                       } else {
@@ -1035,8 +1054,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1097,8 +1116,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={

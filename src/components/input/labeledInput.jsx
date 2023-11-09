@@ -97,16 +97,21 @@ function LabeledInputComponent({
           />
           {icon && <div>{icon}</div>}
           {type === "password" ? (
-            <div
+            <IconButton
+              disableRipple={true}
               onClick={handleChangePasswordVisibility}
               className="password_svg"
             >
-              {!isVisiblePassword ? (<IconButton size="small" disableRipple={true} sx={{ p: 0 }}>
-                <SVG.EyeOpen />
-              </IconButton>) : (<IconButton size="small" disableRipple={true} sx={{ p: 0 }}>
-                <SVG.EyeOff />
-              </IconButton>)}
-            </div>
+              {!isVisiblePassword ? (
+                <IconButton size="small" disableRipple={true} sx={{ p: 0 }}>
+                  <SVG.EyeOpen />
+                </IconButton>
+              ) : (
+                <IconButton size="small" disableRipple={true} sx={{ p: 0 }}>
+                  <SVG.EyeOff />
+                </IconButton>
+              )}
+            </IconButton>
           ) : (
             ""
           )}
