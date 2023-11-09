@@ -261,7 +261,7 @@ const JobDetails = () => {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate(-1)}
+                    onClick={() => navigate("/search/jobs")}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>

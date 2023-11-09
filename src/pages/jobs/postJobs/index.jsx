@@ -399,7 +399,6 @@ function PostJobsComponent() {
   useEffect(() => {
     getPackageData();
   }, []);
-  console.log(formik.values);
   return (
     <div className="job-application">
       <Card
