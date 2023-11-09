@@ -1,4 +1,4 @@
-import { Container, Grid, Stack } from "@mui/material";
+import { Container, Grid, IconButton, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
 import { SVG } from "../../../assets/svg";
@@ -221,12 +221,17 @@ function TenderDetailsComponent() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <div className={`${styles.postJob}`}>
-                  <span
-                    style={{ paddingTop: "5px", cursor: "pointer" }}
+                  <IconButton
+                    disableRipple={true}
+                    style={{
+                      paddingTop: "5px",
+                      padding: "0px",
+                      cursor: "pointer",
+                    }}
                     onClick={() => navigate(-1)}
                   >
                     {<SVG.LeftArrow />}
-                  </span>
+                  </IconButton>
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>
@@ -248,9 +253,7 @@ function TenderDetailsComponent() {
                       // color: "#ffffff",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1
-                        ? details?.expiredInDays
-                        : 0
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -339,11 +342,11 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                            <>
-                              <SVG.Enable1 className="me-2" />
-                            </>,
-                            "Apply for the Tender",
-                          ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for the Tender",
+                            ]
                       }
                       sx={{
                         padding: "10px 0px !important",
@@ -400,11 +403,11 @@ function TenderDetailsComponent() {
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.BlueSaveIcon className="me-2" />
-                              </>,
-                              "Save Tender",
-                            ]
+                                <>
+                                  <SVG.BlueSaveIcon className="me-2" />
+                                </>,
+                                "Save Tender",
+                              ]
                         }
                         sx={{
                           height: "44px",
