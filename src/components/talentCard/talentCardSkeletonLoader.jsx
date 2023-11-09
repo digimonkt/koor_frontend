@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 function TalentCardSkeletonLoader() {
   return (
     <Stack
+      sx={{ width: "100%" }}
       direction={{ xs: "column", lg: "row" }}
       spacing={{ xs: "2", lg: "2" }}
       alignItems={{ xs: "start", lg: "center" }}
@@ -21,9 +22,10 @@ function TalentCardSkeletonLoader() {
             flexWrap="wrap"
             alignItems="center"
             sx={{ mb: 1 }}
+            useFlexGap
           >
             <h4>
-              <Skeleton width={720} />
+              <Skeleton width={620} />
             </h4>
           </Stack>
           <Stack
@@ -41,33 +43,34 @@ function TalentCardSkeletonLoader() {
           </Stack>
           <div className="recent-descrition">
             <p>
-              <Skeleton width={1500} count={2} style={{ lineHeight: "9px" }} />
+              <Skeleton width={550} count={2} style={{ lineHeight: "9px" }} />
             </p>
           </div>
           <Stack
             direction="row"
             spacing={2}
             alignItems="center"
-            sx={{ mb: 1, mt: 2 }}
+            sx={{ mb: 1, mt: 2, flexWrap: "wrap" }}
             className="meets_div"
+            useFlexGap
           >
             <div style={{ display: "flex" }}>
               <Skeleton
                 height={30}
                 width={100}
-                style={{ borderRadius: "20px" }}
+                style={{ borderRadius: "20px", marginRight: "10px" }}
                 className="chiplabel"
               />
               <Skeleton
                 height={30}
                 width={100}
-                style={{ borderRadius: "20px" }}
+                style={{ borderRadius: "20px", marginRight: "10px" }}
                 className="chiplabel"
               />
               <Skeleton
                 height={30}
                 width={100}
-                style={{ borderRadius: "20px" }}
+                style={{ borderRadius: "20px", marginRight: "10px" }}
                 className="chiplabel"
               />
             </div>
