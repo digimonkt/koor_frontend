@@ -1,4 +1,4 @@
-import { Container, Grid, Stack } from "@mui/material";
+import { Container, Grid, IconButton, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
 import { SVG } from "../../../assets/svg";
@@ -221,12 +221,17 @@ function TenderDetailsComponent() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <div className={`${styles.postJob}`}>
-                  <span
-                    style={{ paddingTop: "5px", cursor: "pointer" }}
+                  <IconButton
+                    disableRipple={true}
+                    style={{
+                      paddingTop: "5px",
+                      padding: "0px",
+                      cursor: "pointer",
+                    }}
                     onClick={() => navigate(-1)}
                   >
                     {<SVG.LeftArrow />}
-                  </span>
+                  </IconButton>
                   <p className="mb-0">{details.title}</p>
                 </div>
               </Grid>

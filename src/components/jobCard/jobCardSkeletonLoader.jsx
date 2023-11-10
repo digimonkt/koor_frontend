@@ -20,16 +20,16 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             item
             sx={{
               "@media (min-width: 1200px)": {
-                maxWidth: "10.555%",
-                flexBasis: "10.555%",
+                maxWidth: "2.555%",
+                flexBasis: "2.555%",
               },
             }}
           >
             <div
               className="squer-width"
               style={{
-                height: "150px",
-                width: "150px",
+                height: "70px",
+                width: "70px",
               }}
             >
               <Skeleton circle style={{ height: "100%" }} />
@@ -42,8 +42,8 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
           xs={12}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "72%",
-              flexBasis: "72%",
+              maxWidth: "80%",
+              flexBasis: "80%",
             },
           }}
         >
@@ -56,6 +56,7 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
+              useFlexGap
             >
               <Skeleton
                 height={30}

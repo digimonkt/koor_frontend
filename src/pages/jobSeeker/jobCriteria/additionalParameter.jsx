@@ -182,6 +182,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                       platform === "android" || platform === "ios"
                         ? "12px"
                         : "",
+                    fontWeight: jobType.partTime ? 500 : 400,
                   },
                 }}
               />
@@ -198,6 +199,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                       platform === "android" || platform === "ios"
                         ? "12px"
                         : "",
+                    fontWeight: jobType.fullTime ? 500 : 400,
                   },
                 }}
                 control={<CheckboxInput />}
@@ -224,6 +226,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                       platform === "android" || platform === "ios"
                         ? "12px"
                         : "",
+                    fontWeight: jobType.fullTime ? 500 : 400,
                   },
                 }}
                 control={<CheckboxInput />}

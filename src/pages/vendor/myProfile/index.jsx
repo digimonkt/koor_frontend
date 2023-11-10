@@ -153,7 +153,6 @@ function MyProfile() {
         delete payload.mobile_number;
         delete payload.country_code;
       }
-      console.log({ payload });
       const newFormData = new FormData();
       for (const keys in payload) {
         // using only for files only !

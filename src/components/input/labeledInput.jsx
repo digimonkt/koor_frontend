@@ -97,7 +97,8 @@ function LabeledInputComponent({
           />
           {icon && <div>{icon}</div>}
           {type === "password" ? (
-            <div
+            <IconButton
+              disableRipple={true}
               onClick={handleChangePasswordVisibility}
               className="password_svg"
             >
@@ -110,7 +111,7 @@ function LabeledInputComponent({
                   <SVG.EyeOff />
                 </IconButton>
               )}
-            </div>
+            </IconButton>
           ) : (
             ""
           )}

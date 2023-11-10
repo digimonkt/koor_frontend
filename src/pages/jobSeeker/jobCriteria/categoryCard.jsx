@@ -35,6 +35,7 @@ function CategoryCard({ item, handleSelectedCategories }) {
     }
     setIsAllSubCategoriesSelected(isAllSelected);
   }, [item]);
+
   return (
     <div
       className={`according-content-box py-3 ${

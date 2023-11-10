@@ -34,6 +34,8 @@ import {
 import AdvanceFilter from "./advanceFilter";
 import urlcat from "urlcat";
 import { Capacitor } from "@capacitor/core";
+import { getAdSenseAPI } from "@api/adSense";
+import { setAdSense } from "@redux/slice/adSense";
 function Search({ searchTypeForJob }) {
   const platform = Capacitor.getPlatform();
   const params = useParams();
@@ -50,9 +52,10 @@ function Search({ searchTypeForJob }) {
   const Component = ComponentSelector(searchType || searchTypeForJob);
   const [anchorEl, setAnchorEl] = useState(null);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
-  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [search, setSearch] = useState("");
   const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
+  const { adSense } = useSelector((state) => state.adSense);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -94,7 +97,20 @@ function Search({ searchTypeForJob }) {
         return "Unknown search type"; // Adding a defaultcase
     }
   };
+  const getAdSenseList = async () => {
+    const response = await getAdSenseAPI();
+    if (response.remote === "success") {
+      dispatch(setAdSense(response.data));
+    } else {
+      console.log(response.error);
+    }
+  };
 
+  useEffect(() => {
+    if (adSense.data.length < 1) {
+      getAdSenseList();
+    }
+  }, [adSense]);
   useEffect(() => {
     setSearchType(params.type);
     const search = searchParams.get("search");
