@@ -128,6 +128,10 @@ import { ReactComponent as Sector } from "./sector.svg";
 import { ReactComponent as Tag } from "./tag.svg";
 import { ReactComponent as ArrowOutward } from "./arrow_outward.svg";
 import { ReactComponent as ArrowAngle } from "./angleArrow.svg";
+import { ReactComponent as employeUserGroup } from "./employeUserGroup.svg";
+import { ReactComponent as myPosts } from "./my_posts.svg";
+import { ReactComponent as employerDashboard } from "./employerDashboard.svg";
+
 export const SVG = {
   KoorLogo,
   ArrowOutward,
@@ -259,4 +263,7 @@ export const SVG = {
   Sector,
   Tag,
   ArrowAngle,
+  employeUserGroup,
+  myPosts,
+  employerDashboard,
 };

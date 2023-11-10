@@ -248,9 +248,7 @@ function TenderDetailsComponent() {
                       // color: "#ffffff",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1
-                        ? details?.expiredInDays
-                        : 0
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -339,11 +337,11 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                            <>
-                              <SVG.Enable1 className="me-2" />
-                            </>,
-                            "Apply for the Tender",
-                          ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for the Tender",
+                            ]
                       }
                       sx={{
                         padding: "10px 0px !important",
@@ -400,11 +398,11 @@ function TenderDetailsComponent() {
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.BlueSaveIcon className="me-2" />
-                              </>,
-                              "Save Tender",
-                            ]
+                                <>
+                                  <SVG.BlueSaveIcon className="me-2" />
+                                </>,
+                                "Save Tender",
+                              ]
                         }
                         sx={{
                           height: "44px",

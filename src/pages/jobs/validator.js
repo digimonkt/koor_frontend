@@ -20,12 +20,13 @@ export const validateCreateJobInput = Yup.object().shape({
   isApplyThroughKoor: Yup.boolean(),
   isApplyThroughEmail: Yup.boolean(),
   isApplyThroughWebsite: Yup.boolean(),
-  applicationInstruction: Yup.string().required("Application instructions are required"),
-  websiteLink: Yup.string().when("isApplyThroughWebsite", {
-    is: true,
-    then: Yup.string().required("Website link is required"),
-    otherwise: Yup.string() // Not required when isApplyThroughWebsite is false
-  }),
+  applicationInstruction: Yup.string().nullable().required("Application instructions are required"),
+  websiteLink: Yup.string()
+    .when("isApplyThroughWebsite", {
+      is: true,
+      then: Yup.string().required("Website link is required"),
+      otherwise: Yup.string().nullable() // Allow null or other values when isApplyThroughWebsite is false
+    }),
   duration: Yup.number(),
   experience: Yup.number().typeError("Experience must be a number").required("Experience is required"),
   deadline: Yup.string().nullable()

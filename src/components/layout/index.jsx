@@ -12,7 +12,6 @@ import { Suspense, useState } from "react";
 import { FallbackLoading } from "../../components/loader/fallbackLoader";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Capacitor } from "@capacitor/core";
-import BottomBar from "./bottom-navigation";
 
 function Layout() {
   const platform = Capacitor.getPlatform();
@@ -125,7 +124,7 @@ function Layout() {
           ""
         )} */}
       </Box>
-      {platform === "android" || platform === "ios" ? <BottomBar /> : null}
+      {/* {platform === "android" || platform === "ios" ? "asas" : null}
       {platform === "android" || platform === "ios" ? (
         <Box
           sx={{
@@ -152,7 +151,7 @@ function Layout() {
             }}
           ></Box>
         </Box>
-      ) : null}
+      ) : null} */}
     </Box>
   );
 }

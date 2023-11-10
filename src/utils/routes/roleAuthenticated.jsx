@@ -20,6 +20,7 @@ function RoleRouteComponent(authRole) {
             },
           });
         } else if (role !== authRole) {
+          console.log({ location, authRole });
           navigate(`/${role}/my-profile`);
         }
       } else {

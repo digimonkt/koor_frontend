@@ -1,8 +1,26 @@
-import { SVG } from "@assets/svg";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { BOTOM_BAR_NAVBAR } from "@utils/constants/constants";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const BottomBar = () => {
+  const { role } = useSelector((state) => state.auth);
+
+  const generatNavbar = (role) => {
+    const item = BOTOM_BAR_NAVBAR(role);
+    return item.map((item, index) => {
+      return (
+        <BottomNavigationAction
+          key={index}
+          label={item.label}
+          LinkComponent={Link}
+          to={item.address}
+          icon={item.icon}
+        />
+      );
+    });
+  };
+
   return (
     <>
       <BottomNavigation
@@ -26,30 +44,7 @@ const BottomBar = () => {
         }}
         showLabels
       >
-        <BottomNavigationAction
-          label="Jobs"
-          LinkComponent={Link}
-          to="job_seeker/job-feed"
-          icon={<SVG.JobsSeekerIcon />}
-        />
-        <BottomNavigationAction
-          label="Saved"
-          icon={<SVG.UnSave />}
-          LinkComponent={Link}
-          to="job_seeker/jobs/saved"
-        />
-        <BottomNavigationAction
-          label="Messages"
-          icon={<SVG.MessageIcon />}
-          LinkComponent={Link}
-          to="job_seeker/chat"
-        />
-        <BottomNavigationAction
-          label="Profile"
-          icon={<SVG.UserProfile />}
-          LinkComponent={Link}
-          to="job_seeker/my-profile"
-        />
+        {role && generatNavbar(role)}
       </BottomNavigation>
     </>
   );
