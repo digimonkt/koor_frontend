@@ -1,3 +1,4 @@
+import { REGEX } from "@utils/constants/regex";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import * as Yup from "yup";
 const passwordValidation = {
@@ -37,7 +38,7 @@ export const validateRegistrationForm = Yup.object().shape({
 });
 
 export const validateLoginForm = Yup.object().shape({
-  email: Yup.string().required("Email or Phone is required"),
+  email: Yup.string().matches(REGEX.email, "Invalid email format").required("Email or Phone is required"),
   password: Yup.string().required("Password is Required"),
 });
 export const validateForgotPasswordForm = Yup.object().shape({

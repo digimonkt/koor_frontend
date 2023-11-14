@@ -278,7 +278,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   display: "block",
                 },
               }}
-              // divider={<Divider orientation="vertical" flexItem />}
+            // divider={<Divider orientation="vertical" flexItem />}
             >
               {!selfTender && (
                 <Stack direction="row" spacing={1}>
@@ -338,7 +338,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               className="py-2 mt-2"
               sx={{ minHeight: "87%" }}
             >
-              <div className="py-4 border-left-1 border-left py-4 ps-3">
+              <div className="py-4 border-left-1 py-4 ps-3">
                 {selfTender ? (
                   <div className="job-button-card">
                     <button
