@@ -1,6 +1,6 @@
 import { FilledButton } from "../../components/button";
 import DialogBox from "../../components/dialogBox";
-import { Slider } from "@mui/material";
+import { Box, Slider } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "./helper";
@@ -63,7 +63,14 @@ function ImageCropper({ open, handleClose, image, handleSave }) {
   return (
     <DialogBox open={open} handleClose={handleClose}>
       <div>
-        <div className={`${styles.cropper_height}`}>
+        <Box
+          className={`${styles.cropper_height}`}
+          sx={{
+            "& .reactEasyCrop_Container": {
+              height: "250px",
+            },
+          }}
+        >
           {imageSrc && (
             <Cropper
               image={imageSrc}
@@ -76,9 +83,10 @@ function ImageCropper({ open, handleClose, image, handleSave }) {
               onCropChange={onCropChange}
               onCropComplete={onCropComplete}
               onZoomChange={onZoomChange}
+              cropSize={{ width: 150, height: 150 }}
             />
           )}
-        </div>
+        </Box>
         <div className="controls">
           <label>
             Rotate
