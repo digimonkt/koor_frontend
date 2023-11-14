@@ -48,7 +48,6 @@ function Dashboard() {
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
-  console.log({ isMoreApplicationsAvailable });
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>
