@@ -18,7 +18,10 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
         </div>
       )}
       <div className={`${styles.required}`}>
-        <h6 className="mb-0 mt-3">Languages</h6>
+        {
+          languages.length > 0 && <h6 className="mb-0 mt-3">Languages</h6>
+        }
+
         {languages.map((language) => {
           return (
             <div className={`${styles.educations}`} key={language.id}>
@@ -28,7 +31,7 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
           );
         })}
         <div className={`${styles.skills}`}>
-          <h6 className="mb-2  mt-3">Skills</h6>
+          {skills.length > 0 && <h6 className="mb-2  mt-3">Skills</h6>}
           <Box sx={{ overflow: "auto" }}>
             <Stack direction={"row"} spacing={2} alignItems={"center"}>
               {skills.map((skill) => {

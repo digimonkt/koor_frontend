@@ -913,7 +913,7 @@ function PostJobsComponent() {
                     <label>
                       Required languages{" "}
                       <span style={{ color: "#848484" }}>(Maximum 3)</span>
-                      <span className="required-field">*</span>
+                      {/* <span className="required-field">*</span> */}
                     </label>
                     <SelectInput
                       defaultValue=""
@@ -933,7 +933,7 @@ function PostJobsComponent() {
                     <label className="mb-2">
                       Job skills
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
-                      <span className="required-field">*</span>
+                      {/* <span className="required-field">*</span> */}
                     </label>
                     <SelectInput
                       className="mb-3"
