@@ -236,7 +236,6 @@ const JobDetails = () => {
     }
   };
   const platform = Capacitor.getPlatform();
-  console.log(details.isApplyThroughEmail || details.isApplyThroughWebsite);
   return (
     <>
       <Container
@@ -647,58 +646,62 @@ const JobDetails = () => {
               </div>
             </DialogBox>
           </div>
-          <div className={`${styles.LikeJob}`}>
-            <h2>Application Instructions:</h2>
-            {details.applicationInstruction}
-          </div>
-          {role === USER_ROLES.jobSeeker || role === "" ? (
-            <div className={`${styles.jobpostbtn} `}>
-              <Box sx={{ textAlign: "start", display: "flex" }}>
-                {!details.isApplied && details.isApplyThroughWebsite && (
-                  <OutlinedButton
-                    sx={{
-                      color: "#eea23d !important",
-                      borderColor: "#eea23d !important",
-                    }}
-                    title={[
-                      <>
-                        <SVG.ArrowOutward className="me-2" />
-                      </>,
-                      "Apply on employer's website",
-                    ]}
-                    // className={`${styles.enablebtn}`}
-                    disabled={details.isApplied && !details.isEditable}
-                    onClick={() => {
-                      if (isLoggedIn) {
-                        window.open(details.websiteLink, "_blank");
-                      } else {
-                        setRegistrationWarning(true);
-                      }
-                    }}
-                  />
-                )}
-                {!details.isApplied && details.isApplyThroughEmail && (
-                  <OutlinedButton
-                    sx={{
-                      color: "#eea23d !important",
-                      borderColor: "#eea23d !important",
-                    }}
-                    title={[
-                      <>
-                        <SVG.ArrowOutward className="me-2" />
-                      </>,
-                      "Apply by email",
-                    ]}
-                    className="ms-3"
-                    onClick={() => {
-                      handleSendEmail(details.id);
-                    }}
-                  />
-                )}
-              </Box>
-            </div>
-          ) : null}
-          <Divider />
+          {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+            <>
+              <div className={`${styles.LikeJob}`}>
+                <h2>Application Instructions:</h2>
+                {details.applicationInstruction}
+              </div>
+              {role === USER_ROLES.jobSeeker || role === "" ? (
+                <div className={`${styles.jobpostbtn} `}>
+                  <Box sx={{ textAlign: "start", display: "flex" }}>
+                    {!details.isApplied && details.isApplyThroughWebsite && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply on employer's website",
+                        ]}
+                        // className={`${styles.enablebtn}`}
+                        disabled={details.isApplied && !details.isEditable}
+                        onClick={() => {
+                          if (isLoggedIn) {
+                            window.open(details.websiteLink, "_blank");
+                          } else {
+                            setRegistrationWarning(true);
+                          }
+                        }}
+                      />
+                    )}
+                    {!details.isApplied && details.isApplyThroughEmail && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply by email",
+                        ]}
+                        className="ms-3"
+                        onClick={() => {
+                          handleSendEmail(details.id);
+                        }}
+                      />
+                    )}
+                  </Box>
+                </div>
+              ) : null}
+              <Divider />
+            </>
+          )}
           <Box
             className={`${styles.LikeJob}`}
             sx={{
