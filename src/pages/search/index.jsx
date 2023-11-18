@@ -196,8 +196,8 @@ function Search({ searchTypeForJob }) {
   };
 
   useEffect(() => {
-    console.log({ searchType, searchTypeForJob, platform });
-  }, [searchType, searchTypeForJob, platform]);
+    console.log({ searchType, searchTypeForJob, platform, role });
+  }, [searchType, searchTypeForJob, platform, role]);
   return (
     <Box
       className={`${styles.body}`}
@@ -269,7 +269,8 @@ function Search({ searchTypeForJob }) {
             >
               <AdvanceFilter searchType={searchType || searchTypeForJob} />
             </Box>
-            {platform === "android" || platform === "ios" ? (
+            {(platform === "android" || platform === "ios") &&
+            role === USER_ROLES.vendor ? (
               <Box
                 sx={{
                   marginTop: { lg: "24px", xs: "24px" },
