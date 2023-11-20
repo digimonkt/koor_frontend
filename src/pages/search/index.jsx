@@ -50,7 +50,7 @@ function Search() {
   const Component = ComponentSelector(searchType);
   const [anchorEl, setAnchorEl] = useState(null);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
-  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [search, setSearch] = useState("");
   const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
   const { adSense } = useSelector((state) => state.adSense);
@@ -258,7 +258,7 @@ function Search() {
                     />
                   </h2>
                   {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
-                    (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
+                  (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                     <>
                       <IconButton
                         sx={{ width: "50px", height: "50px" }}
@@ -344,7 +344,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                      orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                       ? role === USER_ROLES.jobSeeker
                                         ? "#FEEFD3"
                                         : "#D5E3F7"
@@ -390,7 +390,7 @@ function Search() {
                                 sx={{
                                   backgroundColor:
                                     sortBy === data.sortBy &&
-                                      orderBy === data.orderBy
+                                    orderBy === data.orderBy
                                       ? role === USER_ROLES.vendors
                                         ? "#FEEFD3"
                                         : "#D5E3F7"

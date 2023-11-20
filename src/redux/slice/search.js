@@ -14,7 +14,7 @@ const initialState = {
   totalItems: 0,
   totalPages: 1,
   page: 1,
-  limit: 10,
+  limit: 20,
   advanceFilter: {
     country: "",
     city: "",

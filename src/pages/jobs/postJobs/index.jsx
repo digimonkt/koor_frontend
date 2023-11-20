@@ -155,8 +155,10 @@ function PostJobsComponent() {
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
         contact_email: values.isApplyThroughEmail ? values.contactEmail : "",
-        cc1: values.isApplyThroughEmail ? values.cc1 : "",
-        cc2: values.isApplyThroughEmail ? values.cc2 : "",
+        // cc1: values.isApplyThroughEmail ? values.cc1 : "",
+        // cc2: values.isApplyThroughEmail ? values.cc2 : "",
+        cc1: values.cc1,
+        cc2: values.cc2,
         contact_whatsapp: values.isContactWhatsapp
           ? values.contactWhatsapp
           : "",
@@ -167,11 +169,11 @@ function PostJobsComponent() {
         attachments_remove: values.attachmentsRemove,
         duration: values.duration,
         experience: values.experience,
-        apply_through_koor: values.isApplyThroughKoor || false,
-        apply_through_email: values.isApplyThroughEmail || false,
+        apply_through_koor: values.isApplyThroughKoor || "false",
+        apply_through_email: values.isApplyThroughEmail || "false",
         apply_through_website: values.isApplyThroughWebsite || "false",
         application_instruction: values.applicationInstruction,
-        website_link: values.websiteLink
+        website_link: values.websiteLink,
       };
       const newFormData = new FormData();
       for (const key in payload) {
@@ -256,10 +258,22 @@ function PostJobsComponent() {
       formik.setFieldValue("cc2", data.cc2);
       formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
       formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
-      formik.setFieldValue("isApplyThroughKoor", Boolean(data.isApplyThroughKoor));
-      formik.setFieldValue("isApplyThroughEmail", Boolean(data.isApplyThroughEmail));
-      formik.setFieldValue("isApplyThroughWebsite", Boolean(data.isApplyThroughWebsite));
-      formik.setFieldValue("applicationInstruction", data.applicationInstruction);
+      formik.setFieldValue(
+        "isApplyThroughKoor",
+        Boolean(data.isApplyThroughKoor)
+      );
+      formik.setFieldValue(
+        "isApplyThroughEmail",
+        Boolean(data.isApplyThroughEmail)
+      );
+      formik.setFieldValue(
+        "isApplyThroughWebsite",
+        Boolean(data.isApplyThroughWebsite)
+      );
+      formik.setFieldValue(
+        "applicationInstruction",
+        data.applicationInstruction
+      );
       formik.setFieldValue("websiteLink", data.websiteLink);
       formik.setFieldValue("highestEducation", data.highestEducation.id || "");
       // !TEMPORARY SOLUTION
@@ -684,7 +698,7 @@ function PostJobsComponent() {
                         className="mb-2"
                       >
                         <label className="mb-1 d-inline-block">
-                          Start Date
+                          Start Date<span className="required-field">*</span>{" "}
                         </label>
                       </Stack>
                       <DateInput
@@ -804,8 +818,11 @@ function PostJobsComponent() {
                       required
                       {...formik.getFieldProps("applicationInstruction")}
                     />
-                    {formik.touched.applicationInstruction && formik.errors.applicationInstruction ? (
-                      <ErrorMessage>{formik.errors.applicationInstruction}</ErrorMessage>
+                    {formik.touched.applicationInstruction &&
+                      formik.errors.applicationInstruction ? (
+                      <ErrorMessage>
+                        {formik.errors.applicationInstruction}
+                      </ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
@@ -896,7 +913,7 @@ function PostJobsComponent() {
                     <label>
                       Required languages{" "}
                       <span style={{ color: "#848484" }}>(Maximum 3)</span>
-                      <span className="required-field">*</span>
+                      {/* <span className="required-field">*</span> */}
                     </label>
                     <SelectInput
                       defaultValue=""
@@ -916,7 +933,7 @@ function PostJobsComponent() {
                     <label className="mb-2">
                       Job skills
                       <span style={{ opacity: "0.5" }}>(Maximum 3)</span>
-                      <span className="required-field">*</span>
+                      {/* <span className="required-field">*</span> */}
                     </label>
                     <SelectInput
                       className="mb-3"
