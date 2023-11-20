@@ -381,7 +381,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <span>{jobDetails?.budgetPayPeriod}</span>
                   </>
                 ) : (
-                  <h3>-</h3>
+                  <>
+                    <span className="d-block">UP TO</span>
+                    <h4>
+                      <small>{"$"}</small>
+                      {"0"}
+                    </h4>
+                  </>
                 )}
               </div>
               <div className="hr-border"></div>
