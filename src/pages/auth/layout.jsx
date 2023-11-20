@@ -8,7 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setSocialLoginError, setUserRole } from "../../redux/slice/user";
 import { processRoleToDisplay } from "../../utils/constants/utility";
-// import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
+import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
 import { setErrorToast } from "../../redux/slice/toast";
 import { SocialLoginAPI } from "../../api/user";
 import {
@@ -156,8 +156,8 @@ function AuthLayout({
     return (
       <div
         className={`register pb-0 py-lg-5 ${role === USER_ROLES.employer || role === USER_ROLES.vendor
-            ? "vendor"
-            : ""
+          ? "vendor"
+          : ""
           }${platform === "andriod" || platform === "ios" ? null : "pt-5"}`}
       >
         <Container
@@ -269,8 +269,8 @@ function AuthLayout({
                       </Box>
                       <div
                         className={`register-des ${platform === "android" || platform === "ios"
-                            ? "register-app"
-                            : ""
+                          ? "register-app"
+                          : ""
                           }`}
                         data-cy="authOptions"
                       >
@@ -404,7 +404,7 @@ function AuthLayout({
                               justifyContent="center"
                             >
                               <div
-                                // onClick={loginWithGoogle}
+                                onClick={loginWithGoogle}
                                 disabled={loading}
                                 style={{ cursor: "pointer" }}
                               >
