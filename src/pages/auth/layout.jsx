@@ -8,7 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setSocialLoginError, setUserRole } from "../../redux/slice/user";
 import { processRoleToDisplay } from "../../utils/constants/utility";
-// import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
+import { loginWithGooglePopupProvider } from "@firebaseProvider/auth";
 import { setErrorToast } from "../../redux/slice/toast";
 import { SocialLoginAPI } from "../../api/user";
 import {
@@ -57,35 +57,35 @@ function AuthLayout({
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // const loginWithGoogle = async () => {
-    //   if (!role) {
-    //     dispatch(setErrorToast("Select Role"));
-    //     return;
-    //   }
-    //   setLoading(false);
-    //   const res = await loginWithGooglePopupProvider();
-    //   if (res.remote === "success") {
-    //     const payload = {
-    //       email: res.data.email,
-    //       role,
-    //       name: res.data.displayName,
-    //       display_image: res.data.photoURL,
-    //       source: "google",
-    //     };
-    //     for (const key in payload) {
-    //       if (!payload[key]) {
-    //         delete payload[key];
-    //       }
-    //     }
-    //     const result = await SocialLoginAPI(payload);
-    //     if (result.remote === "success") {
-    //       console.log({ result });
-    //     } else {
-    //       dispatch(setSocialLoginError(result.error.errors.message));
-    //     }
-    //   }
-    //   setLoading(true);
-    // };
+    const loginWithGoogle = async () => {
+      if (!role) {
+        dispatch(setErrorToast("Select Role"));
+        return;
+      }
+      setLoading(false);
+      const res = await loginWithGooglePopupProvider();
+      if (res.remote === "success") {
+        const payload = {
+          email: res.data.email,
+          role,
+          name: res.data.displayName,
+          display_image: res.data.photoURL,
+          source: "google",
+        };
+        for (const key in payload) {
+          if (!payload[key]) {
+            delete payload[key];
+          }
+        }
+        const result = await SocialLoginAPI(payload);
+        if (result.remote === "success") {
+          console.log({ result });
+        } else {
+          dispatch(setSocialLoginError(result.error.errors.message));
+        }
+      }
+      setLoading(true);
+    };
     const loginWithApple = async () => {
       if (!role) {
         dispatch(setErrorToast("Select Role"));
@@ -155,11 +155,10 @@ function AuthLayout({
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
       <div
-        className={`register pb-0 py-lg-5 ${
-          role === USER_ROLES.employer || role === USER_ROLES.vendor
-            ? "vendor"
-            : ""
-        }${platform === "andriod" || platform === "ios" ? null : "pt-5"}`}
+        className={`register pb-0 py-lg-5 ${role === USER_ROLES.employer || role === USER_ROLES.vendor
+          ? "vendor"
+          : ""
+          }${platform === "andriod" || platform === "ios" ? null : "pt-5"}`}
       >
         <Container
           sx={{
@@ -228,11 +227,11 @@ function AuthLayout({
               md={5}
               sm={7}
               xs={12}
-              // sx={{
-              //   "@media(max-width:992px)": {
-              //     width: "100%",
-              //   },
-              // }}
+            // sx={{
+            //   "@media(max-width:992px)": {
+            //     width: "100%",
+            //   },
+            // }}
             >
               <Card
                 sx={{
@@ -269,11 +268,10 @@ function AuthLayout({
                         <p data-cy="subTitle">{subTitle}</p>
                       </Box>
                       <div
-                        className={`register-des ${
-                          platform === "android" || platform === "ios"
-                            ? "register-app"
-                            : ""
-                        }`}
+                        className={`register-des ${platform === "android" || platform === "ios"
+                          ? "register-app"
+                          : ""
+                          }`}
                         data-cy="authOptions"
                       >
                         {AuthOptions.map((option) => {
@@ -406,7 +404,7 @@ function AuthLayout({
                               justifyContent="center"
                             >
                               <div
-                                // onClick={loginWithGoogle}
+                                onClick={loginWithGoogle}
                                 disabled={loading}
                                 style={{ cursor: "pointer" }}
                               >
