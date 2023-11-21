@@ -137,7 +137,10 @@ body {
   letter-spacing: 0.14px;
 }
 
-.manage_job_black_pop .MuiButtonBase-root-MuiRadio-root .Mui-checked.MuiFormControlLabel-root .MuiFormControlLabel-label {
+.manage_job_black_pop
+  .MuiButtonBase-root-MuiRadio-root
+  .Mui-checked.MuiFormControlLabel-root
+  .MuiFormControlLabel-label {
   font-weight: 500;
 }
 
@@ -242,7 +245,7 @@ iframe {
   margin-left: 20px !important;
 }
 
-.bookmark>svg {
+.bookmark > svg {
   cursor: pointer;
 }
 
@@ -336,7 +339,7 @@ iframe {
   border-bottom: 0 !important;
 }
 
-.SelectDropdown label+.css-hrjh4n-MuiInputBase-root {
+.SelectDropdown label + .css-hrjh4n-MuiInputBase-root {
   margin-top: 12px;
   font-family: "Poppins";
 }
@@ -545,7 +548,8 @@ header {
   margin-top: 0;
 }
 
-.saved-jobs button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
+.saved-jobs
+  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
   justify-content: center;
   position: relative !important;
   left: 13px !important;
@@ -580,7 +584,7 @@ header {
   margin: 0px;
 }
 
-.register-des>a {
+.register-des > a {
   border: 2px solid #cacaca;
   border-radius: 88px;
   display: block;
@@ -591,7 +595,7 @@ header {
   margin-bottom: 16px;
 }
 
-.register-des>a:last-child {
+.register-des > a:last-child {
   margin-bottom: 0px;
   cursor: pointer;
 }
@@ -604,7 +608,7 @@ header {
   opacity: 0.5;
 }
 
-.register-des>a:hover {
+.register-des > a:hover {
   background: #d5e3f7;
   border: 2px solid #274593;
   box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35);
@@ -624,7 +628,8 @@ header {
   align-items: center;
 }
 
-.dialog-reason-plan-inter input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+.dialog-reason-plan-inter
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   cursor: pointer !important;
 }
 
@@ -986,7 +991,11 @@ hr {
   color: red !important;
 }
 
-.additional-box .MuiInputBase-root .MuiOutlinedInput-root .MuiSelect-root .MuiSelect-select {
+.additional-box
+  .MuiInputBase-root
+  .MuiOutlinedInput-root
+  .MuiSelect-root
+  .MuiSelect-select {
   font-size: 16px;
 }
 
@@ -1073,8 +1082,40 @@ hr {
   color: #808080;
   font-family: "Poppins";
   font-style: normal;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 14px;
+}
+
+.add-content .add-form-control::placeholder {
+  font-size: 14px !important;
+  font-weight: 300;
+  font-family: "Poppins";
+  color: #121212;
+  opacity: 50%;
+  letter-spacing: 0.28px;
+}
+
+.add-content .add-form-control {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.add-content .MuiSelect-select {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.add-content .selet-placeholder {
+  font-size: 14px !important;
+  font-weight: 300;
+  font-family: "Poppins";
+  color: #121212;
+  opacity: 50%;
+  letter-spacing: 0.28px;
+}
+
+.add-content .form-control-area {
+  font-size: 14px !important;
 }
 
 .w-30 {
@@ -1109,7 +1150,7 @@ hr {
   font-size: 16px;
   box-sizing: border-box;
   color: #121212;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .description {
@@ -1197,8 +1238,11 @@ hr {
 
 .form-control-area::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: #808080;
-  opacity: 0.5;
+  color: #121212;
+  opacity: 50%;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: "Poppins";
 }
 
 .form-control-area::-moz-placeholder {
@@ -2438,7 +2482,7 @@ input.employersearch {
     display: none;
   }
 
-  .register-des>a {
+  .register-des > a {
     padding: 12px 20px;
     border-radius: 50px;
     -webkit-border-radius: 50px;
@@ -2500,8 +2544,32 @@ input.employersearch {
     font-size: 14px !important;
   }
 
+  .add-content .add-form-control::placeholder {
+    font-size: 12px !important;
+  }
+
+  .form-control-area::-webkit-input-placeholder {
+    font-size: 12px !important;
+  }
+
+  .add-content .MuiSelect-select {
+    font-size: 12px !important;
+  }
+
+  .add-content .add-form-control {
+    font-size: 12px !important;
+  }
+
+  .add-content .selet-placeholder {
+    font-size: 12px !important;
+  }
+
   .add-form-control::placeholder {
     font-size: 12px;
+  }
+
+  .add-content .form-control-area {
+    font-size: 12px !important;
   }
 
   .PhoneInputInput {
@@ -2561,7 +2629,7 @@ input.employersearch {
   }
 
   .form-control-area {
-    font-weight: 300;
+    font-weight: 500;
   }
 
   .add-form-control {
@@ -2744,7 +2812,7 @@ input.employersearch {
   }
 }
 
-.register-app>a {
+.register-app > a {
   border-radius: 16px !important;
 }
 
