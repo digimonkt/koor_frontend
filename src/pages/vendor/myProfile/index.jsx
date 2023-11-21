@@ -3,6 +3,7 @@ import {
   CardContent,
   FormGroup,
   Grid,
+  IconButton,
   Select,
   Stack,
 } from "@mui/material";
@@ -45,6 +46,7 @@ import {
 import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
+import { Capacitor } from "@capacitor/core";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -70,6 +72,17 @@ export const SelectBox = styled(Select)`
 
 function MyProfile() {
   const dispatch = useDispatch();
+  const platform = Capacitor.getPlatform();
+  const [toggle, setToggle] = useState(["about"]);
+  const handleToggleModel2 = (type) => {
+    console.log("first", type);
+    setToggle((prev) =>
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+    );
+  };
+  useEffect(() => {
+    console.log("first", { toggle });
+  }, [toggle]);
   const {
     auth: { currentUser },
     choices: { countries, cities, sectors },
@@ -314,270 +327,588 @@ function MyProfile() {
               }}
             >
               <div className="add-content">
-                <h2 className="mb-4">About</h2>
-                <form onSubmit={formik.handleSubmit}>
-                  <HorizontalLabelInput
-                    placeholder="Organization Name"
-                    className="add-form-control"
-                    label="Organization Name"
-                    {...formik.getFieldProps("organizationName")}
-                  />
-                  {formik.touched.organizationName &&
-                  formik.errors.organizationName ? (
-                    <ErrorMessage>
-                      {formik.errors.organizationName}
-                    </ErrorMessage>
+                <Stack
+                  spacing={2}
+                  direction={"row"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                >
+                  <h2 className="mb-0">About</h2>
+                  {platform === "android" || platform === "ios" ? (
+                    <IconButton
+                      size="small"
+                      onClick={() => handleToggleModel2("about")}
+                    >
+                      <SVG.ArrowUpIcon />
+                    </IconButton>
                   ) : null}
-                  <HorizontalLabelInput
-                    label="Type of the organization"
-                    className="add-form-control"
-                    placeholder="Select a type of your company"
-                    type="select"
-                    options={sectors.data.map((sector) => ({
-                      value: sector.id,
-                      label: sector.title,
-                    }))}
-                    {...formik.getFieldProps("organizationType")}
-                  />
-                  {formik.touched.organizationType &&
-                  formik.errors.organizationType ? (
-                    <ErrorMessage>
-                      {formik.errors.organizationType}
-                    </ErrorMessage>
-                  ) : null}
-                  <HorizontalPhoneInput
-                    label="Mobile Number (optional)"
-                    value={formik.values.mobileNumber.value}
-                    onChange={(e) => formik.setFieldValue("mobileNumber", e)}
-                    defaultCountry={formik.values.countryCode}
-                    international
-                    onCountryChange={(e) =>
-                      formik.setFieldValue("countryCode", e)
-                    }
-                    isInvalidNumber={(isValid) => {
-                      if (!isValid) {
-                        formik.setFieldError(
-                          "mobileNumber",
-                          "Invalid Mobile Number"
-                        );
-                      }
-                    }}
-                    onBlur={formik.getFieldProps("mobileNumber").onBlur}
-                  />
-                  {formik.touched.mobileNumber && formik.errors.mobileNumber ? (
-                    <ErrorMessage>{formik.errors.mobileNumber}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="Country"
-                    className="add-form-control"
-                    label="Country"
-                    type="select"
-                    options={countries.data.map((country) => ({
-                      value: country.id,
-                      label: country.title,
-                    }))}
-                    {...formik.getFieldProps("country")}
-                  />
-                  {formik.touched.country && formik.errors.country ? (
-                    <ErrorMessage>{formik.errors.country}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="City"
-                    className="add-form-control"
-                    label="City"
-                    type="select"
-                    options={(cities.data[formik.values.country] || []).map(
-                      (country) => ({
-                        value: country.id,
-                        label: country.title,
-                      })
-                    )}
-                    {...formik.getFieldProps("city")}
-                  />
-                  {formik.touched.city && formik.errors.city ? (
-                    <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    label="Address"
-                    type="text"
-                    placeholder="Address"
-                    className="add-form-control"
-                    name={formik.getFieldProps("address").name}
-                    onBlur={(e) => formik.getFieldProps("address").onBlur}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    value={searchValue}
-                  />
-                  {debouncedSearchValue &&
-                    searchValue !== formik.values.address && (
-                      <div className={styles.search_results_box}>
-                        {suggestedAddress.map((address) => {
-                          return (
-                            <div
-                              key={address.description}
-                              className={styles.search_results}
-                              onClick={() => {
-                                formik.setFieldValue(
-                                  "address",
-                                  address.description
+                </Stack>
+                {platform === "android" || platform === "ios" ? (
+                  <>
+                    {toggle.includes("about") ? (
+                      <form
+                        onSubmit={formik.handleSubmit}
+                        style={{ marginTop: "10px" }}
+                      >
+                        <HorizontalLabelInput
+                          placeholder="Organization Name"
+                          className="add-form-control"
+                          label="Organization Name"
+                          {...formik.getFieldProps("organizationName")}
+                        />
+                        {formik.touched.organizationName &&
+                        formik.errors.organizationName ? (
+                          <ErrorMessage>
+                            {formik.errors.organizationName}
+                          </ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          label="Type of the organization"
+                          className="add-form-control"
+                          placeholder="Select a type of your company"
+                          type="select"
+                          options={sectors.data.map((sector) => ({
+                            value: sector.id,
+                            label: sector.title,
+                          }))}
+                          {...formik.getFieldProps("organizationType")}
+                        />
+                        {formik.touched.organizationType &&
+                        formik.errors.organizationType ? (
+                          <ErrorMessage>
+                            {formik.errors.organizationType}
+                          </ErrorMessage>
+                        ) : null}
+                        <HorizontalPhoneInput
+                          label="Mobile Number (optional)"
+                          value={formik.values.mobileNumber.value}
+                          onChange={(e) =>
+                            formik.setFieldValue("mobileNumber", e)
+                          }
+                          defaultCountry={formik.values.countryCode}
+                          international
+                          onCountryChange={(e) =>
+                            formik.setFieldValue("countryCode", e)
+                          }
+                          isInvalidNumber={(isValid) => {
+                            if (!isValid) {
+                              formik.setFieldError(
+                                "mobileNumber",
+                                "Invalid Mobile Number"
+                              );
+                            }
+                          }}
+                          onBlur={formik.getFieldProps("mobileNumber").onBlur}
+                        />
+                        {formik.touched.mobileNumber &&
+                        formik.errors.mobileNumber ? (
+                          <ErrorMessage>
+                            {formik.errors.mobileNumber}
+                          </ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="Country"
+                          className="add-form-control"
+                          label="Country"
+                          type="select"
+                          options={countries.data.map((country) => ({
+                            value: country.id,
+                            label: country.title,
+                          }))}
+                          {...formik.getFieldProps("country")}
+                        />
+                        {formik.touched.country && formik.errors.country ? (
+                          <ErrorMessage>{formik.errors.country}</ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="City"
+                          className="add-form-control"
+                          label="City"
+                          type="select"
+                          options={(
+                            cities.data[formik.values.country] || []
+                          ).map((country) => ({
+                            value: country.id,
+                            label: country.title,
+                          }))}
+                          {...formik.getFieldProps("city")}
+                        />
+                        {formik.touched.city && formik.errors.city ? (
+                          <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          label="Address"
+                          type="text"
+                          placeholder="Address"
+                          className="add-form-control"
+                          name={formik.getFieldProps("address").name}
+                          onBlur={(e) => formik.getFieldProps("address").onBlur}
+                          onChange={(e) => setSearchValue(e.target.value)}
+                          value={searchValue}
+                        />
+                        {debouncedSearchValue &&
+                          searchValue !== formik.values.address && (
+                            <div className={styles.search_results_box}>
+                              {suggestedAddress.map((address) => {
+                                return (
+                                  <div
+                                    key={address.description}
+                                    className={styles.search_results}
+                                    onClick={() => {
+                                      formik.setFieldValue(
+                                        "address",
+                                        address.description
+                                      );
+                                      setSearchValue(address.description);
+                                    }}
+                                  >
+                                    {address.description}
+                                  </div>
                                 );
-                                setSearchValue(address.description);
-                              }}
-                            >
-                              {address.description}
+                              })}
                             </div>
-                          );
-                        })}
-                      </div>
+                          )}
+                        {formik.touched.address && formik.errors.address ? (
+                          <ErrorMessage>{formik.errors.address}</ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="Website"
+                          label="Website"
+                          {...formik.getFieldProps("website")}
+                        />
+                        {formik.touched.website && formik.errors.website ? (
+                          <ErrorMessage>{formik.errors.website}</ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="Description"
+                          label="Description"
+                          type="textarea"
+                          {...formik.getFieldProps("description")}
+                        />
+                        {formik.touched.description &&
+                        formik.errors.description ? (
+                          <ErrorMessage>
+                            {formik.errors.description}
+                          </ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="Business license"
+                          label="Business license"
+                          {...formik.getFieldProps("businessLicenseId")}
+                        />
+                        {formik.touched.businessLicenseId &&
+                        formik.errors.businessLicenseId ? (
+                          <ErrorMessage>
+                            {formik.errors.businessLicenseId}
+                          </ErrorMessage>
+                        ) : null}
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          alignItems="center"
+                          className="dashedborder mb-3"
+                        >
+                          <AttachmentDragNDropInput
+                            handleDrop={(e) =>
+                              formik.setFieldValue("businessLicense", e)
+                            }
+                            single
+                            files={formik.values.businessLicense}
+                            deleteFile={(e) =>
+                              formik.setFieldValue("businessLicense", [])
+                            }
+                          />
+                        </Stack>
+                        {formik.touched.businessLicense &&
+                        formik.errors.businessLicense ? (
+                          <ErrorMessage>
+                            {formik.errors.businessLicense}
+                          </ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="Certificate number"
+                          label="Registration certificate"
+                          {...formik.getFieldProps("certificationNumber")}
+                        />
+                        {formik.touched.certificationNumber &&
+                        formik.errors.certificationNumber ? (
+                          <ErrorMessage>
+                            {formik.errors.certificationNumber}
+                          </ErrorMessage>
+                        ) : null}
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          alignItems="center"
+                          className="dashedborder mb-3"
+                        >
+                          <AttachmentDragNDropInput
+                            handleDrop={(e) =>
+                              formik.setFieldValue("certification", e)
+                            }
+                            single
+                            files={formik.values.certification}
+                            deleteFile={(e) =>
+                              formik.setFieldValue("certification", [])
+                            }
+                          />
+                        </Stack>
+                        {formik.touched.certification &&
+                        formik.errors.certification ? (
+                          <ErrorMessage>
+                            {formik.errors.certification}
+                          </ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="Years of operating"
+                          label="Years of operating"
+                          {...formik.getFieldProps("yearsOfOperating")}
+                        />
+                        {formik.touched.yearsOfOperating &&
+                        formik.errors.yearsOfOperating ? (
+                          <ErrorMessage>
+                            {formik.errors.yearsOfOperating}
+                          </ErrorMessage>
+                        ) : null}
+                        <HorizontalLabelInput
+                          placeholder="No. of jobs as experience"
+                          label="No. of jobs as experience"
+                          {...formik.getFieldProps("noOfJobsAsExperience")}
+                        />
+                        {formik.touched.noOfJobsAsExperience &&
+                        formik.errors.noOfJobsAsExperience ? (
+                          <ErrorMessage>
+                            {formik.errors.noOfJobsAsExperience}
+                          </ErrorMessage>
+                        ) : null}
+                        <FormGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                        >
+                          <FormControlReminder
+                            onChange={(e) =>
+                              formik.setFieldValue(
+                                "otherNotification",
+                                e.target.checked
+                              )
+                            }
+                            checked={formik.values.otherNotification}
+                            control={<CheckboxInput />}
+                            label=" I wish to receive notifications and other related information from Koor"
+                          />
+                        </FormGroup>
+                        <FormGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                        >
+                          <FormControlReminder
+                            onChange={(e) =>
+                              formik.setFieldValue(
+                                "marketingInformationNotification",
+                                e.target.checked
+                              )
+                            }
+                            checked={
+                              formik.values.marketingInformationNotification
+                            }
+                            control={<CheckboxInput />}
+                            label="I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
+                          />
+                        </FormGroup>
+                        <div className="text-center mt-3">
+                          <OutlinedButton
+                            type="submit"
+                            variant="outlined"
+                            title="update info"
+                            startIcon={<SVG.CheckIcon />}
+                          />
+                        </div>
+                      </form>
+                    ) : (
+                      ""
                     )}
-                  {formik.touched.address && formik.errors.address ? (
-                    <ErrorMessage>{formik.errors.address}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="Website"
-                    label="Website"
-                    {...formik.getFieldProps("website")}
-                  />
-                  {formik.touched.website && formik.errors.website ? (
-                    <ErrorMessage>{formik.errors.website}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="Description"
-                    label="Description"
-                    type="textarea"
-                    {...formik.getFieldProps("description")}
-                  />
-                  {formik.touched.description && formik.errors.description ? (
-                    <ErrorMessage>{formik.errors.description}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="Business license"
-                    label="Business license"
-                    {...formik.getFieldProps("businessLicenseId")}
-                  />
-                  {formik.touched.businessLicenseId &&
-                  formik.errors.businessLicenseId ? (
-                    <ErrorMessage>
-                      {formik.errors.businessLicenseId}
-                    </ErrorMessage>
-                  ) : null}
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    alignItems="center"
-                    className="dashedborder mb-3"
-                  >
-                    <AttachmentDragNDropInput
-                      handleDrop={(e) =>
-                        formik.setFieldValue("businessLicense", e)
-                      }
-                      single
-                      files={formik.values.businessLicense}
-                      deleteFile={(e) =>
-                        formik.setFieldValue("businessLicense", [])
-                      }
-                    />
-                  </Stack>
-                  {formik.touched.businessLicense &&
-                  formik.errors.businessLicense ? (
-                    <ErrorMessage>{formik.errors.businessLicense}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="Certificate number"
-                    label="Registration certificate"
-                    {...formik.getFieldProps("certificationNumber")}
-                  />
-                  {formik.touched.certificationNumber &&
-                  formik.errors.certificationNumber ? (
-                    <ErrorMessage>
-                      {formik.errors.certificationNumber}
-                    </ErrorMessage>
-                  ) : null}
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    alignItems="center"
-                    className="dashedborder mb-3"
-                  >
-                    <AttachmentDragNDropInput
-                      handleDrop={(e) =>
-                        formik.setFieldValue("certification", e)
-                      }
-                      single
-                      files={formik.values.certification}
-                      deleteFile={(e) =>
-                        formik.setFieldValue("certification", [])
-                      }
-                    />
-                  </Stack>
-                  {formik.touched.certification &&
-                  formik.errors.certification ? (
-                    <ErrorMessage>{formik.errors.certification}</ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="Years of operating"
-                    label="Years of operating"
-                    {...formik.getFieldProps("yearsOfOperating")}
-                  />
-                  {formik.touched.yearsOfOperating &&
-                  formik.errors.yearsOfOperating ? (
-                    <ErrorMessage>
-                      {formik.errors.yearsOfOperating}
-                    </ErrorMessage>
-                  ) : null}
-                  <HorizontalLabelInput
-                    placeholder="No. of jobs as experience"
-                    label="No. of jobs as experience"
-                    {...formik.getFieldProps("noOfJobsAsExperience")}
-                  />
-                  {formik.touched.noOfJobsAsExperience &&
-                  formik.errors.noOfJobsAsExperience ? (
-                    <ErrorMessage>
-                      {formik.errors.noOfJobsAsExperience}
-                    </ErrorMessage>
-                  ) : null}
-                  <FormGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlReminder
-                      onChange={(e) =>
-                        formik.setFieldValue(
-                          "otherNotification",
-                          e.target.checked
-                        )
-                      }
-                      checked={formik.values.otherNotification}
-                      control={<CheckboxInput />}
-                      label=" I wish to receive notifications and other related information from Koor"
-                    />
-                  </FormGroup>
-                  <FormGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                  >
-                    <FormControlReminder
-                      onChange={(e) =>
-                        formik.setFieldValue(
-                          "marketingInformationNotification",
-                          e.target.checked
-                        )
-                      }
-                      checked={formik.values.marketingInformationNotification}
-                      control={<CheckboxInput />}
-                      label="I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
-                    />
-                  </FormGroup>
-                  <div className="text-center mt-3">
-                    <OutlinedButton
-                      type="submit"
-                      variant="outlined"
-                      title="update info"
-                      startIcon={<SVG.CheckIcon />}
-                    />
-                  </div>
-                </form>
+                  </>
+                ) : (
+                  <>
+                    <form onSubmit={formik.handleSubmit}>
+                      <HorizontalLabelInput
+                        placeholder="Organization Name"
+                        className="add-form-control"
+                        label="Organization Name"
+                        {...formik.getFieldProps("organizationName")}
+                      />
+                      {formik.touched.organizationName &&
+                      formik.errors.organizationName ? (
+                        <ErrorMessage>
+                          {formik.errors.organizationName}
+                        </ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        label="Type of the organization"
+                        className="add-form-control"
+                        placeholder="Select a type of your company"
+                        type="select"
+                        options={sectors.data.map((sector) => ({
+                          value: sector.id,
+                          label: sector.title,
+                        }))}
+                        {...formik.getFieldProps("organizationType")}
+                      />
+                      {formik.touched.organizationType &&
+                      formik.errors.organizationType ? (
+                        <ErrorMessage>
+                          {formik.errors.organizationType}
+                        </ErrorMessage>
+                      ) : null}
+                      <HorizontalPhoneInput
+                        label="Mobile Number (optional)"
+                        value={formik.values.mobileNumber.value}
+                        onChange={(e) =>
+                          formik.setFieldValue("mobileNumber", e)
+                        }
+                        defaultCountry={formik.values.countryCode}
+                        international
+                        onCountryChange={(e) =>
+                          formik.setFieldValue("countryCode", e)
+                        }
+                        isInvalidNumber={(isValid) => {
+                          if (!isValid) {
+                            formik.setFieldError(
+                              "mobileNumber",
+                              "Invalid Mobile Number"
+                            );
+                          }
+                        }}
+                        onBlur={formik.getFieldProps("mobileNumber").onBlur}
+                      />
+                      {formik.touched.mobileNumber &&
+                      formik.errors.mobileNumber ? (
+                        <ErrorMessage>
+                          {formik.errors.mobileNumber}
+                        </ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="Country"
+                        className="add-form-control"
+                        label="Country"
+                        type="select"
+                        options={countries.data.map((country) => ({
+                          value: country.id,
+                          label: country.title,
+                        }))}
+                        {...formik.getFieldProps("country")}
+                      />
+                      {formik.touched.country && formik.errors.country ? (
+                        <ErrorMessage>{formik.errors.country}</ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="City"
+                        className="add-form-control"
+                        label="City"
+                        type="select"
+                        options={(cities.data[formik.values.country] || []).map(
+                          (country) => ({
+                            value: country.id,
+                            label: country.title,
+                          })
+                        )}
+                        {...formik.getFieldProps("city")}
+                      />
+                      {formik.touched.city && formik.errors.city ? (
+                        <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        label="Address"
+                        type="text"
+                        placeholder="Address"
+                        className="add-form-control"
+                        name={formik.getFieldProps("address").name}
+                        onBlur={(e) => formik.getFieldProps("address").onBlur}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                        value={searchValue}
+                      />
+                      {debouncedSearchValue &&
+                        searchValue !== formik.values.address && (
+                          <div className={styles.search_results_box}>
+                            {suggestedAddress.map((address) => {
+                              return (
+                                <div
+                                  key={address.description}
+                                  className={styles.search_results}
+                                  onClick={() => {
+                                    formik.setFieldValue(
+                                      "address",
+                                      address.description
+                                    );
+                                    setSearchValue(address.description);
+                                  }}
+                                >
+                                  {address.description}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      {formik.touched.address && formik.errors.address ? (
+                        <ErrorMessage>{formik.errors.address}</ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="Website"
+                        label="Website"
+                        {...formik.getFieldProps("website")}
+                      />
+                      {formik.touched.website && formik.errors.website ? (
+                        <ErrorMessage>{formik.errors.website}</ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="Description"
+                        label="Description"
+                        type="textarea"
+                        {...formik.getFieldProps("description")}
+                      />
+                      {formik.touched.description &&
+                      formik.errors.description ? (
+                        <ErrorMessage>{formik.errors.description}</ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="Business license"
+                        label="Business license"
+                        {...formik.getFieldProps("businessLicenseId")}
+                      />
+                      {formik.touched.businessLicenseId &&
+                      formik.errors.businessLicenseId ? (
+                        <ErrorMessage>
+                          {formik.errors.businessLicenseId}
+                        </ErrorMessage>
+                      ) : null}
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        alignItems="center"
+                        className="dashedborder mb-3"
+                      >
+                        <AttachmentDragNDropInput
+                          handleDrop={(e) =>
+                            formik.setFieldValue("businessLicense", e)
+                          }
+                          single
+                          files={formik.values.businessLicense}
+                          deleteFile={(e) =>
+                            formik.setFieldValue("businessLicense", [])
+                          }
+                        />
+                      </Stack>
+                      {formik.touched.businessLicense &&
+                      formik.errors.businessLicense ? (
+                        <ErrorMessage>
+                          {formik.errors.businessLicense}
+                        </ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="Certificate number"
+                        label="Registration certificate"
+                        {...formik.getFieldProps("certificationNumber")}
+                      />
+                      {formik.touched.certificationNumber &&
+                      formik.errors.certificationNumber ? (
+                        <ErrorMessage>
+                          {formik.errors.certificationNumber}
+                        </ErrorMessage>
+                      ) : null}
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        alignItems="center"
+                        className="dashedborder mb-3"
+                      >
+                        <AttachmentDragNDropInput
+                          handleDrop={(e) =>
+                            formik.setFieldValue("certification", e)
+                          }
+                          single
+                          files={formik.values.certification}
+                          deleteFile={(e) =>
+                            formik.setFieldValue("certification", [])
+                          }
+                        />
+                      </Stack>
+                      {formik.touched.certification &&
+                      formik.errors.certification ? (
+                        <ErrorMessage>
+                          {formik.errors.certification}
+                        </ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="Years of operating"
+                        label="Years of operating"
+                        {...formik.getFieldProps("yearsOfOperating")}
+                      />
+                      {formik.touched.yearsOfOperating &&
+                      formik.errors.yearsOfOperating ? (
+                        <ErrorMessage>
+                          {formik.errors.yearsOfOperating}
+                        </ErrorMessage>
+                      ) : null}
+                      <HorizontalLabelInput
+                        placeholder="No. of jobs as experience"
+                        label="No. of jobs as experience"
+                        {...formik.getFieldProps("noOfJobsAsExperience")}
+                      />
+                      {formik.touched.noOfJobsAsExperience &&
+                      formik.errors.noOfJobsAsExperience ? (
+                        <ErrorMessage>
+                          {formik.errors.noOfJobsAsExperience}
+                        </ErrorMessage>
+                      ) : null}
+                      <FormGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                      >
+                        <FormControlReminder
+                          onChange={(e) =>
+                            formik.setFieldValue(
+                              "otherNotification",
+                              e.target.checked
+                            )
+                          }
+                          checked={formik.values.otherNotification}
+                          control={<CheckboxInput />}
+                          label=" I wish to receive notifications and other related information from Koor"
+                        />
+                      </FormGroup>
+                      <FormGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                      >
+                        <FormControlReminder
+                          onChange={(e) =>
+                            formik.setFieldValue(
+                              "marketingInformationNotification",
+                              e.target.checked
+                            )
+                          }
+                          checked={
+                            formik.values.marketingInformationNotification
+                          }
+                          control={<CheckboxInput />}
+                          label="I wish to receive marketing information from Koor and/or service providers on products or services offered by Koor or other parties."
+                        />
+                      </FormGroup>
+                      <div className="text-center mt-3">
+                        <OutlinedButton
+                          type="submit"
+                          variant="outlined"
+                          title="update info"
+                          startIcon={<SVG.CheckIcon />}
+                        />
+                      </div>
+                    </form>
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -607,11 +938,19 @@ function MyProfile() {
                   handleSave={handleProfilePicSave}
                   image={currentUser.profileImage}
                   loading={profilePicLoading === "loading"}
+                  fun={() => handleToggleModel2("job")}
+                  toggle={toggle.includes("job")}
                 />
               </CardContent>
             </Card>
-            <Sectors />
-            <Tags />
+            <Sectors
+              fun={() => handleToggleModel2("sectors")}
+              toggle={toggle.includes("sectors")}
+            />
+            <Tags
+              fun={() => handleToggleModel2("tags")}
+              toggle={toggle.includes("tags")}
+            />
           </Stack>
         </Grid>
       </Grid>

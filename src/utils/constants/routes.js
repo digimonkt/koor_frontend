@@ -6,6 +6,11 @@ import AboutUs from "../../pages/about";
 import { PostTender } from "../../pages/tenders"; // need to relocate to employer folder
 import { lazy } from "react";
 import PrivacyPolicy from "../../pages/privacyPolicy";
+import Setting from "@pages/setting";
+import { Capacitor } from "@capacitor/core";
+import Spalsh from "@pages/splash";
+import BrowserJob from "@pages/jobs/app";
+const platform = Capacitor.getPlatform();
 // resources
 const Resources = lazy(() =>
   import("../../pages/resources").then((module) => ({
@@ -215,6 +220,7 @@ export const ROUTES = [
     path: "/search/:type",
     component: Search,
   },
+
   {
     id: "jobDetails",
     name: "Job Details",
@@ -285,12 +291,19 @@ export const UNAUTHENTICATED_ROUTES = [
     path: "/reset-password",
     component: ResetPassword,
   },
-  {
-    id: "home",
-    name: "Home",
-    path: "/",
-    component: Home,
-  },
+  platform === "android" || platform === "ios"
+    ? {
+        id: "spalsh",
+        name: "spalsh",
+        path: "/",
+        component: Spalsh,
+      }
+    : {
+        id: "home",
+        name: "Home",
+        path: "/",
+        component: Home,
+      },
 ];
 
 //
@@ -313,6 +326,14 @@ export const AUTHENTICATED_ROUTES = [
     path: "/notification",
     component: Notification,
   },
+  platform === "android" || platform === "ios"
+    ? {
+        id: "setting",
+        name: "setting",
+        path: "/setting",
+        component: Setting,
+      }
+    : "",
 ];
 
 // prefix => `/job_seeker`
@@ -353,6 +374,14 @@ export const JOB_SEEKER_ROUTES = [
     path: "/chat",
     component: ChatBox,
   },
+  platform === "android" || platform === "ios"
+    ? {
+        id: "browseJob",
+        name: "browserJob",
+        path: "/job-feed",
+        component: BrowserJob,
+      }
+    : "",
 ];
 
 // prefix => `/vendor`

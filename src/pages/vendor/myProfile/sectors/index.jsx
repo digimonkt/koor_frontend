@@ -1,4 +1,4 @@
-import { Card, CardContent, Chip, Stack } from "@mui/material";
+import { Card, CardContent, Chip, IconButton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { SVG } from "../../../../assets/svg";
 import { getTenderSector } from "../../../../redux/slice/choices";
@@ -10,9 +10,11 @@ import NoItem from "../noItem";
 import { addSectorsDetailsAPI } from "../../../../api/vendor";
 import { setErrorToast, setSuccessToast } from "../../../../redux/slice/toast";
 import Loader from "../../../../components/loader";
+import { Capacitor } from "@capacitor/core";
 
-const Sectors = () => {
+const Sectors = (props) => {
   const dispatch = useDispatch();
+  const platform = Capacitor.getPlatform();
   const { sectors } = useSelector((state) => state.choices);
   const {
     currentUser: { sectors: selectedSectors },
@@ -106,106 +108,238 @@ const Sectors = () => {
           }}
         >
           <div className="add-content">
-            <h2>Sectors</h2>
-            <p>Maximum 15 Sectors</p>
-            <Stack direction="row" spacing={0} flexWrap="wrap">
-              {allSectors.length ? (
-                allSectors.map((item, index) => (
-                  <Chip
-                    key={index}
-                    label={item.title}
-                    onDelete={() => handleDelete(item.id)}
-                    deleteIcon={<SVG.CancelIcon />}
-                    sx={{
-                      fontSize: "12px",
-                      fontFamily: "Poppins",
-                      color: "#121212",
-                      fontWeight: "400",
-                      padding: "5px 10px 5px 6px",
-                      margin: "0px 8px 8px 0px",
-                    }}
-                  />
-                ))
-              ) : (
-                <NoItem
-                  icon={<SVG.SkillsIcon />}
-                  description={
-                    <p>
-                      List your sectors that you think will be useful for a
-                      tender you’re looking for. Highlight your strengths and
-                      remember to be honest.
-                    </p>
-                  }
-                />
-              )}
+            <Stack
+              spacing={2}
+              direction={"row"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+              sx={{ mb: 1 }}
+            >
+              <h2 className="mb-0">Sectors</h2>
+              {platform === "android" || platform === "ios" ? (
+                <IconButton size="small" onClick={() => props.fun()}>
+                  <SVG.ArrowUpIcon />
+                </IconButton>
+              ) : null}
             </Stack>
+            {platform === "android" || platform === "ios" ? (
+              <>
+                {props.toggle ? (
+                  <>
+                    <div>
+                      <p>Maximum 15 Sectors</p>
+                      <Stack direction="row" spacing={0} flexWrap="wrap">
+                        {allSectors.length ? (
+                          allSectors.map((item, index) => (
+                            <Chip
+                              key={index}
+                              label={item.title}
+                              onDelete={() => handleDelete(item.id)}
+                              deleteIcon={<SVG.CancelIcon />}
+                              sx={{
+                                fontSize: "12px",
+                                fontFamily: "Poppins",
+                                color: "#121212",
+                                fontWeight: "400",
+                                padding: "5px 10px 5px 6px",
+                                margin: "0px 8px 8px 0px",
+                              }}
+                            />
+                          ))
+                        ) : (
+                          <NoItem
+                            icon={<SVG.SkillsIcon />}
+                            description={
+                              <p>
+                                List your sectors that you think will be useful
+                                for a tender you’re looking for. Highlight your
+                                strengths and remember to be honest.
+                              </p>
+                            }
+                          />
+                        )}
+                      </Stack>
 
-            {allSectors.length <= 15 && (
-              <div className="skills-input mt-3">
-                <input
-                  type="text"
-                  placeholder="Start typing a sector to add a new one"
-                  onChange={(e) => setSearchSector(e.target.value)}
-                  value={searchSector}
-                />
-                {debouncedSearchSectorValue && searchSector && (
-                  <div className={styles.search_results_box}>
-                    {sectors.data
-                      .filter(
-                        (sector) =>
-                          !allSectors.some(
-                            (otherItem) => otherItem.title === sector.title
+                      {allSectors.length <= 15 && (
+                        <div className="skills-input mt-3">
+                          <input
+                            type="text"
+                            placeholder="Start typing a sector to add a new one"
+                            onChange={(e) => setSearchSector(e.target.value)}
+                            value={searchSector}
+                          />
+                          {debouncedSearchSectorValue && searchSector && (
+                            <div className={styles.search_results_box}>
+                              {sectors.data
+                                .filter(
+                                  (sector) =>
+                                    !allSectors.some(
+                                      (otherItem) =>
+                                        otherItem.title === sector.title
+                                    )
+                                )
+                                .map((sector) => {
+                                  return (
+                                    <div
+                                      key={sector.id}
+                                      className={styles.search_results}
+                                      onClick={() => handleClick(sector)}
+                                    >
+                                      {sector.title}
+                                    </div>
+                                  );
+                                })}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <div className="text-center mt-4">
+                        <OutlinedButton
+                          title={
+                            <>
+                              {loading ? (
+                                <Loader
+                                  loading={loading}
+                                  style={{ color: "#EEA23D" }}
+                                />
+                              ) : (
+                                <>
+                                  <span className="me-2 d-inline-flex">
+                                    <SVG.SaveFile />
+                                  </span>
+                                  Update Sectors
+                                </>
+                              )}
+                            </>
+                          }
+                          onClick={updateSectors}
+                          sx={{
+                            "&.MuiButton-outlined": {
+                              border: "1px solid #EEA23D !important",
+                              color: "#EEA23D !important",
+                              fontWeight: "500",
+                              fontSize: "16px",
+                              padding: "6px 30px",
+
+                              "&:hover": { background: "#eea23d14" },
+                              "@media (max-width: 992px)": {
+                                padding: "10px 16px",
+                                fontSize: "14px",
+                              },
+                            },
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </>
+                ) : null}
+              </>
+            ) : (
+              <div>
+                <p>Maximum 15 Sectors</p>
+                <Stack direction="row" spacing={0} flexWrap="wrap">
+                  {allSectors.length ? (
+                    allSectors.map((item, index) => (
+                      <Chip
+                        key={index}
+                        label={item.title}
+                        onDelete={() => handleDelete(item.id)}
+                        deleteIcon={<SVG.CancelIcon />}
+                        sx={{
+                          fontSize: "12px",
+                          fontFamily: "Poppins",
+                          color: "#121212",
+                          fontWeight: "400",
+                          padding: "5px 10px 5px 6px",
+                          margin: "0px 8px 8px 0px",
+                        }}
+                      />
+                    ))
+                  ) : (
+                    <NoItem
+                      icon={<SVG.SkillsIcon />}
+                      description={
+                        <p>
+                          List your sectors that you think will be useful for a
+                          tender you’re looking for. Highlight your strengths
+                          and remember to be honest.
+                        </p>
+                      }
+                    />
+                  )}
+                </Stack>
+
+                {allSectors.length <= 15 && (
+                  <div className="skills-input mt-3">
+                    <input
+                      type="text"
+                      placeholder="Start typing a sector to add a new one"
+                      onChange={(e) => setSearchSector(e.target.value)}
+                      value={searchSector}
+                    />
+                    {debouncedSearchSectorValue && searchSector && (
+                      <div className={styles.search_results_box}>
+                        {sectors.data
+                          .filter(
+                            (sector) =>
+                              !allSectors.some(
+                                (otherItem) => otherItem.title === sector.title
+                              )
                           )
-                      )
-                      .map((sector) => {
-                        return (
-                          <div
-                            key={sector.id}
-                            className={styles.search_results}
-                            onClick={() => handleClick(sector)}
-                          >
-                            {sector.title}
-                          </div>
-                        );
-                      })}
+                          .map((sector) => {
+                            return (
+                              <div
+                                key={sector.id}
+                                className={styles.search_results}
+                                onClick={() => handleClick(sector)}
+                              >
+                                {sector.title}
+                              </div>
+                            );
+                          })}
+                      </div>
+                    )}
                   </div>
                 )}
+                <div className="text-center mt-4">
+                  <OutlinedButton
+                    title={
+                      <>
+                        {loading ? (
+                          <Loader
+                            loading={loading}
+                            style={{ color: "#EEA23D" }}
+                          />
+                        ) : (
+                          <>
+                            <span className="me-2 d-inline-flex">
+                              <SVG.SaveFile />
+                            </span>
+                            Update Sectors
+                          </>
+                        )}
+                      </>
+                    }
+                    onClick={updateSectors}
+                    sx={{
+                      "&.MuiButton-outlined": {
+                        border: "1px solid #EEA23D !important",
+                        color: "#EEA23D !important",
+                        fontWeight: "500",
+                        fontSize: "16px",
+                        padding: "6px 30px",
+
+                        "&:hover": { background: "#eea23d14" },
+                        "@media (max-width: 992px)": {
+                          padding: "10px 16px",
+                          fontSize: "14px",
+                        },
+                      },
+                    }}
+                  />
+                </div>
               </div>
             )}
-            <div className="text-center mt-4">
-              <OutlinedButton
-                title={
-                  <>
-                    {loading ? (
-                      <Loader loading={loading} style={{ color: "#EEA23D" }} />
-                    ) : (
-                      <>
-                        <span className="me-2 d-inline-flex">
-                          <SVG.SaveFile />
-                        </span>
-                        Update Sectors
-                      </>
-                    )}
-                  </>
-                }
-                onClick={updateSectors}
-                sx={{
-                  "&.MuiButton-outlined": {
-                    border: "1px solid #EEA23D !important",
-                    color: "#EEA23D !important",
-                    fontWeight: "500",
-                    fontSize: "16px",
-                    padding: "6px 30px",
-
-                    "&:hover": { background: "#eea23d14" },
-                    "@media (max-width: 992px)": {
-                      padding: "10px 16px",
-                      fontSize: "14px",
-                    },
-                  },
-                }}
-              />
-            </div>
           </div>
         </CardContent>
       </Card>

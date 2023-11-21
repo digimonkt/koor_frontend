@@ -155,10 +155,11 @@ function AuthLayout({
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
       <div
-        className={`register pb-0 py-lg-5 ${role === USER_ROLES.employer || role === USER_ROLES.vendor
-          ? "vendor"
-          : ""
-          }${platform === "andriod" || platform === "ios" ? null : "pt-5"}`}
+        className={`register pb-0 py-lg-5 ${
+          role === USER_ROLES.employer || role === USER_ROLES.vendor
+            ? "vendor"
+            : ""
+        }${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
       >
         <Container
           sx={{
@@ -176,7 +177,10 @@ function AuthLayout({
             sx={{
               fontFamily: "Bahnschrift",
               textAlign: "center",
-              padding: "50px 0px 40px",
+              padding:
+                platform === "android" || platform === "ios"
+                  ? "142px 0px 60px"
+                  : "50px 0px 40px",
               color: "#fff",
               "& h5": { fontSize: "40px", color: "#fff", margin: "0px" },
               "& p": { fontSize: "16px", margin: "0px" },
@@ -227,11 +231,11 @@ function AuthLayout({
               md={5}
               sm={7}
               xs={12}
-            // sx={{
-            //   "@media(max-width:992px)": {
-            //     width: "100%",
-            //   },
-            // }}
+              // sx={{
+              //   "@media(max-width:992px)": {
+              //     width: "100%",
+              //   },
+              // }}
             >
               <Card
                 sx={{
@@ -244,6 +248,7 @@ function AuthLayout({
                   "@media(max-width:480px)": {
                     borderRadius: "25px 25px 0px 0px",
                     marginBottom: "0px !important",
+                    minHeight: "423px",
                   },
                 }}
               >
@@ -268,10 +273,11 @@ function AuthLayout({
                         <p data-cy="subTitle">{subTitle}</p>
                       </Box>
                       <div
-                        className={`register-des ${platform === "android" || platform === "ios"
-                          ? "register-app"
-                          : ""
-                          }`}
+                        className={`register-des ${
+                          platform === "android" || platform === "ios"
+                            ? "register-app"
+                            : ""
+                        }`}
                         data-cy="authOptions"
                       >
                         {AuthOptions.map((option) => {

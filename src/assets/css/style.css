@@ -137,7 +137,10 @@ body {
   letter-spacing: 0.14px;
 }
 
-.manage_job_black_pop .MuiButtonBase-root-MuiRadio-root .Mui-checked.MuiFormControlLabel-root .MuiFormControlLabel-label {
+.manage_job_black_pop
+  .MuiButtonBase-root-MuiRadio-root
+  .Mui-checked.MuiFormControlLabel-root
+  .MuiFormControlLabel-label {
   font-weight: 500;
 }
 
@@ -242,7 +245,7 @@ iframe {
   margin-left: 20px !important;
 }
 
-.bookmark>svg {
+.bookmark > svg {
   cursor: pointer;
 }
 
@@ -336,7 +339,7 @@ iframe {
   border-bottom: 0 !important;
 }
 
-.SelectDropdown label+.css-hrjh4n-MuiInputBase-root {
+.SelectDropdown label + .css-hrjh4n-MuiInputBase-root {
   margin-top: 12px;
   font-family: "Poppins";
 }
@@ -545,7 +548,8 @@ header {
   margin-top: 0;
 }
 
-.saved-jobs button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
+.saved-jobs
+  button.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.css-15arr0g-MuiButtonBase-root-MuiIconButton-root {
   justify-content: center;
   position: relative !important;
   left: 13px !important;
@@ -580,7 +584,7 @@ header {
   margin: 0px;
 }
 
-.register-des>a {
+.register-des > a {
   border: 2px solid #cacaca;
   border-radius: 88px;
   display: block;
@@ -591,7 +595,7 @@ header {
   margin-bottom: 16px;
 }
 
-.register-des>a:last-child {
+.register-des > a:last-child {
   margin-bottom: 0px;
   cursor: pointer;
 }
@@ -604,7 +608,7 @@ header {
   opacity: 0.5;
 }
 
-.register-des>a:hover {
+.register-des > a:hover {
   background: #d5e3f7;
   border: 2px solid #274593;
   box-shadow: 0px 2px 15px 2px rgba(0, 44, 106, 0.35);
@@ -624,7 +628,8 @@ header {
   align-items: center;
 }
 
-.dialog-reason-plan-inter input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+.dialog-reason-plan-inter
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   cursor: pointer !important;
 }
 
@@ -986,7 +991,11 @@ hr {
   color: red !important;
 }
 
-.additional-box .MuiInputBase-root .MuiOutlinedInput-root .MuiSelect-root .MuiSelect-select {
+.additional-box
+  .MuiInputBase-root
+  .MuiOutlinedInput-root
+  .MuiSelect-root
+  .MuiSelect-select {
   font-size: 16px;
 }
 
@@ -2438,7 +2447,7 @@ input.employersearch {
     display: none;
   }
 
-  .register-des>a {
+  .register-des > a {
     padding: 12px 20px;
     border-radius: 50px;
     -webkit-border-radius: 50px;
@@ -2694,6 +2703,7 @@ input.employersearch {
 
   span.later {
     font-size: 14px;
+    white-space: nowrap;
   }
 
   .step-continer {
@@ -2744,7 +2754,7 @@ input.employersearch {
   }
 }
 
-.register-app>a {
+.register-app > a {
   border-radius: 16px !important;
 }
 
@@ -2861,4 +2871,19 @@ input.employersearch {
   width: 124px;
   height: 70px;
   object-fit: cover;
+}
+
+/* android css */
+.labell-aap {
+  width: 25%;
+}
+.field-app {
+  width: 75%;
+}
+
+@media only screen and (max-width: 540px) {
+  .squer-width {
+    width: 70px;
+    height: 70px;
+  }
 }
