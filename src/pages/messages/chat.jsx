@@ -1,12 +1,18 @@
 import { Box, Card } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ChatList from "./chatList";
 import ChatBox from "./chatBoxRight";
 import { useSearchParams } from "react-router-dom";
 import { ChatNotSelected } from "../../components/animations";
+import { useSelector } from "react-redux";
 
 function ChatComponent() {
   const [searchParams] = useSearchParams();
+  const [isSeleted, setIsSeleted] = useState(false);
+  const { isMobileView } = useSelector((state) => state.platform);
+  useEffect(() => {
+    console.log({ searchParams });
+  }, [searchParams]);
   return (
     <>
       <Card
@@ -34,7 +40,11 @@ function ChatComponent() {
             }}
             className="leftchatbox"
           >
-            <ChatList />
+            {!isMobileView ? (
+              <ChatList setIsSeleted={setIsSeleted} />
+            ) : (
+              <>{!isSeleted && <ChatList setIsSeleted={setIsSeleted} />}</>
+            )}
           </Box>
           <Box
             component="main"
@@ -45,9 +55,11 @@ function ChatComponent() {
             }}
           >
             {searchParams.get("conversion") || searchParams.get("userId") ? (
-              <ChatBox />
+              <ChatBox setIsSeleted={setIsSeleted} />
             ) : (
-              <ChatNotSelected title="You haven't made any conversation selections." />
+              <>
+                <ChatNotSelected title="You haven't made any conversation selections." />
+              </>
             )}
           </Box>
         </Box>
