@@ -22,7 +22,7 @@ import { resetToast } from "./redux/slice/toast";
 import { FallbackLoading } from "./components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
 // eslint-disable-next-line no-unused-vars
-import { getUserCountryByIpAPI, getUserIpAPI } from "./api/user";
+import { getUserCountryByIpAPI, getUserIpAPI, postUserIpAPI } from "./api/user";
 import InnerFooter from "./components/footer/innerfooter";
 import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
@@ -75,7 +75,16 @@ function App() {
 
     getPosition();
   }, []);
-
+  useEffect(() => {
+    const getAPI = async () => {
+      const userIp = await getUserIpAPI();
+      if (userIp.remote === "success") {
+        const ip = userIp.data.ip;
+        await postUserIpAPI(ip);
+      }
+    };
+    getAPI();
+  }, []);
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
