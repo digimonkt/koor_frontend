@@ -50,7 +50,7 @@ function MyJobs({ onTabChange }) {
           </button>
         </Stack>
       </div>
-      <EmployerMyPostTabs onTabChange={onTabChange} />
+
       {isLoading ? (
         [1, 2, 3, 4, 5].map((loader) => {
           return (
@@ -90,7 +90,7 @@ function MyJobs({ onTabChange }) {
           <NoDataFoundAnimation title="It appears that you haven't created any jobs yet." />
         </Card>
       ) : (
-        jobs.map((job) => {
+        jobs.map((job, index) => {
           return (
             <Card
               key={job.id}
@@ -109,6 +109,9 @@ function MyJobs({ onTabChange }) {
                   },
                 }}
               >
+                {index === 0 && (
+                  <EmployerMyPostTabs onTabChange={onTabChange} />
+                )}
                 <JobCard selfJob jobDetails={job} />
                 <ApplicantList
                   jobId={job.id}
