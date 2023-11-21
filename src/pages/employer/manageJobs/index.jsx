@@ -14,6 +14,7 @@ import { setManageJobActiveTab } from "../../../redux/slice/employer";
 import Tenders from "../manageTenders/components/tenders";
 
 function ManageJobsComponent() {
+  // const platform = Capacitor.getPlatform();
   const { totalCreatedJobs } = useSelector((state) => state.employer);
   const { totalApplications } = useSelector((state) => state.employer);
   const { isMobileView } = useSelector((state) => state.platform);

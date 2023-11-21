@@ -1082,8 +1082,40 @@ hr {
   color: #808080;
   font-family: "Poppins";
   font-style: normal;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 14px;
+}
+
+.add-content .add-form-control::placeholder {
+  font-size: 14px !important;
+  font-weight: 300;
+  font-family: "Poppins";
+  color: #121212;
+  opacity: 50%;
+  letter-spacing: 0.28px;
+}
+
+.add-content .add-form-control {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.add-content .MuiSelect-select {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.add-content .selet-placeholder {
+  font-size: 14px !important;
+  font-weight: 300;
+  font-family: "Poppins";
+  color: #121212;
+  opacity: 50%;
+  letter-spacing: 0.28px;
+}
+
+.add-content .form-control-area {
+  font-size: 14px !important;
 }
 
 .w-30 {
@@ -1118,7 +1150,7 @@ hr {
   font-size: 16px;
   box-sizing: border-box;
   color: #121212;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .description {
@@ -1206,8 +1238,11 @@ hr {
 
 .form-control-area::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: #808080;
-  opacity: 0.5;
+  color: #121212;
+  opacity: 50%;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: "Poppins";
 }
 
 .form-control-area::-moz-placeholder {
@@ -2509,8 +2544,32 @@ input.employersearch {
     font-size: 14px !important;
   }
 
+  .add-content .add-form-control::placeholder {
+    font-size: 12px !important;
+  }
+
+  .form-control-area::-webkit-input-placeholder {
+    font-size: 12px !important;
+  }
+
+  .add-content .MuiSelect-select {
+    font-size: 12px !important;
+  }
+
+  .add-content .add-form-control {
+    font-size: 12px !important;
+  }
+
+  .add-content .selet-placeholder {
+    font-size: 12px !important;
+  }
+
   .add-form-control::placeholder {
     font-size: 12px;
+  }
+
+  .add-content .form-control-area {
+    font-size: 12px !important;
   }
 
   .PhoneInputInput {
@@ -2570,7 +2629,7 @@ input.employersearch {
   }
 
   .form-control-area {
-    font-weight: 300;
+    font-weight: 500;
   }
 
   .add-form-control {

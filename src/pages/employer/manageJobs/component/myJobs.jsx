@@ -50,7 +50,6 @@ function MyJobs({ onTabChange }) {
           </button>
         </Stack>
       </div>
-
       {isLoading ? (
         [1, 2, 3, 4, 5].map((loader) => {
           return (
