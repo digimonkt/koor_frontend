@@ -1,17 +1,23 @@
+import { Capacitor } from "@capacitor/core";
 import { IconButton } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
 
 function NoItem({ icon, bgColor, color, description }) {
+  const platform = Capacitor.getPlatform();
   return (
     <Stack
-      direction="row"
+      direction={
+        platform === "android" || platform === "ios" ? "column" : "row"
+      }
       spacing={2}
       sx={{
-        alignItems: "center",
+        alignItems:
+          platform === "android" || platform === "ios" ? "start" : "center",
         "@media(max-width: 480px)": {
           display: "block",
-          textAlign: "center",
+          textAlign:
+            platform === "android" || platform === "ios" ? "left" : "center",
         },
       }}
     >

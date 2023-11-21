@@ -9,7 +9,9 @@ import { AD_AFTER_RECORDS } from "@utils/constants/constants";
 function JobSearchComponent() {
   const { jobs, isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
-  const adSenseData = adSense.data.find((item) => item.pageName === "browseJobs");
+  const adSenseData = adSense.data.find(
+    (item) => item.pageName === "browseJobs"
+  );
   return (
     <div>
       {isSearching ? (
@@ -29,7 +31,10 @@ function JobSearchComponent() {
           return (
             <React.Fragment key={job.id}>
               <JobCard logo jobDetails={job} />
-              <AdSenseCard code={adSenseData.code} show={index > 0 && (index % AD_AFTER_RECORDS === 0)} />
+              <AdSenseCard
+                code={adSenseData.code}
+                show={index > 0 && index % AD_AFTER_RECORDS === 0}
+              />
               <Divider />
             </React.Fragment>
           );

@@ -3,8 +3,10 @@ import React from "react";
 import { SVG } from "../../assets/svg";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "../../utils/enum";
+import { Capacitor } from "@capacitor/core";
 
 function CheckboxInputComponent({ sx, ...rest }) {
+  const platform = Capacitor.getPlatform();
   const { role } = useSelector((state) => state.auth);
   return (
     <Checkbox
@@ -16,7 +18,10 @@ function CheckboxInputComponent({ sx, ...rest }) {
           ? {
               color: "#CACACA",
               transition: "all 0.5s ease-out",
-              padding: "2px 10px",
+              padding:
+                platform === "android" || platform === "ios"
+                  ? "2px 8px"
+                  : "2px 10px",
               "&.Mui-checked": {
                 color: "#EEA23D",
                 transition: "all 0.5s ease-out",

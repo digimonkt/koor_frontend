@@ -25,6 +25,8 @@ import { firebaseInitialize } from "./firebaseProvider";
 import { getUserCountryByIpAPI, getUserIpAPI } from "./api/user";
 import InnerFooter from "./components/footer/innerfooter";
 import { Capacitor } from "@capacitor/core";
+import BottomBar from "@components/layout/bottom-navigation";
+import { Box } from "@mui/material";
 const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ function App() {
     auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
@@ -77,9 +80,8 @@ function App() {
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
       <div style={{ display: isGlobalLoading ? "none" : "" }}>
-        {/* {platform === "android" || platform === "ios" ? null : <Header />} */}
+        {platform === "android" || platform === "ios" ? null : <Header />}
 
-        <Header />
         <Routes>
           {ROUTES.map((route) => {
             return (
@@ -90,7 +92,9 @@ function App() {
                     <Suspense fallback={<FallbackLoading />}>
                       <route.component />
                     </Suspense>
-                    <InnerFooter />
+                    {platform === "android" || platform === "ios" ? null : (
+                      <InnerFooter />
+                    )}
                     {/* <Footer /> */}
                   </>
                 }
@@ -98,7 +102,6 @@ function App() {
               />
             );
           })}
-
           {UNAUTHENTICATED_ROUTES.map((route) => {
             return (
               <Route
@@ -110,6 +113,7 @@ function App() {
                       <UnauthorizedRoute>
                         <route.component />
                       </UnauthorizedRoute>
+                      <></>
                     </Suspense>
                     {/* <Footer /> */}
                     {platform === "android" || platform === "ios" ? null : (
@@ -142,7 +146,38 @@ function App() {
             }
           />
         </Routes>
-
+        {(platform === "android" || platform === "ios") && isLoggedIn ? (
+          <>
+            <BottomBar />
+            <Box
+              sx={{
+                position: "fixed",
+                bottom: "0px",
+                left: 0,
+                right: 0,
+                background: "#fff",
+                textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "20px",
+              }}
+            >
+              <Box
+                component={"span"}
+                sx={{
+                  borderRadius: "10px",
+                  width: "100px",
+                  height: "4px",
+                  background: "#121212",
+                  display: "block",
+                }}
+              ></Box>
+            </Box>
+          </>
+        ) : (
+          <></>
+        )}
         <SuccessToast
           open={toastType === MESSAGE_TYPE.success}
           message={toastMessage}
