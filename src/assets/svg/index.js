@@ -119,9 +119,19 @@ import { ReactComponent as BlueAttach } from "./blueAttach.svg";
 import { ReactComponent as arrowDown } from "./arrowDown.svg";
 import { ReactComponent as HamburgerMenu } from "./hamburger_menu.svg";
 import { ReactComponent as AdvancedDown } from "./advanced_down.svg";
+import { ReactComponent as AppGroup } from "./app-group.svg";
+import { ReactComponent as Settings } from "./settings.svg";
+import { ReactComponent as JobsSeekerIcon } from "./jobseeker.svg";
+import { ReactComponent as UserProfile } from "./userProfile.svg";
+import { ReactComponent as SplashLogo } from "./splash-logo.svg";
 import { ReactComponent as Sector } from "./sector.svg";
 import { ReactComponent as Tag } from "./tag.svg";
 import { ReactComponent as ArrowOutward } from "./arrow_outward.svg";
+import { ReactComponent as ArrowAngle } from "./angleArrow.svg";
+import { ReactComponent as employeUserGroup } from "./employeUserGroup.svg";
+import { ReactComponent as myPosts } from "./my_posts.svg";
+import { ReactComponent as employerDashboard } from "./employerDashboard.svg";
+
 export const SVG = {
   KoorLogo,
   ArrowOutward,
@@ -245,6 +255,15 @@ export const SVG = {
   DownloadIcon,
   HelpIcon,
   arrowDown,
+  AppGroup,
+  Settings,
+  JobsSeekerIcon,
+  UserProfile,
+  SplashLogo,
   Sector,
   Tag,
+  ArrowAngle,
+  employeUserGroup,
+  myPosts,
+  employerDashboard,
 };

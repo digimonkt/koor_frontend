@@ -193,7 +193,7 @@ function Header() {
 
           <div
             className="ms-auto"
-          // ref={menu}
+            // ref={menu}
           >
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
               {isLoggedIn ? (
@@ -284,8 +284,9 @@ function Header() {
               </IconButton>
             </Stack>
             <ul
-              className={`menu ${ismenu && "menu-selected"} ${role !== USER_ROLES.jobSeeker ? "color-change" : null
-                }`}
+              className={`menu ${ismenu && "menu-selected"} ${
+                role !== USER_ROLES.jobSeeker ? "color-change" : null
+              }`}
             >
               {!isLoggedIn ? (
                 <li onClick={() => setIsmenu(false)}>
@@ -370,7 +371,7 @@ function Header() {
                         ? "#274593"
                         : "",
                     }}
-                  // onClick={(e) => checkUserLoggedIn(e)}
+                    // onClick={(e) => checkUserLoggedIn(e)}
                   >
                     Browse tenders
                   </Link>

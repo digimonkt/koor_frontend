@@ -7,7 +7,8 @@ import { useDispatch } from "react-redux";
 import { NoDataFoundAnimation } from "../../../../components/animations";
 import ApplicantCardSkeletonLoading from "../../../../components/applicantCard/skeletonLoading";
 import ApplicantCard from "../../../../components/applicantCard";
-function AllApplication() {
+import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
+function AllApplication({ onTabChange }) {
   const dispatch = useDispatch();
   const [recentApplication, setRecentApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +63,7 @@ function AllApplication() {
             },
           }}
         >
+          <EmployerMyPostTabs onTabChange={onTabChange} />
           {isLoading ? (
             // skeleton loading need to be implemented
             [1, 2, 3].map((loader) => (

@@ -151,7 +151,7 @@ const InnerFooter = () => {
               {(isLoggedIn &&
                 (role === USER_ROLES.employer ||
                   role === USER_ROLES.jobSeeker)) ||
-                !isLoggedIn ? (
+              !isLoggedIn ? (
                 <Grid item lg={3} xs={6} sm={3}>
                   <Typography
                     sx={{
@@ -192,7 +192,7 @@ const InnerFooter = () => {
                             }}
                             className={
                               currentURL === "/search/jobs" &&
-                                jobCategoryId === child.id
+                              jobCategoryId === child.id
                                 ? "active-footer"
                                 : "not-active-footer"
                             }
@@ -213,7 +213,7 @@ const InnerFooter = () => {
               )}
               <Grid item lg={3} xs={6} sm={3}>
                 {(isLoggedIn && role !== USER_ROLES.jobSeeker) ||
-                  !isLoggedIn ? (
+                !isLoggedIn ? (
                   <>
                     <Typography
                       sx={{
@@ -317,7 +317,7 @@ const InnerFooter = () => {
                             }}
                             className={
                               currentURL === "/search/talents" &&
-                                talentCategoryId === child.id
+                              talentCategoryId === child.id
                                 ? "active-footer"
                                 : "not-active-footer"
                             }
@@ -346,85 +346,89 @@ const InnerFooter = () => {
             </Grid>
           </Grid>
           <Grid item lg={4} xs={12} sm={12}>
-            {!isLoggedIn && <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                height: "100%",
-                paddingLeft: "5rem",
-                "@media(max-width:992px)": {
-                  paddingLeft: "0rem",
-                  justifyContent: "center",
-                },
-              }}
-            >
+            {!isLoggedIn && (
               <Box
                 sx={{
-                  marginLeft: "auto",
-                  "@media(max-width:992px)": { marginLeft: "0", width: "100%" },
-                  // "@media(max-width:480px)": { width: "340px" },
-                  // "@media(max-width:375px)": { width: "340px" },
-                  // "@media(max-width:320px)": { width: "290px" },
+                  display: "flex",
+                  alignItems: "center",
+                  height: "100%",
+                  paddingLeft: "5rem",
+                  "@media(max-width:992px)": {
+                    paddingLeft: "0rem",
+                    justifyContent: "center",
+                  },
                 }}
               >
-                <Typography
-                  variant="h2"
+                <Box
                   sx={{
-                    fontSize: "20px",
-                    "@media(max-width:480px)": { fontSize: "14px" },
-                    fontFamily: "Bahnschrift",
-                    fontWeight: "600",
-                    mb: 1,
-                  }}
-                >
-                  Sign up for our newsletter
-                </Typography>
-                <Stack
-                  direction={"row"}
-                  sx={{
-                    borderRadius: "66px",
-                    border: "1px solid #D5E3F7",
-                    overflow: "hidden",
-                    justifyContent: "space-between",
-                    "& input": {
-                      outline: "0px",
-                      border: "0px",
-                      fontFamily: "Poppins",
-                      fontSize: "14px",
-                      padding: "0px 10px",
-                      height: "50px",
+                    marginLeft: "auto",
+                    "@media(max-width:992px)": {
+                      marginLeft: "0",
+                      width: "100%",
                     },
+                    // "@media(max-width:480px)": { width: "340px" },
+                    // "@media(max-width:375px)": { width: "340px" },
+                    // "@media(max-width:320px)": { width: "290px" },
                   }}
                 >
-                  <input
-                    placeholder="Email..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <Button
-                    onClick={() => saveNewsletter()}
+                  <Typography
+                    variant="h2"
+                    sx={{
+                      fontSize: "20px",
+                      "@media(max-width:480px)": { fontSize: "14px" },
+                      fontFamily: "Bahnschrift",
+                      fontWeight: "600",
+                      mb: 1,
+                    }}
+                  >
+                    Sign up for our newsletter
+                  </Typography>
+                  <Stack
+                    direction={"row"}
                     sx={{
                       borderRadius: "66px",
-                      background: "#274593",
-                      color: "#ffffff",
-                      fontFamily: "Bahnschrift",
-                      fontSize: "15px",
-                      fontWeight: "400",
-                      height: "39px",
-                      width: "116px",
-                      marginTop: "5.4px",
-                      marginRight: "5px",
-                      "&:hover": {
-                        background: "#274593",
+                      border: "1px solid #D5E3F7",
+                      overflow: "hidden",
+                      justifyContent: "space-between",
+                      "& input": {
+                        outline: "0px",
+                        border: "0px",
+                        fontFamily: "Poppins",
+                        fontSize: "14px",
+                        padding: "0px 10px",
+                        height: "50px",
                       },
                     }}
                   >
-                    Sign up
-                  </Button>
-                </Stack>
+                    <input
+                      placeholder="Email..."
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Button
+                      onClick={() => saveNewsletter()}
+                      sx={{
+                        borderRadius: "66px",
+                        background: "#274593",
+                        color: "#ffffff",
+                        fontFamily: "Bahnschrift",
+                        fontSize: "15px",
+                        fontWeight: "400",
+                        height: "39px",
+                        width: "116px",
+                        marginTop: "5.4px",
+                        marginRight: "5px",
+                        "&:hover": {
+                          background: "#274593",
+                        },
+                      }}
+                    >
+                      Sign up
+                    </Button>
+                  </Stack>
+                </Box>
               </Box>
-            </Box>
-            }
+            )}
           </Grid>
         </Grid>
         <Stack
