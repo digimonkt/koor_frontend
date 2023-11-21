@@ -270,7 +270,7 @@ function Search({ searchTypeForJob }) {
               <AdvanceFilter searchType={searchType || searchTypeForJob} />
             </Box>
             {(platform === "android" || platform === "ios") &&
-            role === USER_ROLES.vendor ? (
+            (role === USER_ROLES.vendor || role === USER_ROLES.employer) ? (
               <Box
                 sx={{
                   marginTop: { lg: "24px", xs: "24px" },
@@ -283,213 +283,212 @@ function Search({ searchTypeForJob }) {
                   },
                 }}
               >
-                <Tabs setValue={setValue} value={value} />
+                <Tabs setValue={setValue} value={value} role={role} />
               </Box>
             ) : (
               <></>
             )}
-            {value !== "2" &&
-              (platform === "android" || platform === "ios") && (
-                <>
-                  <Box
-                    className={`${styles.jobcards}`}
-                    sx={{ minHeight: "450px", marginBottom: "130px" }}
-                  >
-                    <div className="saved-jobs">
-                      <Stack
-                        direction="row"
-                        spacing={2}
-                        justifyContent="space-between"
-                        alignItems="center"
-                      >
-                        <h2 className="m-0">
-                          {searchName}
-                          <Chip
-                            label={totalItems}
-                            className="ms-3"
-                            sx={{
-                              background:
-                                role === USER_ROLES.jobSeeker
-                                  ? "#FEEFD3"
-                                  : "#D5E3F7",
-                              color:
-                                role === USER_ROLES.jobSeeker
-                                  ? "#EEA23D"
-                                  : "#274593",
-                              fontFamily: "Bahnschrift",
-                              fontSize: "16px",
-                              padding: "5px 4px !important",
+            {value !== "2" && (
+              <>
+                <Box
+                  className={`${styles.jobcards}`}
+                  sx={{
+                    minHeight: "450px",
+                    marginBottom: "130px",
+                    marginTop:
+                      platform === "android" || platform === "ios"
+                        ? ""
+                        : "24px",
+                  }}
+                >
+                  <div className="saved-jobs">
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <h2 className="m-0">
+                        {searchName}
+                        <Chip
+                          label={totalItems}
+                          className="ms-3"
+                          sx={{
+                            background:
+                              role === USER_ROLES.jobSeeker
+                                ? "#FEEFD3"
+                                : "#D5E3F7",
+                            color:
+                              role === USER_ROLES.jobSeeker
+                                ? "#EEA23D"
+                                : "#274593",
+                            fontFamily: "Bahnschrift",
+                            fontSize: "16px",
+                            padding: "5px 4px !important",
+                          }}
+                        />
+                      </h2>
+                      {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
+                      (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
+                        <>
+                          <IconButton
+                            sx={{ width: "50px", height: "50px" }}
+                            onClick={handleClick}
+                          >
+                            {<SVG.FillterICon />}
+                          </IconButton>
+                          <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                              "aria-labelledby": "basic-button",
                             }}
-                          />
-                        </h2>
-                        {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
-                        (searchType === SEARCH_TYPE.tenders &&
-                          tenders.length) ? (
-                          <>
-                            <IconButton
-                              sx={{ width: "50px", height: "50px" }}
-                              onClick={handleClick}
-                            >
-                              {<SVG.FillterICon />}
-                            </IconButton>
-                            <Menu
-                              id="basic-menu"
-                              anchorEl={anchorEl}
-                              open={open}
-                              onClose={handleClose}
-                              MenuListProps={{
-                                "aria-labelledby": "basic-button",
-                              }}
-                              PaperProps={{
-                                elevation: 0,
-                                sx: {
-                                  overflow: "visible",
-                                  filter:
-                                    "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                                  mt: 1.5,
-                                  "& .MuiAvatar-root": {
-                                    width: 32,
-                                    height: 32,
-                                    ml: -0.5,
-                                    mr: 1,
-                                  },
-                                  "&:before": {
-                                    content: '""',
-                                    display: "block",
-                                    position: "absolute",
-                                    top: 0,
-                                    right: 14,
-                                    width: 10,
-                                    height: 10,
-                                    bgcolor: "background.paper",
-                                    transform: "translateY(-50%) rotate(45deg)",
-                                    zIndex: 0,
-                                  },
+                            PaperProps={{
+                              elevation: 0,
+                              sx: {
+                                overflow: "visible",
+                                filter:
+                                  "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                                mt: 1.5,
+                                "& .MuiAvatar-root": {
+                                  width: 32,
+                                  height: 32,
+                                  ml: -0.5,
+                                  mr: 1,
                                 },
-                              }}
-                              transformOrigin={{
-                                horizontal: "right",
-                                vertical: "top",
-                              }}
-                              anchorOrigin={{
-                                horizontal: "right",
-                                vertical: "bottom",
-                              }}
-                            >
-                              <h5 className="px-3 mt-0 mb-1">Sort by :</h5>
-                              {SEARCH_TYPE.jobs === searchType &&
-                                [
-                                  {
-                                    label: "Newest",
-                                    sortBy: JOB_SORT_BY.created,
-                                    orderBy: JOB_ORDER_BY.descending,
-                                  },
-                                  {
-                                    label: "Oldest",
-                                    sortBy: JOB_SORT_BY.created,
-                                    orderBy: JOB_ORDER_BY.ascending,
-                                  },
-                                  {
-                                    label: "Salary: Low to High",
-                                    sortBy: JOB_SORT_BY.salary,
-                                    orderBy: JOB_ORDER_BY.ascending,
-                                  },
-                                  {
-                                    label: "Salary: High to Low",
-                                    sortBy: JOB_SORT_BY.salary,
-                                    orderBy: JOB_ORDER_BY.descending,
-                                  },
-                                ].map((data) => {
-                                  return (
-                                    <MenuItem
-                                      key={data.label}
-                                      onClick={() => {
-                                        handleClose();
-                                        handleSorting(
-                                          data.sortBy,
-                                          data.orderBy
-                                        );
-                                      }}
-                                      className="fillterbox"
-                                      sx={{
-                                        backgroundColor:
-                                          sortBy === data.sortBy &&
-                                          orderBy === data.orderBy
-                                            ? role === USER_ROLES.jobSeeker
-                                              ? "#FEEFD3"
-                                              : "#D5E3F7"
-                                            : "",
-                                      }}
-                                    >
-                                      {data.label}
-                                    </MenuItem>
-                                  );
-                                })}
+                                "&:before": {
+                                  content: '""',
+                                  display: "block",
+                                  position: "absolute",
+                                  top: 0,
+                                  right: 14,
+                                  width: 10,
+                                  height: 10,
+                                  bgcolor: "background.paper",
+                                  transform: "translateY(-50%) rotate(45deg)",
+                                  zIndex: 0,
+                                },
+                              },
+                            }}
+                            transformOrigin={{
+                              horizontal: "right",
+                              vertical: "top",
+                            }}
+                            anchorOrigin={{
+                              horizontal: "right",
+                              vertical: "bottom",
+                            }}
+                          >
+                            <h5 className="px-3 mt-0 mb-1">Sort by :</h5>
+                            {SEARCH_TYPE.jobs === searchType &&
+                              [
+                                {
+                                  label: "Newest",
+                                  sortBy: JOB_SORT_BY.created,
+                                  orderBy: JOB_ORDER_BY.descending,
+                                },
+                                {
+                                  label: "Oldest",
+                                  sortBy: JOB_SORT_BY.created,
+                                  orderBy: JOB_ORDER_BY.ascending,
+                                },
+                                {
+                                  label: "Salary: Low to High",
+                                  sortBy: JOB_SORT_BY.salary,
+                                  orderBy: JOB_ORDER_BY.ascending,
+                                },
+                                {
+                                  label: "Salary: High to Low",
+                                  sortBy: JOB_SORT_BY.salary,
+                                  orderBy: JOB_ORDER_BY.descending,
+                                },
+                              ].map((data) => {
+                                return (
+                                  <MenuItem
+                                    key={data.label}
+                                    onClick={() => {
+                                      handleClose();
+                                      handleSorting(data.sortBy, data.orderBy);
+                                    }}
+                                    className="fillterbox"
+                                    sx={{
+                                      backgroundColor:
+                                        sortBy === data.sortBy &&
+                                        orderBy === data.orderBy
+                                          ? role === USER_ROLES.jobSeeker
+                                            ? "#FEEFD3"
+                                            : "#D5E3F7"
+                                          : "",
+                                    }}
+                                  >
+                                    {data.label}
+                                  </MenuItem>
+                                );
+                              })}
 
-                              {SEARCH_TYPE.tenders === searchType &&
-                                [
-                                  {
-                                    label: "Newest",
-                                    sortBy: TENDER_SORT_BY.created,
-                                    orderBy: TENDER_ORDER_BY.descending,
-                                  },
-                                  {
-                                    label: "Oldest",
-                                    sortBy: TENDER_SORT_BY.created,
-                                    orderBy: TENDER_ORDER_BY.ascending,
-                                  },
-                                  {
-                                    label: "Budget: Low to High",
-                                    sortBy: TENDER_SORT_BY.budget,
-                                    orderBy: TENDER_ORDER_BY.ascending,
-                                  },
-                                  {
-                                    label: "Budget: High to Low",
-                                    sortBy: TENDER_SORT_BY.budget,
-                                    orderBy: TENDER_ORDER_BY.descending,
-                                  },
-                                ].map((data) => {
-                                  return (
-                                    <MenuItem
-                                      key={data.label}
-                                      onClick={() => {
-                                        handleClose();
-                                        handleSorting(
-                                          data.sortBy,
-                                          data.orderBy
-                                        );
-                                      }}
-                                      className="fillterbox"
-                                      sx={{
-                                        backgroundColor:
-                                          sortBy === data.sortBy &&
-                                          orderBy === data.orderBy
-                                            ? role === USER_ROLES.vendors
-                                              ? "#FEEFD3"
-                                              : "#D5E3F7"
-                                            : "",
-                                      }}
-                                    >
-                                      {data.label}
-                                    </MenuItem>
-                                  );
-                                })}
-                            </Menu>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </Stack>
-                    </div>
-                    <Component />
-                  </Box>
-                  {totalPages > 1 ? (
-                    <div className="paginations pt-4">{pagination()}</div>
-                  ) : (
-                    <div style={{ marginTop: "20px" }}></div>
-                  )}
-                </>
-              )}
+                            {SEARCH_TYPE.tenders === searchType &&
+                              [
+                                {
+                                  label: "Newest",
+                                  sortBy: TENDER_SORT_BY.created,
+                                  orderBy: TENDER_ORDER_BY.descending,
+                                },
+                                {
+                                  label: "Oldest",
+                                  sortBy: TENDER_SORT_BY.created,
+                                  orderBy: TENDER_ORDER_BY.ascending,
+                                },
+                                {
+                                  label: "Budget: Low to High",
+                                  sortBy: TENDER_SORT_BY.budget,
+                                  orderBy: TENDER_ORDER_BY.ascending,
+                                },
+                                {
+                                  label: "Budget: High to Low",
+                                  sortBy: TENDER_SORT_BY.budget,
+                                  orderBy: TENDER_ORDER_BY.descending,
+                                },
+                              ].map((data) => {
+                                return (
+                                  <MenuItem
+                                    key={data.label}
+                                    onClick={() => {
+                                      handleClose();
+                                      handleSorting(data.sortBy, data.orderBy);
+                                    }}
+                                    className="fillterbox"
+                                    sx={{
+                                      backgroundColor:
+                                        sortBy === data.sortBy &&
+                                        orderBy === data.orderBy
+                                          ? role === USER_ROLES.vendors
+                                            ? "#FEEFD3"
+                                            : "#D5E3F7"
+                                          : "",
+                                    }}
+                                  >
+                                    {data.label}
+                                  </MenuItem>
+                                );
+                              })}
+                          </Menu>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </Stack>
+                  </div>
+                  <Component />
+                </Box>
+                {totalPages > 1 ? (
+                  <div className="paginations pt-4">{pagination()}</div>
+                ) : (
+                  <div style={{ marginTop: "20px" }}></div>
+                )}
+              </>
+            )}
           </Grid>
         </Grid>
       </Container>

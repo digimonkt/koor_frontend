@@ -8,8 +8,9 @@ import { useDispatch } from "react-redux";
 import { setTotalCreatedJobs } from "../../../../redux/slice/employer";
 import { NoDataFoundAnimation } from "../../../../components/animations";
 import JobCardSkeletonLoader from "../../../../components/jobCard/jobCardSkeletonLoader";
+import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
 
-function MyJobs() {
+function MyJobs({ onTabChange }) {
   const dispatch = useDispatch();
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
@@ -49,6 +50,7 @@ function MyJobs() {
           </button>
         </Stack>
       </div>
+      <EmployerMyPostTabs onTabChange={onTabChange} />
       {isLoading ? (
         [1, 2, 3, 4, 5].map((loader) => {
           return (

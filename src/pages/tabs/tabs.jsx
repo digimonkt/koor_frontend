@@ -1,9 +1,10 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Tab } from "@mui/material";
 import AppliedTenderComponent from "@pages/vendor/appliedTender";
+import { USER_ROLES } from "@utils/enum";
 import React from "react";
 
-const Tabs = ({ setValue, value }) => {
+const Tabs = ({ setValue, value, role }) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -34,7 +35,13 @@ const Tabs = ({ setValue, value }) => {
           }}
         >
           <Tab label="Talents feed" value="1" disableRipple={true} />
-          <Tab label="Applied tenders" value="2" disableRipple={true} />
+          <Tab
+            label={
+              role === USER_ROLES.employer ? "Shortlisted" : "Applied tenders"
+            }
+            value="2"
+            disableRipple={true}
+          />
         </TabList>
         <TabPanel value="2" sx={{ px: 0 }}>
           <Box sx={{ marginBottom: "130px" }}>
