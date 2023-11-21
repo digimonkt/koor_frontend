@@ -6,8 +6,10 @@ import {
   UpdateJobSeekerCategoriesAPI,
 } from "../../../api/jobSeeker";
 import CategoryCard from "./categoryCard";
+import { Capacitor } from "@capacitor/core";
 
 const JobCategory = ({ handleNext }) => {
+  const platform = Capacitor.getPlatform();
   const [allCategories, setAllCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState({});
   const [updating, setUpdating] = useState(false);
@@ -73,42 +75,43 @@ const JobCategory = ({ handleNext }) => {
           />
         );
       })}
-
-      <div className="text-center border-top pt-3">
-        <OutlinedButton
-          title={
-            <>
-              {updating ? (
-                "Saving..."
-              ) : (
-                <>
-                  Next
-                  <span className="ms-2">
-                    <SVG.StartIcon />
-                  </span>
-                </>
-              )}
-            </>
-          }
-          onClick={handleUpdateCategories}
-          disabled={updating}
-          sx={{
-            "&.MuiButton-outlined": {
-              border: "1px solid #EEA23D !important",
-              padding: "10px 30px 8px 30px !important",
-              color: "#EEA23D !important",
-              fontWeight: "500",
-              fontSize: "16px !important",
-              "@media(max-width: 480px)": {
-                fontSize: "14px !important",
+      {platform === "android" || platform === "ios" ? null : (
+        <div className="text-center border-top pt-3">
+          <OutlinedButton
+            title={
+              <>
+                {updating ? (
+                  "Saving..."
+                ) : (
+                  <>
+                    Next
+                    <span className="ms-2">
+                      <SVG.StartIcon />
+                    </span>
+                  </>
+                )}
+              </>
+            }
+            onClick={handleUpdateCategories}
+            disabled={updating}
+            sx={{
+              "&.MuiButton-outlined": {
+                border: "1px solid #EEA23D !important",
+                padding: "10px 30px 8px 30px !important",
+                color: "#EEA23D !important",
+                fontWeight: "500",
+                fontSize: "16px !important",
+                "@media(max-width: 480px)": {
+                  fontSize: "14px !important",
+                },
+                "&:hover": {
+                  background: "rgba(255, 165, 0, 0.1)",
+                },
               },
-              "&:hover": {
-                background: "rgba(255, 165, 0, 0.1)",
-              },
-            },
-          }}
-        />
-      </div>
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };

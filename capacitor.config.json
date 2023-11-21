@@ -9,6 +9,8 @@
     "namespace": "org.reactjs.example.koor"
   },
   "server": {
-    "androidScheme": "https"
+    "androidScheme": "http",
+    "url": "http://192.168.0.158:8100",
+    "cleartext": true
   }
 }

@@ -2762,6 +2762,7 @@ input.employersearch {
 
   span.later {
     font-size: 14px;
+    white-space: nowrap;
   }
 
   .step-continer {
@@ -2929,4 +2930,19 @@ input.employersearch {
   width: 124px;
   height: 70px;
   object-fit: cover;
+}
+
+/* android css */
+.labell-aap {
+  width: 25%;
+}
+.field-app {
+  width: 75%;
+}
+
+@media only screen and (max-width: 540px) {
+  .squer-width {
+    width: 70px;
+    height: 70px;
+  }
 }

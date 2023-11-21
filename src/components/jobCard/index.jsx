@@ -60,9 +60,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-        dayjs(jobDetails.isPlannedInterview).format(
-          "MMMM D, YYYY [at] h:mm A"
-        )
+          dayjs(jobDetails.isPlannedInterview).format(
+            "MMMM D, YYYY [at] h:mm A"
+          )
       );
     }
   }, [jobDetails]);
@@ -300,12 +300,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                    jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                        jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>
@@ -340,18 +340,18 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         <Grid item lg={logo ? 2 : 3} xs={12} sm={3}>
           <div className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
             <SolidButton
-              className={jobDetails?.expiredInDays > 0
-                ? "btn_font_lower"
-                : "btn_font_capitalize"}
+              className={
+                jobDetails?.expiredInDays > 0
+                  ? "btn_font_lower"
+                  : "btn_font_capitalize"
+              }
               title={
                 jobDetails?.expiredInDays > 0
                   ? showDay(jobDetails?.expiredInDays)
                   : "Expired"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0
-                  ? jobDetails?.expiredInDays
-                  : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
               )}
             />
           </div>
@@ -381,7 +381,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <span>{jobDetails?.budgetPayPeriod}</span>
                   </>
                 ) : (
-                  <h3>-</h3>
+                  <>
+                    <span className="d-block">UP TO</span>
+                    <h4>
+                      <small>{"$"}</small>
+                      {"0"}
+                    </h4>
+                  </>
                 )}
               </div>
               <div className="hr-border"></div>

@@ -11,7 +11,10 @@ import Blacklist from "./component/blacklist";
 import urlcat from "urlcat";
 import DialogBox from "../../../components/dialogBox";
 import { setManageJobActiveTab } from "../../../redux/slice/employer";
+// import { Capacitor } from "@capacitor/core";
+
 function ManageJobsComponent() {
+  // const platform = Capacitor.getPlatform();
   const { totalCreatedJobs } = useSelector((state) => state.employer);
   const { totalApplications } = useSelector((state) => state.employer);
   const { totalBlacklist } = useSelector((state) => state.employer);
@@ -38,6 +41,7 @@ function ManageJobsComponent() {
       component: Blacklist,
     },
   ]);
+
   const handlePageTab = (newValue) => {
     setPanel(newValue);
     dispatch(setManageJobActiveTab(newValue));
@@ -56,6 +60,7 @@ function ManageJobsComponent() {
       return newTabs;
     });
   }, [totalCreatedJobs]);
+
   return (
     <div className="manage-jobs">
       <div className="ant_tabs_div">
@@ -97,7 +102,6 @@ function ManageJobsComponent() {
             aria-controls={`simple-tabpanel-${1}`}
           />
         </AntTabs>
-
         <div className="post_new_job_btn">
           <OutlinedButton
             sx={{ whiteSpace: "nowrap" }}
@@ -127,7 +131,7 @@ function ManageJobsComponent() {
           id={`simple-tabpanel-${index}`}
           style={{ height: "100%" }}
         >
-          <tab.component />
+          <tab.component onTabChange={handlePageTab} />
         </div>
       ))}
       <DialogBox

@@ -278,7 +278,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   display: "block",
                 },
               }}
-            // divider={<Divider orientation="vertical" flexItem />}
+              // divider={<Divider orientation="vertical" flexItem />}
             >
               {!selfTender && (
                 <Stack direction="row" spacing={1}>

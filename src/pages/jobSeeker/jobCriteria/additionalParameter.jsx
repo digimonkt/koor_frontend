@@ -10,8 +10,10 @@ import { UpdateJobSeekerAdditionalParametersAPI } from "../../../api/jobSeeker";
 import { useNavigate } from "react-router-dom";
 import { USER_ROLES } from "../../../utils/enum";
 import { updateCurrentUser } from "../../../redux/slice/user";
+import { Capacitor } from "@capacitor/core";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
+  const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -85,10 +87,19 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   }, [selectedCountry]);
   return (
     <div className="p-3">
-      <Divider />
-      <div className="py-3 additional-box">
+      {platform === "android" || platform === "ios" ? null : <Divider />}
+
+      <div
+        className={`additional-box ${
+          platform === "android" || platform === "ios" ? "pt-0" : "py-3"
+        }`}
+      >
         <Grid container spacing={2} item>
-          <Grid item md={6} xs={12}>
+          <Grid
+            item
+            md={6}
+            xs={platform === "android" || platform === "ios" ? "6" : "12"}
+          >
             <FormControl fullWidth size="small">
               <label className="d-block mb-2">Country</label>
               <SelectInput
@@ -103,7 +114,11 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               />
             </FormControl>
           </Grid>
-          <Grid item md={6} xs={12}>
+          <Grid
+            item
+            md={6}
+            xs={platform === "android" || platform === "ios" ? "6" : "12"}
+          >
             <FormControl fullWidth size="small">
               <label className="d-block mb-2">City</label>
               <SelectInput
@@ -121,7 +136,10 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             </FormControl>
           </Grid>
           <Grid item md={12} xs={12}>
-            <Divider className="mb-3" />
+            {platform === "android" || platform === "ios" ? null : (
+              <Divider className="mb-3" />
+            )}
+
             <label
               className="d-block"
               style={{
@@ -134,13 +152,15 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             >
               Job type
             </label>
-            <FormGroup row className="additional-check">
+            <FormGroup
+              row
+              className={
+                platform === "android" || platform === "ios"
+                  ? null
+                  : "additional-check"
+              }
+            >
               <FormControlReminder
-                sx={{
-
-                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": { fontWeight: jobType.partTime ? 500 : 400 },
-
-                }}
                 control={<CheckboxInput />}
                 onChange={(e) =>
                   setJobType((prevState) => ({
@@ -150,12 +170,37 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                 }
                 checked={jobType.partTime}
                 label="Part Time"
+                sx={{
+                  "&.MuiFormControlLabel-root": {
+                    marginRight:
+                      platform === "android" || platform === "ios"
+                        ? "10px"
+                        : "",
+                  },
+                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": {
+                    fontSize:
+                      platform === "android" || platform === "ios"
+                        ? "12px"
+                        : "",
+                    fontWeight: jobType.partTime ? 500 : 400,
+                  },
+                }}
               />
               <FormControlReminder
                 sx={{
-
-                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": { fontWeight: jobType.fullTime ? 500 : 400 },
-
+                  "&.MuiFormControlLabel-root": {
+                    marginRight:
+                      platform === "android" || platform === "ios"
+                        ? "10px"
+                        : "",
+                  },
+                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": {
+                    fontSize:
+                      platform === "android" || platform === "ios"
+                        ? "12px"
+                        : "",
+                    fontWeight: jobType.fullTime ? 500 : 400,
+                  },
                 }}
                 control={<CheckboxInput />}
                 onChange={(e) =>
@@ -169,9 +214,20 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               />
               <FormControlReminder
                 sx={{
-
-                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": { fontWeight: jobType.contract ? 500 : 400 },
-
+                  color: jobType.contract ? "addition-color" : "",
+                  "&.MuiFormControlLabel-root": {
+                    marginRight:
+                      platform === "android" || platform === "ios"
+                        ? "10px"
+                        : "",
+                  },
+                  "&.MuiFormControlLabel-root .MuiFormControlLabel-label": {
+                    fontSize:
+                      platform === "android" || platform === "ios"
+                        ? "12px"
+                        : "",
+                    fontWeight: jobType.fullTime ? 500 : 400,
+                  },
                 }}
                 control={<CheckboxInput />}
                 onChange={(e) =>
@@ -184,18 +240,26 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                 label="Contract"
               />
             </FormGroup>
-            <Divider className="my-3" />
+            {platform === "android" || platform === "ios" ? (
+              ""
+            ) : (
+              <Divider className="my-3" />
+            )}
           </Grid>
         </Grid>
       </div>
-      <div className="text-center">
+      <div
+        className={
+          platform === "android" || platform === "ios" ? "mt-4" : "text-center"
+        }
+      >
         <OutlinedButton
           title={
             <>
               <span className="me-2 d-inline-flex">
                 <SVG.CheckIcon />
-              </span>{" "}
-              Done
+              </span>
+              {platform === "android" || platform === "ios" ? "Next" : " Done"}
             </>
           }
           // component={Link}
@@ -208,14 +272,21 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               fontWeight: "500",
               fontSize: "16px",
               padding: "10px 30px",
-              width: "134px",
+              width:
+                platform === "android" || platform === "ios" ? "100%" : "134px",
               height: "42px",
               "@media(max-width: 992px)": {
-                width: "129px",
+                width:
+                  platform === "android" || platform === "ios"
+                    ? "100%"
+                    : "129px",
                 height: "42px",
               },
               "@media(max-width: 480px)": {
-                width: "129px",
+                width:
+                  platform === "android" || platform === "ios"
+                    ? "100%"
+                    : "129px",
                 height: "42px",
                 fontSize: "14px",
               },
