@@ -23,7 +23,7 @@ function MessageNotificationCard({
     >
       <div
         className={`${styles.content_div}`}
-      //   style={{ background: item.color }}
+        //   style={{ background: item.color }}
       >
         <div>
           <Avatar

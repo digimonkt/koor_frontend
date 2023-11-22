@@ -97,3 +97,9 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
         : "job_seeker/my-profile",
   },
 ];
+
+export const TABS_VALUE = {
+  tab1: 0,
+  tab2: 1,
+  tab3: 2,
+};

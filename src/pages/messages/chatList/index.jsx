@@ -14,7 +14,7 @@ import { transformConversationResponse } from "../../../api/transform/chat";
 import { useDebounce } from "usehooks-ts";
 import { setIsBlackListedByEmployer } from "../../../redux/slice/user";
 import { setJobSeekerJobApplication } from "@redux/slice/employer";
-function ChatList() {
+function ChatList({ setIsSeleted }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { role } = useSelector((state) => state.auth);
@@ -46,6 +46,9 @@ function ChatList() {
   const handleJobSeekerJobApplication = (user) => {
     if (user.role === USER_ROLES.jobSeeker) {
       getJobSeekerJobApplication(user.id);
+    }
+    if (setIsSeleted) {
+      setIsSeleted(true);
     }
   };
 

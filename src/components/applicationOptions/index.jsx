@@ -175,26 +175,32 @@ function ApplicationOptions({
   }, [details]);
   return (
     <Box sx={{ width: "100%" }}>
-      <Grid container spacing={0} flexWrap={"nowrap"}>
-        {
-          (applicationList && applicationList.length > 1 && role === USER_ROLES.employer) &&
-          <Grid item className="me-0 me-lg-3">
-            <Button
-              className="buttonbox"
-              sx={{ minWidth: "auto" }}
-              fullWidth
-              onClick={() => handleOpenList(true)}
-              style={{
-                fontWeight: 700,
-              }}
-            >
-              <div>
-                <SVG.HamburgerMenu className="application-option-icon" />
-                <span>{"Applications"}</span>
-              </div>
-            </Button>
-          </Grid>
-        }
+      <Grid
+        container
+        spacing={0}
+        flexWrap={{ xs: "wrap", lg: "nowrap" }}
+        useFlexGap
+      >
+        {applicationList &&
+          applicationList.length > 1 &&
+          role === USER_ROLES.employer && (
+            <Grid item className="me-0 me-lg-3">
+              <Button
+                className="buttonbox"
+                sx={{ minWidth: "auto" }}
+                fullWidth
+                onClick={() => handleOpenList(true)}
+                style={{
+                  fontWeight: 700,
+                }}
+              >
+                <div>
+                  <SVG.HamburgerMenu className="application-option-icon" />
+                  <span>{"Applications"}</span>
+                </div>
+              </Button>
+            </Grid>
+          )}
 
         {interviewPlanned && !details.tender && (
           <Grid item>
