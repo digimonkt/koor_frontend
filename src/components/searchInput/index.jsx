@@ -16,10 +16,11 @@ export default function SearchInput({
   const { role } = useSelector((state) => state.auth);
   const [fieldValue, setFieldValue] = useState("");
   useEffect(() => {
-    if (value) {
+    if (value !== null && value !== undefined) {
       setFieldValue(value);
     }
   }, [value]);
+
   return (
     <>
       <div className={`${styles.searchInput}`}>

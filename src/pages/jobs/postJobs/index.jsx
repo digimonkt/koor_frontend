@@ -752,6 +752,9 @@ function PostJobsComponent() {
                         {...formik.getFieldProps("isApplyThroughKoor")}
                       />
                     </FormGroup>
+                    {formik.touched.isApplyThroughKoor && formik.errors.isApplyThroughKoor ? (
+                      <ErrorMessage>{formik.errors.isApplyThroughKoor}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <FormGroup>
