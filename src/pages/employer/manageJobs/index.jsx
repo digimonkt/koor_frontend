@@ -1,4 +1,4 @@
-import { Chip, Stack } from "@mui/material";
+import { Box, Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
@@ -12,6 +12,7 @@ import urlcat from "urlcat";
 import DialogBox from "../../../components/dialogBox";
 import { setManageJobActiveTab } from "../../../redux/slice/employer";
 import Tenders from "../manageTenders/components/tenders";
+import HeaddingSearch from "@pages/search/hedding-search";
 
 function ManageJobsComponent() {
   // const platform = Capacitor.getPlatform();
@@ -64,6 +65,33 @@ function ManageJobsComponent() {
 
   return (
     <div className="manage-jobs">
+      {isMobileView ? (
+        <>
+          <Box sx={{ px: 3, pt: 3 }}>
+            <HeaddingSearch
+              title="My posts"
+              count={
+                <Box
+                  component={"span"}
+                  sx={{
+                    background: "#D5E3F7",
+                    padding: "5px 12px",
+                    borderRadius: "73px",
+                    fontFamily: "Bahnschrift",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    ml: 1,
+                  }}
+                >
+                  4
+                </Box>
+              }
+            />
+          </Box>
+        </>
+      ) : (
+        ""
+      )}
       <div className="ant_tabs_div">
         {!isMobileView && (
           <AntTabs

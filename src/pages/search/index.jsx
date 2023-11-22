@@ -37,6 +37,7 @@ import { Capacitor } from "@capacitor/core";
 import { getAdSenseAPI } from "@api/adSense";
 import { setAdSense } from "@redux/slice/adSense";
 import Tabs from "@pages/tabs/tabs";
+import HeaddingSearch from "./hedding-search";
 function Search({ searchTypeForJob }) {
   const platform = Capacitor.getPlatform();
   const params = useParams();
@@ -58,6 +59,7 @@ function Search({ searchTypeForJob }) {
   const [value, setValue] = useState("1");
   const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
   const { adSense } = useSelector((state) => state.adSense);
+  const { isMobileView } = useSelector((state) => state.platform);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -209,6 +211,39 @@ function Search({ searchTypeForJob }) {
           },
         }}
       >
+        {isMobileView ? (
+          <>
+            <Box sx={{ px: 3, pt: 3 }}>
+              <HeaddingSearch
+                title="Browse talents"
+                count={
+                  <Box
+                    component={"span"}
+                    sx={{
+                      background: "#D5E3F7",
+                      padding: "5px 12px",
+                      borderRadius: "73px",
+                      fontFamily: "Bahnschrift",
+                      fontWeight: 600,
+                      fontSize: "14px",
+                      ml: 1,
+                    }}
+                  >
+                    2,513
+                  </Box>
+                }
+                icon={
+                  <IconButton>
+                    <SVG.CalendarMonth />
+                  </IconButton>
+                }
+              />
+            </Box>
+          </>
+        ) : (
+          ""
+        )}
+
         <Grid container spacing={2}>
           <Grid
             item

@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Stack } from "@mui/material";
+import { Box, Card, CardContent, Grid, IconButton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import { DonutChart } from "../../../components/charts";
@@ -18,6 +18,12 @@ import ApplicantCard from "../../../components/applicantCard";
 import ApplicantCardSkeletonLoading from "../../../components/applicantCard/skeletonLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalAvailableCredits } from "../../../redux/slice/employer";
+import { LogoutUserAPI } from "@api/user";
+import { globalLocalStorage } from "@utils/localStorage";
+import { setIsLoggedIn } from "@redux/slice/user";
+import { SVG } from "@assets/svg";
+import { Link } from "react-router-dom";
+import { IMAGES } from "@assets/images";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -40,6 +46,7 @@ const Dashboard = () => {
     total: 0,
   });
   const { jobPostUpdate } = useSelector((state) => state.employer);
+  const { isMobileView } = useSelector((state) => state.platform);
   const getRecentApplications = async () => {
     setIsLoading(true);
     const res = await getRecentApplicationAPI({
@@ -115,10 +122,90 @@ const Dashboard = () => {
   useEffect(() => {
     getShareCountData();
   }, []);
+  const userLogout = async () => {
+    await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
+  };
+  const logoutHandle = () => {
+    userLogout();
+    dispatch(setIsLoggedIn(false));
+  };
   return (
     <>
       <div className="employer-dashboard">
         <Grid item container spacing={{ xs: 1, lg: 2 }} sx={{ mb: 4 }}>
+          {isMobileView ? (
+            <>
+              <Grid item xs={12}>
+                <Stack
+                  direction={"row"}
+                  alignItems={"center"}
+                  spacing={2}
+                  justifyContent={"space-between"}
+                  sx={{
+                    mb: 1,
+                    "& h1": {
+                      fontFamily: "Bahnschrift",
+                      fontSize: "22px",
+                      fontWeight: "600",
+                    },
+                  }}
+                >
+                  <h1>Dashboard</h1>
+                  <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
+                    <IconButton onClick={() => logoutHandle()}>
+                      <SVG.AppGroup />
+                    </IconButton>
+                    <IconButton LinkComponent={Link} to="/Setting">
+                      <SVG.Settings />
+                    </IconButton>
+                    <IconButton LinkComponent={Link} to="/notification">
+                      <SVG.NotificationIcon />
+                    </IconButton>
+                  </Stack>
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
+                  <img
+                    alt="profile"
+                    src={IMAGES.RecentFive}
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      borderRadius: "100%",
+                      boxShadow: "0px 5px 25px 0px rgba(0, 0, 0, 0.25)",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      "& h4": {
+                        fontSize: "18px",
+                        fontFamily: "Bahnschrift",
+                        letterSpacing: "0.54px",
+                        fontWeight: "700",
+                        mb: 1,
+                      },
+                      "& p": {
+                        fontSize: "14px",
+                        fontFamily: "Poppins",
+                        opacity: "0.5",
+                        color: "#121212",
+                        fontWeight: "400",
+                        mb: 0.5,
+                      },
+                    }}
+                  >
+                    <h4>Lotus'es Employment Group LLC</h4>
+                    <p>lotuss.us</p>
+                    <p>+51599268290</p>
+                    <p>contact@lotuss.us</p>
+                  </Box>
+                </Stack>
+              </Grid>
+            </>
+          ) : null}
+
           {employerCard(counts).map((item, index) => (
             <Grid item lg={3} xs={6} sm={3} key={index}>
               <Stack
