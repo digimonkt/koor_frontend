@@ -24,6 +24,7 @@ import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/templa
 import { FilledButton } from "../../../components/button";
 import html2pdf from "html2pdf.js";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
+import { useSelector } from "react-redux";
 
 export default function PublicProfileComponent() {
   const params = useParams();
@@ -77,8 +78,15 @@ export default function PublicProfileComponent() {
     const userId = params.userId;
     getUserDetails(userId);
   }, []);
+  const { isMobileView } = useSelector((state) => state.platform);
   return (
-    <Box sx={{ marginTop: "67px", py: 3 }}>
+    <Box
+      sx={{
+        marginTop: isMobileView ? "0px" : "67px",
+        py: 3,
+        pb: isMobileView ? 15 : null,
+      }}
+    >
       {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (

@@ -131,6 +131,7 @@ import { ReactComponent as ArrowAngle } from "./angleArrow.svg";
 import { ReactComponent as employeUserGroup } from "./employeUserGroup.svg";
 import { ReactComponent as myPosts } from "./my_posts.svg";
 import { ReactComponent as employerDashboard } from "./employerDashboard.svg";
+import { ReactComponent as CalendarMonth } from "./calendar_month.svg";
 
 export const SVG = {
   KoorLogo,
@@ -266,4 +267,5 @@ export const SVG = {
   employeUserGroup,
   myPosts,
   employerDashboard,
+  CalendarMonth,
 };

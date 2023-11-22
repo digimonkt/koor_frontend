@@ -709,7 +709,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
             <Stack
               direction={"row"}
               spacing={1}
-              overflow={responsive ? "" : "auto"}
+              overflow={
+                platform === "android" || platform === "ios" ? "auto" : ""
+              }
               flexWrap={
                 platform === "android" || platform === "ios" ? "nowrap" : "wrap"
               }
@@ -734,7 +736,18 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     }}
                   >
                     <SearchButton
-                      sx={{ whiteSpace: "nowrap !important" }}
+                      sx={{
+                        whiteSpace:
+                          platform === "android" || platform === "ios"
+                            ? "nowrap !important"
+                            : "",
+                        height:
+                          platform === "android" || platform === "ios"
+                            ? "50px !important"
+                            : matches
+                            ? "77px !important"
+                            : "42px !important",
+                      }}
                       className={`${
                         selectedFilter === filter.id
                           ? styles.btninActive
