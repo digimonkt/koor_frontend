@@ -11,6 +11,17 @@ body {
   padding: 17px;
 }
 
+.enterotp_input .MuiOutlinedInput-notchedOutline {
+  border: none !important;
+  width: 60px !important;
+  border-radius: 0px !important;
+  border-bottom: 1px solid #121212 !important;
+}
+
+.enterotp_input .MuiFormControl-root.MuiTextField-root input {
+  width: 33px !important;
+}
+
 .chat-search::placeholder {
   font-family: "Poppins" !important;
 }
@@ -1333,11 +1344,10 @@ hr {
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
-
   letter-spacing: 0.02em;
   white-space: nowrap;
-
   color: #eea23d;
+  width: 100px;
 }
 
 .pricebox h4 small {
