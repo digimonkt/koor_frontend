@@ -6,6 +6,7 @@ import ToastReducer from "./slice/toast";
 import JobReducer from "./slice/search";
 import FaqReducer from "./slice/faq";
 import AdSenseReducer from "./slice/adSense";
+import PlatformReducer from "./slice/platform";
 const isProd = process.env.NODE_ENV === "production";
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -23,6 +24,7 @@ export const store = configureStore({
     search: JobReducer,
     faq: FaqReducer,
     adSense: AdSenseReducer,
+    platform: PlatformReducer,
   },
   devTools: !isProd,
 });
