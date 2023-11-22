@@ -94,6 +94,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     height: "100%",
                     margin: "auto",
                     color: "#CACACA",
+                    borderRadius: "0px",
                     "&.MuiAvatar-colorDefault": {
                       background: "#F0F0F0",
                     },
@@ -390,7 +391,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </>
                 )}
               </div>
-              <div className="hr-border"></div>
+              {/* <div className="hr-border"></div> */}
               {selfJob ? (
                 <div className="job-button-card">
                   <button

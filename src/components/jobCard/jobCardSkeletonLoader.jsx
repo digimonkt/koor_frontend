@@ -32,7 +32,7 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
                 width: "70px",
               }}
             >
-              <Skeleton circle style={{ height: "100%" }} />
+              <Skeleton style={{ height: "100%" }} />
             </div>
           </Grid>
         )}

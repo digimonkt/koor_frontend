@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import React from "react";
 
-function OtpInputComponent({ title, labelWeight, ...rest }) {
+function OtpInputComponent({ title, labelWeight, sx, ...rest }) {
   return (
     <>
       <Stack
