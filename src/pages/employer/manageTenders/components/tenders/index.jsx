@@ -9,8 +9,9 @@ import TenderCard from "../../../../../components/tenderCard";
 import ApplicantList from "../applicantList";
 import { NoDataFoundAnimation } from "../../../../../components/animations";
 import TenderCardSkeletonLoader from "../../../../../components/tenderCard/tenderCardSkeletonLoader";
+import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
 
-const Tenders = () => {
+const Tenders = ({ onTabChange }) => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -120,6 +121,9 @@ const Tenders = () => {
                   },
                 }}
               >
+                {index === 0 && (
+                  <EmployerMyPostTabs onTabChange={onTabChange} />
+                )}
                 <TenderCard tenderDetails={tender} selfTender />
                 <ApplicantList
                   tenderId={tender.id}

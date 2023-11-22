@@ -45,7 +45,11 @@ const Tabs = ({ setValue, value, role }) => {
         </TabList>
         <TabPanel value="2" sx={{ px: 0 }}>
           <Box sx={{ marginBottom: "130px" }}>
-            <AppliedTenderComponent />
+            {role === USER_ROLES.employer ? (
+              "Api was not creted Yet"
+            ) : (
+              <AppliedTenderComponent />
+            )}
           </Box>
         </TabPanel>
       </TabContext>

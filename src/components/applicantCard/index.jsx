@@ -180,6 +180,7 @@ function ApplicantCard({
         direction="row"
         spacing={0}
         flexWrap={"wrap"}
+        useFlexGap
         className="edit-button"
         justifyContent={{ xs: "space-between", lg: "row" }}
         sx={{

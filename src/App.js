@@ -27,6 +27,7 @@ import InnerFooter from "./components/footer/innerfooter";
 import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
 import { Box } from "@mui/material";
+import { setIsMobileView } from "@redux/slice/platform";
 const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
@@ -85,6 +86,13 @@ function App() {
     };
     getAPI();
   }, []);
+  useEffect(() => {
+    if (platform === "android" || platform === "ios") {
+      dispatch(setIsMobileView(true));
+    } else {
+      dispatch(setIsMobileView(false));
+    }
+  }, [platform]);
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}

@@ -11,12 +11,13 @@ import Blacklist from "./component/blacklist";
 import urlcat from "urlcat";
 import DialogBox from "../../../components/dialogBox";
 import { setManageJobActiveTab } from "../../../redux/slice/employer";
-// import { Capacitor } from "@capacitor/core";
+import Tenders from "../manageTenders/components/tenders";
 
 function ManageJobsComponent() {
   // const platform = Capacitor.getPlatform();
   const { totalCreatedJobs } = useSelector((state) => state.employer);
   const { totalApplications } = useSelector((state) => state.employer);
+  const { isMobileView } = useSelector((state) => state.platform);
   const { totalBlacklist } = useSelector((state) => state.employer);
   const [panel, setPanel] = useState(0);
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
@@ -33,12 +34,12 @@ function ManageJobsComponent() {
     {
       title: "All applications",
       count: 0,
-      component: AllApplication,
+      component: isMobileView ? Tenders : AllApplication,
     },
     {
       title: "Blacklist",
       count: 0,
-      component: Blacklist,
+      component: isMobileView ? AllApplication : Blacklist,
     },
   ]);
 
@@ -64,44 +65,47 @@ function ManageJobsComponent() {
   return (
     <div className="manage-jobs">
       <div className="ant_tabs_div">
-        <AntTabs
-          value={panel}
-          onChange={(e, newValue) => handlePageTab(newValue)}
-          variant="scrollable"
-          scrollButtons
-          allowScrollButtonsMobile
-        >
-          <AntTab
-            label={
-              <Stack direction="row" spacing={1} alignItems="center">
-                <span>My Jobs</span>{" "}
-                <Chip label={totalCreatedJobs} className="job-count" />
-              </Stack>
-            }
-            id={`simple-tab-${0}`}
-            aria-controls={`simple-tabpanel-${0}`}
-          />
-          <AntTab
-            label={
-              <Stack direction="row" spacing={1} alignItems="center">
-                <span>All applications</span>{" "}
-                <Chip label={totalApplications} className="job-count" />
-              </Stack>
-            }
-            id={`simple-tab-${1}`}
-            aria-controls={`simple-tabpanel-${1}`}
-          />
-          <AntTab
-            label={
-              <Stack direction="row" spacing={1} alignItems="center">
-                <span>Blacklisted</span>{" "}
-                <Chip label={totalBlacklist} className="job-count" />
-              </Stack>
-            }
-            id={`simple-tab-${1}`}
-            aria-controls={`simple-tabpanel-${1}`}
-          />
-        </AntTabs>
+        {!isMobileView && (
+          <AntTabs
+            value={panel}
+            onChange={(e, newValue) => handlePageTab(newValue)}
+            variant="scrollable"
+            scrollButtons
+            allowScrollButtonsMobile
+          >
+            <AntTab
+              label={
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <span>My Jobs</span>{" "}
+                  <Chip label={totalCreatedJobs} className="job-count" />
+                </Stack>
+              }
+              id={`simple-tab-${0}`}
+              aria-controls={`simple-tabpanel-${0}`}
+            />
+            <AntTab
+              label={
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <span>All applications</span>{" "}
+                  <Chip label={totalApplications} className="job-count" />
+                </Stack>
+              }
+              id={`simple-tab-${1}`}
+              aria-controls={`simple-tabpanel-${1}`}
+            />
+            <AntTab
+              label={
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <span>Blacklisted</span>{" "}
+                  <Chip label={totalBlacklist} className="job-count" />
+                </Stack>
+              }
+              id={`simple-tab-${1}`}
+              aria-controls={`simple-tabpanel-${1}`}
+            />
+          </AntTabs>
+        )}
+
         <div className="post_new_job_btn">
           <OutlinedButton
             sx={{ whiteSpace: "nowrap" }}

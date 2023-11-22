@@ -734,6 +734,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     }}
                   >
                     <SearchButton
+                      sx={{ whiteSpace: "nowrap !important" }}
                       className={`${
                         selectedFilter === filter.id
                           ? styles.btninActive
