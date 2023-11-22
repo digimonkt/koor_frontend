@@ -2,7 +2,7 @@ import { Avatar, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SVG } from "../../assets/svg";
-import { SolidButton } from "../button";
+import { OutlinedButton, SolidButton } from "../button";
 import { ChipBox } from "./style";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -13,19 +13,26 @@ import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "../../api/employer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { showDay } from "@utils/constants/utility";
+import { USER_ROLES } from "@utils/enum";
+import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
   const [applicationStatus, setApplicationStatus] = useState("applied");
   const handleToggleSave = async () => {
-    setIsSaved(!isSaved);
-    if (!isSaved) {
-      await saveJobAPI(jobDetails.id);
+    if (isLoggedIn) {
+      setIsSaved(!isSaved);
+      if (!isSaved) {
+        await saveJobAPI(jobDetails.id);
+      } else {
+        await unSaveJobAPI(jobDetails.id);
+      }
     } else {
-      await unSaveJobAPI(jobDetails.id);
+      setRegistrationWarning(true);
     }
   };
   const matches = useMediaQuery("(max-width:600px)");
@@ -60,9 +67,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-          dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+        dayjs(jobDetails.isPlannedInterview).format(
+          "MMMM D, YYYY [at] h:mm A"
+        )
       );
     }
   }, [jobDetails]);
@@ -300,12 +307,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                    jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                        jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>
@@ -390,7 +397,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </>
                 )}
               </div>
-              <div className="hr-border"></div>
+              {/* <div className="hr-border"></div> */}
               {selfJob ? (
                 <div className="job-button-card">
                   <button
@@ -425,28 +432,26 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <span className="d-block">Edit</span>
                   </button>
                 </div>
-              ) : isLoggedIn && role === "job_seeker" ? (
+              ) : role !== USER_ROLES.employer ? (
                 <React.Fragment>
-                  {!applied ? (
-                    <div
-                      onClick={handleToggleSave}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <div className="bookmark">
-                        {isSaved ? (
-                          <>
-                            <SVG.SaveIcon />
-                            <span>Saved</span>
-                          </>
-                        ) : (
-                          <>
-                            <SVG.UnSave style={{ color: "#848484" }} />
-                            <span style={{ color: "#848484" }}>Save</span>
-                          </>
-                        )}
-                      </div>
+                  <div
+                    onClick={handleToggleSave}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className="bookmark">
+                      {isSaved ? (
+                        <>
+                          <SVG.SaveIcon />
+                          <span>Saved</span>
+                        </>
+                      ) : (
+                        <>
+                          <SVG.UnSave style={{ color: "#848484" }} />
+                          <span style={{ color: "#848484" }}>Save</span>
+                        </>
+                      )}
                     </div>
-                  ) : null}
+                  </div>
                 </React.Fragment>
               ) : (
                 ""
@@ -457,6 +462,51 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           )}
         </Grid>
       </Grid>
+      <DialogBox
+        open={registrationWarning}
+        handleClose={() => setRegistrationWarning(false)}
+      >
+        <div>
+          <h1 className="heading">Register as jobseeker</h1>
+          <div className="form-content">
+            <p className="jobs_dailog_content">
+              To apply for the job and have many other useful features to
+              find a job, please register on Koor.
+            </p>
+            <div style={{ textAlign: "center", lineHeight: "40px" }}>
+              <Link to="/register?role=job_seeker">
+                <OutlinedButton
+                  title="Register"
+                  jobSeeker
+                  sx={{
+                    width: "100%",
+                    fontSize: "16px !important",
+                    "@media (max-width: 992px)": {
+                      fontSize: "16px !important",
+                    },
+                    "@media (max-width: 480px)": {
+                      fontSize: "14px !important",
+                    },
+                  }}
+                />
+              </Link>
+              <span className="jobs_dailog_login_line">
+                Already have an account?{" "}
+                <Link
+                  to={`/login?role=${USER_ROLES.jobSeeker}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "#EEA23D",
+                    fontWeight: 600,
+                  }}
+                >
+                  Login
+                </Link>
+              </span>
+            </div>
+          </div>
+        </div>
+      </DialogBox>
     </div>
   );
 }

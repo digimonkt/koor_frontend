@@ -139,6 +139,13 @@ export const getUserCountryByIpAPI = async (ip) => {
     method: "GET",
   });
 };
+export const postUserIpAPI = async (ip) => {
+  await api.request({
+    url: urlcat("/v1/users/visitors"),
+    method: "POST",
+    data: { ip }
+  });
+};
 export const getSearchUserFilterAPI = async (data) => {
   const res = await api.request({
     url: urlcat("/v1/users/filter", { role: "job_seeker" }),
