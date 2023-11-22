@@ -30,7 +30,6 @@ export const getSearchJobsAPI = async (data) => {
   jobSubCategories.forEach((category) => {
     url += `&jobSubCategory=${category.title}`;
   });
-  console.log({ url });
   const response = await api.request({
     url,
     method: "GET",
