@@ -74,7 +74,7 @@ function VerifyOTPForm() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="form-group mb-3">
+        <div className="form-group mb-3 enterotp_input">
           <LabeledOtpInput
             title="Enter OTP"
             onChange={(e) => formik.setFieldValue("otp", e)}
