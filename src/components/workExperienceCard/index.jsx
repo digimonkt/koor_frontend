@@ -105,7 +105,7 @@ function WorkExperienceCard({
                   wordBreak: "break-all",
                 }}
               /> */}
-                <br />
+                {/* <br /> */}
               </>
             ) : (
               ""
