@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Card,
   CardContent,
   Chip,
@@ -7,6 +8,7 @@ import {
   Grid,
   IconButton,
   Stack,
+  Typography,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import React, { useEffect, useState } from "react";
@@ -152,18 +154,35 @@ const ApplicantDetails = () => {
             <Stack
               direction={{ xs: "column", lg: "row", sm: "row" }}
               spacing={3}
-              divider={<Divider orientation="vertical" flexItem />}
             >
-              <div className="user-descrition">
-                <p
+              <Box className="user-descrition">
+                <Typography
+                  sx={{
+                    wordBreak: "break-word",
+                    paddingRight: "10px",
+                    textAlign: "justify",
+                  }}
                   dangerouslySetInnerHTML={{
                     __html:
                       applicantDetails.shortLetter ||
                       applicantDetails.user.profile.description,
                   }}
                 />
-              </div>
-              <div className="attachment-box">
+              </Box>
+              <Box sx={{ display: "contents" }}>
+                {
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    sx={{
+                      height: "162px !important",
+                      width: "1px",
+                      backgroundColor: "#CACACA",
+                    }}
+                  />
+                }
+              </Box>
+              <Box className="attachment-box">
                 {applicantDetails.attachments.length ? (
                   <h2>Attachments</h2>
                 ) : (
@@ -191,7 +210,7 @@ const ApplicantDetails = () => {
                     </Stack>
                   );
                 })}
-              </div>
+              </Box>
             </Stack>
 
             {/* ---------------- education, experience and skills -------- */}
