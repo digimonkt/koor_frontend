@@ -179,7 +179,7 @@ function ApplicationOptions({
         container
         spacing={0}
         flexWrap={{ xs: "wrap", lg: "nowrap" }}
-        useFlexGap
+        useflexgap="true"
       >
         {applicationList &&
           applicationList.length > 1 &&
