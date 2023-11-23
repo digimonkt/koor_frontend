@@ -25,6 +25,7 @@ import CurrencyInput from "../../../pages/jobs/postJobs/currencyInput";
 import { FilledButton, OutlinedButton } from "../../../components/button";
 import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import {
+  Box,
   Card,
   CardContent,
   Divider,
@@ -41,6 +42,8 @@ import styles from "./postTender.module.css";
 import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "../../../api/user";
 import urlcat from "urlcat";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const PostTender = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -60,14 +63,28 @@ const PostTender = () => {
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const [suggestedAddress, setSuggestedAddress] = useState([]);
-
+  const [descData, setDescData] = useState("");
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // basic formatting
+    ["blockquote", "code-block"], // blockquote and code block
+    [{ header: 1 }, { header: 2 }], // headers
+    [{ list: "ordered" }, { list: "bullet" }], // ordered and unordered lists
+    [{ script: "sub" }, { script: "super" }], // subscript and superscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent and indent
+    [{ direction: "rtl" }], // text direction
+    [{ size: ["small", false, "large", "huge"] }], // font size
+    [{ color: [] }, { background: [] }], // text and background color
+    [{ font: [] }], // font family
+    [{ align: [] }], // text alignment
+    ["link", "image", "video"], // link, image, and video
+    ["clean"], // remove formatting
+  ];
   const getSuggestedAddress = async (search) => {
     const res = await GetSuggestedAddressAPI(search);
     if (res.remote === "success") {
       setSuggestedAddress(res.data.predictions);
     }
   };
-
   const handleRedirect = () => {
     setOpen(close);
     setIsRedirect(true);
@@ -155,6 +172,10 @@ const PostTender = () => {
       }
     },
   });
+  const handleEditorValue = (content) => {
+    setDescData(content);
+    formik.setFieldValue("description", content !== "<p><br></p>" ? content : "");
+  };
   const getTenderDetailsById = useCallback(async (tenderId) => {
     const response = await getTenderDetailsByIdAPI({ tenderId });
     if (response.remote === "success") {
@@ -307,19 +328,39 @@ const PostTender = () => {
                     />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <div>
+                    <Box sx={{ height: "270px" }}>
                       <label>
-                        Description <span className="required-field">*</span>
+                        Description<span className="required-field">*</span>
                       </label>
-                      <textarea
+                      {/* <textarea
                         className="form-control-area"
                         placeholder="Write more details to attract the right candidates."
                         {...formik.getFieldProps("description")}
-                      ></textarea>
-                    </div>
-                    {formik.touched.description && formik.errors.description ? (
-                      <ErrorMessage>{formik.errors.description}</ErrorMessage>
-                    ) : null}
+                      ></textarea> */}
+                      <ReactQuill
+                        placeholder="Write more details to attract the right candidates."
+                        theme="snow"
+                        value={descData || formik.values.description}
+                        modules={{
+                          toolbar: toolbarOptions,
+                        }}
+                        onChange={(value) => handleEditorValue(value)}
+                        className="work-experience-text-editor"
+                        style={{
+                          width: "100%",
+                          marginTop: "10px",
+                          height: "170px",
+                        }}
+                      />
+                    </Box>
+                    <Box style={{
+                      width: "100%",
+                      marginTop: "10px",
+                    }}>
+                      {formik.touched.description && formik.errors.description ? (
+                        <ErrorMessage>{formik.errors.description}</ErrorMessage>
+                      ) : null}
+                    </Box>
                   </Grid>
                   <Grid item xl={8} lg={8} xs={12}>
                     <label>
@@ -425,7 +466,7 @@ const PostTender = () => {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.categories &&
-                        formik.errors.categories ? (
+                          formik.errors.categories ? (
                           <ErrorMessage>
                             {formik.errors.categories}
                           </ErrorMessage>
@@ -471,7 +512,7 @@ const PostTender = () => {
                           {...formik.getFieldProps("opportunityType")}
                         />
                         {formik.touched.opportunityType &&
-                        formik.errors.opportunityType ? (
+                          formik.errors.opportunityType ? (
                           <ErrorMessage>
                             {formik.errors.opportunityType}
                           </ErrorMessage>
@@ -521,7 +562,7 @@ const PostTender = () => {
                             minDate={dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.startDate &&
-                          formik.errors.startDate ? (
+                            formik.errors.startDate ? (
                             <ErrorMessage>
                               {formik.errors.startDate}
                             </ErrorMessage>
@@ -580,8 +621,7 @@ const PostTender = () => {
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
-                          `Maximum 10 files allowed. you can upload only ${
-                            10 - currentAttachments.length
+                          `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length
                           } remaining`
                         );
                       } else {
@@ -674,8 +714,8 @@ const PostTender = () => {
                             ? "Updating..."
                             : "Posting..."
                           : tenderId
-                          ? "Update the tender"
-                          : "POST THE TENDER"
+                            ? "Update the tender"
+                            : "POST THE TENDER"
                       }
                       type="submit"
                       disabled={formik.isSubmitting}

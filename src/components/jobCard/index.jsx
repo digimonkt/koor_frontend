@@ -233,9 +233,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <p className="job-description card-description mt-1 mb-3">
-              {jobDetails?.description}
-            </p>
+            <div className="job-description card-description mt-1 mb-3"
+              dangerouslySetInnerHTML={{ __html: jobDetails.description }}
+            ></div>
             <Stack
               direction="row"
               useFlexGap
@@ -388,17 +388,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     </h4>
                     <span>{jobDetails?.budgetPayPeriod}</span>
                   </>
-                ) : (
-                  <>
-                    <span className="d-block">UP TO</span>
-                    <h4>
-                      <small>{"$"}</small>
-                      {"0"}
-                    </h4>
-                  </>
-                )}
+                ) : ""}
               </div>
-              {/* <div className="hr-border"></div> */}
+              {
+                selfJob && <div className="hr-border"></div>
+              }
               {selfJob ? (
                 <div className="job-button-card">
                   <button
