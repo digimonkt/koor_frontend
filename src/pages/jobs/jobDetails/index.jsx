@@ -403,11 +403,11 @@ const JobDetails = () => {
                               ? "Edit"
                               : "Applied"
                             : [
-                                <>
-                                  <SVG.Enable1 className="me-2" />
-                                </>,
-                                "Apply for this job",
-                              ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for this job",
+                            ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -468,11 +468,11 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.SaveIcon1 className="me-2" />
-                                </>,
-                                "Save job",
-                              ]
+                              <>
+                                <SVG.SaveIcon1 className="me-2" />
+                              </>,
+                              "Save job",
+                            ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
