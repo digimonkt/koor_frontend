@@ -69,6 +69,9 @@ function Layout() {
         {/* {role === USER_ROLES.jobSeeker ? ( */}
         <Routes>
           {JOB_SEEKER_ROUTES.map((route) => {
+            if (!route.path) {
+              return null;
+            }
             return (
               <Route
                 path={`/${USER_ROLES.jobSeeker}${route.path}`}
