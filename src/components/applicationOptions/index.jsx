@@ -180,6 +180,7 @@ function ApplicationOptions({
         spacing={0}
         flexWrap={{ xs: "wrap", lg: "nowrap" }}
         useFlexGap
+        sx={{ display: "flex", alignItems: "center", justifyContent: "end" }}
       >
         {applicationList &&
           applicationList.length > 1 &&
