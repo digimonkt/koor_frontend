@@ -62,6 +62,8 @@ import {
 import { getPackageAPI } from "../../../api/choices";
 import { Package } from "../../../components/package";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -92,6 +94,23 @@ function PostJobsComponent() {
   const [isRedirect, setIsRedirect] = useState(false);
   const [packageData, setPackageData] = useState([]);
   const [buyPackage, setBuyPackage] = useState(false);
+  const [descData, setDescData] = useState("");
+  const [applicationInstructionData, setApplicationInstructionData] = useState("");
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // basic formatting
+    ["blockquote", "code-block"], // blockquote and code block
+    [{ header: 1 }, { header: 2 }], // headers
+    [{ list: "ordered" }, { list: "bullet" }], // ordered and unordered lists
+    [{ script: "sub" }, { script: "super" }], // subscript and superscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent and indent
+    [{ direction: "rtl" }], // text direction
+    [{ size: ["small", false, "large", "huge"] }], // font size
+    [{ color: [] }, { background: [] }], // text and background color
+    [{ font: [] }], // font family
+    [{ align: [] }], // text alignment
+    ["link", "image", "video"], // link, image, and video
+    ["clean"], // remove formatting
+  ];
   const handleRedirect = () => {
     setOpen(close);
     setIsRedirect(true);
@@ -141,7 +160,7 @@ function PostJobsComponent() {
         budget_currency: values.budgetCurrency,
         budget_amount: values.budgetAmount,
         budget_pay_period: values.budgetPayPeriod,
-        description: values.description,
+        description: descData,
         country: values.country,
         city: values.city,
         address: values.address,
@@ -321,6 +340,7 @@ function PostJobsComponent() {
   };
   const handleBuyPackage = async (planDetails) => {
     const data = {
+      package: planDetails.title.toLowerCase(),
       points: planDetails.credit,
       amount: Number(planDetails.price),
       note: `Employer buy ${planDetails.title} Plan`,
@@ -333,6 +353,15 @@ function PostJobsComponent() {
       dispatch(setErrorToast("Something Went Wrong"));
     }
   };
+  const handleEditorValue = (content) => {
+    setDescData(content);
+    formik.setFieldValue("description", content !== "<p><br></p>" ? content : "");
+  };
+  const handleApplicationInstructionEditorValue = (content) => {
+    setApplicationInstructionData(content);
+    formik.setFieldValue("applicationInstruction", content !== "<p><br></p>" ? content : "");
+  };
+
   useEffect(() => {
     if (isRedirect) {
       navigate(`/${USER_ROLES.employer}/manage-jobs`);
@@ -476,19 +505,39 @@ function PostJobsComponent() {
                     />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <div>
+                    <Box sx={{ height: "270px" }}>
                       <label>
                         Description<span className="required-field">*</span>
                       </label>
-                      <textarea
+                      {/* <textarea
                         className="form-control-area"
                         placeholder="Write more details to attract the right candidates."
                         {...formik.getFieldProps("description")}
-                      ></textarea>
-                    </div>
-                    {formik.touched.description && formik.errors.description ? (
-                      <ErrorMessage>{formik.errors.description}</ErrorMessage>
-                    ) : null}
+                      ></textarea> */}
+                      <ReactQuill
+                        placeholder="Write more details to attract the right candidates."
+                        theme="snow"
+                        value={descData || formik.values.description}
+                        modules={{
+                          toolbar: toolbarOptions,
+                        }}
+                        onChange={(value) => handleEditorValue(value)}
+                        className="work-experience-text-editor"
+                        style={{
+                          width: "100%",
+                          marginTop: "10px",
+                          height: "170px",
+                        }}
+                      />
+                    </Box>
+                    <Box style={{
+                      width: "100%",
+                      marginTop: "10px",
+                    }}>
+                      {formik.touched.description && formik.errors.description ? (
+                        <ErrorMessage>{formik.errors.description}</ErrorMessage>
+                      ) : null}
+                    </Box>
                   </Grid>
                   <Grid item xl={9} lg={9} sm={8} xs={12}>
                     <label>
@@ -814,19 +863,39 @@ function PostJobsComponent() {
                     />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <LabeledInput
-                      title="Application Instructions"
-                      className="add-form-control"
-                      placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
-                      required
-                      {...formik.getFieldProps("applicationInstruction")}
-                    />
-                    {formik.touched.applicationInstruction &&
-                      formik.errors.applicationInstruction ? (
-                      <ErrorMessage>
-                        {formik.errors.applicationInstruction}
-                      </ErrorMessage>
-                    ) : null}
+                    <Box sx={{ height: "245px" }}>
+                      <label>
+                        Application Instructions<span className="required-field">*</span>
+                      </label>
+                      <ReactQuill
+                        placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
+                        theme="snow"
+                        value={applicationInstructionData || formik.values.applicationInstruction}
+                        modules={{
+                          toolbar: toolbarOptions,
+                        }}
+                        onChange={(value) => handleApplicationInstructionEditorValue(value)}
+                        className="work-experience-text-editor"
+                        style={{
+                          width: "100%",
+                          marginTop: "10px",
+                          height: "150px",
+                        }}
+                      />
+                    </Box>
+                    <Box style={{
+                      width: "100%",
+                      marginTop: "10px",
+                    }}>
+                      {
+                        formik.touched.applicationInstruction &&
+                          formik.errors.applicationInstruction ? (
+                          <ErrorMessage>
+                            {formik.errors.applicationInstruction}
+                          </ErrorMessage>
+                        ) : null
+                      }
+                    </Box>
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <FormGroup>
