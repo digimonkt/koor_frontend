@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { styled } from "@mui/material/styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { getProfileAnalyticsDataAPI } from "../../../../api/jobSeeker";
+import { getProfileAnalyticsDataAPI } from "@api/jobSeeker";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -213,8 +213,8 @@ const AreaChart = () => {
             {lastMonthComparing > 0
               ? "+"
               : lastMonthComparing === 0
-              ? ""
-              : "-"}{" "}
+                ? ""
+                : "-"}{" "}
             {lastMonthComparing || 0}%
           </h5>
           <p>comparing to previous period</p>

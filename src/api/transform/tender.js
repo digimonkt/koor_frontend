@@ -34,13 +34,14 @@ export const transformTenderResponse = (data) => {
   };
 };
 export const transformFullTenderDetails = (data) => {
+  const description = data.description !== "<p><br></p>" ? data.description : "";
   return {
     id: data.id,
     title: data.title,
     tenderId: data.tender_id,
     budgetCurrency: data.budget_currency,
     budgetAmount: data.budget_amount,
-    description: data.description,
+    description,
     country: data.country || {},
     city: data.city || {},
     address: data.address || "",
