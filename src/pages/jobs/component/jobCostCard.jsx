@@ -12,7 +12,7 @@ function JobCostCard({ amount, payPeriod, user }) {
   const { role } = useSelector((state) => state.auth);
   return (
     <>
-      {amount ? (
+      {amount > 0 ? (
         <div className={`${styles.monthBox}`}>
           <>
             {payPeriod ? <h4>UP TO</h4> : "BUDGET"}
