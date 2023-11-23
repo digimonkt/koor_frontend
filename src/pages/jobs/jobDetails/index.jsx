@@ -305,7 +305,9 @@ const JobDetails = () => {
               <Grid item xs={12} lg={9} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <p className="job-description">{details.description}</p>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: details.description }}
+                  ></div>
                 </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
@@ -514,7 +516,9 @@ const JobDetails = () => {
             <>
               <div className={`${styles.LikeJob}`}>
                 <h2>Application Instructions:</h2>
-                {details.applicationInstruction}
+                <div
+                  dangerouslySetInnerHTML={{ __html: details.applicationInstruction }}
+                ></div>
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
@@ -646,7 +650,7 @@ const JobDetails = () => {
               </div>
             </DialogBox>
           </div>
-          {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+          {/* {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
             <>
               <div className={`${styles.LikeJob}`}>
                 <h2>Application Instructions:</h2>
@@ -701,7 +705,7 @@ const JobDetails = () => {
               ) : null}
               <Divider />
             </>
-          )}
+          )} */}
           <Box
             className={`${styles.LikeJob}`}
             sx={{

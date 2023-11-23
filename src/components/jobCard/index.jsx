@@ -233,9 +233,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <p className="job-description card-description mt-1 mb-3">
-              {jobDetails?.description}
-            </p>
+            <div className="job-description card-description mt-1 mb-3"
+              dangerouslySetInnerHTML={{ __html: jobDetails.description }}
+            ></div>
             <Stack
               direction="row"
               useFlexGap
