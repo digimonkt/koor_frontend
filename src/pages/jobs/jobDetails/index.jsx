@@ -326,11 +326,20 @@ const JobDetails = () => {
                     leftIcon={<SVG.LocationIcon />}
                     className={`${styles.iconbutton}`}
                   />
-                  <SearchButton
-                    text={`${details.workingDays || 2}-Day Week`}
-                    leftIcon={<SVG.BagClock />}
-                    className={`${styles.iconbutton}`}
-                  />
+                  {details?.workingDays &&
+                    <SearchButton
+                      text={`${details.workingDays}`}
+                      leftIcon={<SVG.BagClock />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  }
+                  {details?.duration &&
+                    <SearchButton
+                      text={`${details.duration} Month`}
+                      leftIcon={<SVG.BagClock />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  }
                   {details.isFullTime && (
                     <SearchButton
                       text="Full Time"

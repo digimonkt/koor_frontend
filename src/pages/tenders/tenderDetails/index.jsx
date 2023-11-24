@@ -264,7 +264,7 @@ function TenderDetailsComponent() {
               <Grid item xs={12} lg={9} sm={8}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <p className="job-description">{details.description}. </p>
+                  <div className="job-description" dangerouslySetInnerHTML={{ __html: details.description }}></div>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
@@ -342,11 +342,11 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for the Tender",
-                            ]
+                            <>
+                              <SVG.Enable1 className="me-2" />
+                            </>,
+                            "Apply for the Tender",
+                          ]
                       }
                       sx={{
                         padding: "10px 0px !important",
@@ -403,11 +403,11 @@ function TenderDetailsComponent() {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.BlueSaveIcon className="me-2" />
-                                </>,
-                                "Save Tender",
-                              ]
+                              <>
+                                <SVG.BlueSaveIcon className="me-2" />
+                              </>,
+                              "Save Tender",
+                            ]
                         }
                         sx={{
                           height: "44px",
