@@ -79,7 +79,7 @@ function ResetPasswordComponent() {
           <div className="form-group mb-3">
             <LabeledInput
               title="Repeat your password"
-              placeholder="Re-type Password"
+              placeholder="Repeat Password"
               type="password"
               disabled={loading}
               zIndex={9999}

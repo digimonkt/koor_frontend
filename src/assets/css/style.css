@@ -574,7 +574,7 @@ header {
 
 .content-box h5 {
   font-weight: 700;
-  font-size: 45px;
+  font-size: 24px;
   margin: 0px 0px 5px;
   color: #000000;
   padding-bottom: 12px;
@@ -991,6 +991,7 @@ hr {
 .additional-box .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input {
   font-size: 16px !important;
   font-weight: 500;
+  padding: 11.5px 14px;
 }
 
 .additional-check .MuiFormControlLabel-root .MuiFormControlLabel-label {
@@ -1347,7 +1348,7 @@ hr {
   letter-spacing: 0.02em;
   white-space: nowrap;
   color: #eea23d;
-  width: 100px;
+  width: 140px;
 }
 
 .pricebox h4 small {
@@ -1825,7 +1826,7 @@ span.count {
   }
 
   .content-box h5 {
-    font-size: 36px !important;
+    font-size: 20px !important;
   }
 
   .content-box p {
@@ -2374,6 +2375,7 @@ input.employersearch {
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
+  text-align: justify;
 }
 
 .close_icon_circle svg {
@@ -2529,10 +2531,6 @@ input.employersearch {
 }
 
 @media only screen and (max-width: 540px) {
-  .content-box h5 {
-    font-size: 28px !important;
-  }
-
   .text-gray {
     font-size: 12px;
   }
@@ -2553,6 +2551,10 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+
+  .content-box h5 {
+    font-size: 16px !important;
   }
 
   .add-content .add-form-control::placeholder {
@@ -2752,6 +2754,7 @@ input.employersearch {
   .additional-box .MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input {
     font-size: 14px !important;
     font-weight: 500;
+    padding: 10.5px 14px;
   }
 
   .navbar-brand {
