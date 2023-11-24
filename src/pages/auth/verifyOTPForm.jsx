@@ -74,7 +74,7 @@ function VerifyOTPForm() {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="form-group mb-3">
+        <div className="form-group mb-3 enterotp_input">
           <LabeledOtpInput
             title="Enter OTP"
             onChange={(e) => formik.setFieldValue("otp", e)}
@@ -85,16 +85,20 @@ function VerifyOTPForm() {
               <ErrorMessage>{formik.errors.otp}</ErrorMessage>
             ) : null}
           </Box>
-          <FilledButton
-            type="submit"
-            title="Submit"
-            style={{ marginRight: "10px" }}
-          />
-          <FilledButton
-            type="button"
-            onClick={handleResendOTP}
-            title={sendingOTP ? <Loader loading={sendingOTP} /> : "Resend OTP"}
-          />
+          <Box sx={{ textAlign: "center", mt: 3 }}>
+            <FilledButton
+              type="submit"
+              title="Submit"
+              style={{ marginRight: "10px" }}
+            />
+            <FilledButton
+              type="button"
+              onClick={handleResendOTP}
+              title={
+                sendingOTP ? <Loader loading={sendingOTP} /> : "Resend OTP"
+              }
+            />
+          </Box>
         </div>
       </form>
     </div>

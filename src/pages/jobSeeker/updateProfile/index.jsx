@@ -25,6 +25,13 @@ const UpdateProfile = () => {
   const [open, setOpen] = useState(false);
   const [profilePicLoading, setProfilePicLoading] = useState("");
   const [profileCompleted, setProfileCompleted] = useState(true);
+  const [toggle, setToggle] = useState(["about"]);
+
+  const handleToggleModel = (type) => {
+    setToggle((prev) =>
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+    );
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -72,7 +79,11 @@ const UpdateProfile = () => {
       )}
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>
-          <AboutMe handleClickOpen={handleClickOpen} />
+          <AboutMe
+            handleClickOpen={handleClickOpen}
+            fun={() => handleToggleModel("about")}
+            toggle={toggle.includes("about")}
+          />
         </Grid>
         <Grid item lg={6} xs={12}>
           <Stack direction="column" spacing={2}>
@@ -92,6 +103,8 @@ const UpdateProfile = () => {
                 }}
               >
                 <ProfilePicInput
+                  fun={() => handleToggleModel("updateprofille")}
+                  toggle={toggle.includes("updateprofille")}
                   title="Profile photo"
                   handleSave={handleProfilePicSave}
                   image={currentUser.profileImage}
@@ -115,6 +128,8 @@ const UpdateProfile = () => {
                 }}
               >
                 <ResumeUpdate
+                  fun={() => handleToggleModel("resume")}
+                  toggle={toggle.includes("resume")}
                   title="Resume"
                   bgcolor="#FEEFD3"
                   color="#EEA23D"

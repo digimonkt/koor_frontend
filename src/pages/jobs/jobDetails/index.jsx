@@ -33,6 +33,7 @@ import { Box, Divider, IconButton, Stack } from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
+import { Capacitor } from "@capacitor/core";
 
 const JobDetails = () => {
   const params = useParams();
@@ -234,21 +235,27 @@ const JobDetails = () => {
       URL.revokeObjectURL(downloadUrl);
     }
   };
-
-  console.log({ details });
-
+  const platform = Capacitor.getPlatform();
   return (
     <>
       <Container
         maxWidth={false}
         sx={{
+          padding: platform === "android" || platform === "ios" ? "0px" : null,
           "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
         }}
       >
-        <div className={`${styles.Jobcard}`}>
+        <div
+          className={`${styles.Jobcard}`}
+          style={{
+            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            borderRadius:
+              platform === "android" || platform === "ios" ? "0px" : null,
+          }}
+        >
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={7} lg={8}>
@@ -298,50 +305,62 @@ const JobDetails = () => {
               <Grid item xs={12} lg={9} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <p className="job-description">{details.description}</p>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: details.description }}
+                  ></div>
                 </div>
                 <Stack
-                  direction={{ xs: "column", lg: "row", sm: "row" }}
+                  direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
-                  spacing={2}
-                  sx={{ overflow: "auto" }}
+                  spacing={{ xs: 1, lg: 0 }}
+                  flexWrap={"wrap"}
+                  useFlexGap
+                  sx={{
+                    "@media (max-width:992px)": {
+                      "& .MuiButtonBase-root": { margin: "0px !important" },
+                    },
+                  }}
                 >
-                  <Box
-                    className={styles.details_searchs_button}
-                    sx={{ display: "flex", flexWrap: "nowrap !important" }}
-                  >
+                  <SearchButton
+                    text={details.country.title}
+                    leftIcon={<SVG.LocationIcon />}
+                    className={`${styles.iconbutton}`}
+                  />
+                  {details?.workingDays &&
                     <SearchButton
-                      text={details.country.title}
-                      leftIcon={<SVG.LocationIcon />}
-                      className={`${styles.iconbutton}`}
-                    />
-                    <SearchButton
-                      text={`${details.workingDays || 2}-Day Week`}
+                      text={`${details.workingDays}`}
                       leftIcon={<SVG.BagClock />}
                       className={`${styles.iconbutton}`}
                     />
-                    {details.isFullTime && (
-                      <SearchButton
-                        text="Full Time"
-                        leftIcon={<SVG.MoonCircle />}
-                        className={`${styles.iconbutton}`}
-                      />
-                    )}
-                    {details.isPartTime && (
-                      <SearchButton
-                        text="Part time"
-                        leftIcon={<SVG.MoonCircle />}
-                        className={`${styles.iconbutton}`}
-                      />
-                    )}
-                    {details.hasContract && (
-                      <SearchButton
-                        text="Contract"
-                        leftIcon={<SVG.MoonCircle />}
-                        className={`${styles.iconbutton}`}
-                      />
-                    )}
-                  </Box>
+                  }
+                  {details?.duration &&
+                    <SearchButton
+                      text={`${details.duration} Month`}
+                      leftIcon={<SVG.BagClock />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  }
+                  {details.isFullTime && (
+                    <SearchButton
+                      text="Full Time"
+                      leftIcon={<SVG.MoonCircle />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  )}
+                  {details.isPartTime && (
+                    <SearchButton
+                      text="Part time"
+                      leftIcon={<SVG.MoonCircle />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  )}
+                  {details.hasContract && (
+                    <SearchButton
+                      text="Contract"
+                      leftIcon={<SVG.MoonCircle />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  )}
                 </Stack>
                 {details.startDate && (
                   <div className={`${styles.datesatrt}`}>
@@ -395,11 +414,11 @@ const JobDetails = () => {
                               ? "Edit"
                               : "Applied"
                             : [
-                                <>
-                                  <SVG.Enable1 className="me-2" />
-                                </>,
-                                "Apply for this job",
-                              ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for this job",
+                            ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -460,11 +479,11 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.SaveIcon1 className="me-2" />
-                                </>,
-                                "Save job",
-                              ]
+                              <>
+                                <SVG.SaveIcon1 className="me-2" />
+                              </>,
+                              "Save job",
+                            ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -506,7 +525,9 @@ const JobDetails = () => {
             <>
               <div className={`${styles.LikeJob}`}>
                 <h2>Application Instructions:</h2>
-                {details.applicationInstruction}
+                <div
+                  dangerouslySetInnerHTML={{ __html: details.applicationInstruction }}
+                ></div>
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
@@ -638,7 +659,91 @@ const JobDetails = () => {
               </div>
             </DialogBox>
           </div>
-          <div className={`${styles.LikeJob}`}>
+          {/* {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+            <>
+              <div className={`${styles.LikeJob}`}>
+                <h2>Application Instructions:</h2>
+                {details.applicationInstruction}
+              </div>
+              {role === USER_ROLES.jobSeeker || role === "" ? (
+                <div className={`${styles.jobpostbtn} `}>
+                  <Box sx={{ textAlign: "start", display: "flex" }}>
+                    {!details.isApplied && details.isApplyThroughWebsite && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply on employer's website",
+                        ]}
+                        // className={`${styles.enablebtn}`}
+                        disabled={details.isApplied && !details.isEditable}
+                        onClick={() => {
+                          if (isLoggedIn) {
+                            window.open(details.websiteLink, "_blank");
+                          } else {
+                            setRegistrationWarning(true);
+                          }
+                        }}
+                      />
+                    )}
+                    {!details.isApplied && details.isApplyThroughEmail && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply by email",
+                        ]}
+                        className="ms-3"
+                        onClick={() => {
+                          handleSendEmail(details.id);
+                        }}
+                      />
+                    )}
+                  </Box>
+                </div>
+              ) : null}
+              <Divider />
+            </>
+          )} */}
+          <Box
+            className={`${styles.LikeJob}`}
+            sx={{
+              "& p": {
+                position: "relative",
+                padding:
+                  platform === "android" || platform === "ios"
+                    ? "16px 30px 16px 0px"
+                    : "",
+                margin: platform === "android" || platform === "ios" ? "0" : "",
+                borderBottom:
+                  platform === "android" || platform === "ios"
+                    ? "1px solid #ccc"
+                    : "",
+              },
+              "& p:last-child": {
+                borderBottom:
+                  platform === "android" || platform === "ios" ? "0" : "",
+              },
+              "& p:first-child": {
+                paddingTop:
+                  platform === "android" || platform === "ios" ? "0px" : "",
+              },
+              "& span": {
+                display:
+                  platform === "android" || platform === "ios" ? "block" : "",
+              },
+            }}
+          >
             <h2>more jobs like this:</h2>
             {suggestionJobs.map((item, key) => {
               return (
@@ -650,10 +755,25 @@ const JobDetails = () => {
                     – {item.city.title}, {item.country.title} $
                     {item.budgetAmount}{" "}
                   </span>
+                  {platform === "android" || platform === "ios" ? (
+                    <b
+                      style={{
+                        position: "absolute",
+                        right: "10px",
+                        top: "37px",
+                        transform: "translate(0%, -37%)",
+                        color: "#EEA23D",
+                      }}
+                    >
+                      <SVG.ArrowAngle />
+                    </b>
+                  ) : (
+                    ""
+                  )}
                 </p>
               );
             })}
-          </div>
+          </Box>
         </div>
       </Container>
       <DialogBox

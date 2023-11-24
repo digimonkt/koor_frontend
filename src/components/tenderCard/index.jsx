@@ -233,9 +233,8 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 ) : null}
               </Link>
             </h2>
-            <p className="job-description card-description mt-1 mb-3">
-              {tenderDetails?.description}
-            </p>
+            <div className="job-description card-description mt-1 mb-3" dangerouslySetInnerHTML={{ __html: tenderDetails?.description }}>
+            </div>
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}

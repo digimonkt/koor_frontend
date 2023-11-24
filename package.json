@@ -68,7 +68,9 @@
     "eject": "craco eject",
     "server": "node server.js",
     "cypress": "cypress open",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "ionic:build": "craco build",
+    "ionic:serve": "craco start"
   },
   "eslintConfig": {
     "extends": [

@@ -3,7 +3,9 @@ import {
   CardContent,
   FormControlLabel,
   Select,
+  Stack,
   StepConnector,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
@@ -14,6 +16,7 @@ import { styled } from "@mui/material/styles";
 import { SVG } from "../../../assets/svg";
 import JobCategory from "./jobCategory";
 import AdditionalParameter from "./additionalParameter";
+import { Capacitor } from "@capacitor/core";
 
 // styles
 
@@ -46,6 +49,7 @@ export const FormLabelBox = styled(FormControlLabel)`
 `;
 
 const JobCriteria = () => {
+  const platform = Capacitor.getPlatform();
   // state management
   const [activeStep, setActiveStep] = useState(0);
   const [city, setCity] = useState("");
@@ -87,36 +91,114 @@ const JobCriteria = () => {
           >
             <Box sx={{ width: "100%" }}>
               {/* --------------- stepper slider ----------- */}
-              <Stepper activeStep={activeStep} className="step-continer">
-                <Step className="sub-step-continer">
-                  <StepLabel icon={<SVG.OneIcon />}>Categories</StepLabel>
-                </Step>
-                <Step className="sub-step-continer">
-                  <StepLabel>Additional parameters</StepLabel>
-                </Step>
+              {platform === "android" || platform === "ios" ? (
+                <>
+                  <Stack
+                    direction={"row"}
+                    component={Typography}
+                    alignItems={"center"}
+                    spacing={1}
+                    variant="h2"
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "18px",
+                      fontFamily: "Bahnschrift",
+                    }}
+                  >
+                    <Box
+                      component={"span"}
+                      sx={{
+                        width: "35px",
+                        height: "35px",
+                        borderRadius: "100%",
+                        background: "#FEEFD3",
+                        display: "inline-flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        fontFamily: "Bahnschrift",
+                        collor: "#121212",
+                      }}
+                    >
+                      1
+                    </Box>{" "}
+                    <Box component={"span"}>Categories</Box>
+                  </Stack>
+                  <JobCategory />
+                  <Stack
+                    direction={"row"}
+                    component={Typography}
+                    alignItems={"center"}
+                    spacing={1}
+                    variant="h2"
+                    sx={{
+                      fontWeight: "600",
+                      fontSize: "18px",
+                      fontFamily: "Bahnschrift",
+                    }}
+                  >
+                    <Box
+                      component={"span"}
+                      sx={{
+                        width: "35px",
+                        height: "35px",
+                        borderRadius: "100%",
+                        background: "#FEEFD3",
+                        display: "inline-flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "14px",
+                        fontWeight: "600",
+                        fontFamily: "Bahnschrift",
+                        collor: "#121212",
+                      }}
+                    >
+                      2
+                    </Box>
+                    <Box component={"span"}>Additional parameters</Box>
+                  </Stack>
 
-                <StepConnector
-                  className={
-                    activeStep === 0
-                      ? "Mui-active"
-                      : activeStep === 1
-                      ? "Mui-active"
-                      : ""
-                  }
-                />
-              </Stepper>
+                  <AdditionalParameter
+                    age={age}
+                    city={city}
+                    handleChange={(vl) => handleChange(vl)}
+                    handleCity={(vl) => handleCity(vl)}
+                  />
+                </>
+              ) : (
+                <>
+                  <Stepper activeStep={activeStep} className="step-continer">
+                    <Step className="sub-step-continer">
+                      <StepLabel icon={<SVG.OneIcon />}>Categories</StepLabel>
+                    </Step>
+                    <Step className="sub-step-continer">
+                      <StepLabel>Additional parameters</StepLabel>
+                    </Step>
 
-              {/* -------------- main content ---------- */}
-              {activeStep === 0 ? (
-                <JobCategory handleNext={() => handleNext()} />
-              ) : activeStep === 1 ? (
-                <AdditionalParameter
-                  age={age}
-                  city={city}
-                  handleChange={(vl) => handleChange(vl)}
-                  handleCity={(vl) => handleCity(vl)}
-                />
-              ) : null}
+                    <StepConnector
+                      className={
+                        activeStep === 0
+                          ? "Mui-active"
+                          : activeStep === 1
+                          ? "Mui-active"
+                          : ""
+                      }
+                    />
+                  </Stepper>
+                  {/* -------------- main content ---------- */}
+                  {activeStep === 0 ? (
+                    <JobCategory handleNext={() => handleNext()} />
+                  ) : activeStep === 1 ? (
+                    <AdditionalParameter
+                      age={age}
+                      city={city}
+                      handleChange={(vl) => handleChange(vl)}
+                      handleCity={(vl) => handleCity(vl)}
+                    />
+                  ) : null}
+                </>
+              )}
             </Box>
           </CardContent>
         </Card>

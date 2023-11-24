@@ -4,9 +4,9 @@ export const getColorByRemainingDays = (days) => {
   // // value from 0 to 1
   // const hue = ((1 - value) * 120).toString(10);
   // return `hsl(${hue}, 100%, 50%)`;
-  if (days >= 15) {
+  if (days >= 5) {
     return "#419C55"; // Green for days greater than 15
-  } else if (days >= 1 && days < 15) {
+  } else if (days >= 1 && days < 5) {
     return "#EBB938"; // Yellow for days between 1 and 15
   } else if (days === 0) {
     return "#BE4444"; // Red for 0 days

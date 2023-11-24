@@ -59,6 +59,7 @@ import {
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Capacitor } from "@capacitor/core";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const matches = useMediaQuery("(max-width:768px)");
   const dispatch = useDispatch();
@@ -100,9 +101,11 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const [open, setOpen] = useState(false);
   const [filterId, setFilterId] = useState(0);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const platform = Capacitor.getPlatform();
   useEffect(() => {
     setData(!!defaultOpen);
   }, []);
+
   const footer = () => {
     return (
       <>
@@ -639,69 +642,85 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
+                justifyContent:
+                  platform === "android" || platform === "ios"
+                    ? "center"
+                    : "space-between",
               }}
             >
               Saved searches:
-              {matches ? (
+              {platform === "android" || platform === "ios" ? null : (
                 <>
-                  {!defaultOpen && (
-                    <div
-                      onClick={() => setData(!data)}
-                      style={{
-                        color:
-                          role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
-                        cursor: "pointer",
-                        fontSize: "12px",
-                      }}
-                    >
-                      Advanced filter{" "}
-                      {data ? (
-                        <>
-                          <span
-                            style={{
-                              marginLeft: "10px",
-                              width: "18px",
-                              display: "inline-block",
-                              color:
-                                role === USER_ROLES.jobSeeker
-                                  ? "#FFA500"
-                                  : "#274593",
-                            }}
-                          >
-                            {<SVG.ArrowUpIcon />}
-                          </span>
-                        </>
-                      ) : (
-                        <span
+                  {matches ? (
+                    <>
+                      {!defaultOpen && (
+                        <div
+                          onClick={() => setData(!data)}
                           style={{
-                            marginLeft: "10px",
-                            width: "18px",
-                            display: "inline-block",
                             color:
                               role === USER_ROLES.jobSeeker
                                 ? "#FFA500"
                                 : "#274593",
+                            cursor: "pointer",
+                            fontSize: "12px",
                           }}
                         >
-                          {<SVG.AdvancedDown />}
-                        </span>
+                          Advanced filter{" "}
+                          {data ? (
+                            <>
+                              <span
+                                style={{
+                                  marginLeft: "10px",
+                                  width: "18px",
+                                  display: "inline-block",
+                                  color:
+                                    role === USER_ROLES.jobSeeker
+                                      ? "#FFA500"
+                                      : "#274593",
+                                }}
+                              >
+                                {<SVG.ArrowUpIcon />}
+                              </span>
+                            </>
+                          ) : (
+                            <span
+                              style={{
+                                marginLeft: "10px",
+                                width: "18px",
+                                display: "inline-block",
+                                color:
+                                  role === USER_ROLES.jobSeeker
+                                    ? "#FFA500"
+                                    : "#274593",
+                              }}
+                            >
+                              {<SVG.AdvancedDown />}
+                            </span>
+                          )}
+                        </div>
                       )}
-                    </div>
+                    </>
+                  ) : (
+                    ""
                   )}
                 </>
-              ) : (
-                ""
               )}
             </span>
             <Stack
               direction={"row"}
               spacing={1}
               overflow={responsive ? "" : "auto"}
-              flexWrap={"wrap"}
+              flexWrap={
+                platform === "android" || platform === "ios" ? "nowrap" : "wrap"
+              }
               useFlexGap
               component={"ul"}
-              sx={{ p: 0, m: 0 }}
+              sx={{
+                p: 0,
+                m: 0,
+                width:
+                  platform === "android" || platform === "ios" ? "100%" : null,
+              }}
             >
               {allFilters.map((filter) => {
                 return (
@@ -715,6 +734,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     }}
                   >
                     <SearchButton
+                      sx={{ whiteSpace: "nowrap !important" }}
                       className={`${
                         selectedFilter === filter.id
                           ? styles.btninActive
@@ -747,6 +767,57 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               })}
             </Stack>
           </Box>
+          {platform === "android" || platform === "ios" ? (
+            <Box sx={{ pt: 2 }}>
+              <>
+                {!defaultOpen && (
+                  <div
+                    onClick={() => setData(!data)}
+                    style={{
+                      color:
+                        role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
+                      cursor: "pointer",
+                      fontSize: "12px",
+                    }}
+                  >
+                    Advanced filter
+                    {data ? (
+                      <>
+                        <span
+                          style={{
+                            marginLeft: "10px",
+                            width: "18px",
+                            display: "inline-block",
+                            color:
+                              role === USER_ROLES.jobSeeker
+                                ? "#FFA500"
+                                : "#274593",
+                          }}
+                        >
+                          {<SVG.ArrowUpIcon />}
+                        </span>
+                      </>
+                    ) : (
+                      <span
+                        style={{
+                          marginLeft: "10px",
+                          width: "18px",
+                          display: "inline-block",
+                          color:
+                            role === USER_ROLES.jobSeeker
+                              ? "#FFA500"
+                              : "#274593",
+                        }}
+                      >
+                        {<SVG.Downarrow />}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </>
+            </Box>
+          ) : null}
+
           {!matches ? (
             <>
               {!defaultOpen && (
