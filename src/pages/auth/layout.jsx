@@ -159,7 +159,7 @@ function AuthLayout({
           role === USER_ROLES.employer || role === USER_ROLES.vendor
             ? "vendor"
             : ""
-        }${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
+        } ${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
       >
         <Container
           sx={{
