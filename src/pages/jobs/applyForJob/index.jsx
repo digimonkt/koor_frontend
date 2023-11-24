@@ -31,6 +31,7 @@ import CancelApply from "./cancelApply";
 import ApplySuccessfully from "./applySuccessfully";
 import { getApplicationDetailsAPI } from "../../../api/employer";
 import urlcat from "urlcat";
+import { Capacitor } from "@capacitor/core";
 const ApplyForJob = () => {
   const dispatch = useDispatch();
   // navigate
@@ -223,10 +224,22 @@ const ApplyForJob = () => {
       getApplicantDetails();
     }
   }, [searchParams.get("applicationId")]);
+  const platform = Capacitor.getPlatform();
   return (
     <div>
-      <Container>
-        <div className={`${styles.Jobcard}`}>
+      <Container
+        sx={{
+          padding: platform === "android" || platform === "ios" ? "0px" : null,
+        }}
+      >
+        <div
+          className={`${styles.Jobcard}`}
+          style={{
+            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            borderRadius:
+              platform === "android" || platform === "ios" ? "0px" : null,
+          }}
+        >
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={11} sm={11} lg={11}>
@@ -238,7 +251,7 @@ const ApplyForJob = () => {
                     {<SVG.LeftArrow />}
                   </span>
 
-                  <h1>Apply for the job</h1>
+                  <h1>Apply for the job dd</h1>
                 </div>
               </Grid>
               <Grid item xs={1} sm={1} lg={1}>
@@ -408,7 +421,11 @@ const ApplyForJob = () => {
               </Grid>
 
               <Stack
-                direction="row"
+                direction={
+                  platform === "android" || platform === "ios"
+                    ? "column-reverse"
+                    : "row"
+                }
                 spacing={2}
                 className={`${styles.applybtns}`}
               >
@@ -423,10 +440,14 @@ const ApplyForJob = () => {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                        ? "Update"
-                        : "Apply"
+                      ? "Update"
+                      : "Apply"
                   }
-                  className={`${styles.applybtn}`}
+                  className={`${styles.applybtn} ${
+                    platform === "android" || platform === "ios"
+                      ? styles.applybtnapp
+                      : ""
+                  }`}
                   type="submit"
                   disabled={isSubmitting}
                 />

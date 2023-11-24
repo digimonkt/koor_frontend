@@ -8,8 +8,9 @@ import { useDispatch } from "react-redux";
 import { setTotalCreatedJobs } from "../../../../redux/slice/employer";
 import { NoDataFoundAnimation } from "../../../../components/animations";
 import JobCardSkeletonLoader from "../../../../components/jobCard/jobCardSkeletonLoader";
+import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
 
-function MyJobs() {
+function MyJobs({ onTabChange }) {
   const dispatch = useDispatch();
   const [jobs, setJobs] = useState([]);
   const [search, setSearch] = useState("");
@@ -88,7 +89,7 @@ function MyJobs() {
           <NoDataFoundAnimation title="It appears that you haven't created any jobs yet." />
         </Card>
       ) : (
-        jobs.map((job) => {
+        jobs.map((job, index) => {
           return (
             <Card
               key={job.id}
@@ -107,6 +108,9 @@ function MyJobs() {
                   },
                 }}
               >
+                {index === 0 && (
+                  <EmployerMyPostTabs onTabChange={onTabChange} />
+                )}
                 <JobCard selfJob jobDetails={job} />
                 <ApplicantList
                   jobId={job.id}

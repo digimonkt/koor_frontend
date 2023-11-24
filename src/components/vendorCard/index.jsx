@@ -31,7 +31,6 @@ function VendorCard({ vendorDetails }) {
   const toggleText = () => {
     setShowFullText(!showFullText);
   };
-  console.log({ vendorDetails });
   useEffect(() => {
     setDescription(vendorDetails.description);
   }, [vendorDetails]);

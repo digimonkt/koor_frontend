@@ -44,21 +44,33 @@ import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import ReactQuill from "react-quill";
 import Loader from "@components/loader";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import { setJobSeekerJobApplication, setTotalApplicationsByJob, setTotalApplicationsByTender, setVendorTenderApplication } from "@redux/slice/employer";
+import {
+  setJobSeekerJobApplication,
+  setTotalApplicationsByJob,
+  setTotalApplicationsByTender,
+  setVendorTenderApplication,
+} from "@redux/slice/employer";
 import LabeledRadioInputComponent from "@components/input/labeledRadioInput";
-import { getApplicationOnJobAPI, getApplicationOnTenderAPI } from "@api/employer";
+import {
+  getApplicationOnJobAPI,
+  getApplicationOnTenderAPI,
+} from "@api/employer";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
 
-function ChatBox() {
+function ChatBox({ setIsSeleted }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { role, currentUser, isBlackListedByEmployer } = useSelector(
     (state) => state.auth
   );
-  const { jobSeekerJobApplication, vendorTenderApplication } = useSelector((state) => state.employer);
+  const { isMobileView } = useSelector((state) => state.platform);
+  const { jobSeekerJobApplication, vendorTenderApplication } = useSelector(
+    (state) => state.employer
+  );
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [hashId, setHashId] = useState("");
@@ -83,7 +95,8 @@ function ChatBox() {
   const [selectedMessage, setSelectedMessage] = useState("");
   const [messageForUpdate, setMessageForUpdate] = useState("");
   const [messageReplayId, setMessageReplayId] = useState(null);
-  const [openSelectApplicationModal, setOpenSelectApplicationModal] = useState(false);
+  const [openSelectApplicationModal, setOpenSelectApplicationModal] =
+    useState(false);
   const [totalShortlisted, setTotalShortlisted] = useState(0);
   const [totalRejected, setTotalRejected] = useState(0);
   const [applicationId, setApplicationId] = useState(0);
@@ -117,7 +130,8 @@ function ChatBox() {
     const textToCopy = tempDiv.textContent;
 
     // Copy the text to the clipboard
-    navigator.clipboard.writeText(textToCopy)
+    navigator.clipboard
+      .writeText(textToCopy)
       .then(() => {
         dispatch(setSuccessToast("Message Copied successfully"));
       })
@@ -148,7 +162,10 @@ function ChatBox() {
   const formats = ["header", "font", "bold", "italic", "underline", "link"];
   const updateMessage = async () => {
     setLoading(true);
-    const res = await updateMessageAttachmentAPI(selectedMessage.id, messageForUpdate);
+    const res = await updateMessageAttachmentAPI(
+      selectedMessage.id,
+      messageForUpdate
+    );
     if (res.remote === "success") {
       setMessage(updateMessageInArray());
       setOpenEditMessage(false);
@@ -172,7 +189,7 @@ function ChatBox() {
     });
   };
   const updateMessageInArray = () => {
-    return messages.map(message =>
+    return messages.map((message) =>
       message.id === selectedMessage.id
         ? { ...message, message: messageForUpdate }
         : message
@@ -367,17 +384,32 @@ function ChatBox() {
   // Start Draft JS Implement
   const _onBoldClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
-    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "BOLD").getCurrentContent()));
+    const chatHtml = draftToHtml(
+      convertToRaw(
+        RichUtils.toggleInlineStyle(editorState, "BOLD").getCurrentContent()
+      )
+    );
     setNewMessage(chatHtml);
   });
   const _onItalicClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
-    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "ITALIC").getCurrentContent()));
+    const chatHtml = draftToHtml(
+      convertToRaw(
+        RichUtils.toggleInlineStyle(editorState, "ITALIC").getCurrentContent()
+      )
+    );
     setNewMessage(chatHtml);
   });
   const _onUnderLineClick = useCallback(() => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
-    const chatHtml = draftToHtml(convertToRaw(RichUtils.toggleInlineStyle(editorState, "UNDERLINE").getCurrentContent()));
+    const chatHtml = draftToHtml(
+      convertToRaw(
+        RichUtils.toggleInlineStyle(
+          editorState,
+          "UNDERLINE"
+        ).getCurrentContent()
+      )
+    );
     setNewMessage(chatHtml);
   });
   const handleMenuOpen = (event) => {
@@ -402,7 +434,10 @@ function ChatBox() {
   const getApplicationList = async () => {
     setIsLoading(true);
     const filter = "";
-    const res = await getApplicationOnJobAPI({ jobId: applicationDetails.job.id, filter });
+    const res = await getApplicationOnJobAPI({
+      jobId: applicationDetails.job.id,
+      filter,
+    });
     if (res.remote === "success") {
       setTotalRejected(res.data.rejectedCount);
       setTotalShortlisted(res.data.shortlistedCount);
@@ -414,7 +449,10 @@ function ChatBox() {
   const getTenderApplicationList = async () => {
     setIsLoading(true);
     const filter = "";
-    const res = await getApplicationOnTenderAPI({ tenderId: applicationDetails.tender.id, filter });
+    const res = await getApplicationOnTenderAPI({
+      tenderId: applicationDetails.tender.id,
+      filter,
+    });
     if (res.remote === "success") {
       setTotalRejected(res.data.rejectedCount);
       setTotalShortlisted(res.data.shortlistedCount);
@@ -422,6 +460,12 @@ function ChatBox() {
     }
     setIsLoading(false);
   };
+
+  const handleBack = () => {
+    setIsSeleted(false);
+    navigate(`/${role}/chat`);
+  };
+
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -449,10 +493,10 @@ function ChatBox() {
     if (jobSeekerJobApplication.length === 1) {
       setApplicationDetails(jobSeekerJobApplication[0]);
     }
-    const listForShow = jobSeekerJobApplication.map(application => {
+    const listForShow = jobSeekerJobApplication.map((application) => {
       return {
         label: application.job.title,
-        value: application.id
+        value: application.id,
       };
     });
     setApplicationList(listForShow);
@@ -462,10 +506,10 @@ function ChatBox() {
     if (vendorTenderApplication.length === 1) {
       setApplicationDetails(vendorTenderApplication[0]);
     }
-    const listForShow = vendorTenderApplication.map(application => {
+    const listForShow = vendorTenderApplication.map((application) => {
       return {
         label: application.tender.title,
-        value: application.id
+        value: application.id,
       };
     });
     setApplicationList(listForShow);
@@ -566,6 +610,7 @@ function ChatBox() {
     // Clean up the timeout to avoid memory leaks
     return () => clearTimeout(scrollTimeout);
   }, [hashId]); // The empty dependency array ensures this effect runs once
+
   return (
     <>
       {isLoading ? (
@@ -575,14 +620,32 @@ function ChatBox() {
           <div className="message-header">
             <Stack direction="row" spacing={2} justifyContent="space-between">
               <div className="headerbox">
-                <h3>{userDetails.name || userDetails.email}</h3>
+                <h3 style={{ display: "flex", alignItems: "center" }}>
+                  {" "}
+                  {isMobileView && (
+                    <IconButton onClick={handleBack} sx={{ mr: 1 }}>
+                      <ArrowBackIcon />
+                    </IconButton>
+                  )}
+                  <span> {userDetails.name || userDetails.email}</span>
+                </h3>
                 {/* <p className="mb-2">Online Research Participant</p> */}
               </div>
 
               <div>
-                <ApplicationOptions details={applicationDetails || { user: userDetails }} view interviewPlanned={userDetails.role === USER_ROLES.jobSeeker && role === USER_ROLES.employer} shortlist={role === USER_ROLES.employer} applicationList={applicationList} handleOpenList={(action) => handleOpenList(action)} isApplicationSelect={applicationDetails} />
+                <ApplicationOptions
+                  details={applicationDetails || { user: userDetails }}
+                  view
+                  interviewPlanned={
+                    userDetails.role === USER_ROLES.jobSeeker &&
+                    role === USER_ROLES.employer
+                  }
+                  shortlist={role === USER_ROLES.employer}
+                  applicationList={applicationList}
+                  handleOpenList={(action) => handleOpenList(action)}
+                  isApplicationSelect={applicationDetails}
+                />
               </div>
-
             </Stack>
           </div>
           <div
@@ -631,10 +694,11 @@ function ChatBox() {
                 .map((message) => {
                   return (
                     <div
-                      className={`${message.user.id === currentUser.id
-                        ? "rightside"
-                        : "leftside"
-                        } mt-3 pe-2`}
+                      className={`${
+                        message.user.id === currentUser.id
+                          ? "rightside"
+                          : "leftside"
+                      } mt-3 pe-2`}
                       key={message.id}
                       id={message.id}
                     >
@@ -651,23 +715,25 @@ function ChatBox() {
                           <Avatar src={message.user.image} />
                         )}
                         <div
-                          className={`w-70 ${message.user.id === currentUser.id
-                            ? "text-right"
-                            : "text-left"
-                            }`}
+                          className={`w-70 ${
+                            message.user.id === currentUser.id
+                              ? "text-right"
+                              : "text-left"
+                          }`}
                         >
                           <div
-                            className={`message-text ${message.user.id === currentUser.id
-                              ? ""
-                              : "message-tex-2"
-                              }`}
+                            className={`message-text ${
+                              message.user.id === currentUser.id
+                                ? ""
+                                : "message-tex-2"
+                            }`}
                             style={{
                               background:
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                    ? "#D5E3F7"
-                                    : "#FEEFD3",
+                                  ? "#D5E3F7"
+                                  : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -678,24 +744,35 @@ function ChatBox() {
                             <div
                               className={
                                 message.attachment ||
-                                  countWords(message.message) > 10
+                                countWords(message.message) > 10
                                   ? ""
                                   : "text-inline old-message"
                               }
                             >
-                              {message.reply.id &&
+                              {message.reply.id && (
                                 <div className="reply-message">
-                                  <b className="d-block">{message.replyUserId === currentUser.id ? "You" : message.replyUserName}</b>
-                                  {message.reply.attachment
-                                    ? <div className="reply-attachment"> {renderAttachment(message.reply.attachment)}</div>
-                                    : ""}
+                                  <b className="d-block">
+                                    {message.replyUserId === currentUser.id
+                                      ? "You"
+                                      : message.replyUserName}
+                                  </b>
+                                  {message.reply.attachment ? (
+                                    <div className="reply-attachment">
+                                      {" "}
+                                      {renderAttachment(
+                                        message.reply.attachment
+                                      )}
+                                    </div>
+                                  ) : (
+                                    ""
+                                  )}
                                   <div
                                     dangerouslySetInnerHTML={{
                                       __html: message.reply.message,
                                     }}
                                   />
                                 </div>
-                              }
+                              )}
                               <div>
                                 {message.attachment
                                   ? renderAttachment(message.attachment)
@@ -712,7 +789,9 @@ function ChatBox() {
                               <div className={`ms-2 ${styles.chatTime}`}>
                                 {dayjs.utc(message.createdAt).local().fromNow()}
                               </div>
-                              <div className="edit-message">{message.isEdited && "Edited"}</div>
+                              <div className="edit-message">
+                                {message.isEdited && "Edited"}
+                              </div>
 
                               <IconButton
                                 size="small"
@@ -720,7 +799,11 @@ function ChatBox() {
                                 aria-controls={open ? "basic-menu" : undefined}
                                 aria-haspopup="true"
                                 aria-expanded={open ? "true" : undefined}
-                                onClick={(e) => { handleClickMedia(e, messageType(message)); setSelectedMessage(message); setMessageReplayId(message.id); }} // Open the menu when the IconButton is clicked
+                                onClick={(e) => {
+                                  handleClickMedia(e, messageType(message));
+                                  setSelectedMessage(message);
+                                  setMessageReplayId(message.id);
+                                }} // Open the menu when the IconButton is clicked
                                 sx={{
                                   position: "absolute",
                                   top: "-5px",
@@ -728,12 +811,11 @@ function ChatBox() {
                                   zIndex: 1,
                                   width: "25px",
                                   height: "25px",
-                                  color: "#274593"
+                                  color: "#274593",
                                 }}
                               >
                                 <MoreHorizIcon />
                               </IconButton>
-
                             </div>
                           </div>
                         </div>
@@ -748,8 +830,10 @@ function ChatBox() {
             <MediaControl
               anchorElMedia={anchorElMedia}
               handleMenuCloseMedia={handleMenuCloseMedia}
-              option={ImageDataDelete(messageIsMedia,
-                (selectedMessage?.user?.id === currentUser?.id))}
+              option={ImageDataDelete(
+                messageIsMedia,
+                selectedMessage?.user?.id === currentUser?.id
+              )}
               message={selectedMessage}
             />
           </div>
@@ -757,7 +841,10 @@ function ChatBox() {
             {!isBlackListedByEmployer ? (
               <Stack direction={"row"} spacing={2} alignItems="start">
                 <div className="chatinput">
-                  <span className="attachment-icon" style={{ position: "relative" }}>
+                  <span
+                    className="attachment-icon"
+                    style={{ position: "relative" }}
+                  >
                     <SVG.AttachIcon style={{ position: "relative" }} />
                     <input
                       type="file"
@@ -895,82 +982,120 @@ function ChatBox() {
           </DialogBox>
           <DialogBox open={openEditMessage} handleClose={handleClose}>
             <h3>Edit Message</h3>
-            <ReactQuill value={messageForUpdate || selectedMessage.message} onChange={(value) => { setMessageForUpdate(value); }} modules={modules}
-              formats={formats} />
+            <ReactQuill
+              value={messageForUpdate || selectedMessage.message}
+              onChange={(value) => {
+                setMessageForUpdate(value);
+              }}
+              modules={modules}
+              formats={formats}
+            />
             <FilledButton
               title={loading ? <Loader loading={loading} /> : "update"}
               disabled={loading}
-              onClick={() => { updateMessage(); }}
+              onClick={() => {
+                updateMessage();
+              }}
               sx={{ marginTop: "10px" }}
             />
             <FilledButton
               title="Cancel"
-              onClick={() => { setOpenEditMessage(false); setMessageForUpdate(""); }}
+              onClick={() => {
+                setOpenEditMessage(false);
+                setMessageForUpdate("");
+              }}
               sx={{ marginTop: "10px" }}
             />
           </DialogBox>
           <DialogBox open={openReplyMessage} handleClose={handleClose}>
             <h3>Reply Message</h3>
-            <ReactQuill onChange={(value) => { setNewMessage(value); }} modules={modules}
-              formats={formats} />
+            <ReactQuill
+              onChange={(value) => {
+                setNewMessage(value);
+              }}
+              modules={modules}
+              formats={formats}
+            />
             <FilledButton
               title={loading ? <Loader loading={loading} /> : "Reply"}
               disabled={loading}
-              onClick={() => { replyMessage(); setOpenReplyMessage(false); }}
+              onClick={() => {
+                replyMessage();
+                setOpenReplyMessage(false);
+              }}
               sx={{ marginTop: "10px" }}
             />
             <FilledButton
               title="Cancel"
-              onClick={() => { setOpenReplyMessage(false); setNewMessage(""); }}
+              onClick={() => {
+                setOpenReplyMessage(false);
+                setNewMessage("");
+              }}
               sx={{ marginTop: "10px" }}
             />
           </DialogBox>
-          <DialogBox open={openSelectApplicationModal} handleClose={() => setOpenSelectApplicationModal(false)}>
-            {(applicationList.length > 0) ? <>
-              <div className="dialog-reason">
-                <LabeledRadioInputComponent
-                  title={`Please select ${(userDetails.role === USER_ROLES.jobSeeker) ? "job" : "tender"} application:`}
-                  options={applicationList}
-                  onChange={(e) => setApplicationId(e.target.value)}
-                  value={applicationId}
-                  sx={{
-                    "& .MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
-                      { fontWeight: 500 },
+          <DialogBox
+            open={openSelectApplicationModal}
+            handleClose={() => setOpenSelectApplicationModal(false)}
+          >
+            {applicationList.length > 0 ? (
+              <>
+                <div className="dialog-reason">
+                  <LabeledRadioInputComponent
+                    title={`Please select ${
+                      userDetails.role === USER_ROLES.jobSeeker
+                        ? "job"
+                        : "tender"
+                    } application:`}
+                    options={applicationList}
+                    onChange={(e) => setApplicationId(e.target.value)}
+                    value={applicationId}
+                    sx={{
+                      "& .MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
+                        { fontWeight: 500 },
+                      display: "flex",
+                      flexDirection: "column",
+                      color: "black",
+                      fontWeight: "500",
+                    }}
+                  />
+                </div>
+                <div
+                  style={{
                     display: "flex",
-                    flexDirection: "column",
-                    color: "black",
-                    fontWeight: "500",
+                    justifyContent: "center",
                   }}
-                />
-
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <OutlinedButton
-                  title="Click"
-                  onClick={() => {
-                    if (userDetails.role === USER_ROLES.jobSeeker) {
-                      setApplicationDetails(jobSeekerJobApplication.find((application) => application.id === applicationId));
-                    } else {
-                      setApplicationDetails(vendorTenderApplication.find((application) => application.id === applicationId));
-                    }
-                    setOpenSelectApplicationModal(false);
-                  }
-                  }
-                />
-                <OutlinedButton
-                  title="Cancel"
-                  onClick={() => {
-                    setOpenSelectApplicationModal(false);
-                  }
-                  }
-                />
-              </div></>
-              : "No Application Found"}
+                >
+                  <OutlinedButton
+                    title="Click"
+                    onClick={() => {
+                      if (userDetails.role === USER_ROLES.jobSeeker) {
+                        setApplicationDetails(
+                          jobSeekerJobApplication.find(
+                            (application) => application.id === applicationId
+                          )
+                        );
+                      } else {
+                        setApplicationDetails(
+                          vendorTenderApplication.find(
+                            (application) => application.id === applicationId
+                          )
+                        );
+                      }
+                      setOpenSelectApplicationModal(false);
+                    }}
+                  />
+                  <OutlinedButton
+                    title="Cancel"
+                    onClick={() => {
+                      setOpenSelectApplicationModal(false);
+                    }}
+                  />
+                </div>
+              </>
+            ) : (
+              "No Application Found"
+            )}
           </DialogBox>
         </>
       )}

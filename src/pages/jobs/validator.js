@@ -73,7 +73,30 @@ export const validateCreateJobInput = Yup.object().shape({
   highestEducation: Yup.string(),
   // languages: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Language is required"),
   // skills: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Skill is required"),
-});
+}).test(
+  "oneOfFields",
+  "At least one option must be selected",
+  function (value) {
+    const {
+      isApplyThroughKoor,
+      isApplyThroughEmail,
+      isApplyThroughWebsite,
+    } = value;
+
+    const isError = !(isApplyThroughKoor ||
+      isApplyThroughEmail ||
+      isApplyThroughWebsite);
+
+    if (isError) {
+      return this.createError({
+        path: "isApplyThroughKoor",
+        message: "At least one option must be selected"
+      });
+    }
+
+    return true;
+  }
+);
 
 export const validateCreateTenderInput = Yup.object().shape({
   title: Yup.string().required("Title is required"),

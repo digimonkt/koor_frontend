@@ -8,11 +8,21 @@ import html2pdf from "html2pdf.js";
 import { useSelector } from "react-redux";
 import { DownloadResumeAPI } from "../../../../api/jobSeeker";
 import { generateFileUrl } from "../../../../utils/generateFileUrl";
-const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
+import { Capacitor } from "@capacitor/core";
+const ResumeUpdate = ({
+  title,
+  bgcolor,
+  color,
+  description,
+  buttonWidth,
+  toggle,
+  fun,
+}) => {
   const [openResume, setOpenResume] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
+  const platform = Capacitor.getPlatform();
 
   const downloadPDF = async () => {
     setIsDownloadingPDF(true);
@@ -49,62 +59,141 @@ const ResumeUpdate = ({ title, bgcolor, color, description, buttonWidth }) => {
   return (
     <>
       <div className="add-content">
-        <h2>{title}</h2>
         <Stack
-          direction={{ xs: "column", lg: "row" }}
           spacing={2}
-          className="mt-4"
+          direction={"row"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
         >
-          <IconButton
-            sx={{
-              "&.MuiIconButton-root": {
-                backgroundColor: bgcolor,
-                width: "101px",
-                height: "101px",
-                color,
-                "@media (max-width:540px)": {
-                  margin: "auto",
-                },
-                cursor: "default",
-              },
-            }}
-          >
-            <SVG.ResumeIcon />
-          </IconButton>
-          <div className="description">{description}</div>
+          <h2 className="mb-0">{title}</h2>
+          {platform === "android" || platform === "ios" ? (
+            <IconButton size="small" onClick={() => fun()}>
+              <SVG.ArrowUpIcon />
+            </IconButton>
+          ) : null}
         </Stack>
-        <div className="my-4 text-center">
-          <OutlinedButton
-            style={{ width: "100%" }}
-            title={
-              <>
-                <span className="me-2 d-inline-flex">
-                  <SVG.DownloadIcon />
-                </span>
-                DOWNLOAD YOUR RESUME
-              </>
-            }
-            onClick={() => setOpenResume(true)}
-            sx={{
-              "&.MuiButton-outlined": {
-                border: "1px solid #EEA23D !important",
-                color: "#EEA23D !important",
-                fontWeight: "500",
-                fontSize: "16px",
-                padding: "6px 30px",
-                width: buttonWidth,
-                height: "42px",
-                "&:hover": { background: "rgba(255, 165, 0, 0.1)" },
-                "@media (max-width: 992px)": {
-                  padding: "10px 16px",
-                },
-                "@media (max-width: 480px)": {
-                  fontSize: "14px",
-                },
-              },
-            }}
-          />
-        </div>
+        {platform === "android" || platform === "ios" ? (
+          <>
+            {toggle ? (
+              <div>
+                <Stack direction={"row"} spacing={2} className="mt-4">
+                  <IconButton
+                    sx={{
+                      "&.MuiIconButton-root": {
+                        backgroundColor: bgcolor,
+                        width: "60px",
+                        height: "60px",
+                        color,
+                        "@media (max-width:540px)": {
+                          margin: "auto",
+                        },
+                        cursor: "default",
+                      },
+                    }}
+                  >
+                    <SVG.ResumeIcon />
+                  </IconButton>
+                  <div className="description">{description}</div>
+                </Stack>
+                <div className="my-4 text-center">
+                  <OutlinedButton
+                    style={{ width: "100%" }}
+                    title={
+                      <>
+                        <span className="me-2 d-inline-flex">
+                          <SVG.DownloadIcon />
+                        </span>
+                        DOWNLOAD YOUR RESUME
+                      </>
+                    }
+                    onClick={() => setOpenResume(true)}
+                    sx={{
+                      "&.MuiButton-outlined": {
+                        border: "1px solid #EEA23D !important",
+                        color: "#EEA23D !important",
+                        fontWeight: "500",
+                        fontSize:
+                          platform === "android" || platform === "ios"
+                            ? "15px !important"
+                            : "16px",
+                        padding: "6px 30px",
+                        width: buttonWidth,
+                        height: "42px",
+                        "&:hover": { background: "rgba(255, 165, 0, 0.1)" },
+                        "@media (max-width: 992px)": {
+                          padding: "10px 16px",
+                        },
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px",
+                        },
+                      },
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </>
+        ) : (
+          <div>
+            <Stack
+              direction={{ xs: "column", lg: "row" }}
+              spacing={2}
+              className="mt-4"
+            >
+              <IconButton
+                sx={{
+                  "&.MuiIconButton-root": {
+                    backgroundColor: bgcolor,
+                    width: "101px",
+                    height: "101px",
+                    color,
+                    "@media (max-width:540px)": {
+                      margin: "auto",
+                    },
+                    cursor: "default",
+                  },
+                }}
+              >
+                <SVG.ResumeIcon />
+              </IconButton>
+              <div className="description">{description}</div>
+            </Stack>
+            <div className="my-4 text-center">
+              <OutlinedButton
+                style={{ width: "100%" }}
+                title={
+                  <>
+                    <span className="me-2 d-inline-flex">
+                      <SVG.DownloadIcon />
+                    </span>
+                    DOWNLOAD YOUR RESUME
+                  </>
+                }
+                onClick={() => setOpenResume(true)}
+                sx={{
+                  "&.MuiButton-outlined": {
+                    border: "1px solid #EEA23D !important",
+                    color: "#EEA23D !important",
+                    fontWeight: "500",
+                    fontSize: "16px",
+                    padding: "6px 30px",
+                    width: buttonWidth,
+                    height: "42px",
+                    "&:hover": { background: "rgba(255, 165, 0, 0.1)" },
+                    "@media (max-width: 992px)": {
+                      padding: "10px 16px",
+                    },
+                    "@media (max-width: 480px)": {
+                      fontSize: "14px",
+                    },
+                  },
+                }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* <Divider />
         <div className="text-resume  text-center mt-3 pb-1">
