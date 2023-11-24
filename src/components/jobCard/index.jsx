@@ -67,9 +67,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-        dayjs(jobDetails.isPlannedInterview).format(
-          "MMMM D, YYYY [at] h:mm A"
-        )
+          dayjs(jobDetails.isPlannedInterview).format(
+            "MMMM D, YYYY [at] h:mm A"
+          )
       );
     }
   }, [jobDetails]);
@@ -83,8 +83,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             sm={2}
             sx={{
               "@media (min-width: 1200px)": {
-                maxWidth: "10.555%",
-                flexBasis: "10.555%",
+                maxWidth: "11%",
+                flexBasis: "11%",
               },
             }}
           >
@@ -211,8 +211,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           sm={7}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "72%",
-              flexBasis: "72%",
+              maxWidth: "64%",
+              flexBasis: "64%",
             },
           }}
         >
@@ -233,7 +233,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <div className="job-description card-description mt-1 mb-3"
+            <div
+              className="job-description card-description mt-1 mb-3"
               dangerouslySetInnerHTML={{ __html: jobDetails.description }}
             ></div>
             <Stack
@@ -308,12 +309,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                    jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                        jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>
@@ -345,7 +346,18 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12} sm={3}>
+        <Grid
+          item
+          lg={logo ? 2 : 3}
+          xs={12}
+          sm={3}
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+          }}
+        >
           <div className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
             <SolidButton
               className={
@@ -388,11 +400,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     </h4>
                     <span>{jobDetails?.budgetPayPeriod}</span>
                   </>
-                ) : ""}
+                ) : (
+                  ""
+                )}
               </div>
-              {
-                selfJob && <div className="hr-border"></div>
-              }
+              {selfJob && <div className="hr-border"></div>}
               {selfJob ? (
                 <div className="job-button-card">
                   <button
@@ -429,10 +441,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </div>
               ) : role !== USER_ROLES.employer ? (
                 <React.Fragment>
-                  <div
-                    onClick={handleToggleSave}
-                    style={{ cursor: "pointer" }}
-                  >
+                  <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
                     <div className="bookmark">
                       {isSaved ? (
                         <>
@@ -465,8 +474,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           <h1 className="heading">Register as jobseeker</h1>
           <div className="form-content">
             <p className="jobs_dailog_content">
-              To apply for the job and have many other useful features to
-              find a job, please register on Koor.
+              To apply for the job and have many other useful features to find a
+              job, please register on Koor.
             </p>
             <div style={{ textAlign: "center", lineHeight: "40px" }}>
               <Link to="/register?role=job_seeker">
