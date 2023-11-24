@@ -21,6 +21,7 @@ function EducationCard({
   educationLevel,
   handleEdit,
   noOptions,
+  isResumeTemp = false,
 }) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
@@ -56,7 +57,7 @@ function EducationCard({
             {present ? "Present" : dayjs(endDate).format(YEAR_FORMAT)}
           </span>
         </div>
-        {role === USER_ROLES.jobSeeker && !noOptions ? (
+        {role === USER_ROLES.jobSeeker && !noOptions && !isResumeTemp ? (
           <Stack direction="row" spacing={1} className="list-button">
             <button onClick={handleEdit}>
               <SVG.EditIcon />
