@@ -2960,3 +2960,13 @@ input.employersearch {
     height: 70px;
   }
 }
+@media only screen and (max-width: 640px) {
+  .registerApp {
+    background: url("../images/joobseekerAppBg.png") no-repeat center top !important;
+    background-size: contain !important;
+  }
+  .appbg {
+    background: url("../images/vendor-appbg.png") no-repeat center top !important;
+    background-size: contain !important;
+  }
+}
