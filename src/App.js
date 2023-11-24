@@ -101,6 +101,9 @@ function App() {
 
         <Routes>
           {ROUTES.map((route) => {
+            if (!route.path) {
+              return null;
+            }
             return (
               <Route
                 path={route.path}
@@ -120,6 +123,9 @@ function App() {
             );
           })}
           {UNAUTHENTICATED_ROUTES.map((route) => {
+            if (!route.path) {
+              return null;
+            }
             return (
               <Route
                 key={route.id}
@@ -141,19 +147,24 @@ function App() {
               />
             );
           })}
-          {AUTHENTICATED_ROUTES.map((route) => (
-            <Route
-              key={route.id}
-              path={route.path}
-              element={
-                <Suspense fallback={<FallbackLoading />}>
-                  <AuthorizedRoute>
-                    <route.component />
-                  </AuthorizedRoute>
-                </Suspense>
-              }
-            />
-          ))}
+          {AUTHENTICATED_ROUTES.map((route, index) => {
+            if (!route.path) {
+              return null;
+            }
+            return (
+              <Route
+                key={route.id}
+                path={route.path}
+                element={
+                  <Suspense fallback={<FallbackLoading />}>
+                    <AuthorizedRoute>
+                      <route.component />
+                    </AuthorizedRoute>
+                  </Suspense>
+                }
+              />
+            );
+          })}
           <Route
             path={"/*"}
             element={
