@@ -9,7 +9,14 @@ import { setSuccessToast } from "../../redux/slice/toast";
 import DialogBox from "../../components/dialogBox";
 import DeleteCard from "../../components/deleteCard";
 
-function LanguageCard({ id, language, spoken, written, handleEdit }) {
+function LanguageCard({
+  id,
+  language,
+  spoken,
+  written,
+  handleEdit,
+  isResumeTemp = false,
+}) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
   const [deleting, setDeleting] = useState(false);
@@ -42,7 +49,7 @@ function LanguageCard({ id, language, spoken, written, handleEdit }) {
           <span>Spoken: {capitalizeFLetter(spoken)}</span> <br />
           <span>Written: {capitalizeFLetter(written)}</span> <br />
         </div>
-        {role === USER_ROLES.jobSeeker && (
+        {role === USER_ROLES.jobSeeker && !isResumeTemp && (
           <Stack direction="row" spacing={1} className="list-button">
             <button onClick={handleEdit}>
               <SVG.EditIcon />
