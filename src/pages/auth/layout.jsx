@@ -159,7 +159,7 @@ function AuthLayout({
           role === USER_ROLES.employer || role === USER_ROLES.vendor
             ? "vendor"
             : ""
-        }${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
+        } ${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
       >
         <Container
           sx={{
@@ -371,11 +371,11 @@ function AuthLayout({
                     <>
                       <div className="content-box mb-3">
                         <h5
-                          style={{
-                            fontSize: selectedRoleTitle.includes("@email")
-                              ? "35px"
-                              : "none",
-                          }}
+                        // style={{
+                        //   fontSize: selectedRoleTitle.includes("@email")
+                        //     ? "24px"
+                        //     : "none",
+                        // }}
                         >
                           {/* <IconButton
                             onClick={() => {
