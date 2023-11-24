@@ -27,6 +27,7 @@ import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "../../../components/caption";
 import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   getCities,
   getCountries,
@@ -54,7 +55,6 @@ import { JobFormControl } from "./style";
 import DialogBox from "../../../components/dialogBox";
 import { SVG } from "../../../assets/svg";
 import urlcat from "urlcat";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   setJobPostUpdate,
   setMinimumCreditJobPost,
@@ -88,6 +88,7 @@ function PostJobsComponent() {
   const { minimumCreditJobPost, totalAvailableCredits } = useSelector(
     (state) => state.employer
   );
+  const { isMobileView } = useSelector((state) => state.platform);
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
@@ -456,9 +457,11 @@ function PostJobsComponent() {
         >
           <div className="job-content">
             <h2>
-              <IconButton>
-                <ArrowBackIcon />
-              </IconButton>{" "}
+              {isMobileView && (
+                <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
+                  <ArrowBackIcon />
+                </IconButton>
+              )}
               {jobId ? "Update Job" : "Post new job"}
               <span className="right-pull">
                 <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>

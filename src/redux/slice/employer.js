@@ -14,6 +14,7 @@ const initialState = {
   manageJobActiveTab: 0,
   jobSeekerJobApplication: [],
   vendorTenderApplication: [],
+  tabsStep: 0,
 };
 
 export const employerSlice = createSlice({
@@ -45,7 +46,7 @@ export const employerSlice = createSlice({
         data: {
           ...(state.totalApplicationsByJob.data || {}),
           [action.payload.jobId]: action.payload.data,
-        }
+        },
       };
     },
     setTotalApplicationsByTender: (state, action) => {
@@ -54,7 +55,7 @@ export const employerSlice = createSlice({
         data: {
           ...(state.totalApplicationsByTender.data || {}),
           [action.payload.tenderId]: action.payload.data,
-        }
+        },
       };
     },
     setJobPostUpdate: (state, action) => {
@@ -71,7 +72,10 @@ export const employerSlice = createSlice({
     },
     setVendorTenderApplication: (state, action) => {
       state.vendorTenderApplication = action.payload;
-    }
+    },
+    setEmployerTabsSteps: (state, action) => {
+      state.tabsStep = action.payload;
+    },
   },
 });
 export const {
@@ -87,6 +91,7 @@ export const {
   setMinimumCreditJobPost,
   setJobSeekerJobApplication,
   setManageJobActiveTab,
-  setVendorTenderApplication
+  setVendorTenderApplication,
+  setEmployerTabsSteps,
 } = employerSlice.actions;
 export default employerSlice.reducer;

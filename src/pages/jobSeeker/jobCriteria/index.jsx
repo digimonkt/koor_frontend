@@ -7,6 +7,7 @@ import {
   StepConnector,
   Typography,
 } from "@mui/material";
+
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -168,22 +169,22 @@ const JobCriteria = () => {
                 </>
               ) : (
                 <>
-                  <Stepper activeStep={activeStep} className="step-continer">
+                  <Stepper
+                    activeStep={activeStep}
+                    connector={() => {
+                      <></>;
+                    }}
+                    className="step-continer"
+                  >
                     <Step className="sub-step-continer">
                       <StepLabel icon={<SVG.OneIcon />}>Categories</StepLabel>
                     </Step>
-                    <Step className="sub-step-continer">
+                    <StepConnector className="Mui-active" />
+                    <Step index={1} className="sub-step-continer">
                       <StepLabel>Additional parameters</StepLabel>
                     </Step>
-
                     <StepConnector
-                      className={
-                        activeStep === 0
-                          ? "Mui-active"
-                          : activeStep === 1
-                          ? "Mui-active"
-                          : ""
-                      }
+                      className={activeStep === 1 && "Mui-active"}
                     />
                   </Stepper>
                   {/* -------------- main content ---------- */}
