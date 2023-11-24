@@ -54,6 +54,7 @@ import { JobFormControl } from "./style";
 import DialogBox from "../../../components/dialogBox";
 import { SVG } from "../../../assets/svg";
 import urlcat from "urlcat";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   setJobPostUpdate,
   setMinimumCreditJobPost,
@@ -95,7 +96,8 @@ function PostJobsComponent() {
   const [packageData, setPackageData] = useState([]);
   const [buyPackage, setBuyPackage] = useState(false);
   const [descData, setDescData] = useState("");
-  const [applicationInstructionData, setApplicationInstructionData] = useState("");
+  const [applicationInstructionData, setApplicationInstructionData] =
+    useState("");
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // basic formatting
     ["blockquote", "code-block"], // blockquote and code block
@@ -355,11 +357,17 @@ function PostJobsComponent() {
   };
   const handleEditorValue = (content) => {
     setDescData(content);
-    formik.setFieldValue("description", content !== "<p><br></p>" ? content : "");
+    formik.setFieldValue(
+      "description",
+      content !== "<p><br></p>" ? content : ""
+    );
   };
   const handleApplicationInstructionEditorValue = (content) => {
     setApplicationInstructionData(content);
-    formik.setFieldValue("applicationInstruction", content !== "<p><br></p>" ? content : "");
+    formik.setFieldValue(
+      "applicationInstruction",
+      content !== "<p><br></p>" ? content : ""
+    );
   };
 
   useEffect(() => {
@@ -448,6 +456,9 @@ function PostJobsComponent() {
         >
           <div className="job-content">
             <h2>
+              <IconButton>
+                <ArrowBackIcon />
+              </IconButton>{" "}
               {jobId ? "Update Job" : "Post new job"}
               <span className="right-pull">
                 <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
@@ -530,11 +541,14 @@ function PostJobsComponent() {
                         }}
                       />
                     </Box>
-                    <Box style={{
-                      width: "100%",
-                      marginTop: "10px",
-                    }}>
-                      {formik.touched.description && formik.errors.description ? (
+                    <Box
+                      style={{
+                        width: "100%",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {formik.touched.description &&
+                      formik.errors.description ? (
                         <ErrorMessage>{formik.errors.description}</ErrorMessage>
                       ) : null}
                     </Box>
@@ -639,7 +653,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -655,7 +669,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                            formik.values.jobCategories
+                              formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -664,7 +678,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
+                        formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -801,8 +815,11 @@ function PostJobsComponent() {
                         {...formik.getFieldProps("isApplyThroughKoor")}
                       />
                     </FormGroup>
-                    {formik.touched.isApplyThroughKoor && formik.errors.isApplyThroughKoor ? (
-                      <ErrorMessage>{formik.errors.isApplyThroughKoor}</ErrorMessage>
+                    {formik.touched.isApplyThroughKoor &&
+                    formik.errors.isApplyThroughKoor ? (
+                      <ErrorMessage>
+                        {formik.errors.isApplyThroughKoor}
+                      </ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
@@ -820,7 +837,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -865,16 +882,22 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <Box sx={{ height: "245px" }}>
                       <label>
-                        Application Instructions<span className="required-field">*</span>
+                        Application Instructions
+                        <span className="required-field">*</span>
                       </label>
                       <ReactQuill
                         placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
                         theme="snow"
-                        value={applicationInstructionData || formik.values.applicationInstruction}
+                        value={
+                          applicationInstructionData ||
+                          formik.values.applicationInstruction
+                        }
                         modules={{
                           toolbar: toolbarOptions,
                         }}
-                        onChange={(value) => handleApplicationInstructionEditorValue(value)}
+                        onChange={(value) =>
+                          handleApplicationInstructionEditorValue(value)
+                        }
                         className="work-experience-text-editor"
                         style={{
                           width: "100%",
@@ -883,18 +906,18 @@ function PostJobsComponent() {
                         }}
                       />
                     </Box>
-                    <Box style={{
-                      width: "100%",
-                      marginTop: "10px",
-                    }}>
-                      {
-                        formik.touched.applicationInstruction &&
-                          formik.errors.applicationInstruction ? (
-                          <ErrorMessage>
-                            {formik.errors.applicationInstruction}
-                          </ErrorMessage>
-                        ) : null
-                      }
+                    <Box
+                      style={{
+                        width: "100%",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {formik.touched.applicationInstruction &&
+                      formik.errors.applicationInstruction ? (
+                        <ErrorMessage>
+                          {formik.errors.applicationInstruction}
+                        </ErrorMessage>
+                      ) : null}
                     </Box>
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
@@ -935,7 +958,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -1039,7 +1062,8 @@ function PostJobsComponent() {
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
-                          `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
                           } remaining`
                         );
                       } else {
@@ -1124,8 +1148,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1186,8 +1210,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
