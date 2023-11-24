@@ -371,11 +371,11 @@ function AuthLayout({
                     <>
                       <div className="content-box mb-3">
                         <h5
-                          style={{
-                            fontSize: selectedRoleTitle.includes("@email")
-                              ? "35px"
-                              : "none",
-                          }}
+                        // style={{
+                        //   fontSize: selectedRoleTitle.includes("@email")
+                        //     ? "24px"
+                        //     : "none",
+                        // }}
                         >
                           {/* <IconButton
                             onClick={() => {
