@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  getApplyJobByEmailAPI,
+  // getApplyJobByEmailAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
@@ -135,34 +135,32 @@ const JobDetails = () => {
     }
   };
 
-  function handleSendEmail(jobId) {
-    getApplyJobByEmail(jobId);
-    // const email = details.contactEmail;
-    // const ccEmail1 = details.cc1;
-    // const ccEmail2 = details.cc2;
-    // const subject = `Job Application for ${details.title}`;
-    // const body = `Here is the my job application for this job \n ${window.location.href}`;
-    // let link = `mailto:${email}?&subject=${encodeURIComponent(
-    //   subject
-    // )}&body=${encodeURIComponent(body)}`;
-    // if (ccEmail1) {
-    //   link += `&cc=${ccEmail1}`;
-    // }
-    // if (ccEmail1 && ccEmail2) {
-    //   link += `,${ccEmail2}`;
-    // }
-    // const tag = document.createElement("a");
-    // tag.href = link;
-    // tag.target = "_blank";
-    // document.body.appendChild(tag);
-    // tag.click();
-    // document.body.removeChild(tag);
+  function handleSendEmail(details) {
+    const email = details.contactEmail;
+    const ccEmail1 = details.cc1;
+    const ccEmail2 = details.cc2;
+    const subject = `Job Application for ${details.title}`;
+    const body = `Here is the my job application for this job \n ${window.location.href}`;
+    let link = `mailto:${email}?&subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    if (ccEmail1) {
+      link += `&cc=${ccEmail1}`;
+    }
+    if (ccEmail1 && ccEmail2) {
+      link += `,${ccEmail2}`;
+    }
+    const tag = document.createElement("a");
+    tag.href = link;
+    tag.target = "_blank";
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
   }
-  const getApplyJobByEmail = async (jobId) => {
-    dispatch(setSuccessToast("Job apply by email successfully"));
-    const res = await getApplyJobByEmailAPI(jobId);
-    console.log({ res });
-  };
+  // const getApplyJobByEmail = async (jobId) => {
+  //   dispatch(setSuccessToast("Job apply by email successfully"));
+  //   await getApplyJobByEmailAPI(jobId);
+  // };
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
@@ -335,7 +333,7 @@ const JobDetails = () => {
                   }
                   {details?.duration &&
                     <SearchButton
-                      text={`${details.duration} Month`}
+                      text={`${details.duration} Months`}
                       leftIcon={<SVG.BagClock />}
                       className={`${styles.iconbutton}`}
                     />
@@ -547,35 +545,27 @@ const JobDetails = () => {
                         // className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (isLoggedIn) {
-                            window.open(details.websiteLink, "_blank");
-                          } else {
-                            setRegistrationWarning(true);
-                          }
+                          window.open(details.websiteLink, "_blank");
                         }}
                       />
                     )}
                     {!details.isApplied && details.isApplyThroughEmail && (
-                      <a
-                        href={`mailto:email@example.com?subject=[Help]%20Base%20Leisure&cc=${details.cc1},${details.cc2}`}
-                      >
-                        <OutlinedButton
-                          sx={{
-                            color: "#eea23d !important",
-                            borderColor: "#eea23d !important",
-                          }}
-                          title={[
-                            <>
-                              <SVG.ArrowOutward className="me-2" />
-                            </>,
-                            "Apply by email",
-                          ]}
-                          className="ms-3"
-                          onClick={() => {
-                            handleSendEmail(details.id);
-                          }}
-                        />
-                      </a>
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply by email",
+                        ]}
+                        className="ms-3"
+                        onClick={() => {
+                          handleSendEmail(details);
+                        }}
+                      />
                     )}
                   </Box>
                 </div>
