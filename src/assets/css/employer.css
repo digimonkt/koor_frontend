@@ -335,11 +335,9 @@ span.arrowjobs svg {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  /* or 133% */
   letter-spacing: 0.02em;
-
-  /* Black #121212 */
   color: #121212;
+  text-align: justify;
 }
 .cricle {
   display: inline-flex;

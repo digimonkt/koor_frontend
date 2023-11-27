@@ -22,19 +22,27 @@ const ResumeUpdate = ({
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
+
   const platform = Capacitor.getPlatform();
 
   const downloadPDF = async () => {
     setIsDownloadingPDF(true);
     const element = document.getElementById("div-to-pdf");
-    const options = {
-      margin: [10, 10],
-      filename: `${currentUser.name || "Resume"}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-    await html2pdf().set(options).from(element).save();
+    const images = document.getElementById("profile-avatar");
+
+    if (images) {
+      console.log({ images });
+      const options = {
+        margin: [5, 5],
+        filename: `${currentUser.name || "Resume"}.pdf`,
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      };
+      await html2pdf().set(options).from(element).save();
+    } else {
+      console.log("loading");
+    }
     setIsDownloadingPDF(false);
   };
 

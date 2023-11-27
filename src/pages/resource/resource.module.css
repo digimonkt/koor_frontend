@@ -182,7 +182,7 @@
 .resource_back_box {
   background-image: url(../../assets/images/resource_back.png);
   background-repeat: no-repeat;
-  background-size: 100% 17%;
+  background-size: 100% 360px;
 }
 
 .resource {
@@ -255,7 +255,7 @@
   .resource_back_box {
     background-image: url(../../assets/images/resource_back.png);
     background-repeat: no-repeat;
-    background-size: 100% 13%;
+    background-size: 100% 212px;
   }
 
   .resource {
@@ -275,6 +275,7 @@
   .resource_banner {
     width: 336px;
     height: 240px;
+    border-radius: 16px;
   }
 
   .resource_text {
@@ -385,7 +386,7 @@
   .resource_back_box {
     background-image: url(../../assets/images/resource_back.png);
     background-repeat: no-repeat;
-    background-size: 100% 24%;
+    background-size: 100% 502px;
   }
 
   .resource {
@@ -399,9 +400,9 @@
     font-size: 40px !important;
   }
 
-  .resource_back_box {
+  /* .resource_back_box {
     background-size: 100% 18%;
-  }
+  } */
 
   .resource_text_box {
     margin-top: 95px;
@@ -440,10 +441,7 @@
   .resource_banner {
     width: 320px;
     height: 212px;
-  }
-
-  .resource_back_box {
-    border-bottom-left-radius: 49px !important;
+    border-radius: 16px;
   }
 
   .content_div {
