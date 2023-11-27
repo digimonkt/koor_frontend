@@ -538,7 +538,7 @@ function PostJobsComponent() {
                         <ErrorMessage>{formik.errors.description}</ErrorMessage>
                       ) : null}
                     </Box>
-                  </Grid>
+                  </Grid >
                   <Grid item xl={9} lg={9} sm={8} xs={12}>
                     <label>
                       Location<span className="required-field">*</span>
@@ -1022,7 +1022,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.skills}</ErrorMessage>
                     ) : null}
                   </Grid>
-                </Grid>
+                </Grid >
 
                 <Grid item xl={12} lg={12} xs={12}>
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
@@ -1081,24 +1081,26 @@ function PostJobsComponent() {
                     sx={{ borderColor: "#CACACA", opacity: "1", my: 2 }}
                   />
                 </Grid>
-                {!jobId && totalAvailableCredits < minimumCreditJobPost ? (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will need to purchase{" "}
-                    <b>
-                      {minimumCreditJobPost - totalAvailableCredits} more
-                      credits.{" "}
-                    </b>
-                  </div>
-                ) : (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will redeemed{" "}
-                    <b>{minimumCreditJobPost} credits</b> .
-                  </div>
-                )}
+                {
+                  !jobId && totalAvailableCredits < minimumCreditJobPost ? (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will need to purchase{" "}
+                      <b>
+                        {minimumCreditJobPost - totalAvailableCredits} more
+                        credits.{" "}
+                      </b>
+                    </div>
+                  ) : (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will redeemed{" "}
+                      <b>{minimumCreditJobPost} credits</b> .
+                    </div>
+                  )
+                }
                 <Grid container spacing={2}>
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Job Posting Plan</h2>
@@ -1219,11 +1221,11 @@ function PostJobsComponent() {
                     />
                   </Stack>
                 </Grid>
-              </form>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+              </form >
+            </div >
+          </div >
+        </CardContent >
+      </Card >
       <SuccessToast
         open={submitting === SUBMITTING_STATUS_ENUM.submitted}
         handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
@@ -1293,7 +1295,7 @@ function PostJobsComponent() {
           </Box>
         </Box>
       </DialogBox>
-    </div>
+    </div >
   );
 }
 
