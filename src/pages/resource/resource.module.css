@@ -4,6 +4,13 @@
   color: #f5f5f5 !important;
 }
 
+.resource_banner {
+  width: 664px;
+  height: 486px;
+  border-radius: 16px;
+  margin-top: 80px;
+}
+
 .card_btn {
   font-family: "Bahnschrift", sans-serif !important;
   background-color: #d5e3f7 !important;
@@ -136,6 +143,7 @@
 .resource_social_div {
   display: flex;
   align-items: center;
+  margin-top: 5px;
 }
 
 .resource_social_box {
@@ -171,18 +179,13 @@
 .resource_text_box {
   display: flex;
   justify-content: center;
-  margin-top: 200px;
-}
-
-.resource_banner {
-  width: 100%;
-  margin-top: 80px;
+  margin-top: 130px;
 }
 
 .resource_back_box {
-  background-image: url(../../assets/images/resource_back.png);
+  background-image: url(../../assets/images/resource-11.png);
   background-repeat: no-repeat;
-  background-size: 100% 360px;
+  background-size: 100%;
 }
 
 .resource {
@@ -241,41 +244,36 @@
     color: #ffffff !important;
   }
 
-  .resource_text_box {
-    display: flex;
-    justify-content: center;
-    margin-top: 134px;
-  }
-
-  .resource_banner {
-    width: 100%;
-    margin-top: 80px;
-  }
-
-  .resource_back_box {
-    background-image: url(../../assets/images/resource_back.png);
-    background-repeat: no-repeat;
-    background-size: 100% 212px;
-  }
-
   .resource {
     margin-top: 70px;
     background-color: #ffffff !important;
   }
 }
+
 @media screen and (max-width: 992px) {
   .resource_heading {
     line-height: 40px !important;
   }
 
-  .articles_heading {
-    font-size: 28px;
+  .resource_back_box {
+    background-image: url(../../assets/images/resource-12.png);
+    background-size: 100% !important;
+  }
+
+  .resource_text_box {
+    display: flex;
+    justify-content: center;
+    margin-top: 55px;
   }
 
   .resource_banner {
     width: 336px;
     height: 240px;
-    border-radius: 16px;
+    margin-top: 50px;
+  }
+
+  .articles_heading {
+    font-size: 28px;
   }
 
   .resource_text {
@@ -297,12 +295,29 @@
   }
 }
 @media screen and (max-width: 480px) {
-  .resource_banner {
-    margin-top: 0px !important;
-  }
-
   .content_div span {
     font-size: 16px;
+  }
+
+  .resource_text {
+    margin-top: 20px !important;
+  }
+
+  .resource_text_box {
+    margin-top: 50px;
+  }
+
+  .resource_back_box {
+    background-image: url(../../assets/images/resource-13.png);
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-size: 100% !important;
+  }
+
+  .resource_banner {
+    width: 320px;
+    height: 212px;
+    margin-top: 0px;
   }
 
   .content_heading {
@@ -370,25 +385,6 @@
     color: #ffffff !important;
   }
 
-  .resource_text_box {
-    display: flex;
-    justify-content: center;
-    margin-top: 134px;
-  }
-
-  .resource_banner {
-    width: 664px;
-    height: 486px;
-    border-radius: 16px;
-    margin-top: 80px;
-  }
-
-  .resource_back_box {
-    background-image: url(../../assets/images/resource_back.png);
-    background-repeat: no-repeat;
-    background-size: 100% 502px;
-  }
-
   .resource {
     margin-top: 70px;
     background-color: #ffffff !important;
@@ -398,14 +394,6 @@
 @media screen and (max-width: 768px) and (min-width: 520px) {
   .resource_heading {
     font-size: 40px !important;
-  }
-
-  /* .resource_back_box {
-    background-size: 100% 18%;
-  } */
-
-  .resource_text_box {
-    margin-top: 95px;
   }
 
   .content_div {
@@ -419,10 +407,6 @@
     font-size: 38px !important;
   }
 
-  .resource_text_box {
-    margin-top: 140px;
-  }
-
   .content_div {
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -432,16 +416,6 @@
 @media screen and (max-width: 480px) and (min-width: 320px) {
   .resource_heading {
     font-size: 40px !important;
-  }
-
-  .resource_text_box {
-    margin-top: 40px;
-  }
-
-  .resource_banner {
-    width: 320px;
-    height: 212px;
-    border-radius: 16px;
   }
 
   .content_div {
@@ -456,15 +430,6 @@
   }
   .text_content {
     line-height: 28px !important;
-  }
-
-  .resource_text_box {
-    margin-top: 30px;
-  }
-
-  .resource_back_box {
-    background-image: url(../../assets/images/mobile-back.png);
-    background-size: 100% 19% !important;
   }
 
   .card_title {
