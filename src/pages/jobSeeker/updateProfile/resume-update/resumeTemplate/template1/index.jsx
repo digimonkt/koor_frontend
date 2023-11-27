@@ -73,7 +73,7 @@ function ResumeTemplate({ user }) {
                 <Stack direction="row" spacing={1} alignItems="center">
                   <span>{<SVG.LocationIcon />}</span>{" "}
                   <span>
-                    {applicantDetails?.profile?.country?.title},
+                    {applicantDetails?.profile?.country?.title},{" "}
                     {applicantDetails?.profile?.city?.title}
                   </span>
                 </Stack>
@@ -91,6 +91,8 @@ function ResumeTemplate({ user }) {
               wordBreak: "break-word",
               paddingRight: "10px",
               textAlign: "justify",
+              fontFamily: "Poppins",
+              fontSize: "12px",
             }}
             dangerouslySetInnerHTML={{
               __html:
