@@ -1,4 +1,4 @@
-import { Container, Grid, IconButton, Stack } from "@mui/material";
+import { Box, Container, Divider, Grid, IconButton, Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
 import { SVG } from "../../../assets/svg";
@@ -201,6 +201,28 @@ function TenderDetailsComponent() {
       URL.revokeObjectURL(downloadUrl);
     }
   };
+  function handleSendEmail(details) {
+    const email = details.contactEmail;
+    const ccEmail1 = details.cc1;
+    const ccEmail2 = details.cc2;
+    const subject = `Tender Application for ${details.title}`;
+    const body = `Here is the my tender application for this tender \n ${window.location.href}`;
+    let link = `mailto:${email}?&subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    if (ccEmail1) {
+      link += `&cc=${ccEmail1}`;
+    }
+    if (ccEmail1 && ccEmail2) {
+      link += `,${ccEmail2}`;
+    }
+    const tag = document.createElement("a");
+    tag.href = link;
+    tag.target = "_blank";
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
+  }
   useEffect(() => {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
@@ -443,6 +465,64 @@ function TenderDetailsComponent() {
               </Grid>
             </Grid>
           </div>
+          {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+            <>
+              <div className={`${styles.LikeJob}`}>
+                <h2>Application Instructions:</h2>
+                <div
+                  dangerouslySetInnerHTML={{ __html: details.applicationInstruction }}
+                ></div>
+              </div>
+              {role === USER_ROLES.vendor || role === "" ? (
+                <div className={`${styles.jobpostbtn} `}>
+                  <Box sx={{ textAlign: "start", display: "flex" }}>
+                    {!details.isApplied && details.isApplyThroughWebsite && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply on employer's website",
+                        ]}
+                        // className={`${styles.enablebtn}`}
+                        // disabled={details.isApplied && !details.isEditable}
+                        onClick={() => {
+                          // if (isLoggedIn) {
+                          window.open(details.websiteLink, "_blank");
+                          // } else {
+                          // setRegistrationWarning(true);
+                          // }
+                        }}
+                      />
+                    )}
+                    {!details.isApplied && details.isApplyThroughEmail && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply by email",
+                        ]}
+                        className="ms-3"
+                        onClick={() => {
+                          handleSendEmail(details);
+                        }}
+                      />
+                    )}
+                  </Box>
+                </div>
+              ) : null}
+              <Divider />
+            </>
+          )}
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={7} md={7}>
