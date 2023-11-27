@@ -28,7 +28,7 @@ const Articles = ({ resourcesId }) => {
     return htmlArray.map((html) => html.replace(imgRegex, ""));
   };
   useEffect(() => {
-    getResourceSuggestion();
+    if (resourcesId) getResourceSuggestion();
   }, [resourcesId]);
   return (
     <>
