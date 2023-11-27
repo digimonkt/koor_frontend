@@ -29,9 +29,12 @@ import {
   Card,
   CardContent,
   Divider,
+  FormControlLabel,
+  FormGroup,
   Grid,
   IconButton,
   Stack,
+  Switch,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { validateCreateTenderInput } from "../../../pages/jobs/validator";
@@ -64,6 +67,7 @@ const PostTender = () => {
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [descData, setDescData] = useState("");
+  const [applicationInstructionData, setApplicationInstructionData] = useState("");
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // basic formatting
     ["blockquote", "code-block"], // blockquote and code block
@@ -111,6 +115,14 @@ const PostTender = () => {
       deadline: "",
       attachments: [],
       attachmentsRemove: [],
+      isApplyThroughKoor: true,
+      isApplyThroughEmail: false,
+      isApplyThroughWebsite: false,
+      websiteLink: "",
+      applicationInstruction: "",
+      contactEmail: "",
+      cc1: "",
+      cc2: "",
     },
     validationSchema: validateCreateTenderInput,
     onSubmit: async (values, { resetForm }) => {
@@ -133,6 +145,14 @@ const PostTender = () => {
         attachments: values.attachments,
         attachments_remove: values.attachmentsRemove,
         tag: values.tag,
+        apply_through_koor: values.isApplyThroughKoor || "false",
+        apply_through_email: values.isApplyThroughEmail || "false",
+        apply_through_website: values.isApplyThroughWebsite || "false",
+        application_instruction: values.applicationInstruction,
+        website_link: values.websiteLink,
+        contact_email: values.isApplyThroughEmail ? values.contactEmail : "",
+        cc1: values.cc1,
+        cc2: values.cc2,
       };
       const newFormData = new FormData();
       for (const key in payload) {
@@ -203,9 +223,35 @@ const PostTender = () => {
       for (const key in payloadFormik) {
         formik.setFieldValue(key, payloadFormik[key]);
       }
+      formik.setFieldValue("contactEmail", data.contactEmail);
+      formik.setFieldValue("cc1", data.cc1);
+      formik.setFieldValue("cc2", data.cc2);
+      formik.setFieldValue(
+        "isApplyThroughKoor",
+        Boolean(data.isApplyThroughKoor)
+      );
+      formik.setFieldValue(
+        "isApplyThroughEmail",
+        Boolean(data.isApplyThroughEmail)
+      );
+      formik.setFieldValue(
+        "isApplyThroughWebsite",
+        Boolean(data.isApplyThroughWebsite)
+      );
+      formik.setFieldValue(
+        "applicationInstruction",
+        data.applicationInstruction
+      );
+      formik.setFieldValue("websiteLink", data.websiteLink);
     }
   }, []);
-
+  const handleApplicationInstructionEditorValue = (content) => {
+    setApplicationInstructionData(content);
+    formik.setFieldValue(
+      "applicationInstruction",
+      content !== "<p><br></p>" ? content : ""
+    );
+  };
   useEffect(() => {
     if (
       debouncedSearchValue &&
@@ -603,7 +649,146 @@ const PostTender = () => {
                       </Grid>
                     </Grid>
                   </Grid>
-
+                  <Grid item xl={12} lg={12} xs={12}>
+                    <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
+                  </Grid>
+                  <Grid item xl={12} lg={12} xs={12}>
+                    <h2 className="mt-3">Ways to apply</h2>
+                  </Grid>
+                  <Grid item xl={12} lg={12} sm={12} xs={12}>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Switch />}
+                        label="Apply through Koor"
+                        checked={formik.values.isApplyThroughKoor}
+                        {...formik.getFieldProps("isApplyThroughKoor")}
+                      />
+                    </FormGroup>
+                    {formik.touched.isApplyThroughKoor &&
+                      formik.errors.isApplyThroughKoor ? (
+                      <ErrorMessage>
+                        {formik.errors.isApplyThroughKoor}
+                      </ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Switch />}
+                        label="Apply by email"
+                        checked={formik.values.isApplyThroughEmail}
+                        {...formik.getFieldProps("isApplyThroughEmail")}
+                      />
+                    </FormGroup>
+                    <input
+                      className="add-form-control"
+                      placeholder="Your email address"
+                      {...formik.getFieldProps("contactEmail")}
+                    />
+                    {formik.touched.contactEmail &&
+                      formik.errors.contactEmail ? (
+                      <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid
+                    item
+                    xl={4}
+                    lg={4}
+                    sm={4}
+                    xs={12}
+                    sx={{
+                      marginTop: "41px",
+                      "@media (max-width: 480px)": {
+                        marginTop: "0px",
+                      },
+                    }}
+                  >
+                    <input
+                      className="add-form-control"
+                      placeholder="CC email address"
+                      {...formik.getFieldProps("cc1")}
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xl={4}
+                    lg={4}
+                    sm={4}
+                    xs={12}
+                    sx={{
+                      marginTop: "41px",
+                      "@media (max-width: 480px)": {
+                        marginTop: "0px",
+                      },
+                    }}
+                  >
+                    <input
+                      className="add-form-control"
+                      placeholder="Another CC email address"
+                      {...formik.getFieldProps("cc2")}
+                    />
+                  </Grid>
+                  <Grid item xl={12} lg={12} xs={12}>
+                    <Box sx={{ height: "245px" }}>
+                      <label>
+                        Application Instructions
+                        <span className="required-field">*</span>
+                      </label>
+                      <ReactQuill
+                        placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
+                        theme="snow"
+                        value={
+                          applicationInstructionData ||
+                          formik.values.applicationInstruction
+                        }
+                        modules={{
+                          toolbar: toolbarOptions,
+                        }}
+                        onChange={(value) =>
+                          handleApplicationInstructionEditorValue(value)
+                        }
+                        className="work-experience-text-editor"
+                        style={{
+                          width: "100%",
+                          marginTop: "10px",
+                          height: "150px",
+                        }}
+                      />
+                    </Box>
+                    <Box
+                      style={{
+                        width: "100%",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {formik.touched.applicationInstruction &&
+                        formik.errors.applicationInstruction ? (
+                        <ErrorMessage>
+                          {formik.errors.applicationInstruction}
+                        </ErrorMessage>
+                      ) : null}
+                    </Box>
+                  </Grid>
+                  <Grid item xl={12} lg={12} xs={12}>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<Switch />}
+                        label="Apply through your website"
+                        checked={formik.values.isApplyThroughWebsite}
+                        {...formik.getFieldProps("isApplyThroughWebsite")}
+                      />
+                    </FormGroup>
+                    <LabeledInput
+                      title=""
+                      className="add-form-control"
+                      placeholder="Paste a link to your website’s application form"
+                      required
+                      {...formik.getFieldProps("websiteLink")}
+                    />
+                    {formik.touched.websiteLink && formik.errors.websiteLink ? (
+                      <ErrorMessage>{formik.errors.websiteLink}</ErrorMessage>
+                    ) : null}
+                  </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
                   </Grid>

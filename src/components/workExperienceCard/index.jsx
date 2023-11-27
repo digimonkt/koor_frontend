@@ -22,6 +22,7 @@ function WorkExperienceCard({
   description,
   handleEdit,
   noOptions,
+  isResumeTemp = false,
 }) {
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
@@ -72,7 +73,7 @@ function WorkExperienceCard({
               {present ? "Present" : dayjs(endDate).format(MONTH_YEAR_FORMAT)}
             </span>
           </div>
-          {role === USER_ROLES.jobSeeker && !noOptions ? (
+          {role === USER_ROLES.jobSeeker && !noOptions && !isResumeTemp ? (
             <Stack direction="row" spacing={1} className="list-button">
               <button onClick={handleEdit}>
                 <SVG.EditIcon />
@@ -115,7 +116,7 @@ function WorkExperienceCard({
               {present ? "Present" : dayjs(endDate).format(MONTH_YEAR_FORMAT)}
             </span>
           </div>
-          {role === USER_ROLES.jobSeeker && !noOptions ? (
+          {role === USER_ROLES.jobSeeker && !noOptions && !isResumeTemp ? (
             <Stack direction="row" spacing={1} className="list-button">
               <button onClick={handleEdit}>
                 <SVG.EditIcon />
