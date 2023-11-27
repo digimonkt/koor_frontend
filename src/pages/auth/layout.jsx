@@ -155,9 +155,9 @@ function AuthLayout({
     }, [dispatch, location.pathname, location.search, navigate]);
     return (
       <div
-        className={`register pb-0 py-lg-5 ${
+        className={`register pb-0 py-lg-5 registerApp ${
           role === USER_ROLES.employer || role === USER_ROLES.vendor
-            ? "vendor"
+            ? "vendor appbg"
             : ""
         } ${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
       >
