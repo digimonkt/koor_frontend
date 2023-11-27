@@ -1,4 +1,11 @@
-import { Box, Container, Divider, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Box,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
 import { SVG } from "../../../assets/svg";
@@ -286,7 +293,10 @@ function TenderDetailsComponent() {
               <Grid item xs={12} lg={9} sm={8}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <div className="job-description" dangerouslySetInnerHTML={{ __html: details.description }}></div>
+                  <div
+                    className="job-description"
+                    dangerouslySetInnerHTML={{ __html: details.description }}
+                  ></div>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
@@ -364,20 +374,21 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                            <>
-                              <SVG.Enable1 className="me-2" />
-                            </>,
-                            "Apply for the Tender",
-                          ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for the Tender",
+                            ]
                       }
                       sx={{
                         padding: "10px 0px !important",
                         width: "100% !important",
+                        marginBottom: "20px",
                         "@media (max-width: 480px)": {
                           fontSize: "14px !important",
                         },
                       }}
-                      className={`${styles.enablebtn}`}
+                      // className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
                         if (isLoggedIn) {
@@ -425,11 +436,11 @@ function TenderDetailsComponent() {
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.BlueSaveIcon className="me-2" />
-                              </>,
-                              "Save Tender",
-                            ]
+                                <>
+                                  <SVG.BlueSaveIcon className="me-2" />
+                                </>,
+                                "Save Tender",
+                              ]
                         }
                         sx={{
                           height: "44px",
@@ -470,7 +481,9 @@ function TenderDetailsComponent() {
               <div className={`${styles.LikeJob}`}>
                 <h2>Application Instructions:</h2>
                 <div
-                  dangerouslySetInnerHTML={{ __html: details.applicationInstruction }}
+                  dangerouslySetInnerHTML={{
+                    __html: details.applicationInstruction,
+                  }}
                 ></div>
               </div>
               {role === USER_ROLES.vendor || role === "" ? (
