@@ -96,6 +96,7 @@ function SavedJobsComponent() {
             </IconButton>
             <Menu
               id="basic-menu"
+              Menu
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}

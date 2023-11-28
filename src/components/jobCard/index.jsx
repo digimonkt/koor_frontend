@@ -1,4 +1,4 @@
-import { Avatar, Chip, Grid, Stack } from "@mui/material";
+import { Avatar, Box, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { SVG } from "../../assets/svg";
@@ -233,10 +233,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <div
+            <Box
               className="job-description card-description mt-1 mb-3"
               dangerouslySetInnerHTML={{ __html: jobDetails.description }}
-            ></div>
+            ></Box>
             <Stack
               direction="row"
               useFlexGap
