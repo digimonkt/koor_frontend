@@ -184,7 +184,6 @@ function MyProfile() {
 
       const response = await updateVendorAboutMeAPI(newFormData);
       if (response.remote === "success") {
-        console.log({ values });
         handleToggleModel();
         const updatedUser = {
           name: values.organizationName,

@@ -68,7 +68,6 @@ const Skills = (props) => {
 
   useEffect(() => {
     if (debouncedSearchSkillValue) {
-      console.log({ debouncedSearchSkillValue });
       dispatch(
         getSkills({
           search: debouncedSearchSkillValue,
