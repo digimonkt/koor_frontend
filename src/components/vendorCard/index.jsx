@@ -105,29 +105,27 @@ function VendorCard({ vendorDetails }) {
             direction="row"
             spacing={2}
             alignItems="center"
-            sx={{ mb: 1, mt: 2 }}
+            sx={{ mb: 1, mt: 2, flexWrap: "wrap" }}
+            useFlexGap
             className="meets_div"
           >
-            <div>
-              {vendorDetails.sectors.map((sector) => (
-                <Chip
-                  key={sector.id}
-                  label={`Sector: ${sector.title}`}
-                  className="chiplabel"
-                  icon={<SVG.Sector />}
-                />
-              ))}
-            </div>
-            <div>
-              {vendorDetails.tags.map((tag) => (
-                <Chip
-                  key={tag.id}
-                  label={`Tag: ${tag.title}`}
-                  className="chiplabel"
-                  icon={<SVG.Tag />}
-                />
-              ))}
-            </div>
+            {vendorDetails.sectors.map((sector) => (
+              <Chip
+                key={sector.id}
+                label={`Sector: ${sector.title}`}
+                className="chiplabel"
+                icon={<SVG.Sector />}
+              />
+            ))}
+
+            {vendorDetails.tags.map((tag) => (
+              <Chip
+                key={tag.id}
+                label={`Tag: ${tag.title}`}
+                className="chiplabel"
+                icon={<SVG.Tag />}
+              />
+            ))}
           </Stack>
         </div>
       </Stack>

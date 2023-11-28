@@ -302,9 +302,10 @@ const JobDetails = () => {
               <Grid item xs={12} lg={9} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <div
+                  <Box
+                    className={styles.job_detail_description}
                     dangerouslySetInnerHTML={{ __html: details.description }}
-                  ></div>
+                  ></Box>
                 </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}

@@ -413,8 +413,9 @@ function TenderDetailsComponent() {
                     />
                     {details.isEditable && details.isApplied && isLoggedIn && (
                       <FilledButton
+                        sx={{ width: "100%", marginBottom: "20px" }}
                         title="Withdraw"
-                        className={`${styles.enablebtn}`}
+                        // className={`${styles.enablebtn}`}
                         disabled={!details.isEditable}
                         onClick={() => {
                           handleWithdrawTenderApplication();
