@@ -118,6 +118,30 @@ export const validateCreateTenderInput = Yup.object().shape({
     .test("isFuture", "Date Must be of Future", (value, context) => {
       return dayjs(value).isSameOrAfter(dayjs(), "days");
     }),
+  isContactEmail: Yup.boolean(),
+  isApplyThroughKoor: Yup.boolean(),
+  isApplyThroughEmail: Yup.boolean(),
+  isApplyThroughWebsite: Yup.boolean(),
+  applicationInstruction: Yup.string().nullable().required("Application instructions are required"),
+  websiteLink: Yup.string()
+    .when("isApplyThroughWebsite", {
+      is: true,
+      then: Yup.string().required("Website link is required"),
+      otherwise: Yup.string().nullable() // Allow null or other values when isApplyThroughWebsite is false
+    }),
+  contactEmail: Yup.string()
+    .email("Invalid Email")
+    .test("atLeastOneContactMethod", "At least one email is required", function (value) {
+      const { isApplyThroughEmail } = this.parent;
+      if (isApplyThroughEmail) {
+        return value || this.parent.cc1 || this.parent.cc2;
+      }
+      return true; // Not required when isApplyThroughEmail is false
+    }),
+  cc1: Yup.string().email("Invalid Email"),
+  cc2: Yup.string().email("Invalid Email"),
+  startDate: Yup.string().nullable()
+    .required("Start Date is required"),
   // startDate: Yup.string()
   //   .required("Start date is required")
   //   .test(
@@ -130,6 +154,27 @@ export const validateCreateTenderInput = Yup.object().shape({
   //       return dayjs(value).isSameOrAfter(dayjs(), "day"); // Use "day" to compare only the date part.
   //     }
   //   ),
-  startDate: Yup.string().nullable()
-    .required("Start Date is required"),
-});
+}).test(
+  "oneOfFields",
+  "At least one option must be selected",
+  function (value) {
+    const {
+      isApplyThroughKoor,
+      isApplyThroughEmail,
+      isApplyThroughWebsite,
+    } = value;
+
+    const isError = !(isApplyThroughKoor ||
+      isApplyThroughEmail ||
+      isApplyThroughWebsite);
+
+    if (isError) {
+      return this.createError({
+        path: "isApplyThroughKoor",
+        message: "At least one option must be selected"
+      });
+    }
+
+    return true;
+  }
+);

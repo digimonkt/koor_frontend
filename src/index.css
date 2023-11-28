@@ -560,3 +560,6 @@ ul.listvertical li {
 .not-active-footer-tab {
   color: #274593;
 }
+#third_step {
+  display: none;
+}

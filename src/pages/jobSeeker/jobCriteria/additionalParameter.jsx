@@ -122,7 +122,9 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             <FormControl fullWidth size="small">
               <label className="d-block mb-2">City</label>
               <SelectInput
-                placeholder={selectedCountry ? "City" : "Select Country first"}
+                placeholder={
+                  selectedCountry ? "Choose City" : "Select Country first"
+                }
                 disabled={!selectedCountry}
                 options={(cities.data[selectedCountry] || []).map(
                   (country) => ({

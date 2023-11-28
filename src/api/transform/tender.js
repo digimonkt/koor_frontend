@@ -73,6 +73,14 @@ export const transformFullTenderDetails = (data) => {
     isSaved: data.is_saved,
     isEditable: data.is_editable,
     application: data.application,
+    contactEmail: data.contact_email || "",
+    cc1: data.cc1 || "",
+    cc2: data.cc2 || "",
+    isApplyThroughKoor: data.apply_through_koor,
+    isApplyThroughEmail: data.apply_through_email,
+    isApplyThroughWebsite: data.apply_through_website,
+    applicationInstruction: data.application_instruction,
+    websiteLink: data.website_link,
   };
 };
 

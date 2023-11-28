@@ -27,6 +27,7 @@ import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "../../../components/caption";
 import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   getCities,
   getCountries,
@@ -87,6 +88,7 @@ function PostJobsComponent() {
   const { minimumCreditJobPost, totalAvailableCredits } = useSelector(
     (state) => state.employer
   );
+  const { isMobileView } = useSelector((state) => state.platform);
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
@@ -448,6 +450,11 @@ function PostJobsComponent() {
         >
           <div className="job-content">
             <h2>
+              {isMobileView && (
+                <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
+                  <ArrowBackIcon />
+                </IconButton>
+              )}
               {jobId ? "Update Job" : "Post new job"}
               <span className="right-pull">
                 <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
@@ -801,9 +808,11 @@ function PostJobsComponent() {
                         {...formik.getFieldProps("isApplyThroughKoor")}
                       />
                     </FormGroup>
-                    {formik.touched.isApplyThroughKoor && formik.errors.isApplyThroughKoor ? (
-                      <ErrorMessage>{formik.errors.isApplyThroughKoor}</ErrorMessage>
-                    ) : null}
+                    {
+                      formik.touched.isApplyThroughKoor && formik.errors.isApplyThroughKoor ? (
+                        <ErrorMessage>{formik.errors.isApplyThroughKoor}</ErrorMessage>
+                      ) : null
+                    }
                   </Grid>
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <FormGroup>
@@ -1022,7 +1031,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.skills}</ErrorMessage>
                     ) : null}
                   </Grid>
-                </Grid>
+                </Grid >
 
                 <Grid item xl={12} lg={12} xs={12}>
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
@@ -1081,24 +1090,26 @@ function PostJobsComponent() {
                     sx={{ borderColor: "#CACACA", opacity: "1", my: 2 }}
                   />
                 </Grid>
-                {!jobId && totalAvailableCredits < minimumCreditJobPost ? (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will need to purchase{" "}
-                    <b>
-                      {minimumCreditJobPost - totalAvailableCredits} more
-                      credits.{" "}
-                    </b>
-                  </div>
-                ) : (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will redeemed{" "}
-                    <b>{minimumCreditJobPost} credits</b> .
-                  </div>
-                )}
+                {
+                  !jobId && totalAvailableCredits < minimumCreditJobPost ? (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will need to purchase{" "}
+                      <b>
+                        {minimumCreditJobPost - totalAvailableCredits} more
+                        credits.{" "}
+                      </b>
+                    </div>
+                  ) : (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will redeemed{" "}
+                      <b>{minimumCreditJobPost} credits</b> .
+                    </div>
+                  )
+                }
                 <Grid container spacing={2}>
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Job Posting Plan</h2>
@@ -1293,7 +1304,7 @@ function PostJobsComponent() {
           </Box>
         </Box>
       </DialogBox>
-    </div>
+    </div >
   );
 }
 
