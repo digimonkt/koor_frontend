@@ -2367,6 +2367,10 @@ input.employersearch {
 
 .job-description {
   white-space: pre-line;
+  font-size: 16px;
+  font-family: "Poppins";
+  color: #121212;
+  font-weight: 600;
 }
 
 .card-description {
@@ -2551,6 +2555,10 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+
+  .job-description {
+    font-size: 14px;
   }
 
   .content-box h5 {
