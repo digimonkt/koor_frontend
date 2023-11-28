@@ -47,6 +47,7 @@
 .imgSize {
   width: 400px !important;
   height: 300px !important;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 992px) {

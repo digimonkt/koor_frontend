@@ -303,9 +303,10 @@ const JobDetails = () => {
               <Grid item xs={12} lg={9} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <div
+                  <Box
+                    className={styles.job_detail_description}
                     dangerouslySetInnerHTML={{ __html: details.description }}
-                  ></div>
+                  ></Box>
                 </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
@@ -324,20 +325,20 @@ const JobDetails = () => {
                     leftIcon={<SVG.LocationIcon />}
                     className={`${styles.iconbutton}`}
                   />
-                  {details?.workingDays &&
+                  {details?.workingDays && (
                     <SearchButton
                       text={`${details.workingDays}`}
                       leftIcon={<SVG.BagClock />}
                       className={`${styles.iconbutton}`}
                     />
-                  }
-                  {details?.duration &&
+                  )}
+                  {details?.duration && (
                     <SearchButton
                       text={`${details.duration} Months`}
                       leftIcon={<SVG.BagClock />}
                       className={`${styles.iconbutton}`}
                     />
-                  }
+                  )}
                   {details.isFullTime && (
                     <SearchButton
                       text="Full Time"
@@ -412,11 +413,11 @@ const JobDetails = () => {
                               ? "Edit"
                               : "Applied"
                             : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for this job",
-                            ]
+                                <>
+                                  <SVG.Enable1 className="me-2" />
+                                </>,
+                                "Apply for this job",
+                              ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -477,11 +478,11 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.SaveIcon1 className="me-2" />
-                              </>,
-                              "Save job",
-                            ]
+                                <>
+                                  <SVG.SaveIcon1 className="me-2" />
+                                </>,
+                                "Save job",
+                              ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -524,7 +525,9 @@ const JobDetails = () => {
               <div className={`${styles.LikeJob}`}>
                 <h2>Application Instructions:</h2>
                 <div
-                  dangerouslySetInnerHTML={{ __html: details.applicationInstruction }}
+                  dangerouslySetInnerHTML={{
+                    __html: details.applicationInstruction,
+                  }}
                 ></div>
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
