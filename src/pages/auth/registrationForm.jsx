@@ -54,11 +54,12 @@ function RegistrationForm() {
       const res = await CreateUserAPI(payload);
       if (res.remote === "success") {
         setIsLoading(false);
-        if (role === USER_ROLES.jobSeeker) {
-          navigate(`/${role}/my-profile/job-criteria`);
-        } else {
-          navigate(`/${role}/my-profile`);
-        }
+        navigate("/verify-otp?user=new");
+        // if (role === USER_ROLES.jobSeeker) {
+        //   navigate(`/${role}/my-profile/job-criteria`);
+        // } else {
+        //   navigate(`/${role}/my-profile`);
+        // }
       } else {
         setIsLoading(false);
         formik.setErrors({
