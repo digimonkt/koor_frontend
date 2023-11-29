@@ -97,7 +97,8 @@ function PostJobsComponent() {
   const [packageData, setPackageData] = useState([]);
   const [buyPackage, setBuyPackage] = useState(false);
   const [descData, setDescData] = useState("");
-  const [applicationInstructionData, setApplicationInstructionData] = useState("");
+  const [applicationInstructionData, setApplicationInstructionData] =
+    useState("");
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // basic formatting
     ["blockquote", "code-block"], // blockquote and code block
@@ -550,7 +551,7 @@ function PostJobsComponent() {
                       }}
                     >
                       {formik.touched.description &&
-                        formik.errors.description ? (
+                      formik.errors.description ? (
                         <ErrorMessage>{formik.errors.description}</ErrorMessage>
                       ) : null}
                     </Box>
@@ -655,7 +656,7 @@ function PostJobsComponent() {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
+                        formik.errors.jobCategories ? (
                           <ErrorMessage>
                             {formik.errors.jobCategories}
                           </ErrorMessage>
@@ -671,7 +672,7 @@ function PostJobsComponent() {
                           }
                           options={(
                             jobSubCategories.data[
-                            formik.values.jobCategories
+                              formik.values.jobCategories
                             ] || []
                           ).map((subCategory) => ({
                             value: subCategory.id,
@@ -680,7 +681,7 @@ function PostJobsComponent() {
                           {...formik.getFieldProps("jobSubCategory")}
                         />
                         {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
+                        formik.errors.jobSubCategory ? (
                           <ErrorMessage>
                             {formik.errors.jobSubCategory}
                           </ErrorMessage>
@@ -811,6 +812,7 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} sm={12} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "198px" }}
                         control={<Switch />}
                         label="Apply through Koor"
                         checked={formik.values.isApplyThroughKoor}
@@ -818,7 +820,7 @@ function PostJobsComponent() {
                       />
                     </FormGroup>
                     {formik.touched.isApplyThroughKoor &&
-                      formik.errors.isApplyThroughKoor ? (
+                    formik.errors.isApplyThroughKoor ? (
                       <ErrorMessage>
                         {formik.errors.isApplyThroughKoor}
                       </ErrorMessage>
@@ -827,6 +829,7 @@ function PostJobsComponent() {
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "165px" }}
                         control={<Switch />}
                         label="Apply by email"
                         checked={formik.values.isApplyThroughEmail}
@@ -839,7 +842,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -915,7 +918,7 @@ function PostJobsComponent() {
                       }}
                     >
                       {formik.touched.applicationInstruction &&
-                        formik.errors.applicationInstruction ? (
+                      formik.errors.applicationInstruction ? (
                         <ErrorMessage>
                           {formik.errors.applicationInstruction}
                         </ErrorMessage>
@@ -925,6 +928,7 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "255px" }}
                         control={<Switch />}
                         label="Apply through your website"
                         checked={formik.values.isApplyThroughWebsite}
@@ -960,7 +964,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -1064,7 +1068,8 @@ function PostJobsComponent() {
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
-                          `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
                           } remaining`
                         );
                       } else {
@@ -1149,8 +1154,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1211,8 +1216,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
