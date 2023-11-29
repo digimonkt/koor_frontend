@@ -162,7 +162,7 @@ function PublicProfileComponent() {
                           fontWeight: "600",
                         }}
                       >
-                        Aboutaa
+                        About
                       </Typography>
                       <Typography
                         sx={{
