@@ -251,7 +251,6 @@ function PostJobsComponent() {
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
-
   const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
     if (response.remote === "success") {
@@ -858,6 +857,9 @@ function PostJobsComponent() {
                       placeholder="CC email address"
                       {...formik.getFieldProps("cc1")}
                     />
+                    {formik.touched.cc1 && formik.errors.cc1 ? (
+                      <ErrorMessage>{formik.errors.cc1}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid
                     item
@@ -877,6 +879,9 @@ function PostJobsComponent() {
                       placeholder="Another CC email address"
                       {...formik.getFieldProps("cc2")}
                     />
+                    {formik.touched.cc2 && formik.errors.cc2 ? (
+                      <ErrorMessage>{formik.errors.cc2}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Box sx={{ height: "245px" }}>
