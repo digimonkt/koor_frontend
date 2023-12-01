@@ -16,7 +16,7 @@ import { showDay } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
-  const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const { isLoggedIn, role } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
@@ -40,7 +40,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
   };
-  const updateJob = async (jobId) => {
+  const updateJob = async jobId => {
     const res = await updateEmployerJobStatusAPI(jobId);
     if (res.remote === "success") {
       console.log(res);
@@ -68,8 +68,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -86,14 +86,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 maxWidth: "11%",
                 flexBasis: "11%",
               },
-            }}
-          >
+            }}>
             <Stack
               direction={"row"}
               spacing={2}
               alignItems={"center"}
-              justifyContent={"space-between"}
-            >
+              justifyContent={"space-between"}>
               <div className="squer-width">
                 <Avatar
                   sx={{
@@ -106,8 +104,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       background: "#F0F0F0",
                     },
                   }}
-                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}
-                >
+                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}>
                   <SVG.SuitcaseJob />
                 </Avatar>
               </div>
@@ -118,8 +115,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   justifyContent={{ xs: "center", lg: "end" }}
                   alignItems="center"
                   // divider={<hr orientation="vertical" className="job_card_hr" />}
-                  sx={{ minHeight: "87%" }}
-                >
+                  sx={{ minHeight: "87%" }}>
                   <div className="pricebox py-3 me-lg-4">
                     {jobDetails?.budgetAmount ? (
                       <>
@@ -139,8 +135,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       <button
                         onClick={() => {
                           handleStartPause();
-                        }}
-                      >
+                        }}>
                         {isStart === "active" ? (
                           <>
                             <SVG.PauseIcon />
@@ -159,11 +154,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             navigate(
                               urlcat("/employer/jobs/post", {
                                 jobId: jobDetails?.id,
-                              })
+                              }),
                             );
                           }
-                        }}
-                      >
+                        }}>
                         {<SVG.Edit1 />}
                         <span className="d-block">Edit</span>
                       </button>
@@ -173,12 +167,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       {!applied ? (
                         <div
                           onClick={handleToggleSave}
-                          style={{ marginLeft: "6px", cursor: "pointer" }}
-                        >
+                          style={{ marginLeft: "6px", cursor: "pointer" }}>
                           <div
                             className="bookmark"
-                            style={{ width: matches ? "auto" : "" }}
-                          >
+                            style={{ width: matches ? "auto" : "" }}>
                             {isSaved ? (
                               <>
                                 <SVG.SaveIcon />
@@ -214,8 +206,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               maxWidth: "64%",
               flexBasis: "64%",
             },
-          }}
-        >
+          }}>
           <div className="my-jobs">
             <h2>
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
@@ -235,8 +226,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </h2>
             <Box
               className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{ __html: jobDetails.description }}
-            ></Box>
+              dangerouslySetInnerHTML={{
+                __html: jobDetails.description,
+              }}></Box>
             <Stack
               direction="row"
               useFlexGap
@@ -253,8 +245,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 //   flexWrap: "wrap",
                 // },
               }}
-              className="job_card_chip"
-            >
+              className="job_card_chip">
               <ChipBox
                 sx={{ px: 1.5 }}
                 label={jobDetails?.country.title || "Dusseldorf"}
@@ -300,8 +291,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 "@media(max-width: 480px)": {
                   display: "block",
                 },
-              }}
-            >
+              }}>
               {!selfJob && (
                 <Stack direction="row" spacing={1}>
                   <span>
@@ -333,8 +323,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     marginLeft: "0px !important",
                     marginTop: "10px !important",
                   },
-                }}
-              >
+                }}>
                 <span>
                   <SVG.ClockIconSmall />
                 </span>{" "}
@@ -356,8 +345,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               maxWidth: "25%",
               flexBasis: "25%",
             },
-          }}
-        >
+          }}>
           <div className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
             <SolidButton
               className={
@@ -368,10 +356,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               title={
                 jobDetails?.expiredInDays > 0
                   ? showDay(jobDetails?.expiredInDays)
-                  : "Expired"
+                  : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </div>
@@ -388,8 +376,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   marginTop: "58px",
                   "& .bookmark": { width: "auto", marginLeft: "0px" },
                 },
-              }}
-            >
+              }}>
               <div className="pricebox py-3 upto-slide">
                 {jobDetails?.budgetAmount ? (
                   <>
@@ -410,8 +397,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <button
                     onClick={() => {
                       handleStartPause();
-                    }}
-                  >
+                    }}>
                     {isStart === "active" ? (
                       <>
                         <SVG.PauseIcon />
@@ -430,11 +416,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         navigate(
                           urlcat("/employer/jobs/post", {
                             jobId: jobDetails?.id,
-                          })
+                          }),
                         );
                       }
-                    }}
-                  >
+                    }}>
                     {<SVG.Edit1 />}
                     <span className="d-block">Edit</span>
                   </button>
@@ -468,8 +453,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       </Grid>
       <DialogBox
         open={registrationWarning}
-        handleClose={() => setRegistrationWarning(false)}
-      >
+        handleClose={() => setRegistrationWarning(false)}>
         <div>
           <h1 className="heading">Register as jobseeker</h1>
           <div className="form-content">
@@ -502,8 +486,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     textDecoration: "none",
                     color: "#EEA23D",
                     fontWeight: 600,
-                  }}
-                >
+                  }}>
                   Login
                 </Link>
               </span>

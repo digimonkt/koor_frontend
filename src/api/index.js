@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(function (response) {
   return response;
 });
 
-export const request = async (config) => {
+export const request = async config => {
   try {
     if (!config.headers) {
       config.headers = {};
@@ -36,12 +36,12 @@ export const request = async (config) => {
       config.headers["Content-Type"] = "application/json";
     }
     if (config.url !== "v1/jobs/categories") {
-      // const accessToken = globalLocalStorage.getAccessToken();
-      // const refreshToken = globalLocalStorage.getRefreshToken();
-      // if (accessToken && refreshToken && !config.url.includes("http")) {
-      //   config.headers.Authorization = `Bearer ${accessToken}`;
-      //   config.headers["x-refresh"] = `${refreshToken}`;
-      // }
+      const accessToken = globalLocalStorage.getAccessToken();
+      const refreshToken = globalLocalStorage.getRefreshToken();
+      if (accessToken && refreshToken && !config.url.includes("http")) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+        config.headers["x-refresh"] = `${refreshToken}`;
+      }
     }
     const response = await axiosInstance.request({ ...config });
     return {
@@ -94,7 +94,7 @@ export const request = async (config) => {
   }
 };
 
-export const parseResponse = (response) => {
+export const parseResponse = response => {
   const data = JSON.parse(response);
   if (data && (data.errors || data.error)) {
     return {
