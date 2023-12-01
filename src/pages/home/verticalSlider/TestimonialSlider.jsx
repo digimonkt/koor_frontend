@@ -24,7 +24,7 @@ function TestimonialSlider({ testimonialList }) {
   return (
     <>
       <Grid container spacing={{ xs: 3, lg: 10 }}>
-        <Grid item xs={5}>
+        <Grid item xs={12} lg={6} sm={6}>
           <Slider
             asNavFor={nav1}
             ref={(slider) => (slider2 = slider)}
@@ -56,7 +56,7 @@ function TestimonialSlider({ testimonialList }) {
             ))}
           </Slider>
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={12} lg={6} sm={6}>
           <Slider
             asNavFor={nav2}
             ref={(slider) => (slider1 = slider)}
