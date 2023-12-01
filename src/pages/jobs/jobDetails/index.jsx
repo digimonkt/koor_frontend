@@ -190,7 +190,6 @@ const JobDetails = () => {
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
