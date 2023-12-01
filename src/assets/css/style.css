@@ -5,6 +5,11 @@ body {
   background-color: #e5e5e5 !important;
 }
 
+.job_profile_date .MuiInputBase-root {
+  border-radius: 10px !important;
+  height: 42px;
+}
+
 .main_component_class {
   background: #e5e5e5;
   min-height: 544px;
@@ -1848,8 +1853,8 @@ span.count {
   .step-continer svg.Mui-active,
   .step-continer svg.Mui-completed {
     color: #feefd3;
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
   }
 
   .step-continer .MuiStepLabel-labelContainer .Mui-active,
@@ -2367,6 +2372,10 @@ input.employersearch {
 
 .job-description {
   white-space: pre-line;
+  font-size: 16px;
+  font-family: "Poppins";
+  color: #121212;
+  font-weight: 600;
 }
 
 .card-description {
@@ -2551,6 +2560,28 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+
+  ul.listvertical {
+    display: none !important;
+  }
+
+  .step-continer svg.Mui-active,
+  .step-continer svg.Mui-completed {
+    color: #feefd3;
+    width: 28px;
+    height: 28px;
+    margin-top: 5px;
+  }
+
+  .MuiStepLabel-iconContainer svg {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 5px;
+  }
+
+  .job-description {
+    font-size: 14px;
   }
 
   .content-box h5 {
@@ -2805,7 +2836,14 @@ input.employersearch {
   .css-z7uhs0-MuiStepConnector-line {
     width: 20px;
     transform: rotate(90deg);
-    margin: 10px 0px 16px 16px;
+    margin: 0px 0px 0px 12px;
+  }
+
+  .step-continer .Mui-disabled svg {
+    width: 28px;
+    height: 28px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
   .add-content p {

@@ -6,6 +6,12 @@
   margin-top: 110px;
   margin-bottom: 40px;
 }
+.job_detail_description {
+  font-family: "Poppins";
+  font-weight: 300;
+  font-size: 14px;
+  color: #121212;
+}
 .postJob {
   display: flex;
   align-items: center;
@@ -281,6 +287,10 @@
 @media screen and (max-width: 480px) {
   .clocs p {
     font-size: 10px;
+  }
+
+  .job_detail_description {
+    font-size: 12px;
   }
 
   .postJob p {

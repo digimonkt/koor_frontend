@@ -67,7 +67,8 @@ const PostTender = () => {
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [descData, setDescData] = useState("");
-  const [applicationInstructionData, setApplicationInstructionData] = useState("");
+  const [applicationInstructionData, setApplicationInstructionData] =
+    useState("");
   const toolbarOptions = [
     ["bold", "italic", "underline", "strike"], // basic formatting
     ["blockquote", "code-block"], // blockquote and code block
@@ -194,7 +195,10 @@ const PostTender = () => {
   });
   const handleEditorValue = (content) => {
     setDescData(content);
-    formik.setFieldValue("description", content !== "<p><br></p>" ? content : "");
+    formik.setFieldValue(
+      "description",
+      content !== "<p><br></p>" ? content : ""
+    );
   };
   const getTenderDetailsById = useCallback(async (tenderId) => {
     const response = await getTenderDetailsByIdAPI({ tenderId });
@@ -399,11 +403,14 @@ const PostTender = () => {
                         }}
                       />
                     </Box>
-                    <Box style={{
-                      width: "100%",
-                      marginTop: "10px",
-                    }}>
-                      {formik.touched.description && formik.errors.description ? (
+                    <Box
+                      style={{
+                        width: "100%",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {formik.touched.description &&
+                      formik.errors.description ? (
                         <ErrorMessage>{formik.errors.description}</ErrorMessage>
                       ) : null}
                     </Box>
@@ -512,7 +519,7 @@ const PostTender = () => {
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.categories &&
-                          formik.errors.categories ? (
+                        formik.errors.categories ? (
                           <ErrorMessage>
                             {formik.errors.categories}
                           </ErrorMessage>
@@ -558,7 +565,7 @@ const PostTender = () => {
                           {...formik.getFieldProps("opportunityType")}
                         />
                         {formik.touched.opportunityType &&
-                          formik.errors.opportunityType ? (
+                        formik.errors.opportunityType ? (
                           <ErrorMessage>
                             {formik.errors.opportunityType}
                           </ErrorMessage>
@@ -608,7 +615,7 @@ const PostTender = () => {
                             minDate={dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.startDate &&
-                            formik.errors.startDate ? (
+                          formik.errors.startDate ? (
                             <ErrorMessage>
                               {formik.errors.startDate}
                             </ErrorMessage>
@@ -658,6 +665,7 @@ const PostTender = () => {
                   <Grid item xl={12} lg={12} sm={12} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "198px" }}
                         control={<Switch />}
                         label="Apply through Koor"
                         checked={formik.values.isApplyThroughKoor}
@@ -665,7 +673,7 @@ const PostTender = () => {
                       />
                     </FormGroup>
                     {formik.touched.isApplyThroughKoor &&
-                      formik.errors.isApplyThroughKoor ? (
+                    formik.errors.isApplyThroughKoor ? (
                       <ErrorMessage>
                         {formik.errors.isApplyThroughKoor}
                       </ErrorMessage>
@@ -674,6 +682,7 @@ const PostTender = () => {
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "165px" }}
                         control={<Switch />}
                         label="Apply by email"
                         checked={formik.values.isApplyThroughEmail}
@@ -686,7 +695,7 @@ const PostTender = () => {
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -762,7 +771,7 @@ const PostTender = () => {
                       }}
                     >
                       {formik.touched.applicationInstruction &&
-                        formik.errors.applicationInstruction ? (
+                      formik.errors.applicationInstruction ? (
                         <ErrorMessage>
                           {formik.errors.applicationInstruction}
                         </ErrorMessage>
@@ -772,6 +781,7 @@ const PostTender = () => {
                   <Grid item xl={12} lg={12} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "255px" }}
                         control={<Switch />}
                         label="Apply through your website"
                         checked={formik.values.isApplyThroughWebsite}
@@ -806,7 +816,8 @@ const PostTender = () => {
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
-                          `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
                           } remaining`
                         );
                       } else {
@@ -899,8 +910,8 @@ const PostTender = () => {
                             ? "Updating..."
                             : "Posting..."
                           : tenderId
-                            ? "Update the tender"
-                            : "POST THE TENDER"
+                          ? "Update the tender"
+                          : "POST THE TENDER"
                       }
                       type="submit"
                       disabled={formik.isSubmitting}
