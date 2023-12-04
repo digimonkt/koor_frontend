@@ -3008,3 +3008,18 @@ input.employersearch {
     background-size: contain !important;
   }
 }
+
+.text-truncate {
+  overflow: hidden;
+  color: #121212;
+  text-overflow: ellipsis;
+
+  font-family: Poppins !important;
+  font-size: 11px !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  line-height: 16px;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
