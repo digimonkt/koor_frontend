@@ -235,7 +235,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </h2>
             <Box
               className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{ __html: jobDetails.description }}
+              dangerouslySetInnerHTML={{
+                __html: jobDetails.description,
+              }}
             ></Box>
             <Stack
               direction="row"
@@ -371,7 +373,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               title={
                 jobDetails?.expiredInDays > 0
                   ? showDay(jobDetails?.expiredInDays)
-                  : "Expired"
+                  : "Closed"
               }
               color={getColorByRemainingDays(
                 jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0

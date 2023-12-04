@@ -34,8 +34,8 @@ function App() {
   const {
     auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
-  } = useSelector((state) => state);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  } = useSelector(state => state);
+  const { isLoggedIn } = useSelector(state => state.auth);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
@@ -68,7 +68,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            })
+            }),
           );
         }
       }
@@ -100,7 +100,7 @@ function App() {
         {platform === "android" || platform === "ios" ? null : <Header />}
 
         <Routes>
-          {ROUTES.map((route) => {
+          {ROUTES.map(route => {
             if (!route.path) {
               return null;
             }
@@ -122,7 +122,7 @@ function App() {
               />
             );
           })}
-          {UNAUTHENTICATED_ROUTES.map((route) => {
+          {UNAUTHENTICATED_ROUTES.map(route => {
             if (!route.path) {
               return null;
             }
@@ -189,8 +189,7 @@ function App() {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "20px",
-              }}
-            >
+              }}>
               <Box
                 component={"span"}
                 sx={{
@@ -199,8 +198,7 @@ function App() {
                   height: "4px",
                   background: "#121212",
                   display: "block",
-                }}
-              ></Box>
+                }}></Box>
             </Box>
           </>
         ) : (
