@@ -46,7 +46,6 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getApplicantDetails();
   }, [params.applicationId]);
-  console.log({ applicantDetails });
   return (
     <>
       <div className="job-application">

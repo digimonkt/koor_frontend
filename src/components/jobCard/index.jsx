@@ -131,7 +131,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         <span>{jobDetails?.budgetPayPeriod}</span>
                       </>
                     ) : (
-                      <h3>-</h3>
+                      <h3></h3>
                     )}
                   </div>
                   {selfJob ? (
@@ -235,7 +235,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </h2>
             <Box
               className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{ __html: jobDetails.description }}
+              dangerouslySetInnerHTML={{
+                __html: jobDetails.description,
+              }}
             ></Box>
             <Stack
               direction="row"
@@ -358,7 +360,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             },
           }}
         >
-          <div className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
+          <Box
+            sx={{ display: "flex", justifyContent: "end" }}
+            className="text-start text-lg-end text-sm-end mb-0 mb-lg-4"
+          >
             <SolidButton
               className={
                 jobDetails?.expiredInDays > 0
@@ -368,13 +373,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               title={
                 jobDetails?.expiredInDays > 0
                   ? showDay(jobDetails?.expiredInDays)
-                  : "Expired"
+                  : "Closed"
               }
               color={getColorByRemainingDays(
                 jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
               )}
             />
-          </div>
+          </Box>
           {!matches ? (
             <Stack
               direction="row"

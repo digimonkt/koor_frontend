@@ -33,7 +33,6 @@ function ChatList({ setIsSeleted }) {
   };
 
   const onUpdateChatActivity = (data) => {
-    console.log({ activity: data.content });
     const updatedConversations = data.content.map((conversation) =>
       transformConversationResponse(conversation)
     );
