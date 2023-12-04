@@ -67,9 +67,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-          dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A",
-          ),
+        dayjs(jobDetails.isPlannedInterview).format(
+          "MMMM D, YYYY [at] h:mm A",
+        ),
       );
     }
   }, [jobDetails]);
@@ -127,7 +127,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         <span>{jobDetails?.budgetPayPeriod}</span>
                       </>
                     ) : (
-                      <h3>-</h3>
+                      <h3></h3>
                     )}
                   </div>
                   {selfJob ? (
@@ -299,12 +299,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                    jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                        jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>
@@ -345,8 +345,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               maxWidth: "25%",
               flexBasis: "25%",
             },
-          }}>
-          <div className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
+          }}
+        >
+          <Box
+            sx={{ display: "flex", justifyContent: "end" }}
+            className="text-start text-lg-end text-sm-end mb-0 mb-lg-4"
+          >
             <SolidButton
               className={
                 jobDetails?.expiredInDays > 0
@@ -362,7 +366,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
-          </div>
+          </Box>
           {!matches ? (
             <Stack
               direction="row"

@@ -23,6 +23,10 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
                 maxWidth: "12%",
                 flexBasis: "12%",
               },
+              "@media (min-width: 480px)": {
+                maxWidth: "12%",
+                flexBasis: "12%",
+              },
             }}
           >
             <div
@@ -42,6 +46,10 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
           xs={12}
           sx={{
             "@media (min-width: 1200px)": {
+              maxWidth: "64%",
+              flexBasis: "64%",
+            },
+            "@media (min-width: 480px)": {
               maxWidth: "64%",
               flexBasis: "64%",
             },
@@ -112,6 +120,10 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
           xs={12}
           sx={{
             "@media (min-width: 1200px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+            "@media (min-width: 480px)": {
               maxWidth: "25%",
               flexBasis: "25%",
             },
