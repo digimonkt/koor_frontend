@@ -25,7 +25,7 @@
 }
 .clocs {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-end;
 }
 .clocs p {
@@ -319,6 +319,7 @@
 
   .clocs {
     justify-content: flex-start;
+    align-items: baseline;
     margin-left: 36px;
   }
 }

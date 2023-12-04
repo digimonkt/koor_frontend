@@ -531,12 +531,27 @@ const JobDetails = () => {
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
-                  <Box sx={{ textAlign: "start", display: "flex" }}>
+                  <Box
+                    sx={{
+                      textAlign: "start",
+                      display: "flex",
+                      "@media (max-width: 480px)": {
+                        textAlign: "center",
+                      },
+                    }}
+                  >
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "12px",
+                            padding: "10px 25px",
+                          },
                         }}
                         title={[
                           <>
@@ -556,6 +571,13 @@ const JobDetails = () => {
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "12px",
+                            padding: "10px 25px",
+                          },
                         }}
                         title={[
                           <>

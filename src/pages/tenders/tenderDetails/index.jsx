@@ -495,6 +495,13 @@ function TenderDetailsComponent() {
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "12px",
+                            padding: "10px 25px",
+                          },
                         }}
                         title={[
                           <>
