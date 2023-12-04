@@ -46,6 +46,14 @@ body {
 .btn_font_lower {
   text-transform: lowercase !important;
   cursor: default !important;
+  display: block !important;
+  margin-bottom: 10px !important;
+}
+
+.btn_font_lower_btn {
+  text-transform: lowercase !important;
+  cursor: default !important;
+  display: none !important;
 }
 
 .btn_font_capitalize {
@@ -1316,8 +1324,8 @@ hr {
 .bookmark {
   text-align: center;
   color: #eea23d;
-  margin-left: 20px;
-  width: 60px;
+  margin-left: 5px !important;
+  width: 32px !important;
 }
 
 .bookmark span {
@@ -2384,7 +2392,6 @@ input.employersearch {
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
-  text-align: justify;
 }
 
 .close_icon_circle svg {
@@ -2560,6 +2567,10 @@ input.employersearch {
 @media screen and (max-width: 480px) {
   .reset_password_btn {
     font-size: 14px !important;
+  }
+
+  .bookmark {
+    width: 32px !important;
   }
 
   ul.listvertical {

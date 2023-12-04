@@ -131,7 +131,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         <span>{jobDetails?.budgetPayPeriod}</span>
                       </>
                     ) : (
-                      <h3>-</h3>
+                      <h3></h3>
                     )}
                   </div>
                   {selfJob ? (
@@ -358,7 +358,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             },
           }}
         >
-          <div className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
+          <Box
+            sx={{ display: "flex", justifyContent: "end" }}
+            className="text-start text-lg-end text-sm-end mb-0 mb-lg-4"
+          >
             <SolidButton
               className={
                 jobDetails?.expiredInDays > 0
@@ -374,7 +377,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
               )}
             />
-          </div>
+          </Box>
           {!matches ? (
             <Stack
               direction="row"
