@@ -228,7 +228,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               className="job-description card-description mt-1 mb-3"
               dangerouslySetInnerHTML={{
                 __html: jobDetails.description,
-              }}></Box>
+              }}
+            ></Box>
             <Stack
               direction="row"
               useFlexGap
