@@ -5,8 +5,10 @@ import React from "react";
 import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
 import { getConversationIdByUserIdAPI } from "../../api/chat";
+import { Capacitor } from "@capacitor/core";
 
 function TalentCard({ talentDetails }) {
+  const platform = Capacitor.getPlatform();
   const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const handleMessageClick = async () => {
@@ -57,7 +59,12 @@ function TalentCard({ talentDetails }) {
         >
           <Avatar
             src={generateFileUrl(talentDetails.profilePicture?.path || "")}
-            sx={{ width: "70px", height: "70px" }}
+            sx={{
+              width:
+                platform === "android" || platform === "ios" ? "40px" : "70px",
+              height:
+                platform === "android" || platform === "ios" ? "40px" : "70px",
+            }}
           />
           {matches ? (
             <>
