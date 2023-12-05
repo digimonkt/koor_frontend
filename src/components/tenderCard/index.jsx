@@ -1,6 +1,6 @@
 import { SVG } from "../../assets/svg";
 import { ChipBox } from "../../components/jobCard/style";
-import { Avatar, Chip, Divider, Grid, Stack } from "@mui/material";
+import { Avatar, Box, Chip, Divider, Grid, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
@@ -122,7 +122,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   >
                     <div>
                       {selfTender ? (
-                        <div className="job-button-card">
+                        <Box className="job-button-card">
                           <button
                             onClick={() => {
                               handleStartPause();
@@ -154,7 +154,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                             {<SVG.Edit1 />}
                             <span className="d-block">Edit</span>
                           </button>
-                        </div>
+                        </Box>
                       ) : isLoggedIn ? (
                         <React.Fragment>
                           {!applied ? (
@@ -233,8 +233,10 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 ) : null}
               </Link>
             </h2>
-            <div className="job-description card-description mt-1 mb-3" dangerouslySetInnerHTML={{ __html: tenderDetails?.description }}>
-            </div>
+            <div
+              className="job-description card-description mt-1 mb-3"
+              dangerouslySetInnerHTML={{ __html: tenderDetails?.description }}
+            ></div>
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
@@ -277,7 +279,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   display: "block",
                 },
               }}
-            // divider={<Divider orientation="vertical" flexItem />}
+              // divider={<Divider orientation="vertical" flexItem />}
             >
               {!selfTender && (
                 <Stack direction="row" spacing={1}>

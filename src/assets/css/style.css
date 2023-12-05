@@ -161,6 +161,14 @@ body {
   letter-spacing: 0.14px;
 }
 
+.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
+  height: 220px !important;
+}
+
+ul.listvertical {
+  display: none !important;
+}
+
 .manage_job_black_pop
   .MuiButtonBase-root-MuiRadio-root
   .Mui-checked.MuiFormControlLabel-root
@@ -1361,7 +1369,7 @@ hr {
   letter-spacing: 0.02em;
   white-space: nowrap;
   color: #eea23d;
-  width: 140px;
+  width: 134px;
 }
 
 .pricebox h4 small {
@@ -2573,10 +2581,6 @@ input.employersearch {
     width: 32px !important;
   }
 
-  ul.listvertical {
-    display: none !important;
-  }
-
   .step-continer svg.Mui-active,
   .step-continer svg.Mui-completed {
     color: #feefd3;
@@ -2907,7 +2911,7 @@ input.employersearch {
 
 .hr-border {
   width: 1px;
-  height: 75px;
+  height: 122px;
   background: #ccc;
 }
 
