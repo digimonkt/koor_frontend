@@ -20,22 +20,21 @@ function VerifyOTPForm() {
   const { role, verifyEmail } = useSelector((state) => state.auth);
   const [sendingOTP, setSendingOTP] = useState(false);
   //   const [loading, setIsLoading] = useState(false);
-  const [paramsValue, setParamsValue] = useState("");
+  const [token, setToken] = useState("");
 
-  console.log({ role, verifyEmail, paramsValue });
   useEffect(() => {
-    const paramsValue = searchParams.get("token");
-    if (!paramsValue) {
+    const token = searchParams.get("token");
+    if (!token) {
       if (role) dispatch(setUserRole(""));
-      // navigate("/login");
+      navigate("/login");
     } else {
-      setParamsValue(paramsValue);
+      setToken(token);
     }
   }, []);
   useEffect(() => {
     if (!role || !verifyEmail) {
       if (role) dispatch(setUserRole(""));
-      // navigate("/login");
+      navigate("/login");
     }
   }, [role, verifyEmail]);
 
@@ -47,7 +46,7 @@ function VerifyOTPForm() {
     onSubmit: async (values) => {
       //   setIsLoading(true);
       const payload = {
-        paramsValue,
+        token,
         otp: values.otp,
       };
       const res = await VerifyOtpAPI(payload);
