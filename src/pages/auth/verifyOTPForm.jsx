@@ -12,12 +12,13 @@ import { setSuccessToast } from "@redux/slice/toast";
 import Loader from "@components/loader";
 import { validateOTPForm } from "./validator";
 import { Box } from "@mui/material";
+
 function VerifyOTPForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams({});
 
-  const { role, verifyEmail } = useSelector((state) => state.auth);
+  const { role, verifyEmail } = useSelector(state => state.auth);
   const [sendingOTP, setSendingOTP] = useState(false);
   //   const [loading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
@@ -31,6 +32,7 @@ function VerifyOTPForm() {
       setToken(token);
     }
   }, []);
+
   useEffect(() => {
     if (!role || !verifyEmail) {
       if (role) dispatch(setUserRole(""));
@@ -43,7 +45,7 @@ function VerifyOTPForm() {
       otp: "",
     },
     validationSchema: validateOTPForm,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       //   setIsLoading(true);
       const payload = {
         token,
@@ -53,7 +55,7 @@ function VerifyOTPForm() {
       if (res.remote === "success") {
         navigate(urlcat("/reset-password", { token: res.data.token }));
       } else {
-        formik.setFieldError("otp", "Invalid or Expired OTP");
+        formik.setFieldError("email", "Invalid or Expired OTP");
       }
     },
   });
@@ -64,6 +66,7 @@ function VerifyOTPForm() {
       email: verifyEmail,
       role,
     };
+
     const res = await SendOtpAPI(payload);
     if (res.remote === "success") {
       setSendingOTP(false);
@@ -72,18 +75,19 @@ function VerifyOTPForm() {
       dispatch(setSuccessToast("Network Error! Try again"));
     }
   };
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group mb-3 enterotp_input">
           <LabeledOtpInput
-            title="Enter OTP"
-            onChange={(e) => formik.setFieldValue("otp", e)}
-            value={formik.values.otp}
+            title="Enter Mail"
+            onChange={e => formik.setFieldValue("mail", e)}
+            value={formik.values.mail}
           />
           <Box sx={{ marginBottom: "10px" }}>
-            {formik.errors.otp ? (
-              <ErrorMessage>{formik.errors.otp}</ErrorMessage>
+            {formik.errors.Mail ? (
+              <ErrorMessage>{formik.errors.mail}</ErrorMessage>
             ) : null}
           </Box>
           <Box sx={{ textAlign: "center", mt: 3 }}>
@@ -96,7 +100,7 @@ function VerifyOTPForm() {
               type="button"
               onClick={handleResendOTP}
               title={
-                sendingOTP ? <Loader loading={sendingOTP} /> : "Resend OTP"
+                sendingOTP ? <Loader loading={sendingOTP} /> : "Resend Mail"
               }
             />
           </Box>

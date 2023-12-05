@@ -8,7 +8,7 @@ import {
 } from "./transform/user";
 import env from "../utils/validateEnv";
 import { USER_ROLES } from "../utils/enum";
-export const CreateUserAPI = async (data) => {
+export const CreateUserAPI = async data => {
   return await api.request({
     url: "/v1/users",
     method: "POST",
@@ -16,7 +16,7 @@ export const CreateUserAPI = async (data) => {
   });
 };
 
-export const LoginUserAPI = async (data) => {
+export const LoginUserAPI = async data => {
   return await api.request({
     url: "/v1/users/session",
     method: "POST",
@@ -29,7 +29,7 @@ export const LoginUserAPI = async (data) => {
  * @param {object} data { userId: string}
  * @returns
  */
-export const GetUserDetailsAPI = async (data) => {
+export const GetUserDetailsAPI = async data => {
   const response = await api.request({
     url: urlcat("/v1/users", data || {}),
   });
@@ -49,7 +49,7 @@ export const LogoutUserAPI = async () => {
   });
 };
 
-export const UpdateProfileImageAPI = async (data) => {
+export const UpdateProfileImageAPI = async data => {
   return await api.request({
     url: "/v1/users/display-image",
     method: "PATCH",
@@ -60,16 +60,30 @@ export const UpdateProfileImageAPI = async (data) => {
   });
 };
 
-export const SendOtpAPI = async (data) => {
+export const SendOtpAPI = async data => {
   return await api.request({
     url: urlcat("/v1/users/send-otp", { email: data.email, role: data.role }),
     method: "GET",
   });
 };
 
-export const VerifyOtpAPI = async (data) => {
+export const VerifyOtpAPI = async data => {
   return await api.request({
-    url: urlcat("v1/users/otp-verification/:otp", data),
+    url: urlcat("v1/users/account-verification/:otp", data),
+    method: "GET",
+  });
+};
+
+export const ResentActivation = async data => {
+  return await api.request({
+    url: urlcat("v1/users/resend-verification", data),
+    method: "POST",
+  });
+};
+
+export const VerifyAcountAPI = async data => {
+  return await api.request({
+    url: urlcat("v1/users/account-verification/:hash_code", data),
     method: "GET",
   });
 };
@@ -82,7 +96,7 @@ export const ResetPasswordAPI = async (data, token) => {
   });
 };
 
-export const SocialLoginAPI = async (data) => {
+export const SocialLoginAPI = async data => {
   return await api.request({
     url: urlcat("v1/users/social-login"),
     method: "POST",
@@ -92,7 +106,11 @@ export const SocialLoginAPI = async (data) => {
 
 export const GetNotificationAPI = async ({ type, created, exactDate }) => {
   const res = await api.request({
-    url: urlcat("v1/users/notification", { type, created, exact_date: exactDate }),
+    url: urlcat("v1/users/notification", {
+      type,
+      created,
+      exact_date: exactDate,
+    }),
     method: "GET",
   });
   if (res.remote === "success") {
@@ -100,8 +118,8 @@ export const GetNotificationAPI = async ({ type, created, exactDate }) => {
       remote: "success",
       data: {
         ...res.data,
-        results: res.data.results.map((data) =>
-          transformNotificationResponse(data)
+        results: res.data.results.map(data =>
+          transformNotificationResponse(data),
         ),
       },
     };
@@ -109,13 +127,13 @@ export const GetNotificationAPI = async ({ type, created, exactDate }) => {
   return res;
 };
 
-export const GetSuggestedAddressAPI = async (search) => {
+export const GetSuggestedAddressAPI = async search => {
   return await api.request({
     url: urlcat("v1/users/get-location", { search }),
     method: "GET",
   });
 };
-export const getLetLongByAddressAPI = async (address) => {
+export const getLetLongByAddressAPI = async address => {
   const res = await api.request({
     url: urlcat("https://maps.googleapis.com/maps/api/geocode/json", {
       address,
@@ -133,20 +151,20 @@ export const getUserIpAPI = async () => {
   });
 };
 
-export const getUserCountryByIpAPI = async (ip) => {
+export const getUserCountryByIpAPI = async ip => {
   return await api.request({
     url: urlcat("https://api.iplocation.net/", { ip }),
     method: "GET",
   });
 };
-export const postUserIpAPI = async (ip) => {
+export const postUserIpAPI = async ip => {
   await api.request({
     url: urlcat("/v1/users/visitors"),
     method: "POST",
-    data: { ip }
+    data: { ip },
   });
 };
-export const getSearchUserFilterAPI = async (data) => {
+export const getSearchUserFilterAPI = async data => {
   const res = await api.request({
     url: urlcat("/v1/users/filter", { role: "job_seeker" }),
     method: "GET",
@@ -154,12 +172,12 @@ export const getSearchUserFilterAPI = async (data) => {
   if (res.remote === "success") {
     return {
       remote: "success",
-      data: res.data.map((data) => transformSearchUserFilterResponse(data)),
+      data: res.data.map(data => transformSearchUserFilterResponse(data)),
     };
   }
   return res;
 };
-export const saveSearchUserFilterAPI = async (data) => {
+export const saveSearchUserFilterAPI = async data => {
   const res = await api.request({
     url: urlcat("/v1/users/filter"),
     method: "POST",
@@ -178,13 +196,13 @@ export const updateSavedSearchUserFilterAPI = async (filterId, status) => {
     data,
   });
 };
-export const deleteSearchUserFilterAPI = async (filterId) => {
+export const deleteSearchUserFilterAPI = async filterId => {
   return await api.request({
     url: urlcat("/v1/users/filter/:filterId", { filterId }),
     method: "DELETE",
   });
 };
-export const searchUserByRole = async (data) => {
+export const searchUserByRole = async data => {
   let jobSubCategories = [];
   let organizationTypes = [];
   let tag = [];
@@ -215,16 +233,16 @@ export const searchUserByRole = async (data) => {
     }
   }
   let url = urlcat("/v1/users/search/:role", { ...newData });
-  jobSubCategories.forEach((subCategory) => {
+  jobSubCategories.forEach(subCategory => {
     url += `&jobSubCategory=${subCategory.title}`;
   });
-  organizationTypes.forEach((organizationType) => {
+  organizationTypes.forEach(organizationType => {
     url += `&organizationType=${organizationType.title}`;
   });
-  tag.forEach((tag) => {
+  tag.forEach(tag => {
     url += `&tag=${tag.title}`;
   });
-  sector.forEach((sector) => {
+  sector.forEach(sector => {
     url += `&sector=${sector.title}`;
   });
   const res = await api.request({
@@ -236,8 +254,8 @@ export const searchUserByRole = async (data) => {
       remote: "success",
       data: {
         ...res.data,
-        results: res.data.results.map((data) =>
-          transformSearchUserByRoleResponse(data)
+        results: res.data.results.map(data =>
+          transformSearchUserByRoleResponse(data),
         ),
       },
     };
@@ -253,7 +271,7 @@ export const getJobSeekerCategoriesAPI = async () => {
   return res;
 };
 
-export const storeProfileAnalyticsAPI = async (data) => {
+export const storeProfileAnalyticsAPI = async data => {
   const res = await api.request({
     url: urlcat("/v1/users/analytic"),
     method: "POST",
@@ -262,7 +280,7 @@ export const storeProfileAnalyticsAPI = async (data) => {
   return res;
 };
 
-export const settingUpdateAPI = async (notificationType) => {
+export const settingUpdateAPI = async notificationType => {
   const res = await api.request({
     url: urlcat("v1/users/notification/settings/:notificationType", {
       notificationType,
