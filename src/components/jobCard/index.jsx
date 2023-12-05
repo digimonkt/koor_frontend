@@ -409,9 +409,16 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   ""
                 )}
               </div>
-              {selfJob && <div className="hr-border"></div>}
+              {selfJob && (
+                <Box sx={{ width: "2px !important" }}>
+                  <Box className="hr-border"></Box>
+                </Box>
+              )}
               {selfJob ? (
-                <div className="job-button-card">
+                <Box
+                  className="job-button-card"
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
                   <button
                     onClick={() => {
                       handleStartPause();
@@ -443,7 +450,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     {<SVG.Edit1 />}
                     <span className="d-block">Edit</span>
                   </button>
-                </div>
+                </Box>
               ) : role !== USER_ROLES.employer ? (
                 <React.Fragment>
                   <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>

@@ -191,10 +191,7 @@ function Header() {
             ""
           )}
 
-          <div
-            className="ms-auto"
-            // ref={menu}
-          >
+          <div className="ms-auto">
             <Stack direction={"row"} alignItems={"center"} spacing={1}>
               {isLoggedIn ? (
                 <>
@@ -206,7 +203,12 @@ function Header() {
                         p: 0,
                         mt: 1,
                       },
-                      display: { xs: "block", sm: "none" },
+                      display: {
+                        xs: "block",
+                        md: "none",
+                        sm: "none",
+                        lg: "none",
+                      },
                     }}
                   >
                     <Box
@@ -223,7 +225,14 @@ function Header() {
                         p: 0,
                         mt: 1,
                       },
-                      display: { xs: "block", sm: "block", lg: "none" },
+                      display: {
+                        xs: "block",
+                        lg: "none",
+                        md: "block",
+                      },
+                      "@media (min-width: 993px) and (max-width: 1200px)": {
+                        display: "none",
+                      },
                     }}
                   >
                     <NotificationPopup />
@@ -277,7 +286,10 @@ function Header() {
                     p: 0,
                   },
                   fontSize: "18px",
-                  display: { lg: "none" },
+                  display: { lg: "none", sm: "block", md: "block" },
+                  "@media (min-width: 993px) and (max-width: 1200px)": {
+                    display: "none",
+                  },
                 }}
               >
                 <SVG.HamburgerMenu className="ms-3" />

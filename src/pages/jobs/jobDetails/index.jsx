@@ -536,7 +536,7 @@ const JobDetails = () => {
                       textAlign: "start",
                       display: "flex",
                       "@media (max-width: 480px)": {
-                        textAlign: "center",
+                        justifyContent: "center",
                       },
                     }}
                   >
@@ -546,11 +546,11 @@ const JobDetails = () => {
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
-                            fontSize: "14px",
+                            fontSize: "14px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px",
-                            padding: "10px 25px",
+                            fontSize: "12px !important",
+                            padding: "10px 25px !important",
                           },
                         }}
                         title={[
@@ -572,11 +572,11 @@ const JobDetails = () => {
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
-                            fontSize: "14px",
+                            fontSize: "14px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px",
-                            padding: "10px 25px",
+                            fontSize: "12px !important",
+                            padding: "10px 25px !important",
                           },
                         }}
                         title={[

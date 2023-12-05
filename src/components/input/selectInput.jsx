@@ -14,6 +14,11 @@ export const SelectBox = styled(Select)`
     font-family: "Poppins";
     font-weight: 500;
   }
+
+  & .MuiList-root-MuiMenu-list {
+    height: 220px;
+  }
+
   & .Mui-disabled {
     color: #848484 !important;
     -webkit-text-fill-color: #848484;
@@ -27,10 +32,10 @@ export const SelectBox = styled(Select)`
     font-weight: 300;
     font-size: 16px;
     line-height: 22px;
-
     letter-spacing: 0.02em;
-
     color: #121212;
+
+    height: 220px;
   }
   & fieldset {
     display: none;
