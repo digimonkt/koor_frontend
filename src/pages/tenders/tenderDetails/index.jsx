@@ -496,11 +496,11 @@ function TenderDetailsComponent() {
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
-                            fontSize: "14px",
+                            fontSize: "14px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px",
-                            padding: "10px 25px",
+                            fontSize: "12px !important",
+                            padding: "10px 25px !important",
                           },
                         }}
                         title={[
