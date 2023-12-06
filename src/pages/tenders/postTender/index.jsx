@@ -129,33 +129,34 @@ const PostTender = () => {
     onSubmit: async (values, { resetForm }) => {
       console.log("values in", values);
       const payload = {
-        title: values.title,
+        title: values.title || "",
         budget_currency: values.budgetCurrency,
         budget_amount: values.budgetAmount,
         budget_pay_period: values.budgetPayPeriod,
-        description: values.description,
-        country: values.country,
-        sector: values.sectors,
-        tender_type: values.opportunityType,
-        city: values.city,
-        tender_category: values.categories,
+        description: values.description || "",
+        country: values.country || "",
+        sector: values.sectors || "",
+        tender_type: values.opportunityType || "",
+        city: values.city || "",
+        tender_category: values.categories || [],
         deadline: dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        address: values.address,
+        address: values.address || "",
         start_date: values.startDate
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
         attachments: values.attachments,
         attachments_remove: values.attachmentsRemove,
-        tag: values.tag,
+        tag: values.tag || "",
         apply_through_koor: values.isApplyThroughKoor || "false",
         apply_through_email: values.isApplyThroughEmail || "false",
         apply_through_website: values.isApplyThroughWebsite || "false",
-        application_instruction: values.applicationInstruction,
-        website_link: values.websiteLink,
+        application_instruction: values.applicationInstruction || "",
+        website_link: values.websiteLink || "",
         contact_email: values.isApplyThroughEmail ? values.contactEmail : "",
-        cc1: values.cc1,
-        cc2: values.cc2,
+        cc1: values.cc1 || "",
+        cc2: values.cc2 || "",
       };
+      console.log({ payload });
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "attachments") {
@@ -467,7 +468,7 @@ const PostTender = () => {
                         placeholder="Address"
                         className="add-form-control"
                         name={formik.getFieldProps("address").name}
-                        onBlur={e => formik.getFieldProps("address").onBlur}
+                        onBlur={() => formik.getFieldProps("address").onBlur}
                         onChange={e => setSearchValue(e.target.value)}
                         value={searchValue}
                       />
@@ -529,9 +530,7 @@ const PostTender = () => {
                   <Grid item xl={12} lg={12} xs={12}>
                     <Grid container spacing={2}>
                       <Grid item xl={4} lg={4} sm={6} xs={12}>
-                        <label>
-                          Sector <span className="required-field">*</span>
-                        </label>
+                        <label>Sector</label>
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Sector"
@@ -549,9 +548,7 @@ const PostTender = () => {
                         ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} sm={6} xs={12}>
-                        <label>
-                          Type <span className="required-field">*</span>
-                        </label>
+                        <label>Type</label>
                         <SelectInput
                           placeholder="Select a type of opportunity"
                           defaultValue=""
@@ -571,9 +568,7 @@ const PostTender = () => {
                         ) : null}
                       </Grid>
                       <Grid item xl={4} lg={4} xs={12}>
-                        <label>
-                          Tag <span className="required-field">*</span>
-                        </label>
+                        <label>Tag</label>
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Tag"

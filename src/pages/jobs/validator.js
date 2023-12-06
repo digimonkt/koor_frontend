@@ -10,7 +10,7 @@ export const validateCreateJobInput = Yup.object()
     budgetPayPeriod: Yup.string().required("Pay period is required"),
     description: Yup.string().required("Description is required"),
     country: Yup.string().required("Country is required"),
-    city: Yup.string().required("City is required"),
+    // city: Yup.string().required("City is required"),
     address: Yup.string().required("Address is required"),
     jobCategories: Yup.string().required("Job Category is required"),
     jobSubCategory: Yup.string(),
@@ -36,7 +36,7 @@ export const validateCreateJobInput = Yup.object()
     deadline: Yup.string()
       .nullable()
       .required("Deadline is required")
-      .test("isFuture", "Date Must be of Future", (value) => {
+      .test("isFuture", "Date Must be of Future", value => {
         return dayjs(value).isSameOrAfter(dayjs(), "days");
       }),
     startDate: Yup.string().nullable().required("Start Date is required"),
@@ -61,7 +61,7 @@ export const validateCreateJobInput = Yup.object()
             return value || this.parent.cc1 || this.parent.cc2;
           }
           return true; // Not required when isApplyThroughEmail is false
-        }
+        },
       ),
     cc1: Yup.string().email("Invalid Email"),
     cc2: Yup.string().email("Invalid Email"),
@@ -76,7 +76,7 @@ export const validateCreateJobInput = Yup.object()
         } else {
           return true;
         }
-      }
+      },
     ),
     highestEducation: Yup.string(),
     // languages: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Language is required"),
@@ -103,13 +103,13 @@ export const validateCreateJobInput = Yup.object()
       }
 
       return true;
-    }
+    },
   );
 
 export const validateCreateTenderInput = Yup.object()
   .shape({
     title: Yup.string().required("Title is required"),
-    opportunityType: Yup.string().required("Type is required"),
+    // opportunityType: Yup.string().required("Type is required"),
     budgetCurrency: Yup.string(),
     budgetAmount: Yup.number(),
     budgetPayPeriod: Yup.string(),
@@ -119,13 +119,13 @@ export const validateCreateTenderInput = Yup.object()
     categories: Yup.array()
       .of(Yup.string())
       .min(1, "At Least one category is required"),
-    sectors: Yup.string().required(" Sector is required"),
-    tag: Yup.string().required(" Tag is required"),
+    // sectors: Yup.string().required(" Sector is required"),
+    // tag: Yup.string().required(" Tag is required"),
     address: Yup.string().required("Address is required"),
     deadline: Yup.string()
       .nullable()
       .required("Deadline is required")
-      .test("isFuture", "Date Must be of Future", (value) => {
+      .test("isFuture", "Date Must be of Future", value => {
         return dayjs(value).isSameOrAfter(dayjs(), "days");
       }),
     isContactEmail: Yup.boolean(),
@@ -151,7 +151,7 @@ export const validateCreateTenderInput = Yup.object()
             return value || this.parent.cc1 || this.parent.cc2;
           }
           return true; // Not required when isApplyThroughEmail is false
-        }
+        },
       ),
     cc1: Yup.string().email("Invalid Email"),
     cc2: Yup.string().email("Invalid Email"),
@@ -190,5 +190,5 @@ export const validateCreateTenderInput = Yup.object()
       }
 
       return true;
-    }
+    },
   );
