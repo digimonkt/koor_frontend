@@ -163,6 +163,7 @@ body {
 
 .MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
   height: 220px !important;
+  min-width: 320px;
 }
 
 ul.listvertical {
@@ -2172,7 +2173,7 @@ span.count {
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   ul.menu {
     position: absolute;
     width: 100%;
@@ -2193,6 +2194,10 @@ span.count {
   .menu.menu-selected {
     visibility: visible;
     opacity: 1;
+  }
+
+  ul.menu .noti-mobile {
+    display: none;
   }
 
   ul.menu li {
@@ -2387,11 +2392,11 @@ input.employersearch {
 }
 
 .job-description {
-  white-space: pre-line;
   font-size: 16px;
   font-family: "Poppins";
   color: #121212;
   font-weight: 600;
+  word-break: break-word !important;
 }
 
 .card-description {

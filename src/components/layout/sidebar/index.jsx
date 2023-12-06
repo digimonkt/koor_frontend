@@ -137,6 +137,12 @@ function Sidebar(props) {
             width: drawerWidth,
             top: "80px",
             minHeight: "495px",
+            zIndex: 3,
+          },
+          "&.MuiDrawer-root": {
+            "@media (min-width: 992px) and (max-width: 1024px)": {
+              display: "block",
+            },
           },
         }}
         open

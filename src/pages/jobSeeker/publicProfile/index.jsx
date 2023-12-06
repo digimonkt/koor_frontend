@@ -270,6 +270,7 @@ export default function PublicProfileComponent() {
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
                           color: "#121212",
+                          wordBreak: "break-word",
                           "@media (max-width: 480px)": {
                             fontSize: "12px",
                           },

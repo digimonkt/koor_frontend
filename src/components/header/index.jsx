@@ -228,11 +228,11 @@ function Header() {
                       display: {
                         xs: "block",
                         lg: "none",
-                        md: "block",
+                        sm: "block",
                       },
-                      "@media (min-width: 993px) and (max-width: 1200px)": {
-                        display: "none",
-                      },
+                      // "@media (min-width: 993px) and (max-width: 1200px)": {
+                      //   display: "none",
+                      // },
                     }}
                   >
                     <NotificationPopup />
@@ -288,7 +288,7 @@ function Header() {
                   fontSize: "18px",
                   display: { lg: "none", sm: "block", md: "block" },
                   "@media (min-width: 993px) and (max-width: 1200px)": {
-                    display: "none",
+                    display: "block",
                   },
                 }}
               >
@@ -433,11 +433,11 @@ function Header() {
                       <NotificationPopup />
                     </IconButton>
                   </li>
-                  <li onClick={() => setIsmenu(false)}>
+                  <MenuItem onClick={() => setIsmenu(false)}>
                     <Link to={`/${role}/my-profile`}>
                       <FilledButton title="My Profile" />
                     </Link>
-                  </li>
+                  </MenuItem>
                 </>
               ) : (
                 <>
