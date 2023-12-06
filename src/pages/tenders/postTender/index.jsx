@@ -558,6 +558,7 @@ const PostTender = () => {
                               label: opportunityType.title,
                             }),
                           )}
+                          value={formik.values.opportunityType || ""}
                           {...formik.getFieldProps("opportunityType")}
                         />
                         {formik.touched.opportunityType &&
