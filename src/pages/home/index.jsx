@@ -30,6 +30,7 @@ import { getTopJobCategoriesAPI } from "../../api/job";
 import {
   getTestimonialListAPI,
   getTopListingCompaniesAPI,
+  getSiteUpdatesAPI,
 } from "../../api/home";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
@@ -40,8 +41,8 @@ const Home = () => {
   const navigate = useNavigate();
   // redux dispatch
   const dispatch = useDispatch();
-  const { countries, jobCategories } = useSelector((state) => state.choices);
-  const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const { countries, jobCategories } = useSelector(state => state.choices);
+  const { role, isLoggedIn } = useSelector(state => state.auth);
   // state management
   const [categories, setCategories] = useState("");
   const [location, setLocation] = useState("");
@@ -49,11 +50,18 @@ const Home = () => {
   const [topJobCategories, setTopJobCategories] = useState([]);
   const [topListingCompanies, setTopListingCompanies] = useState([]);
   const [testimonialList, setTestimonialList] = useState([]);
+  const [siteUpdates, setSiteUpdates] = useState("");
 
   const getTopJobCategories = async () => {
     const res = await getTopJobCategoriesAPI();
     if (res.remote === "success") {
       setTopJobCategories(res.data);
+    }
+  };
+  const getSiteUpdates = async () => {
+    const res = await getSiteUpdatesAPI();
+    if (res.remote === "success") {
+      setSiteUpdates(res.data);
     }
   };
   const getTopListingCompanies = async () => {
@@ -73,6 +81,7 @@ const Home = () => {
     getTopJobCategories();
     getTopListingCompanies();
     getTestimonialList();
+    getSiteUpdates();
   }, []);
   useEffect(() => {
     dispatch(setIstHomePage(true));
@@ -88,7 +97,7 @@ const Home = () => {
   }, []);
   const totalJobs = topJobCategories.reduce(
     (total, item) => total + item.count,
-    0
+    0,
   );
 
   return (
@@ -105,8 +114,7 @@ const Home = () => {
                 position: "relative",
                 "@media (max-width:992px)": { backgroundSize: "contain" },
                 "@media (min-width:992px)": { backgroundSize: "contain" },
-              }}
-            >
+              }}>
               <Box
                 className={styles.back_img_div}
                 sx={{
@@ -120,8 +128,7 @@ const Home = () => {
                         ? "0px"
                         : "60px",
                   },
-                }}
-              >
+                }}>
                 <Box sx={{ width: "100%" }}>
                   <Container
                     maxWidth={false}
@@ -130,28 +137,25 @@ const Home = () => {
                         paddingLeft: "100px",
                         paddingRight: "100px",
                       },
-                    }}
-                  >
+                    }}>
                     <Box
                       className={styles.headding}
                       sx={{
                         paddingTop: "26%",
                         // "@media(max-width:992px)": { paddingTop: "40%" },
                         // "@media(max-width:480px)": { paddingTop: "90%" },
-                      }}
-                    >
+                      }}>
                       <h2>Find your dream job</h2>
                       <h5 className="mb-5">
                         Search for the best opportunities in your area
                       </h5>
                       <form
-                        onSubmit={(e) => {
+                        onSubmit={e => {
                           e.preventDefault();
                           navigate(
-                            `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+                            `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
                           );
-                        }}
-                      >
+                        }}>
                         <Grid
                           container
                           spacing={2}
@@ -163,23 +167,20 @@ const Home = () => {
                           style={{
                             padding: "0px 0px 0px 16px",
                             justifyContent: "space-between",
-                          }}
-                        >
+                          }}>
                           <Grid className="mb-2">
                             <InputSearch
-                              onChange={(e) => setSearchValue(e.target.value)}
+                              onChange={e => setSearchValue(e.target.value)}
                             />
                           </Grid>
                           <Grid className="mb-2 ">
                             <SelectInput
                               value={categories}
-                              onChange={(vl) => setCategories(vl.target.value)}
-                              options={jobCategories.data.map(
-                                (jobCategory) => ({
-                                  value: jobCategory.id,
-                                  label: jobCategory.title,
-                                })
-                              )}
+                              onChange={vl => setCategories(vl.target.value)}
+                              options={jobCategories.data.map(jobCategory => ({
+                                value: jobCategory.id,
+                                label: jobCategory.title,
+                              }))}
                               label="Category"
                               placeholder="Category"
                               className={`${styles.category_select}`}
@@ -188,8 +189,8 @@ const Home = () => {
                           <Grid className="mb-2 ">
                             <SelectInput
                               value={location}
-                              onChange={(vl) => setLocation(vl.target.value)}
-                              options={countries.data.map((country) => ({
+                              onChange={vl => setLocation(vl.target.value)}
+                              options={countries.data.map(country => ({
                                 value: country.id,
                                 label: country.title,
                               }))}
@@ -226,8 +227,7 @@ const Home = () => {
                     paddingLeft: "100px",
                     paddingRight: "100px",
                   },
-                }}
-              >
+                }}>
                 {role !== USER_ROLES.jobSeeker && role !== USER_ROLES.vendor ? (
                   <Stack
                     direction={"row"}
@@ -238,16 +238,14 @@ const Home = () => {
                       padding: "40px 0px",
                       position: "relative",
                       zIndex: 1,
-                    }}
-                  >
+                    }}>
                     <h5 className={styles.home_img_contents_h5}>
                       Are you an employer looking for applicants <br /> to fill
                       your job openings fast?
                     </h5>
                     <Link
                       to={isLoggedIn ? "/employer/jobs/post" : "/login"}
-                      className={styles.home_img_contents_p}
-                    >
+                      className={styles.home_img_contents_p}>
                       Post a job{" "}
                       <SVG.RightArrow className={styles.rightarrow} />
                     </Link>
@@ -264,13 +262,11 @@ const Home = () => {
                   paddingLeft: "100px",
                   paddingRight: "100px",
                 },
-              }}
-            >
+              }}>
               <Box sx={{ width: "100%" }}>
                 <Typography
                   className={`${styles.first_heading}`}
-                  sx={{ mb: 4 }}
-                >
+                  sx={{ mb: 4 }}>
                   Listings from the top companies
                 </Typography>
                 <Grid
@@ -278,8 +274,7 @@ const Home = () => {
                   spacing={{ xs: 2, lg: 10 }}
                   direction="row"
                   justifyContent="center"
-                  alignItems="center"
-                >
+                  alignItems="center">
                   {(topListingCompanies || []).map((item, key) => {
                     return (
                       <>
@@ -313,8 +308,7 @@ const Home = () => {
                     }}
                     onClick={() => {
                       navigate("/search/jobs");
-                    }}
-                  >
+                    }}>
                     See all {totalJobs} jobs{" "}
                     <IconButton>
                       <ArrowForwardIcon sx={{ color: "#eea23d" }} />
@@ -331,10 +325,9 @@ const Home = () => {
                   paddingLeft: "100px",
                   paddingRight: "100px",
                 },
-              }}
-            >
+              }}>
               <SlickSlider
-                items={topJobCategories.map((category) => ({
+                items={topJobCategories.map(category => ({
                   icon: <SVG.Market />,
                   title: category.title,
                   text: `${category.count || 0} jobs`,
@@ -350,8 +343,7 @@ const Home = () => {
                     paddingLeft: "100px",
                     paddingRight: "100px",
                   },
-                }}
-              >
+                }}>
                 <HomeSection />
               </Container>
             </Box>
@@ -366,17 +358,17 @@ const Home = () => {
                     doing. You can read more about us competitors say they
                   </p>
                 </Box>
-                <Box className={styles.home_new_job_box}>
+                <Box className={styles.home_new_job_box} useflexGap>
                   <Box className={`${styles.new_jobs}`}>
-                    <h2>500</h2>
+                    <h2>{siteUpdates.jobs}</h2>
                     <p>New jobs posted every day</p>
                   </Box>
                   <Box className={`${styles.new_jobs}`}>
-                    <h2>7500</h2>
+                    <h2>{siteUpdates.employer}</h2>
                     <p>Employers are hiring now</p>
                   </Box>
                   <Box className={`${styles.new_jobs}`}>
-                    <h2>2050</h2>
+                    <h2>{siteUpdates.tenders}</h2>
                     <p>Tenders are currently active</p>
                   </Box>
                 </Box>
@@ -389,8 +381,7 @@ const Home = () => {
                       paddingLeft: "100px",
                       paddingRight: "100px",
                     },
-                  }}
-                >
+                  }}>
                   <TestimonialSlider testimonialList={testimonialList} />
                 </Container>
               </Box>
@@ -405,8 +396,7 @@ const Home = () => {
                       paddingLeft: "100px",
                       paddingRight: "100px",
                     },
-                  }}
-                >
+                  }}>
                   <Grid container spacing={3}>
                     <Grid item xs={12} lg={5} md={7} sm={6}>
                       <Box className={styles.stay_text_box}>
@@ -424,8 +414,7 @@ const Home = () => {
                             "@media (max-width:480px)": {
                               "& img": { width: "45%" },
                             },
-                          }}
-                        >
+                          }}>
                           <img src={IMAGES.Googleplay} alt="" rel="nofollow" />
                           <img
                             src={IMAGES.Appstore}
@@ -448,8 +437,7 @@ const Home = () => {
                         "@media (max-width:480px)": {
                           padding: "0px 0px 0px",
                         },
-                      }}
-                    >
+                      }}>
                       <img
                         src={IMAGES.MobileApp2}
                         alt=""

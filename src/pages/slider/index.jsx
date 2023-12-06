@@ -48,11 +48,17 @@ const SlickSlider = ({ items }) => {
       {
         breakpoint: 991,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 3,
         },
       },
       {
         breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 500,
         settings: {
           slidesToShow: 1,
         },

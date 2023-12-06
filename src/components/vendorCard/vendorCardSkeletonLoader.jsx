@@ -5,12 +5,12 @@ import Skeleton from "react-loading-skeleton";
 function VendorCardSkeletonLoader() {
   return (
     <Stack
+      sx={{ width: "100%" }}
       direction={{ xs: "column", lg: "row" }}
       spacing={{ xs: "2", lg: "2" }}
       alignItems={{ xs: "start", lg: "center" }}
       justifyContent={{ xs: "center", lg: "space-between" }}
-      className="border-recent"
-    >
+      className="border-recent">
       <Stack direction="row" spacing={2} alignItems="center">
         <Skeleton circle style={{ width: "70px", height: "70px" }} />
         <div className="recent-content">
@@ -21,9 +21,9 @@ function VendorCardSkeletonLoader() {
             flexWrap="wrap"
             alignItems="center"
             sx={{ mb: 1 }}
-          >
+            useFlexGap>
             <h4>
-              <Skeleton width={720} />
+              <Skeleton width={"100%"} />
             </h4>
           </Stack>
           <Stack
@@ -31,8 +31,7 @@ function VendorCardSkeletonLoader() {
             spacing={2}
             alignItems="center"
             sx={{ mb: 1 }}
-            className="meets_div"
-          >
+            className="meets_div">
             <div>
               <span className="meets">
                 <Skeleton width={207} style={{ lineHeight: "9px" }} />
@@ -41,17 +40,21 @@ function VendorCardSkeletonLoader() {
           </Stack>
           <div className="recent-descrition">
             <p>
-              <Skeleton width={1500} count={2} style={{ lineHeight: "9px" }} />
+              <Skeleton
+                width={"100%"}
+                count={2}
+                style={{ lineHeight: "9px" }}
+              />
             </p>
           </div>
           <Stack
             direction="row"
             spacing={2}
             alignItems="center"
-            sx={{ mb: 1, mt: 2 }}
+            sx={{ mb: 1, mt: 2, flexWrap: "wrap" }}
             className="meets_div"
-          >
-            <div style={{ display: "flex" }}>
+            useFlexGap>
+            <Stack direction={"row"} spacing={1.5} flexWrap={"wrap"} useFlexGap>
               <Skeleton
                 height={30}
                 width={100}
@@ -70,7 +73,7 @@ function VendorCardSkeletonLoader() {
                 style={{ borderRadius: "20px" }}
                 className="chiplabel"
               />
-            </div>
+            </Stack>
           </Stack>
         </div>
       </Stack>

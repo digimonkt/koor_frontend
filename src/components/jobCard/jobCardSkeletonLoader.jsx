@@ -20,8 +20,12 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             item
             sx={{
               "@media (min-width: 1200px)": {
-                maxWidth: "12%",
-                flexBasis: "12%",
+                maxWidth: "11%",
+                flexBasis: "11%",
+              },
+              "@media (min-width: 480px)": {
+                maxWidth: "11%",
+                flexBasis: "11%",
               },
             }}
           >
@@ -45,10 +49,14 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
               maxWidth: "64%",
               flexBasis: "64%",
             },
+            "@media (min-width: 480px)": {
+              maxWidth: "64%",
+              flexBasis: "64%",
+            },
           }}
         >
           <div className="my-jobs" style={{ paddingLeft: "75px" }}>
-            <Skeleton height={24} width={500} />
+            <Skeleton height={24} width={"100%"} />
             <p className="my-3 job-description card-description">
               <Skeleton count={2} style={{ lineHeight: "9px" }} />
             </p>
@@ -112,6 +120,10 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
           xs={12}
           sx={{
             "@media (min-width: 1200px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+            "@media (min-width: 480px)": {
               maxWidth: "25%",
               flexBasis: "25%",
             },

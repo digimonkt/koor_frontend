@@ -11,6 +11,7 @@
   font-weight: 300;
   font-size: 14px;
   color: #121212;
+  word-break: break-word;
 }
 .postJob {
   display: flex;
@@ -25,7 +26,7 @@
 }
 .clocs {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: flex-end;
 }
 .clocs p {
@@ -73,7 +74,7 @@
   height: 44px !important;
   font-weight: 600 !important;
   padding: 10px 30px !important;
-  font-size: 16px !important;
+  font-size: 16px;
   margin-bottom: 7% !important;
   color: #fff !important;
   border-radius: 60px !important;
@@ -284,6 +285,12 @@
   justify-content: space-around;
 }
 
+@media screen and (min-width: 600px) and (max-width: 764px) {
+  .width_wise_btn {
+    font-size: 10px;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .clocs p {
     font-size: 10px;
@@ -319,6 +326,7 @@
 
   .clocs {
     justify-content: flex-start;
+    align-items: baseline;
     margin-left: 36px;
   }
 }

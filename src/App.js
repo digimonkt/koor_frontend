@@ -6,7 +6,7 @@ import {
   ROUTES,
   UNAUTHENTICATED_ROUTES,
 } from "./utils/constants/routes";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "./components/layout";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthorizedRoute, UnauthorizedRoute } from "./utils/routes";
@@ -15,9 +15,10 @@ import {
   getUserDetails,
   setCurrentLocation,
   setIsLoggedIn,
+  setUserVerificationToken,
 } from "./redux/slice/user";
 import { ErrorToast, SuccessToast } from "./components/toast";
-import { MESSAGE_TYPE } from "./utils/enum";
+import { MESSAGE_TYPE, USER_ROLES } from "./utils/enum";
 import { resetToast } from "./redux/slice/toast";
 import { FallbackLoading } from "./components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
@@ -31,11 +32,12 @@ import { setIsMobileView } from "@redux/slice/platform";
 const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
-  } = useSelector((state) => state);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  } = useSelector(state => state);
+  const { isLoggedIn } = useSelector(state => state.auth);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
@@ -68,7 +70,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            })
+            }),
           );
         }
       }
@@ -93,6 +95,31 @@ function App() {
       dispatch(setIsMobileView(false));
     }
   }, [platform]);
+  useEffect(() => {
+    if (currentUser.role !== USER_ROLES.employer) {
+      const isVerified = currentUser?.profile?.isVerified;
+      // Get the current URL
+      const currentUrl = window.location.href;
+      // Split the URL based on the '?' character
+      const urlParts = currentUrl.split("?");
+
+      // Check if there is a second part (after '?')
+      if (urlParts.length === 2) {
+        // Get the second part, which contains the query parameters
+        const queryParams = urlParts[1];
+        const paramPairs = queryParams.split("&");
+        const verifyTokenPair = paramPairs.find(pair => pair.startsWith("verify-token="));
+        if (verifyTokenPair) {
+          const verifyToken = verifyTokenPair.split("=")[1];
+          dispatch(setUserVerificationToken(verifyToken));
+        }
+      }
+      if (currentUser?.id && !isVerified) {
+        navigate("/account-verification");
+      }
+    }
+  }, [currentUser?.id, window.location.pathname]);
+
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
@@ -100,7 +127,7 @@ function App() {
         {platform === "android" || platform === "ios" ? null : <Header />}
 
         <Routes>
-          {ROUTES.map((route) => {
+          {ROUTES.map(route => {
             if (!route.path) {
               return null;
             }
@@ -122,7 +149,7 @@ function App() {
               />
             );
           })}
-          {UNAUTHENTICATED_ROUTES.map((route) => {
+          {UNAUTHENTICATED_ROUTES.map(route => {
             if (!route.path) {
               return null;
             }
@@ -189,8 +216,7 @@ function App() {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "20px",
-              }}
-            >
+              }}>
               <Box
                 component={"span"}
                 sx={{
@@ -199,8 +225,7 @@ function App() {
                   height: "4px",
                   background: "#121212",
                   display: "block",
-                }}
-              ></Box>
+                }}></Box>
             </Box>
           </>
         ) : (
