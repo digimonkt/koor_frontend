@@ -311,7 +311,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             sm={2}
             sx={{ marginLeft: "auto" }}
           >
-            <div className="text-end">
+            <Box sx={{ display: "flex", justifyContent: "end" }}>
               <SolidButton
                 // style={{ textTransform: "capitalize", cursor: "default" }}
                 className={
@@ -330,7 +330,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     : 0
                 )}
               />
-            </div>
+            </Box>
             <Stack
               direction="row"
               spacing={2}
@@ -341,7 +341,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             >
               <div className="py-4 border-left-1 py-4 ps-3">
                 {selfTender ? (
-                  <div className="job-button-card">
+                  <Box className="job-button-card">
                     <button
                       onClick={() => {
                         handleStartPause();
@@ -373,7 +373,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       {<SVG.Edit1 />}
                       <span className="d-block">Edit</span>
                     </button>
-                  </div>
+                  </Box>
                 ) : isLoggedIn ? (
                   <React.Fragment>
                     {!applied ? (
