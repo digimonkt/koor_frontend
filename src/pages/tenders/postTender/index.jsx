@@ -498,7 +498,6 @@ const PostTender = () => {
                       <ErrorMessage>{formik.errors.address}</ErrorMessage>
                     ) : null}
                   </Grid>
-
                   <Grid item xl={12} lg={12} sm={12} xs={12}>
                     <label>
                       Category <span className="required-field">*</span>
