@@ -366,7 +366,7 @@ const Home = () => {
                     doing. You can read more about us competitors say they
                   </p>
                 </Box>
-                <Box className={styles.home_new_job_box}>
+                <Box className={styles.home_new_job_box} useflexGap>
                   <Box className={`${styles.new_jobs}`}>
                     <h2>500</h2>
                     <p>New jobs posted every day</p>

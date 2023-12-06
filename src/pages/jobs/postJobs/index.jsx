@@ -18,6 +18,7 @@ import {
   CheckboxInput,
   DateInput,
   LabeledInput,
+  QuillInput,
   SelectInput,
 } from "../../../components/input";
 import CurrencyInput from "./currencyInput";
@@ -63,8 +64,6 @@ import {
 import { getPackageAPI } from "../../../api/choices";
 import { Package } from "../../../components/package";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -251,7 +250,6 @@ function PostJobsComponent() {
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
-
   const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
     if (response.remote === "success") {
@@ -489,6 +487,7 @@ function PostJobsComponent() {
                       title="Experience in Years"
                       className="add-form-control"
                       placeholder="Experience in Years"
+                      type="number"
                       required
                       {...formik.getFieldProps("experience")}
                     />
@@ -500,6 +499,7 @@ function PostJobsComponent() {
                     <CurrencyInput
                       currency="USD"
                       title="Salary"
+                      type="number"
                       optionsValues={{
                         currency: formik.getFieldProps("budgetCurrency"),
                         input: formik.getFieldProps("budgetAmount"),
@@ -518,30 +518,23 @@ function PostJobsComponent() {
                       }}
                     />
                   </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
-                    <Box sx={{ height: "270px" }}>
+                  <Grid item xl={12} lg={12} xs={12} sm={12}>
+                    <Box
+                      sx={{
+                        height: { xs: "300px", sm: "270px", md: "250px" },
+                      }}
+                    >
                       <label>
                         Description<span className="required-field">*</span>
                       </label>
-                      {/* <textarea
-                        className="form-control-area"
+                      <QuillInput
+                        type="textarea"
                         placeholder="Write more details to attract the right candidates."
-                        {...formik.getFieldProps("description")}
-                      ></textarea> */}
-                      <ReactQuill
-                        placeholder="Write more details to attract the right candidates."
-                        theme="snow"
                         value={descData || formik.values.description}
                         modules={{
                           toolbar: toolbarOptions,
                         }}
                         onChange={(value) => handleEditorValue(value)}
-                        className="work-experience-text-editor"
-                        style={{
-                          width: "100%",
-                          marginTop: "10px",
-                          height: "170px",
-                        }}
                       />
                     </Box>
                     <Box
@@ -747,6 +740,7 @@ function PostJobsComponent() {
                     <LabeledInput
                       title="Duration in Month"
                       className="add-form-control"
+                      type="number"
                       placeholder="Months"
                       {...formik.getFieldProps("duration")}
                     />
@@ -769,6 +763,7 @@ function PostJobsComponent() {
                       </Stack>
                       <DateInput
                         className="smallfont"
+                        type="date"
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
                         minDate={dayjs().format("YYYY-MM-DD")}
@@ -794,6 +789,7 @@ function PostJobsComponent() {
                       <DateInput
                         className="smallfont"
                         onChange={(e) => formik.setFieldValue("deadline", e)}
+                        type="date"
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
                         minDate={formik.values.startDate}
@@ -831,6 +827,7 @@ function PostJobsComponent() {
                       <FormControlLabel
                         sx={{ width: "165px" }}
                         control={<Switch />}
+                        type="email"
                         label="Apply by email"
                         checked={formik.values.isApplyThroughEmail}
                         {...formik.getFieldProps("isApplyThroughEmail")}
@@ -838,6 +835,7 @@ function PostJobsComponent() {
                     </FormGroup>
                     <input
                       className="add-form-control"
+                      type="email"
                       placeholder="Your email address"
                       {...formik.getFieldProps("contactEmail")}
                     />
@@ -861,9 +859,13 @@ function PostJobsComponent() {
                   >
                     <input
                       className="add-form-control"
+                      type="email"
                       placeholder="CC email address"
                       {...formik.getFieldProps("cc1")}
                     />
+                    {formik.touched.cc1 && formik.errors.cc1 ? (
+                      <ErrorMessage>{formik.errors.cc1}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid
                     item
@@ -880,35 +882,34 @@ function PostJobsComponent() {
                   >
                     <input
                       className="add-form-control"
+                      type="email"
                       placeholder="Another CC email address"
                       {...formik.getFieldProps("cc2")}
                     />
+                    {formik.touched.cc2 && formik.errors.cc2 ? (
+                      <ErrorMessage>{formik.errors.cc2}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <Box sx={{ height: "245px" }}>
+                    <Box
+                      sx={{
+                        height: { xs: "320px", sm: "270px", md: "250px" },
+                      }}
+                    >
                       <label>
                         Application Instructions
                         <span className="required-field">*</span>
                       </label>
-                      <ReactQuill
+                      <QuillInput
+                        type="textarea"
                         placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
-                        theme="snow"
                         value={
                           applicationInstructionData ||
                           formik.values.applicationInstruction
                         }
-                        modules={{
-                          toolbar: toolbarOptions,
-                        }}
                         onChange={(value) =>
                           handleApplicationInstructionEditorValue(value)
                         }
-                        className="work-experience-text-editor"
-                        style={{
-                          width: "100%",
-                          marginTop: "10px",
-                          height: "150px",
-                        }}
                       />
                     </Box>
                     <Box
@@ -925,11 +926,12 @@ function PostJobsComponent() {
                       ) : null}
                     </Box>
                   </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
+                  <Grid item xl={12} lg={12} xs={12} mt={1}>
                     <FormGroup>
                       <FormControlLabel
                         sx={{ width: "255px" }}
                         control={<Switch />}
+                        type="url"
                         label="Apply through your website"
                         checked={formik.values.isApplyThroughWebsite}
                         {...formik.getFieldProps("isApplyThroughWebsite")}
@@ -1233,7 +1235,6 @@ function PostJobsComponent() {
                         fontFamily: "Bahnschrift !important",
                         padding: "10px 50px !important",
                         background: "#274593 !important",
-                        display: "block",
 
                         "&:hover": {
                           color: "#848484 !important",

@@ -190,7 +190,6 @@ const JobDetails = () => {
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
@@ -532,12 +531,27 @@ const JobDetails = () => {
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
-                  <Box sx={{ textAlign: "start", display: "flex" }}>
+                  <Box
+                    sx={{
+                      textAlign: "start",
+                      display: "flex",
+                      "@media (max-width: 480px)": {
+                        justifyContent: "center",
+                      },
+                    }}
+                  >
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "12px !important",
+                            padding: "10px 25px !important",
+                          },
                         }}
                         title={[
                           <>
@@ -557,6 +571,13 @@ const JobDetails = () => {
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "12px !important",
+                            padding: "10px 25px !important",
+                          },
                         }}
                         title={[
                           <>

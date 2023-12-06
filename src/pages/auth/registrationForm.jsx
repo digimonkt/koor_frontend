@@ -16,7 +16,7 @@ import { setErrorToast } from "../../redux/slice/toast";
 function RegistrationForm() {
   // navigate
   const navigate = useNavigate();
-  const { role, socialLoginError } = useSelector((state) => state.auth);
+  const { role, socialLoginError } = useSelector(state => state.auth);
   const [loading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -32,13 +32,13 @@ function RegistrationForm() {
       confirmPassword: "",
     },
     validationSchema: validateRegistrationForm,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       dispatch(setSocialLoginError(""));
       setIsLoading(true);
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        ""
+        "",
       );
       const payload = {
         password: values.password,
@@ -55,7 +55,8 @@ function RegistrationForm() {
       if (res.remote === "success") {
         setIsLoading(false);
         if (role === USER_ROLES.jobSeeker) {
-          navigate(`/${role}/my-profile/job-criteria`);
+          // navigate(`/${role}/my-profile/job-criteria`);
+          navigate("/account-verification");
         } else {
           navigate(`/${role}/my-profile`);
         }
@@ -97,11 +98,11 @@ function RegistrationForm() {
             <LabeledPhoneInput
               placeholder="Your Mobile Number"
               title="Mobile"
-              onChange={(e) => formik.setFieldValue("mobileNumber", e)}
+              onChange={e => formik.setFieldValue("mobileNumber", e)}
               defaultCountry={formik.values.countryCode}
               international
-              onCountryChange={(e) => formik.setFieldValue("countryCode", e)}
-              isInvalidNumber={(isValid) => {
+              onCountryChange={e => formik.setFieldValue("countryCode", e)}
+              isInvalidNumber={isValid => {
                 if (!isValid) {
                   formik.setFieldError("mobileNumber", "Invalid Mobile Number");
                 }

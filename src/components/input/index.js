@@ -9,10 +9,12 @@ import LabeledRadioInputComponent from "./labeledRadioInput";
 import LabeledPhoneInputComponent from "./labledPhoneInput";
 import OtpInputComponent from "./otpInput";
 import ProfilePicInputComponent from "./profilePicInput";
+import QuillInputComponent from "./quillInput";
 import SelectInputComponent, { SelectBox } from "./selectInput";
 
 export const SelectBoxStyle = SelectBox;
 
+export const QuillInput = QuillInputComponent;
 export const LabeledInput = LabeledInputComponent;
 export const SelectInput = SelectInputComponent;
 export const CheckboxInput = CheckboxInputComponent;

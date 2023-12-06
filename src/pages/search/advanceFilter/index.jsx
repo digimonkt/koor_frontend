@@ -745,7 +745,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                           platform === "android" || platform === "ios"
                             ? "50px !important"
                             : matches
-                            ? "77px !important"
+                            ? "42px !important"
                             : "42px !important",
                       }}
                       className={`${

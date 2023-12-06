@@ -1,20 +1,23 @@
 import { USER_ROLES } from "../../../utils/enum";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Divider, Stack } from "@mui/material";
+import { Avatar, Divider, IconButton, Stack } from "@mui/material";
 // import styles from "../message.module.css";
 import {
   getConversationListAPI,
   getJobSeekerJobApplicationAPI,
 } from "../../../api/chat";
 import { NoDataFoundAnimation } from "../../../components/animations";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { WebSocketClient } from "../../../utils/constants/websocket";
 import { transformConversationResponse } from "../../../api/transform/chat";
 import { useDebounce } from "usehooks-ts";
 import { setIsBlackListedByEmployer } from "../../../redux/slice/user";
 import { setJobSeekerJobApplication } from "@redux/slice/employer";
+import { SVG } from "@assets/svg";
+import { Capacitor } from "@capacitor/core";
 function ChatList({ setIsSeleted }) {
+  const platform = Capacitor.getPlatform();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { role } = useSelector((state) => state.auth);
@@ -33,7 +36,6 @@ function ChatList({ setIsSeleted }) {
   };
 
   const onUpdateChatActivity = (data) => {
-    console.log({ activity: data.content });
     const updatedConversations = data.content.map((conversation) =>
       transformConversationResponse(conversation)
     );
@@ -83,7 +85,12 @@ function ChatList({ setIsSeleted }) {
   }, [debouncedSearchValue]);
   return (
     <>
-      <h3 className="chat_message_text">Messages</h3>
+      <h3 className="chat_message_text">
+        Messages
+        <IconButton LinkComponent={Link} to="/notification">
+          <SVG.NotificationIcon />
+        </IconButton>
+      </h3>
       <div className="searchmessage">
         <div className="searchmessage-icon">
           <input
@@ -131,11 +138,17 @@ function ChatList({ setIsSeleted }) {
                         : "",
                   }}
                 >
-                  <Stack direction="row" spacing={1} alignItems="center">
+                  <Stack direction="row" spacing={2} alignItems="center">
                     <Avatar
                       sx={{
-                        width: "70px",
-                        height: "70px",
+                        width:
+                          platform === "android" || platform === "ios"
+                            ? "40px"
+                            : "70px",
+                        height:
+                          platform === "android" || platform === "ios"
+                            ? "40px"
+                            : "70px",
                         background: "#F0F0F0",
                         color: "#CACACA",
                       }}
