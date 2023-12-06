@@ -16,14 +16,46 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
     <div className="job_card">
       <Grid container spacing={1.875} {...gridProps}>
         {logo && (
-          <Grid item xs={12} sm={6} lg={3}>
-            <div className="squer-width" style={{ height: "100px", width: "100px" }}>
+          <Grid
+            item
+            sx={{
+              "@media (min-width: 1200px)": {
+                maxWidth: "11%",
+                flexBasis: "11%",
+              },
+              "@media (min-width: 480px)": {
+                maxWidth: "11%",
+                flexBasis: "11%",
+              },
+            }}
+          >
+            <div
+              className="squer-width"
+              style={{
+                height: "70px",
+                width: "70px",
+              }}
+            >
               <Skeleton style={{ height: "100%" }} />
             </div>
           </Grid>
         )}
-        <Grid item xs={12} sm={12} md={8} lg={logo ? 6 : 9}>
-          <div className="my-jobs">
+        <Grid
+          item
+          lg={logo ? 8 : 9}
+          xs={12}
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "64%",
+              flexBasis: "64%",
+            },
+            "@media (min-width: 480px)": {
+              maxWidth: "64%",
+              flexBasis: "64%",
+            },
+          }}
+        >
+          <div className="my-jobs" style={{ paddingLeft: "75px" }}>
             <Skeleton height={24} width={"100%"} />
             <p className="my-3 job-description card-description">
               <Skeleton count={2} style={{ lineHeight: "9px" }} />
@@ -32,7 +64,33 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
+              useFlexGap
             >
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
               <Skeleton
                 height={30}
                 width={100}
@@ -47,28 +105,30 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             >
               {!selfJob && (
                 <Stack direction="row" spacing={1}>
-                <Skeleton style={{
-                  width: "100px",
-                 borderRadius: "20px",
-                  "@media (min-width: 500px)": {
-                  width: "50px",
-                  }
-                }}/>
+                  <Skeleton width={200} style={{ borderRadius: "20px" }} />
                 </Stack>
               )}
               <Stack direction="row" spacing={1}>
-                <Skeleton style={{
-                  width: "100px",
-                 borderRadius: "20px",
-                  "@media (min-width: 500px)": {
-                  width: "50px",
-                  }
-                }}/>
+                <Skeleton width={200} style={{ borderRadius: "20px" }} />
               </Stack>
             </Stack>
           </div>
         </Grid>
-        <Grid item xs={12} lg={3}>
+        <Grid
+          item
+          lg={logo ? 2 : 3}
+          xs={12}
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+            "@media (min-width: 480px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+          }}
+        >
           <div className="text-end mb-4">
             <Skeleton height={30} width={100} style={{ borderRadius: "5px" }} />
           </div>
@@ -82,6 +142,7 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             sx={{ minHeight: "87%" }}
           >
             <div className="pricebox py-3">
+              {/* Skeleton Loader for Budget Amount */}
               <span className="d-block">
                 <Skeleton
                   height={30}
