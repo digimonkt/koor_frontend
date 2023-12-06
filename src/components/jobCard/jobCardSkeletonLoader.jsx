@@ -22,7 +22,6 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             </div>
           </Grid>
         )}
-<<<<<<< HEAD
         <Grid
           item
           lg={logo ? 8 : 9}
@@ -40,11 +39,6 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
         >
           <div className="my-jobs" style={{ paddingLeft: "75px" }}>
             <Skeleton height={24} width={500} />
-=======
-        <Grid item xs={12} sm={12} md={8} lg={logo ? 6 : 9}>
-          <div className="my-jobs">
-            <Skeleton height={24} width={"100%"} />
->>>>>>> d84afe2 (conflict resolve)
             <p className="my-3 job-description card-description">
               <Skeleton count={2} style={{ lineHeight: "9px" }} />
             </p>
