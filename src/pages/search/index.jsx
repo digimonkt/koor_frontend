@@ -264,7 +264,7 @@ function Search({ searchTypeForJob }) {
               <AdvanceFilter searchType={searchType || searchTypeForJob} />
             </Box>
             {(platform === "android" || platform === "ios") &&
-              (role === USER_ROLES.vendor || role === USER_ROLES.employer) ? (
+            (role === USER_ROLES.vendor || role === USER_ROLES.employer) ? (
               <Box
                 sx={{
                   marginTop: { lg: "24px", xs: "24px" },
@@ -323,7 +323,7 @@ function Search({ searchTypeForJob }) {
                         />
                       </h2>
                       {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
-                        (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
+                      (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                         <>
                           <IconButton
                             sx={{ width: "50px", height: "50px" }}
@@ -410,7 +410,7 @@ function Search({ searchTypeForJob }) {
                                     sx={{
                                       backgroundColor:
                                         sortBy === data.sortBy &&
-                                          orderBy === data.orderBy
+                                        orderBy === data.orderBy
                                           ? role === USER_ROLES.jobSeeker
                                             ? "#FEEFD3"
                                             : "#D5E3F7"
@@ -456,7 +456,7 @@ function Search({ searchTypeForJob }) {
                                     sx={{
                                       backgroundColor:
                                         sortBy === data.sortBy &&
-                                          orderBy === data.orderBy
+                                        orderBy === data.orderBy
                                           ? role === USER_ROLES.vendors
                                             ? "#FEEFD3"
                                             : "#D5E3F7"

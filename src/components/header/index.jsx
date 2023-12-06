@@ -272,7 +272,7 @@ function Header() {
                       </Box>
 
                       <Box
-                        className="d-lg-none"
+                        // className="d-lg-none"
                         data-cy="login-nav"
                         onClick={() => {
                           dispatch(setUserRole(""));
