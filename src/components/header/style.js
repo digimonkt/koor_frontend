@@ -7,6 +7,9 @@ export const SearchCategory = styled(Stack)(() => ({
   borderRadius: "50px",
   // height: "37px",
   width: "320px",
+  "@media (min-width: 993px) and (max-width: 1024px)": {
+    width: "265px",
+  },
   // paddingLeft: "15px",
 }));
 export const SelectBox = styled(Select)`

@@ -46,6 +46,14 @@ body {
 .btn_font_lower {
   text-transform: lowercase !important;
   cursor: default !important;
+  display: block !important;
+  margin-bottom: 10px !important;
+}
+
+.btn_font_lower_btn {
+  text-transform: lowercase !important;
+  cursor: default !important;
+  display: none !important;
 }
 
 .btn_font_capitalize {
@@ -151,6 +159,15 @@ body {
   color: #121212;
   font-family: "Poppins";
   letter-spacing: 0.14px;
+}
+
+.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
+  height: 220px !important;
+  min-width: 320px;
+}
+
+ul.listvertical {
+  display: none !important;
 }
 
 .manage_job_black_pop
@@ -1316,8 +1333,8 @@ hr {
 .bookmark {
   text-align: center;
   color: #eea23d;
-  margin-left: 20px;
-  width: 60px;
+  margin-left: 5px !important;
+  width: 32px !important;
 }
 
 .bookmark span {
@@ -1353,7 +1370,7 @@ hr {
   letter-spacing: 0.02em;
   white-space: nowrap;
   color: #eea23d;
-  width: 140px;
+  width: 134px;
 }
 
 .pricebox h4 small {
@@ -2156,7 +2173,7 @@ span.count {
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   ul.menu {
     position: absolute;
     width: 100%;
@@ -2177,6 +2194,10 @@ span.count {
   .menu.menu-selected {
     visibility: visible;
     opacity: 1;
+  }
+
+  ul.menu .noti-mobile {
+    display: none;
   }
 
   ul.menu li {
@@ -2371,11 +2392,11 @@ input.employersearch {
 }
 
 .job-description {
-  white-space: pre-line;
   font-size: 16px;
   font-family: "Poppins";
   color: #121212;
   font-weight: 600;
+  word-break: break-word !important;
 }
 
 .card-description {
@@ -2384,7 +2405,6 @@ input.employersearch {
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 3;
-  text-align: justify;
 }
 
 .close_icon_circle svg {
@@ -2562,8 +2582,8 @@ input.employersearch {
     font-size: 14px !important;
   }
 
-  ul.listvertical {
-    display: none !important;
+  .bookmark {
+    width: 32px !important;
   }
 
   .step-continer svg.Mui-active,
@@ -2896,7 +2916,7 @@ input.employersearch {
 
 .hr-border {
   width: 1px;
-  height: 75px;
+  height: 122px;
   background: #ccc;
 }
 
@@ -3007,4 +3027,19 @@ input.employersearch {
     background: url("../images/vendor-appbg.png") no-repeat center top !important;
     background-size: contain !important;
   }
+}
+
+.text-truncate {
+  overflow: hidden;
+  color: #121212;
+  text-overflow: ellipsis;
+
+  font-family: Poppins !important;
+  font-size: 11px !important;
+  font-style: normal;
+  font-weight: 400 !important;
+  line-height: 16px;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }

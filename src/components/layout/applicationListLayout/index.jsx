@@ -25,7 +25,7 @@ function ApplicationListLayout({
         spacing={{ xs: 1, lg: 2, md: 1 }}
         justifyContent={{ xs: "flex-start", lg: "space-between" }}
         alignItems={{ xs: "flex-start", lg: "center" }}
-        sx={{ mt: 2 }}
+        sx={{ marginTop: { lg: "32px" } }}
       >
         <div className="toggle-application">
           Applications

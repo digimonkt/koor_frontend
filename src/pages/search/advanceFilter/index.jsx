@@ -237,7 +237,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-        (typeof filter.country === "string" ? filter.country : "")
+      (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -725,6 +725,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               {allFilters.map((filter) => {
                 return (
                   <MenuItem
+                    disableRipple={true}
                     key={filter.id}
                     sx={{
                       "&.MuiButtonBase-root": {
@@ -734,12 +735,19 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     }}
                   >
                     <SearchButton
-                      sx={{ whiteSpace: "nowrap !important" }}
-                      className={`${
-                        selectedFilter === filter.id
+                      sx={{
+                        whiteSpace: "nowrap !important",
+                        height:
+                          platform === "android" || platform === "ios"
+                            ? "50px !important"
+                            : matches
+                              ? "42px !important"
+                              : "42px !important",
+                      }}
+                      className={`${selectedFilter === filter.id
                           ? styles.btninActive
                           : styles.btnActive
-                      }`}
+                        }`}
                       leftIcon={
                         <div
                           onClick={() => toggleNotificationStatus(filter.id)}

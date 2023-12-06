@@ -443,8 +443,12 @@
   .home_powerfull_p {
     text-align: center;
   }
+  .new_jobs {
+    margin-bottom: 15px;
+  }
   .home_new_job_box {
     margin-left: 0px;
+    flex-wrap: wrap;
   }
   header {
     display: block !important;
