@@ -297,6 +297,12 @@ export const UNAUTHENTICATED_ROUTES = [
     component: VerifyAccount,
   },
   {
+    id: "verifyAccount",
+    name: "Verify OTP",
+    path: "/activation",
+    component: VerifyAccount,
+  },
+  {
     id: "resetPassword",
     name: "Reset Password",
     path: "/reset-password",
@@ -304,17 +310,17 @@ export const UNAUTHENTICATED_ROUTES = [
   },
   platform === "android" || platform === "ios"
     ? {
-        id: "spalsh",
-        name: "spalsh",
-        path: "/",
-        component: Spalsh,
-      }
+      id: "spalsh",
+      name: "spalsh",
+      path: "/",
+      component: Spalsh,
+    }
     : {
-        id: "home",
-        name: "Home",
-        path: "/",
-        component: Home,
-      },
+      id: "home",
+      name: "Home",
+      path: "/",
+      component: Home,
+    },
 ];
 
 //
@@ -339,11 +345,11 @@ export const AUTHENTICATED_ROUTES = [
   },
   platform === "android" || platform === "ios"
     ? {
-        id: "setting",
-        name: "setting",
-        path: "/setting",
-        component: Setting,
-      }
+      id: "setting",
+      name: "setting",
+      path: "/setting",
+      component: Setting,
+    }
     : "",
 ];
 
@@ -387,11 +393,11 @@ export const JOB_SEEKER_ROUTES = [
   },
   platform === "android" || platform === "ios"
     ? {
-        id: "browseJob",
-        name: "browserJob",
-        path: "/job-feed",
-        component: BrowserJob,
-      }
+      id: "browseJob",
+      name: "browserJob",
+      path: "/job-feed",
+      component: BrowserJob,
+    }
     : "",
 ];
 

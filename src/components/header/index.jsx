@@ -19,9 +19,11 @@ import { FilledButton, OutlinedButton } from "../button";
 import { SVG } from "../../assets/svg";
 import { SEARCH_TYPE, USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserRole } from "../../redux/slice/user";
+import { setIsLoggedIn, setUserRole } from "../../redux/slice/user";
 import NotificationPopup from "./notificationPopup";
 import DialogBox from "../../components/dialogBox";
+import { LogoutUserAPI } from "@api/user";
+import { globalLocalStorage } from "@utils/localStorage";
 
 // const ismenu = false;
 
@@ -50,6 +52,14 @@ function Header() {
       setAccountVerifiedWarning(true);
       e.preventDefault();
     }
+  };
+  const userLogout = async () => {
+    await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
+  };
+  const logoutHandle = () => {
+    userLogout();
+    dispatch(setIsLoggedIn(false));
   };
   useEffect(() => {
     switch (role) {
@@ -296,9 +306,8 @@ function Header() {
               </IconButton>
             </Stack>
             <ul
-              className={`menu ${ismenu && "menu-selected"} ${
-                role !== USER_ROLES.jobSeeker ? "color-change" : null
-              }`}
+              className={`menu ${ismenu && "menu-selected"} ${role !== USER_ROLES.jobSeeker ? "color-change" : null
+                }`}
             >
               {!isLoggedIn ? (
                 <li onClick={() => setIsmenu(false)}>
@@ -383,7 +392,7 @@ function Header() {
                         ? "#274593"
                         : "",
                     }}
-                    // onClick={(e) => checkUserLoggedIn(e)}
+                  // onClick={(e) => checkUserLoggedIn(e)}
                   >
                     Browse tenders
                   </Link>
@@ -433,11 +442,20 @@ function Header() {
                       <NotificationPopup />
                     </IconButton>
                   </li>
-                  <li onClick={() => setIsmenu(false)}>
-                    <Link to={`/${role}/my-profile`}>
-                      <FilledButton title="My Profile" />
-                    </Link>
-                  </li>
+                  {role &&
+                    <li onClick={() => setIsmenu(false)}>
+                      <Link to={`/${role}/my-profile`}>
+                        <FilledButton title="My Profile" />
+                      </Link>
+                    </li>
+                  }
+                  {!currentUser.profile.isVerified &&
+                    <li onClick={() => logoutHandle()}>
+
+                      <FilledButton title="Log Out" />
+
+                    </li>
+                  }
                 </>
               ) : (
                 <>
