@@ -55,7 +55,8 @@ function RegistrationForm() {
       if (res.remote === "success") {
         setIsLoading(false);
         if (role === USER_ROLES.jobSeeker) {
-          navigate(`/${role}/my-profile/job-criteria`);
+          // navigate(`/${role}/my-profile/job-criteria`);
+          navigate("/account-verification");
         } else {
           navigate(`/${role}/my-profile`);
         }

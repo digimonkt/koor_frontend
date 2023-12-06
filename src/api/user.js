@@ -76,14 +76,15 @@ export const VerifyOtpAPI = async data => {
 
 export const ResentActivation = async data => {
   return await api.request({
-    url: urlcat("v1/users/resend-verification", data),
+    url: urlcat("v1/users/resend-verification"),
     method: "POST",
+    data
   });
 };
 
 export const VerifyAcountAPI = async data => {
   return await api.request({
-    url: urlcat("v1/users/account-verification/:hash_code", data),
+    url: urlcat("v1/users/account-verification/:hash_code", { hash_code: data }),
     method: "GET",
   });
 };
