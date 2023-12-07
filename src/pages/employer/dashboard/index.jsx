@@ -192,7 +192,7 @@ const Dashboard = () => {
                         opacity: "0.5",
                         color: "#121212",
                         fontWeight: "400",
-                        mb: 0.5,
+                        my: 0,
                       },
                     }}
                   >
