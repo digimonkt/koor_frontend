@@ -224,6 +224,9 @@ function Header() {
                         mt: 1,
                       },
                       display: { xs: "block", sm: "block", lg: "none" },
+                      "@media (min-width: 1100px) and (max-width: 1200px)": {
+                        display: "none",
+                      },
                     }}
                   >
                     <NotificationPopup />
@@ -278,6 +281,9 @@ function Header() {
                   },
                   fontSize: "18px",
                   display: { lg: "none" },
+                  "@media (min-width: 1100px) and (max-width: 1200px)": {
+                    display: "none",
+                  },
                 }}
               >
                 <SVG.HamburgerMenu className="ms-3" />

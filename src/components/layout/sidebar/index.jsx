@@ -132,11 +132,18 @@ function Sidebar(props) {
         variant="permanent"
         sx={{
           display: { xs: "none", lg: "block" },
+
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
             top: "80px",
             minHeight: "495px",
+            zIndex: 3,
+          },
+          "&.MuiDrawer-root": {
+            "@media (min-width: 992px) and (max-width: 1200px)": {
+              display: "block",
+            },
           },
         }}
         open

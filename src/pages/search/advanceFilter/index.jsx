@@ -727,6 +727,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               {allFilters.map((filter) => {
                 return (
                   <MenuItem
+                    disableRipple={true}
                     key={filter.id}
                     sx={{
                       "&.MuiButtonBase-root": {
