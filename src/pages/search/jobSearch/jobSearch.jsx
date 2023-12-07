@@ -14,7 +14,6 @@ function JobSearchComponent() {
   );
   return (
     <div>
-      <JobCardSkeletonLoader logo />
       {isSearching ? (
         [1, 2, 3, 4, 5].map((loader) => {
           return (
