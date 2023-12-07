@@ -568,9 +568,7 @@ function PostJobsComponent() {
                     ) : null}
                   </Grid>
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
-                    <label>
-                      City<span className="required-field">*</span>
-                    </label>
+                    <label>City</label>
                     <SelectInput
                       placeholder={formik.values.country ? "City" : "City"}
                       disabled={!formik.values.country}
@@ -929,6 +927,7 @@ function PostJobsComponent() {
                         {...formik.getFieldProps("isApplyThroughWebsite")}
                       />
                     </FormGroup>
+                    {/* <Box className="Apply_through_input"> */}
                     <LabeledInput
                       title=""
                       className="add-form-control"
@@ -936,6 +935,7 @@ function PostJobsComponent() {
                       required
                       {...formik.getFieldProps("websiteLink")}
                     />
+                    {/* </Box> */}
                     {formik.touched.websiteLink && formik.errors.websiteLink ? (
                       <ErrorMessage>{formik.errors.websiteLink}</ErrorMessage>
                     ) : null}
