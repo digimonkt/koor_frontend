@@ -140,7 +140,7 @@ function Sidebar(props) {
             zIndex: 3,
           },
           "&.MuiDrawer-root": {
-            "@media (min-width: 992px) and (max-width: 1024px)": {
+            "@media (min-width: 992px) and (max-width: 1200px)": {
               display: "block",
             },
           },

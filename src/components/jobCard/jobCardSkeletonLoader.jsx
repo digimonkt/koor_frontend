@@ -99,17 +99,17 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             </Stack>
             <Stack
               direction="row"
-              spacing={2}
+              spacing={{ xs: 0, lg: 1 }}
               className="mt-3"
-              divider={<Divider orientation="vertical" flexItem />}
+              // divider={<Divider orientation="vertical" flexItem />}
+              flexWrap={"wrap"}
+              useFlexGap
             >
               {!selfJob && (
-                <Stack direction="row" spacing={1}>
-                  <Skeleton width={200} style={{ borderRadius: "20px" }} />
-                </Stack>
+                <Skeleton width={150} style={{ borderRadius: "20px" }} />
               )}
               <Stack direction="row" spacing={1}>
-                <Skeleton width={200} style={{ borderRadius: "20px" }} />
+                <Skeleton width={150} style={{ borderRadius: "20px" }} />
               </Stack>
             </Stack>
           </div>

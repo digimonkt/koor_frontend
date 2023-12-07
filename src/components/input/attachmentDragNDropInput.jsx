@@ -70,7 +70,7 @@ function AttachmentDragNDropInputComponent({
   });
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid container spacing={{ lg: 3, xs: 0, sm: 2, md: 2 }}>
         <Grid item xl={6} lg={6} sm={6} xs={12}>
           <div {...getRootProps({ className: "dropzone styles_attachment" })}>
             <input {...getInputProps()} />
