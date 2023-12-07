@@ -23,10 +23,12 @@ function TenderCardSkeletonLoader(logo, selfJob) {
                 maxWidth: "10.555%",
                 flexBasis: "10.555%",
               },
-            }}>
+            }}
+          >
             <div
               className="squer-width"
-              style={{ height: "150px", width: "150px" }}>
+              style={{ height: "150px", width: "150px" }}
+            >
               <Skeleton circle style={{ height: "100%" }} />
             </div>
           </Grid>
@@ -40,7 +42,8 @@ function TenderCardSkeletonLoader(logo, selfJob) {
               maxWidth: "72%",
               flexBasis: "72%",
             },
-          }}>
+          }}
+        >
           <div className="my-jobs" style={{ paddingLeft: "75px" }}>
             <Skeleton height={24} width={500} />
             <p className="my-3 job-description card-description">
@@ -49,7 +52,8 @@ function TenderCardSkeletonLoader(logo, selfJob) {
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
-              sx={{ width: "100%", flexWrap: "wrap" }}>
+              sx={{ width: "100%", flexWrap: "wrap" }}
+            >
               <Skeleton
                 height={30}
                 width={100}
@@ -85,7 +89,8 @@ function TenderCardSkeletonLoader(logo, selfJob) {
               direction="row"
               spacing={2}
               className="mt-3"
-              divider={<Divider orientation="vertical" flexItem />}>
+              divider={<Divider orientation="vertical" flexItem />}
+            >
               {!selfJob && (
                 <Stack direction="row" spacing={1}>
                   <Skeleton width={200} style={{ borderRadius: "20px" }} />
@@ -108,7 +113,8 @@ function TenderCardSkeletonLoader(logo, selfJob) {
             alignItems="center"
             divider={<Divider orientation="vertical" flexItem />}
             className="py-2"
-            sx={{ minHeight: "87%" }}>
+            sx={{ minHeight: "87%" }}
+          >
             <div className="pricebox py-3">
               {/* Skeleton Loader for Budget Amount */}
               <span className="d-block">

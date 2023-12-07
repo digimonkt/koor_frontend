@@ -290,7 +290,7 @@ function TenderDetailsComponent() {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9} sm={8}>
+              <Grid item xs={12} lg={9} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <div
@@ -360,7 +360,7 @@ function TenderDetailsComponent() {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={3} sm={4}>
+              <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   user={details?.user}
@@ -489,18 +489,27 @@ function TenderDetailsComponent() {
               </div>
               {role === USER_ROLES.vendor || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
-                  <Box sx={{ textAlign: "start", display: "flex" }}>
+                  <Box
+                    sx={{
+                      textAlign: "start",
+                      display: "flex",
+                      "@media (max-width: 480px)": {
+                        display: "block",
+                      },
+                    }}
+                  >
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
-                            fontSize: "14px",
+                            fontSize: "14px !important",
+                            padding: "10px 22px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px",
-                            padding: "10px 25px",
+                            fontSize: "10px !important",
+                            padding: "10px 25px !important",
                           },
                         }}
                         title={[
@@ -525,6 +534,15 @@ function TenderDetailsComponent() {
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                            marginTop: "20px",
+                            marginLeft: "0px !important",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "10px !important",
+                            padding: "10px 30px !important",
+                          },
                         }}
                         title={[
                           <>

@@ -299,7 +299,7 @@ const JobDetails = () => {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9} sm={7}>
+              <Grid item xs={12} lg={9} md={7} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <Box
@@ -396,7 +396,7 @@ const JobDetails = () => {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={3} sm={5}>
+              <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
@@ -406,6 +406,11 @@ const JobDetails = () => {
                   <div className={`${styles.jobpostbtn}`}>
                     {details.isApplyThroughKoor && (
                       <FilledButton
+                        sx={{
+                          "@media (min-width: 600px) and (max-width: 760px)": {
+                            fontSize: "10px !important",
+                          },
+                        }}
                         title={
                           details.isApplied
                             ? details.isEditable
@@ -473,6 +478,7 @@ const JobDetails = () => {
                       justifyContent="center"
                     >
                       <OutlinedButton
+                        className={styles.width_wise_btn}
                         title={
                           details.isSaved
                             ? "Saved"
@@ -506,6 +512,9 @@ const JobDetails = () => {
                           "&:hover": {
                             backgroundColor: "transparent !important",
                           },
+                          "@media (min-width: 600px) and (max-width: 760px)": {
+                            fontSize: "10px !important",
+                          },
                         }}
                         onClick={() => {
                           setIsSharing(true);
@@ -536,7 +545,7 @@ const JobDetails = () => {
                       textAlign: "start",
                       display: "flex",
                       "@media (max-width: 480px)": {
-                        textAlign: "center",
+                        justifyContent: "center",
                       },
                     }}
                   >
@@ -546,11 +555,11 @@ const JobDetails = () => {
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
-                            fontSize: "14px",
+                            fontSize: "14px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px",
-                            padding: "10px 25px",
+                            fontSize: "10px !important",
+                            padding: "10px 25px !important",
                           },
                         }}
                         title={[
@@ -572,11 +581,11 @@ const JobDetails = () => {
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
-                            fontSize: "14px",
+                            fontSize: "14px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px",
-                            padding: "10px 25px",
+                            fontSize: "10px !important",
+                            padding: "10px 30px !important",
                           },
                         }}
                         title={[

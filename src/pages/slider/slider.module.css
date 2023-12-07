@@ -27,17 +27,22 @@
 .slider_box {
   display: flex !important;
   align-items: center;
-  padding: 0px 0px 0px 20px;
+  padding: 22px 10px 22px 20px;
   background-color: #feefd3;
   margin-top: 50px;
   border-radius: 10px;
-  height: 100px;
   width: 250px;
+  word-break: break-word;
+  margin-right: 15px;
 }
 
 @media screen and (max-width: 992px) {
   .slider_box_h4 {
     font-size: 14px;
+  }
+
+  .slider_box {
+    width: 220px;
   }
 
   .slider_box_p {

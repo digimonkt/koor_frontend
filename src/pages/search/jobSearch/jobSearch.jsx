@@ -14,6 +14,7 @@ function JobSearchComponent() {
   );
   return (
     <div>
+      <JobCardSkeletonLoader logo />
       {isSearching ? (
         [1, 2, 3, 4, 5].map((loader) => {
           return (
@@ -32,7 +33,7 @@ function JobSearchComponent() {
             <React.Fragment key={job.id}>
               <JobCard logo jobDetails={job} />
               <AdSenseCard
-                code={adSenseData.code}
+                code={adSenseData?.code}
                 show={index > 0 && index % AD_AFTER_RECORDS === 0}
               />
               <Divider />

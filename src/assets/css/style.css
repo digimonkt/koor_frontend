@@ -161,6 +161,15 @@ body {
   letter-spacing: 0.14px;
 }
 
+.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
+  height: 220px !important;
+  min-width: 320px;
+}
+
+ul.listvertical {
+  display: none !important;
+}
+
 .manage_job_black_pop
   .MuiButtonBase-root-MuiRadio-root
   .Mui-checked.MuiFormControlLabel-root
@@ -1361,7 +1370,7 @@ hr {
   letter-spacing: 0.02em;
   white-space: nowrap;
   color: #eea23d;
-  width: 140px;
+  width: 134px;
 }
 
 .pricebox h4 small {
@@ -2187,6 +2196,10 @@ span.count {
     opacity: 1;
   }
 
+  ul.menu .noti-mobile {
+    display: none;
+  }
+
   ul.menu li {
     display: block;
     border-top: 1px solid #cacaca;
@@ -2379,11 +2392,11 @@ input.employersearch {
 }
 
 .job-description {
-  white-space: pre-line;
   font-size: 16px;
   font-family: "Poppins";
   color: #121212;
   font-weight: 600;
+  word-break: break-word !important;
 }
 
 .card-description {
@@ -2571,10 +2584,6 @@ input.employersearch {
 
   .bookmark {
     width: 32px !important;
-  }
-
-  ul.listvertical {
-    display: none !important;
   }
 
   .step-continer svg.Mui-active,
@@ -2907,7 +2916,7 @@ input.employersearch {
 
 .hr-border {
   width: 1px;
-  height: 75px;
+  height: 122px;
   background: #ccc;
 }
 
