@@ -8,7 +8,7 @@ export const SearchCategory = styled(Stack)(() => ({
   // height: "37px",
   width: "320px",
   "@media (min-width: 993px) and (max-width: 1024px)": {
-    width: "265px",
+    width: "280px",
   },
   // paddingLeft: "15px",
 }));
