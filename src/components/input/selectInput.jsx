@@ -87,6 +87,13 @@ function SelectInputComponent({
           inputProps={{ "aria-label": "Without label" }}
           IconComponent={SVG.arrowDown}
           value={value}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                width: "200px", // Set your desired width here
+              },
+            },
+          }}
           displayEmpty
           renderValue={
             value && value.length !== 0
@@ -108,6 +115,8 @@ function SelectInputComponent({
                   fontSize: "16px",
                   fontFamily: "Poppins",
                   color: "#121212",
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
                 }}
               >
                 {option.label}
