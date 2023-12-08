@@ -108,6 +108,10 @@ body {
   margin: 0;
 }
 
+.ql-align-justify {
+  word-break: break-word;
+}
+
 .credits_button {
   font-size: 14px !important;
   font-weight: 500 !important;
