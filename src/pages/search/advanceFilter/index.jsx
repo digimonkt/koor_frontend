@@ -727,6 +727,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               {allFilters.map((filter) => {
                 return (
                   <MenuItem
+                    disableRipple={true}
                     key={filter.id}
                     sx={{
                       "&.MuiButtonBase-root": {
@@ -745,7 +746,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                           platform === "android" || platform === "ios"
                             ? "50px !important"
                             : matches
-                            ? "77px !important"
+                            ? "42px !important"
                             : "42px !important",
                       }}
                       className={`${
@@ -765,9 +766,20 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         </div>
                       }
                       text={
-                        <div onClick={() => handleSelectFilter(filter)}>
+                        <Box
+                          sx={{
+                            wordBreak: "break-word",
+                            overflow: "hidden",
+                            overflowY: "auto",
+                            height: "42px",
+                            resize: "none",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                          onClick={() => handleSelectFilter(filter)}
+                        >
                           {filter.title}
-                        </div>
+                        </Box>
                       }
                       handleCross={() => {
                         // handleDeleteFilter(filter.id);

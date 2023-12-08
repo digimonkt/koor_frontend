@@ -148,7 +148,6 @@ function ApplyForTender() {
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
@@ -435,8 +434,8 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                        ? "Update"
-                        : "Apply"
+                      ? "Update"
+                      : "Apply"
                   }
                   sx={{
                     "@media (max-width: 480px)": {

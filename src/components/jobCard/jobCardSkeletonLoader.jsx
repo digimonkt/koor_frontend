@@ -20,8 +20,12 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             item
             sx={{
               "@media (min-width: 1200px)": {
-                maxWidth: "2.555%",
-                flexBasis: "2.555%",
+                maxWidth: "12%",
+                flexBasis: "12%",
+              },
+              "@media (min-width: 480px)": {
+                maxWidth: "12%",
+                flexBasis: "12%",
               },
             }}
           >
@@ -42,8 +46,12 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
           xs={12}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "80%",
-              flexBasis: "80%",
+              maxWidth: "64%",
+              flexBasis: "64%",
+            },
+            "@media (min-width: 480px)": {
+              maxWidth: "64%",
+              flexBasis: "64%",
             },
           }}
         >
@@ -91,22 +99,36 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             </Stack>
             <Stack
               direction="row"
-              spacing={2}
+              spacing={{ xs: 0, lg: 1 }}
               className="mt-3"
-              divider={<Divider orientation="vertical" flexItem />}
+              // divider={<Divider orientation="vertical" flexItem />}
+              flexWrap={"wrap"}
+              useFlexGap
             >
               {!selfJob && (
-                <Stack direction="row" spacing={1}>
-                  <Skeleton width={200} style={{ borderRadius: "20px" }} />
-                </Stack>
+                <Skeleton width={150} style={{ borderRadius: "20px" }} />
               )}
               <Stack direction="row" spacing={1}>
-                <Skeleton width={200} style={{ borderRadius: "20px" }} />
+                <Skeleton width={150} style={{ borderRadius: "20px" }} />
               </Stack>
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12}>
+        <Grid
+          item
+          lg={logo ? 2 : 3}
+          xs={12}
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+            "@media (min-width: 480px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+          }}
+        >
           <div className="text-end mb-4">
             <Skeleton height={30} width={100} style={{ borderRadius: "5px" }} />
           </div>

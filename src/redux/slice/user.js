@@ -10,6 +10,7 @@ const initialState = {
   isLoggedIn: false,
   isHomePage: false,
   role: "",
+  userVerificationToken: null,
   currentUser: {
     id: "",
     sessionId: "",
@@ -272,6 +273,9 @@ export const authSlice = createSlice({
     setSocialLoginError: (state, action) => {
       state.socialLoginError = action.payload;
     },
+    setUserVerificationToken: (state, action) => {
+      state.userVerificationToken = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.pending, (state, action) => {
@@ -310,5 +314,6 @@ export const {
   setCurrentLocation,
   setSocialLoginError,
   setIsBlackListedByEmployer,
+  setUserVerificationToken,
 } = authSlice.actions;
 export default authSlice.reducer;

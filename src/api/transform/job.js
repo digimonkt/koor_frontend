@@ -52,11 +52,12 @@ export const transformFullJobDetails = (data) => {
   const today = dayjs(new Date().toISOString().split("T")[0]);
   const tomorrow = today.add(-1, "day");
   const deadline = dayjs(data.deadline);
+  const description = data.description !== "<p><br></p>" ? data.description : "";
   return {
     id: data.id,
     title: data.title,
     application: data.application || {},
-    description: data.description,
+    description,
     budgetCurrency: data.budget_currency,
     budgetAmount: Number(data.budget_amount).toLocaleString().replace(/,/g, ""),
     budgetPayPeriod: data.budget_pay_period,

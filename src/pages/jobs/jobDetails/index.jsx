@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  getApplyJobByEmailAPI,
+  // getApplyJobByEmailAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
@@ -135,34 +135,32 @@ const JobDetails = () => {
     }
   };
 
-  function handleSendEmail(jobId) {
-    getApplyJobByEmail(jobId);
-    // const email = details.contactEmail;
-    // const ccEmail1 = details.cc1;
-    // const ccEmail2 = details.cc2;
-    // const subject = `Job Application for ${details.title}`;
-    // const body = `Here is the my job application for this job \n ${window.location.href}`;
-    // let link = `mailto:${email}?&subject=${encodeURIComponent(
-    //   subject
-    // )}&body=${encodeURIComponent(body)}`;
-    // if (ccEmail1) {
-    //   link += `&cc=${ccEmail1}`;
-    // }
-    // if (ccEmail1 && ccEmail2) {
-    //   link += `,${ccEmail2}`;
-    // }
-    // const tag = document.createElement("a");
-    // tag.href = link;
-    // tag.target = "_blank";
-    // document.body.appendChild(tag);
-    // tag.click();
-    // document.body.removeChild(tag);
+  function handleSendEmail(details) {
+    const email = details.contactEmail;
+    const ccEmail1 = details.cc1;
+    const ccEmail2 = details.cc2;
+    const subject = `Job Application for ${details.title}`;
+    const body = `Here is the my job application for this job \n ${window.location.href}`;
+    let link = `mailto:${email}?&subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    if (ccEmail1) {
+      link += `&cc=${ccEmail1}`;
+    }
+    if (ccEmail1 && ccEmail2) {
+      link += `,${ccEmail2}`;
+    }
+    const tag = document.createElement("a");
+    tag.href = link;
+    tag.target = "_blank";
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
   }
-  const getApplyJobByEmail = async (jobId) => {
-    dispatch(setSuccessToast("Job apply by email successfully"));
-    const res = await getApplyJobByEmailAPI(jobId);
-    console.log({ res });
-  };
+  // const getApplyJobByEmail = async (jobId) => {
+  //   dispatch(setSuccessToast("Job apply by email successfully"));
+  //   await getApplyJobByEmailAPI(jobId);
+  // };
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
@@ -192,7 +190,6 @@ const JobDetails = () => {
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
@@ -302,10 +299,13 @@ const JobDetails = () => {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9} sm={7}>
+              <Grid item xs={12} lg={9} md={7} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <p className="job-description">{details.description}</p>
+                  <Box
+                    className={styles.job_detail_description}
+                    dangerouslySetInnerHTML={{ __html: details.description }}
+                  ></Box>
                 </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
@@ -324,11 +324,20 @@ const JobDetails = () => {
                     leftIcon={<SVG.LocationIcon />}
                     className={`${styles.iconbutton}`}
                   />
-                  <SearchButton
-                    text={`${details.workingDays || 2}-Day Week`}
-                    leftIcon={<SVG.BagClock />}
-                    className={`${styles.iconbutton}`}
-                  />
+                  {details?.workingDays && (
+                    <SearchButton
+                      text={`${details.workingDays}`}
+                      leftIcon={<SVG.BagClock />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  )}
+                  {details?.duration && (
+                    <SearchButton
+                      text={`${details.duration} Months`}
+                      leftIcon={<SVG.BagClock />}
+                      className={`${styles.iconbutton}`}
+                    />
+                  )}
                   {details.isFullTime && (
                     <SearchButton
                       text="Full Time"
@@ -387,7 +396,7 @@ const JobDetails = () => {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={3} sm={5}>
+              <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
@@ -397,17 +406,22 @@ const JobDetails = () => {
                   <div className={`${styles.jobpostbtn}`}>
                     {details.isApplyThroughKoor && (
                       <FilledButton
+                        sx={{
+                          "@media (min-width: 600px) and (max-width: 760px)": {
+                            fontSize: "10px !important",
+                          },
+                        }}
                         title={
                           details.isApplied
                             ? details.isEditable
                               ? "Edit"
                               : "Applied"
                             : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for this job",
-                            ]
+                                <>
+                                  <SVG.Enable1 className="me-2" />
+                                </>,
+                                "Apply for this job",
+                              ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -464,15 +478,16 @@ const JobDetails = () => {
                       justifyContent="center"
                     >
                       <OutlinedButton
+                        className={styles.width_wise_btn}
                         title={
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.SaveIcon1 className="me-2" />
-                              </>,
-                              "Save job",
-                            ]
+                                <>
+                                  <SVG.SaveIcon1 className="me-2" />
+                                </>,
+                                "Save job",
+                              ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -497,6 +512,9 @@ const JobDetails = () => {
                           "&:hover": {
                             backgroundColor: "transparent !important",
                           },
+                          "@media (min-width: 600px) and (max-width: 760px)": {
+                            fontSize: "10px !important",
+                          },
                         }}
                         onClick={() => {
                           setIsSharing(true);
@@ -514,16 +532,35 @@ const JobDetails = () => {
             <>
               <div className={`${styles.LikeJob}`}>
                 <h2>Application Instructions:</h2>
-                {details.applicationInstruction}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: details.applicationInstruction,
+                  }}
+                ></div>
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
-                  <Box sx={{ textAlign: "start", display: "flex" }}>
+                  <Box
+                    sx={{
+                      textAlign: "start",
+                      display: "flex",
+                      "@media (max-width: 480px)": {
+                        justifyContent: "center",
+                      },
+                    }}
+                  >
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
                           color: "#eea23d !important",
                           borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "10px !important",
+                            padding: "10px 25px !important",
+                          },
                         }}
                         title={[
                           <>
@@ -534,35 +571,34 @@ const JobDetails = () => {
                         // className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (isLoggedIn) {
-                            window.open(details.websiteLink, "_blank");
-                          } else {
-                            setRegistrationWarning(true);
-                          }
+                          window.open(details.websiteLink, "_blank");
                         }}
                       />
                     )}
                     {!details.isApplied && details.isApplyThroughEmail && (
-                      <a
-                        href={`mailto:email@example.com?subject=[Help]%20Base%20Leisure&cc=${details.cc1},${details.cc2}`}
-                      >
-                        <OutlinedButton
-                          sx={{
-                            color: "#eea23d !important",
-                            borderColor: "#eea23d !important",
-                          }}
-                          title={[
-                            <>
-                              <SVG.ArrowOutward className="me-2" />
-                            </>,
-                            "Apply by email",
-                          ]}
-                          className="ms-3"
-                          onClick={() => {
-                            handleSendEmail(details.id);
-                          }}
-                        />
-                      </a>
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "10px !important",
+                            padding: "10px 30px !important",
+                          },
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply by email",
+                        ]}
+                        className="ms-3"
+                        onClick={() => {
+                          handleSendEmail(details);
+                        }}
+                      />
                     )}
                   </Box>
                 </div>
@@ -646,7 +682,7 @@ const JobDetails = () => {
               </div>
             </DialogBox>
           </div>
-          {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+          {/* {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
             <>
               <div className={`${styles.LikeJob}`}>
                 <h2>Application Instructions:</h2>
@@ -701,7 +737,7 @@ const JobDetails = () => {
               ) : null}
               <Divider />
             </>
-          )}
+          )} */}
           <Box
             className={`${styles.LikeJob}`}
             sx={{

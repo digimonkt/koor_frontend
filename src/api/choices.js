@@ -41,6 +41,7 @@ export const getJobCategoriesAPI = async (data) => {
   }
   return response;
 };
+
 export const getJobSubCategoriesAPI = async (data) => {
   const response = await api.request({
     url: urlcat("/v1/admin/job-sub-category", data),

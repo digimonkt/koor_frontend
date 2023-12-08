@@ -18,6 +18,7 @@
   line-height: 19px;
   color: #ffffff;
 }
+
 span.blueview {
   width: 16px;
   height: 16px;
@@ -65,6 +66,7 @@ span.blueview {
 .series-box ul li {
   padding: 5px 0px;
 }
+
 .series-box ul li b {
   font-weight: 600;
   color: #121212;
@@ -80,6 +82,7 @@ span.blueview {
   color: #121212;
   margin-bottom: 16px;
 }
+
 .recent-box h3 {
   font-family: "Bahnschrift";
   font-style: normal;
@@ -157,6 +160,7 @@ span.blueview {
   opacity: 0.75;
   padding: 5px 10px !important;
 }
+
 .meets {
   font-family: "Poppins";
   font-style: normal;
@@ -167,6 +171,7 @@ span.blueview {
 
   color: #848484;
 }
+
 .recent-descrition p {
   color: #121212;
   font-size: 12px;
@@ -185,9 +190,11 @@ span.blueview {
   border-bottom: 1px solid #cacaca;
   padding: 16px 0px;
 }
+
 .border-recent:last-child {
   border-bottom: 0px;
 }
+
 .edit-button button {
   background: transparent;
   border: 0px;
@@ -203,6 +210,7 @@ span.blueview {
   text-transform: capitalize !important;
   padding: 6px 10px !important;
 }
+
 .edit-button button span {
   display: block;
   white-space: nowrap;
@@ -216,10 +224,12 @@ span.blueview {
   line-height: 22px !important;
   color: #f0f0f0 !important;
 }
+
 .Mui-selected .job-count {
   background: #d5e3f7 !important;
   color: #274593 !important;
 }
+
 .jobsearch {
   width: 100%;
 
@@ -261,9 +271,11 @@ span.blueview {
   color: #274593;
   cursor: pointer;
 }
+
 .jobt-btn-search:hover {
   background: #1976d20a;
 }
+
 .job-button-card button {
   background: transparent;
   border: 0px;
@@ -282,6 +294,7 @@ span.blueview {
   outline: none;
   cursor: pointer;
 }
+
 .toggle-application {
   font-family: "Poppins";
   font-style: normal;
@@ -320,11 +333,13 @@ span.arrowjobs svg {
   /* Black #121212 */
   color: #121212;
 }
+
 .my-jobs h2 a {
   font-family: "Poppins";
 
   color: #121212;
 }
+
 .my-jobs h2 a:hover {
   color: #121212;
 }
@@ -335,12 +350,11 @@ span.arrowjobs svg {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  /* or 133% */
   letter-spacing: 0.02em;
-
-  /* Black #121212 */
   color: #121212;
+  text-align: justify;
 }
+
 .cricle {
   display: inline-flex;
   background: #cacaca;
@@ -361,6 +375,7 @@ span.arrowjobs svg {
   /* Black #121212 */
   color: #121212;
 }
+
 .chip-cricle {
   font-family: "Poppins" !important;
 
@@ -373,9 +388,11 @@ span.arrowjobs svg {
   color: #121212 !important;
   padding-left: 10px !important;
 }
+
 .font-w {
   font-weight: 500;
 }
+
 .recent-content a {
   text-decoration: none;
   color: #121212;
@@ -383,16 +400,18 @@ span.arrowjobs svg {
   font-weight: 600;
   font-family: "Poppins";
 }
+
 .job-border {
   border-bottom: 1px solid #cacaca;
 }
+
 .user-application h4 {
   font-family: "Bahnschrift";
+  text-transform: capitalize;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
-
   color: #121212;
   margin: 0px 0px 5px 0px;
 }
@@ -407,6 +426,7 @@ span.arrowjobs svg {
   color: #121212;
   margin: 0;
 }
+
 .user-descrition {
   width: 50%;
 }
@@ -454,6 +474,7 @@ span.arrowjobs svg {
   color: #121212;
   padding: 5px 0px;
 }
+
 .user-skills {
   border-top: 1px solid #cacaca;
   margin-top: 20px;
@@ -462,6 +483,7 @@ span.arrowjobs svg {
 .user-descrition p:last-child {
   margin-bottom: 0px;
 }
+
 .skills-card {
   padding-top: 24px;
 }
@@ -519,12 +541,15 @@ span.arrowjobs svg {
   /* Black #121212 */
   color: #121212;
 }
+
 .skills-card ul li:last-child {
   border-bottom: 0px;
 }
+
 .right-pull {
   float: right;
 }
+
 .form-content label {
   font-family: "Poppins";
   font-style: normal;
@@ -534,6 +559,7 @@ span.arrowjobs svg {
   display: inline-block;
   margin-bottom: 5px;
 }
+
 .job-content h2 {
   margin: 0;
   font-family: "Bahnschrift";
@@ -543,6 +569,7 @@ span.arrowjobs svg {
   line-height: 34px;
   color: #121212;
 }
+
 .styles_attachment {
   border: 2px dashed #cacaca;
   border-radius: 6px;
@@ -583,6 +610,7 @@ span.arrowjobs svg {
   /* Dark grey */
   color: #848484;
 }
+
 .attachment-box.inline-attacment li {
   display: flex;
   align-items: center;
@@ -596,6 +624,7 @@ span.arrowjobs svg {
   text-overflow: ellipsis;
   margin-right: 1rem;
 }
+
 .current-creatdit {
   font-family: "Poppins";
   font-style: normal;
@@ -606,9 +635,11 @@ span.arrowjobs svg {
   color: #121212;
   margin: 0;
 }
+
 .mb-30 {
   margin-bottom: 32px !important;
 }
+
 .itemvalue {
   padding: 20px 40px;
   border: 2px solid #d5e3f7;
@@ -661,13 +692,16 @@ span.arrowjobs svg {
   width: 20px;
   color: #848484;
 }
+
 .selected-card {
   border-radius: 20px;
 }
+
 .icon-width svg {
   width: 135px;
   height: 109px;
 }
+
 .description-newjob {
   font-family: "Poppins";
   font-style: normal;
@@ -678,6 +712,7 @@ span.arrowjobs svg {
 
   color: #121212;
 }
+
 .backappling {
   font-family: "Bahnschrift";
   font-style: normal;
@@ -692,6 +727,7 @@ span.arrowjobs svg {
   /* Dark grey */
   color: #848484;
 }
+
 @media (min-width: 1200px) {
   .itemvalue ul {
     height: 140px;
@@ -715,12 +751,14 @@ span.arrowjobs svg {
 .selected-card ul svg {
   color: #fff;
 }
+
 .telentsearchicon {
   position: absolute;
   left: 28px;
   top: 19px;
   display: inline-flex;
 }
+
 .searchmainbox {
   position: relative;
   width: 100%;
@@ -774,28 +812,36 @@ span.arrowjobs svg {
     white-space: normal;
     word-break: break-all;
   }
+
   .posting_tender_done_icon {
     width: 87.66px;
     height: 87.92px;
   }
+
   .job-border h4 {
     font-size: 20px;
   }
+
   .recent-box h3 {
     font-size: 24px;
   }
+
   .form-content label {
     font-size: 14px !important;
   }
+
   .post_tender_done_dailog h1 {
     font-size: 24px;
   }
+
   .recent-research span {
     font-size: 14px;
   }
+
   .job-content h2 {
     font-size: 24px;
   }
+
   .recent-research {
     font-size: 16px;
   }
@@ -860,38 +906,49 @@ span.arrowjobs svg {
   .recent-research span {
     font-size: 12px;
   }
+
   .recent-content {
     align-items: start !important;
   }
+
   .user-application h4 {
     font-size: 14px;
   }
+
   .job-border h4 {
     font-size: 18px;
   }
+
   .applicant_attack_anchor {
     font-size: 12px;
   }
+
   .blue_attach_icon {
     width: 30px;
     height: 30px;
   }
+
   .my-jobs h2 {
     font-size: 14px !important;
   }
+
   .recent-box h3 {
     font-size: 20px;
   }
+
   .styles_attachment {
     padding: 20px;
   }
+
   .job-content h2 {
     font-size: 20px;
   }
+
   .form-content label {
     font-size: 12px !important;
     color: #121212;
   }
+
   .attachment-box ul li {
     font-size: 12px;
   }
@@ -899,6 +956,7 @@ span.arrowjobs svg {
   .post_tender_done_dailog h1 {
     font-size: 20px;
   }
+
   .post_tender_done_dailog p {
     font-size: 12px;
   }

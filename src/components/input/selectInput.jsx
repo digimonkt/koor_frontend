@@ -14,6 +14,11 @@ export const SelectBox = styled(Select)`
     font-family: "Poppins";
     font-weight: 500;
   }
+
+  & .MuiList-root-MuiMenu-list {
+    height: 220px;
+  }
+
   & .Mui-disabled {
     color: #848484 !important;
     -webkit-text-fill-color: #848484;
@@ -27,10 +32,10 @@ export const SelectBox = styled(Select)`
     font-weight: 300;
     font-size: 16px;
     line-height: 22px;
-
     letter-spacing: 0.02em;
-
     color: #121212;
+
+    height: 220px;
   }
   & fieldset {
     display: none;
@@ -82,6 +87,13 @@ function SelectInputComponent({
           inputProps={{ "aria-label": "Without label" }}
           IconComponent={SVG.arrowDown}
           value={value}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                width: "200px", // Set your desired width here
+              },
+            },
+          }}
           displayEmpty
           renderValue={
             value && value.length !== 0
@@ -103,6 +115,8 @@ function SelectInputComponent({
                   fontSize: "16px",
                   fontFamily: "Poppins",
                   color: "#121212",
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
                 }}
               >
                 {option.label}

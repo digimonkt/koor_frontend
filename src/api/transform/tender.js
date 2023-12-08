@@ -34,13 +34,14 @@ export const transformTenderResponse = (data) => {
   };
 };
 export const transformFullTenderDetails = (data) => {
+  const description = data.description !== "<p><br></p>" ? data.description : "";
   return {
     id: data.id,
     title: data.title,
     tenderId: data.tender_id,
     budgetCurrency: data.budget_currency,
     budgetAmount: data.budget_amount,
-    description: data.description,
+    description,
     country: data.country || {},
     city: data.city || {},
     address: data.address || "",
@@ -72,6 +73,14 @@ export const transformFullTenderDetails = (data) => {
     isSaved: data.is_saved,
     isEditable: data.is_editable,
     application: data.application,
+    contactEmail: data.contact_email || "",
+    cc1: data.cc1 || "",
+    cc2: data.cc2 || "",
+    isApplyThroughKoor: data.apply_through_koor,
+    isApplyThroughEmail: data.apply_through_email,
+    isApplyThroughWebsite: data.apply_through_website,
+    applicationInstruction: data.application_instruction,
+    websiteLink: data.website_link,
   };
 };
 

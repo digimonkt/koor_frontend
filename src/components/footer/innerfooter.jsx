@@ -434,25 +434,67 @@ const InnerFooter = () => {
         <Stack
           direction={{ xs: "column", lg: "row", sm: "row" }}
           spacing={{ xs: 1, sm: 2, lg: 5 }}
-          alignItems={{ xs: "flex-start", lg: "center" }}
-          justifyContent={"space-between"}
+          alignItems={{
+            xs: "flex-start",
+            lg: "center",
+            sm: "center",
+            md: "center",
+          }}
+          justifyContent={{
+            lg: "space-between",
+            sx: "center",
+            md: "space-between",
+            sm: "space-between",
+          }}
           flexDirection={{ xs: "column-reverse", lg: "row", sm: "row" }}
           sx={{ mt: 4, "@media (max-width:540px)": { mt: 0 } }}
         >
-          <Stack direction={"row"} spacing={1} alignItems="center">
-            <SVG.KoorLogo style={{ width: "90px" }} />
-            <Typography
+          <Stack
+            direction={{ lg: "row", sx: "column" }}
+            spacing={1}
+            alignItems="center"
+            sx={{
+              "@media (max-width: 480px)": {
+                justifyContent: "center",
+                width: "100%",
+              },
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <SVG.KoorLogo style={{ width: "90px" }} />
+              <Typography
+                sx={{
+                  fontSize: "16px",
+                  color: "#121212",
+                  ms: 1,
+                  fontWeight: 400,
+                  fontFamily: "Bahnschrift",
+                  whiteSpace: "nowrap",
+                  "@media (max-width:992px)": { fontSize: "16px" },
+                }}
+              >
+                © Copyright {dayjs().year()}, Koor
+              </Typography>
+            </Box>
+            <Box
               sx={{
-                fontSize: "16px",
-                color: "#121212",
-                mt: 2,
-                fontWeight: 400,
-                fontFamily: "Bahnschrift",
-                "@media (max-width:992px)": { fontSize: "16px" },
+                display: "none",
+                "@media (max-width: 480px)": {
+                  display: "block",
+                  marginTop: "10px",
+                },
               }}
             >
-              © Copyright {dayjs().year()}, Koor
-            </Typography>
+              <Link
+                to="/terms-condition"
+                style={{ color: "#848484", marginRight: "10px" }}
+              >
+                Terms of use
+              </Link>
+              <Link to="/privacy-policy" style={{ color: "#848484" }}>
+                Privacy policy
+              </Link>
+            </Box>
           </Stack>
 
           <Stack
@@ -466,12 +508,24 @@ const InnerFooter = () => {
               "@media (max-width:992px)": { width: "100%", fontSize: "12px" },
             }}
           >
-            <Link to="/terms-condition" style={{ color: "#848484" }}>
-              Terms of use
-            </Link>
-            <Link to="/privacy-policy" style={{ color: "#848484" }}>
-              Privacy policy
-            </Link>
+            <Box
+              sx={{
+                display: "block",
+                "@media (max-width: 480px)": {
+                  display: "none",
+                },
+              }}
+            >
+              <Link
+                to="/terms-condition"
+                style={{ color: "#848484", marginRight: "10px" }}
+              >
+                Terms of use
+              </Link>
+              <Link to="/privacy-policy" style={{ color: "#848484" }}>
+                Privacy policy
+              </Link>
+            </Box>
           </Stack>
           <Stack
             className="iconfooter"

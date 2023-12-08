@@ -18,6 +18,7 @@ import {
   CheckboxInput,
   DateInput,
   LabeledInput,
+  QuillInput,
   SelectInput,
 } from "../../../components/input";
 import CurrencyInput from "./currencyInput";
@@ -27,6 +28,7 @@ import { validateCreateJobInput } from "../validator";
 import { ErrorMessage } from "../../../components/caption";
 import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   getCities,
   getCountries,
@@ -85,6 +87,7 @@ function PostJobsComponent() {
   const { minimumCreditJobPost, totalAvailableCredits } = useSelector(
     (state) => state.employer
   );
+  const { isMobileView } = useSelector((state) => state.platform);
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
@@ -92,6 +95,24 @@ function PostJobsComponent() {
   const [isRedirect, setIsRedirect] = useState(false);
   const [packageData, setPackageData] = useState([]);
   const [buyPackage, setBuyPackage] = useState(false);
+  const [descData, setDescData] = useState("");
+  const [applicationInstructionData, setApplicationInstructionData] =
+    useState("");
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // basic formatting
+    ["blockquote", "code-block"], // blockquote and code block
+    [{ header: 1 }, { header: 2 }], // headers
+    [{ list: "ordered" }, { list: "bullet" }], // ordered and unordered lists
+    [{ script: "sub" }, { script: "super" }], // subscript and superscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent and indent
+    [{ direction: "rtl" }], // text direction
+    [{ size: ["small", false, "large", "huge"] }], // font size
+    [{ color: [] }, { background: [] }], // text and background color
+    [{ font: [] }], // font family
+    [{ align: [] }], // text alignment
+    ["link", "image", "video"], // link, image, and video
+    ["clean"], // remove formatting
+  ];
   const handleRedirect = () => {
     setOpen(close);
     setIsRedirect(true);
@@ -141,7 +162,7 @@ function PostJobsComponent() {
         budget_currency: values.budgetCurrency,
         budget_amount: values.budgetAmount,
         budget_pay_period: values.budgetPayPeriod,
-        description: values.description,
+        description: descData,
         country: values.country,
         city: values.city,
         address: values.address,
@@ -229,7 +250,6 @@ function PostJobsComponent() {
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
-
   const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
     if (response.remote === "success") {
@@ -321,6 +341,7 @@ function PostJobsComponent() {
   };
   const handleBuyPackage = async (planDetails) => {
     const data = {
+      package: planDetails.title.toLowerCase(),
       points: planDetails.credit,
       amount: Number(planDetails.price),
       note: `Employer buy ${planDetails.title} Plan`,
@@ -333,6 +354,21 @@ function PostJobsComponent() {
       dispatch(setErrorToast("Something Went Wrong"));
     }
   };
+  const handleEditorValue = (content) => {
+    setDescData(content);
+    formik.setFieldValue(
+      "description",
+      content !== "<p><br></p>" ? content : ""
+    );
+  };
+  const handleApplicationInstructionEditorValue = (content) => {
+    setApplicationInstructionData(content);
+    formik.setFieldValue(
+      "applicationInstruction",
+      content !== "<p><br></p>" ? content : ""
+    );
+  };
+
   useEffect(() => {
     if (isRedirect) {
       navigate(`/${USER_ROLES.employer}/manage-jobs`);
@@ -419,6 +455,11 @@ function PostJobsComponent() {
         >
           <div className="job-content">
             <h2>
+              {isMobileView && (
+                <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
+                  <ArrowBackIcon />
+                </IconButton>
+              )}
               {jobId ? "Update Job" : "Post new job"}
               <span className="right-pull">
                 <IconButton LinkComponent={Link} to={"/employer/manage-jobs"}>
@@ -446,6 +487,7 @@ function PostJobsComponent() {
                       title="Experience in Years"
                       className="add-form-control"
                       placeholder="Experience in Years"
+                      type="number"
                       required
                       {...formik.getFieldProps("experience")}
                     />
@@ -457,6 +499,7 @@ function PostJobsComponent() {
                     <CurrencyInput
                       currency="USD"
                       title="Salary"
+                      type="number"
                       optionsValues={{
                         currency: formik.getFieldProps("budgetCurrency"),
                         input: formik.getFieldProps("budgetAmount"),
@@ -475,58 +518,71 @@ function PostJobsComponent() {
                       }}
                     />
                   </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
-                    <div>
+                  <Grid item xl={12} lg={12} xs={12} sm={12}>
+                    <Box
+                      sx={{
+                        height: { xs: "300px", sm: "270px", md: "250px" },
+                      }}
+                    >
                       <label>
                         Description<span className="required-field">*</span>
                       </label>
-                      <textarea
-                        className="form-control-area"
+                      <QuillInput
+                        type="textarea"
                         placeholder="Write more details to attract the right candidates."
-                        {...formik.getFieldProps("description")}
-                      ></textarea>
-                    </div>
-                    {formik.touched.description && formik.errors.description ? (
-                      <ErrorMessage>{formik.errors.description}</ErrorMessage>
-                    ) : null}
+                        value={descData || formik.values.description}
+                        modules={{
+                          toolbar: toolbarOptions,
+                        }}
+                        onChange={(value) => handleEditorValue(value)}
+                      />
+                    </Box>
+                    <Box
+                      style={{
+                        width: "100%",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {formik.touched.description &&
+                      formik.errors.description ? (
+                        <ErrorMessage>{formik.errors.description}</ErrorMessage>
+                      ) : null}
+                    </Box>
                   </Grid>
-                  <Grid item xl={9} lg={9} sm={8} xs={12}>
+                  <Grid item xl={5} lg={5} sm={4} xs={12}>
                     <label>
                       Location<span className="required-field">*</span>
                     </label>
-                    <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          className="location-select"
-                          placeholder="Country"
-                          defaultValue=""
-                          options={countries.data.map((country) => ({
-                            value: country.id,
-                            label: country.title,
-                          }))}
-                          {...formik.getFieldProps("country")}
-                        />
-                        {formik.touched.country && formik.errors.country ? (
-                          <ErrorMessage>{formik.errors.country}</ErrorMessage>
-                        ) : null}
-                      </Grid>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          placeholder={formik.values.country ? "City" : "City"}
-                          disabled={!formik.values.country}
-                          options={(
-                            cities.data[formik.values.country] || []
-                          ).map((country) => ({
-                            value: country.id,
-                            label: country.title,
-                          }))}
-                          {...formik.getFieldProps("city")}
-                        />
-                        {formik.touched.city && formik.errors.city ? (
-                          <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                        ) : null}
-                      </Grid>
-                    </Grid>
+                    <SelectInput
+                      className="location-select"
+                      placeholder="Country"
+                      defaultValue=""
+                      options={countries.data.map((country) => ({
+                        value: country.id,
+                        label: country.title,
+                      }))}
+                      {...formik.getFieldProps("country")}
+                    />
+                    {formik.touched.country && formik.errors.country ? (
+                      <ErrorMessage>{formik.errors.country}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
+                    <label>City</label>
+                    <SelectInput
+                      placeholder={formik.values.country ? "City" : "City"}
+                      disabled={!formik.values.country}
+                      options={(cities.data[formik.values.country] || []).map(
+                        (country) => ({
+                          value: country.id,
+                          label: country.title,
+                        })
+                      )}
+                      {...formik.getFieldProps("city")}
+                    />
+                    {formik.touched.city && formik.errors.city ? (
+                      <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={3} lg={3} sm={4} xs={12}>
                     <label>
@@ -539,7 +595,7 @@ function PostJobsComponent() {
                         placeholder="Address"
                         className="add-form-control"
                         name={formik.getFieldProps("address").name}
-                        onBlur={(e) => formik.getFieldProps("address").onBlur}
+                        onBlur={() => formik.getFieldProps("address").onBlur}
                         onChange={(e) => setSearchValue(e.target.value)}
                         value={searchValue}
                       />
@@ -570,58 +626,51 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.address}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
+                  <Grid item xl={6} lg={6} xs={12}>
                     <label>
                       Job Category
                       <span className="required-field">*</span>
                     </label>
-                    <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          defaultValue=""
-                          placeholder="Select a Job category"
-                          options={jobCategories.data.map((jobCategory) => ({
-                            value: jobCategory.id,
-                            label: jobCategory.title,
-                          }))}
-                          name={"jobCategories"}
-                          value={formik.values.jobCategories || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        {formik.touched.jobCategories &&
-                          formik.errors.jobCategories ? (
-                          <ErrorMessage>
-                            {formik.errors.jobCategories}
-                          </ErrorMessage>
-                        ) : null}
-                      </Grid>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          defaultValue=""
-                          placeholder={
-                            formik.values.jobCategories
-                              ? "Job Sub Category"
-                              : "Select Category first"
-                          }
-                          options={(
-                            jobSubCategories.data[
-                            formik.values.jobCategories
-                            ] || []
-                          ).map((subCategory) => ({
-                            value: subCategory.id,
-                            label: subCategory.title,
-                          }))}
-                          {...formik.getFieldProps("jobSubCategory")}
-                        />
-                        {formik.touched.jobSubCategory &&
-                          formik.errors.jobSubCategory ? (
-                          <ErrorMessage>
-                            {formik.errors.jobSubCategory}
-                          </ErrorMessage>
-                        ) : null}
-                      </Grid>
-                    </Grid>
+                    <SelectInput
+                      defaultValue=""
+                      placeholder="Select a Job category"
+                      options={jobCategories.data.map((jobCategory) => ({
+                        value: jobCategory.id,
+                        label: jobCategory.title,
+                      }))}
+                      name={"jobCategories"}
+                      value={formik.values.jobCategories || ""}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.jobCategories &&
+                    formik.errors.jobCategories ? (
+                      <ErrorMessage>{formik.errors.jobCategories}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={6} lg={6} xs={12}>
+                    <label>Sub Category</label>
+                    <SelectInput
+                      defaultValue=""
+                      placeholder={
+                        formik.values.jobCategories
+                          ? "Job Sub Category"
+                          : "Select Category first"
+                      }
+                      options={(
+                        jobSubCategories.data[formik.values.jobCategories] || []
+                      ).map((subCategory) => ({
+                        value: subCategory.id,
+                        label: subCategory.title,
+                      }))}
+                      {...formik.getFieldProps("jobSubCategory")}
+                    />
+                    {formik.touched.jobSubCategory &&
+                    formik.errors.jobSubCategory ? (
+                      <ErrorMessage>
+                        {formik.errors.jobSubCategory}
+                      </ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={5} lg={5} xs={12} className="jobtype_grid">
                     <label>Job type</label>
@@ -681,6 +730,7 @@ function PostJobsComponent() {
                     <LabeledInput
                       title="Duration in Month"
                       className="add-form-control"
+                      type="number"
                       placeholder="Months"
                       {...formik.getFieldProps("duration")}
                     />
@@ -703,6 +753,7 @@ function PostJobsComponent() {
                       </Stack>
                       <DateInput
                         className="smallfont"
+                        type="date"
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
                         minDate={dayjs().format("YYYY-MM-DD")}
@@ -728,6 +779,7 @@ function PostJobsComponent() {
                       <DateInput
                         className="smallfont"
                         onChange={(e) => formik.setFieldValue("deadline", e)}
+                        type="date"
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
                         minDate={formik.values.startDate}
@@ -746,20 +798,26 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} sm={12} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "198px" }}
                         control={<Switch />}
                         label="Apply through Koor"
                         checked={formik.values.isApplyThroughKoor}
                         {...formik.getFieldProps("isApplyThroughKoor")}
                       />
                     </FormGroup>
-                    {formik.touched.isApplyThroughKoor && formik.errors.isApplyThroughKoor ? (
-                      <ErrorMessage>{formik.errors.isApplyThroughKoor}</ErrorMessage>
+                    {formik.touched.isApplyThroughKoor &&
+                    formik.errors.isApplyThroughKoor ? (
+                      <ErrorMessage>
+                        {formik.errors.isApplyThroughKoor}
+                      </ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "165px" }}
                         control={<Switch />}
+                        type="email"
                         label="Apply by email"
                         checked={formik.values.isApplyThroughEmail}
                         {...formik.getFieldProps("isApplyThroughEmail")}
@@ -767,11 +825,12 @@ function PostJobsComponent() {
                     </FormGroup>
                     <input
                       className="add-form-control"
+                      type="email"
                       placeholder="Your email address"
                       {...formik.getFieldProps("contactEmail")}
                     />
                     {formik.touched.contactEmail &&
-                      formik.errors.contactEmail ? (
+                    formik.errors.contactEmail ? (
                       <ErrorMessage>{formik.errors.contactEmail}</ErrorMessage>
                     ) : null}
                   </Grid>
@@ -790,9 +849,13 @@ function PostJobsComponent() {
                   >
                     <input
                       className="add-form-control"
+                      type="email"
                       placeholder="CC email address"
                       {...formik.getFieldProps("cc1")}
                     />
+                    {formik.touched.cc1 && formik.errors.cc1 ? (
+                      <ErrorMessage>{formik.errors.cc1}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid
                     item
@@ -809,34 +872,62 @@ function PostJobsComponent() {
                   >
                     <input
                       className="add-form-control"
+                      type="email"
                       placeholder="Another CC email address"
                       {...formik.getFieldProps("cc2")}
                     />
-                  </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
-                    <LabeledInput
-                      title="Application Instructions"
-                      className="add-form-control"
-                      placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
-                      required
-                      {...formik.getFieldProps("applicationInstruction")}
-                    />
-                    {formik.touched.applicationInstruction &&
-                      formik.errors.applicationInstruction ? (
-                      <ErrorMessage>
-                        {formik.errors.applicationInstruction}
-                      </ErrorMessage>
+                    {formik.touched.cc2 && formik.errors.cc2 ? (
+                      <ErrorMessage>{formik.errors.cc2}</ErrorMessage>
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
+                    <Box
+                      sx={{
+                        height: { xs: "320px", sm: "270px", md: "250px" },
+                      }}
+                    >
+                      <label>
+                        Application Instructions
+                        <span className="required-field">*</span>
+                      </label>
+                      <QuillInput
+                        type="textarea"
+                        placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
+                        value={
+                          applicationInstructionData ||
+                          formik.values.applicationInstruction
+                        }
+                        onChange={(value) =>
+                          handleApplicationInstructionEditorValue(value)
+                        }
+                      />
+                    </Box>
+                    <Box
+                      style={{
+                        width: "100%",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {formik.touched.applicationInstruction &&
+                      formik.errors.applicationInstruction ? (
+                        <ErrorMessage>
+                          {formik.errors.applicationInstruction}
+                        </ErrorMessage>
+                      ) : null}
+                    </Box>
+                  </Grid>
+                  <Grid item xl={12} lg={12} xs={12} mt={1}>
                     <FormGroup>
                       <FormControlLabel
+                        sx={{ width: "255px" }}
                         control={<Switch />}
+                        type="url"
                         label="Apply through your website"
                         checked={formik.values.isApplyThroughWebsite}
                         {...formik.getFieldProps("isApplyThroughWebsite")}
                       />
                     </FormGroup>
+                    {/* <Box className="Apply_through_input"> */}
                     <LabeledInput
                       title=""
                       className="add-form-control"
@@ -844,6 +935,7 @@ function PostJobsComponent() {
                       required
                       {...formik.getFieldProps("websiteLink")}
                     />
+                    {/* </Box> */}
                     {formik.touched.websiteLink && formik.errors.websiteLink ? (
                       <ErrorMessage>{formik.errors.websiteLink}</ErrorMessage>
                     ) : null}
@@ -866,7 +958,7 @@ function PostJobsComponent() {
                       {...formik.getFieldProps("highestEducation")}
                     />
                     {formik.touched.highestEducation &&
-                      formik.errors.highestEducation ? (
+                    formik.errors.highestEducation ? (
                       <ErrorMessage>
                         {formik.errors.highestEducation}
                       </ErrorMessage>
@@ -970,7 +1062,8 @@ function PostJobsComponent() {
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
-                          `Maximum 10 files allowed. you can upload only ${10 - currentAttachments.length
+                          `Maximum 10 files allowed. you can upload only ${
+                            10 - currentAttachments.length
                           } remaining`
                         );
                       } else {
@@ -1055,8 +1148,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1117,8 +1210,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1134,7 +1227,6 @@ function PostJobsComponent() {
                         fontFamily: "Bahnschrift !important",
                         padding: "10px 50px !important",
                         background: "#274593 !important",
-                        display: "block",
 
                         "&:hover": {
                           color: "#848484 !important",

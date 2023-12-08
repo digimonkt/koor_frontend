@@ -1,4 +1,11 @@
-import { Container, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Box,
+  Container,
+  Divider,
+  Grid,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
 import { SVG } from "../../../assets/svg";
@@ -201,6 +208,28 @@ function TenderDetailsComponent() {
       URL.revokeObjectURL(downloadUrl);
     }
   };
+  function handleSendEmail(details) {
+    const email = details.contactEmail;
+    const ccEmail1 = details.cc1;
+    const ccEmail2 = details.cc2;
+    const subject = `Tender Application for ${details.title}`;
+    const body = `Here is the my tender application for this tender \n ${window.location.href}`;
+    let link = `mailto:${email}?&subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    if (ccEmail1) {
+      link += `&cc=${ccEmail1}`;
+    }
+    if (ccEmail1 && ccEmail2) {
+      link += `,${ccEmail2}`;
+    }
+    const tag = document.createElement("a");
+    tag.href = link;
+    tag.target = "_blank";
+    document.body.appendChild(tag);
+    tag.click();
+    document.body.removeChild(tag);
+  }
   useEffect(() => {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
@@ -261,10 +290,13 @@ function TenderDetailsComponent() {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9} sm={8}>
+              <Grid item xs={12} lg={9} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <p className="job-description">{details.description}. </p>
+                  <div
+                    className="job-description"
+                    dangerouslySetInnerHTML={{ __html: details.description }}
+                  ></div>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
@@ -328,7 +360,7 @@ function TenderDetailsComponent() {
                   })}
                 </div>
               </Grid>
-              <Grid item xs={12} lg={3} sm={4}>
+              <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   user={details?.user}
@@ -351,11 +383,12 @@ function TenderDetailsComponent() {
                       sx={{
                         padding: "10px 0px !important",
                         width: "100% !important",
+                        marginBottom: "20px",
                         "@media (max-width: 480px)": {
                           fontSize: "14px !important",
                         },
                       }}
-                      className={`${styles.enablebtn}`}
+                      // className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
                         if (isLoggedIn) {
@@ -380,8 +413,9 @@ function TenderDetailsComponent() {
                     />
                     {details.isEditable && details.isApplied && isLoggedIn && (
                       <FilledButton
+                        sx={{ width: "100%", marginBottom: "20px" }}
                         title="Withdraw"
-                        className={`${styles.enablebtn}`}
+                        // className={`${styles.enablebtn}`}
                         disabled={!details.isEditable}
                         onClick={() => {
                           handleWithdrawTenderApplication();
@@ -443,6 +477,91 @@ function TenderDetailsComponent() {
               </Grid>
             </Grid>
           </div>
+          {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+            <>
+              <div className={`${styles.LikeJob}`}>
+                <h2>Application Instructions:</h2>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: details.applicationInstruction,
+                  }}
+                ></div>
+              </div>
+              {role === USER_ROLES.vendor || role === "" ? (
+                <div className={`${styles.jobpostbtn} `}>
+                  <Box
+                    sx={{
+                      textAlign: "start",
+                      display: "flex",
+                      "@media (max-width: 480px)": {
+                        display: "block",
+                      },
+                    }}
+                  >
+                    {!details.isApplied && details.isApplyThroughWebsite && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                            padding: "10px 22px !important",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "10px !important",
+                            padding: "10px 25px !important",
+                          },
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply on employer's website",
+                        ]}
+                        // className={`${styles.enablebtn}`}
+                        // disabled={details.isApplied && !details.isEditable}
+                        onClick={() => {
+                          // if (isLoggedIn) {
+                          window.open(details.websiteLink, "_blank");
+                          // } else {
+                          // setRegistrationWarning(true);
+                          // }
+                        }}
+                      />
+                    )}
+                    {!details.isApplied && details.isApplyThroughEmail && (
+                      <OutlinedButton
+                        sx={{
+                          color: "#eea23d !important",
+                          borderColor: "#eea23d !important",
+                          "@media (max-width: 480px)": {
+                            fontSize: "14px !important",
+                            marginTop: "20px",
+                            marginLeft: "0px !important",
+                          },
+                          "@media (max-width: 320px)": {
+                            fontSize: "10px !important",
+                            padding: "10px 30px !important",
+                          },
+                        }}
+                        title={[
+                          <>
+                            <SVG.ArrowOutward className="me-2" />
+                          </>,
+                          "Apply by email",
+                        ]}
+                        className="ms-3"
+                        onClick={() => {
+                          handleSendEmail(details);
+                        }}
+                      />
+                    )}
+                  </Box>
+                </div>
+              ) : null}
+              <Divider />
+            </>
+          )}
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={7} md={7}>

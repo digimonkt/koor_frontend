@@ -5,6 +5,7 @@ import LogoutForm from "./logout";
 import RegistrationForm from "./registrationForm";
 import ResetPasswordComponent from "./resetPassword";
 import VerifyOTPForm from "./verifyOTPForm";
+import ActivatioinUser from "./activationuser";
 const registration = {
   title: "Register",
   subTitle: "I want to register as...",
@@ -39,6 +40,15 @@ const verifyOTP = {
   isRoleSelection: false,
   options: false,
 };
+const activeAcount = {
+  title: "Active Account",
+  subTitle: "Verify Your Account...",
+  selectedRoleTitle: "We have sent you an activation email. Please click on the activation button. If you have not received the activation link yet, please click on the resend button",
+  children: <ActivatioinUser />,
+  isRoleSelection: false,
+  options: false,
+};
+
 const resetPassword = {
   title: "Reset Password",
   selectedRoleTitle: "Create a new password",
@@ -50,5 +60,6 @@ export const Registration = AuthLayout(registration);
 export const Login = AuthLayout(login);
 export const ForgotPassword = AuthLayout(forgotPassword);
 export const VerifyOTP = AuthLayout(verifyOTP);
+export const ActiveAcount = AuthLayout(activeAcount);
 export const ResetPassword = AuthLayout(resetPassword);
 export const Logout = LogoutForm;

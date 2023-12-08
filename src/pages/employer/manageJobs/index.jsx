@@ -1,4 +1,4 @@
-import { Box, Chip, Stack } from "@mui/material";
+import { Box, Chip, IconButton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
@@ -133,27 +133,59 @@ function ManageJobsComponent() {
             />
           </AntTabs>
         )}
-
-        <div className="post_new_job_btn">
-          <OutlinedButton
-            sx={{ whiteSpace: "nowrap" }}
-            onClick={() => {
-              if (currentUser.profile.isVerified) {
-                navigate(urlcat("../employer/jobs/post"));
-              } else {
-                setAccountVerifiedWarning(true);
-              }
-            }}
-            title={
-              <>
-                <span className="me-3 d-inline-flex">
-                  <SVG.EditDashIcon />
-                </span>
-                Post new job
-              </>
-            }
-          />
-        </div>
+        {isMobileView ? (
+          <>
+            <IconButton
+              onClick={() => {
+                if (currentUser.profile.isVerified) {
+                  navigate(urlcat("../employer/jobs/post"));
+                } else {
+                  setAccountVerifiedWarning(true);
+                }
+              }}
+              sx={{
+                width: "56px",
+                height: "56px",
+                background: "#274593",
+                color: "#fff",
+                boxShadow: "0px 2px 15px 2px rgba(0, 44, 106, 0.25)",
+                position: "fixed",
+                bottom: "125px",
+                right: "17px",
+                zIndex: 10,
+                "&:hover": {
+                  background: "#274593",
+                  color: "#fff",
+                },
+              }}
+            >
+              <SVG.EditDashIcon />
+            </IconButton>
+          </>
+        ) : (
+          <>
+            <div className="post_new_job_btn">
+              <OutlinedButton
+                sx={{ whiteSpace: "nowrap" }}
+                onClick={() => {
+                  if (currentUser.profile.isVerified) {
+                    navigate(urlcat("../employer/jobs/post"));
+                  } else {
+                    setAccountVerifiedWarning(true);
+                  }
+                }}
+                title={
+                  <>
+                    <span className="me-3 d-inline-flex">
+                      <SVG.EditDashIcon />
+                    </span>
+                    Post new job
+                  </>
+                }
+              />
+            </div>
+          </>
+        )}
       </div>
       {tabs.map((tab, index) => (
         <div

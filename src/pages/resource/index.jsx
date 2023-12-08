@@ -37,7 +37,11 @@ const Resource = () => {
             <Grid
               container
               spacing={3}
-              direction={{ sm: "row-reverse", md: "row", lg: "row-reverse" }}
+              direction={{
+                sm: "row-reverse",
+                md: "row-reverse",
+                lg: "row-reverse",
+              }}
             >
               <Grid item lg={5} sm={6} xs={12}>
                 <Box className={styles.resource_text_box}>
@@ -71,7 +75,13 @@ const Resource = () => {
               </Grid>
               {resourceList?.attachment?.path ? (
                 <Grid item lg={7} sm={6} xs={12}>
-                  <Box>
+                  <Box
+                    sx={{
+                      "@media (max-width: 480px)": {
+                        textAlign: "center",
+                      },
+                    }}
+                  >
                     <img
                       src={generateFileUrl(resourceList?.attachment?.path)}
                       alt="img"
