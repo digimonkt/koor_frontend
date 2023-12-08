@@ -497,16 +497,16 @@
     height: 54px !important;
     border-radius: 10px !important;
     padding: 0px !important;
-    width: 142px !important;
+    width: 100% !important;
     margin-left: 4px;
   }
   .location_select {
     padding: 0px !important;
-    width: 142px !important;
+    width: 100% !important;
   }
 
   .home_btn_btn {
-    width: 142px !important;
+    width: 100% !important;
   }
 
   .bg_corav:before {
@@ -535,4 +535,6 @@
     top: 6rem;
     position: relative;
   }
+ 
 }
+
