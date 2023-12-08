@@ -201,7 +201,8 @@ const InnerFooter = () => {
                             dense={true}
                             disableGutters={true}
                           >
-                            {child.title}
+                            {child.title.length > 20 ? `${child.title.slice(0, 20)}...` : child.title}
+
                           </ListItemButton>
                         </ListItem>
                       );
