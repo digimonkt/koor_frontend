@@ -99,7 +99,6 @@ const Home = () => {
     (total, item) => total + item.count,
     0,
   );
-
   return (
     <>
       {!isLoggedIn ? (
@@ -205,11 +204,11 @@ const Home = () => {
                               variant="contained"
                               type="submit"
                               className={styles.home_btn_btn}
-                              // onClick={() => {
-                              //   navigate(
-                              //     `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
-                              //   );
-                              // }}
+                            // onClick={() => {
+                            //   navigate(
+                            //     `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+                            //   );
+                            // }}
                             >
                               Search
                             </Button>
@@ -329,11 +328,12 @@ const Home = () => {
               <SlickSlider
                 items={topJobCategories.map(category => ({
                   icon: <SVG.Market />,
-                  title: category.title,
+                  title: (category?.title || "").length > 15 ? `${category.title.slice(0, 12)}...` : category.title,
                   text: `${category.count || 0} jobs`,
                   id: category.id,
                 }))}
               />
+
             </Container>
             <Box sx={{ paddingTop: "50px" }}>
               <Container

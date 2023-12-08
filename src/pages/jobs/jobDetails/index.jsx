@@ -371,30 +371,32 @@ const JobDetails = () => {
                     </p>
                   </div>
                 )}
-                <div className={`${styles.downloadattachment}`}>
-                  <h6>Download attachments </h6>
-                  {details.attachments.map((attachment) => {
-                    return (
-                      <div
-                        className={`${styles.downloadtext}`}
-                        key={attachment.id}
-                      >
-                        <span className="d-inline-flex  me-2">
-                          {<SVG.OrangeIcon />}
-                        </span>
-                        <span
-                          onClick={() => handleLoadImage(attachment.path)}
-                          // target="_blank"
-                          style={{ cursor: "pointer" }}
-                          className="m-0"
-                          rel="noreferrer"
+                {
+                  details.attachments.length > 0 && <div className={`${styles.downloadattachment}`}>
+                    <h6>Download attachments </h6>
+                    {details.attachments.map((attachment) => {
+                      return (
+                        <div
+                          className={`${styles.downloadtext}`}
+                          key={attachment.id}
                         >
-                          {attachment.title}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
+                          <span className="d-inline-flex  me-2">
+                            {<SVG.OrangeIcon />}
+                          </span>
+                          <span
+                            onClick={() => handleLoadImage(attachment.path)}
+                            // target="_blank"
+                            style={{ cursor: "pointer" }}
+                            className="m-0"
+                            rel="noreferrer"
+                          >
+                            {attachment.title}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                }
               </Grid>
               <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
@@ -417,11 +419,11 @@ const JobDetails = () => {
                               ? "Edit"
                               : "Applied"
                             : [
-                                <>
-                                  <SVG.Enable1 className="me-2" />
-                                </>,
-                                "Apply for this job",
-                              ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for this job",
+                            ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -483,11 +485,11 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.SaveIcon1 className="me-2" />
-                                </>,
-                                "Save job",
-                              ]
+                              <>
+                                <SVG.SaveIcon1 className="me-2" />
+                              </>,
+                              "Save job",
+                            ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -775,8 +777,8 @@ const JobDetails = () => {
                     {item.title}
                   </Link>
                   <span>
-                    – {item.city.title}, {item.country.title} $
-                    {item.budgetAmount}{" "}
+                    – {item.city.title}, {item.country.title}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`} {" "}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b
