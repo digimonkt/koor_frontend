@@ -1,4 +1,4 @@
-import { Box, Chip, IconButton, Stack } from "@mui/material";
+import { Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
@@ -12,7 +12,6 @@ import urlcat from "urlcat";
 import DialogBox from "../../../components/dialogBox";
 import { setManageJobActiveTab } from "../../../redux/slice/employer";
 import Tenders from "../manageTenders/components/tenders";
-import HeaddingSearch from "@pages/search/hedding-search";
 
 function ManageJobsComponent() {
   // const platform = Capacitor.getPlatform();
@@ -65,33 +64,6 @@ function ManageJobsComponent() {
 
   return (
     <div className="manage-jobs">
-      {isMobileView ? (
-        <>
-          <Box sx={{ px: 3, pt: 3 }}>
-            <HeaddingSearch
-              title="My posts"
-              count={
-                <Box
-                  component={"span"}
-                  sx={{
-                    background: "#D5E3F7",
-                    padding: "5px 12px",
-                    borderRadius: "73px",
-                    fontFamily: "Bahnschrift",
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    ml: 1,
-                  }}
-                >
-                  4
-                </Box>
-              }
-            />
-          </Box>
-        </>
-      ) : (
-        ""
-      )}
       <div className="ant_tabs_div">
         {!isMobileView && (
           <AntTabs
@@ -108,8 +80,8 @@ function ManageJobsComponent() {
                   <Chip label={totalCreatedJobs} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${0}`}
-              aria-controls={`simple-tabpanel-${0}`}
+              id={`simple - tab - ${0}`}
+            aria-controls={`simple - tabpanel - ${0}`}
             />
             <AntTab
               label={
@@ -118,8 +90,8 @@ function ManageJobsComponent() {
                   <Chip label={totalApplications} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${1}`}
-              aria-controls={`simple-tabpanel-${1}`}
+              id={`simple - tab - ${1}`}
+              aria-controls={`simple - tabpanel - ${1}`}
             />
             <AntTab
               label={
@@ -128,99 +100,68 @@ function ManageJobsComponent() {
                   <Chip label={totalBlacklist} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${1}`}
-              aria-controls={`simple-tabpanel-${1}`}
+              id={`simple - tab - ${1}`}
+              aria-controls={`simple - tabpanel - ${1}`}
             />
           </AntTabs>
         )}
-        {isMobileView ? (
-          <>
-            <IconButton
-              onClick={() => {
-                if (currentUser.profile.isVerified) {
-                  navigate(urlcat("../employer/jobs/post"));
-                } else {
-                  setAccountVerifiedWarning(true);
-                }
-              }}
-              sx={{
-                width: "56px",
-                height: "56px",
-                background: "#274593",
-                color: "#fff",
-                boxShadow: "0px 2px 15px 2px rgba(0, 44, 106, 0.25)",
-                position: "fixed",
-                bottom: "125px",
-                right: "17px",
-                zIndex: 10,
-                "&:hover": {
-                  background: "#274593",
-                  color: "#fff",
-                },
-              }}
-            >
-              <SVG.EditDashIcon />
-            </IconButton>
-          </>
-        ) : (
-          <>
-            <div className="post_new_job_btn">
-              <OutlinedButton
-                sx={{ whiteSpace: "nowrap" }}
-                onClick={() => {
-                  if (currentUser.profile.isVerified) {
-                    navigate(urlcat("../employer/jobs/post"));
-                  } else {
-                    setAccountVerifiedWarning(true);
-                  }
-                }}
-                title={
-                  <>
-                    <span className="me-3 d-inline-flex">
-                      <SVG.EditDashIcon />
-                    </span>
-                    Post new job
-                  </>
-                }
-              />
-            </div>
-          </>
-        )}
+
+        <div className="post_new_job_btn">
+          <OutlinedButton
+            sx={{ whiteSpace: "nowrap" }}
+            onClick={() => {
+              if (currentUser.profile.isVerified) {
+                navigate(urlcat("../employer/jobs/post"));
+              } else {
+                setAccountVerifiedWarning(true);
+              }
+            }}
+            title={
+              <>
+                <span className="me-3 d-inline-flex">
+                  <SVG.EditDashIcon />
+                </span>
+                Post new job
+              </>
+            }
+          />
+        </div>
       </div>
       {tabs.map((tab, index) => (
         <div
           key={index}
           role="tabpanel"
           hidden={index !== panel}
-          id={`simple-tabpanel-${index}`}
-          style={{ height: "100%" }}
+          id={`simple - tabpanel - ${index}`}
+      style={{ height: "100%" }}
         >
-          <tab.component onTabChange={handlePageTab} />
-        </div>
-      ))}
-      <DialogBox
-        open={accountVerifiedWarning}
-        handleClose={() => setAccountVerifiedWarning(false)}
-      >
-        <div>
-          <SVG.Warning
-            style={{
-              marginLeft: "39%",
-              height: "50px",
-              width: "50px",
-              color: "red",
-            }}
-          />
-          <h1 className="heading">Account Verification Status </h1>
-          <div className="form-content">
-            <p>
-              Dear {currentUser.name || currentUser.email}, your account is not
-              verified by the administrator. Please contact the administrator
-              for further assistance.
-            </p>
-          </div>
-        </div>
-      </DialogBox>
+      <tab.component onTabChange={handlePageTab} />
+    </div>
+  ))
+}
+<DialogBox
+  open={accountVerifiedWarning}
+  handleClose={() => setAccountVerifiedWarning(false)}
+>
+  <div>
+    <SVG.Warning
+      style={{
+        marginLeft: "39%",
+        height: "50px",
+        width: "50px",
+        color: "red",
+      }}
+    />
+    <h1 className="heading">Account Verification Status </h1>
+    <div className="form-content">
+      <p>
+        Dear {currentUser.name || currentUser.email}, your account is not
+        verified by the administrator. Please contact the administrator
+        for further assistance.
+      </p>
+    </div>
+  </div>
+</DialogBox>
     </div>
   );
 }

@@ -21,7 +21,7 @@ const EmployerMyPostTabs = ({ onTabChange }) => {
             aria-label="lab API tabs example"
             sx={{
               "& .MuiTabs-indicator": {
-                background: "#274593",
+                background: "#EEA23D",
                 borderRadius: "8px 12px 0px 0px",
                 height: "3px",
               },
