@@ -20,12 +20,12 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             item
             sx={{
               "@media (min-width: 1200px)": {
-                maxWidth: "11%",
-                flexBasis: "11%",
+                maxWidth: "12%",
+                flexBasis: "12%",
               },
               "@media (min-width: 480px)": {
-                maxWidth: "11%",
-                flexBasis: "11%",
+                maxWidth: "12%",
+                flexBasis: "12%",
               },
             }}
           >
@@ -64,7 +64,33 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
+              useFlexGap
             >
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
+              <Skeleton
+                height={30}
+                width={100}
+                style={{ borderRadius: "20px" }}
+              />
               <Skeleton
                 height={30}
                 width={100}
@@ -116,6 +142,7 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             sx={{ minHeight: "87%" }}
           >
             <div className="pricebox py-3">
+              {/* Skeleton Loader for Budget Amount */}
               <span className="d-block">
                 <Skeleton
                   height={30}

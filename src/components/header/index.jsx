@@ -238,9 +238,6 @@ function Header() {
                       display: {
                         xs: "block",
                         lg: "none",
-                        md: "block",
-                      },
-                      "@media (min-width: 993px) and (max-width: 1200px)": {
                         sm: "block",
                       },
                       "@media (min-width: 1025px) and (max-width: 1200px)": {
@@ -309,8 +306,9 @@ function Header() {
               </IconButton>
             </Stack>
             <ul
-              className={`menu ${ismenu && "menu-selected"} ${role !== USER_ROLES.jobSeeker ? "color-change" : null
-                }`}
+              className={`menu ${ismenu && "menu-selected"} ${
+                role !== USER_ROLES.jobSeeker ? "color-change" : null
+              }`}
             >
               {!isLoggedIn ? (
                 <li onClick={() => setIsmenu(false)}>
@@ -395,7 +393,7 @@ function Header() {
                         ? "#274593"
                         : "",
                     }}
-                  // onClick={(e) => checkUserLoggedIn(e)}
+                    // onClick={(e) => checkUserLoggedIn(e)}
                   >
                     Browse tenders
                   </Link>
@@ -445,20 +443,23 @@ function Header() {
                       <NotificationPopup />
                     </IconButton>
                   </li>
-                  {role &&
+                  {/* <MenuItem onClick={() => setIsmenu(false)}>
+                    <Link to={`/${role}/my-profile`}>
+                      <FilledButton title="My Profile" />
+                    </Link>
+                  </MenuItem> */}
+                  {role && (
                     <li onClick={() => setIsmenu(false)}>
                       <Link to={`/${role}/my-profile`}>
                         <FilledButton title="My Profile" />
                       </Link>
                     </li>
-                  }
-                  {!currentUser.profile.isVerified &&
+                  )}
+                  {!currentUser.profile.isVerified && (
                     <li onClick={() => logoutHandle()}>
-
                       <FilledButton title="Log Out" />
-
                     </li>
-                  }
+                  )}
                 </>
               ) : (
                 <>

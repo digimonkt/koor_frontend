@@ -257,7 +257,7 @@ const ApplyForJob = () => {
                     {<SVG.LeftArrow />}
                   </span>
 
-                  <h1>Apply for the job dd</h1>
+                  <h1>Apply for the job</h1>
                 </div>
               </Grid>
               <Grid item xs={1} sm={1} lg={1}>
@@ -294,7 +294,10 @@ const ApplyForJob = () => {
               <Grid item xs={12} lg={4} sm={4}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
-                  <p className="job-description" dangerouslySetInnerHTML={{ __html: showMore ? details.description : truncatedDescription }} />
+                  <p
+                    className="job-description"
+                    dangerouslySetInnerHTML={{ __html: details.description }}
+                  ></p>
                   {hide ? (
                     <>
                       <p>Please check out my attachements below..</p>
