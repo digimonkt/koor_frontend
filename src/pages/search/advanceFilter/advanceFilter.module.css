@@ -53,7 +53,8 @@ body {
   font-family: "Poppins" !important;
   font-weight: 400 !important;
   text-transform: capitalize !important;
-  white-space: break-spaces;
+  white-space: break-spaces !important;
+  width: auto !important;
 }
 
 .MuiList-root.MuiList-padding.css-h4y409-MuiList-root {
