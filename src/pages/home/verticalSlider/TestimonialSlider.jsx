@@ -23,38 +23,58 @@ function TestimonialSlider({ testimonialList }) {
 
   return (
     <>
-      <Grid container spacing={{ xs: 3, lg: 10 }}>
+      <Grid container spacing={{ xs: 3, lg: 10 }} alignItems={"center"}>
         <Grid item xs={12} lg={6} sm={6}>
-          <Slider
-            asNavFor={nav1}
-            ref={(slider) => (slider2 = slider)}
-            slidesToShow={3}
-            infinite={true}
-            swipeToSlide={true}
-            focusOnSelect={true}
-            vertical={false}
-            arrows={false}
-            centerMode={true}
-            dots={true}
-            dotsClass="listvertical"
-            centerPadding="0px"
-            className="testmonials-slider"
+          <Box
+            sx={{
+              height: "325px",
+              overflow: "hidden",
+              "@media(max-width:600px)": {
+                height: "auto",
+              },
+            }}
           >
-            {(testimonialList || []).map((item, index) => (
-              <>
-                <Box className="testmonial-img">
-                  {item.image?.path && (
-                    <img
-                      key={index}
-                      src={generateFileUrl(item.image.path)}
-                      alt=""
-                      height={100}
-                    />
-                  )}
-                </Box>
-              </>
-            ))}
-          </Slider>
+            <Slider
+              asNavFor={nav1}
+              ref={(slider) => (slider2 = slider)}
+              slidesToShow={3}
+              slidesToScroll={3}
+              infinite={true}
+              swipeToSlide={true}
+              focusOnSelect={true}
+              vertical={false}
+              arrows={false}
+              centerMode={true}
+              dots={true}
+              dotsClass="listvertical"
+              centerPadding="0px"
+              className="testmonials-slider"
+              responsive={[
+                {
+                  breakpoint: 600,
+                  settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                  },
+                },
+              ]}
+            >
+              {(testimonialList || []).map((item, index) => (
+                <>
+                  <Box className="testmonial-img">
+                    {item.image?.path && (
+                      <img
+                        key={index}
+                        src={generateFileUrl(item.image.path)}
+                        alt=""
+                        height={100}
+                      />
+                    )}
+                  </Box>
+                </>
+              ))}
+            </Slider>
+          </Box>
         </Grid>
         <Grid item xs={12} lg={6} sm={6}>
           <Slider
@@ -63,7 +83,15 @@ function TestimonialSlider({ testimonialList }) {
             arrows={false}
             fade={true}
             infinite={true}
-            // style={{ paddingTop: "120px" }}
+            responsive={[
+              {
+                breakpoint: 600,
+                settings: {
+                  slidesToShow: 1,
+                  slidesToScroll: 1,
+                },
+              },
+            ]}
           >
             {(testimonialList || []).map((item, index) => (
               <>
