@@ -635,77 +635,83 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               maxWidth: { xs: "100%", lg: "100%" },
             }}
           >
-            <span
-              style={{
-                whiteSpace: "nowrap",
-                marginBottom: "10px",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent:
-                  platform === "android" || platform === "ios"
-                    ? "center"
-                    : "space-between",
-              }}
-            >
-              Saved searches:
-              {platform === "android" || platform === "ios" ? null : (
-                <>
-                  {matches ? (
+            {isLoggedIn ? (
+              <>
+                <span
+                  style={{
+                    whiteSpace: "nowrap",
+                    marginBottom: "10px",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent:
+                      platform === "android" || platform === "ios"
+                        ? "center"
+                        : "space-between",
+                  }}
+                >
+                  Saved searches:
+                  {platform === "android" || platform === "ios" ? null : (
                     <>
-                      {!defaultOpen && (
-                        <div
-                          onClick={() => setData(!data)}
-                          style={{
-                            color:
-                              role === USER_ROLES.jobSeeker
-                                ? "#FFA500"
-                                : "#274593",
-                            cursor: "pointer",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Advanced filter{" "}
-                          {data ? (
-                            <>
-                              <span
-                                style={{
-                                  marginLeft: "10px",
-                                  width: "18px",
-                                  display: "inline-block",
-                                  color:
-                                    role === USER_ROLES.jobSeeker
-                                      ? "#FFA500"
-                                      : "#274593",
-                                }}
-                              >
-                                {<SVG.ArrowUpIcon />}
-                              </span>
-                            </>
-                          ) : (
-                            <span
+                      {matches ? (
+                        <>
+                          {!defaultOpen && (
+                            <div
+                              onClick={() => setData(!data)}
                               style={{
-                                marginLeft: "10px",
-                                width: "18px",
-                                display: "inline-block",
                                 color:
                                   role === USER_ROLES.jobSeeker
                                     ? "#FFA500"
                                     : "#274593",
+                                cursor: "pointer",
+                                fontSize: "12px",
                               }}
                             >
-                              {<SVG.AdvancedDown />}
-                            </span>
+                              Advanced filter{" "}
+                              {data ? (
+                                <>
+                                  <span
+                                    style={{
+                                      marginLeft: "10px",
+                                      width: "18px",
+                                      display: "inline-block",
+                                      color:
+                                        role === USER_ROLES.jobSeeker
+                                          ? "#FFA500"
+                                          : "#274593",
+                                    }}
+                                  >
+                                    {<SVG.ArrowUpIcon />}
+                                  </span>
+                                </>
+                              ) : (
+                                <span
+                                  style={{
+                                    marginLeft: "10px",
+                                    width: "18px",
+                                    display: "inline-block",
+                                    color:
+                                      role === USER_ROLES.jobSeeker
+                                        ? "#FFA500"
+                                        : "#274593",
+                                  }}
+                                >
+                                  {<SVG.AdvancedDown />}
+                                </span>
+                              )}
+                            </div>
                           )}
-                        </div>
+                        </>
+                      ) : (
+                        ""
                       )}
                     </>
-                  ) : (
-                    ""
                   )}
-                </>
-              )}
-            </span>
+                </span>
+              </>
+            ) : (
+              ""
+            )}
             <Stack
               direction={"row"}
               spacing={1}

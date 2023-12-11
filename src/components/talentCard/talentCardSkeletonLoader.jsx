@@ -25,7 +25,7 @@ function TalentCardSkeletonLoader() {
             useFlexGap
           >
             <h4>
-              <Skeleton width={620} />
+              <Skeleton width={"100%"} />
             </h4>
           </Stack>
           <Stack
@@ -43,7 +43,11 @@ function TalentCardSkeletonLoader() {
           </Stack>
           <div className="recent-descrition">
             <p>
-              <Skeleton width={550} count={2} style={{ lineHeight: "9px" }} />
+              <Skeleton
+                width={"100%"}
+                count={2}
+                style={{ lineHeight: "9px" }}
+              />
             </p>
           </div>
           <Stack
@@ -54,26 +58,26 @@ function TalentCardSkeletonLoader() {
             className="meets_div"
             useFlexGap
           >
-            <div style={{ display: "flex" }}>
+            <Stack direction={"row"} spacing={1.5} flexWrap={"wrap"} useFlexGap>
               <Skeleton
                 height={30}
                 width={100}
-                style={{ borderRadius: "20px", marginRight: "10px" }}
+                style={{ borderRadius: "20px" }}
                 className="chiplabel"
               />
               <Skeleton
                 height={30}
                 width={100}
-                style={{ borderRadius: "20px", marginRight: "10px" }}
+                style={{ borderRadius: "20px" }}
                 className="chiplabel"
               />
               <Skeleton
                 height={30}
                 width={100}
-                style={{ borderRadius: "20px", marginRight: "10px" }}
+                style={{ borderRadius: "20px" }}
                 className="chiplabel"
               />
-            </div>
+            </Stack>
           </Stack>
         </div>
       </Stack>
