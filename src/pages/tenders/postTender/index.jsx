@@ -416,46 +416,43 @@ const PostTender = () => {
                       ) : null}
                     </Box>
                   </Grid>
-                  <Grid item xl={8} lg={8} xs={12}>
+                  <Grid item xl={4} lg={4} xs={12}>
                     <label>
                       Location <span className="required-field">*</span>
                     </label>
-                    <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          placeholder="Country"
-                          defaultValue=""
-                          options={countries.data.map(country => ({
-                            value: country.id,
-                            label: country.title,
-                          }))}
-                          {...formik.getFieldProps("country")}
-                        />
-                        {formik.touched.country && formik.errors.country ? (
-                          <ErrorMessage>{formik.errors.country}</ErrorMessage>
-                        ) : null}
-                      </Grid>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          placeholder={
-                            formik.values.country
-                              ? "City"
-                              : "Select Country first"
-                          }
-                          disabled={!formik.values.country}
-                          options={(
-                            cities.data[formik.values.country] || []
-                          ).map(country => ({
-                            value: country.id,
-                            label: country.title,
-                          }))}
-                          {...formik.getFieldProps("city")}
-                        />
-                        {formik.touched.city && formik.errors.city ? (
-                          <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                        ) : null}
-                      </Grid>
-                    </Grid>
+                    <SelectInput
+                      placeholder="Country"
+                      defaultValue=""
+                      options={countries.data.map(country => ({
+                        value: country.id,
+                        label: country.title,
+                      }))}
+                      {...formik.getFieldProps("country")}
+                    />
+                    {formik.touched.country && formik.errors.country ? (
+                      <ErrorMessage>{formik.errors.country}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={4} lg={4} sm={6} xs={12}>
+                    <label>
+                      City <span className="required-field">*</span>
+                    </label>
+                    <SelectInput
+                      placeholder={
+                        formik.values.country ? "City" : "Select Country first"
+                      }
+                      disabled={!formik.values.country}
+                      options={(cities.data[formik.values.country] || []).map(
+                        country => ({
+                          value: country.id,
+                          label: country.title,
+                        }),
+                      )}
+                      {...formik.getFieldProps("city")}
+                    />
+                    {formik.touched.city && formik.errors.city ? (
+                      <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={4} lg={4} sm={12} xs={12}>
                     <label>
@@ -498,7 +495,6 @@ const PostTender = () => {
                       <ErrorMessage>{formik.errors.address}</ErrorMessage>
                     ) : null}
                   </Grid>
-
                   <Grid item xl={12} lg={12} sm={12} xs={12}>
                     <label>
                       Category <span className="required-field">*</span>
@@ -558,6 +554,7 @@ const PostTender = () => {
                               label: opportunityType.title,
                             }),
                           )}
+                          value={formik.values.opportunityType || ""}
                           {...formik.getFieldProps("opportunityType")}
                         />
                         {formik.touched.opportunityType &&

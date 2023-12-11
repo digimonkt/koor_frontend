@@ -330,8 +330,9 @@ textarea {
 
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
-    left: 590px !important;
-    top: 100px !important;
+    left: 630px !important;
+    top: 80px !important;
+    height: 500px !important;
   }
 
   .scroll_tabs .MuiButtonBase-root.MuiTab-root {
@@ -352,8 +353,9 @@ textarea {
 
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     width: 480px !important;
-    left: 420px !important;
-    top: 68px !important;
+    left: 450px !important;
+    top: 80px !important;
+    height: 500px !important;
   }
 
   .scroll_tabs .MuiButtonBase-root.MuiTab-root {
@@ -438,7 +440,8 @@ img {
 @media screen and (max-width: 992px) {
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     left: 15px !important;
-    top: 140px !important;
+    top: 80px !important;
+    height: 490px !important;
   }
 }
 
@@ -458,7 +461,8 @@ img {
 
   .drop_menu .MuiPaper-root.MuiMenu-paper.MuiPaper-elevation {
     left: 16px !important;
-    top: 140px !important;
+    top: 70px !important;
+    height: 500px !important;
   }
 }
 

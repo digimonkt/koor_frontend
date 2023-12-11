@@ -299,7 +299,7 @@ const JobDetails = () => {
             </Grid>
             <hr />
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={9} sm={7}>
+              <Grid item xs={12} lg={9} md={7} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
                   <Box
@@ -371,32 +371,34 @@ const JobDetails = () => {
                     </p>
                   </div>
                 )}
-                <div className={`${styles.downloadattachment}`}>
-                  <h6>Download attachments </h6>
-                  {details.attachments.map((attachment) => {
-                    return (
-                      <div
-                        className={`${styles.downloadtext}`}
-                        key={attachment.id}
-                      >
-                        <span className="d-inline-flex  me-2">
-                          {<SVG.OrangeIcon />}
-                        </span>
-                        <span
-                          onClick={() => handleLoadImage(attachment.path)}
-                          // target="_blank"
-                          style={{ cursor: "pointer" }}
-                          className="m-0"
-                          rel="noreferrer"
+                {
+                  details.attachments.length > 0 && <div className={`${styles.downloadattachment}`}>
+                    <h6>Download attachments </h6>
+                    {details.attachments.map((attachment) => {
+                      return (
+                        <div
+                          className={`${styles.downloadtext}`}
+                          key={attachment.id}
                         >
-                          {attachment.title}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
+                          <span className="d-inline-flex  me-2">
+                            {<SVG.OrangeIcon />}
+                          </span>
+                          <span
+                            onClick={() => handleLoadImage(attachment.path)}
+                            // target="_blank"
+                            style={{ cursor: "pointer" }}
+                            className="m-0"
+                            rel="noreferrer"
+                          >
+                            {attachment.title}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                }
               </Grid>
-              <Grid item xs={12} lg={3} sm={5}>
+              <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
@@ -406,17 +408,22 @@ const JobDetails = () => {
                   <div className={`${styles.jobpostbtn}`}>
                     {details.isApplyThroughKoor && (
                       <FilledButton
+                        sx={{
+                          "@media (min-width: 600px) and (max-width: 760px)": {
+                            fontSize: "10px !important",
+                          },
+                        }}
                         title={
                           details.isApplied
                             ? details.isEditable
                               ? "Edit"
                               : "Applied"
                             : [
-                                <>
-                                  <SVG.Enable1 className="me-2" />
-                                </>,
-                                "Apply for this job",
-                              ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for this job",
+                            ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -473,15 +480,16 @@ const JobDetails = () => {
                       justifyContent="center"
                     >
                       <OutlinedButton
+                        className={styles.width_wise_btn}
                         title={
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.SaveIcon1 className="me-2" />
-                                </>,
-                                "Save job",
-                              ]
+                              <>
+                                <SVG.SaveIcon1 className="me-2" />
+                              </>,
+                              "Save job",
+                            ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -505,6 +513,9 @@ const JobDetails = () => {
                           marginTop: "0px !important",
                           "&:hover": {
                             backgroundColor: "transparent !important",
+                          },
+                          "@media (min-width: 600px) and (max-width: 760px)": {
+                            fontSize: "10px !important",
                           },
                         }}
                         onClick={() => {
@@ -549,7 +560,7 @@ const JobDetails = () => {
                             fontSize: "14px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px !important",
+                            fontSize: "10px !important",
                             padding: "10px 25px !important",
                           },
                         }}
@@ -575,8 +586,8 @@ const JobDetails = () => {
                             fontSize: "14px !important",
                           },
                           "@media (max-width: 320px)": {
-                            fontSize: "12px !important",
-                            padding: "10px 25px !important",
+                            fontSize: "10px !important",
+                            padding: "10px 30px !important",
                           },
                         }}
                         title={[
@@ -766,8 +777,8 @@ const JobDetails = () => {
                     {item.title}
                   </Link>
                   <span>
-                    – {item.city.title}, {item.country.title} $
-                    {item.budgetAmount}{" "}
+                    – {item.city.title}, {item.country.title}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`} {" "}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b

@@ -86,7 +86,7 @@ function Header() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-  const matches = useMediaQuery("(min-width: 600px) and (max-width: 992px)");
+  const matches = useMediaQuery("(min-width: 600px) and (max-width: 1024px)");
   return (
     <header>
       <Container
@@ -241,6 +241,9 @@ function Header() {
                         md: "block",
                       },
                       "@media (min-width: 993px) and (max-width: 1200px)": {
+                        sm: "block",
+                      },
+                      "@media (min-width: 1025px) and (max-width: 1200px)": {
                         display: "none",
                       },
                     }}
@@ -297,7 +300,7 @@ function Header() {
                   },
                   fontSize: "18px",
                   display: { lg: "none", sm: "block", md: "block" },
-                  "@media (min-width: 993px) and (max-width: 1200px)": {
+                  "@media (min-width: 1025px) and (max-width: 1200px)": {
                     display: "none",
                   },
                 }}

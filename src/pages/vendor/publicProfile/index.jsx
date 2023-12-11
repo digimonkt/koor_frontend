@@ -198,6 +198,7 @@ function PublicProfileComponent() {
                           fontSize: "14px",
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
+                          wordBreak: "break-word",
                         }}
                       >
                         {userDetails.profile.description}

@@ -201,7 +201,8 @@ const InnerFooter = () => {
                             dense={true}
                             disableGutters={true}
                           >
-                            {child.title}
+                            {child.title.length > 20 ? `${child.title.slice(0, 20)}...` : child.title}
+
                           </ListItemButton>
                         </ListItem>
                       );
@@ -264,7 +265,7 @@ const InnerFooter = () => {
                               // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
                               disableGutters={true}
                             >
-                              {child.title}
+                              {child.title.length > 20 ? `${child.title.slice(0, 20)}...` : child.title}
                             </ListItemButton>
                           </ListItem>
                         );
@@ -333,7 +334,7 @@ const InnerFooter = () => {
                               checkUserLoggedIn(e, USER_ROLES.employer)
                             }
                           >
-                            {child.title}
+                            {child.title.length > 20 ? `${child.title.slice(0, 20)}...` : child.title}
                           </ListItemButton>
                         </ListItem>
                       );

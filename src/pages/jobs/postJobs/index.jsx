@@ -549,43 +549,40 @@ function PostJobsComponent() {
                       ) : null}
                     </Box>
                   </Grid>
-                  <Grid item xl={9} lg={9} sm={8} xs={12}>
+                  <Grid item xl={5} lg={5} sm={4} xs={12}>
                     <label>
                       Location<span className="required-field">*</span>
                     </label>
-                    <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          className="location-select"
-                          placeholder="Country"
-                          defaultValue=""
-                          options={countries.data.map((country) => ({
-                            value: country.id,
-                            label: country.title,
-                          }))}
-                          {...formik.getFieldProps("country")}
-                        />
-                        {formik.touched.country && formik.errors.country ? (
-                          <ErrorMessage>{formik.errors.country}</ErrorMessage>
-                        ) : null}
-                      </Grid>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          placeholder={formik.values.country ? "City" : "City"}
-                          disabled={!formik.values.country}
-                          options={(
-                            cities.data[formik.values.country] || []
-                          ).map((country) => ({
-                            value: country.id,
-                            label: country.title,
-                          }))}
-                          {...formik.getFieldProps("city")}
-                        />
-                        {formik.touched.city && formik.errors.city ? (
-                          <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                        ) : null}
-                      </Grid>
-                    </Grid>
+                    <SelectInput
+                      className="location-select"
+                      placeholder="Country"
+                      defaultValue=""
+                      options={countries.data.map((country) => ({
+                        value: country.id,
+                        label: country.title,
+                      }))}
+                      {...formik.getFieldProps("country")}
+                    />
+                    {formik.touched.country && formik.errors.country ? (
+                      <ErrorMessage>{formik.errors.country}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
+                    <label>City</label>
+                    <SelectInput
+                      placeholder={formik.values.country ? "City" : "City"}
+                      disabled={!formik.values.country}
+                      options={(cities.data[formik.values.country] || []).map(
+                        (country) => ({
+                          value: country.id,
+                          label: country.title,
+                        })
+                      )}
+                      {...formik.getFieldProps("city")}
+                    />
+                    {formik.touched.city && formik.errors.city ? (
+                      <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={3} lg={3} sm={4} xs={12}>
                     <label>
@@ -598,7 +595,7 @@ function PostJobsComponent() {
                         placeholder="Address"
                         className="add-form-control"
                         name={formik.getFieldProps("address").name}
-                        onBlur={(e) => formik.getFieldProps("address").onBlur}
+                        onBlur={() => formik.getFieldProps("address").onBlur}
                         onChange={(e) => setSearchValue(e.target.value)}
                         value={searchValue}
                       />
@@ -629,58 +626,51 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.address}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={12} lg={12} xs={12}>
+                  <Grid item xl={6} lg={6} xs={12}>
                     <label>
                       Job Category
                       <span className="required-field">*</span>
                     </label>
-                    <Grid container spacing={2}>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          defaultValue=""
-                          placeholder="Select a Job category"
-                          options={jobCategories.data.map((jobCategory) => ({
-                            value: jobCategory.id,
-                            label: jobCategory.title,
-                          }))}
-                          name={"jobCategories"}
-                          value={formik.values.jobCategories || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        {formik.touched.jobCategories &&
-                        formik.errors.jobCategories ? (
-                          <ErrorMessage>
-                            {formik.errors.jobCategories}
-                          </ErrorMessage>
-                        ) : null}
-                      </Grid>
-                      <Grid item xl={6} lg={6} sm={6} xs={12}>
-                        <SelectInput
-                          defaultValue=""
-                          placeholder={
-                            formik.values.jobCategories
-                              ? "Job Sub Category"
-                              : "Select Category first"
-                          }
-                          options={(
-                            jobSubCategories.data[
-                              formik.values.jobCategories
-                            ] || []
-                          ).map((subCategory) => ({
-                            value: subCategory.id,
-                            label: subCategory.title,
-                          }))}
-                          {...formik.getFieldProps("jobSubCategory")}
-                        />
-                        {formik.touched.jobSubCategory &&
-                        formik.errors.jobSubCategory ? (
-                          <ErrorMessage>
-                            {formik.errors.jobSubCategory}
-                          </ErrorMessage>
-                        ) : null}
-                      </Grid>
-                    </Grid>
+                    <SelectInput
+                      defaultValue=""
+                      placeholder="Select a Job category"
+                      options={jobCategories.data.map((jobCategory) => ({
+                        value: jobCategory.id,
+                        label: jobCategory.title,
+                      }))}
+                      name={"jobCategories"}
+                      value={formik.values.jobCategories || ""}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                    />
+                    {formik.touched.jobCategories &&
+                    formik.errors.jobCategories ? (
+                      <ErrorMessage>{formik.errors.jobCategories}</ErrorMessage>
+                    ) : null}
+                  </Grid>
+                  <Grid item xl={6} lg={6} xs={12}>
+                    <label>Sub Category</label>
+                    <SelectInput
+                      defaultValue=""
+                      placeholder={
+                        formik.values.jobCategories
+                          ? "Job Sub Category"
+                          : "Select Category first"
+                      }
+                      options={(
+                        jobSubCategories.data[formik.values.jobCategories] || []
+                      ).map((subCategory) => ({
+                        value: subCategory.id,
+                        label: subCategory.title,
+                      }))}
+                      {...formik.getFieldProps("jobSubCategory")}
+                    />
+                    {formik.touched.jobSubCategory &&
+                    formik.errors.jobSubCategory ? (
+                      <ErrorMessage>
+                        {formik.errors.jobSubCategory}
+                      </ErrorMessage>
+                    ) : null}
                   </Grid>
                   <Grid item xl={5} lg={5} xs={12} className="jobtype_grid">
                     <label>Job type</label>
@@ -897,8 +887,7 @@ function PostJobsComponent() {
                       }}
                     >
                       <label>
-                        Application Instructions
-                        <span className="required-field">*</span>
+                        Application Instructions <span className="required-field">*</span>
                       </label>
                       <QuillInput
                         type="textarea"
@@ -937,6 +926,7 @@ function PostJobsComponent() {
                         {...formik.getFieldProps("isApplyThroughWebsite")}
                       />
                     </FormGroup>
+                    {/* <Box className="Apply_through_input"> */}
                     <LabeledInput
                       title=""
                       className="add-form-control"
@@ -944,6 +934,7 @@ function PostJobsComponent() {
                       required
                       {...formik.getFieldProps("websiteLink")}
                     />
+                    {/* </Box> */}
                     {formik.touched.websiteLink && formik.errors.websiteLink ? (
                       <ErrorMessage>{formik.errors.websiteLink}</ErrorMessage>
                     ) : null}
@@ -1053,7 +1044,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.skills}</ErrorMessage>
                     ) : null}
                   </Grid>
-                </Grid>
+                </Grid >
 
                 <Grid item xl={12} lg={12} xs={12}>
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
@@ -1113,24 +1104,26 @@ function PostJobsComponent() {
                     sx={{ borderColor: "#CACACA", opacity: "1", my: 2 }}
                   />
                 </Grid>
-                {!jobId && totalAvailableCredits < minimumCreditJobPost ? (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will need to purchase{" "}
-                    <b>
-                      {minimumCreditJobPost - totalAvailableCredits} more
-                      credits.{" "}
-                    </b>
-                  </div>
-                ) : (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will redeemed{" "}
-                    <b>{minimumCreditJobPost} credits</b> .
-                  </div>
-                )}
+                {
+                  !jobId && totalAvailableCredits < minimumCreditJobPost ? (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will need to purchase{" "}
+                      <b>
+                        {minimumCreditJobPost - totalAvailableCredits} more
+                        credits.{" "}
+                      </b>
+                    </div>
+                  ) : (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will redeemed{" "}
+                      <b>{minimumCreditJobPost} credits</b> .
+                    </div>
+                  )
+                }
                 <Grid container spacing={2}>
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Job Posting Plan</h2>
@@ -1324,7 +1317,7 @@ function PostJobsComponent() {
           </Box>
         </Box>
       </DialogBox>
-    </div>
+    </div >
   );
 }
 
