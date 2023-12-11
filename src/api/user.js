@@ -69,7 +69,7 @@ export const SendOtpAPI = async data => {
 
 export const VerifyOtpAPI = async data => {
   return await api.request({
-    url: urlcat("v1/users/account-verification/:otp", data),
+    url: urlcat("v1/users/otp-verification/:otp", data),
     method: "GET",
   });
 };
@@ -78,13 +78,15 @@ export const ResentActivation = async data => {
   return await api.request({
     url: urlcat("v1/users/resend-verification"),
     method: "POST",
-    data
+    data,
   });
 };
 
 export const VerifyAcountAPI = async data => {
   return await api.request({
-    url: urlcat("v1/users/account-verification/:hash_code", { hash_code: data }),
+    url: urlcat("v1/users/account-verification/:hash_code", {
+      hash_code: data,
+    }),
     method: "GET",
   });
 };

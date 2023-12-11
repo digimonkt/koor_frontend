@@ -76,7 +76,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       tenderCategories,
       sectors,
     },
-  } = useSelector((state) => state);
+  } = useSelector(state => state);
   let category = [];
   switch (searchType) {
     case SEARCH_TYPE.jobs:
@@ -117,8 +117,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
             style={{ pointer: "cursor", marginTop: "5px" }}
             onClick={() => {
               handleToggleModel();
-            }}
-          >
+            }}>
             {<SVG.Favorite />} SAVE SEARCH
           </span>
         )}
@@ -146,8 +145,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               <span
                 style={{
                   color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
-                }}
-              >
+                }}>
                 {formik.isSubmitting ? "Searching..." : "Search"}
               </span>
             </>
@@ -228,7 +226,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     }
   };
 
-  const handleSelectFilter = async (filter) => {
+  const handleSelectFilter = async filter => {
     setSelectedFilter(filter.id);
     dispatch(setSearchTrue());
     formik.setFieldValue("id", filter.id);
@@ -237,7 +235,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-      (typeof filter.country === "string" ? filter.country : "")
+        (typeof filter.country === "string" ? filter.country : ""),
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -262,8 +260,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     }, 1000);
   };
 
-  const handleDeleteFilter = async (filterId) => {
-    const newAllFilters = allFilters.filter((filter) => filter.id !== filterId);
+  const handleDeleteFilter = async filterId => {
+    const newAllFilters = allFilters.filter(filter => filter.id !== filterId);
     setAllFilters([...newAllFilters]);
     switch (searchType) {
       case SEARCH_TYPE.jobs:
@@ -307,10 +305,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
         tag: "",
         // vendor
         yearsInMarket: "",
-      })
+      }),
     );
   };
-  const handleSaveJobSearch = async (title) => {
+  const handleSaveJobSearch = async title => {
     const rawData = formik.values;
     const data = {
       title,
@@ -325,13 +323,13 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
+        city => city.title === rawData.city,
       );
       data.city = city?.id;
     }
     const res = await saveSearchJobsFilterAPI(data);
     if (res.remote === "success") {
-      setAllFilters((prevState) => [res.data, ...prevState]);
+      setAllFilters(prevState => [res.data, ...prevState]);
       setSelectedFilter(res.data.id);
       dispatch(setSuccessToast("Filter Saved Successfully"));
       handleToggleModel();
@@ -340,7 +338,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       dispatch(setErrorToast("Name is required"));
     }
   };
-  const handleSaveUserSearch = async (title) => {
+  const handleSaveUserSearch = async title => {
     const rawData = formik.values;
     const data = {
       title,
@@ -357,7 +355,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
+        city => city.title === rawData.city,
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -366,7 +364,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
 
     const res = await saveSearchUserFilterAPI(data);
     if (res.remote === "success") {
-      setAllFilters((prevState) => [res.data, ...prevState]);
+      setAllFilters(prevState => [res.data, ...prevState]);
       setSelectedFilter(res.data.id);
       dispatch(setSuccessToast("Filter Saved Successfully"));
       handleToggleModel();
@@ -376,7 +374,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     }
   };
 
-  const handleSaveTenderSearch = async (title) => {
+  const handleSaveTenderSearch = async title => {
     const rawData = formik.values;
     const data = {
       title,
@@ -393,7 +391,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
+        city => city.title === rawData.city,
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -402,7 +400,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
 
     const res = await saveSearchTenderFilterAPI(data);
     if (res.remote === "success") {
-      setAllFilters((prevState) => [res.data, ...prevState]);
+      setAllFilters(prevState => [res.data, ...prevState]);
       setSelectedFilter(res.data.id);
       dispatch(setSuccessToast("Filter Saved Successfully"));
       handleToggleModel();
@@ -412,7 +410,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     }
   };
   // Vendor
-  const handleSaveVendorSearch = async (title) => {
+  const handleSaveVendorSearch = async title => {
     const rawData = formik.values;
     const data = {
       title,
@@ -426,7 +424,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
+        city => city.title === rawData.city,
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -435,7 +433,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
 
     const res = await saveSearchVendorFilterAPI(data);
     if (res.remote === "success") {
-      setAllFilters((prevState) => [res.data, ...prevState]);
+      setAllFilters(prevState => [res.data, ...prevState]);
       setSelectedFilter(res.data.id);
       dispatch(setSuccessToast("Filter Saved Successfully"));
       handleToggleModel();
@@ -445,12 +443,12 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     }
   };
 
-  const toggleNotificationStatus = async (filterId) => {
+  const toggleNotificationStatus = async filterId => {
     let newFilters = [...allFilters];
-    const filter = newFilters.find((filter) => filter.id === filterId);
+    const filter = newFilters.find(filter => filter.id === filterId);
     if (filter) {
       const currentStatus = filter.isNotification;
-      newFilters = newFilters.map((filter) => {
+      newFilters = newFilters.map(filter => {
         if (filter.id === filterId) {
           return {
             ...filter,
@@ -551,23 +549,23 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       yearsInMarket: "",
     },
 
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       const country = countries.data.find(
-        (country) => country.id === values.country
+        country => country.id === values.country,
       );
       const payload = {
         country: country ? country.title : "",
         city: values.city,
         jobCategory: jobCategories.data.find(
-          (val) => val.id === values.jobCategories
+          val => val.id === values.jobCategories,
         )?.title,
         jobSubCategories: (values.jobSubCategories || [])
-          .map((subCategories) => {
+          .map(subCategories => {
             return jobSubCategories.data[values.jobCategories]?.find(
-              (subCategory) => subCategory.id === subCategories
+              subCategory => subCategory.id === subCategories,
             );
           })
-          .filter((e) => e),
+          .filter(e => e),
         experience: values.experience,
         fullTime: values.isFullTime,
         partTime: values.isPartTime,
@@ -579,17 +577,17 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
         deadline:
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
-        sector: values.sector?.map((sector) =>
-          sectors.data.find((i) => i.id === sector)
+        sector: values.sector?.map(sector =>
+          sectors.data.find(i => i.id === sector),
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
-        opportunityType: values.opportunityType?.map((type) =>
-          opportunityTypes.data.find((i) => i.id === type)
+        opportunityType: values.opportunityType?.map(type =>
+          opportunityTypes.data.find(i => i.id === type),
         ),
-        tag: values.tag?.map((tag) => tags.data.find((i) => i.id === tag)),
-        tenderCategories: values.tenderCategories?.map((tenderCategory) =>
-          tenderCategories.data.find((i) => i.id === tenderCategory)
+        tag: values.tag?.map(tag => tags.data.find(i => i.id === tag)),
+        tenderCategories: values.tenderCategories?.map(tenderCategory =>
+          tenderCategories.data.find(i => i.id === tenderCategory),
         ),
         // vendor
         years_in_market: values.yearsInMarket,
@@ -606,7 +604,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories })
+        getJobSubCategories({ categoryId: formik.values.jobCategories }),
       );
     }
   }, [formik.values.country, formik.values.jobCategories]);
@@ -633,79 +631,80 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               justifyContent: "flex-start",
               flexDirection: "column",
               maxWidth: { xs: "100%", lg: "100%" },
-            }}
-          >
-            <span
-              style={{
-                whiteSpace: "nowrap",
-                marginBottom: "10px",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent:
-                  platform === "android" || platform === "ios"
-                    ? "center"
-                    : "space-between",
-              }}
-            >
-              Saved searches:
-              {platform === "android" || platform === "ios" ? null : (
-                <>
-                  {matches ? (
+            }}>
+            {isLoggedIn ? (
+              <>
+                <span
+                  style={{
+                    whiteSpace: "nowrap",
+                    marginBottom: "10px",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent:
+                      platform === "android" || platform === "ios"
+                        ? "center"
+                        : "space-between",
+                  }}>
+                  Saved searches:
+                  {platform === "android" || platform === "ios" ? null : (
                     <>
-                      {!defaultOpen && (
-                        <div
-                          onClick={() => setData(!data)}
-                          style={{
-                            color:
-                              role === USER_ROLES.jobSeeker
-                                ? "#FFA500"
-                                : "#274593",
-                            cursor: "pointer",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Advanced filter{" "}
-                          {data ? (
-                            <>
-                              <span
-                                style={{
-                                  marginLeft: "10px",
-                                  width: "18px",
-                                  display: "inline-block",
-                                  color:
-                                    role === USER_ROLES.jobSeeker
-                                      ? "#FFA500"
-                                      : "#274593",
-                                }}
-                              >
-                                {<SVG.ArrowUpIcon />}
-                              </span>
-                            </>
-                          ) : (
-                            <span
+                      {matches ? (
+                        <>
+                          {!defaultOpen && (
+                            <div
+                              onClick={() => setData(!data)}
                               style={{
-                                marginLeft: "10px",
-                                width: "18px",
-                                display: "inline-block",
                                 color:
                                   role === USER_ROLES.jobSeeker
                                     ? "#FFA500"
                                     : "#274593",
-                              }}
-                            >
-                              {<SVG.AdvancedDown />}
-                            </span>
+                                cursor: "pointer",
+                                fontSize: "12px",
+                              }}>
+                              Advanced filter{" "}
+                              {data ? (
+                                <>
+                                  <span
+                                    style={{
+                                      marginLeft: "10px",
+                                      width: "18px",
+                                      display: "inline-block",
+                                      color:
+                                        role === USER_ROLES.jobSeeker
+                                          ? "#FFA500"
+                                          : "#274593",
+                                    }}>
+                                    {<SVG.ArrowUpIcon />}
+                                  </span>
+                                </>
+                              ) : (
+                                <span
+                                  style={{
+                                    marginLeft: "10px",
+                                    width: "18px",
+                                    display: "inline-block",
+                                    color:
+                                      role === USER_ROLES.jobSeeker
+                                        ? "#FFA500"
+                                        : "#274593",
+                                  }}>
+                                  {<SVG.AdvancedDown />}
+                                </span>
+                              )}
+                            </div>
                           )}
-                        </div>
+                        </>
+                      ) : (
+                        ""
                       )}
                     </>
-                  ) : (
-                    ""
                   )}
-                </>
-              )}
-            </span>
+                </span>
+              </>
+            ) : (
+              ""
+            )}
             <Stack
               direction={"row"}
               spacing={1}
@@ -720,9 +719,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                 m: 0,
                 width:
                   platform === "android" || platform === "ios" ? "100%" : null,
-              }}
-            >
-              {allFilters.map((filter) => {
+              }}>
+              {allFilters.map(filter => {
                 return (
                   <MenuItem
                     disableRipple={true}
@@ -732,8 +730,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         padding: "0px !important",
                         "&:hover": { background: "#fff" },
                       },
-                    }}
-                  >
+                    }}>
                     <SearchButton
                       sx={{
                         whiteSpace: "nowrap !important",
@@ -744,14 +741,14 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                               ? "42px !important"
                               : "42px !important",
                       }}
-                      className={`${selectedFilter === filter.id
+                      className={`${
+                        selectedFilter === filter.id
                           ? styles.btninActive
                           : styles.btnActive
-                        }`}
+                      }`}
                       leftIcon={
                         <div
-                          onClick={() => toggleNotificationStatus(filter.id)}
-                        >
+                          onClick={() => toggleNotificationStatus(filter.id)}>
                           {filter.isNotification ? (
                             <SVG.Notificationactive />
                           ) : (
@@ -770,8 +767,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             display: "flex",
                             alignItems: "center",
                           }}
-                          onClick={() => handleSelectFilter(filter)}
-                        >
+                          onClick={() => handleSelectFilter(filter)}>
                           {filter.title}
                         </Box>
                       }
@@ -797,8 +793,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                       cursor: "pointer",
                       fontSize: "12px",
-                    }}
-                  >
+                    }}>
                     Advanced filter
                     {data ? (
                       <>
@@ -811,8 +806,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                               role === USER_ROLES.jobSeeker
                                 ? "#FFA500"
                                 : "#274593",
-                          }}
-                        >
+                          }}>
                           {<SVG.ArrowUpIcon />}
                         </span>
                       </>
@@ -826,8 +820,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             role === USER_ROLES.jobSeeker
                               ? "#FFA500"
                               : "#274593",
-                        }}
-                      >
+                        }}>
                         {<SVG.Downarrow />}
                       </span>
                     )}
@@ -847,8 +840,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                       role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                     cursor: "pointer",
                     fontSize: "12px",
-                  }}
-                >
+                  }}>
                   Advanced filter
                   {data ? (
                     <>
@@ -861,8 +853,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             role === USER_ROLES.jobSeeker
                               ? "#FFA500"
                               : "#274593",
-                        }}
-                      >
+                        }}>
                         {<SVG.ArrowUpIcon />}
                       </span>
                     </>
@@ -874,8 +865,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         display: "inline-block",
                         color:
                           role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
-                      }}
-                    >
+                      }}>
                       {<SVG.Downarrow />}
                     </span>
                   )}
@@ -915,14 +905,15 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
         </DialogBox>
         <DialogBox
           open={showDeleteConfirmation}
-          handleClose={() => setShowDeleteConfirmation(!showDeleteConfirmation)}
-        >
+          handleClose={() =>
+            setShowDeleteConfirmation(!showDeleteConfirmation)
+          }>
           <div className="add-content">
             <h2 className="mb-4">Warning!</h2>
             <h3>Are you sure want to delete? 😉</h3>
             <div className="text-center mt-4">
               <OutlinedButton
-                onClick={(e) => {
+                onClick={e => {
                   handleDeleteFilter(filterId);
                   setShowDeleteConfirmation(!showDeleteConfirmation);
                   e.preventDefault();

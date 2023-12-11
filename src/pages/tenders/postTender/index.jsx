@@ -12,6 +12,7 @@ import {
   LabeledInput,
   DateInput,
   SelectInput,
+  QuillInput,
 } from "../../../components/input";
 import {
   getCountries,
@@ -45,8 +46,6 @@ import styles from "./postTender.module.css";
 import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "../../../api/user";
 import urlcat from "urlcat";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 const PostTender = () => {
   const { currentUser } = useSelector(state => state.auth);
   const navigate = useNavigate();
@@ -69,21 +68,6 @@ const PostTender = () => {
   const [descData, setDescData] = useState("");
   const [applicationInstructionData, setApplicationInstructionData] =
     useState("");
-  const toolbarOptions = [
-    ["bold", "italic", "underline", "strike"], // basic formatting
-    ["blockquote", "code-block"], // blockquote and code block
-    [{ header: 1 }, { header: 2 }], // headers
-    [{ list: "ordered" }, { list: "bullet" }], // ordered and unordered lists
-    [{ script: "sub" }, { script: "super" }], // subscript and superscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent and indent
-    [{ direction: "rtl" }], // text direction
-    [{ size: ["small", false, "large", "huge"] }], // font size
-    [{ color: [] }, { background: [] }], // text and background color
-    [{ font: [] }], // font family
-    [{ align: [] }], // text alignment
-    ["link", "image", "video"], // link, image, and video
-    ["clean"], // remove formatting
-  ];
   const getSuggestedAddress = async search => {
     const res = await GetSuggestedAddressAPI(search);
     if (res.remote === "success") {
@@ -211,7 +195,6 @@ const PostTender = () => {
         title: data.title,
         budgetCurrency: data.budgetCurrency || "usd",
         budgetAmount: Number(data.budgetAmount) || 0,
-        // budgetPayPeriod: data.budget,
         description: data.description || "",
         country: data.country.id,
         city: data.city.id,
@@ -230,26 +213,26 @@ const PostTender = () => {
       for (const key in payloadFormik) {
         formik.setFieldValue(key, payloadFormik[key]);
       }
-      formik.setFieldValue("contactEmail", data.contactEmail);
-      formik.setFieldValue("cc1", data.cc1);
-      formik.setFieldValue("cc2", data.cc2);
+      formik.setFieldValue("contactEmail", data?.contactEmail || "");
+      formik.setFieldValue("cc1", data?.cc1 || "");
+      formik.setFieldValue("cc2", data?.cc2 || "");
       formik.setFieldValue(
         "isApplyThroughKoor",
-        Boolean(data.isApplyThroughKoor),
+        Boolean(data?.isApplyThroughKoor) || false,
       );
       formik.setFieldValue(
         "isApplyThroughEmail",
-        Boolean(data.isApplyThroughEmail),
+        Boolean(data?.isApplyThroughEmail) || false,
       );
       formik.setFieldValue(
         "isApplyThroughWebsite",
-        Boolean(data.isApplyThroughWebsite),
+        Boolean(data?.isApplyThroughWebsite) || false,
       );
       formik.setFieldValue(
         "applicationInstruction",
-        data.applicationInstruction,
+        data.applicationInstruction || "",
       );
-      formik.setFieldValue("websiteLink", data.websiteLink);
+      formik.setFieldValue("websiteLink", data?.websiteLink || "");
     }
   }, []);
   const handleApplicationInstructionEditorValue = content => {
@@ -379,7 +362,10 @@ const PostTender = () => {
                     />
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <Box sx={{ height: "270px" }}>
+                    <Box
+                      sx={{
+                        height: { xs: "320px", sm: "270px", md: "250px" },
+                      }}>
                       <label>
                         Description<span className="required-field">*</span>
                       </label>
@@ -388,21 +374,12 @@ const PostTender = () => {
                         placeholder="Write more details to attract the right candidates."
                         {...formik.getFieldProps("description")}
                       ></textarea> */}
-                      <ReactQuill
-                        placeholder="Write more details to attract the right candidates."
-                        theme="snow"
-                        type="texteara"
-                        value={descData || formik.values.description}
-                        modules={{
-                          toolbar: toolbarOptions,
-                        }}
-                        onChange={value => handleEditorValue(value)}
+                      <QuillInput
                         className="work-experience-text-editor"
-                        style={{
-                          width: "100%",
-                          marginTop: "10px",
-                          height: "170px",
-                        }}
+                        type="texteara"
+                        placeholder="Write more details to attract the right candidates."
+                        value={descData || formik.values.description}
+                        onChange={value => handleEditorValue(value)}
                       />
                     </Box>
                     <Box
@@ -732,31 +709,25 @@ const PostTender = () => {
                     ) : null}
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
-                    <Box sx={{ height: "245px" }}>
+                    <Box
+                      sx={{
+                        height: { xs: "320px", sm: "270px", md: "250px" },
+                      }}>
                       <label>
                         Application Instructions
                         <span className="required-field">*</span>
                       </label>
-                      <ReactQuill
+                      <QuillInput
+                        className="work-experience-text-editor"
                         placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."
                         type="texteara"
-                        theme="snow"
                         value={
                           applicationInstructionData ||
                           formik.values.applicationInstruction
                         }
-                        modules={{
-                          toolbar: toolbarOptions,
-                        }}
                         onChange={value =>
                           handleApplicationInstructionEditorValue(value)
                         }
-                        className="work-experience-text-editor"
-                        style={{
-                          width: "100%",
-                          marginTop: "10px",
-                          height: "150px",
-                        }}
                       />
                     </Box>
                     <Box

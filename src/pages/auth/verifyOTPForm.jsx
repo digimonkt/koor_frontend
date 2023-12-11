@@ -20,7 +20,6 @@ function VerifyOTPForm() {
 
   const { role, verifyEmail } = useSelector(state => state.auth);
   const [sendingOTP, setSendingOTP] = useState(false);
-  //   const [loading, setIsLoading] = useState(false);
   const [token, setToken] = useState("");
 
   useEffect(() => {
@@ -46,7 +45,7 @@ function VerifyOTPForm() {
     },
     validationSchema: validateOTPForm,
     onSubmit: async values => {
-      //   setIsLoading(true);
+      console.log(values, "in");
       const payload = {
         token,
         otp: values.otp,
@@ -81,13 +80,14 @@ function VerifyOTPForm() {
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group mb-3 enterotp_input">
           <LabeledOtpInput
-            title="Enter Mail"
-            onChange={e => formik.setFieldValue("mail", e)}
-            value={formik.values.mail}
+            title="Enter OTP"
+            onChange={e => formik.setFieldValue("otp", e)}
+            name="otp"
+            value={formik.values.otp}
           />
           <Box sx={{ marginBottom: "10px" }}>
-            {formik.errors.Mail ? (
-              <ErrorMessage>{formik.errors.mail}</ErrorMessage>
+            {formik.errors.otp ? (
+              <ErrorMessage>{formik.errors.otp}</ErrorMessage>
             ) : null}
           </Box>
           <Box sx={{ textAlign: "center", mt: 3 }}>
@@ -100,7 +100,7 @@ function VerifyOTPForm() {
               type="button"
               onClick={handleResendOTP}
               title={
-                sendingOTP ? <Loader loading={sendingOTP} /> : "Resend Mail"
+                sendingOTP ? <Loader loading={sendingOTP} /> : "Resend otp"
               }
             />
           </Box>
