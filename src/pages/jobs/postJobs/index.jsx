@@ -887,8 +887,7 @@ function PostJobsComponent() {
                       }}
                     >
                       <label>
-                        Application Instructions
-                        <span className="required-field">*</span>
+                        Application Instructions <span className="required-field">*</span>
                       </label>
                       <QuillInput
                         type="textarea"
@@ -1045,7 +1044,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.skills}</ErrorMessage>
                     ) : null}
                   </Grid>
-                </Grid>
+                </Grid >
 
                 <Grid item xl={12} lg={12} xs={12}>
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
@@ -1105,24 +1104,26 @@ function PostJobsComponent() {
                     sx={{ borderColor: "#CACACA", opacity: "1", my: 2 }}
                   />
                 </Grid>
-                {!jobId && totalAvailableCredits < minimumCreditJobPost ? (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will need to purchase{" "}
-                    <b>
-                      {minimumCreditJobPost - totalAvailableCredits} more
-                      credits.{" "}
-                    </b>
-                  </div>
-                ) : (
-                  <div>
-                    Currently, you have{" "}
-                    <b>{totalAvailableCredits} credits remaining </b>. In order
-                    to post a job, you will redeemed{" "}
-                    <b>{minimumCreditJobPost} credits</b> .
-                  </div>
-                )}
+                {
+                  !jobId && totalAvailableCredits < minimumCreditJobPost ? (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will need to purchase{" "}
+                      <b>
+                        {minimumCreditJobPost - totalAvailableCredits} more
+                        credits.{" "}
+                      </b>
+                    </div>
+                  ) : (
+                    <div>
+                      Currently, you have{" "}
+                      <b>{totalAvailableCredits} credits remaining </b>. In order
+                      to post a job, you will redeemed{" "}
+                      <b>{minimumCreditJobPost} credits</b> .
+                    </div>
+                  )
+                }
                 <Grid container spacing={2}>
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Job Posting Plan</h2>
@@ -1316,7 +1317,7 @@ function PostJobsComponent() {
           </Box>
         </Box>
       </DialogBox>
-    </div>
+    </div >
   );
 }
 

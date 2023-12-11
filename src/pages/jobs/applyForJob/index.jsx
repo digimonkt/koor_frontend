@@ -93,6 +93,12 @@ const ApplyForJob = () => {
   const [hide, setHide] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const maxLength = 200;
+  const toggleShowMore = () => {
+    setShowMore(!showMore);
+  };
+  const truncatedDescription = details.description.length > maxLength ? `${details.description.slice(0, maxLength)}...` : details.description;
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
@@ -317,7 +323,7 @@ const ApplyForJob = () => {
                     </>
                   ) : null}
                   <div className={`${styles.infomore}`}>
-                    <h6 onClick={() => setHide(!hide)}>
+                    <h6 onClick={() => { setHide(!hide); toggleShowMore(); }}>
                       {!hide ? "More" : "Less"}
                       <span className={`${hide ? styles.rotate : ""}`}>
                         {<SVG.Downarrow />}
@@ -445,11 +451,10 @@ const ApplyForJob = () => {
                       ? "Update"
                       : "Apply"
                   }
-                  className={`${styles.applybtn} ${
-                    platform === "android" || platform === "ios"
-                      ? styles.applybtnapp
-                      : ""
-                  }`}
+                  className={`${styles.applybtn} ${platform === "android" || platform === "ios"
+                    ? styles.applybtnapp
+                    : ""
+                    }`}
                   type="submit"
                   disabled={isSubmitting}
                 />
