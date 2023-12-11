@@ -13,7 +13,7 @@ function WorkExperienceCardSkeletonLoading() {
           <Skeleton width={100} />
         </h6>
         <span>
-          <Skeleton width={800} count={2} style={{ lineHeight: "9px" }} />
+          <Skeleton width={"100%"} count={2} style={{ lineHeight: "9px" }} />
         </span>
         <span style={{ display: "flex", marginTop: "10px" }}>
           <Skeleton height={10} width={100} />

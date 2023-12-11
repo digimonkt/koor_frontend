@@ -11,7 +11,7 @@ export default function SearchButtonComponent({
 }) {
   return (
     <>
-      <Button className={className} {...rest}>
+      <Button className={className} {...rest} disableRipple={true}>
         <span>{leftIcon}</span>
         {text}
         {handleCross ? (
