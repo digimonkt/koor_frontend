@@ -856,8 +856,7 @@ function PostJobsComponent() {
                         height: { xs: "320px", sm: "270px", md: "250px" },
                       }}>
                       <label>
-                        Application Instructions
-                        <span className="required-field">*</span>
+                        Application Instructions <span className="required-field">*</span>
                       </label>
                       <QuillInput
                         type="textarea"
