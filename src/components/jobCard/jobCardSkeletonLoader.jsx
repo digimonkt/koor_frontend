@@ -20,12 +20,12 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             item
             sx={{
               "@media (min-width: 1200px)": {
-                maxWidth: "12%",
-                flexBasis: "12%",
+                maxWidth: "11%",
+                flexBasis: "11%",
               },
               "@media (min-width: 480px)": {
-                maxWidth: "12%",
-                flexBasis: "12%",
+                maxWidth: "11%",
+                flexBasis: "11%",
               },
             }}
           >
