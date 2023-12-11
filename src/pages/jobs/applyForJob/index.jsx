@@ -294,10 +294,7 @@ const ApplyForJob = () => {
               <Grid item xs={12} lg={4} sm={4}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
-                  <p
-                    className="job-description"
-                    dangerouslySetInnerHTML={{ __html: details.description }}
-                  ></p>
+                  <p className="job-description" dangerouslySetInnerHTML={{ __html: showMore ? details.description : truncatedDescription }} />
                   {hide ? (
                     <>
                       <p>Please check out my attachements below..</p>
