@@ -235,7 +235,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-        (typeof filter.country === "string" ? filter.country : ""),
+        (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -732,14 +732,15 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                       },
                     }}>
                     <SearchButton
+                      disableRipple={true}
                       sx={{
-                        whiteSpace: "nowrap !important",
+                        wordBreak: "break-word !important",
                         height:
                           platform === "android" || platform === "ios"
                             ? "50px !important"
                             : matches
-                              ? "42px !important"
-                              : "42px !important",
+                            ? "42px !important"
+                            : "42px !important",
                       }}
                       className={`${
                         selectedFilter === filter.id
@@ -759,7 +760,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                       text={
                         <Box
                           sx={{
-                            wordBreak: "break-word",
+                            wordBreak: "break-word !important",
                             overflow: "hidden",
                             overflowY: "auto",
                             height: "42px",
