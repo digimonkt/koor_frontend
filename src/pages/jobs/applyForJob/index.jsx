@@ -445,8 +445,8 @@ const ApplyForJob = () => {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                        ? "Update"
-                        : "Apply"
+                      ? "Update"
+                      : "Apply"
                   }
                   className={`${styles.applybtn} ${platform === "android" || platform === "ios"
                     ? styles.applybtnapp

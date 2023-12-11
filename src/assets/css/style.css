@@ -166,6 +166,7 @@ body {
 }
 
 .MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
+  height: 220px !important;
   max-height: 220px !important;
 }
 

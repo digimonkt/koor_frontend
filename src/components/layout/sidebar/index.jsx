@@ -132,6 +132,7 @@ function Sidebar(props) {
         variant="permanent"
         sx={{
           display: { xs: "none", lg: "block" },
+
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: drawerWidth,
