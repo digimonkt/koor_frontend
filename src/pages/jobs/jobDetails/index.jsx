@@ -310,14 +310,14 @@ const JobDetails = () => {
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
-                  spacing={{ xs: 1, lg: 0 }}
+                  spacing={{ xs: 2, lg: 0 }}
                   flexWrap={"wrap"}
                   useFlexGap
-                  sx={{
-                    "@media (max-width:992px)": {
-                      "& .MuiButtonBase-root": { margin: "0px !important" },
-                    },
-                  }}
+                  // sx={{
+                  //   "@media (max-width:992px)": {
+                  //     "& .MuiButtonBase-root": { margin: "0px !important" },
+                  //   },
+                  // }}
                 >
                   <SearchButton
                     text={details.country.title}
