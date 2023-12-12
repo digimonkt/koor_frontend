@@ -235,6 +235,7 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
+  console.log({ details });
   return (
     <>
       <Container

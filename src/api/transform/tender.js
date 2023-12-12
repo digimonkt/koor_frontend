@@ -29,7 +29,7 @@ export const transformTenderResponse = data => {
           id: res.user.id,
           name: res.user.name,
           email: res.user.email,
-          image: res.user.image,
+          image: res.user.image || res.company_logo,
         },
       };
     }),
@@ -62,11 +62,11 @@ export const transformFullTenderDetails = data => {
     deadline: data.deadline,
     user: {
       id: data.user.id,
-      name: data.user.name,
+      name: data.user.name || data.company,
       email: data.user.email || "",
       countryCode: data.user.country_code || "",
       mobileNumber: data.user.mobile_number || "",
-      image: data.user.image,
+      image: data.user.image || data.company_logo,
       description: data.user.description || "",
       isBlacklisted: data.user.is_blacklisted,
     },
