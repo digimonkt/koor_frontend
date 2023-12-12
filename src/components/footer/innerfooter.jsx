@@ -201,8 +201,9 @@ const InnerFooter = () => {
                             dense={true}
                             disableGutters={true}
                           >
-                            {child.title.length > 20 ? `${child.title.slice(0, 20)}...` : child.title}
-
+                            {child.title.length > 20
+                              ? `${child.title.slice(0, 20)}...`
+                              : child.title}
                           </ListItemButton>
                         </ListItem>
                       );
@@ -265,7 +266,9 @@ const InnerFooter = () => {
                               // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
                               disableGutters={true}
                             >
-                              {child.title.length > 20 ? `${child.title.slice(0, 20)}...` : child.title}
+                              {child.title.length > 20
+                                ? `${child.title.slice(0, 20)}...`
+                                : child.title}
                             </ListItemButton>
                           </ListItem>
                         );
@@ -334,7 +337,9 @@ const InnerFooter = () => {
                               checkUserLoggedIn(e, USER_ROLES.employer)
                             }
                           >
-                            {child.title.length > 20 ? `${child.title.slice(0, 20)}...` : child.title}
+                            {child.title.length > 20
+                              ? `${child.title.slice(0, 20)}...`
+                              : child.title}
                           </ListItemButton>
                         </ListItem>
                       );
@@ -419,6 +424,7 @@ const InnerFooter = () => {
                         width: "116px",
                         marginTop: "5.4px",
                         marginRight: "5px",
+                        whiteSpace: "nowrap",
                         "&:hover": {
                           background: "#274593",
                         },
