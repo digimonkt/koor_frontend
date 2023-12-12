@@ -418,17 +418,17 @@ const JobDetails = () => {
                               ? "Edit"
                               : "Applied"
                             : [
-                                <>
-                                  <SVG.Enable1 className="me-2" />
-                                </>,
-                                "Apply for this job",
-                              ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for this job",
+                            ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (isLoggedIn) {
-                            if (details.expiredInDays > 0) {
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
                               if (details.isEditable && details.isApplied) {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
@@ -444,10 +444,10 @@ const JobDetails = () => {
                                 );
                               }
                             } else {
-                              setExpiredWarning(true);
+                              setRegistrationWarning(true);
                             }
                           } else {
-                            setRegistrationWarning(true);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -487,23 +487,23 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.SaveIcon1 className="me-2" />
-                                </>,
-                                "Save job",
-                              ]
+                              <>
+                                <SVG.SaveIcon1 className="me-2" />
+                              </>,
+                              "Save job",
+                            ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
                         onClick={() => {
-                          if (isLoggedIn) {
-                            if (details.expiredInDays > 0) {
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
                               handleSaveJob(params.jobId);
                             } else {
-                              setExpiredWarning(true);
+                              setRegistrationWarning(true);
                             }
                           } else {
-                            setRegistrationWarning(true);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
