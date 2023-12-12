@@ -25,7 +25,7 @@ import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
-import DialogBox from "../../../components/dialogBox";
+import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { USER_ROLES } from "../../../utils/enum";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
@@ -39,8 +39,9 @@ const JobDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector(state => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
+  const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
   const [details, setDetails] = useState({
@@ -104,7 +105,8 @@ const JobDetails = () => {
     attachments: [],
   });
   const [addressGeoCode, setAddressGeoCode] = useState({});
-  const getJobDetails = async (jobId) => {
+
+  const getJobDetails = async jobId => {
     const res = await getJobDetailsByIdAPI({ jobId });
     if (res.remote === "success") {
       setDetails(res.data);
@@ -114,7 +116,7 @@ const JobDetails = () => {
       }
     }
   };
-  const getJobSuggestions = async (jobId) => {
+  const getJobSuggestions = async jobId => {
     const res = await getJobSuggestionAPI(jobId);
     if (res.remote === "success") {
       setSuggestionJobs(res.data.results);
@@ -142,7 +144,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -165,9 +167,9 @@ const JobDetails = () => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
   }, [params.jobId]);
-  const handleSaveJob = async (jobId) => {
+  const handleSaveJob = async jobId => {
     if (isLoggedIn) {
-      setDetails((prevState) => ({
+      setDetails(prevState => ({
         ...prevState,
         isSaved: !prevState.isSaved,
       }));
@@ -182,13 +184,15 @@ const JobDetails = () => {
           console.log("resp", resp);
         }
       }
+    } else if (details.expiredInDays <= 0) {
+      setExpiredWarning(true);
     } else {
       setRegistrationWarning(true);
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = (url) => {
+  const handleLoadImage = async url => {
+    const fileType = url => {
       const extension = "." + url.split(".").pop().toLowerCase();
       const mimeTypes = {
         ".jpg": "image/jpeg",
@@ -243,16 +247,14 @@ const JobDetails = () => {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
-        }}
-      >
+        }}>
         <div
           className={`${styles.Jobcard}`}
           style={{
             margin: platform === "android" || platform === "ios" ? "0px" : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
-          }}
-        >
+          }}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={7} lg={8}>
@@ -265,8 +267,7 @@ const JobDetails = () => {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate("/search/jobs")}
-                  >
+                    onClick={() => navigate("/search/jobs")}>
                     {<SVG.LeftArrow />}
                   </IconButton>
                   {/* </Link> */}
@@ -291,7 +292,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -304,8 +305,9 @@ const JobDetails = () => {
                   <h4>Details :</h4>
                   <Box
                     className={styles.job_detail_description}
-                    dangerouslySetInnerHTML={{ __html: details.description }}
-                  ></Box>
+                    dangerouslySetInnerHTML={{
+                      __html: details.description,
+                    }}></Box>
                 </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
@@ -317,8 +319,7 @@ const JobDetails = () => {
                     "@media (max-width:992px)": {
                       "& .MuiButtonBase-root": { margin: "0px !important" },
                     },
-                  }}
-                >
+                  }}>
                   <SearchButton
                     text={details.country.title}
                     leftIcon={<SVG.LocationIcon />}
@@ -371,15 +372,14 @@ const JobDetails = () => {
                     </p>
                   </div>
                 )}
-                {
-                  details.attachments.length > 0 && <div className={`${styles.downloadattachment}`}>
+                {details.attachments.length > 0 && (
+                  <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
-                    {details.attachments.map((attachment) => {
+                    {details.attachments.map(attachment => {
                       return (
                         <div
                           className={`${styles.downloadtext}`}
-                          key={attachment.id}
-                        >
+                          key={attachment.id}>
                           <span className="d-inline-flex  me-2">
                             {<SVG.OrangeIcon />}
                           </span>
@@ -388,15 +388,14 @@ const JobDetails = () => {
                             // target="_blank"
                             style={{ cursor: "pointer" }}
                             className="m-0"
-                            rel="noreferrer"
-                          >
+                            rel="noreferrer">
                             {attachment.title}
                           </span>
                         </div>
                       );
                     })}
                   </div>
-                }
+                )}
               </Grid>
               <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
@@ -428,23 +427,27 @@ const JobDetails = () => {
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (isLoggedIn) {
-                            if (details.isEditable && details.isApplied) {
-                              navigate(
-                                urlcat("../job/apply/:jobId", {
-                                  jobId: params.jobId,
-                                  applicationId: details.application.id,
-                                })
-                              );
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              if (details.isEditable && details.isApplied) {
+                                navigate(
+                                  urlcat("../job/apply/:jobId", {
+                                    jobId: params.jobId,
+                                    applicationId: details.application.id,
+                                  }),
+                                );
+                              } else {
+                                navigate(
+                                  urlcat("../job/apply/:jobId", {
+                                    jobId: params.jobId,
+                                  }),
+                                );
+                              }
                             } else {
-                              navigate(
-                                urlcat("../job/apply/:jobId", {
-                                  jobId: params.jobId,
-                                })
-                              );
+                              setRegistrationWarning(true);
                             }
                           } else {
-                            setRegistrationWarning(true);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -477,8 +480,7 @@ const JobDetails = () => {
                         lg: 2,
                       }}
                       alignItems="center"
-                      justifyContent="center"
-                    >
+                      justifyContent="center">
                       <OutlinedButton
                         className={styles.width_wise_btn}
                         title={
@@ -494,7 +496,15 @@ const JobDetails = () => {
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
                         onClick={() => {
-                          handleSaveJob(params.jobId);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSaveJob(params.jobId);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
+                          } else {
+                            setExpiredWarning(true);
+                          }
                         }}
                       />
                       <OutlinedButton
@@ -537,8 +547,7 @@ const JobDetails = () => {
                 <div
                   dangerouslySetInnerHTML={{
                     __html: details.applicationInstruction,
-                  }}
-                ></div>
+                  }}></div>
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
@@ -549,8 +558,7 @@ const JobDetails = () => {
                       "@media (max-width: 480px)": {
                         justifyContent: "center",
                       },
-                    }}
-                  >
+                    }}>
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
@@ -573,7 +581,11 @@ const JobDetails = () => {
                         // className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          window.open(details.websiteLink, "_blank");
+                          if (details.expiredInDays <= 0) {
+                            setExpiredWarning(true);
+                          } else {
+                            window.open(details.websiteLink, "_blank");
+                          }
                         }}
                       />
                     )}
@@ -598,7 +610,11 @@ const JobDetails = () => {
                         ]}
                         className="ms-3"
                         onClick={() => {
-                          handleSendEmail(details);
+                          if (details.expiredInDays <= 0) {
+                            setExpiredWarning(true);
+                          } else {
+                            handleSendEmail(details);
+                          }
                         }}
                       />
                     )}
@@ -629,8 +645,7 @@ const JobDetails = () => {
                       "@media (max-width:992px)": {
                         height: "250px",
                       },
-                    }}
-                  >
+                    }}>
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
@@ -640,8 +655,7 @@ const JobDetails = () => {
             </Grid>
             <DialogBox
               open={registrationWarning}
-              handleClose={() => setRegistrationWarning(false)}
-            >
+              handleClose={() => setRegistrationWarning(false)}>
               <div>
                 <h1 className="heading">Register as jobseeker</h1>
                 <div className="form-content">
@@ -674,8 +688,7 @@ const JobDetails = () => {
                           textDecoration: "none",
                           color: "#EEA23D",
                           fontWeight: 600,
-                        }}
-                      >
+                        }}>
                         Login
                       </Link>
                     </span>
@@ -767,8 +780,7 @@ const JobDetails = () => {
                 display:
                   platform === "android" || platform === "ios" ? "block" : "",
               },
-            }}
-          >
+            }}>
             <h2>more jobs like this:</h2>
             {suggestionJobs.map((item, key) => {
               return (
@@ -778,7 +790,7 @@ const JobDetails = () => {
                   </Link>
                   <span>
                     – {item.city.title}, {item.country.title}
-                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`} {" "}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}{" "}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b
@@ -788,8 +800,7 @@ const JobDetails = () => {
                         top: "37px",
                         transform: "translate(0%, -37%)",
                         color: "#EEA23D",
-                      }}
-                    >
+                      }}>
                       <SVG.ArrowAngle />
                     </b>
                   ) : (
@@ -810,14 +821,12 @@ const JobDetails = () => {
             width: "700px",
             maxWidth: "857px",
           },
-        }}
-      >
+        }}>
         <ShareJob />
       </DialogBox>
       <DialogBox
         open={registrationWarning}
-        handleClose={() => setRegistrationWarning(false)}
-      >
+        handleClose={() => setRegistrationWarning(false)}>
         <div>
           <h1 className="heading">Register as jobseeker</h1>
           <div className="form-content">
@@ -850,8 +859,7 @@ const JobDetails = () => {
                     textDecoration: "none",
                     color: "#EEA23D",
                     fontWeight: 600,
-                  }}
-                >
+                  }}>
                   Login
                 </Link>
               </span>
@@ -859,6 +867,10 @@ const JobDetails = () => {
           </div>
         </div>
       </DialogBox>
+      <ExpiredBox
+        open={expiredWarning}
+        handleClose={() => setExpiredWarning(false)}
+      />
     </>
   );
 };

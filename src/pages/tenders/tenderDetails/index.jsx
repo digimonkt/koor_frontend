@@ -29,7 +29,7 @@ import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_ROLES } from "../../../utils/enum";
-import DialogBox from "../../../components/dialogBox";
+import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
@@ -101,13 +101,14 @@ function TenderDetailsComponent() {
     },
     attachments: [],
   });
-  const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector(state => state.auth);
   const [addressGeoCode, setAddressGeoCode] = useState({});
   const [registrationWarning, setRegistrationWarning] = useState(false);
+  const [expiredWarning, setExpiredWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
 
-  const getTenderDetails = async (tenderId) => {
+  const getTenderDetails = async tenderId => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
       setDetails(res.data);
@@ -118,15 +119,15 @@ function TenderDetailsComponent() {
     }
   };
 
-  const getTenderSuggestion = async (tenderId) => {
+  const getTenderSuggestion = async tenderId => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
       setTenderSuggestion(res.data.results);
     }
   };
-  const handleSaveTender = async (tenderId) => {
+  const handleSaveTender = async tenderId => {
     if (isLoggedIn) {
-      setDetails((prevState) => ({
+      setDetails(prevState => ({
         ...prevState,
         isSaved: !prevState.isSaved,
       }));
@@ -141,6 +142,8 @@ function TenderDetailsComponent() {
           console.log("resp", resp);
         }
       }
+    } else if (details.expiredInDays <= 0) {
+      setExpiredWarning(true);
     } else {
       setRegistrationWarning(true);
     }
@@ -162,8 +165,8 @@ function TenderDetailsComponent() {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
-  const handleLoadImage = async (url) => {
-    const fileType = (url) => {
+  const handleLoadImage = async url => {
+    const fileType = url => {
       const extension = "." + url.split(".").pop().toLowerCase();
       console.log({ extension });
       const mimeTypes = {
@@ -172,10 +175,9 @@ function TenderDetailsComponent() {
         ".png": "image/png",
         ".gif": "image/gif",
         ".pdf": "application/pdf",
-        // Add more extensions and corresponding MIME types as needed
       };
 
-      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
+      return mimeTypes[extension] || "application/octet-stream";
     };
 
     const fileName = "attachment";
@@ -199,9 +201,8 @@ function TenderDetailsComponent() {
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = downloadUrl;
-      a.download = fileName || "file"; // Default filename is "file"
+      a.download = fileName || "file";
 
-      // Append the link to the document and click it
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -215,7 +216,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -243,8 +244,7 @@ function TenderDetailsComponent() {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
-        }}
-      >
+        }}>
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
@@ -257,8 +257,7 @@ function TenderDetailsComponent() {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate(-1)}
-                  >
+                    onClick={() => navigate(-1)}>
                     {<SVG.LeftArrow />}
                   </IconButton>
                   <p className="mb-0">{details.title}</p>
@@ -279,10 +278,9 @@ function TenderDetailsComponent() {
                     style={{
                       marginLeft: "20px",
                       cursor: "default",
-                      // color: "#ffffff",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -295,8 +293,9 @@ function TenderDetailsComponent() {
                   <h4>Details :</h4>
                   <div
                     className="job-description"
-                    dangerouslySetInnerHTML={{ __html: details.description }}
-                  ></div>
+                    dangerouslySetInnerHTML={{
+                      __html: details.description,
+                    }}></div>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
@@ -351,8 +350,7 @@ function TenderDetailsComponent() {
                             cursor: "pointer",
                             whiteSpace: "normal",
                             wordBreak: "break-all",
-                          }}
-                        >
+                          }}>
                           {attachment.title}
                         </span>
                       </div>
@@ -374,11 +372,11 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for the Tender",
-                            ]
+                            <>
+                              <SVG.Enable1 className="me-2" />
+                            </>,
+                            "Apply for the Tender",
+                          ]
                       }
                       sx={{
                         padding: "10px 0px !important",
@@ -391,23 +389,27 @@ function TenderDetailsComponent() {
                       // className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
-                        if (isLoggedIn) {
-                          if (details.isEditable) {
-                            navigate(
-                              urlcat("../tender/apply/:tenderId", {
-                                tenderId: params.tenderId,
-                                applicationId: details.application.id,
-                              })
-                            );
+                        if (details.expiredInDays > 0) {
+                          if (isLoggedIn) {
+                            if (details.isEditable) {
+                              navigate(
+                                urlcat("../tender/apply/:tenderId", {
+                                  tenderId: params.tenderId,
+                                  applicationId: details.application.id,
+                                }),
+                              );
+                            } else {
+                              navigate(
+                                urlcat("../tender/apply/:tenderId", {
+                                  tenderId: params.tenderId,
+                                }),
+                              );
+                            }
                           } else {
-                            navigate(
-                              urlcat("../tender/apply/:tenderId", {
-                                tenderId: params.tenderId,
-                              })
-                            );
+                            setRegistrationWarning(true);
                           }
                         } else {
-                          setRegistrationWarning(true);
+                          setExpiredWarning(true);
                         }
                       }}
                     />
@@ -430,18 +432,17 @@ function TenderDetailsComponent() {
                         lg: 1,
                       }}
                       alignItems="center"
-                      justifyContent="center"
-                    >
+                      justifyContent="center">
                       <OutlinedButton
                         title={
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.BlueSaveIcon className="me-2" />
-                                </>,
-                                "Save Tender",
-                              ]
+                              <>
+                                <SVG.BlueSaveIcon className="me-2" />
+                              </>,
+                              "Save Tender",
+                            ]
                         }
                         sx={{
                           height: "44px",
@@ -449,7 +450,15 @@ function TenderDetailsComponent() {
                         }}
                         vendor
                         onClick={() => {
-                          handleSaveTender(params.tenderId);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSaveTender(params.tenderId);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
+                          } else {
+                            setExpiredWarning(true);
+                          }
                         }}
                       />
                       <OutlinedButton
@@ -484,8 +493,7 @@ function TenderDetailsComponent() {
                 <div
                   dangerouslySetInnerHTML={{
                     __html: details.applicationInstruction,
-                  }}
-                ></div>
+                  }}></div>
               </div>
               {role === USER_ROLES.vendor || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
@@ -496,8 +504,7 @@ function TenderDetailsComponent() {
                       "@media (max-width: 480px)": {
                         display: "block",
                       },
-                    }}
-                  >
+                    }}>
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
@@ -518,14 +525,12 @@ function TenderDetailsComponent() {
                           </>,
                           "Apply on employer's website",
                         ]}
-                        // className={`${styles.enablebtn}`}
-                        // disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          // if (isLoggedIn) {
-                          window.open(details.websiteLink, "_blank");
-                          // } else {
-                          // setRegistrationWarning(true);
-                          // }
+                          if (details.expiredInDays <= 0) {
+                            setExpiredWarning(true);
+                          } else {
+                            window.open(details.websiteLink, "_blank");
+                          }
                         }}
                       />
                     )}
@@ -552,7 +557,11 @@ function TenderDetailsComponent() {
                         ]}
                         className="ms-3"
                         onClick={() => {
-                          handleSendEmail(details);
+                          if (details.expiredInDays <= 0) {
+                            setExpiredWarning(true);
+                          } else {
+                            handleSendEmail(details);
+                          }
                         }}
                       />
                     )}
@@ -573,8 +582,7 @@ function TenderDetailsComponent() {
                       height: "236px",
                       overflow: "hidden",
                       borderRadius: "5px",
-                    }}
-                  >
+                    }}>
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
@@ -584,8 +592,7 @@ function TenderDetailsComponent() {
             </Grid>
             <DialogBox
               open={registrationWarning}
-              handleClose={() => setRegistrationWarning(false)}
-            >
+              handleClose={() => setRegistrationWarning(false)}>
               <div>
                 <h1 className="heading">Register as vendor</h1>
                 <div className="form-content">
@@ -619,8 +626,7 @@ function TenderDetailsComponent() {
                           textDecoration: "none",
                           color: "#274593",
                           fontWeight: 600,
-                        }}
-                      >
+                        }}>
                         Login
                       </Link>
                     </span>
@@ -628,6 +634,10 @@ function TenderDetailsComponent() {
                 </div>
               </div>
             </DialogBox>
+            <ExpiredBox
+              open={expiredWarning}
+              handleClose={() => setExpiredWarning(false)}
+            />
           </div>
           <div className={`${styles.LikeJob}`}>
             <h2>more tenders like this:</h2>
@@ -637,8 +647,7 @@ function TenderDetailsComponent() {
                   <Link
                     to={urlcat("/tender/details/:tenderId", {
                       tenderId: item.id,
-                    })}
-                  >
+                    })}>
                     {item?.title}
                   </Link>
                   <span>
@@ -659,8 +668,7 @@ function TenderDetailsComponent() {
             width: "700px",
             maxWidth: "857px",
           },
-        }}
-      >
+        }}>
         <ShareTender />
       </DialogBox>
     </>
