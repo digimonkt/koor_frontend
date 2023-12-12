@@ -235,6 +235,7 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
+  console.log({ details });
   return (
     <>
       <Container
@@ -372,11 +373,11 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for the Tender",
-                            ]
+                            <>
+                              <SVG.Enable1 className="me-2" />
+                            </>,
+                            "Apply for the Tender",
+                          ]
                       }
                       sx={{
                         padding: "10px 0px !important",
@@ -389,8 +390,8 @@ function TenderDetailsComponent() {
                       // className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
-                        if (isLoggedIn) {
-                          if (details.expiredInDays > 0) {
+                        if (details.expiredInDays > 0) {
+                          if (isLoggedIn) {
                             if (details.isEditable) {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
@@ -406,10 +407,10 @@ function TenderDetailsComponent() {
                               );
                             }
                           } else {
-                            setExpiredWarning(true);
+                            setRegistrationWarning(true);
                           }
                         } else {
-                          setRegistrationWarning(true);
+                          setExpiredWarning(true);
                         }
                       }}
                     />
@@ -438,11 +439,11 @@ function TenderDetailsComponent() {
                           details.isSaved
                             ? "Saved"
                             : [
-                                <>
-                                  <SVG.BlueSaveIcon className="me-2" />
-                                </>,
-                                "Save Tender",
-                              ]
+                              <>
+                                <SVG.BlueSaveIcon className="me-2" />
+                              </>,
+                              "Save Tender",
+                            ]
                         }
                         sx={{
                           height: "44px",
@@ -450,14 +451,14 @@ function TenderDetailsComponent() {
                         }}
                         vendor
                         onClick={() => {
-                          if (isLoggedIn) {
-                            if (details.expiredInDays > 0) {
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
                               handleSaveTender(params.tenderId);
                             } else {
-                              setExpiredWarning(true);
+                              setRegistrationWarning(true);
                             }
                           } else {
-                            setRegistrationWarning(true);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
