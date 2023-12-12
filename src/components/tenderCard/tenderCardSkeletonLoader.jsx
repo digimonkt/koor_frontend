@@ -18,34 +18,37 @@ function TenderCardSkeletonLoader(logo, selfJob) {
         {logo && (
           <Grid
             item
+            xs={12}
+            spacing={{ lg: 2, sm: 2, xs: 0 }}
             sx={{
               "@media (min-width: 1200px)": {
-                maxWidth: "10.555%",
-                flexBasis: "10.555%",
+                maxWidth: "11%",
+                flexBasis: "11%",
               },
             }}
           >
             <div
               className="squer-width"
-              style={{ height: "150px", width: "150px" }}
+              style={{ height: "100px", width: "100px", borderRadius: "4px" }}
             >
-              <Skeleton circle style={{ height: "100%" }} />
+              <Skeleton style={{ height: "100%", borderRadius: "4px" }} />
             </div>
           </Grid>
         )}
         <Grid
           item
-          lg={logo ? 8 : 9}
+          // lg={logo ? 8 : 9}
           xs={12}
+          spacing={{ lg: 2, sm: 2, xs: 0 }}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "72%",
-              flexBasis: "72%",
+              maxWidth: "64%",
+              flexBasis: "64%",
             },
           }}
         >
           <div className="my-jobs" style={{ paddingLeft: "75px" }}>
-            <Skeleton height={24} width={500} />
+            <Skeleton height={24} width="100" />
             <p className="my-3 job-description card-description">
               <Skeleton count={2} style={{ lineHeight: "9px" }} />
             </p>
@@ -53,6 +56,7 @@ function TenderCardSkeletonLoader(logo, selfJob) {
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
               sx={{ width: "100%", flexWrap: "wrap" }}
+              useFlexGap
             >
               <Skeleton
                 height={30}
@@ -102,7 +106,18 @@ function TenderCardSkeletonLoader(logo, selfJob) {
             </Stack>
           </div>
         </Grid>
-        <Grid item lg={logo ? 2 : 3} xs={12}>
+        <Grid
+          item
+          // lg={logo ? 2 : 3}
+          xs={12}
+          spacing={{ lg: 2, sm: 2, xs: 0 }}
+          sx={{
+            "@media (min-width: 1200px)": {
+              maxWidth: "25%",
+              flexBasis: "25%",
+            },
+          }}
+        >
           <div className="text-end mb-4">
             <Skeleton height={30} width={100} style={{ borderRadius: "5px" }} />
           </div>
