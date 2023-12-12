@@ -1,10 +1,11 @@
+import { Box } from "@mui/material";
 import React from "react";
 import Marquee from "react-fast-marquee";
 
 const TextSlide = () => {
   return (
     <>
-      <div>
+      <Box sx={{ "& h1": { marginRight: "25px" } }}>
         <Marquee
           play={true}
           speed={100}
@@ -21,7 +22,7 @@ const TextSlide = () => {
           <h1>Earn</h1>
           <h1></h1>
         </Marquee>
-      </div>
+      </Box>
     </>
   );
 };

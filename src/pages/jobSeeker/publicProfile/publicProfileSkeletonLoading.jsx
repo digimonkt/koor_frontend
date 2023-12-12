@@ -47,7 +47,7 @@ function PublicProfileSkeletonLoading() {
                   direction={{ xs: "column", lg: "row" }}
                   spacing={{ xs: 1, lg: 2 }}
                   justifyContent={{ xs: "start", lg: "space-between" }}
-                  alignItems={"center"}
+                  alignItems={{ xs: "start", lg: "center" }}
                 >
                   <Stack direction={"row"} spacing={2}>
                     <Skeleton
@@ -66,7 +66,7 @@ function PublicProfileSkeletonLoading() {
                           mb: 0,
                         }}
                       >
-                        <Skeleton width={300} />
+                        <Skeleton width={"100%"} />
                       </Typography>
                       <Typography
                         sx={{
@@ -111,7 +111,7 @@ function PublicProfileSkeletonLoading() {
                     }}
                   >
                     <Skeleton
-                      width={1000}
+                      width={"100%"}
                       count={3}
                       style={{ lineHeight: "10px" }}
                     />
