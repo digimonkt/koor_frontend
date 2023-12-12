@@ -1,21 +1,6 @@
-import React from "react";
-import { Dialog } from "@mui/material";
+import ExpiredBoxComponent from "./expiredBoxi.jsx";
+import DialogBoxComponent from "./dialogBox.jsx";
 
-const DialogBox = ({ open, handleClose, className, children, ...rest }) => {
-  return (
-    <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-        className={`modal-box ${className}`}
-        fullWidth
-        maxWidth="sm"
-        {...rest}
-      >
-        <div>{children}</div>
-      </Dialog>
-    </>
-  );
-};
+export const ExpiredBox = ExpiredBoxComponent;
+const DialogBox = DialogBoxComponent;
 export default DialogBox;
