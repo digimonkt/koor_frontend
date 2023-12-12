@@ -12,12 +12,12 @@ const ExpiredBoxComponent = ({ open, handleClose }) => {
   return (
     <DialogBox open={open} handleClose={handleClose}>
       <div>
-        <h1 className="heading" style={{ textTransform: "capitalize" }}>
-          {pageType === "tenders" ? "tender" : "job"} has Expired
+        <h1 className="heading">
+          {pageType === "tenders" ? "Tender" : "Job"} has expired
         </h1>
         <div className="form-content">
           <p className="jobs_dailog_content">
-            This posted has expired. So you can't apply for this {pageType}.
+            This {pageType === "tenders" ? "tender" : "job"} has expired. So you can't apply for this {pageType === "tenders" ? "tender" : "job"}.
           </p>
           <div style={{ textAlign: "center", lineHeight: "40px" }}>
             <Link to={`/search/${pageType}`}>
