@@ -80,8 +80,8 @@ function ManageJobsComponent() {
                   <Chip label={totalCreatedJobs} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${0}`}
-              aria-controls={`simple-tabpanel-${0}`}
+              id={`simple - tab - ${0}`}
+            aria-controls={`simple - tabpanel - ${0}`}
             />
             <AntTab
               label={
@@ -90,8 +90,8 @@ function ManageJobsComponent() {
                   <Chip label={totalApplications} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${1}`}
-              aria-controls={`simple-tabpanel-${1}`}
+              id={`simple - tab - ${1}`}
+              aria-controls={`simple - tabpanel - ${1}`}
             />
             <AntTab
               label={
@@ -100,8 +100,8 @@ function ManageJobsComponent() {
                   <Chip label={totalBlacklist} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${1}`}
-              aria-controls={`simple-tabpanel-${1}`}
+              id={`simple - tab - ${1}`}
+              aria-controls={`simple - tabpanel - ${1}`}
             />
           </AntTabs>
         )}
@@ -132,35 +132,36 @@ function ManageJobsComponent() {
           key={index}
           role="tabpanel"
           hidden={index !== panel}
-          id={`simple-tabpanel-${index}`}
-          style={{ height: "100%" }}
+          id={`simple - tabpanel - ${index}`}
+      style={{ height: "100%" }}
         >
-          <tab.component onTabChange={handlePageTab} />
-        </div>
-      ))}
-      <DialogBox
-        open={accountVerifiedWarning}
-        handleClose={() => setAccountVerifiedWarning(false)}
-      >
-        <div>
-          <SVG.Warning
-            style={{
-              marginLeft: "39%",
-              height: "50px",
-              width: "50px",
-              color: "red",
-            }}
-          />
-          <h1 className="heading">Account Verification Status </h1>
-          <div className="form-content">
-            <p>
-              Dear {currentUser.name || currentUser.email}, your account is not
-              verified by the administrator. Please contact the administrator
-              for further assistance.
-            </p>
-          </div>
-        </div>
-      </DialogBox>
+      <tab.component onTabChange={handlePageTab} />
+    </div>
+  ))
+}
+<DialogBox
+  open={accountVerifiedWarning}
+  handleClose={() => setAccountVerifiedWarning(false)}
+>
+  <div>
+    <SVG.Warning
+      style={{
+        marginLeft: "39%",
+        height: "50px",
+        width: "50px",
+        color: "red",
+      }}
+    />
+    <h1 className="heading">Account Verification Status </h1>
+    <div className="form-content">
+      <p>
+        Dear {currentUser.name || currentUser.email}, your account is not
+        verified by the administrator. Please contact the administrator
+        for further assistance.
+      </p>
+    </div>
+  </div>
+</DialogBox>
     </div>
   );
 }

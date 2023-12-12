@@ -300,12 +300,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   </span>{" "}
                   <div className="textdes">
                     {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
+                    jobDetails.companyLogo === null
                       ? "Company:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
-                        jobDetails.companyLogo === null
+                      jobDetails.companyLogo === null
                         ? jobDetails.user.name
                         : " Koor"}
                     </span>

@@ -16,7 +16,7 @@ import { USER_ROLES } from "@utils/enum";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
@@ -29,7 +29,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
       await unSaveTenderAPI(tenderDetails.id);
     }
   };
-  const updateTender = async (tenderId) => {
+  const updateTender = async tenderId => {
     const res = await updateEmployerTenderStatusAPI(tenderId);
     if (res.remote === "success") {
       console.log(res);
@@ -66,13 +66,11 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 maxWidth: "10.555%",
                 flexBasis: "10.555%",
               },
-            }}
-          >
+            }}>
             <Stack
               direction={"row"}
               spacing={2}
-              justifyContent={"space-between"}
-            >
+              justifyContent={"space-between"}>
               <div className="squer-width">
                 <Avatar
                   sx={{
@@ -84,8 +82,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       background: "#F0F0F0",
                     },
                   }}
-                  src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
-                >
+                  src={generateFileUrl(tenderDetails?.user?.image?.path || "")}>
                   <SVG.SuitcaseJob />
                 </Avatar>
               </div>
@@ -107,7 +104,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       color={getColorByRemainingDays(
                         tenderDetails?.expiredInDays > 0
                           ? tenderDetails?.expiredInDays
-                          : 0
+                          : 0,
                       )}
                     />
                   </div>
@@ -118,16 +115,14 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     alignItems="center"
                     divider={<Divider orientation="vertical" flexItem />}
                     className="py-2"
-                    sx={{ minHeight: "87%" }}
-                  >
+                    sx={{ minHeight: "87%" }}>
                     <div>
                       {selfTender ? (
                         <Box className="job-button-card">
                           <button
                             onClick={() => {
                               handleStartPause();
-                            }}
-                          >
+                            }}>
                             {isStart === "active" ? (
                               <>
                                 <SVG.PauseIcon />
@@ -146,11 +141,10 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                 navigate(
                                   urlcat("/employer/tender/post", {
                                     tenderId: tenderDetails?.id,
-                                  })
+                                  }),
                                 );
                               }
-                            }}
-                          >
+                            }}>
                             {<SVG.Edit1 />}
                             <span className="d-block">Edit</span>
                           </button>
@@ -160,8 +154,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                           {!applied ? (
                             <div
                               onClick={handleToggleSave}
-                              style={{ marginLeft: "6px" }}
-                            >
+                              style={{ marginLeft: "6px" }}>
                               <div className="bookmark">
                                 {isSaved ? (
                                   <>
@@ -175,8 +168,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                         color: USER_ROLES.jobSeeker
                                           ? " #274593"
                                           : "#eea23d",
-                                      }}
-                                    >
+                                      }}>
                                       Saved
                                     </span>
                                   </>
@@ -214,8 +206,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               maxWidth: "72%",
               flexBasis: "72%",
             },
-          }}
-        >
+          }}>
           <div className="my-jobs">
             <h2>
               <Link to={`/tender/details/${tenderDetails?.id || "tenderId"}`}>
@@ -235,8 +226,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             </h2>
             <div
               className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{ __html: tenderDetails?.description }}
-            ></div>
+              dangerouslySetInnerHTML={{
+                __html: tenderDetails?.description,
+              }}></div>
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
@@ -249,12 +241,11 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 },
               }}
               useFlexGap
-              className="tender_card_chip"
-            >
+              className="tender_card_chip">
               {tenderDetails.sector && (
                 <ChipBox
                   label={`Sector: ${capitalizeFirst(
-                    tenderDetails?.sector?.title || ""
+                    tenderDetails?.sector?.title || "",
                   )}`}
                   icon={<>{<SVG.SellIcon />}</>}
                 />
@@ -269,7 +260,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 );
               })}
             </Stack>
-
             <Stack
               direction="row"
               spacing={2}
@@ -287,7 +277,16 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
-                    Company: <span>{tenderDetails.user.name}</span>
+                    {tenderDetails.company === null &&
+                    tenderDetails.companyLogo === null
+                      ? "Company:"
+                      : "Posted By"}
+                    <span>
+                      {tenderDetails.company === null &&
+                      tenderDetails.companyLogo === null
+                        ? tenderDetails.user.name
+                        : " Koor"}
+                    </span>
                   </div>
                 </Stack>
               )}
@@ -309,8 +308,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             lg={logo ? 2 : 3}
             xs={12}
             sm={2}
-            sx={{ marginLeft: "auto" }}
-          >
+            sx={{ marginLeft: "auto" }}>
             <Box sx={{ display: "flex", justifyContent: "end" }}>
               <SolidButton
                 // style={{ textTransform: "capitalize", cursor: "default" }}
@@ -327,7 +325,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 color={getColorByRemainingDays(
                   tenderDetails?.expiredInDays > 0
                     ? tenderDetails?.expiredInDays
-                    : 0
+                    : 0,
                 )}
               />
             </Box>
@@ -337,16 +335,14 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               justifyContent="end"
               alignItems="center"
               className="py-2 mt-2"
-              sx={{ minHeight: "87%" }}
-            >
+              sx={{ minHeight: "87%" }}>
               <div className="py-4 border-left-1 py-4 ps-3">
                 {selfTender ? (
                   <Box className="job-button-card">
                     <button
                       onClick={() => {
                         handleStartPause();
-                      }}
-                    >
+                      }}>
                       {isStart === "active" ? (
                         <>
                           <SVG.PauseIcon />
@@ -365,11 +361,10 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                           navigate(
                             urlcat("/employer/tender/post", {
                               tenderId: tenderDetails?.id,
-                            })
+                            }),
                           );
                         }
-                      }}
-                    >
+                      }}>
                       {<SVG.Edit1 />}
                       <span className="d-block">Edit</span>
                     </button>
@@ -379,8 +374,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     {!applied ? (
                       <div
                         onClick={handleToggleSave}
-                        style={{ marginLeft: "6px" }}
-                      >
+                        style={{ marginLeft: "6px" }}>
                         <div className="bookmark">
                           {isSaved ? (
                             <>
@@ -394,8 +388,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                   color: USER_ROLES.jobSeeker
                                     ? " #274593"
                                     : "#eea23d",
-                                }}
-                              >
+                                }}>
                                 Saved
                               </span>
                             </>

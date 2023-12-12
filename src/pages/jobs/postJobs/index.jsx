@@ -98,21 +98,6 @@ function PostJobsComponent() {
   const [descData, setDescData] = useState("");
   const [applicationInstructionData, setApplicationInstructionData] =
     useState("");
-  const toolbarOptions = [
-    ["bold", "italic", "underline", "strike"], // basic formatting
-    ["blockquote", "code-block"], // blockquote and code block
-    [{ header: 1 }, { header: 2 }], // headers
-    [{ list: "ordered" }, { list: "bullet" }], // ordered and unordered lists
-    [{ script: "sub" }, { script: "super" }], // subscript and superscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent and indent
-    [{ direction: "rtl" }], // text direction
-    [{ size: ["small", false, "large", "huge"] }], // font size
-    [{ color: [] }, { background: [] }], // text and background color
-    [{ font: [] }], // font family
-    [{ align: [] }], // text alignment
-    ["link", "image", "video"], // link, image, and video
-    ["clean"], // remove formatting
-  ];
   const handleRedirect = () => {
     setOpen(close);
     setIsRedirect(true);
@@ -143,11 +128,8 @@ function PostJobsComponent() {
       contactEmail: "",
       cc1: "",
       cc2: "",
-      isContactWhatsapp: false,
       duration: 0,
       experience: "",
-      countryCodeContactWhatsapp: "",
-      contactWhatsapp: "",
       highestEducation: "",
       languages: [],
       skills: [],
@@ -168,6 +150,7 @@ function PostJobsComponent() {
         address: values.address,
         job_category: values.jobCategories,
         job_sub_category: values.jobSubCategory,
+        highest_education: values.highestEducation,
         is_full_time: values.isFullTime,
         is_part_time: values.isPartTime,
         has_contract: values.hasContract,
@@ -176,14 +159,8 @@ function PostJobsComponent() {
           ? dayjs(values.startDate).format(DATABASE_DATE_FORMAT)
           : "",
         contact_email: values.isApplyThroughEmail ? values.contactEmail : "",
-        // cc1: values.isApplyThroughEmail ? values.cc1 : "",
-        // cc2: values.isApplyThroughEmail ? values.cc2 : "",
         cc1: values.cc1,
         cc2: values.cc2,
-        contact_whatsapp: values.isContactWhatsapp
-          ? values.contactWhatsapp
-          : "",
-        highest_education: values.highestEducation || "",
         language: values.languages,
         skill: values.skills,
         attachments: values.attachments,
@@ -254,48 +231,52 @@ function PostJobsComponent() {
     const response = await getJobDetailsByIdAPI({ jobId });
     if (response.remote === "success") {
       const { data } = response;
-      formik.setFieldValue("title", data.title);
-      formik.setFieldValue("budgetCurrency", data.budgetCurrency);
-      formik.setFieldValue("budgetAmount", data.budgetAmount);
-      formik.setFieldValue("budgetPayPeriod", data.budgetPayPeriod);
-      formik.setFieldValue("description", data.description);
-      formik.setFieldValue("country", data.country.id);
-      formik.setFieldValue("city", data.city.id);
-      formik.setFieldValue("address", data.address);
-      formik.setFieldValue("duration", data.duration);
-      formik.setFieldValue("experience", data.experience);
+      formik.setFieldValue("title", data?.title || "");
+      formik.setFieldValue("budgetCurrency", data?.budgetCurrency);
+      formik.setFieldValue("budgetAmount", data?.budgetAmount || 0);
+      formik.setFieldValue("budgetPayPeriod", data?.budgetPayPeriod);
+      formik.setFieldValue("description", data?.description || "");
+      formik.setFieldValue("country", data?.country?.id || "");
+      formik.setFieldValue("city", data?.city?.id || "");
+      formik.setFieldValue("address", data?.address || "");
+      formik.setFieldValue("duration", data?.duration || "");
+      formik.setFieldValue("experience", data?.experience || "");
       setSearchValue(data.address);
-      formik.setFieldValue("jobCategories", data.jobCategories.id);
-      formik.setFieldValue("jobSubCategory", data.jobSubCategory.id);
-      formik.setFieldValue("isFullTime", data.isFullTime);
-      formik.setFieldValue("isPartTime", data.isPartTime);
-      formik.setFieldValue("hasContract", data.hasContract);
+      formik.setFieldValue("jobCategories", data?.jobCategories?.id || "");
+      formik.setFieldValue("jobSubCategory", data?.jobSubCategory?.id || "");
+      formik.setFieldValue("isFullTime", data?.isFullTime || false);
+      formik.setFieldValue("isPartTime", data?.isPartTime || false);
+      formik.setFieldValue("hasContract", data?.hasContract || false);
       formik.setFieldValue("deadline", dayjs(data.deadline));
       formik.setFieldValue("startDate", dayjs(data.startDate));
-      formik.setFieldValue("isContactEmail", Boolean(data.contactEmail));
-      formik.setFieldValue("contactEmail", data.contactEmail);
-      formik.setFieldValue("cc1", data.cc1);
-      formik.setFieldValue("cc2", data.cc2);
-      formik.setFieldValue("isContactWhatsapp", Boolean(data.contactWhatsapp));
-      formik.setFieldValue("contactWhatsapp", data.contactWhatsapp);
+      formik.setFieldValue(
+        "isContactEmail",
+        Boolean(data?.contactEmail) || false
+      );
+      formik.setFieldValue("contactEmail", data?.contactEmail || "");
+      formik.setFieldValue("cc1", data?.cc1 || "");
+      formik.setFieldValue("cc2", data?.cc2 || "");
       formik.setFieldValue(
         "isApplyThroughKoor",
-        Boolean(data.isApplyThroughKoor)
+        Boolean(data?.isApplyThroughKoor) || false
       );
       formik.setFieldValue(
         "isApplyThroughEmail",
-        Boolean(data.isApplyThroughEmail)
+        Boolean(data?.isApplyThroughEmail) || false
       );
       formik.setFieldValue(
         "isApplyThroughWebsite",
-        Boolean(data.isApplyThroughWebsite)
+        Boolean(data?.isApplyThroughWebsite) || false
       );
       formik.setFieldValue(
         "applicationInstruction",
-        data.applicationInstruction
+        data?.applicationInstruction || ""
       );
-      formik.setFieldValue("websiteLink", data.websiteLink);
-      formik.setFieldValue("highestEducation", data.highestEducation.id || "");
+      formik.setFieldValue("websiteLink", data?.websiteLink || "");
+      formik.setFieldValue(
+        "highestEducation",
+        data?.highestEducation?.id || ""
+      );
       // !TEMPORARY SOLUTION
       formik.setFieldValue(
         "languages",
@@ -408,6 +389,7 @@ function PostJobsComponent() {
       dispatch(getSkills());
     }
   }, []);
+  console.log({ formik, jobCategories });
   useEffect(() => {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {
       dispatch(getCities({ countryId: formik.values.country }));
@@ -531,9 +513,6 @@ function PostJobsComponent() {
                         type="textarea"
                         placeholder="Write more details to attract the right candidates."
                         value={descData || formik.values.description}
-                        modules={{
-                          toolbar: toolbarOptions,
-                        }}
                         onChange={(value) => handleEditorValue(value)}
                       />
                     </Box>
@@ -634,14 +613,15 @@ function PostJobsComponent() {
                     <SelectInput
                       defaultValue=""
                       placeholder="Select a Job category"
-                      options={jobCategories.data.map((jobCategory) => ({
-                        value: jobCategory.id,
-                        label: jobCategory.title,
+                      options={jobCategories?.data?.map((jobCategory) => ({
+                        value: jobCategory?.id,
+                        label: jobCategory?.title,
                       }))}
-                      name={"jobCategories"}
-                      value={formik.values.jobCategories || ""}
+                      name="jobCategories"
+                      value={formik.values.jobCategories}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
+                      {...formik.getFieldProps("jobCategories")}
                     />
                     {formik.touched.jobCategories &&
                     formik.errors.jobCategories ? (
@@ -887,7 +867,8 @@ function PostJobsComponent() {
                       }}
                     >
                       <label>
-                        Application Instructions<span className="required-field">*</span>
+                        Application Instructions{" "}
+                        <span className="required-field">*</span>
                       </label>
                       <QuillInput
                         type="textarea"
@@ -1044,7 +1025,7 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.skills}</ErrorMessage>
                     ) : null}
                   </Grid>
-                </Grid >
+                </Grid>
 
                 <Grid item xl={12} lg={12} xs={12}>
                   <Divider sx={{ borderColor: "#CACACA", opacity: "1" }} />
@@ -1104,26 +1085,24 @@ function PostJobsComponent() {
                     sx={{ borderColor: "#CACACA", opacity: "1", my: 2 }}
                   />
                 </Grid>
-                {
-                  !jobId && totalAvailableCredits < minimumCreditJobPost ? (
-                    <div>
-                      Currently, you have{" "}
-                      <b>{totalAvailableCredits} credits remaining </b>. In order
-                      to post a job, you will need to purchase{" "}
-                      <b>
-                        {minimumCreditJobPost - totalAvailableCredits} more
-                        credits.{" "}
-                      </b>
-                    </div>
-                  ) : (
-                    <div>
-                      Currently, you have{" "}
-                      <b>{totalAvailableCredits} credits remaining </b>. In order
-                      to post a job, you will redeemed{" "}
-                      <b>{minimumCreditJobPost} credits</b> .
-                    </div>
-                  )
-                }
+                {!jobId && totalAvailableCredits < minimumCreditJobPost ? (
+                  <div>
+                    Currently, you have{" "}
+                    <b>{totalAvailableCredits} credits remaining </b>. In order
+                    to post a job, you will need to purchase{" "}
+                    <b>
+                      {minimumCreditJobPost - totalAvailableCredits} more
+                      credits.{" "}
+                    </b>
+                  </div>
+                ) : (
+                  <div>
+                    Currently, you have{" "}
+                    <b>{totalAvailableCredits} credits remaining </b>. In order
+                    to post a job, you will redeemed{" "}
+                    <b>{minimumCreditJobPost} credits</b> .
+                  </div>
+                )}
                 <Grid container spacing={2}>
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Job Posting Plan</h2>
@@ -1317,7 +1296,7 @@ function PostJobsComponent() {
           </Box>
         </Box>
       </DialogBox>
-    </div >
+    </div>
   );
 }
 

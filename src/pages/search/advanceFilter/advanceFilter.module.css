@@ -1,6 +1,7 @@
 body {
   background-color: #e5e5e5 !important;
 }
+
 .checkboxDiv {
   display: flex;
   justify-content: space-between;
@@ -9,15 +10,18 @@ body {
   margin: 0 10px;
   font-family: "Poppins";
 }
+
 .checkboxDiv span {
   font-size: 16px;
   font-weight: 400;
 }
+
 .btnActive span {
   margin-right: 4px !important;
   position: relative;
   top: 3px;
 }
+
 .btninActive span {
   margin-right: 4px !important;
   position: relative;
@@ -53,7 +57,8 @@ body {
   font-family: "Poppins" !important;
   font-weight: 400 !important;
   text-transform: capitalize !important;
-  white-space: break-spaces;
+  white-space: break-spaces !important;
+  width: auto !important;
 }
 
 .MuiList-root.MuiList-padding.css-h4y409-MuiList-root {

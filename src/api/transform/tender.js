@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
-export const transformTenderResponse = (data) => {
+export const transformTenderResponse = data => {
   return {
     count: data.count,
     next: data.next,
     previous: data.previous,
-    results: data.results.map((res) => {
+    results: data.results.map(res => {
       const today = dayjs(new Date().toISOString().split("T")[0]);
       const tomorrow = today.add(-1, "day");
       const deadline = dayjs(res.deadline);
@@ -19,7 +19,9 @@ export const transformTenderResponse = (data) => {
         status: res.status,
         createdAt: res.created,
         expiredInDays: deadline.diff(tomorrow, "day", true),
-        tenderCategory: (res.tender_category || []).map((category) => ({
+        companyLogo: res.company_logo,
+        company: res.company,
+        tenderCategory: (res.tender_category || []).map(category => ({
           id: category.id,
           title: category.title,
         })),
@@ -33,8 +35,10 @@ export const transformTenderResponse = (data) => {
     }),
   };
 };
-export const transformFullTenderDetails = (data) => {
-  const description = data.description !== "<p><br></p>" ? data.description : "";
+
+export const transformFullTenderDetails = data => {
+  const description =
+    data.description !== "<p><br></p>" ? data.description : "";
   return {
     id: data.id,
     title: data.title,
@@ -52,7 +56,7 @@ export const transformFullTenderDetails = (data) => {
     expiredInDays: dayjs(data.deadline).diff(
       dayjs(new Date().toISOString().split("T")[0]),
       "day",
-      true
+      true,
     ),
     startDate: data.start_date,
     deadline: data.deadline,
@@ -84,10 +88,10 @@ export const transformFullTenderDetails = (data) => {
   };
 };
 
-export const transformSavedFilter = (data) => {
+export const transformSavedFilter = data => {
   return {
     id: data.id,
-    jobCategories: data.job_category.map((category) => category.id),
+    jobCategories: data.job_category.map(category => category.id),
     country: data.country?.id ? data.country : null,
     city: data.city?.id ? data.city : null,
     isFullTime: data.is_full_time,
@@ -98,12 +102,12 @@ export const transformSavedFilter = (data) => {
     workingDays: data.working_days,
   };
 };
-export const transformTenderSuggestion = (data) => {
+export const transformTenderSuggestion = data => {
   return {
     count: data.count,
     next: data.next,
     previous: data.previous,
-    results: data.results.map((res) => ({
+    results: data.results.map(res => ({
       id: res.id,
       title: res.title,
       country: res.country.title,
