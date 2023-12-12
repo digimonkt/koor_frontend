@@ -323,7 +323,6 @@ function Search({ searchTypeForJob }) {
                   className={`${styles.jobcards}`}
                   sx={{
                     minHeight: "450px",
-                    marginBottom: "130px",
                     marginTop:
                       platform === "android" || platform === "ios"
                         ? ""

@@ -371,8 +371,8 @@ const JobDetails = () => {
                     </p>
                   </div>
                 )}
-                {
-                  details.attachments.length > 0 && <div className={`${styles.downloadattachment}`}>
+                {details.attachments.length > 0 && (
+                  <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
                     {details.attachments.map((attachment) => {
                       return (
@@ -396,7 +396,7 @@ const JobDetails = () => {
                       );
                     })}
                   </div>
-                }
+                )}
               </Grid>
               <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
@@ -419,11 +419,11 @@ const JobDetails = () => {
                               ? "Edit"
                               : "Applied"
                             : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for this job",
-                            ]
+                                <>
+                                  <SVG.Enable1 className="me-2" />
+                                </>,
+                                "Apply for this job",
+                              ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -485,11 +485,11 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.SaveIcon1 className="me-2" />
-                              </>,
-                              "Save job",
-                            ]
+                                <>
+                                  <SVG.SaveIcon1 className="me-2" />
+                                </>,
+                                "Save job",
+                              ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -547,6 +547,7 @@ const JobDetails = () => {
                       textAlign: "start",
                       display: "flex",
                       "@media (max-width: 480px)": {
+                        display: "block",
                         justifyContent: "center",
                       },
                     }}
@@ -778,7 +779,7 @@ const JobDetails = () => {
                   </Link>
                   <span>
                     – {item.city.title}, {item.country.title}
-                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`} {" "}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}{" "}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b
