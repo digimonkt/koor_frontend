@@ -248,7 +248,10 @@ const JobDetails = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}
@@ -269,6 +272,7 @@ const JobDetails = () => {
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
+
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -371,8 +375,8 @@ const JobDetails = () => {
                     </p>
                   </div>
                 )}
-                {
-                  details.attachments.length > 0 && <div className={`${styles.downloadattachment}`}>
+                {details.attachments.length > 0 && (
+                  <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
                     {details.attachments.map((attachment) => {
                       return (
@@ -396,7 +400,7 @@ const JobDetails = () => {
                       );
                     })}
                   </div>
-                }
+                )}
               </Grid>
               <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
@@ -419,11 +423,11 @@ const JobDetails = () => {
                               ? "Edit"
                               : "Applied"
                             : [
-                              <>
-                                <SVG.Enable1 className="me-2" />
-                              </>,
-                              "Apply for this job",
-                            ]
+                                <>
+                                  <SVG.Enable1 className="me-2" />
+                                </>,
+                                "Apply for this job",
+                              ]
                         }
                         className={`${styles.enablebtn}`}
                         disabled={details.isApplied && !details.isEditable}
@@ -485,11 +489,11 @@ const JobDetails = () => {
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.SaveIcon1 className="me-2" />
-                              </>,
-                              "Save job",
-                            ]
+                                <>
+                                  <SVG.SaveIcon1 className="me-2" />
+                                </>,
+                                "Save job",
+                              ]
                         }
                         style={{ height: "44px", width: "100%" }}
                         jobSeeker
@@ -542,14 +546,20 @@ const JobDetails = () => {
               </div>
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
-                  <Box
-                    sx={{
-                      textAlign: "start",
-                      display: "flex",
-                      "@media (max-width: 480px)": {
-                        justifyContent: "center",
-                      },
-                    }}
+                  <Stack
+                    direction={{ xs: "column", lg: "row" }}
+                    spacing={2}
+                    alignItems={{ xs: "flex-start", lg: "center" }}
+
+                    // sx={{
+                    //   textAlign: "start",
+                    //   display: "flex",
+
+                    //   "@media (max-width: 480px)": {
+                    //     justifyContent: "center",
+                    //     flexDirection: "column",
+                    //   },
+                    // }}
                   >
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
@@ -558,10 +568,12 @@ const JobDetails = () => {
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
+                            width: "100%",
                           },
                           "@media (max-width: 320px)": {
                             fontSize: "10px !important",
                             padding: "10px 25px !important",
+                            width: "100%",
                           },
                         }}
                         title={[
@@ -584,10 +596,12 @@ const JobDetails = () => {
                           borderColor: "#eea23d !important",
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
+                            width: "100%",
                           },
                           "@media (max-width: 320px)": {
                             fontSize: "10px !important",
                             padding: "10px 30px !important",
+                            width: "100%",
                           },
                         }}
                         title={[
@@ -596,13 +610,12 @@ const JobDetails = () => {
                           </>,
                           "Apply by email",
                         ]}
-                        className="ms-3"
                         onClick={() => {
                           handleSendEmail(details);
                         }}
                       />
                     )}
-                  </Box>
+                  </Stack>
                 </div>
               ) : null}
               <Divider />
@@ -626,6 +639,7 @@ const JobDetails = () => {
                       height: "75%",
                       overflow: "hidden",
                       borderRadius: "5px",
+                      position: "relative",
                       "@media (max-width:992px)": {
                         height: "250px",
                       },
@@ -778,7 +792,7 @@ const JobDetails = () => {
                   </Link>
                   <span>
                     – {item.city.title}, {item.country.title}
-                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`} {" "}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}{" "}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b

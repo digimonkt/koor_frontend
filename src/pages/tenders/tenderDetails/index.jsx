@@ -35,8 +35,10 @@ import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
 import { getColorByRemainingDays } from "@utils/generateColor";
+import { Capacitor } from "@capacitor/core";
 
 function TenderDetailsComponent() {
+  const platform = Capacitor.getPlatform();
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -245,7 +247,17 @@ function TenderDetailsComponent() {
           },
         }}
       >
-        <div className={`${styles.Jobcard}`}>
+        <div
+          className={`${styles.Jobcard}`}
+          style={{
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
+            borderRadius:
+              platform === "android" || platform === "ios" ? "0px" : null,
+          }}
+        >
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -573,6 +585,7 @@ function TenderDetailsComponent() {
                       height: "236px",
                       overflow: "hidden",
                       borderRadius: "5px",
+                      position: "relative",
                     }}
                   >
                     <GoogleMapWrapper>

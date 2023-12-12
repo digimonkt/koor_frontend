@@ -241,7 +241,10 @@ const ApplyForJob = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}
@@ -294,7 +297,14 @@ const ApplyForJob = () => {
               <Grid item xs={12} lg={4} sm={4}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
-                  <p className="job-description" dangerouslySetInnerHTML={{ __html: showMore ? details.description : truncatedDescription }} />
+                  <p
+                    className="job-description"
+                    dangerouslySetInnerHTML={{
+                      __html: showMore
+                        ? details.description
+                        : truncatedDescription,
+                    }}
+                  />
                   {hide ? (
                     <>
                       <p>Please check out my attachements below..</p>
@@ -320,7 +330,12 @@ const ApplyForJob = () => {
                     </>
                   ) : null}
                   <div className={`${styles.infomore}`}>
-                    <h6 onClick={() => { setHide(!hide); toggleShowMore(); }}>
+                    <h6
+                      onClick={() => {
+                        setHide(!hide);
+                        toggleShowMore();
+                      }}
+                    >
                       {!hide ? "More" : "Less"}
                       <span className={`${hide ? styles.rotate : ""}`}>
                         {<SVG.Downarrow />}
@@ -448,10 +463,11 @@ const ApplyForJob = () => {
                       ? "Update"
                       : "Apply"
                   }
-                  className={`${styles.applybtn} ${platform === "android" || platform === "ios"
-                    ? styles.applybtnapp
-                    : ""
-                    }`}
+                  className={`${styles.applybtn} ${
+                    platform === "android" || platform === "ios"
+                      ? styles.applybtnapp
+                      : ""
+                  }`}
                   type="submit"
                   disabled={isSubmitting}
                 />
