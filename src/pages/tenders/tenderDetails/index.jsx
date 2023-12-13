@@ -121,6 +121,7 @@ function TenderDetailsComponent() {
     }
   };
 
+  console.log({ details });
   const getTenderSuggestion = async tenderId => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
@@ -386,11 +387,11 @@ function TenderDetailsComponent() {
                             ? "Edit"
                             : "Applied"
                           : [
-                            <>
-                              <SVG.Enable1 className="me-2" />
-                            </>,
-                            "Apply for the Tender",
-                          ]
+                              <>
+                                <SVG.Enable1 className="me-2" />
+                              </>,
+                              "Apply for the Tender",
+                            ]
                       }
                       sx={{
                         padding: "10px 0px !important",
@@ -452,11 +453,11 @@ function TenderDetailsComponent() {
                           details.isSaved
                             ? "Saved"
                             : [
-                              <>
-                                <SVG.BlueSaveIcon className="me-2" />
-                              </>,
-                              "Save Tender",
-                            ]
+                                <>
+                                  <SVG.BlueSaveIcon className="me-2" />
+                                </>,
+                                "Save Tender",
+                              ]
                         }
                         sx={{
                           height: "44px",
