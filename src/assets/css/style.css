@@ -407,7 +407,7 @@ iframe {
 header {
   filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.05));
   background: #fff;
-  padding: 15.5px 0px;
+  padding: 17.5px 0px;
   position: fixed;
   width: 100%;
   height: 80px;
@@ -417,8 +417,6 @@ header {
 
 .navbar-brand {
   display: inline-block;
-  width: 10%;
-  height: 50px;
 }
 
 .menu {
