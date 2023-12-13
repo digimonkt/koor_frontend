@@ -39,11 +39,10 @@ function Header() {
   const location = useLocation();
   const [searchParams] = useSearchParams({});
 
-  const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const { role, isLoggedIn, currentUser } = useSelector(state => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  const { currentUser } = useSelector((state) => state.auth);
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const [warningTrue, setWarningTrue] = useState(false);
 
