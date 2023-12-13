@@ -83,7 +83,7 @@ function ImageCropper({ open, handleClose, image, handleSave }) {
               onCropChange={onCropChange}
               onCropComplete={onCropComplete}
               onZoomChange={onZoomChange}
-              cropSize={{ width: 150, height: 150 }}
+              cropSize={{ width: 250, height: 250 }}
             />
           )}
         </Box>

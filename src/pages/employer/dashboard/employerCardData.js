@@ -6,7 +6,7 @@ export const employerCard = (count) => [
     title: count.availableCredits,
     subtitle: "available credits",
     bgcolor: "#FCB74F",
-    boxshadow: "0px 5px 25px rgba(92, 193, 224, 0.5)",
+    boxshadow: "0px 5px 25px rgba(252, 183, 79, 0.5)",
   },
   {
     icon: <SVG.ClockIcon />,
@@ -20,7 +20,7 @@ export const employerCard = (count) => [
     title: count.activeJobs,
     subtitle: "active job post",
     bgcolor: "#61C78A",
-    boxshadow: "0px 5px 25px rgba(252, 183, 79, 0.5)",
+    boxshadow: "0px 5px 25px rgba(97, 199, 138, 0.5)",
   },
   {
     icon: <SVG.UserGroupIcon />,
