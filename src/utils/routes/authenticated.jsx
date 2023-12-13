@@ -4,7 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function AuthenticatedRouteComponent({ children, redirectURL }) {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const location = useLocation();
   if (!isLoggedIn) {
     return (

@@ -108,7 +108,9 @@ function App() {
         // Get the second part, which contains the query parameters
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
-        const verifyTokenPair = paramPairs.find(pair => pair.startsWith("verify-token="));
+        const verifyTokenPair = paramPairs.find(pair =>
+          pair.startsWith("verify-token="),
+        );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];
           dispatch(setUserVerificationToken(verifyToken));
@@ -174,7 +176,7 @@ function App() {
               />
             );
           })}
-          {AUTHENTICATED_ROUTES.map((route, index) => {
+          {AUTHENTICATED_ROUTES.map(route => {
             if (!route.path) {
               return null;
             }

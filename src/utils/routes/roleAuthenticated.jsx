@@ -10,7 +10,7 @@ function RoleRouteComponent(authRole) {
   return function ({ children }) {
     const navigate = useNavigate();
     const location = useLocation();
-    const { role, isLoggedIn } = useSelector((state) => state.auth);
+    const { role, isLoggedIn } = useSelector(state => state.auth);
     useEffect(() => {
       if (isLoggedIn) {
         if (!role) {
@@ -31,6 +31,7 @@ function RoleRouteComponent(authRole) {
         });
       }
     }, [navigate, role, isLoggedIn]);
+
     return <>{children}</>;
   };
 }
