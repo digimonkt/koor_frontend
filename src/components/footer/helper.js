@@ -10,31 +10,21 @@ export const menu = [
       },
       {
         id: 2,
-        label: "Browse jobs",
-        url: "/search/jobs",
-      },
-      {
-        id: 3,
-        label: " Browse tenders",
-        url: "/search/tenders",
-      },
-      {
-        id: 4,
         label: "About us",
         url: "/about-us",
       },
       {
-        id: 5,
+        id: 3,
         label: "Resources",
         url: "/resources",
       },
       {
-        id: 6,
+        id: 4,
         label: "Register",
         url: "/register",
       },
       {
-        id: 7,
+        id: 5,
         label: "Log in",
         url: "/login",
       },
