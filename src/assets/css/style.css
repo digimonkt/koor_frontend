@@ -3050,3 +3050,8 @@ input.employersearch {
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+.selet-placeholder {
+  text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
