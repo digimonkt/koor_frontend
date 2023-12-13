@@ -46,6 +46,7 @@ const Home = () => {
   // state management
   const [categories, setCategories] = useState("");
   const [location, setLocation] = useState("");
+  const [totalJobs, setTotalJobs] = useState(0);
   const [searchValue, setSearchValue] = useState("");
   const [topJobCategories, setTopJobCategories] = useState([]);
   const [topListingCompanies, setTopListingCompanies] = useState([]);
@@ -55,7 +56,8 @@ const Home = () => {
   const getTopJobCategories = async () => {
     const res = await getTopJobCategoriesAPI();
     if (res.remote === "success") {
-      setTopJobCategories(res.data);
+      setTopJobCategories(res.data.job_categories);
+      setTotalJobs(res.data.total_jobs);
     }
   };
   const getSiteUpdates = async () => {
@@ -95,10 +97,7 @@ const Home = () => {
       dispatch(setIstHomePage(false));
     };
   }, []);
-  const totalJobs = topJobCategories.reduce(
-    (total, item) => total + item.count,
-    0,
-  );
+
   return (
     <>
       <div className="homepage">
