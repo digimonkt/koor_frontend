@@ -68,7 +68,7 @@ function ApplyForTender() {
   const [isCanceling, setIsCanceling] = useState(false);
   const [hide, setHide] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const getTenderDetails = async (tenderId) => {
+  const getTenderDetails = async tenderId => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
       setDetails(res.data);
@@ -82,7 +82,7 @@ function ApplyForTender() {
       attachmentsRemove: [],
     },
     validationSchema: applyTenderValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       setIsSubmitting(true);
       const payload = new FormData();
       const newValues = {
@@ -96,11 +96,11 @@ function ApplyForTender() {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
-        (attachment) => !attachment.id
+        attachment => !attachment.id,
       );
       for (const key in newValues) {
         if (newValues[key].forEach) {
-          newValues[key].forEach((val) => {
+          newValues[key].forEach(val => {
             payload.append(key, val);
           });
         } else {
@@ -125,7 +125,7 @@ function ApplyForTender() {
     }
   };
 
-  const applyForTender = async (data) => {
+  const applyForTender = async data => {
     const res = await applyForTenderAPI(params.tenderId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
@@ -135,7 +135,7 @@ function ApplyForTender() {
     }
   };
 
-  const updateAppliedTender = async (data) => {
+  const updateAppliedTender = async data => {
     const res = await updateAppliedTenderAPI(params.tenderId, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied Tender Updated successfully"));
@@ -145,8 +145,8 @@ function ApplyForTender() {
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = (url) => {
+  const handleLoadImage = async url => {
+    const fileType = url => {
       const extension = "." + url.split(".").pop().toLowerCase();
       const mimeTypes = {
         ".jpg": "image/jpeg",
@@ -208,8 +208,7 @@ function ApplyForTender() {
                 <div className={`${styles.postJob}`}>
                   <span
                     style={{ cursor: "pointer" }}
-                    onClick={() => navigate(-1)}
-                  >
+                    onClick={() => navigate(-1)}>
                     {<SVG.LeftArrow />}
                   </span>
 
@@ -220,8 +219,7 @@ function ApplyForTender() {
                 <span
                   style={{ cursor: "pointer" }}
                   onClick={() => navigate(-1)}
-                  className={`${styles.crossed}`}
-                >
+                  className={`${styles.crossed}`}>
                   {<SVG.Crossed />}
                 </span>
               </Grid>
@@ -241,7 +239,7 @@ function ApplyForTender() {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details.expiredInDays > 0 ? details.expiredInDays : 0
+                      details.expiredInDays > 0 ? details.expiredInDays : 0,
                     )}
                     className="apply_dd_btn"
                   />
@@ -256,11 +254,14 @@ function ApplyForTender() {
                   "@media (max-width:600px)": {
                     borderRight: "0px",
                   },
-                }}
-              >
+                }}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
-                  <p className="job-description">{details.description}</p>
+                  <div
+                    className="job-description"
+                    dangerouslySetInnerHTML={{
+                      __html: details.description,
+                    }}></div>
                   <div className={`${styles.infomore}`}>
                     <h6 onClick={() => setHide(!hide)}>
                       More
@@ -273,24 +274,21 @@ function ApplyForTender() {
                     <>
                       <p
                         className={styles.more_text_p}
-                        style={{ marginBottom: "10px" }}
-                      >
+                        style={{ marginBottom: "10px" }}>
                         Please check out my attachements below..
                       </p>
-                      {details.attachments.map((attachment) => {
+                      {details.attachments.map(attachment => {
                         return (
                           <div
                             className={styles.downloadtext}
-                            key={attachment.id}
-                          >
+                            key={attachment.id}>
                             <span className="d-inline-flex">
                               {<SVG.OrangeIcon />}
                             </span>
                             <span
                               className="ms-3"
                               style={{ cursor: "pointer" }}
-                              onClick={() => handleLoadImage(attachment.path)}
-                            >
+                              onClick={() => handleLoadImage(attachment.path)}>
                               {attachment.title}
                             </span>
                           </div>
@@ -371,14 +369,13 @@ function ApplyForTender() {
                     "@media (max-width: 480px)": {
                       fontSize: "24px",
                     },
-                  }}
-                >
+                  }}>
                   Attach files
                 </h2>
                 <AttachmentDragNDropInput
                   single
                   files={formik.getFieldProps("attachments").value}
-                  handleDrop={(file) => {
+                  handleDrop={file => {
                     formik.setValues({
                       ...formik.values,
                       attachments: [
@@ -387,7 +384,7 @@ function ApplyForTender() {
                       ],
                     });
                   }}
-                  deleteFile={(file) => {
+                  deleteFile={file => {
                     if (file.id) {
                       formik.setFieldValue("attachmentsRemove", [
                         ...formik.values.attachmentsRemove,
@@ -395,14 +392,14 @@ function ApplyForTender() {
                       ]);
                       formik.setFieldValue("attachments", [
                         ...formik.values.attachments.filter(
-                          (attachment) => attachment.id !== file.id
+                          attachment => attachment.id !== file.id,
                         ),
                       ]);
                     } else {
                       formik.setValues({
                         ...formik.values,
                         attachments: formik.values.attachments.filter(
-                          (el) => el !== file
+                          el => el !== file,
                         ),
                       });
                     }
@@ -416,8 +413,7 @@ function ApplyForTender() {
               <Stack
                 direction="row"
                 spacing={2}
-                className={`${styles.applybtns}`}
-              >
+                className={`${styles.applybtns}`}>
                 <SearchButton
                   text="Cancel"
                   className={`${styles.cancelbtn}`}
@@ -434,8 +430,8 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                      ? "Update"
-                      : "Apply"
+                        ? "Update"
+                        : "Apply"
                   }
                   sx={{
                     "@media (max-width: 480px)": {
@@ -462,8 +458,7 @@ function ApplyForTender() {
             maxWidth: "734px",
             width: "734px",
           },
-        }}
-      >
+        }}>
         <ApplySuccessfully />
       </DialogBox>
     </div>
