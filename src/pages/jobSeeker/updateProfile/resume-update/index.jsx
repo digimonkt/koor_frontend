@@ -232,7 +232,12 @@ const ResumeUpdate = ({
             disabled={isDownloadingPDF || isDownloadingDocs}
           />
           <FilledButton
-            sx={{ marginLeft: "10px" }}
+            sx={{
+              marginLeft: "10px",
+              "@media (max-width: 480px)": {
+                marginLeft: "0px",
+              },
+            }}
             title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
             onClick={downloadDocs}
             style={{ marginBottom: "10px" }}
