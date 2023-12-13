@@ -31,7 +31,7 @@ function TenderFilter({ formik, footer, responsive }) {
     <form onSubmit={formik.handleSubmit}>
       <div className="SelectDropdown">
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
+          <Grid item xs={6} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -56,7 +56,7 @@ function TenderFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
+          <Grid item xs={6} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -82,7 +82,7 @@ function TenderFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
+          <Grid item xs={6} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -111,7 +111,7 @@ function TenderFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
+          <Grid item xs={6} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -137,7 +137,7 @@ function TenderFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
+          <Grid item xs={6} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -154,7 +154,7 @@ function TenderFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
+          <Grid item xs={6} lg={responsive ? 12 : 4}>
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -178,8 +178,11 @@ function TenderFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
+          <Grid item xs={12} lg={responsive ? 12 : 4}>
+            <div
+              style={{ display: "flex", flexDirection: "column" }}
+              className="filter_input"
+            >
               <Stack
                 direction="row"
                 alignItems="center"

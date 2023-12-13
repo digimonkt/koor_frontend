@@ -129,7 +129,7 @@ function App() {
         {platform === "android" || platform === "ios" ? null : <Header />}
 
         <Routes>
-          {ROUTES.map(route => {
+          {ROUTES.map((route) => {
             if (!route.path) {
               return null;
             }
@@ -151,7 +151,7 @@ function App() {
               />
             );
           })}
-          {UNAUTHENTICATED_ROUTES.map(route => {
+          {UNAUTHENTICATED_ROUTES.map((route) => {
             if (!route.path) {
               return null;
             }
@@ -218,7 +218,8 @@ function App() {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "20px",
-              }}>
+              }}
+            >
               <Box
                 component={"span"}
                 sx={{
@@ -227,7 +228,8 @@ function App() {
                   height: "4px",
                   background: "#121212",
                   display: "block",
-                }}></Box>
+                }}
+              ></Box>
             </Box>
           </>
         ) : (

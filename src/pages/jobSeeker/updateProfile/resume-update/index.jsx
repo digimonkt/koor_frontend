@@ -75,8 +75,12 @@ const ResumeUpdate = ({
         >
           <h2 className="mb-0">{title}</h2>
           {platform === "android" || platform === "ios" ? (
-            <IconButton size="small" onClick={() => fun()}>
-              <SVG.ArrowUpIcon />
+            <IconButton
+              size="small"
+              onClick={() => fun()}
+              sx={{ "& svg": { width: "18px", height: "11px" } }}
+            >
+              {toggle ? <SVG.ArrowUpIcon /> : <SVG.Downarrow />}
             </IconButton>
           ) : null}
         </Stack>
@@ -225,19 +229,27 @@ const ResumeUpdate = ({
         }}
       >
         <>
-          <FilledButton
-            title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
-            onClick={downloadPDF}
-            style={{ marginBottom: "10px" }}
-            disabled={isDownloadingPDF || isDownloadingDocs}
-          />
-          <FilledButton
-            sx={{ marginLeft: "10px" }}
-            title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
-            onClick={downloadDocs}
-            style={{ marginBottom: "10px" }}
-            disabled={isDownloadingPDF || isDownloadingDocs}
-          />
+          <Stack
+            direction={{ xs: "column", lg: "row" }}
+            spacing={1}
+            flexWrap={"wrap"}
+            useFlexGap
+          >
+            <FilledButton
+              title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
+              onClick={downloadPDF}
+              style={{ marginBottom: "10px" }}
+              disabled={isDownloadingPDF || isDownloadingDocs}
+            />
+            <FilledButton
+              title={
+                isDownloadingDocs ? "Downloading Docs..." : "Download Docs"
+              }
+              onClick={downloadDocs}
+              style={{ marginBottom: "10px" }}
+              disabled={isDownloadingPDF || isDownloadingDocs}
+            />
+          </Stack>
           <ResumeTemplate />
         </>
       </DialogBox>
