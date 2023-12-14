@@ -56,6 +56,7 @@ const ProfilePicInputComponent = ({
         color: "#CACACA",
         "&.MuiAvatar-circular": {
           background: "#F0F0F0",
+          borderRadius: "0px",
         },
       }}
       src={newImage instanceof File ? URL.createObjectURL(newImage) : newImage}
@@ -104,6 +105,7 @@ const ProfilePicInputComponent = ({
                       color: "#CACACA",
                       "&.MuiAvatar-colorDefault": {
                         background: "#F0F0F0",
+                        borderRadius: "0px",
                       },
                     }}
                   >

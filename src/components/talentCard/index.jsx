@@ -60,6 +60,7 @@ function TalentCard({ talentDetails }) {
           <Avatar
             src={generateFileUrl(talentDetails.profilePicture?.path || "")}
             sx={{
+              borderRadius: "0px !important",
               width:
                 platform === "android" || platform === "ios" ? "40px" : "70px",
               height:
