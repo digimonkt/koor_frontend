@@ -39,6 +39,9 @@ export const transformTenderResponse = data => {
 export const transformFullTenderDetails = data => {
   const description =
     data.description !== "<p><br></p>" ? data.description : "";
+  const today = dayjs(new Date().toISOString().split("T")[0]);
+  const tomorrow = today.add(-1, "day");
+  const deadline = dayjs(data.deadline);
   return {
     id: data.id,
     title: data.title,
@@ -53,11 +56,7 @@ export const transformFullTenderDetails = data => {
     categories: data.tender_category || [],
     type: data.tender_type || {},
     sector: data.sector,
-    expiredInDays: dayjs(data.deadline).diff(
-      dayjs(new Date().toISOString().split("T")[0]),
-      "day",
-      true,
-    ),
+    expiredInDays: deadline.diff(tomorrow, "day", true),
     startDate: data.start_date,
     deadline: data.deadline,
     user: {

@@ -23,6 +23,7 @@
   font-family: "Poppins";
   font-weight: 600;
   font-size: 18px;
+  word-break: break-word;
 }
 .clocs {
   display: flex;
@@ -52,6 +53,7 @@
   font-size: 14px;
   font-weight: 300;
   font-family: "Poppins";
+  word-break: break-word;
   margin-bottom: 10px !important;
 }
 .contentJob h4 {
@@ -193,6 +195,7 @@
 .location p {
   color: #274593;
   font-size: 12px;
+  word-break: break-word;
 }
 .educations p {
   font-size: 14px;
@@ -224,11 +227,15 @@
   padding-bottom: 25px;
   padding-top: 11px;
 }
+.LikeJob p {
+  word-break: break-word;
+}
 .LikeJob p a {
   color: #eea23d;
   font-size: 16px;
   font-family: "poppins";
   font-weight: 600;
+  word-break: break-word;
 }
 .LikeJob span {
   color: #848484;
