@@ -29,7 +29,7 @@ function TenderCardSkeletonLoader(logo, selfJob) {
           >
             <div
               className="squer-width"
-              style={{ height: "100px", width: "100px", borderRadius: "4px" }}
+              style={{ height: "70px", width: "70px", borderRadius: "4px" }}
             >
               <Skeleton style={{ height: "100%", borderRadius: "4px" }} />
             </div>
