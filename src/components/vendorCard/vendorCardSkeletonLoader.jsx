@@ -10,9 +10,10 @@ function VendorCardSkeletonLoader() {
       spacing={{ xs: "2", lg: "2" }}
       alignItems={{ xs: "start", lg: "center" }}
       justifyContent={{ xs: "center", lg: "space-between" }}
-      className="border-recent">
+      className="border-recent"
+    >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Skeleton circle style={{ width: "70px", height: "70px" }} />
+        <Skeleton style={{ width: "70px", height: "70px" }} />
         <div className="recent-content">
           <Stack
             direction="row"
@@ -21,7 +22,8 @@ function VendorCardSkeletonLoader() {
             flexWrap="wrap"
             alignItems="center"
             sx={{ mb: 1 }}
-            useFlexGap>
+            useFlexGap
+          >
             <h4>
               <Skeleton width={"100%"} />
             </h4>
@@ -31,7 +33,8 @@ function VendorCardSkeletonLoader() {
             spacing={2}
             alignItems="center"
             sx={{ mb: 1 }}
-            className="meets_div">
+            className="meets_div"
+          >
             <div>
               <span className="meets">
                 <Skeleton width={207} style={{ lineHeight: "9px" }} />
@@ -53,7 +56,8 @@ function VendorCardSkeletonLoader() {
             alignItems="center"
             sx={{ mb: 1, mt: 2, flexWrap: "wrap" }}
             className="meets_div"
-            useFlexGap>
+            useFlexGap
+          >
             <Stack direction={"row"} spacing={1.5} flexWrap={"wrap"} useFlexGap>
               <Skeleton
                 height={30}

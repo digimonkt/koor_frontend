@@ -39,7 +39,7 @@ const JobDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { role, isLoggedIn } = useSelector(state => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
@@ -106,7 +106,7 @@ const JobDetails = () => {
   });
   const [addressGeoCode, setAddressGeoCode] = useState({});
 
-  const getJobDetails = async jobId => {
+  const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });
     if (res.remote === "success") {
       setDetails(res.data);
@@ -116,7 +116,7 @@ const JobDetails = () => {
       }
     }
   };
-  const getJobSuggestions = async jobId => {
+  const getJobSuggestions = async (jobId) => {
     const res = await getJobSuggestionAPI(jobId);
     if (res.remote === "success") {
       setSuggestionJobs(res.data.results);
@@ -144,7 +144,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -167,9 +167,9 @@ const JobDetails = () => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
   }, [params.jobId]);
-  const handleSaveJob = async jobId => {
+  const handleSaveJob = async (jobId) => {
     if (isLoggedIn) {
-      setDetails(prevState => ({
+      setDetails((prevState) => ({
         ...prevState,
         isSaved: !prevState.isSaved,
       }));
@@ -191,8 +191,8 @@ const JobDetails = () => {
     }
   };
 
-  const handleLoadImage = async url => {
-    const fileType = url => {
+  const handleLoadImage = async (url) => {
+    const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
       const mimeTypes = {
         ".jpg": "image/jpeg",
@@ -323,11 +323,11 @@ const JobDetails = () => {
                   spacing={{ xs: 2, lg: 0 }}
                   flexWrap={"wrap"}
                   useFlexGap
-                  // sx={{
-                  //   "@media (max-width:992px)": {
-                  //     "& .MuiButtonBase-root": { margin: "0px !important" },
-                  //   },
-                  // }}
+                  sx={{
+                    "@media (max-width:992px)": {
+                      "& .MuiButtonBase-root": { margin: "0px !important" },
+                    },
+                  }}
                 >
                   <SearchButton
                     text={details.country.title}
@@ -600,7 +600,7 @@ const JobDetails = () => {
                           </>,
                           "Apply on employer's website",
                         ]}
-                        // className={`${styles.enablebtn}`}
+                        // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
                           if (details.expiredInDays <= 0) {

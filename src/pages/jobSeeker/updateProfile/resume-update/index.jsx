@@ -229,27 +229,24 @@ const ResumeUpdate = ({
         }}
       >
         <>
-          <Stack
-            direction={{ xs: "column", lg: "row" }}
-            spacing={1}
-            flexWrap={"wrap"}
-            useFlexGap
-          >
-            <FilledButton
-              title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
-              onClick={downloadPDF}
-              style={{ marginBottom: "10px" }}
-              disabled={isDownloadingPDF || isDownloadingDocs}
-            />
-            <FilledButton
-              title={
-                isDownloadingDocs ? "Downloading Docs..." : "Download Docs"
-              }
-              onClick={downloadDocs}
-              style={{ marginBottom: "10px" }}
-              disabled={isDownloadingPDF || isDownloadingDocs}
-            />
-          </Stack>
+          <FilledButton
+            title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
+            onClick={downloadPDF}
+            style={{ marginBottom: "10px" }}
+            disabled={isDownloadingPDF || isDownloadingDocs}
+          />
+          <FilledButton
+            sx={{
+              marginLeft: "10px",
+              "@media (max-width: 480px)": {
+                marginLeft: "0px",
+              },
+            }}
+            title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
+            onClick={downloadDocs}
+            style={{ marginBottom: "10px" }}
+            disabled={isDownloadingPDF || isDownloadingDocs}
+          />
           <ResumeTemplate />
         </>
       </DialogBox>
