@@ -35,7 +35,7 @@ const HomeSection = () => {
     <>
       <Box className={`${styles.home_section_box}`}>
         <Grid container spacing={2}>
-          {sectionItem.map((item, index) => (
+          {sectionItem.map(item => (
             <>
               <Grid
                 item
@@ -43,8 +43,7 @@ const HomeSection = () => {
                 md={6}
                 lg={6}
                 key="index"
-                className={styles.home_section_grid}
-              >
+                className={styles.home_section_grid}>
                 <Box className={`${styles.home_section_img_box}`}>
                   <img src={item.image} alt="img" rel="nofollow" />
                   <h5 className={styles.homeheadding}>{item.imgtext}</h5>

@@ -9,13 +9,16 @@ import { useSelector } from "react-redux";
 import { AD_AFTER_RECORDS } from "@utils/constants/constants";
 
 function TenderSearchComponent() {
-  const { tenders, isSearching } = useSelector((state) => state.search);
-  const { adSense } = useSelector((state) => state.adSense);
-  const adSenseData = adSense.data.find((item) => item.pageName === "browseTenders");
+  const { tenders, isSearching } = useSelector(state => state.search);
+  const { adSense } = useSelector(state => state.adSense);
+  const adSenseData = adSense.data.find(
+    item => item.pageName === "browseTenders",
+  );
+  console.log({ tenders });
   return (
     <div>
       {isSearching ? (
-        [1, 2, 3, 4, 5].map((loader) => {
+        [1, 2, 3, 4, 5].map(loader => {
           return (
             <React.Fragment key={loader}>
               <TenderCardSkeletonLoader logo />
@@ -31,7 +34,10 @@ function TenderSearchComponent() {
           return (
             <React.Fragment key={tender.id}>
               <TenderCard logo tenderDetails={tender} />
-              <AdSenseCard code={adSenseData.code} show={index > 0 && (index % AD_AFTER_RECORDS === 0)} />
+              <AdSenseCard
+                code={adSenseData.code}
+                show={index > 0 && index % AD_AFTER_RECORDS === 0}
+              />
               <Divider />
             </React.Fragment>
           );
