@@ -78,7 +78,7 @@ function ImageCropper({ open, handleClose, image, handleSave }) {
               zoom={zoom}
               rotation={rotation}
               aspect={1}
-              cropShape="round"
+              // cropShape="round"
               showGrid={false}
               onCropChange={onCropChange}
               onCropComplete={onCropComplete}

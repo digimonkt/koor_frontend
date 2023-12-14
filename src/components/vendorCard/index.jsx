@@ -45,7 +45,7 @@ function VendorCard({ vendorDetails }) {
       <Stack direction="row" spacing={2} alignItems={"center"}>
         <Avatar
           src={generateFileUrl(vendorDetails.profilePicture?.path || "")}
-          sx={{ width: "70px", height: "70px" }}
+          sx={{ width: "70px", height: "70px", borderRadius: "0px !important" }}
         />
         <div className="recent-content">
           <Stack
