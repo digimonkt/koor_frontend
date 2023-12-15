@@ -61,7 +61,7 @@ span.blueview {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 21px;
   letter-spacing: 0.02em;
   color: rgb(18 18 18 / 75%);
@@ -118,6 +118,7 @@ span.blueview {
   color: #121212;
   margin-bottom: 5px;
   margin-top: 0;
+  word-break: break-word;
   white-space: nowrap;
 }
 
@@ -133,6 +134,11 @@ span.blueview {
   margin-bottom: 5px;
   border-left: 1px solid #848484;
   padding-left: 10px;
+  word-break: break-word;
+}
+
+.recent-research span strong {
+  word-break: break-word;
 }
 
 .recent-research {
@@ -804,7 +810,6 @@ span.arrowjobs svg {
 @media screen and (max-width: 992px) {
   .recent-content h4 {
     font-size: 24px;
-    word-break: break-all;
     white-space: normal;
   }
 
@@ -817,6 +822,14 @@ span.arrowjobs svg {
 @media screen and (max-width: 480px) {
   .recent-content h4 {
     font-size: 20px;
+  }
+
+  .series-box ul li {
+    padding: 0px 0px;
+  }
+
+  .series-box ul {
+    font-size: 10px;
   }
 
   .job-content h2 {
