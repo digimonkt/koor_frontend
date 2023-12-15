@@ -80,6 +80,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     height: "100%",
                     margin: "auto",
                     color: "#CACACA",
+                    borderRadius: "0px !important",
                     "&.MuiAvatar-colorDefault": {
                       background: "#F0F0F0",
                     },
@@ -235,7 +236,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             </h2>
             <div
               className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{ __html: tenderDetails?.description }}
+              dangerouslySetInnerHTML={{
+                __html: tenderDetails?.description,
+              }}
             ></div>
             <Stack
               direction={{ xs: "row", sm: "row" }}
@@ -269,7 +272,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 );
               })}
             </Stack>
-
             <Stack
               direction="row"
               spacing={2}
@@ -287,7 +289,16 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
-                    Company: <span>{tenderDetails.user.name}</span>
+                    {tenderDetails.company === null &&
+                    tenderDetails.companyLogo === null
+                      ? "Company:"
+                      : "Posted By"}
+                    <span>
+                      {tenderDetails.company === null &&
+                      tenderDetails.companyLogo === null
+                        ? tenderDetails.user.name
+                        : " Koor"}
+                    </span>
                   </div>
                 </Stack>
               )}

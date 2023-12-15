@@ -72,7 +72,7 @@ const SUBMITTING_STATUS_ENUM = Object.freeze({
   null: "",
 });
 function PostJobsComponent() {
-  const { currentUser } = useSelector(state => state.auth);
+  const { currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
@@ -83,11 +83,11 @@ function PostJobsComponent() {
     educationLevels,
     languages,
     skills,
-  } = useSelector(state => state.choices);
+  } = useSelector((state) => state.choices);
   const { minimumCreditJobPost, totalAvailableCredits } = useSelector(
-    state => state.employer,
+    (state) => state.employer
   );
-  const { isMobileView } = useSelector(state => state.platform);
+  const { isMobileView } = useSelector((state) => state.platform);
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [jobId, setJobId] = useState(null);
@@ -176,21 +176,21 @@ function PostJobsComponent() {
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "language") {
-          payload.language.forEach(language => {
+          payload.language.forEach((language) => {
             if (language) {
               const languageFormat = { language };
               newFormData.append("language", JSON.stringify(languageFormat));
             }
           });
         } else if (key === "attachments") {
-          payload.attachments.forEach(attachment => {
+          payload.attachments.forEach((attachment) => {
             if (!attachment.id) {
               newFormData.append(key, attachment);
             }
           });
         } else if (payload[key]) {
           if (payload[key].forEach) {
-            payload[key].forEach(data => {
+            payload[key].forEach((data) => {
               newFormData.append(key, data);
             });
           } else {
@@ -227,7 +227,7 @@ function PostJobsComponent() {
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
-  const getJobDetailsById = useCallback(async jobId => {
+  const getJobDetailsById = useCallback(async (jobId) => {
     const response = await getJobDetailsByIdAPI({ jobId });
     if (response.remote === "success") {
       const { data } = response;
@@ -251,48 +251,48 @@ function PostJobsComponent() {
       formik.setFieldValue("startDate", dayjs(data.startDate));
       formik.setFieldValue(
         "isContactEmail",
-        Boolean(data?.contactEmail) || false,
+        Boolean(data?.contactEmail) || false
       );
       formik.setFieldValue("contactEmail", data?.contactEmail || "");
       formik.setFieldValue("cc1", data?.cc1 || "");
       formik.setFieldValue("cc2", data?.cc2 || "");
       formik.setFieldValue(
         "isApplyThroughKoor",
-        Boolean(data?.isApplyThroughKoor) || false,
+        Boolean(data?.isApplyThroughKoor) || false
       );
       formik.setFieldValue(
         "isApplyThroughEmail",
-        Boolean(data?.isApplyThroughEmail) || false,
+        Boolean(data?.isApplyThroughEmail) || false
       );
       formik.setFieldValue(
         "isApplyThroughWebsite",
-        Boolean(data?.isApplyThroughWebsite) || false,
+        Boolean(data?.isApplyThroughWebsite) || false
       );
       formik.setFieldValue(
         "applicationInstruction",
-        data?.applicationInstruction || "",
+        data?.applicationInstruction || ""
       );
       formik.setFieldValue("websiteLink", data?.websiteLink || "");
       formik.setFieldValue(
         "highestEducation",
-        data?.highestEducation?.id || "",
+        data?.highestEducation?.id || ""
       );
       // !TEMPORARY SOLUTION
       formik.setFieldValue(
         "languages",
         data.languages.map && data.languages.length
-          ? [...data.languages.map(language => language.language.id)]
-          : [],
+          ? [...data.languages.map((language) => language.language.id)]
+          : []
       );
       formik.setFieldValue(
         "skills",
-        data.skills.map ? data.skills.map(skill => skill.id) : [],
+        data.skills.map ? data.skills.map((skill) => skill.id) : []
       );
       formik.setFieldValue("attachments", data.attachments);
     }
   }, []);
 
-  const getSuggestedAddress = async search => {
+  const getSuggestedAddress = async (search) => {
     const res = await GetSuggestedAddressAPI(search);
     if (res.remote === "success") {
       setSuggestedAddress(res.data.predictions);
@@ -320,7 +320,7 @@ function PostJobsComponent() {
       setPackageData(resp.data);
     }
   };
-  const handleBuyPackage = async planDetails => {
+  const handleBuyPackage = async (planDetails) => {
     const data = {
       package: planDetails.title.toLowerCase(),
       points: planDetails.credit,
@@ -335,18 +335,18 @@ function PostJobsComponent() {
       dispatch(setErrorToast("Something Went Wrong"));
     }
   };
-  const handleEditorValue = content => {
+  const handleEditorValue = (content) => {
     setDescData(content);
     formik.setFieldValue(
       "description",
-      content !== "<p><br></p>" ? content : "",
+      content !== "<p><br></p>" ? content : ""
     );
   };
-  const handleApplicationInstructionEditorValue = content => {
+  const handleApplicationInstructionEditorValue = (content) => {
     setApplicationInstructionData(content);
     formik.setFieldValue(
       "applicationInstruction",
-      content !== "<p><br></p>" ? content : "",
+      content !== "<p><br></p>" ? content : ""
     );
   };
 
@@ -401,7 +401,7 @@ function PostJobsComponent() {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories }),
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
       );
     }
   }, [formik.values.jobCategories]);
@@ -426,13 +426,15 @@ function PostJobsComponent() {
             borderRadius: "10px",
             mb: 3,
           },
-        }}>
+        }}
+      >
         <CardContent
           sx={{
             "&.MuiCardContent-root": {
               padding: "25px 25px 25px",
             },
-          }}>
+          }}
+        >
           <div className="job-content">
             <h2>
               {isMobileView && (
@@ -502,7 +504,8 @@ function PostJobsComponent() {
                     <Box
                       sx={{
                         height: { xs: "300px", sm: "270px", md: "250px" },
-                      }}>
+                      }}
+                    >
                       <label>
                         Description<span className="required-field">*</span>
                       </label>
@@ -510,14 +513,15 @@ function PostJobsComponent() {
                         type="textarea"
                         placeholder="Write more details to attract the right candidates."
                         value={descData || formik.values.description}
-                        onChange={value => handleEditorValue(value)}
+                        onChange={(value) => handleEditorValue(value)}
                       />
                     </Box>
                     <Box
                       style={{
                         width: "100%",
                         marginTop: "10px",
-                      }}>
+                      }}
+                    >
                       {formik.touched.description &&
                       formik.errors.description ? (
                         <ErrorMessage>{formik.errors.description}</ErrorMessage>
@@ -532,7 +536,7 @@ function PostJobsComponent() {
                       className="location-select"
                       placeholder="Country"
                       defaultValue=""
-                      options={countries.data.map(country => ({
+                      options={countries.data.map((country) => ({
                         value: country.id,
                         label: country.title,
                       }))}
@@ -548,10 +552,10 @@ function PostJobsComponent() {
                       placeholder={formik.values.country ? "City" : "City"}
                       disabled={!formik.values.country}
                       options={(cities.data[formik.values.country] || []).map(
-                        country => ({
+                        (country) => ({
                           value: country.id,
                           label: country.title,
-                        }),
+                        })
                       )}
                       {...formik.getFieldProps("city")}
                     />
@@ -571,13 +575,13 @@ function PostJobsComponent() {
                         className="add-form-control"
                         name={formik.getFieldProps("address").name}
                         onBlur={() => formik.getFieldProps("address").onBlur}
-                        onChange={e => setSearchValue(e.target.value)}
+                        onChange={(e) => setSearchValue(e.target.value)}
                         value={searchValue}
                       />
                       {debouncedSearchValue &&
                         searchValue !== formik.values.address && (
                           <div className={styles.search_results_box}>
-                            {suggestedAddress.map(address => {
+                            {suggestedAddress.map((address) => {
                               return (
                                 <div
                                   key={address.description}
@@ -585,10 +589,11 @@ function PostJobsComponent() {
                                   onClick={() => {
                                     formik.setFieldValue(
                                       "address",
-                                      address.description,
+                                      address.description
                                     );
                                     setSearchValue(address.description);
-                                  }}>
+                                  }}
+                                >
                                   {address.description}
                                 </div>
                               );
@@ -608,7 +613,7 @@ function PostJobsComponent() {
                     <SelectInput
                       defaultValue=""
                       placeholder="Select a Job category"
-                      options={jobCategories?.data?.map(jobCategory => ({
+                      options={jobCategories?.data?.map((jobCategory) => ({
                         value: jobCategory?.id,
                         label: jobCategory?.title,
                       }))}
@@ -634,7 +639,7 @@ function PostJobsComponent() {
                       }
                       options={(
                         jobSubCategories.data[formik.values.jobCategories] || []
-                      ).map(subCategory => ({
+                      ).map((subCategory) => ({
                         value: subCategory.id,
                         label: subCategory.title,
                       }))}
@@ -655,7 +660,8 @@ function PostJobsComponent() {
                         marginLeft: "7px",
                         display: "flex",
                         marginTop: "8px",
-                      }}>
+                      }}
+                    >
                       <JobFormControl
                         className="update_checkbox"
                         control={
@@ -719,7 +725,8 @@ function PostJobsComponent() {
                         direction="row"
                         alignItems="center"
                         justifyContent="space-between"
-                        className="mb-2">
+                        className="mb-2"
+                      >
                         <label className="mb-1 d-inline-block">
                           Start Date<span className="required-field">*</span>{" "}
                         </label>
@@ -727,7 +734,7 @@ function PostJobsComponent() {
                       <DateInput
                         className="smallfont"
                         type="date"
-                        onChange={e => formik.setFieldValue("startDate", e)}
+                        onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
                         minDate={dayjs().format("YYYY-MM-DD")}
                         onBlur={formik.getFieldProps("startDate").onBlur}
@@ -743,14 +750,15 @@ function PostJobsComponent() {
                         direction="row"
                         alignItems="center"
                         justifyContent="space-between"
-                        className="mb-2">
+                        className="mb-2"
+                      >
                         <label className="mb-1 d-inline-block">
                           Deadline<span className="required-field">*</span>{" "}
                         </label>
                       </Stack>
                       <DateInput
                         className="smallfont"
-                        onChange={e => formik.setFieldValue("deadline", e)}
+                        onChange={(e) => formik.setFieldValue("deadline", e)}
                         type="date"
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
@@ -817,7 +825,8 @@ function PostJobsComponent() {
                       "@media (max-width: 480px)": {
                         marginTop: "0px",
                       },
-                    }}>
+                    }}
+                  >
                     <input
                       className="add-form-control"
                       type="email"
@@ -839,7 +848,8 @@ function PostJobsComponent() {
                       "@media (max-width: 480px)": {
                         marginTop: "0px",
                       },
-                    }}>
+                    }}
+                  >
                     <input
                       className="add-form-control"
                       type="email"
@@ -854,9 +864,11 @@ function PostJobsComponent() {
                     <Box
                       sx={{
                         height: { xs: "320px", sm: "270px", md: "250px" },
-                      }}>
+                      }}
+                    >
                       <label>
-                        Application Instructions <span className="required-field">*</span>
+                        Application Instructions{" "}
+                        <span className="required-field">*</span>
                       </label>
                       <QuillInput
                         type="textarea"
@@ -865,7 +877,7 @@ function PostJobsComponent() {
                           applicationInstructionData ||
                           formik.values.applicationInstruction
                         }
-                        onChange={value =>
+                        onChange={(value) =>
                           handleApplicationInstructionEditorValue(value)
                         }
                       />
@@ -874,7 +886,8 @@ function PostJobsComponent() {
                       style={{
                         width: "100%",
                         marginTop: "10px",
-                      }}>
+                      }}
+                    >
                       {formik.touched.applicationInstruction &&
                       formik.errors.applicationInstruction ? (
                         <ErrorMessage>
@@ -918,7 +931,7 @@ function PostJobsComponent() {
                     <SelectInput
                       defaultValue=""
                       placeholder="Choose an education level"
-                      options={educationLevels.data.map(educationLevel => ({
+                      options={educationLevels.data.map((educationLevel) => ({
                         value: educationLevel.id,
                         label: educationLevel.title,
                       }))}
@@ -981,7 +994,7 @@ function PostJobsComponent() {
                       defaultValue=""
                       placeholder="Select a Language"
                       multiple
-                      options={languages.data.map(language => ({
+                      options={languages.data.map((language) => ({
                         value: language.id,
                         label: language.title,
                       }))}
@@ -1001,7 +1014,7 @@ function PostJobsComponent() {
                       className="mb-3"
                       defaultValue=""
                       placeholder="Select a Skill"
-                      options={skills.data.map(skill => ({
+                      options={skills.data.map((skill) => ({
                         value: skill.id,
                         label: skill.title,
                       }))}
@@ -1024,19 +1037,19 @@ function PostJobsComponent() {
                   ) : null}
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
-                    handleDrop={file => {
+                    handleDrop={(file) => {
                       const currentAttachments = formik.values.attachments;
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
                           `Maximum 10 files allowed. you can upload only ${
                             10 - currentAttachments.length
-                          } remaining`,
+                          } remaining`
                         );
                       } else {
                         const filesTaken = file.slice(
                           0,
-                          10 - currentAttachments.length,
+                          10 - currentAttachments.length
                         );
                         formik.setFieldValue("attachments", [
                           ...currentAttachments,
@@ -1053,15 +1066,15 @@ function PostJobsComponent() {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            attachment => attachment.path !== file.path,
-                          ),
+                            (attachment) => attachment.path !== file.path
+                          )
                         );
                       } else {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment, i) => i !== index,
-                          ),
+                            (attachment, i) => i !== index
+                          )
                         );
                       }
                     }}
@@ -1106,7 +1119,8 @@ function PostJobsComponent() {
                     alignItems="center"
                     justifyContent="space-between"
                     flexWrap="wrap"
-                    style={{ marginTop: "40px" }}>
+                    style={{ marginTop: "40px" }}
+                  >
                     <FilledButton
                       title={
                         submitting === SUBMITTING_STATUS_ENUM.loading
@@ -1114,8 +1128,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1176,8 +1190,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1235,7 +1249,8 @@ function PostJobsComponent() {
             "@media (max-width:600px)": {
               flexDirection: "column-reverse",
             },
-          }}>
+          }}
+        >
           <Box
             sx={{
               width: "70%",
@@ -1243,7 +1258,8 @@ function PostJobsComponent() {
                 width: "100%",
                 textAlign: "center",
               },
-            }}>
+            }}
+          >
             <h1 className="mb-3">Done!</h1>
             <p>
               {jobId
@@ -1274,7 +1290,8 @@ function PostJobsComponent() {
                 width: "100%",
                 textAlign: "center",
               },
-            }}>
+            }}
+          >
             <SVG.JobPost className="w-100" />
           </Box>
         </Box>

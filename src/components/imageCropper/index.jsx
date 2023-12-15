@@ -78,12 +78,12 @@ function ImageCropper({ open, handleClose, image, handleSave }) {
               zoom={zoom}
               rotation={rotation}
               aspect={1}
-              cropShape="round"
+              // cropShape="round"
               showGrid={false}
               onCropChange={onCropChange}
               onCropComplete={onCropComplete}
               onZoomChange={onZoomChange}
-              cropSize={{ width: 150, height: 150 }}
+              cropSize={{ width: 250, height: 250 }}
             />
           )}
         </Box>

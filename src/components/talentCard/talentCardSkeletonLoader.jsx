@@ -13,7 +13,7 @@ function TalentCardSkeletonLoader() {
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        <Skeleton circle style={{ width: "70px", height: "70px" }} />
+        <Skeleton style={{ width: "70px", height: "70px" }} />
         <div className="recent-content">
           <Stack
             direction="row"
