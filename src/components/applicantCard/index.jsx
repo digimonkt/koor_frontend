@@ -67,10 +67,10 @@ function ApplicantCard({
             <div
               className="recent-research"
               style={{
-                whiteSpace: "nowrap",
                 display: "flex",
                 alignItems: "baseline",
                 flexWrap: "wrap",
+                wordBreak: "break-word",
               }}
             >
               <span>
