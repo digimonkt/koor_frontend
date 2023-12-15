@@ -5,7 +5,7 @@ import Marquee from "react-fast-marquee";
 const TextSlide = () => {
   return (
     <>
-      <Box sx={{ "& h1": { marginRight: "25px" } }}>
+      <Box sx={{ "& h1": { marginRight: "80px" } }}>
         <Marquee
           play={true}
           speed={100}

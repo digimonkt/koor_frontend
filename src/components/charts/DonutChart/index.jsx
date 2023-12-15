@@ -82,8 +82,9 @@ const DonutChart = ({ shareCountData }) => {
           breakpoint: 600,
           options: {
             chart: {
-              width: 110,
-              height: 110,
+              width: 115,
+              height: 115,
+              borderRadius: "50%",
             },
             legend: {
               // position: "right",
@@ -119,7 +120,7 @@ const DonutChart = ({ shareCountData }) => {
           item
           lg={5}
           xl={5}
-          xs={4}
+          xs={6}
           sx={{
             "& .dount-chart": {
               marginLeft: "-22px",
@@ -134,9 +135,11 @@ const DonutChart = ({ shareCountData }) => {
             height={200}
           />
         </Grid>
-        <Grid item xl={7} lg={7} xs={8} style={{ paddingTop: "0px" }}>
+        <Grid item xl={7} lg={7} xs={6} style={{ paddingTop: "0px" }}>
           <div className="series-box">
-            <h2>{shareCountData?.total} Total shares:</h2>
+            <h3>
+              {shareCountData?.total} <span>Total shares:</span>
+            </h3>
             <ul>
               {shareCountData?.sites.map((site, i) => {
                 return (

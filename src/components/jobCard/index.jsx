@@ -16,7 +16,7 @@ import { showDay } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
-  const { isLoggedIn, role } = useSelector(state => state.auth);
+  const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
@@ -40,7 +40,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
   };
-  const updateJob = async jobId => {
+  const updateJob = async (jobId) => {
     const res = await updateEmployerJobStatusAPI(jobId);
     if (res.remote === "success") {
       console.log(res);
@@ -67,9 +67,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails.isPlannedInterview) {
       setApplicationStatus(
         "Interview planned on " +
-        dayjs(jobDetails.isPlannedInterview).format(
-          "MMMM D, YYYY [at] h:mm A",
-        ),
+          dayjs(jobDetails.isPlannedInterview).format(
+            "MMMM D, YYYY [at] h:mm A"
+          )
       );
     }
   }, [jobDetails]);
@@ -380,102 +380,104 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               )}
             />
           </Box>
-          {!matches ? (
-            <Stack
-              direction="row"
-              spacing={1}
-              justifyContent={{ xs: "center", lg: "end", sm: "flex-end" }}
-              alignItems="center"
-              // divider={<hr orientation="vertical" className="job_card_hr" />}
-              sx={{
-                minHeight: "87%",
-                "@media (max-width:768px)": {
-                  marginTop: "58px",
-                  "& .bookmark": { width: "auto", marginLeft: "0px" },
-                },
-              }}
-            >
-              <div className="pricebox py-3 upto-slide">
-                {jobDetails?.budgetAmount ? (
-                  <>
-                    <span className="d-block">UP TO</span>
-                    <h4>
-                      <small>{"$"}</small>
-                      {jobDetails?.budgetAmount || "3,500"}
-                    </h4>
-                    <span>{jobDetails?.budgetPayPeriod}</span>
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
-              {selfJob && (
-                <Box sx={{ width: "2px !important" }}>
-                  <Box className="hr-border"></Box>
-                </Box>
-              )}
-              {selfJob ? (
-                <Box
-                  className="job-button-card"
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <button
-                    onClick={() => {
-                      handleStartPause();
-                    }}
-                  >
-                    {isStart === "active" ? (
-                      <>
-                        <SVG.PauseIcon />
-                        <span className="d-block">Hold</span>
-                      </>
-                    ) : (
-                      <>
-                        <SVG.StartIcon />
-                        <span className="d-block">Start</span>
-                      </>
-                    )}
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (jobDetails?.id) {
-                        navigate(
-                          urlcat("/employer/jobs/post", {
-                            jobId: jobDetails?.id,
-                          })
-                        );
-                      }
-                    }}
-                  >
-                    {<SVG.Edit1 />}
-                    <span className="d-block">Edit</span>
-                  </button>
-                </Box>
-              ) : role !== USER_ROLES.employer ? (
-                <React.Fragment>
-                  <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
-                    <div className="bookmark">
-                      {isSaved ? (
-                        <>
-                          <SVG.SaveIcon />
-                          <span>Saved</span>
-                        </>
-                      ) : (
-                        <>
-                          <SVG.UnSave style={{ color: "#848484" }} />
-                          <span style={{ color: "#848484" }}>Save</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </React.Fragment>
+
+          <Stack
+            direction="row"
+            spacing={1}
+            justifyContent={{ xs: "center", lg: "end", sm: "flex-end" }}
+            alignItems="center"
+            // divider={<hr orientation="vertical" className="job_card_hr" />}
+            sx={{
+              minHeight: "87%",
+              "@media (max-width:768px)": {
+                marginTop: "58px",
+                "& .bookmark": { width: "auto", marginLeft: "0px" },
+              },
+              "@media (max-width:480px)": {
+                marginTop: "0px",
+                minHeight: "0%",
+                marginBottom: "10px",
+              },
+            }}
+          >
+            <div className="pricebox py-3 upto-slide">
+              {jobDetails?.budgetAmount ? (
+                <>
+                  <span className="d-block">UP TO</span>
+                  <h4>
+                    <small>{"$"}</small>
+                    {jobDetails?.budgetAmount || "3,500"}
+                  </h4>
+                  <span>{jobDetails?.budgetPayPeriod}</span>
+                </>
               ) : (
                 ""
               )}
-            </Stack>
-          ) : (
-            ""
-          )}
+            </div>
+            {Boolean(jobDetails?.budgetAmount) && selfJob && (
+              <Box sx={{ width: "2px !important" }}>
+                <Box className="hr-border"></Box>
+              </Box>
+            )}
+            {selfJob ? (
+              <Box
+                className="job-button-card"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <button
+                  onClick={() => {
+                    handleStartPause();
+                  }}
+                >
+                  {isStart === "active" ? (
+                    <>
+                      <SVG.PauseIcon />
+                      <span className="d-block">Hold</span>
+                    </>
+                  ) : (
+                    <>
+                      <SVG.StartIcon />
+                      <span className="d-block">Start</span>
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    if (jobDetails?.id) {
+                      navigate(
+                        urlcat("/employer/jobs/post", {
+                          jobId: jobDetails?.id,
+                        })
+                      );
+                    }
+                  }}
+                >
+                  {<SVG.Edit1 />}
+                  <span className="d-block">Edit</span>
+                </button>
+              </Box>
+            ) : role !== USER_ROLES.employer ? (
+              <React.Fragment>
+                <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
+                  <div className="bookmark">
+                    {isSaved ? (
+                      <>
+                        <SVG.SaveIcon />
+                        <span>Saved</span>
+                      </>
+                    ) : (
+                      <>
+                        <SVG.UnSave style={{ color: "#848484" }} />
+                        <span style={{ color: "#848484" }}>Save</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </React.Fragment>
+            ) : (
+              ""
+            )}
+          </Stack>
         </Grid>
       </Grid>
       <DialogBox
