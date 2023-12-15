@@ -37,7 +37,7 @@ function PublicProfileComponent() {
     workExperiences: [],
   });
   const [jobList, setJobList] = useState([]);
-  const getUserDetails = async (userId) => {
+  const getUserDetails = async userId => {
     setIsLoading(true);
     const res = await GetUserDetailsAPI({ userId });
     if (res.remote === "success") {
@@ -45,7 +45,7 @@ function PublicProfileComponent() {
     }
     setIsLoading(false);
   };
-  const getEmployersJob = async (userId) => {
+  const getEmployersJob = async userId => {
     const res = await getEmployerActiveJobsAPI({
       employerId: userId,
       limit: 3,
@@ -69,15 +69,13 @@ function PublicProfileComponent() {
             sx={{
               boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
               borderRadius: "20px",
-            }}
-          >
+            }}>
             <CardContent
               sx={{
                 "&.MuiCardContent-root": {
                   padding: "30px",
                 },
-              }}
-            >
+              }}>
               <Grid container spacing={2}>
                 <Grid
                   item
@@ -89,15 +87,13 @@ function PublicProfileComponent() {
                     "@media (max-width:992px)": {
                       borderRight: "0",
                     },
-                  }}
-                >
+                  }}>
                   <Box sx={{ paddingRight: "45px" }}>
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
                       justifyContent={{ xs: "start", lg: "space-between" }}
-                      alignItems={"center"}
-                    >
+                      alignItems={"center"}>
                       <Stack direction={"row"} spacing={2}>
                         <Avatar
                           src={generateFileUrl(userDetails.profileImage || "")}
@@ -116,8 +112,7 @@ function PublicProfileComponent() {
                               fontWeight: "700",
                               letterSpacing: "0.03em",
                               mb: 0,
-                            }}
-                          >
+                            }}>
                             {userDetails.name || userDetails.email}
                           </Typography>
                           <Typography
@@ -125,24 +120,21 @@ function PublicProfileComponent() {
                               color: "rgb(18 18 18 / 50%)",
                               margin: "3px 0px",
                               fontFamily: "Poppins",
-                            }}
-                          >
+                            }}>
                             {userDetails.profile.highestEducation?.title}
                           </Typography>
                           {userDetails.profile.country?.title ? (
                             <Stack
                               direction={"row"}
                               spacing={1}
-                              alignItems={"center"}
-                            >
+                              alignItems={"center"}>
                               <SVG.LocationIcon />
                               <Box
                                 component={"span"}
                                 sx={{
                                   color: "rgb(18 18 18 / 50%)",
                                   fontFamily: "Poppins",
-                                }}
-                              >
+                                }}>
                                 {userDetails.profile.city?.title},{" "}
                                 {userDetails.profile.country?.title}
                               </Box>
@@ -160,8 +152,7 @@ function PublicProfileComponent() {
                           fontSize: "26px",
                           fontFamily: "Bahnschrift",
                           fontWeight: "600",
-                        }}
-                      >
+                        }}>
                         About
                       </Typography>
                       <Typography
@@ -169,8 +160,7 @@ function PublicProfileComponent() {
                           fontSize: "14px",
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
-                        }}
-                      >
+                        }}>
                         {userDetails.profile.description}
                       </Typography>
                       <Divider sx={{ borderColor: "#ccc", my: 2 }} />
@@ -180,16 +170,14 @@ function PublicProfileComponent() {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "space-between",
-                          }}
-                        >
+                          }}>
                           <Typography
                             variant="h6"
                             sx={{
                               fontSize: "26px",
                               fontFamily: "Bahnschrift",
                               fontWeight: "600",
-                            }}
-                          >
+                            }}>
                             Active Jobs
                           </Typography>
                           <Typography
@@ -197,11 +185,9 @@ function PublicProfileComponent() {
                             sx={{
                               fontSize: "15px",
                               fontFamily: "Bahnschrift",
-                            }}
-                          >
+                            }}>
                             <Link
-                              to={`/search/jobs?search=${userDetails.name}`}
-                            >
+                              to={`/search/jobs?search=${userDetails.name}`}>
                               See All
                             </Link>
                           </Typography>
@@ -217,8 +203,7 @@ function PublicProfileComponent() {
                                     userDetails.workExperiences.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
-                                }}
-                              >
+                                }}>
                                 <JobCard jobDetails={item} />
                               </li>
                             ))
@@ -243,16 +228,14 @@ function PublicProfileComponent() {
                           fontWeight: "600",
                           color: "#121212",
                           mb: 2,
-                        }}
-                      >
+                        }}>
                         Contact info
                       </Typography>
                       {userDetails.countryCode && userDetails.mobileNumber ? (
                         <Stack
                           direction={"row"}
                           spacing={2}
-                          alignItems={"center"}
-                        >
+                          alignItems={"center"}>
                           <Box
                             sx={{
                               background: "#FEEFD3",
@@ -264,8 +247,7 @@ function PublicProfileComponent() {
                               display: "inline-flex",
                               alignItems: "center",
                               justifyContent: "center",
-                            }}
-                          >
+                            }}>
                             <SVG.Phone />
                           </Box>
                           <Box>
@@ -275,11 +257,10 @@ function PublicProfileComponent() {
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
                                 fontWeight: "600",
-                              }}
-                            >
+                              }}>
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                  userDetails.mobileNumber,
                               )}
                             </Typography>
                             <Typography
@@ -287,8 +268,7 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
-                              }}
-                            >
+                              }}>
                               Mobile
                             </Typography>
                           </Box>
@@ -297,8 +277,7 @@ function PublicProfileComponent() {
                       <Stack
                         direction={"row"}
                         spacing={2}
-                        alignItems={"center"}
-                      >
+                        alignItems={"center"}>
                         <Box
                           sx={{
                             background: "#FEEFD3",
@@ -310,8 +289,7 @@ function PublicProfileComponent() {
                             display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
-                          }}
-                        >
+                          }}>
                           <SVG.Mail />
                         </Box>
                         <Box>
@@ -321,8 +299,7 @@ function PublicProfileComponent() {
                               fontSize: "16px",
                               fontFamily: "Poppins",
                               fontWeight: "600",
-                            }}
-                          >
+                            }}>
                             {userDetails.email}
                           </Typography>
                           <Typography
@@ -330,8 +307,7 @@ function PublicProfileComponent() {
                               color: "#848484",
                               fontFamily: "Poppins",
                               fontSize: "12px",
-                            }}
-                          >
+                            }}>
                             Email
                           </Typography>
                         </Box>
@@ -340,8 +316,7 @@ function PublicProfileComponent() {
                         <Stack
                           direction={"row"}
                           spacing={2}
-                          alignItems={"center"}
-                        >
+                          alignItems={"center"}>
                           <Box
                             sx={{
                               background: "#FEEFD3",
@@ -353,8 +328,7 @@ function PublicProfileComponent() {
                               display: "inline-flex",
                               alignItems: "center",
                               justifyContent: "center",
-                            }}
-                          >
+                            }}>
                             <SVG.Mail />
                           </Box>
                           <Box>
@@ -364,8 +338,7 @@ function PublicProfileComponent() {
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
                                 fontWeight: "600",
-                              }}
-                            >
+                              }}>
                               {userDetails.profile.website}
                             </Typography>
                             <Typography
@@ -373,8 +346,7 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
-                              }}
-                            >
+                              }}>
                               Website
                             </Typography>
                           </Box>
@@ -384,8 +356,7 @@ function PublicProfileComponent() {
                         <Stack
                           direction={"row"}
                           spacing={2}
-                          alignItems={"center"}
-                        >
+                          alignItems={"center"}>
                           <Box
                             sx={{
                               background: "#FEEFD3",
@@ -397,8 +368,7 @@ function PublicProfileComponent() {
                               display: "inline-flex",
                               alignItems: "center",
                               justifyContent: "center",
-                            }}
-                          >
+                            }}>
                             <SVG.LocationIcon />
                           </Box>
                           <Box>
@@ -408,8 +378,7 @@ function PublicProfileComponent() {
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
                                 fontWeight: "600",
-                              }}
-                            >
+                              }}>
                               {userDetails.profile.address}
                             </Typography>
                             <Typography
@@ -417,8 +386,7 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
-                              }}
-                            >
+                              }}>
                               Address
                             </Typography>
                           </Box>
@@ -432,8 +400,7 @@ function PublicProfileComponent() {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                        }}
-                      >
+                        }}>
                         ADVERTISEMENT
                       </Box>
                     </Stack>

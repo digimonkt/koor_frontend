@@ -5,14 +5,16 @@ import { SVG } from "../../assets/svg";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
+import { generateFileUrl } from "@utils/generateFileUrl";
 function RejectedCard({
+  job,
   handleClose,
   tender,
   tenderApplication,
   createdAt,
   application,
 }) {
-  const jobId = application?.job?.id;
+    const jobId = application?.job?.id;
   const tenderId = tender?.id;
   let newUrl = "#";
   let applicationFor = "";
@@ -40,8 +42,7 @@ function RejectedCard({
                 background: "#F0F0F0",
               },
             }}
-            src={SVG.KoorShortLogo}
-          >
+            src={generateFileUrl(job.user.image) || SVG.KoorShortLogo}>
             <SVG.KoorShortLogo />
           </Avatar>
         </div>

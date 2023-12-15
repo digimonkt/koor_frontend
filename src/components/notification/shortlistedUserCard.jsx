@@ -6,7 +6,9 @@ import { timeAgoFromNow } from "../../utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import { USER_ROLES } from "../../utils/enum";
+import { generateFileUrl } from "@utils/generateFileUrl";
 function ShortlistedUserCard({
+  job,
   handleClose,
   application,
   tender,
@@ -28,7 +30,7 @@ function ShortlistedUserCard({
           applicationId: application.id,
           role: USER_ROLES.employer,
           jobId,
-        }
+        },
       );
     }
 
@@ -53,8 +55,7 @@ function ShortlistedUserCard({
                 background: "#F0F0F0",
               },
             }}
-            src={SVG.KoorShortLogo}
-          >
+            src={generateFileUrl(job.user.image) || SVG.KoorShortLogo}>
             <SVG.KoorShortLogo />
           </Avatar>
         </div>

@@ -1,6 +1,6 @@
 import { generateFileUrl } from "../../utils/generateFileUrl";
 
-export const transformGetUserDetails = (data) => {
+export const transformGetUserDetails = data => {
   return {
     id: data.id,
     sessionId: data.session_id,
@@ -13,8 +13,8 @@ export const transformGetUserDetails = (data) => {
     profileCompleted: data.profile_completed,
     profile: {
       description: data.profile.description || "",
-      country: data.profile.country || {},
-      city: data.profile.city || {},
+      country: data.profile.country || data.country || {},
+      city: data.profile.city || data.city || {},
       // job-seeker
       gender: data.profile.gender || "",
       dob: data.profile.dob || "",
@@ -41,17 +41,17 @@ export const transformGetUserDetails = (data) => {
     },
     jobPreferences: data.job_preferences
       ? {
-        id: data.job_preferences.id,
-        isAvailable: data.job_preferences.is_available,
-        displayInSearch: data.job_preferences.display_in_search,
-        isPartTime: data.job_preferences.is_part_time,
-        isFullTime: data.job_preferences.is_full_time,
-        hasContract: data.job_preferences.has_contract,
-        expectedSalary: data.job_preferences.expected_salary,
-        payPeriod: data.job_preferences.pay_period,
-      }
+          id: data.job_preferences.id,
+          isAvailable: data.job_preferences.is_available,
+          displayInSearch: data.job_preferences.display_in_search,
+          isPartTime: data.job_preferences.is_part_time,
+          isFullTime: data.job_preferences.is_full_time,
+          hasContract: data.job_preferences.has_contract,
+          expectedSalary: data.job_preferences.expected_salary,
+          payPeriod: data.job_preferences.pay_period,
+        }
       : {},
-    educationRecord: (data.education_record || []).map((record) => ({
+    educationRecord: (data.education_record || []).map(record => ({
       id: record.id,
       title: record.title,
       startDate: record.start_date,
@@ -63,7 +63,7 @@ export const transformGetUserDetails = (data) => {
         title: record.education_level.title,
       },
     })),
-    workExperiences: (data.work_experience || []).map((record) => ({
+    workExperiences: (data.work_experience || []).map(record => ({
       id: record.id,
       title: record.title,
       startDate: record.start_date,
@@ -72,39 +72,38 @@ export const transformGetUserDetails = (data) => {
       organization: record.organization,
       description: record.description,
     })),
-    languages: (data.languages || []).map((record) => ({
+    languages: (data.languages || []).map(record => ({
       id: record.id,
       language: record.language,
       written: record.written,
       spoken: record.spoken,
     })),
-    skills: (data.skills || []).map((record) => ({
+    skills: (data.skills || []).map(record => ({
       id: record.id,
       skill: record.skill,
     })),
-    resume: (data.resume || []).map((record) => ({
+    resume: (data.resume || []).map(record => ({
       id: record.id,
       title: record.title,
       filePath: record.file_path,
       createdAt: record.created_at,
     })),
-    sectors: (data.sector || []).map((record) => ({
+    sectors: (data.sector || []).map(record => ({
       id: record.id,
       sector: record.sector,
     })),
-    tags: (data.tag || []).map((record) => ({
+    tags: (data.tag || []).map(record => ({
       id: record.id,
       tag: record.tag,
     })),
   };
 };
 
-export const transformNotificationResponse = (data) => {
+export const transformNotificationResponse = data => {
   return {
     id: data.id,
     createdAt: data.created,
     notificationType: data.notification_type,
-    job: data.job,
     jobFilter: data.job_filter,
     seen: data.seen,
     message: data?.message || "",
@@ -113,19 +112,33 @@ export const transformNotificationResponse = (data) => {
     userId: data?.message_sender,
     tender: data.tender,
     tenderApplication: data.tender_application,
-    sender: {
-      image: data?.sender?.img,
-    },
     application: {
       id: data.application?.id,
       attachments: data.application ? data.application.attachments[0] : {},
       job: data.application?.job,
       user: data.application?.user,
     },
+    job: {
+      id: data.job?.id,
+      title: data.job?.title,
+      user: {
+        id: data.job?.user?.id,
+        name: data.job?.user?.name,
+        email: data.job?.user?.email,
+        image: data.job?.company_logo || data.job?.user?.image,
+        company: data.job?.company || "",
+      },
+    },
+    sender: {
+      id: data.sender?.id,
+      name: data.sender?.name,
+      email: data.sender?.email,
+      image: data.sender?.image,
+    },
   };
 };
 
-export const transformSearchUserByRoleResponse = (data) => {
+export const transformSearchUserByRoleResponse = data => {
   return {
     id: data.id,
     role: data.role,
@@ -139,18 +152,18 @@ export const transformSearchUserByRoleResponse = (data) => {
     city: data.profile?.city?.title || "",
     highestEducation: data.highest_education || "",
     readyForChat: data.ready_for_chat,
-    sectors: (data.sector || []).map((item) => item.sector),
-    tags: (data.tag || []).map((item) => item.tag),
+    sectors: (data.sector || []).map(item => item.sector),
+    tags: (data.tag || []).map(item => item.tag),
   };
 };
 
-export const transformSearchUserFilterResponse = (data) => {
+export const transformSearchUserFilterResponse = data => {
   return {
     id: data.id,
     title: data.title,
     country: data.country,
     city: data.city,
-    jobCategories: data.category.map((category) => category.id),
+    jobCategories: data.category.map(category => category.id),
     isFullTime: data.is_full_time,
     isPartTime: data.is_part_time,
     hasContract: data.has_contract,
