@@ -380,7 +380,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               )}
             />
           </Box>
-
           <Stack
             direction="row"
             spacing={1}
