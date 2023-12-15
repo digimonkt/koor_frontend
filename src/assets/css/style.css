@@ -419,6 +419,16 @@ header {
   display: inline-block;
 }
 
+.rfm-initial-child-container {
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+.initial-child-container {
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
 .menu {
   margin: 0px;
   padding: 0px;
