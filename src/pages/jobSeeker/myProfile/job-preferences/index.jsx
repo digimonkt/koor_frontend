@@ -104,8 +104,13 @@ const JobPreferences = (props) => {
                 >
                   <span>More</span>
                 </Link>
-                <IconButton size="small" onClick={() => props.fun()}>
-                  <SVG.ArrowUpIcon />
+
+                <IconButton
+                  size="small"
+                  onClick={() => props.fun()}
+                  sx={{ "& svg": { width: "18px", height: "11px" } }}
+                >
+                  {props.toggle ? <SVG.ArrowUpIcon /> : <SVG.Downarrow />}
                 </IconButton>
               </Stack>
             ) : (

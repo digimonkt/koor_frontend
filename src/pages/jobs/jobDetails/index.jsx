@@ -251,7 +251,10 @@ const JobDetails = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}>
@@ -270,6 +273,7 @@ const JobDetails = () => {
                     onClick={() => navigate("/search/jobs")}>
                     {<SVG.LeftArrow />}
                   </IconButton>
+
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -312,7 +316,7 @@ const JobDetails = () => {
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
-                  spacing={{ xs: 1, lg: 0 }}
+                  spacing={{ xs: 2, lg: 0 }}
                   flexWrap={"wrap"}
                   useFlexGap
                   sx={{
