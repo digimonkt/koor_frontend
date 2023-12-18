@@ -343,7 +343,7 @@ function TenderDetailsComponent() {
                     return (
                       <div key={i} className={`${styles.downloadtext}`}>
                         <span className="d-inline-flex me-2">
-                          {<SVG.OrangeIcon />}
+                          {<SVG.BlueAttach />}
                         </span>
                         <span
                           onClick={() => handleLoadImage(attachment.path)}
@@ -584,6 +584,7 @@ function TenderDetailsComponent() {
                       height: "236px",
                       overflow: "hidden",
                       borderRadius: "5px",
+                      position: "relative",
                     }}>
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
