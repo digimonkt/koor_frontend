@@ -16,13 +16,24 @@ import { showDay } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
-  const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const { isLoggedIn, role } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
   const [applicationStatus, setApplicationStatus] = useState("applied");
+  const [numLines, setNumLines] = useState(3);
+  const handleSeeMoreClick = () => {
+    setNumLines(prevNumLines => (prevNumLines === 3 ? jobDetails.length : 3));
+  };
+
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    WebkitLineClamp: numLines,
+  };
   const handleToggleSave = async () => {
     if (isLoggedIn) {
       setIsSaved(!isSaved);
@@ -40,7 +51,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
   };
-  const updateJob = async (jobId) => {
+  const updateJob = async jobId => {
     const res = await updateEmployerJobStatusAPI(jobId);
     if (res.remote === "success") {
       console.log(res);
@@ -68,8 +79,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -86,14 +97,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 maxWidth: "11%",
                 flexBasis: "11%",
               },
-            }}
-          >
+            }}>
             <Stack
               direction={"row"}
               spacing={2}
               alignItems={"center"}
-              justifyContent={"space-between"}
-            >
+              justifyContent={"space-between"}>
               <div className="squer-width">
                 <Avatar
                   sx={{
@@ -106,8 +115,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       background: "#F0F0F0",
                     },
                   }}
-                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}
-                >
+                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}>
                   <SVG.SuitcaseJob />
                 </Avatar>
               </div>
@@ -118,8 +126,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   justifyContent={{ xs: "center", lg: "end" }}
                   alignItems="center"
                   // divider={<hr orientation="vertical" className="job_card_hr" />}
-                  sx={{ minHeight: "87%" }}
-                >
+                  sx={{ minHeight: "87%" }}>
                   <div className="pricebox py-3 me-lg-4">
                     {jobDetails?.budgetAmount ? (
                       <>
@@ -139,8 +146,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       <button
                         onClick={() => {
                           handleStartPause();
-                        }}
-                      >
+                        }}>
                         {isStart === "active" ? (
                           <>
                             <SVG.PauseIcon />
@@ -159,26 +165,23 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             navigate(
                               urlcat("/employer/jobs/post", {
                                 jobId: jobDetails?.id,
-                              })
+                              }),
                             );
                           }
-                        }}
-                      >
+                        }}>
                         {<SVG.Edit1 />}
                         <span className="d-block">Edit</span>
                       </button>
                     </div>
-                  ) : isLoggedIn && role === "job_seeker" ? (
+                  ) : isLoggedIn && role === USER_ROLES.jobSeeker ? (
                     <React.Fragment>
                       {!applied ? (
                         <div
                           onClick={handleToggleSave}
-                          style={{ marginLeft: "6px", cursor: "pointer" }}
-                        >
+                          style={{ marginLeft: "6px", cursor: "pointer" }}>
                           <div
                             className="bookmark"
-                            style={{ width: matches ? "auto" : "" }}
-                          >
+                            style={{ width: matches ? "auto" : "" }}>
                             {isSaved ? (
                               <>
                                 <SVG.SaveIcon />
@@ -214,8 +217,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               maxWidth: "64%",
               flexBasis: "64%",
             },
-          }}
-        >
+          }}>
           <div className="my-jobs">
             <h2>
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
@@ -233,17 +235,32 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <Box
-              className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{
-                __html: jobDetails.description,
-              }}
-            ></Box>
+            <Box className="job-description card-description mt-1 mb-3">
+              <div style={textWrapperStyle}>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: jobDetails.description,
+                  }}></p>
+              </div>
+              {jobDetails.description && (
+                <button
+                  style={{
+                    border: "none",
+                    cursor: "pointer",
+                    background: "none",
+                    color:
+                      role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
+                  }}
+                  onClick={handleSeeMoreClick}>
+                  {numLines === 3 ? "See More" : "See Less"}
+                </button>
+              )}
+            </Box>{" "}
             <Stack
               direction="row"
-              useFlexGap
               flexWrap="wrap"
-              spacing={{ xs: 1, sm: 1, md: 1 }}
+              spacing={{ xs: 2, sm: 1, md: 1 }}
+              useFlexGap
               sx={{
                 width: "100%",
 
@@ -251,12 +268,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   overflow: "hidden",
                   overflowX: "auto",
                 },
-                // "@media (max-width: 480px)": {
-                //   flexWrap: "wrap",
-                // },
+                "@media (max-width: 480px)": {
+                  "& .MuiChip-root": { marginRight: "5px" },
+                },
               }}
-              className="job_card_chip"
-            >
+              className="job_card_chip">
               <ChipBox
                 sx={{ px: 1.5 }}
                 label={jobDetails?.country.title || "Dusseldorf"}
@@ -302,8 +318,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 "@media(max-width: 480px)": {
                   display: "block",
                 },
-              }}
-            >
+              }}>
               {!selfJob && (
                 <Stack direction="row" spacing={1}>
                   <span>
@@ -335,8 +350,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     marginLeft: "0px !important",
                     marginTop: "10px !important",
                   },
-                }}
-              >
+                }}>
                 <span>
                   <SVG.ClockIconSmall />
                 </span>{" "}
@@ -358,12 +372,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               maxWidth: "25%",
               flexBasis: "25%",
             },
-          }}
-        >
+          }}>
           <Box
             sx={{ display: "flex", justifyContent: "end" }}
-            className="text-start text-lg-end text-sm-end mb-0 mb-lg-4"
-          >
+            className="text-start text-lg-end text-sm-end mb-0 mb-lg-4">
             <SolidButton
               className={
                 jobDetails?.expiredInDays > 0
@@ -376,11 +388,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
-
           <Stack
             direction="row"
             spacing={1}
@@ -398,8 +409,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 minHeight: "0%",
                 marginBottom: "10px",
               },
-            }}
-          >
+            }}>
             <div className="pricebox py-3 upto-slide">
               {jobDetails?.budgetAmount ? (
                 <>
@@ -422,13 +432,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             {selfJob ? (
               <Box
                 className="job-button-card"
-                sx={{ display: "flex", alignItems: "center" }}
-              >
+                sx={{ display: "flex", alignItems: "center" }}>
                 <button
                   onClick={() => {
                     handleStartPause();
-                  }}
-                >
+                  }}>
                   {isStart === "active" ? (
                     <>
                       <SVG.PauseIcon />
@@ -447,16 +455,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        })
+                        }),
                       );
                     }
-                  }}
-                >
+                  }}>
                   {<SVG.Edit1 />}
                   <span className="d-block">Edit</span>
                 </button>
               </Box>
-            ) : role !== USER_ROLES.employer ? (
+            ) : role === USER_ROLES.jobSeeker ? (
               <React.Fragment>
                 <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
                   <div className="bookmark">
@@ -482,8 +489,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       </Grid>
       <DialogBox
         open={registrationWarning}
-        handleClose={() => setRegistrationWarning(false)}
-      >
+        handleClose={() => setRegistrationWarning(false)}>
         <div>
           <h1 className="heading">Register as jobseeker</h1>
           <div className="form-content">
@@ -516,8 +522,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     textDecoration: "none",
                     color: "#EEA23D",
                     fontWeight: 600,
-                  }}
-                >
+                  }}>
                   Login
                 </Link>
               </span>
