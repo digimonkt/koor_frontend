@@ -47,7 +47,7 @@ import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "../../../api/user";
 import urlcat from "urlcat";
 const PostTender = () => {
-  const { currentUser } = useSelector((state) => state.auth);
+  const { currentUser } = useSelector(state => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -58,7 +58,7 @@ const PostTender = () => {
     cities,
     sectors,
     opportunityTypes,
-  } = useSelector((state) => state.choices);
+  } = useSelector(state => state.choices);
   const [tenderId, setTenderId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
@@ -68,7 +68,7 @@ const PostTender = () => {
   const [descData, setDescData] = useState("");
   const [applicationInstructionData, setApplicationInstructionData] =
     useState("");
-  const getSuggestedAddress = async (search) => {
+  const getSuggestedAddress = async search => {
     const res = await GetSuggestedAddressAPI(search);
     if (res.remote === "success") {
       setSuggestedAddress(res.data.predictions);
@@ -111,6 +111,7 @@ const PostTender = () => {
     },
     validationSchema: validateCreateTenderInput,
     onSubmit: async (values, { resetForm }) => {
+      console.log("values in", values);
       const payload = {
         title: values.title || "",
         budget_currency: values.budgetCurrency,
@@ -139,16 +140,17 @@ const PostTender = () => {
         cc1: values.cc1 || "",
         cc2: values.cc2 || "",
       };
+      console.log({ payload });
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "attachments") {
-          payload.attachments.forEach((attachment) => {
+          payload.attachments.forEach(attachment => {
             if (!attachment.id) {
               newFormData.append(key, attachment);
             }
           });
         } else if (payload[key].forEach) {
-          payload[key].forEach((data) => newFormData.append(key, data));
+          payload[key].forEach(data => newFormData.append(key, data));
         } else if (payload[key]) {
           newFormData.append(key, payload[key]);
         }
@@ -177,14 +179,15 @@ const PostTender = () => {
       }
     },
   });
-  const handleEditorValue = (content) => {
+  const handleEditorValue = content => {
     setDescData(content);
     formik.setFieldValue(
       "description",
-      content !== "<p><br></p>" ? content : ""
+      content !== "<p><br></p>" ? content : "",
     );
   };
-  const getTenderDetailsById = useCallback(async (tenderId) => {
+  console.log({ formik });
+  const getTenderDetailsById = useCallback(async tenderId => {
     const response = await getTenderDetailsByIdAPI({ tenderId });
     if (response.remote === "success") {
       const { data } = response;
@@ -195,7 +198,7 @@ const PostTender = () => {
         description: data.description || "",
         country: data.country.id,
         city: data.city.id,
-        categories: data.categories.map((category) => category.id),
+        categories: data.categories.map(category => category.id),
         sectors: data.sector.id,
         opportunityType: data.type.id,
         tag: data.tag[0]?.id || "",
@@ -215,28 +218,28 @@ const PostTender = () => {
       formik.setFieldValue("cc2", data?.cc2 || "");
       formik.setFieldValue(
         "isApplyThroughKoor",
-        Boolean(data?.isApplyThroughKoor) || false
+        Boolean(data?.isApplyThroughKoor) || false,
       );
       formik.setFieldValue(
         "isApplyThroughEmail",
-        Boolean(data?.isApplyThroughEmail) || false
+        Boolean(data?.isApplyThroughEmail) || false,
       );
       formik.setFieldValue(
         "isApplyThroughWebsite",
-        Boolean(data?.isApplyThroughWebsite) || false
+        Boolean(data?.isApplyThroughWebsite) || false,
       );
       formik.setFieldValue(
         "applicationInstruction",
-        data.applicationInstruction || ""
+        data.applicationInstruction || "",
       );
       formik.setFieldValue("websiteLink", data?.websiteLink || "");
     }
   }, []);
-  const handleApplicationInstructionEditorValue = (content) => {
+  const handleApplicationInstructionEditorValue = content => {
     setApplicationInstructionData(content);
     formik.setFieldValue(
       "applicationInstruction",
-      content !== "<p><br></p>" ? content : ""
+      content !== "<p><br></p>" ? content : "",
     );
   };
   useEffect(() => {
@@ -293,6 +296,7 @@ const PostTender = () => {
       navigate(urlcat("../employer/manage-tenders"));
     }
   }, []);
+  // console.log("formik_values", formik.values);
   return (
     <div className="job-application">
       <Card
@@ -302,23 +306,20 @@ const PostTender = () => {
             borderRadius: "10px",
             mb: 3,
           },
-        }}
-      >
+        }}>
         <CardContent
           sx={{
             "&.MuiCardContent-root": {
               padding: "25px 25px 25px",
             },
-          }}
-        >
+          }}>
           <div className="job-content">
             <h2>
               {tenderId ? "Update tender" : "Post new tender"}
               <span className="right-pull">
                 <IconButton
                   LinkComponent={Link}
-                  to={"/employer/manage-tenders"}
-                >
+                  to={"/employer/manage-tenders"}>
                   <CloseIcon />
                 </IconButton>
               </span>
@@ -364,8 +365,7 @@ const PostTender = () => {
                     <Box
                       sx={{
                         height: { xs: "320px", sm: "270px", md: "250px" },
-                      }}
-                    >
+                      }}>
                       <label>
                         Description<span className="required-field">*</span>
                       </label>
@@ -379,15 +379,14 @@ const PostTender = () => {
                         type="texteara"
                         placeholder="Write more details to attract the right candidates."
                         value={descData || formik.values.description}
-                        onChange={(value) => handleEditorValue(value)}
+                        onChange={value => handleEditorValue(value)}
                       />
                     </Box>
                     <Box
                       style={{
                         width: "100%",
                         marginTop: "10px",
-                      }}
-                    >
+                      }}>
                       {formik.touched.description &&
                       formik.errors.description ? (
                         <ErrorMessage>{formik.errors.description}</ErrorMessage>
@@ -401,7 +400,7 @@ const PostTender = () => {
                     <SelectInput
                       placeholder="Country"
                       defaultValue=""
-                      options={countries.data.map((country) => ({
+                      options={countries.data.map(country => ({
                         value: country.id,
                         label: country.title,
                       }))}
@@ -421,10 +420,10 @@ const PostTender = () => {
                       }
                       disabled={!formik.values.country}
                       options={(cities.data[formik.values.country] || []).map(
-                        (country) => ({
+                        country => ({
                           value: country.id,
                           label: country.title,
-                        })
+                        }),
                       )}
                       {...formik.getFieldProps("city")}
                     />
@@ -444,13 +443,13 @@ const PostTender = () => {
                         className="add-form-control"
                         name={formik.getFieldProps("address").name}
                         onBlur={() => formik.getFieldProps("address").onBlur}
-                        onChange={(e) => setSearchValue(e.target.value)}
+                        onChange={e => setSearchValue(e.target.value)}
                         value={searchValue}
                       />
                       {debouncedSearchValue &&
                         searchValue !== formik.values.address && (
                           <div className={styles.search_results_box}>
-                            {suggestedAddress.map((address) => {
+                            {suggestedAddress.map(address => {
                               return (
                                 <div
                                   key={address.description}
@@ -458,11 +457,10 @@ const PostTender = () => {
                                   onClick={() => {
                                     formik.setFieldValue(
                                       "address",
-                                      address.description
+                                      address.description,
                                     );
                                     setSearchValue(address.description);
-                                  }}
-                                >
+                                  }}>
                                   {address.description}
                                 </div>
                               );
@@ -484,7 +482,7 @@ const PostTender = () => {
                           multiple
                           defaultValue=""
                           placeholder="Select a Job category"
-                          options={tenderCategories.data.map((category) => ({
+                          options={tenderCategories.data.map(category => ({
                             value: category.id,
                             label: category.title,
                           }))}
@@ -509,7 +507,7 @@ const PostTender = () => {
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Sector"
-                          options={sectors.data.map((sector) => ({
+                          options={sectors.data.map(sector => ({
                             value: sector.id,
                             label: sector.title,
                           }))}
@@ -528,10 +526,10 @@ const PostTender = () => {
                           placeholder="Select a type of opportunity"
                           defaultValue=""
                           options={opportunityTypes.data.map(
-                            (opportunityType) => ({
+                            opportunityType => ({
                               value: opportunityType.id,
                               label: opportunityType.title,
-                            })
+                            }),
                           )}
                           value={formik.values.opportunityType || ""}
                           {...formik.getFieldProps("opportunityType")}
@@ -548,7 +546,7 @@ const PostTender = () => {
                         <SelectInput
                           defaultValue=""
                           placeholder="Select a Tag"
-                          options={tags.data.map((tag) => ({
+                          options={tags.data.map(tag => ({
                             value: tag.id,
                             label: tag.title,
                           }))}
@@ -563,23 +561,19 @@ const PostTender = () => {
                       </Grid>
                       <Grid item xl={3} lg={3} xs={12} className="mt-2">
                         <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
+                          style={{ display: "flex", flexDirection: "column" }}>
                           <Stack
                             direction="row"
                             alignItems="center"
                             justifyContent="space-between"
-                            className="mb-2"
-                          >
+                            className="mb-2">
                             <label className="mb-1 d-inline-block">
                               Start Date{" "}
                               <span className="required-field">*</span>
                             </label>
                           </Stack>
                           <DateInput
-                            onChange={(e) =>
-                              formik.setFieldValue("startDate", e)
-                            }
+                            onChange={e => formik.setFieldValue("startDate", e)}
                             type="date"
                             value={formik.values.startDate}
                             onBlur={formik.getFieldProps("startDate").onBlur}
@@ -595,22 +589,18 @@ const PostTender = () => {
                       </Grid>
                       <Grid item xl={3} lg={3} xs={12} className="mt-2">
                         <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
+                          style={{ display: "flex", flexDirection: "column" }}>
                           <Stack
                             direction="row"
                             alignItems="center"
                             justifyContent="space-between"
-                            className="mb-2"
-                          >
+                            className="mb-2">
                             <label className="mb-1 d-inline-block">
                               Deadline<span className="required-field">*</span>{" "}
                             </label>
                           </Stack>
                           <DateInput
-                            onChange={(e) =>
-                              formik.setFieldValue("deadline", e)
-                            }
+                            onChange={e => formik.setFieldValue("deadline", e)}
                             type="date"
                             value={formik.values.deadline}
                             onBlur={formik.getFieldProps("deadline").onBlur}
@@ -685,8 +675,7 @@ const PostTender = () => {
                       "@media (max-width: 480px)": {
                         marginTop: "0px",
                       },
-                    }}
-                  >
+                    }}>
                     <input
                       className="add-form-control"
                       placeholder="CC email address"
@@ -708,8 +697,7 @@ const PostTender = () => {
                       "@media (max-width: 480px)": {
                         marginTop: "0px",
                       },
-                    }}
-                  >
+                    }}>
                     <input
                       className="add-form-control"
                       type="email"
@@ -724,8 +712,7 @@ const PostTender = () => {
                     <Box
                       sx={{
                         height: { xs: "320px", sm: "270px", md: "250px" },
-                      }}
-                    >
+                      }}>
                       <label>
                         Application Instructions
                         <span className="required-field">*</span>
@@ -738,7 +725,7 @@ const PostTender = () => {
                           applicationInstructionData ||
                           formik.values.applicationInstruction
                         }
-                        onChange={(value) =>
+                        onChange={value =>
                           handleApplicationInstructionEditorValue(value)
                         }
                       />
@@ -747,8 +734,7 @@ const PostTender = () => {
                       style={{
                         width: "100%",
                         marginTop: "10px",
-                      }}
-                    >
+                      }}>
                       {formik.touched.applicationInstruction &&
                       formik.errors.applicationInstruction ? (
                         <ErrorMessage>
@@ -792,19 +778,19 @@ const PostTender = () => {
                   ) : null}
                   <AttachmentDragNDropInput
                     files={formik.getFieldProps("attachments").value}
-                    handleDrop={(file) => {
+                    handleDrop={file => {
                       const currentAttachments = formik.values.attachments;
                       if (file.length + currentAttachments.length > 10) {
                         formik.setFieldError(
                           "attachments",
                           `Maximum 10 files allowed. you can upload only ${
                             10 - currentAttachments.length
-                          } remaining`
+                          } remaining`,
                         );
                       } else {
                         const filesTaken = file.slice(
                           0,
-                          10 - currentAttachments.length
+                          10 - currentAttachments.length,
                         );
                         formik.setFieldValue("attachments", [
                           ...currentAttachments,
@@ -821,15 +807,15 @@ const PostTender = () => {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment) => attachment.path !== file.path
-                          )
+                            attachment => attachment.path !== file.path,
+                          ),
                         );
                       } else {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment, i) => i !== index
-                          )
+                            (attachment, i) => i !== index,
+                          ),
                         );
                       }
                     }}
@@ -845,8 +831,7 @@ const PostTender = () => {
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
-                    style={{ flexWrap: "wrap" }}
-                  >
+                    style={{ flexWrap: "wrap" }}>
                     <OutlinedButton
                       title="Cancel"
                       sx={{
@@ -891,8 +876,8 @@ const PostTender = () => {
                             ? "Updating..."
                             : "Posting..."
                           : tenderId
-                          ? "Update the tender"
-                          : "POST THE TENDER"
+                            ? "Update the tender"
+                            : "POST THE TENDER"
                       }
                       type="submit"
                       disabled={formik.isSubmitting}
@@ -907,8 +892,7 @@ const PostTender = () => {
       <DialogBox
         open={open}
         handleClose={handleClose}
-        className="posting_tender_done_dailog_div"
-      >
+        className="posting_tender_done_dailog_div">
         <Grid container spacing={2} className="post_tender_done_dailog">
           <Grid item lg={7} sm={7} xs={12}>
             <h1 className="mb-3">Done!</h1>

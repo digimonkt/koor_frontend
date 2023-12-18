@@ -7,7 +7,7 @@ import { USER_ROLES } from "../enum";
 function UnauthenticatedRouteComponent({ children, redirectURL }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { role, isLoggedIn, currentUser } = useSelector((state) => state.auth);
+  const { role, isLoggedIn, currentUser } = useSelector(state => state.auth);
   useEffect(() => {
     const path = role === USER_ROLES.jobSeeker ? "/my-profile" : "/dashboard";
     const fromPath = location.state?.from.includes(role)
@@ -17,6 +17,7 @@ function UnauthenticatedRouteComponent({ children, redirectURL }) {
       !currentUser?.profile?.isVerified && role !== USER_ROLES.employer
         ? "/account-verification"
         : `../${role}${path}`;
+    // console.log({ role, defaultPath });
     if (role && isLoggedIn) {
       navigate(fromPath || redirectURL || defaultPath);
     }

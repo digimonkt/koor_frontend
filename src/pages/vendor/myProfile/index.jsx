@@ -74,10 +74,10 @@ function MyProfile() {
   const dispatch = useDispatch();
   const platform = Capacitor.getPlatform();
   const [toggle, setToggle] = useState(["about"]);
-
-  const handleToggleModel2 = (type) => {
-    setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+  const handleToggleModel2 = type => {
+    console.log("first", type);
+    setToggle(prev =>
+      prev.includes(type) ? prev.filter(el => el !== type) : [...prev, type],
     );
   };
   useEffect(() => {

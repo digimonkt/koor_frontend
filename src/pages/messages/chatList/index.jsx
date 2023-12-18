@@ -39,6 +39,7 @@ function ChatList({ setIsSeleted }) {
     const updatedConversations = data.content.map((conversation) =>
       transformConversationResponse(conversation)
     );
+    console.log({ updatedConversations });
     setChatList([...updatedConversations]);
   };
   const handleBlacklistStatus = (status) => {
