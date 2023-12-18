@@ -102,6 +102,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const [filterId, setFilterId] = useState(0);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const platform = Capacitor.getPlatform();
+
+  const JOBSEEKERCOLOR = role === USER_ROLES.jobSeeker ? "#feefd3" : "#D5E3F7";
+
   useEffect(() => {
     setData(!!defaultOpen);
   }, []);
@@ -730,6 +733,18 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                       disableRipple={true}
                       sx={{
                         wordBreak: "break-word !important",
+                        background:
+                          selectedFilter === filter.id
+                            ? `${JOBSEEKERCOLOR} !important`
+                            : "",
+                        border:
+                          selectedFilter === filter.id
+                            ? `1px solid ${
+                                role !== USER_ROLES.jobSeeker
+                                  ? "#274593"
+                                  : "#eea23d"
+                              } !important`
+                            : "",
                         height:
                           platform === "android" || platform === "ios"
                             ? "50px !important"
@@ -746,7 +761,11 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         <div
                           onClick={() => toggleNotificationStatus(filter.id)}>
                           {filter.isNotification ? (
-                            <SVG.Notificationactive />
+                            role === USER_ROLES.jobSeeker ? (
+                              <SVG.Notificationactive />
+                            ) : (
+                              <SVG.Notificationactivewithblue />
+                            )
                           ) : (
                             <SVG.Notificationinactive />
                           )}
@@ -825,7 +844,6 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               </>
             </Box>
           ) : null}
-
           {!matches ? (
             <>
               {!defaultOpen && (

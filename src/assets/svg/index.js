@@ -59,6 +59,7 @@ import { ReactComponent as ArrowDownward } from "./arrow_downward.svg";
 import { ReactComponent as FillterICon } from "./fillterICon.svg";
 import { ReactComponent as Buttonsearch } from "./buttonsearch.svg";
 import { ReactComponent as Downarrow } from "./downarrow.svg";
+import { ReactComponent as Notificationactivewithblue } from "./notificationactivewithblue.svg";
 import { ReactComponent as Notificationactive } from "./notificationactive.svg";
 import { ReactComponent as Notificationinactive } from "./notificationinactive.svg";
 import { ReactComponent as Favorite } from "./favorite.svg";
@@ -225,6 +226,7 @@ export const SVG = {
   Buttonsearch,
   Downarrow,
   Notificationactive,
+  Notificationactivewithblue,
   Notificationinactive,
   Favorite,
   HeaderSearch,
