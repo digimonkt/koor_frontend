@@ -18,7 +18,7 @@ function VerifyOTPForm() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams({});
 
-  const { role, verifyEmail } = useSelector(state => state.auth);
+  const { role, verifyEmail } = useSelector((state) => state.auth);
   const [sendingOTP, setSendingOTP] = useState(false);
   const [token, setToken] = useState("");
 
@@ -44,8 +44,7 @@ function VerifyOTPForm() {
       otp: "",
     },
     validationSchema: validateOTPForm,
-    onSubmit: async values => {
-      console.log(values, "in");
+    onSubmit: async (values) => {
       const payload = {
         token,
         otp: values.otp,
@@ -81,7 +80,7 @@ function VerifyOTPForm() {
         <div className="form-group mb-3 enterotp_input">
           <LabeledOtpInput
             title="Enter OTP"
-            onChange={e => formik.setFieldValue("otp", e)}
+            onChange={(e) => formik.setFieldValue("otp", e)}
             name="otp"
             value={formik.values.otp}
           />

@@ -14,7 +14,9 @@ function TalentCard({ talentDetails }) {
   const platform = Capacitor.getPlatform();
   const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
+
   const [numLines, setNumLines] = useState(3);
+
   const handleSeeMoreClick = () => {
     setNumLines(prevNumLines =>
       prevNumLines === 3 ? talentDetails.length : 3,
@@ -144,14 +146,14 @@ function TalentCard({ talentDetails }) {
             )}
           </Stack>
           <div className="recent-descrition">
-            <Box className="job-description  mt-1 mb-3">
+            <Box className="job-description mt-1 mb-3">
               <div style={textWrapperStyle}>
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: talentDetails?.description,
+                    __html: talentDetails.description,
                   }}></p>
               </div>
-              {talentDetails?.description && (
+              {talentDetails.description.length > 350 && (
                 <button
                   style={{
                     border: "none",
@@ -164,7 +166,7 @@ function TalentCard({ talentDetails }) {
                   {numLines === 3 ? "See More" : "See Less"}
                 </button>
               )}
-            </Box>{" "}
+            </Box>
           </div>
           <Stack
             direction={"row"}
