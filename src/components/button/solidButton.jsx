@@ -15,7 +15,7 @@ function SolidButtonComponent({
         "&.MuiButton-outlined": {
           borderRadius: "5px",
           border: "0px",
-          color: "black",
+          color: "white",
           fontWeight: "400",
           fontSize: "12px",
           fontFamily: "Poppins",
@@ -26,8 +26,7 @@ function SolidButtonComponent({
         },
       }}
       {...rest}
-      className={className}
-    >
+      className={className}>
       {title}
     </Button>
   );

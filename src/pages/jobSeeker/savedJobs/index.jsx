@@ -19,17 +19,17 @@ function SavedJobsComponent() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [savedJobsList, setSavedJobList] = useState([]);
   const [totalSavedJobs, setTotalSavedJobs] = useState(0);
-  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.ascending);
+  const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.salary);
   const [isLoading, setIsLoading] = useState(true);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const getSavedJobsList = async (data) => {
+  const getSavedJobsList = async data => {
     setIsLoading(true);
     const res = await getSaveJobAPI(data);
     if (res.remote === "success") {
@@ -38,7 +38,7 @@ function SavedJobsComponent() {
     }
     setIsLoading(false);
   };
-  const handleSorting = (search) => {
+  const handleSorting = search => {
     setSortBy(search);
     if (orderBy === "ascending") {
       setOrderBy("descending");
@@ -59,22 +59,19 @@ function SavedJobsComponent() {
           boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
           borderRadius: "10px",
         },
-      }}
-    >
+      }}>
       <CardContent
         sx={{
           "&.MuiCardContent-root": {
             padding: "30px",
           },
-        }}
-      >
+        }}>
         <div className="saved-jobs">
           <Stack
             direction="row"
             spacing={2}
             justifyContent="space-between"
-            alignItems="center"
-          >
+            alignItems="center">
             <h2 className="m-0">
               Saved jobs
               <Chip
@@ -90,8 +87,7 @@ function SavedJobsComponent() {
             </h2>
             <IconButton
               sx={{ width: "50px", height: "50px" }}
-              onClick={handleClick}
-            >
+              onClick={handleClick}>
               <SVG.FilterIcon />
             </IconButton>
             <Menu
@@ -130,16 +126,14 @@ function SavedJobsComponent() {
                 },
               }}
               transformOrigin={{ horizontal: "right", vertical: "top" }}
-              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-            >
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
               <h5 className="px-3 mt-0 mb-1">Sort by &nbsp; :</h5>
               <MenuItem
                 onClick={() => {
                   // handleClose();
                   handleSorting(JOB_SORT_BY.salary);
                 }}
-                className="fillterbox"
-              >
+                className="fillterbox">
                 Salary &nbsp;
                 <span>
                   {sortBy === JOB_SORT_BY.salary &&
@@ -155,8 +149,7 @@ function SavedJobsComponent() {
                   // handleClose();
                   handleSorting(JOB_SORT_BY.expiration);
                 }}
-                className="fillterbox"
-              >
+                className="fillterbox">
                 Expiration
                 <span>
                   {sortBy === JOB_SORT_BY.expiration &&
@@ -182,7 +175,7 @@ function SavedJobsComponent() {
         </div>
         <div className="savedjobs">
           {isLoading ? (
-            [1, 2, 3].map((loader) => (
+            [1, 2, 3].map(loader => (
               <div style={{ borderBottom: "1px solid #cacaca" }} key={loader}>
                 <JobCardSkeletonLoader logo />
               </div>
@@ -190,12 +183,11 @@ function SavedJobsComponent() {
           ) : !savedJobsList.length ? (
             <NoDataFoundAnimation title="You haven't saved any jobs yet." />
           ) : (
-            savedJobsList.map((list) => {
+            savedJobsList.map(list => {
               return (
                 <div
                   style={{ borderBottom: "1px solid #cacaca" }}
-                  key={list.id}
-                >
+                  key={list.id}>
                   <JobCard logo jobDetails={list.job} />
                 </div>
               );

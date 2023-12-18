@@ -34,8 +34,8 @@ body {
 }
 
 .btninActive {
-  background: #feefd3 !important;
-  border: 1px solid #eea23d !important;
+  /* background: #feefd3 !important; */
+  /* border: 1px solid #eea23d !important; */
   border-radius: 73px !important;
   font-size: 12px !important;
   color: #000 !important;
