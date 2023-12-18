@@ -8,6 +8,7 @@ import urlcat from "urlcat";
 import styles from "./notification.module.css";
 import Close from "@mui/icons-material/Close";
 function MessageNotificationCard({
+  sender,
   message,
   messageId,
   createdAt,
@@ -19,8 +20,7 @@ function MessageNotificationCard({
   return (
     <Link
       onClick={() => handleClose()}
-      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}
-    >
+      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}>
       <div
         className={`${styles.content_div}`}
         //   style={{ background: item.color }}
@@ -36,8 +36,7 @@ function MessageNotificationCard({
                 background: "#F0F0F0",
               },
             }}
-            src={generateFileUrl(null)}
-          >
+            src={generateFileUrl(sender?.image) || <SVG.UserIcon />}>
             <SVG.UserIcon />
           </Avatar>
         </div>
@@ -48,8 +47,7 @@ function MessageNotificationCard({
             "&:hover .MuiIconButton-root": {
               display: "inline-flex",
             },
-          }}
-        >
+          }}>
           <IconButton
             sx={{
               width: "15px",
@@ -60,13 +58,22 @@ function MessageNotificationCard({
               right: "0",
               display: "none",
             }}
-            onClick={() => handleClose()}
-          >
+            onClick={() => handleClose()}>
             <Close fontSize="inherit" />
           </IconButton>
-          <h2 className={styles.title}>New message received.</h2>
+          <h2 className={styles.title}>
+            <b style={{ textTransform: "capitalize" }}>{sender?.name}</b> sent
+            you a message
+          </h2>
           <p className={`${styles.text}`}>
-            <div dangerouslySetInnerHTML={{ __html: message }} />
+            <div
+              style={{
+                background: "#f0f0f0",
+                padding: "1rem",
+                borderRadius: "5px",
+              }}
+              dangerouslySetInnerHTML={{ __html: message }}
+            />
           </p>
           <p style={{ marginTop: "5px" }} className={styles.duration}>
             {timeAgoFromNow(createdAt)}

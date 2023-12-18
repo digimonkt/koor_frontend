@@ -5,8 +5,9 @@ import { SVG } from "../../assets/svg";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
-function PlannedInterviewCard({ handleClose, application, createdAt }) {
+function PlannedInterviewCard({ job, handleClose, application, createdAt }) {
   return (
     <Link
       onClick={() => handleClose()}
@@ -28,7 +29,7 @@ function PlannedInterviewCard({ handleClose, application, createdAt }) {
                 background: "#F0F0F0",
               },
             }}
-            src={SVG.KoorShortLogo}
+            src={generateFileUrl(job.user.image) || SVG.KoorShortLogo}
           >
             <SVG.KoorShortLogo />
           </Avatar>

@@ -1,10 +1,15 @@
+import { LabeledInput } from "@components/input";
 import { OutlinedButton } from "../../../components/button";
-import { LabeledInput } from "../../../components/input";
 import { Box, Grid, Stack } from "@mui/material";
+import { USER_ROLES } from "@utils/enum";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 function SaveFilter({ handleSaveSearch, handleCancel }) {
   const [name, setName] = useState("");
+  const { role } = useSelector(({ auth }) => auth);
+
+  const JOBSEEKERCOLOR = role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593";
 
   const handleInputChange = e => {
     // Limiting input to 40 characters
@@ -38,7 +43,6 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
               color: "#848484",
               fontSize: "16px",
             }}>
-            {" "}
             {name.length}/40 characters
           </Box>
           <Grid item xl={12} lg={12} xs={12}>
@@ -68,8 +72,8 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
                 title={<>Save</>}
                 sx={{
                   "&.MuiButtonBase-root": {
-                    border: "1px solid #EEA23D !important",
-                    color: "#EEA23D !important",
+                    border: `1px solid ${JOBSEEKERCOLOR} !important`,
+                    color: `${JOBSEEKERCOLOR} !important`,
                     width: "100px",
                     height: "42px",
                     "@media (max-width: 480px)": {
