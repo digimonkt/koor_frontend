@@ -21,6 +21,20 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(tenderDetails?.status);
+  const [numLines, setNumLines] = useState(3);
+  const handleSeeMoreClick = () => {
+    setNumLines(prevNumLines =>
+      prevNumLines === 3 ? tenderDetails.length : 3,
+    );
+  };
+
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    WebkitLineClamp: numLines,
+  };
+
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -225,11 +239,27 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 ) : null}
               </Link>
             </h2>
-            <div
-              className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{
-                __html: tenderDetails?.description,
-              }}></div>
+            <Box className="job-description  mt-1 mb-3">
+              <div style={textWrapperStyle}>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: tenderDetails.description,
+                  }}></p>
+              </div>
+              {tenderDetails.description && (
+                <button
+                  style={{
+                    border: "none",
+                    cursor: "pointer",
+                    background: "none",
+                    color:
+                      role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
+                  }}
+                  onClick={handleSeeMoreClick}>
+                  {numLines === 3 ? "See More" : "See Less"}
+                </button>
+              )}
+            </Box>{" "}
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
