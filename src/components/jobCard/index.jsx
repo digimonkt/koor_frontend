@@ -23,6 +23,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
   const [applicationStatus, setApplicationStatus] = useState("applied");
+  const [numLines, setNumLines] = useState(3);
+  const handleSeeMoreClick = () => {
+    setNumLines(prevNumLines => (prevNumLines === 3 ? jobDetails?.length : 3));
+  };
+
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    WebkitLineClamp: numLines,
+  };
   const handleToggleSave = async () => {
     if (isLoggedIn) {
       setIsSaved(!isSaved);
@@ -224,11 +235,28 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <Box
-              className="job-description card-description mt-1 mb-3"
-              dangerouslySetInnerHTML={{
-                __html: jobDetails.description,
-              }}></Box>
+
+            <Box className="job-description mt-1 mb-3">
+              <div style={textWrapperStyle}>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: jobDetails?.description,
+                  }}></p>
+              </div>
+              {jobDetails?.description?.length > 350 && (
+                <button
+                  style={{
+                    border: "none",
+                    cursor: "pointer",
+                    background: "none",
+                    color:
+                      role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
+                  }}
+                  onClick={handleSeeMoreClick}>
+                  {numLines === 3 ? "See More" : "See Less"}
+                </button>
+              )}
+            </Box>
             <Stack
               direction="row"
               flexWrap="wrap"

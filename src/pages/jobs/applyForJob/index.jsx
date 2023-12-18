@@ -98,7 +98,10 @@ const ApplyForJob = () => {
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
-  const truncatedDescription = details.description.length > maxLength ? `${details.description.slice(0, maxLength)}...` : details.description;
+  const truncatedDescription =
+    details.description.length > maxLength
+      ? `${details.description.slice(0, maxLength)}...`
+      : details.description;
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
@@ -179,7 +182,6 @@ const ApplyForJob = () => {
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",

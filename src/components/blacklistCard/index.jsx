@@ -37,7 +37,6 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
     }
   };
   const handleMessageClick = async () => {
-    console.log("Running", details?.user.id);
     const res = await getConversationIdByUserIdAPI({
       userId: details?.user?.id,
     });

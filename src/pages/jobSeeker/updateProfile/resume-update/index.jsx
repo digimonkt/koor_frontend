@@ -31,7 +31,6 @@ const ResumeUpdate = ({
     const images = document.getElementById("profile-avatar");
 
     if (images) {
-      console.log({ images });
       const options = {
         margin: [5, 5],
         filename: `${currentUser.name || "Resume"}.pdf`,
