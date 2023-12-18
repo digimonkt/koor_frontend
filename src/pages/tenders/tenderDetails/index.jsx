@@ -248,8 +248,7 @@ function TenderDetailsComponent() {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
-        }}
-      >
+        }}>
         <div
           className={`${styles.Jobcard}`}
           style={{
@@ -259,8 +258,7 @@ function TenderDetailsComponent() {
                 : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
-          }}
-        >
+          }}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -356,7 +354,7 @@ function TenderDetailsComponent() {
                     return (
                       <div key={i} className={`${styles.downloadtext}`}>
                         <span className="d-inline-flex me-2">
-                          {<SVG.OrangeIcon />}
+                          {<SVG.BlueAttach />}
                         </span>
                         <span
                           onClick={() => handleLoadImage(attachment.path)}
@@ -598,8 +596,7 @@ function TenderDetailsComponent() {
                       overflow: "hidden",
                       borderRadius: "5px",
                       position: "relative",
-                    }}
-                  >
+                    }}>
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
