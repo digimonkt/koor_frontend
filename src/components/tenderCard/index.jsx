@@ -400,7 +400,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       <span className="d-block">Edit</span>
                     </button>
                   </Box>
-                ) : isLoggedIn ? (
+                ) : isLoggedIn && role === USER_ROLES.vendor ? (
                   <React.Fragment>
                     {!applied ? (
                       <div

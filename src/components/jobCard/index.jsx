@@ -235,6 +235,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
+
             <Box className="job-description mt-1 mb-3">
               <div style={textWrapperStyle}>
                 <p

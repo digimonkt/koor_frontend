@@ -35,8 +35,10 @@ import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
 import { getColorByRemainingDays } from "@utils/generateColor";
+import { Capacitor } from "@capacitor/core";
 
 function TenderDetailsComponent() {
+  const platform = Capacitor.getPlatform();
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();

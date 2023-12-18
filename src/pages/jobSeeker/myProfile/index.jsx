@@ -103,6 +103,7 @@ const MyProfile = () => {
                         letterSpacing: "0.54px",
                         fontWeight: "700",
                         mb: 1,
+                        mt: 0,
                       },
                       "& p": {
                         fontSize: "14px",

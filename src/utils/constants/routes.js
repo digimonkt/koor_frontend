@@ -190,12 +190,6 @@ export const ROUTES = [
     path: "/resources",
     component: Resources,
   },
-  {
-    id: "home",
-    name: "Home",
-    path: "/",
-    component: Home,
-  },
 
   {
     id: "resources",

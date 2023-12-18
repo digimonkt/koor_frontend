@@ -98,6 +98,16 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
   },
 ];
 
+export const generateColor = (ROLE) => {
+  const color =
+    ROLE === USER_ROLES.employer
+      ? "#274593"
+      : ROLE === USER_ROLES.vendor
+      ? "#274593"
+      : "#EEA23D";
+
+  return color;
+};
 export const TABS_VALUE = {
   tab1: 0,
   tab2: 1,
