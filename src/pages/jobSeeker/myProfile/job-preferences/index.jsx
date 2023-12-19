@@ -32,7 +32,6 @@ const JobPreferences = (props) => {
     setJobPreferences({ ...jobPreferences, [name]: e.target.checked });
   };
   const handleChangeInput = (name) => (e) => {
-    console.log("e: ", e.target.value, name);
     setJobPreferences({ ...jobPreferences, [name]: e.target.value });
   };
   const handleSubmit = async () => {

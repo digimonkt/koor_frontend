@@ -35,10 +35,8 @@ import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
 import { getColorByRemainingDays } from "@utils/generateColor";
-import { Capacitor } from "@capacitor/core";
 
 function TenderDetailsComponent() {
-  const platform = Capacitor.getPlatform();
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -121,7 +119,6 @@ function TenderDetailsComponent() {
     }
   };
 
-  console.log({ details });
   const getTenderSuggestion = async tenderId => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
@@ -171,7 +168,6 @@ function TenderDetailsComponent() {
   const handleLoadImage = async url => {
     const fileType = url => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
@@ -238,7 +234,6 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
-  console.log({ details });
   return (
     <>
       <Container
@@ -249,16 +244,7 @@ function TenderDetailsComponent() {
             paddingRight: "100px",
           },
         }}>
-        <div
-          className={`${styles.Jobcard}`}
-          style={{
-            margin:
-              platform === "android" || platform === "ios"
-                ? "0px 0px 130px 0px"
-                : null,
-            borderRadius:
-              platform === "android" || platform === "ios" ? "0px" : null,
-          }}>
+        <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>

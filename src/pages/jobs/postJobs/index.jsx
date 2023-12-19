@@ -389,7 +389,6 @@ function PostJobsComponent() {
       dispatch(getSkills());
     }
   }, []);
-  console.log({ formik, jobCategories });
   useEffect(() => {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {
       dispatch(getCities({ countryId: formik.values.country }));

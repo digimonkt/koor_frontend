@@ -146,7 +146,6 @@ function MyProfileComponent() {
         );
         setLoading(false);
       } else {
-        console.log({ res });
         dispatch(
           setErrorToast(
             res.error.errors.mobile_number || "Something went wrong",
@@ -429,7 +428,8 @@ function MyProfileComponent() {
                         )
                       }
                       type="submit"
-                      disabled={loading}></OutlinedButton>
+                      disabled={loading}
+                    ></OutlinedButton>
                   </div>
                 </form>
               </div>
