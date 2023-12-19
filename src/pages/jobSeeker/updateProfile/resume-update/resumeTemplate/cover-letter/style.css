@@ -1,0 +1,45 @@
+.container {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.coverLetter {
+  margin-bottom: 25px;
+}
+h1 {
+  font-size: 28px;
+  font-weight: 600;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+  color: #121212;
+  text-align: center;
+}
+.coverLetter h3 {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+  color: #848484;
+  text-align: center;
+}
+
+.coverletter_div {
+  border-bottom: 1.5px solid #cacaca;
+  border-top: 1.5px solid #cacaca;
+  padding: 20px 0px;
+}
+
+.coverletter_div h2 {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Bahnschrift";
+  letter-spacing: 0.8px;
+  color: #121212;
+}
+
+.coverletter_div p {
+  font-size: 12px;
+  font-weight: 300;
+  font-family: "Roboto";
+  letter-spacing: 0.14px;
+  color: #121212;
+}

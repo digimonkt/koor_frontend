@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./style.css";
+
 // import LanguageCard from "@components/languageCard";
 // import {
 //   Box,
@@ -17,6 +18,8 @@ import "./style.css";
 // import { Link } from "react-router-dom";
 // import urlcat from "urlcat";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import { SVG } from "@assets/svg";
+import CoverLetter from "../cover-letter";
 
 function ResumeTemplate({ user }) {
   const { currentUser } = useSelector((state) => state.auth);
@@ -181,6 +184,7 @@ function ResumeTemplate({ user }) {
         </Grid>
       </div> */}
 
+      <CoverLetter />
       <div className="container">
         <div className="heading">
           <h1>Vlad Blyshchyk</h1>
@@ -188,13 +192,26 @@ function ResumeTemplate({ user }) {
         </div>
 
         <div className="cv_first_div">
-          <div style={{ width: "45%", padding: "20px 15px 20px 0px" }}>
+          <div style={{ width: "44%", padding: "20px 15px 20px 0px" }}>
             <div className="top_div">
               <ul>
-                <li> <img src="assets/image/call.png" style={{ marginRight: "5px" }} />083-10-83-0823</li>
-                <li><img src="assets/image/mail.png" style={{ marginRight: "5px" }} />myname@hellowebsite.com</li>
-                <li><img src="assets/image/language.png" style={{ marginRight: "5px" }} />welcome-hellowebsite.com</li>
-                <li><img src="assets/image/location_on.png" style={{ marginRight: "5px" }} />123 Longstreet Mark Str., Somali</li>
+                <li>
+                  {" "}
+                  <SVG.callTrik style={{ marginRight: "5px" }} />
+                  083-10-83-0823
+                </li>
+                <li>
+                  <SVG.mailTrik style={{ marginRight: "5px" }} />
+                  myname@hellowebsite.com
+                </li>
+                <li>
+                  <SVG.languageTrik style={{ marginRight: "5px" }} />
+                  welcome-hellowebsite.com
+                </li>
+                <li>
+                  <SVG.locationTrik style={{ marginRight: "5px" }} />
+                  123 Longstreet Mark Str., Somali
+                </li>
               </ul>
             </div>
             <hr className="horizontal_line" />
@@ -216,13 +233,70 @@ function ResumeTemplate({ user }) {
                 <h3>National University of United Kingdom</h3>
                 <h6>Write some text about this education experience.</h6>
               </div>
-              <div style="margin: 20px 0px;"></div>
+              <div style={{ margin: "20px 0px" }}></div>
               <div className="education_div">
                 <p>2016-2018</p>
                 <span>Bachelor Degree</span>
                 <h3>National University of United Kingdom</h3>
                 <h6>Write some text about this education experience.</h6>
               </div>
+            </div>
+            <hr />
+            <div className="education">
+              <h2>Expertise</h2>
+              <div className="education_div">
+                <h3>My expertise area</h3>
+                <h6>
+                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
+                  amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in
+                  vestibulum phasellus eu. Semper nunc eget varius diam habitant
+                  id lacus.
+                </h6>
+              </div>
+              <div style={{ margin: "20px 0px" }}></div>
+              <div className="education_div">
+                <h3>Product development</h3>
+                <h6>
+                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
+                  amet. At sem vitae leo maecenas tincidunt orci ut.{" "}
+                </h6>
+              </div>
+              <div style={{ margin: "20px 0px" }}></div>
+              <div className="education_div">
+                <h3>Digital product development and team management</h3>
+                <h6>
+                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
+                  amet. At sem vitae leo maecenas tincidunt orci ut. Maecenas
+                  bibendum at mattis gravida pellentesque dolor nibh amet. At
+                  sem vitae leo maecenas tincidunt orci ut. Maecenas bibendum at
+                  mattis gravida pellentesque dolor nibh amet. At sem vitae leo
+                  maecenas tincidunt orci ut.{" "}
+                </h6>
+              </div>
+            </div>
+            <hr />
+            <div className="refrence">
+              <h2>Refrence</h2>
+              <h3 style={{ marginBottom: "5px" }}>Abdimajid Omar</h3>
+              <span>
+                <SVG.callTrik style={{ marginRight: "5px" }} />
+                023-105-61-9018
+              </span>
+              <span>
+                <SVG.mailTrik style={{ marginRight: "5px" }} />
+                023-105-61-9018
+              </span>
+              <h3 style={{ marginBottom: "5px", marginTop: "10px" }}>
+                Second reference name
+              </h3>
+              <span>
+                <SVG.callTrik style={{ marginRight: "5px" }} />
+                023-105-61-9018
+              </span>
+              <span>
+                <SVG.mailTrik style={{ marginRight: "5px" }} />
+                023-105-61-9018
+              </span>
             </div>
             <hr />
             <div className="certification">
@@ -237,11 +311,11 @@ function ResumeTemplate({ user }) {
             <div className="language">
               <h2>Language</h2>
               <div className="language_div">
-                <div style={{marginRight: "40px"}}>
+                <div style={{ marginRight: "40px" }}>
                   <h6>English</h6>
                   <p>Fluent</p>
                 </div>
-                <div style="margin-right: 40px;">
+                <div style={{ marginRight: "40px" }}>
                   <h6>French</h6>
                   <p>Basic</p>
                 </div>
@@ -253,10 +327,17 @@ function ResumeTemplate({ user }) {
             </div>
           </div>
           <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
-          <div style="width: 54%; padding: 20px 0px 20px 15px;">
+          <div style={{ width: "54%", padding: "20px 0px 20px 15px" }}>
             <div className="profile">
               <h2>Profile</h2>
-              <p>Venenatis condimentum sagittis mattis integer pretium scelerisque neque turpis. Volutpat fusce eu ac nunc nunc posuere lectus eu sed. Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.</p>
+              <p>
+                Venenatis condimentum sagittis mattis integer pretium
+                scelerisque neque turpis. Volutpat fusce eu ac nunc nunc posuere
+                lectus eu sed. Maecenas bibendum at mattis gravida pellentesque
+                dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut.
+                Arcu in vestibulum phasellus eu. Semper nunc eget varius diam
+                habitant id lacus.
+              </p>
             </div>
             <hr />
             <div className="work_experiance">
@@ -267,18 +348,41 @@ function ResumeTemplate({ user }) {
                 <h3>2021-2023</h3>
               </div>
               <p>
-                Venenatis condimentum sagittis mattis integer pretium scelerisque neque turpis. Volutpat fusce eu ac nunc nunc posuere lectus eu sed. Maecenas bibendum at mattis gravida pellentesque
-                dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.
-                Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.
-                Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.
-                Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.
+                Venenatis condimentum sagittis mattis integer pretium
+                scelerisque neque turpis. Volutpat fusce eu ac nunc nunc posuere
+                lectus eu sed. Maecenas bibendum at mattis gravida pellentesque
+                dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut.
+                Arcu in vestibulum phasellus eu. Semper nunc eget varius diam
+                habitant id lacus. Maecenas bibendum at mattis gravida
+                pellentesque dolor nibh amet. At sem vitae leo maecenas
+                tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc
+                eget varius diam habitant id lacus. Maecenas bibendum at mattis
+                gravida pellentesque dolor nibh amet. At sem vitae leo maecenas
+                tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc
+                eget varius diam habitant id lacus. Maecenas bibendum at mattis
+                gravida pellentesque dolor nibh amet. At sem vitae leo maecenas
+                tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc
+                eget varius diam habitant id lacus.
               </p>
               <ul>
                 <li>
-                  Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.
+                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
+                  amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in
+                  vestibulum phasellus eu. Semper nunc eget varius diam habitant
+                  id lacus.
                 </li>
-                <li>Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.</li>
-                <li>Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.</li>
+                <li>
+                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
+                  amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in
+                  vestibulum phasellus eu. Semper nunc eget varius diam habitant
+                  id lacus.
+                </li>
+                <li>
+                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
+                  amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in
+                  vestibulum phasellus eu. Semper nunc eget varius diam habitant
+                  id lacus.
+                </li>
               </ul>
             </div>
             <div className="job_position">
@@ -288,16 +392,26 @@ function ResumeTemplate({ user }) {
                 <h3>2021-2023</h3>
               </div>
               <p>
-                Venenatis condimentum sagittis mattis integer pretium scelerisque neque turpis. Volutpat fusce eu ac nunc nunc posuere lectus eu sed. Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.
+                Venenatis condimentum sagittis mattis integer pretium
+                scelerisque neque turpis. Volutpat fusce eu ac nunc nunc posuere
+                lectus eu sed. Maecenas bibendum at mattis gravida pellentesque
+                dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut.
+                Arcu in vestibulum phasellus eu. Semper nunc eget varius diam
+                habitant id lacus.
               </p>
-              <div className="job_position" style="margin-top: 20px;">
-                <span >One more past job position</span>
+              <div className="job_position" style={{ marginTop: "20px" }}>
+                <span>One more past job position</span>
                 <div className="work_experiance_div">
                   <h3>Koor Jobs</h3>
                   <h3>2021-2023</h3>
                 </div>
                 <p>
-                  Venenatis condimentum sagittis mattis integer pretium scelerisque neque turpis. Volutpat fusce eu ac nunc nunc posuere lectus eu sed. Maecenas bibendum at mattis gravida pellentesque dolor nibh amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper nunc eget varius diam habitant id lacus.
+                  Venenatis condimentum sagittis mattis integer pretium
+                  scelerisque neque turpis. Volutpat fusce eu ac nunc nunc
+                  posuere lectus eu sed. Maecenas bibendum at mattis gravida
+                  pellentesque dolor nibh amet. At sem vitae leo maecenas
+                  tincidunt orci ut. Arcu in vestibulum phasellus eu. Semper
+                  nunc eget varius diam habitant id lacus.
                 </p>
               </div>
             </div>
@@ -305,7 +419,7 @@ function ResumeTemplate({ user }) {
         </div>
         <div className="footer">
           <p>This resume is generated with</p>
-          <img src="/assets/image/Logo_main_horizontal 2.png" />
+          <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
         </div>
       </div>
     </div>
