@@ -14,7 +14,7 @@ function TenderSearchComponent() {
   const adSenseData = adSense.data.find(
     item => item.pageName === "browseTenders",
   );
-  console.log({ tenders });
+
   return (
     <div>
       {isSearching ? (

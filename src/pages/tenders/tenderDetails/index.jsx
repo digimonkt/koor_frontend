@@ -119,7 +119,6 @@ function TenderDetailsComponent() {
     }
   };
 
-  console.log({ details });
   const getTenderSuggestion = async tenderId => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
@@ -169,7 +168,6 @@ function TenderDetailsComponent() {
   const handleLoadImage = async url => {
     const fileType = url => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
@@ -236,7 +234,6 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
-  console.log({ details });
   return (
     <>
       <Container
