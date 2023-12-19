@@ -98,7 +98,10 @@ const ApplyForJob = () => {
   const toggleShowMore = () => {
     setShowMore(!showMore);
   };
-  const truncatedDescription = details.description.length > maxLength ? `${details.description.slice(0, maxLength)}...` : details.description;
+  const truncatedDescription =
+    details.description.length > maxLength
+      ? `${details.description.slice(0, maxLength)}...`
+      : details.description;
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
@@ -179,7 +182,6 @@ const ApplyForJob = () => {
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
@@ -294,7 +296,14 @@ const ApplyForJob = () => {
               <Grid item xs={12} lg={4} sm={4}>
                 <div className={`${styles.contentJob}`}>
                   <h4>Details:</h4>
-                  <p className="job-description" dangerouslySetInnerHTML={{ __html: showMore ? details.description : truncatedDescription }} />
+                  <p
+                    className="job-description"
+                    dangerouslySetInnerHTML={{
+                      __html: showMore
+                        ? details.description
+                        : truncatedDescription,
+                    }}
+                  />
                   {hide ? (
                     <>
                       <p>Please check out my attachements below..</p>
@@ -320,7 +329,12 @@ const ApplyForJob = () => {
                     </>
                   ) : null}
                   <div className={`${styles.infomore}`}>
-                    <h6 onClick={() => { setHide(!hide); toggleShowMore(); }}>
+                    <h6
+                      onClick={() => {
+                        setHide(!hide);
+                        toggleShowMore();
+                      }}
+                    >
                       {!hide ? "More" : "Less"}
                       <span className={`${hide ? styles.rotate : ""}`}>
                         {<SVG.Downarrow />}
@@ -448,10 +462,11 @@ const ApplyForJob = () => {
                       ? "Update"
                       : "Apply"
                   }
-                  className={`${styles.applybtn} ${platform === "android" || platform === "ios"
-                    ? styles.applybtnapp
-                    : ""
-                    }`}
+                  className={`${styles.applybtn} ${
+                    platform === "android" || platform === "ios"
+                      ? styles.applybtnapp
+                      : ""
+                  }`}
                   type="submit"
                   disabled={isSubmitting}
                 />
