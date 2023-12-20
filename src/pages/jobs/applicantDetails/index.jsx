@@ -24,12 +24,17 @@ import ApplicationOptions from "../../../components/applicationOptions";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import { NoRecordFoundAnimation } from "../../../components/animations";
 import urlcat from "urlcat";
+import { FilledButton } from "@components/button";
+import html2pdf from "html2pdf.js";
+import ResumeTemplate from "@pages/jobSeeker/updateProfile/resume-update/resumeTemplate/template1";
+import { GetUserDetailsAPI } from "@api/user";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
   // navigate
   const navigate = useNavigate();
   const params = useParams();
+  const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [applicantDetails, setApplicantsDetails] = useState({
     user: {
       profile: {},
@@ -37,16 +42,50 @@ const ApplicantDetails = () => {
     job: {},
     attachments: [],
   });
+  const [userDetails, setUserDetails] = useState({
+    educationRecord: [],
+    jobPreferences: {},
+    languages: [],
+    profile: {
+      city: {},
+      country: {},
+      highestEducation: {},
+    },
+    resume: [],
+    skills: [],
+    workExperiences: [],
+  });
+  const downloadPDF = async () => {
+    setIsDownloadingPDF(true);
+    const element = document.getElementById("div-to-pdf");
+    const options = {
+      margin: [10, 10],
+      filename: `${userDetails.name || "Resume"}.pdf`,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    await html2pdf().set(options).from(element).save();
+    setIsDownloadingPDF(false);
+  };
   const getApplicantDetails = async () => {
     const res = await getApplicationDetailsAPI(params.applicationId);
     if (res.remote === "success") {
       setApplicantsDetails(res.data);
     }
   };
+  const getUserDetails = async userId => {
+    const res = await GetUserDetailsAPI({ userId });
+    if (res.remote === "success") {
+      setUserDetails(res.data);
+    }
+  };
+  useEffect(() => {
+    getUserDetails(applicantDetails.user.id);
+  }, [applicantDetails.user.id]);
   useEffect(() => {
     getApplicantDetails();
   }, [params.applicationId]);
-  console.log(applicantDetails);
   return (
     <>
       <div className="job-application">
@@ -239,7 +278,7 @@ const ApplicantDetails = () => {
                             <li key={index}>
                               <EducationCard
                                 {...item}
-                                // handleEdit={() => handleEdit(item)}
+                              // handleEdit={() => handleEdit(item)}
                               />
                             </li>
                           ),
@@ -294,6 +333,37 @@ const ApplicantDetails = () => {
                 </Grid>
               </Grid>
             </div>
+            {applicantDetails.shortLetter &&
+              <div>
+                <Divider sx={{ borderColor: "#ccc", my: 2 }} />
+                <Box>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontSize: "26px",
+                      fontFamily: "Bahnschrift",
+                      fontWeight: "600",
+                    }}>
+                    Download resume
+                  </Typography>
+                  <Typography>
+                    <FilledButton
+                      title={
+                        isDownloadingPDF
+                          ? "Downloading PDF..."
+                          : "Download PDF"
+                      }
+                      onClick={downloadPDF}
+                      style={{ marginBottom: "10px" }}
+                      disabled={isDownloadingPDF}
+                    />
+                    <div style={{ display: "none" }}>
+                      <ResumeTemplate user={userDetails} appliedJob={applicantDetails.shortLetter} />
+                    </div>
+                  </Typography>
+                </Box>
+              </div>
+            }
           </CardContent>
         </Card>
       </div>

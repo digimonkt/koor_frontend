@@ -34,6 +34,7 @@ const ResumeUpdate = ({
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      pagebreak: { avoid: "#page-break" }, // Add page break before the element with id "page-break"
     };
     await html2pdf().set(options).from(element).save();
     setIsDownloadingPDF(false);

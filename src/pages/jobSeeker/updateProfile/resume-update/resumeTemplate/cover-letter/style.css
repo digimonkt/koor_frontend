@@ -54,3 +54,9 @@
   letter-spacing: 0.8px;
   color: #121212;
 }
+
+@media print {
+  footer {
+    page-break-after: always;
+  }
+}
