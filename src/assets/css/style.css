@@ -678,7 +678,7 @@ header {
 }
 
 .form-control {
-  height: 54px;
+  height: 46px;
   width: 100%;
   background: #f9f9f9;
   border-radius: 4px;
@@ -2212,9 +2212,7 @@ span.count {
     background: #fff;
     visibility: hidden;
     opacity: 0;
-    transition:
-      visibility 1s,
-      opacity 0.5s linear;
+    transition: visibility 1s, opacity 0.5s linear;
     display: block;
   }
 
