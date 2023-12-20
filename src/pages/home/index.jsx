@@ -53,6 +53,21 @@ const Home = () => {
   const [location, setLocation] = useState("");
   const [message, setMessage] = useState(false);
 
+  const handleSearchValueChange = (e) => {
+    setSearchValue(e.target.value);
+    setMessage(false); // Reset the message when searchValue changes
+  };
+
+  const handleCategoriesChange = (vl) => {
+    setCategories(vl.target.value);
+    setMessage(false); // Reset the message when categories change
+  };
+
+  const handleLocationChange = (vl) => {
+    setLocation(vl.target.value);
+    setMessage(false); // Reset the message when location changes
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -190,7 +205,7 @@ const Home = () => {
                                 width: "100% !important",
                               },
                             }}
-                            onChange={(e) => setSearchValue(e.target.value)}
+                            onChange={handleSearchValueChange}
                           />
                           {message && (
                             <p
@@ -199,9 +214,11 @@ const Home = () => {
                                 fontWeight: "300",
                                 fontFamily: "Poppins",
                                 fontSize: "14px",
+                                margin: "0",
+                                position: "absolute",
                               }}
                             >
-                              Please fill the search value.
+                              Please fill the required value
                             </p>
                           )}
                         </Grid>
@@ -209,7 +226,7 @@ const Home = () => {
                           <SelectInput
                             fullWidth
                             value={categories}
-                            onChange={(vl) => setCategories(vl.target.value)}
+                            onChange={handleCategoriesChange}
                             options={jobCategories.data.map((jobCategory) => ({
                               value: jobCategory.id,
                               label: jobCategory.title,
@@ -218,23 +235,11 @@ const Home = () => {
                             placeholder="Category"
                             className={`${styles.category_select}`}
                           />
-                          {/* {message && (
-                            <p
-                              style={{
-                                color: "#eea23d",
-                                fontWeight: "300",
-                                fontFamily: "Poppins",
-                                fontSize: "14px",
-                              }}
-                            >
-                              Please fill the search value.
-                            </p>
-                          )} */}
                         </Grid>
                         <Grid className="mb-2 ">
                           <SelectInput
                             value={location}
-                            onChange={(vl) => setLocation(vl.target.value)}
+                            onChange={handleLocationChange}
                             options={countries.data.map((country) => ({
                               value: country.id,
                               label: country.title,
