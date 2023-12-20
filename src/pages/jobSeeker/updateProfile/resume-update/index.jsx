@@ -16,13 +16,13 @@ const ResumeUpdate = ({
   description,
   buttonWidth,
   toggle,
+  appliedJob,
   fun,
 }) => {
   const [openResume, setOpenResume] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
-
   const platform = Capacitor.getPlatform();
 
   const downloadPDF = async () => {
@@ -34,6 +34,7 @@ const ResumeUpdate = ({
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 2 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      pagebreak: { avoid: "#page-break" }, // Add page break before the element with id "page-break"
     };
     await html2pdf().set(options).from(element).save();
     setIsDownloadingPDF(false);
@@ -236,7 +237,7 @@ const ResumeUpdate = ({
             style={{ marginBottom: "10px" }}
             disabled={isDownloadingPDF || isDownloadingDocs}
           />
-          <ResumeTemplate />
+          <ResumeTemplate appliedJob={appliedJob} />
         </>
       </DialogBox>
     </>
