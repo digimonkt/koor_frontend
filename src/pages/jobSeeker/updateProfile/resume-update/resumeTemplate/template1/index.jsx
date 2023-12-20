@@ -185,7 +185,7 @@ function ResumeTemplate({ user }) {
       </div> */}
 
       <CoverLetter />
-      <div className="container">
+      <div className="container resume_template">
         <div className="heading">
           <h1>Vlad Blyshchyk</h1>
           <h5>UI/UX and Product Designer</h5>

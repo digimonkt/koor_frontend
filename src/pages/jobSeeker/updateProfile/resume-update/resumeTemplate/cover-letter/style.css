@@ -5,6 +5,9 @@
 .coverLetter {
   margin-bottom: 25px;
 }
+.coverletter_div p {
+  text-align: justify;
+}
 h1 {
   font-size: 28px;
   font-weight: 600;
