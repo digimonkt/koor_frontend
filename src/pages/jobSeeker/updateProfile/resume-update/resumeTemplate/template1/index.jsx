@@ -23,7 +23,7 @@ import CoverLetter from "../cover-letter";
 import { YEAR_FORMAT } from "@utils/constants/constants";
 import dayjs from "dayjs";
 
-function ResumeTemplate({ user }) {
+function ResumeTemplate({ user, isAppliedJob }) {
   const { currentUser } = useSelector((state) => state.auth);
   const applicantDetails = user || currentUser;
 
@@ -185,7 +185,7 @@ function ResumeTemplate({ user }) {
           </Grid>
         </Grid>
       </div> */}
-      <div className="container">
+      <div className="container resume_template">
         <div className="heading">
           <h1>{applicantDetails.name}</h1>
           {/* <h5>UI/UX and Product Designer</h5> */}
@@ -195,35 +195,33 @@ function ResumeTemplate({ user }) {
           <div style={{ width: "44%", padding: "20px 15px 20px 0px" }}>
             <div className="top_div">
               <ul>
-                {
-                  applicantDetails.mobileNumber &&
+                {currentUser.mobileNumber && (
                   <li>
                     {" "}
                     <SVG.callTrik style={{ marginRight: "5px" }} />
                     {applicantDetails.countryCode + " " + applicantDetails.mobileNumber}
                   </li>
-                }
-                {
-                  applicantDetails.email &&
+                )}
+                {currentUser.email && (
                   <li>
                     <SVG.mailTrik style={{ marginRight: "5px" }} />
                     {applicantDetails.email}
                   </li>
-                }
-                {applicantDetails?.profile?.website &&
+                )}
+                {currentUser?.profile?.website && (
                   <li>
                     <SVG.languageTrik style={{ marginRight: "5px" }} />
                     {applicantDetails?.profile.website}
                   </li>
-                }
-                {
-                  applicantDetails.profile?.country?.title &&
+                )}
+                {currentUser.profile?.country?.title && (
                   <li>
                     <SVG.locationTrik style={{ marginRight: "5px" }} />
-                    {applicantDetails.profile?.city && applicantDetails.profile?.city.title + ", "}
-                    {applicantDetails.profile?.country?.title}
+                    {currentUser.profile?.city &&
+                      currentUser.profile?.city.title + ", "}
+                    {currentUser.profile?.country?.title}
                   </li>
-                }
+                )}
               </ul>
             </div>
             <hr className="horizontal_line" />
@@ -375,7 +373,10 @@ function ResumeTemplate({ user }) {
             }
           </div>
         </div>
-        <CoverLetter />
+        {
+          isAppliedJob &&
+        <CoverLetter applicantDetails={applicantDetails} />
+        }
         <div className="footer">
           <p>This resume is generated with</p>
           <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />

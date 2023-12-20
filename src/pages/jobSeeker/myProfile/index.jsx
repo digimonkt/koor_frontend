@@ -191,6 +191,7 @@ const MyProfile = () => {
                         title="Resume"
                         bgcolor="#FEEFD3"
                         color="#EEA23D"
+                        isAppliedJob="false"
                         description={
                           <>
                             <p>
