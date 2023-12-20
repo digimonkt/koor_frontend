@@ -28,20 +28,14 @@ const ResumeUpdate = ({
   const downloadPDF = async () => {
     setIsDownloadingPDF(true);
     const element = document.getElementById("div-to-pdf");
-    const images = document.getElementById("profile-avatar");
-
-    if (images) {
-      const options = {
-        margin: [5, 5],
-        filename: `${currentUser.name || "Resume"}.pdf`,
-        image: { type: "jpeg", quality: 1 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      };
-      await html2pdf().set(options).from(element).save();
-    } else {
-      console.log("loading");
-    }
+    const options = {
+      margin: [5, 5],
+      filename: `${currentUser.name || "Resume"}.pdf`,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    await html2pdf().set(options).from(element).save();
     setIsDownloadingPDF(false);
   };
 

@@ -4,7 +4,7 @@ import "./style.css";
 const CoverLetter = () => {
   return (
     <>
-      <div className="container">
+
         <div className="coverLetter">
           <h1>Vlad Blyshchyk</h1>
           <h3>UI/UX and Product Designer</h3>
@@ -46,7 +46,7 @@ const CoverLetter = () => {
           <h2 style={{ marginTop: "50px" }}>Sincerely,</h2>
           <h2>Vlad Blyshchyk</h2>
         </div>
-      </div>
+
     </>
   );
 };
