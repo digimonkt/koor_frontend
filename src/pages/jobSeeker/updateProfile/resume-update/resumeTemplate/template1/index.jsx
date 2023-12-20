@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./style.css";
 
-// import LanguageCard from "@components/languageCard";
 // import {
 //   Box,
 //   Chip,
@@ -12,6 +11,7 @@ import "./style.css";
 //   Stack,
 //   Avatar,
 // } from "@mui/material";
+// import LanguageCard from "@components/languageCard";
 // import EducationCard from "@components/educationCard";
 // import WorkExperienceCard from "@components/workExperienceCard";
 // import { SVG } from "@assets/svg";
@@ -26,7 +26,7 @@ function ResumeTemplate({ user }) {
   const applicantDetails = user || currentUser;
 
   const [, setBase64Image] = useState("");
-
+  console.log({ currentUser });
   useEffect(() => {
     const convertImageToBase64 = async () => {
       try {
@@ -183,35 +183,43 @@ function ResumeTemplate({ user }) {
           </Grid>
         </Grid>
       </div> */}
-
-      <CoverLetter />
       <div className="container resume_template">
         <div className="heading">
-          <h1>Vlad Blyshchyk</h1>
-          <h5>UI/UX and Product Designer</h5>
+          <h1>{currentUser.name}</h1>
+          {/* <h5>UI/UX and Product Designer</h5> */}
         </div>
 
         <div className="cv_first_div">
           <div style={{ width: "44%", padding: "20px 15px 20px 0px" }}>
             <div className="top_div">
               <ul>
-                <li>
-                  {" "}
-                  <SVG.callTrik style={{ marginRight: "5px" }} />
-                  083-10-83-0823
-                </li>
-                <li>
-                  <SVG.mailTrik style={{ marginRight: "5px" }} />
-                  myname@hellowebsite.com
-                </li>
-                <li>
-                  <SVG.languageTrik style={{ marginRight: "5px" }} />
-                  welcome-hellowebsite.com
-                </li>
-                <li>
-                  <SVG.locationTrik style={{ marginRight: "5px" }} />
-                  123 Longstreet Mark Str., Somali
-                </li>
+                {currentUser.mobileNumber && (
+                  <li>
+                    {" "}
+                    <SVG.callTrik style={{ marginRight: "5px" }} />
+                    {currentUser.countryCode + " " + currentUser.mobileNumber}
+                  </li>
+                )}
+                {currentUser.email && (
+                  <li>
+                    <SVG.mailTrik style={{ marginRight: "5px" }} />
+                    {currentUser.email}
+                  </li>
+                )}
+                {currentUser?.profile?.website && (
+                  <li>
+                    <SVG.languageTrik style={{ marginRight: "5px" }} />
+                    {currentUser?.profile.website}
+                  </li>
+                )}
+                {currentUser.profile?.country?.title && (
+                  <li>
+                    <SVG.locationTrik style={{ marginRight: "5px" }} />
+                    {currentUser.profile?.city &&
+                      currentUser.profile?.city.title + ", "}
+                    {currentUser.profile?.country?.title}
+                  </li>
+                )}
               </ul>
             </div>
             <hr className="horizontal_line" />
@@ -417,6 +425,7 @@ function ResumeTemplate({ user }) {
             </div>
           </div>
         </div>
+        <CoverLetter />
         <div className="footer">
           <p>This resume is generated with</p>
           <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />

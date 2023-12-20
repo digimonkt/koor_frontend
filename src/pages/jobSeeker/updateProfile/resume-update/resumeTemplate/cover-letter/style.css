@@ -1,6 +1,6 @@
 .container {
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 .coverLetter {
   margin-bottom: 25px;
@@ -8,8 +8,8 @@
 .coverletter_div p {
   text-align: justify;
 }
-h1 {
-  font-size: 28px;
+.coverLetter h1 {
+  font-size: 32px;
   font-weight: 600;
   font-family: "Poppins";
   letter-spacing: 0.14px;
@@ -32,7 +32,7 @@ h1 {
 }
 
 .coverletter_div h2 {
-  font-size: 14px;
+  font-size: 24px;
   font-weight: 600;
   font-family: "Bahnschrift";
   letter-spacing: 0.8px;
@@ -42,7 +42,15 @@ h1 {
 .coverletter_div p {
   font-size: 12px;
   font-weight: 300;
-  font-family: "Roboto";
+  font-family: "Poppins";
   letter-spacing: 0.14px;
+  color: #121212;
+}
+
+.coverletter_div h3 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Bahnschrift";
+  letter-spacing: 0.8px;
   color: #121212;
 }
