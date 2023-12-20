@@ -191,7 +191,7 @@ const MyProfile = () => {
                         title="Resume"
                         bgcolor="#FEEFD3"
                         color="#EEA23D"
-                        isAppliedJob="false"
+                        appliedJob={false}
                         description={
                           <>
                             <p>
@@ -321,6 +321,7 @@ const MyProfile = () => {
                         title="Resume"
                         bgcolor="#FEEFD3"
                         color="#EEA23D"
+                        appliedJob={false}
                         description={
                           <>
                             <p>

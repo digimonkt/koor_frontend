@@ -7,7 +7,7 @@ import CoverLetter from "../cover-letter";
 import { YEAR_FORMAT } from "@utils/constants/constants";
 import dayjs from "dayjs";
 
-function ResumeTemplate({ user, isAppliedJob = false }) {
+function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
   const applicantDetails = user || currentUser;
   const [, setBase64Image] = useState("");
@@ -225,13 +225,13 @@ function ResumeTemplate({ user, isAppliedJob = false }) {
         </div>
 
         {
-          !isAppliedJob && <>
+          appliedJob && <>
             <div className="footer">
               <p>This resume is generated with</p>
               <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
             </div>
             <div id="page-break"></div>
-            <CoverLetter applicantDetails={applicantDetails} />
+            <CoverLetter applicantDetails={applicantDetails} content={appliedJob} />
           </>
         }
         <div className="footer">

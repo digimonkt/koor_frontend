@@ -16,13 +16,13 @@ const ResumeUpdate = ({
   description,
   buttonWidth,
   toggle,
+  appliedJob,
   fun,
 }) => {
   const [openResume, setOpenResume] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
-
   const platform = Capacitor.getPlatform();
 
   const downloadPDF = async () => {
@@ -237,7 +237,7 @@ const ResumeUpdate = ({
             style={{ marginBottom: "10px" }}
             disabled={isDownloadingPDF || isDownloadingDocs}
           />
-          <ResumeTemplate />
+          <ResumeTemplate appliedJob={appliedJob} />
         </>
       </DialogBox>
     </>
