@@ -53,6 +53,7 @@ function MyProfileComponent() {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
+  const [toggle, setToggle] = useState(["about"]);
   const { countries, cities, sectors } = useSelector((state) => state.choices);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const formik = useFormik({
@@ -80,7 +81,7 @@ function MyProfileComponent() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        ""
+        "",
       );
 
       const payload = {
@@ -127,7 +128,7 @@ function MyProfileComponent() {
             profile: {
               // website: values.website,
               organizationType: sectors.data.find(
-                (sector) => sector.id === values.organizationType
+                (sector) => sector.id === values.organizationType,
               ),
               licenseId: values.licenseId,
               licenseIdFile: values.license[0],
@@ -135,22 +136,21 @@ function MyProfileComponent() {
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
               country: countries.data.find(
-                (country) => country.id === values.country
+                (country) => country.id === values.country,
               ),
               city: cities.data[values.country]?.find(
-                (city) => city.id === values.city
+                (city) => city.id === values.city,
               ),
               address: values.address,
             },
-          })
+          }),
         );
         setLoading(false);
       } else {
-        console.log({ res });
         dispatch(
           setErrorToast(
-            res.error.errors.mobile_number || "Something went wrong"
-          )
+            res.error.errors.mobile_number || "Something went wrong",
+          ),
         );
         setLoading(false);
       }
@@ -192,7 +192,7 @@ function MyProfileComponent() {
       formik.setFieldValue("organizationName", currentUser.name);
       formik.setFieldValue(
         "organizationType",
-        currentUser.profile.organizationType?.id
+        currentUser.profile.organizationType?.id,
       );
       formik.setFieldValue("country", currentUser.profile.country?.id || "");
       formik.setFieldValue("city", currentUser.profile.city?.id || "");
@@ -204,7 +204,7 @@ function MyProfileComponent() {
         "license",
         currentUser.profile.licenseIdFile
           ? [currentUser.profile.licenseIdFile]
-          : []
+          : [],
       );
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
@@ -227,11 +227,21 @@ function MyProfileComponent() {
     else setProfilePicLoading("error");
   };
 
+  const handleToggleModel2 = (type) => {
+    setToggle((prev) =>
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+    );
+  };
+
   const handleToggleModel = () => {
     if (Object.keys(formik.errors).length === 0) {
       setOpen(!open);
     }
   };
+
+  useEffect(() => {
+    console.log("first", { toggle });
+  }, [toggle]);
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
@@ -296,7 +306,7 @@ function MyProfileComponent() {
                       if (!isValid) {
                         formik.setFieldError(
                           "mobileNumber",
-                          "Invalid Mobile Number"
+                          "Invalid Mobile Number",
                         );
                       }
                     }}
@@ -323,7 +333,7 @@ function MyProfileComponent() {
                       (country) => ({
                         value: country.id,
                         label: country.title,
-                      })
+                      }),
                     )}
                     {...formik.getFieldProps("city")}
                   />
@@ -333,7 +343,7 @@ function MyProfileComponent() {
                     placeholder="Address"
                     className="add-form-control"
                     name={formik.getFieldProps("address").name}
-                    onBlur={(e) => formik.getFieldProps("address").onBlur}
+                    onBlur={() => formik.getFieldProps("address").onBlur}
                     onChange={(e) => setSearchValue(e.target.value)}
                     value={searchValue}
                   />
@@ -348,7 +358,7 @@ function MyProfileComponent() {
                               onClick={() => {
                                 formik.setFieldValue(
                                   "address",
-                                  address.description
+                                  address.description,
                                 );
                                 setSearchValue(address.description);
                               }}
@@ -381,7 +391,7 @@ function MyProfileComponent() {
                       handleDrop={(e) => formik.setFieldValue("license", e)}
                       single
                       files={formik.values.license}
-                      deleteFile={(e) => formik.setFieldValue("license", [])}
+                      deleteFile={(_) => formik.setFieldValue("license", [])}
                     />
                   </Stack>
                   {formik.touched.license && formik.errors.license ? (
@@ -396,7 +406,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "otherNotification",
-                          e.target.checked
+                          e.target.checked,
                         )
                       }
                       checked={formik.values.otherNotification}
@@ -413,7 +423,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "marketingInformationNotification",
-                          e.target.checked
+                          e.target.checked,
                         )
                       }
                       checked={formik.values.marketingInformationNotification}
@@ -425,11 +435,18 @@ function MyProfileComponent() {
                     <OutlinedButton
                       variant="outlined"
                       title={
-                        loading ? <Loader loading={loading} /> : "Update Info"
+                        loading ? (
+                          <Loader loading={loading} />
+                        ) : (
+                          <>
+                            <SVG.CheckIcon />
+                            &nbsp;Update Info
+                          </>
+                        )
                       }
                       type="submit"
                       disabled={loading}
-                    />
+                    ></OutlinedButton>
                   </div>
                 </form>
               </div>
@@ -459,6 +476,8 @@ function MyProfileComponent() {
                 bgColor="rgba(40, 71, 146, 0.1)"
                 handleSave={handleProfilePicSave}
                 image={currentUser.profileImage}
+                fun={() => handleToggleModel2("vendor")}
+                toggle={toggle.includes("vendor")}
                 loading={profilePicLoading === "loading"}
               />
             </CardContent>

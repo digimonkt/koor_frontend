@@ -61,7 +61,7 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
       description: "",
     },
     validationSchema: validateWorkExperience,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       setLoading(true);
       const payload = {
         title: values.title,
@@ -85,7 +85,7 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
               present: values.isPresent,
               organization: res.data.data.organization,
               description: res.data.data.description,
-            })
+            }),
           );
           setLoading(false);
           handleSubmit();
@@ -108,7 +108,7 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
                 : dayjs(values.endDate).format(DATE_FORMAT),
               present: values.isPresent,
               description: descData,
-            })
+            }),
           );
           setLoading(false);
           handleSubmit();
@@ -120,7 +120,7 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
       }
     },
   });
-  const handleEditorValue = (content) => {
+  const handleEditorValue = content => {
     // Handle changes in the editor content here
     setDescData(content);
   };
@@ -177,17 +177,17 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
                 className="mb-3 d-inline-block"
                 style={{
                   fontWeight: 500,
-                }}
-              >
+                }}>
                 Working period
               </label>
               <Grid container spacing={2} className="mb-3">
                 <Grid item lg={6} md={6} xs={6}>
                   <Box className="work_experience_date">
+                    <label className="mb-3 d-inline-block">Start</label>
                     <DateInput
-                      label="Start"
+                      label="Select year"
                       views={["year", "month"]}
-                      onChange={(e) => formik.setFieldValue("startDate", e)}
+                      onChange={e => formik.setFieldValue("startDate", e)}
                       maxDate={dayjs()}
                       value={formik.values.startDate}
                       onBlur={formik.getFieldProps("startDate").onBlur}
@@ -199,10 +199,11 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
                 </Grid>
                 <Grid item lg={6} xs={6} md={6}>
                   <Box className="work_experience_date">
+                    <label className="mb-3 d-inline-block">End</label>
                     <DateInput
-                      label="End"
+                      label="Select year"
                       views={["year", "month"]}
-                      onChange={(e) => formik.setFieldValue("endDate", e)}
+                      onChange={e => formik.setFieldValue("endDate", e)}
                       value={formik.values.endDate}
                       minDate={formik.values.startDate}
                       maxDate={dayjs()}
@@ -231,7 +232,7 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
                   />
                 }
                 label="I am currently working"
-                onChange={(e) =>
+                onChange={e =>
                   formik.setFieldValue("isPresent", e.target.checked)
                 }
                 checked={formik.values.isPresent || false}
@@ -251,8 +252,7 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
                 <label
                   style={{
                     fontWeight: 500,
-                  }}
-                >
+                  }}>
                   Job key responsibilities
                 </label>
                 <ReactQuill
@@ -262,7 +262,7 @@ function EditWorkExperience({ handleSubmit, currentSelected, handleClose }) {
                   modules={{
                     toolbar: toolbarOptions,
                   }}
-                  onChange={(value) => handleEditorValue(value)}
+                  onChange={value => handleEditorValue(value)}
                   className="work-experience-text-editor"
                   style={{
                     width: "100%",

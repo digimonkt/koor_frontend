@@ -13,8 +13,10 @@ function UnauthenticatedRouteComponent({ children, redirectURL }) {
     const fromPath = location.state?.from.includes(role)
       ? location.state?.from
       : null;
-    const defaultPath = !currentUser?.profile?.isVerified && role !== USER_ROLES.employer ? "/account-verification" : `../${role}${path}`;
-    // console.log({ role, defaultPath });
+    const defaultPath =
+      !currentUser?.profile?.isVerified && role !== USER_ROLES.employer
+        ? "/account-verification"
+        : `../${role}${path}`;
     if (role && isLoggedIn) {
       navigate(fromPath || redirectURL || defaultPath);
     }

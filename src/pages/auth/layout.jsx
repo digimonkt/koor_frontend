@@ -53,7 +53,9 @@ function AuthLayout({
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { role, verifyEmail, userVerificationToken } = useSelector((state) => state.auth);
+    const { role, verifyEmail, userVerificationToken } = useSelector(
+      (state) => state.auth,
+    );
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [activationLabel, setActivationLabel] = useState(selectedRoleTitle);
@@ -77,6 +79,7 @@ function AuthLayout({
             delete payload[key];
           }
         }
+        console.log({ payload });
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           console.log({ result });
@@ -155,17 +158,20 @@ function AuthLayout({
     }, [dispatch, location.pathname, location.search, navigate]);
     useEffect(() => {
       if (userVerificationToken) {
-        setActivationLabel("Please wait while we are validating activation Link");
+        setActivationLabel(
+          "Please wait while we are validating activation Link",
+        );
       } else {
         setActivationLabel(selectedRoleTitle);
       }
     }, [userVerificationToken]);
     return (
       <div
-        className={`register pb-0 py-lg-5 registerApp ${role === USER_ROLES.employer || role === USER_ROLES.vendor
-          ? "vendor appbg"
-          : ""
-          } ${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
+        className={`register pb-0 py-lg-5 registerApp ${
+          role === USER_ROLES.employer || role === USER_ROLES.vendor
+            ? "vendor appbg"
+            : ""
+        } ${platform === "android" || platform === "ios" ? "mt-0" : "pt-5"}`}
       >
         <Container
           sx={{
@@ -237,11 +243,11 @@ function AuthLayout({
               md={5}
               sm={7}
               xs={12}
-            // sx={{
-            //   "@media(max-width:992px)": {
-            //     width: "100%",
-            //   },
-            // }}
+              // sx={{
+              //   "@media(max-width:992px)": {
+              //     width: "100%",
+              //   },
+              // }}
             >
               <Card
                 sx={{
@@ -279,10 +285,11 @@ function AuthLayout({
                         <p data-cy="subTitle">{subTitle}</p>
                       </Box>
                       <div
-                        className={`register-des ${platform === "android" || platform === "ios"
-                          ? "register-app"
-                          : ""
-                          }`}
+                        className={`register-des ${
+                          platform === "android" || platform === "ios"
+                            ? "register-app"
+                            : ""
+                        }`}
                         data-cy="authOptions"
                       >
                         {AuthOptions.map((option) => {

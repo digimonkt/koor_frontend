@@ -46,6 +46,7 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getApplicantDetails();
   }, [params.applicationId]);
+  console.log(applicantDetails);
   return (
     <>
       <div className="job-application">
@@ -56,35 +57,30 @@ const ApplicantDetails = () => {
               borderRadius: "10px",
               mb: 3,
             },
-          }}
-        >
+          }}>
           <CardContent
             sx={{
               "&.MuiCardContent-root": {
                 padding: "25px 25px 25px",
               },
-            }}
-          >
+            }}>
             {/* -------------- header  ------------ */}
 
             <Stack
               direction="row"
               spacing={2}
               alignItems={{ xs: "start", lg: "center" }}
-              className="recent-content job-border pb-2 mb-3"
-            >
+              className="recent-content job-border pb-2 mb-3">
               <IconButton
                 LinkComponent={Link}
                 onClick={() => navigate(-1)}
-                style={{ padding: "0px" }}
-              >
+                style={{ padding: "0px" }}>
                 <ArrowBackIcon />
               </IconButton>
               <Stack
                 direction={{ xs: "column", lg: "row", sm: "row" }}
                 alignItems={{ xs: "start", lg: "center" }}
-                spacing={2}
-              >
+                spacing={2}>
                 <h4>{applicantDetails.user.name}</h4>
                 <div
                   className="recent-research"
@@ -92,8 +88,7 @@ const ApplicantDetails = () => {
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "wrap",
-                  }}
-                >
+                  }}>
                   <span>
                     Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
@@ -115,16 +110,15 @@ const ApplicantDetails = () => {
                     <Link
                       to={urlcat("/job-seeker/:userId/profile", {
                         userId: applicantDetails.user.id || "a",
-                      })}
-                    >
+                      })}>
                       <h4>{applicantDetails.user.name}</h4>
                     </Link>
-                    {applicantDetails.user.profile?.country?.title ? (
+                    {applicantDetails.user.profile?.country ? (
                       <Stack direction="row" spacing={1} alignItems="center">
                         <span>{<SVG.LocationIcon />}</span>{" "}
                         <span>
-                          {applicantDetails.user.profile?.country?.title},
-                          {applicantDetails.user.profile?.city?.title}
+                          {applicantDetails.user.profile?.country},
+                          {applicantDetails.user.profile?.city}
                         </span>
                       </Stack>
                     ) : (
@@ -138,8 +132,7 @@ const ApplicantDetails = () => {
                   direction="row"
                   spacing={0}
                   className="edit-button"
-                  alignItems="center"
-                >
+                  alignItems="center">
                   <ApplicationOptions
                     details={applicantDetails}
                     interviewPlanned
@@ -153,8 +146,7 @@ const ApplicantDetails = () => {
             </Grid>
             <Stack
               direction={{ xs: "column", lg: "row", sm: "row" }}
-              spacing={3}
-            >
+              spacing={3}>
               <Box className="user-descrition">
                 <Typography
                   sx={{
@@ -188,14 +180,13 @@ const ApplicantDetails = () => {
                 ) : (
                   ""
                 )}
-                {applicantDetails.attachments.map((attachment) => {
+                {applicantDetails.attachments.map(attachment => {
                   return (
                     <Stack
                       direction={"row"}
                       alignItems={"center"}
                       spacing={1}
-                      key={attachment.id}
-                    >
+                      key={attachment.id}>
                       <span className="d-inline-flex">
                         {<SVG.BlueAttach className="blue_attach_icon" />}
                       </span>
@@ -203,8 +194,7 @@ const ApplicantDetails = () => {
                         href={generateFileUrl(attachment.path)}
                         target="_blank"
                         rel="noreferrer"
-                        className="applicant_attack_anchor"
-                      >
+                        className="applicant_attack_anchor">
                         {attachment.title}
                       </a>
                     </Stack>
@@ -231,7 +221,7 @@ const ApplicantDetails = () => {
                                 <WorkExperienceCard {...item} />
                               </div>
                             </li>
-                          )
+                          ),
                         )
                       )}
                     </ul>
@@ -252,7 +242,7 @@ const ApplicantDetails = () => {
                                 // handleEdit={() => handleEdit(item)}
                               />
                             </li>
-                          )
+                          ),
                         )
                       )}
                     </ul>

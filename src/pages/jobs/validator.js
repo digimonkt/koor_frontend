@@ -79,8 +79,8 @@ export const validateCreateJobInput = Yup.object()
       },
     ),
     highestEducation: Yup.string(),
-    // languages: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Language is required"),
-    // skills: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows").min(1, "At Least one Skill is required"),
+    languages: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows"),
+    skills: Yup.array().of(Yup.string()).max(3, "Maximum 3 allows"),
   })
   .test(
     "oneOfFields",

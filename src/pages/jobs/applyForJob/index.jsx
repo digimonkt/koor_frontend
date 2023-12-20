@@ -93,6 +93,15 @@ const ApplyForJob = () => {
   const [hide, setHide] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const maxLength = 200;
+  const toggleShowMore = () => {
+    setShowMore(!showMore);
+  };
+  const truncatedDescription =
+    details.description.length > maxLength
+      ? `${details.description.slice(0, maxLength)}...`
+      : details.description;
   const formik = useFormik({
     initialValues: {
       shortLetter: "",
@@ -173,7 +182,6 @@ const ApplyForJob = () => {
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
@@ -235,7 +243,10 @@ const ApplyForJob = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}
@@ -290,8 +301,12 @@ const ApplyForJob = () => {
                   <h4>Details:</h4>
                   <p
                     className="job-description"
-                    dangerouslySetInnerHTML={{ __html: details.description }}
-                  ></p>
+                    dangerouslySetInnerHTML={{
+                      __html: showMore
+                        ? details.description
+                        : truncatedDescription,
+                    }}
+                  />
                   {hide ? (
                     <>
                       <p>Please check out my attachements below..</p>
@@ -317,7 +332,12 @@ const ApplyForJob = () => {
                     </>
                   ) : null}
                   <div className={`${styles.infomore}`}>
-                    <h6 onClick={() => setHide(!hide)}>
+                    <h6
+                      onClick={() => {
+                        setHide(!hide);
+                        toggleShowMore();
+                      }}
+                    >
                       {!hide ? "More" : "Less"}
                       <span className={`${hide ? styles.rotate : ""}`}>
                         {<SVG.Downarrow />}

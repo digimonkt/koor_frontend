@@ -5,15 +5,32 @@ import { AreaChart } from "../../../components/charts";
 import TenderCard from "../../../components/tenderCard";
 import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
 import {
+  Box,
   Card,
   CardContent,
   Checkbox,
   Divider,
   FormControlLabel,
   Grid,
+  IconButton,
   Stack,
 } from "@mui/material";
+// import { Capacitor } from "@capacitor/core";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+// import JobPreferences from "@pages/jobSeeker/myProfile/job-preferences";
+// import ResumeUpdate from "@pages/jobSeeker/updateProfile/resume-update";
+// import Education from "@pages/jobSeeker/myProfile/education";
+// import WorkExperience from "@pages/jobSeeker/myProfile/work-experience";
+// import Skills from "@pages/jobSeeker/myProfile/skills";
+// import Languages from "@pages/jobSeeker/myProfile/languages";
+import { useDispatch, useSelector } from "react-redux";
+// import { setIsLoggedIn } from "@redux/slice/user";
+// import { LogoutUserAPI } from "@api/user";
+import { globalLocalStorage } from "@utils/localStorage";
+import { SVG } from "@assets/svg";
+import { setIsLoggedIn } from "@redux/slice/user";
+import { LogoutUserAPI } from "@api/user";
 
 function Dashboard() {
   const [recentApplication, setRecentApplication] = useState([]);
@@ -21,6 +38,37 @@ function Dashboard() {
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
+  // const platform = Capacitor.getPlatform();
+
+  const { currentUser } = useSelector(({ auth }) => auth);
+  const { isMobileView } = useSelector(({ platform }) => platform);
+  const dispatch = useDispatch();
+  // const [, setOpen] = useState(false);
+  // const [toggle, setToggle] = useState(["job"]);
+
+  const logoutHandle = () => {
+    userLogout();
+    dispatch(setIsLoggedIn(false));
+  };
+  const userLogout = async () => {
+    await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
+  };
+
+  // const handleToggleModel = (type) => {
+  //   setToggle((prev) =>
+  //     prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+  //   );
+  // };
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
   const getRecentApplications = async () => {
     setIsLoading(true);
     const res = await getAppliedTendersAPI({
@@ -31,8 +79,8 @@ function Dashboard() {
       setRecentApplication((prevState) =>
         [...prevState, ...res.data.results].filter(
           (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id)
-        )
+            index === self.findIndex((t) => t.id === value.id),
+        ),
       );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
@@ -51,6 +99,78 @@ function Dashboard() {
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>
+        {isMobileView ? (
+          <>
+            <Grid item xs={12}>
+              <Stack
+                direction={"row"}
+                alignItems={"center"}
+                spacing={2}
+                justifyContent={"space-between"}
+                sx={{
+                  mb: 1,
+                  "& h1": {
+                    fontFamily: "Bahnschrift",
+                    fontSize: "22px",
+                    fontWeight: "600",
+                  },
+                }}
+              >
+                <h1>Dashboard</h1>
+                <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
+                  <IconButton onClick={() => logoutHandle()}>
+                    <SVG.AppGroup />
+                  </IconButton>
+                  <IconButton LinkComponent={Link} to="/Setting">
+                    <SVG.Settings />
+                  </IconButton>
+                  <IconButton LinkComponent={Link} to="/notification">
+                    <SVG.NotificationIcon />
+                  </IconButton>
+                </Stack>
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
+                <img
+                  alt="profile"
+                  src={currentUser?.profileImage}
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    borderRadius: "100%",
+                    boxShadow: "0px 5px 25px 0px rgba(0, 0, 0, 0.25)",
+                  }}
+                />
+                <Box
+                  sx={{
+                    "& h4": {
+                      fontSize: "18px",
+                      fontFamily: "Bahnschrift",
+                      letterSpacing: "0.54px",
+                      fontWeight: "700",
+                      mb: 1,
+                      mt: 0,
+                    },
+                    "& p": {
+                      fontSize: "14px",
+                      fontFamily: "Poppins",
+                      opacity: "0.5",
+                      color: "#121212",
+                      fontWeight: "400",
+                      my: 0,
+                    },
+                  }}
+                >
+                  <h4>{currentUser?.name || currentUser?.email}</h4>
+                  <p>{currentUser?.profile?.website}</p>
+                  <p>{currentUser?.moblieNumber}</p>
+                  <p>{currentUser?.email}</p>
+                </Box>
+              </Stack>
+            </Grid>
+          </>
+        ) : null}
         <Grid item xl={12} lg={12} sm={12}>
           <Card
             sx={{
@@ -105,7 +225,6 @@ function Dashboard() {
             </CardContent>
           </Card>
         </Grid>
-
         <Grid item xl={12} lg={12} sm={12} xs={12}>
           <Card
             sx={{

@@ -186,7 +186,7 @@ function Search({ searchTypeForJob }) {
         }}
         color="primary"
         count={totalPages}
-        onChange={(e, page) => {
+        onChange={(_, page) => {
           handlePageChange(page);
         }}
         page={page}
@@ -229,7 +229,7 @@ function Search({ searchTypeForJob }) {
                       ml: 1,
                     }}
                   >
-                    2,513
+                    {totalItems || 0}
                   </Box>
                 }
                 icon={
@@ -323,7 +323,10 @@ function Search({ searchTypeForJob }) {
                   className={`${styles.jobcards}`}
                   sx={{
                     minHeight: "450px",
-                    marginBottom: "130px",
+                    marginBottom:
+                      platform === "android" || platform === "ios"
+                        ? "130px"
+                        : "0px",
                     marginTop:
                       platform === "android" || platform === "ios"
                         ? ""

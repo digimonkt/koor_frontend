@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
+import {} from "@capacitor/core";
 import { SVG } from "../../assets/svg";
 import { SEARCH_TYPE, USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,11 +40,10 @@ function Header() {
   const location = useLocation();
   const [searchParams] = useSearchParams({});
 
-  const { role, isLoggedIn } = useSelector((state) => state.auth);
+  const { role, isLoggedIn, currentUser } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  const { currentUser } = useSelector((state) => state.auth);
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const [warningTrue, setWarningTrue] = useState(false);
 
@@ -92,9 +92,11 @@ function Header() {
       <Container
         maxWidth={false}
         sx={{
+          paddingLeft: "24px",
+          paddingRight: "24px",
           "@media(min-width:992px)": {
-            paddingLeft: "100px",
-            paddingRight: "100px",
+            paddingLeft: "24px",
+            paddingRight: "24px",
           },
         }}
       >
@@ -310,37 +312,29 @@ function Header() {
                 role !== USER_ROLES.jobSeeker ? "color-change" : null
               }`}
             >
-              {!isLoggedIn ? (
-                <li onClick={() => setIsmenu(false)}>
-                  <Link
-                    to="/"
-                    className="active"
-                    style={{
-                      color: location.pathname === "/" ? "#274593" : "",
-                    }}
-                  >
-                    Home
-                  </Link>
-                </li>
-              ) : (
-                ""
-              )}
-              {!isLoggedIn || role === USER_ROLES.jobSeeker ? (
-                <li onClick={() => setIsmenu(false)}>
-                  <Link
-                    to="/search/jobs"
-                    style={{
-                      color: location.pathname.includes("/search/jobs")
-                        ? "#274593"
-                        : "",
-                    }}
-                  >
-                    Browse jobs
-                  </Link>
-                </li>
-              ) : (
-                ""
-              )}
+              <li onClick={() => setIsmenu(false)}>
+                <Link
+                  to="/"
+                  className="active"
+                  style={{
+                    color: location.pathname === "/" ? "#274593" : "",
+                  }}
+                >
+                  Home
+                </Link>
+              </li>
+              <li onClick={() => setIsmenu(false)}>
+                <Link
+                  to="/search/jobs"
+                  style={{
+                    color: location.pathname.includes("/search/jobs")
+                      ? "#274593"
+                      : "",
+                  }}
+                >
+                  Browse jobs
+                </Link>
+              </li>
               {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
@@ -383,24 +377,20 @@ function Header() {
               ) : (
                 ""
               )}
-              {!isLoggedIn || role === USER_ROLES.vendor ? (
-                <li onClick={() => setIsmenu(false)}>
-                  <Link
-                    // to={isLoggedIn ? "/search/tenders" : "#"}
-                    to="/search/tenders"
-                    style={{
-                      color: location.pathname.includes("/search/tenders")
-                        ? "#274593"
-                        : "",
-                    }}
-                    // onClick={(e) => checkUserLoggedIn(e)}
-                  >
-                    Browse tenders
-                  </Link>
-                </li>
-              ) : (
-                ""
-              )}
+              <li onClick={() => setIsmenu(false)}>
+                <Link
+                  // to={isLoggedIn ? "/search/tenders" : "#"}
+                  to="/search/tenders"
+                  style={{
+                    color: location.pathname.includes("/search/tenders")
+                      ? "#274593"
+                      : "",
+                  }}
+                  // onClick={(e) => checkUserLoggedIn(e)}
+                >
+                  Browse tenders
+                </Link>
+              </li>
               {!isLoggedIn && (
                 <li onClick={() => setIsmenu(false)}>
                   <Link

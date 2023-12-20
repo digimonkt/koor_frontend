@@ -32,7 +32,6 @@ const JobPreferences = (props) => {
     setJobPreferences({ ...jobPreferences, [name]: e.target.checked });
   };
   const handleChangeInput = (name) => (e) => {
-    console.log("e: ", e.target.value, name);
     setJobPreferences({ ...jobPreferences, [name]: e.target.value });
   };
   const handleSubmit = async () => {
@@ -105,8 +104,13 @@ const JobPreferences = (props) => {
                 >
                   <span>More</span>
                 </Link>
-                <IconButton size="small" onClick={() => props.fun()}>
-                  <SVG.ArrowUpIcon />
+
+                <IconButton
+                  size="small"
+                  onClick={() => props.fun()}
+                  sx={{ "& svg": { width: "18px", height: "11px" } }}
+                >
+                  {props.toggle ? <SVG.ArrowUpIcon /> : <SVG.Downarrow />}
                 </IconButton>
               </Stack>
             ) : (

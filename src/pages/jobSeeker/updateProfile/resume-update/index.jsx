@@ -31,7 +31,6 @@ const ResumeUpdate = ({
     const images = document.getElementById("profile-avatar");
 
     if (images) {
-      console.log({ images });
       const options = {
         margin: [5, 5],
         filename: `${currentUser.name || "Resume"}.pdf`,
@@ -75,8 +74,12 @@ const ResumeUpdate = ({
         >
           <h2 className="mb-0">{title}</h2>
           {platform === "android" || platform === "ios" ? (
-            <IconButton size="small" onClick={() => fun()}>
-              <SVG.ArrowUpIcon />
+            <IconButton
+              size="small"
+              onClick={() => fun()}
+              sx={{ "& svg": { width: "18px", height: "11px" } }}
+            >
+              {toggle ? <SVG.ArrowUpIcon /> : <SVG.Downarrow />}
             </IconButton>
           ) : null}
         </Stack>
@@ -232,7 +235,12 @@ const ResumeUpdate = ({
             disabled={isDownloadingPDF || isDownloadingDocs}
           />
           <FilledButton
-            sx={{ marginLeft: "10px" }}
+            sx={{
+              marginLeft: "10px",
+              "@media (max-width: 480px)": {
+                marginLeft: "0px",
+              },
+            }}
             title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
             onClick={downloadDocs}
             style={{ marginBottom: "10px" }}

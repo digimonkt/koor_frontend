@@ -23,7 +23,6 @@ import { globalLocalStorage } from "@utils/localStorage";
 import { setIsLoggedIn } from "@redux/slice/user";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
-import { IMAGES } from "@assets/images";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -45,6 +44,7 @@ const Dashboard = () => {
     sites: [],
     total: 0,
   });
+  const { currentUser } = useSelector(({ auth }) => auth);
   const { jobPostUpdate } = useSelector((state) => state.employer);
   const { isMobileView } = useSelector((state) => state.platform);
   const getRecentApplications = async () => {
@@ -54,12 +54,11 @@ const Dashboard = () => {
       page: recentApplicationPage,
     });
     if (res.remote === "success") {
-      // ! This filter is temporary and need to be optimized, as somehow API is called two time due to this duplicate data is found to remove this `filter` is used, but need to be fix
       setRecentApplication((prevState) =>
         [...prevState, ...res.data.results].filter(
           (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id)
-        )
+            index === self.findIndex((t) => t.id === value.id),
+        ),
       );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
@@ -130,6 +129,7 @@ const Dashboard = () => {
     userLogout();
     dispatch(setIsLoggedIn(false));
   };
+  console.log({ currentUser });
   return (
     <>
       <div className="employer-dashboard">
@@ -169,7 +169,7 @@ const Dashboard = () => {
                 <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
                   <img
                     alt="profile"
-                    src={IMAGES.RecentFive}
+                    src={currentUser?.profileImage}
                     style={{
                       width: "80px",
                       height: "80px",
@@ -185,6 +185,7 @@ const Dashboard = () => {
                         letterSpacing: "0.54px",
                         fontWeight: "700",
                         mb: 1,
+                        mt: 0,
                       },
                       "& p": {
                         fontSize: "14px",
@@ -196,10 +197,10 @@ const Dashboard = () => {
                       },
                     }}
                   >
-                    <h4>Lotus'es Employment Group LLC</h4>
-                    <p>lotuss.us</p>
-                    <p>+51599268290</p>
-                    <p>contact@lotuss.us</p>
+                    <h4>{currentUser?.name || currentUser?.email}</h4>
+                    <p>{currentUser?.profile?.website}</p>
+                    <p>{currentUser?.moblieNumber}</p>
+                    <p>{currentUser?.email}</p>
                   </Box>
                 </Stack>
               </Grid>

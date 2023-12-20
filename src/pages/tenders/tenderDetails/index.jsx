@@ -29,11 +29,14 @@ import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_ROLES } from "../../../utils/enum";
-import DialogBox from "../../../components/dialogBox";
+import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
+import { Capacitor } from "@capacitor/core";
+import { Filesystem, Directory } from "@capacitor/filesystem";
+import writeBlob from "capacitor-blob-writer";
 import { getColorByRemainingDays } from "@utils/generateColor";
 
 function TenderDetailsComponent() {
@@ -104,6 +107,7 @@ function TenderDetailsComponent() {
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [addressGeoCode, setAddressGeoCode] = useState({});
   const [registrationWarning, setRegistrationWarning] = useState(false);
+  const [expiredWarning, setExpiredWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
 
@@ -141,6 +145,8 @@ function TenderDetailsComponent() {
           console.log("resp", resp);
         }
       }
+    } else if (details.expiredInDays <= 0) {
+      setExpiredWarning(true);
     } else {
       setRegistrationWarning(true);
     }
@@ -162,28 +168,26 @@ function TenderDetailsComponent() {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
+
   const handleLoadImage = async (url) => {
     const fileType = (url) => {
       const extension = "." + url.split(".").pop().toLowerCase();
-      console.log({ extension });
       const mimeTypes = {
         ".jpg": "image/jpeg",
         ".jpeg": "image/jpeg",
         ".png": "image/png",
         ".gif": "image/gif",
         ".pdf": "application/pdf",
-        // Add more extensions and corresponding MIME types as needed
       };
 
-      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
+      return mimeTypes[extension] || "application/octet-stream";
     };
 
-    const fileName = "attachment";
+    const fileName = "attachmentcc";
     const response = await getJobAttachmentAPI(url);
 
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      // Convert base64 string to Blob
       const byteCharacters = atob(base64String);
       const byteArrays = new Uint8Array(byteCharacters.length);
 
@@ -195,16 +199,41 @@ function TenderDetailsComponent() {
         type: fileType(url) || "application/octet-stream",
       });
 
-      // Create a download link
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = downloadUrl;
-      a.download = fileName || "file"; // Default filename is "file"
+      a.download = fileName || "filecc";
 
-      // Append the link to the document and click it
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      if (Capacitor.isNativePlatform()) {
+        const status = await Filesystem.checkPermissions();
+        const directory = Directory.ExternalStorage;
+        const path =
+          Capacitor.platform === "ios" ? `${name}` : `Download/${name}`;
+        if (status.publicStorage !== "granted") {
+          const status = Filesystem.requestPermissions();
+          if (status === "granted") {
+            await writeBlob({
+              path,
+              blob,
+              directory,
+              fast_mode: true,
+              on_fallback: console.error,
+            });
+          }
+        } else {
+          await writeBlob({
+            path,
+            blob,
+            directory,
+            fast_mode: true,
+            on_fallback: console.error,
+          });
+        }
+      } else {
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
       URL.revokeObjectURL(downloadUrl);
     }
   };
@@ -279,7 +308,6 @@ function TenderDetailsComponent() {
                     style={{
                       marginLeft: "20px",
                       cursor: "default",
-                      // color: "#ffffff",
                     }}
                     color={getColorByRemainingDays(
                       details?.expiredInDays > -1 ? details?.expiredInDays : 0
@@ -295,7 +323,9 @@ function TenderDetailsComponent() {
                   <h4>Details :</h4>
                   <div
                     className="job-description"
-                    dangerouslySetInnerHTML={{ __html: details.description }}
+                    dangerouslySetInnerHTML={{
+                      __html: details.description,
+                    }}
                   ></div>
                 </div>
                 <div className={`${styles.iconbtn}`}>
@@ -342,7 +372,7 @@ function TenderDetailsComponent() {
                     return (
                       <div key={i} className={`${styles.downloadtext}`}>
                         <span className="d-inline-flex me-2">
-                          {<SVG.OrangeIcon />}
+                          {<SVG.BlueAttach />}
                         </span>
                         <span
                           onClick={() => handleLoadImage(attachment.path)}
@@ -391,23 +421,27 @@ function TenderDetailsComponent() {
                       // className={`${styles.enablebtn}`}
                       disabled={details.isApplied && !details.isEditable}
                       onClick={() => {
-                        if (isLoggedIn) {
-                          if (details.isEditable) {
-                            navigate(
-                              urlcat("../tender/apply/:tenderId", {
-                                tenderId: params.tenderId,
-                                applicationId: details.application.id,
-                              })
-                            );
+                        if (details.expiredInDays > 0) {
+                          if (isLoggedIn) {
+                            if (details.isEditable) {
+                              navigate(
+                                urlcat("../tender/apply/:tenderId", {
+                                  tenderId: params.tenderId,
+                                  applicationId: details.application.id,
+                                })
+                              );
+                            } else {
+                              navigate(
+                                urlcat("../tender/apply/:tenderId", {
+                                  tenderId: params.tenderId,
+                                })
+                              );
+                            }
                           } else {
-                            navigate(
-                              urlcat("../tender/apply/:tenderId", {
-                                tenderId: params.tenderId,
-                              })
-                            );
+                            setRegistrationWarning(true);
                           }
                         } else {
-                          setRegistrationWarning(true);
+                          setExpiredWarning(true);
                         }
                       }}
                     />
@@ -449,7 +483,15 @@ function TenderDetailsComponent() {
                         }}
                         vendor
                         onClick={() => {
-                          handleSaveTender(params.tenderId);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSaveTender(params.tenderId);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
+                          } else {
+                            setExpiredWarning(true);
+                          }
                         }}
                       />
                       <OutlinedButton
@@ -518,14 +560,12 @@ function TenderDetailsComponent() {
                           </>,
                           "Apply on employer's website",
                         ]}
-                        // className={`${styles.enablebtn}`}
-                        // disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          // if (isLoggedIn) {
-                          window.open(details.websiteLink, "_blank");
-                          // } else {
-                          // setRegistrationWarning(true);
-                          // }
+                          if (details.expiredInDays <= 0) {
+                            setExpiredWarning(true);
+                          } else {
+                            window.open(details.websiteLink, "_blank");
+                          }
                         }}
                       />
                     )}
@@ -552,7 +592,11 @@ function TenderDetailsComponent() {
                         ]}
                         className="ms-3"
                         onClick={() => {
-                          handleSendEmail(details);
+                          if (details.expiredInDays <= 0) {
+                            setExpiredWarning(true);
+                          } else {
+                            handleSendEmail(details);
+                          }
                         }}
                       />
                     )}
@@ -573,6 +617,7 @@ function TenderDetailsComponent() {
                       height: "236px",
                       overflow: "hidden",
                       borderRadius: "5px",
+                      position: "relative",
                     }}
                   >
                     <GoogleMapWrapper>
@@ -628,6 +673,10 @@ function TenderDetailsComponent() {
                 </div>
               </div>
             </DialogBox>
+            <ExpiredBox
+              open={expiredWarning}
+              handleClose={() => setExpiredWarning(false)}
+            />
           </div>
           <div className={`${styles.LikeJob}`}>
             <h2>more tenders like this:</h2>

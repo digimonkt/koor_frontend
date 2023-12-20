@@ -1,4 +1,4 @@
-import { Box, Chip, IconButton, Stack } from "@mui/material";
+import { Chip, IconButton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
@@ -12,7 +12,6 @@ import urlcat from "urlcat";
 import DialogBox from "../../../components/dialogBox";
 import { setManageJobActiveTab } from "../../../redux/slice/employer";
 import Tenders from "../manageTenders/components/tenders";
-import HeaddingSearch from "@pages/search/hedding-search";
 
 function ManageJobsComponent() {
   // const platform = Capacitor.getPlatform();
@@ -65,33 +64,6 @@ function ManageJobsComponent() {
 
   return (
     <div className="manage-jobs">
-      {isMobileView ? (
-        <>
-          <Box sx={{ px: 3, pt: 3 }}>
-            <HeaddingSearch
-              title="My posts"
-              count={
-                <Box
-                  component={"span"}
-                  sx={{
-                    background: "#D5E3F7",
-                    padding: "5px 12px",
-                    borderRadius: "73px",
-                    fontFamily: "Bahnschrift",
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    ml: 1,
-                  }}
-                >
-                  4
-                </Box>
-              }
-            />
-          </Box>
-        </>
-      ) : (
-        ""
-      )}
       <div className="ant_tabs_div">
         {!isMobileView && (
           <AntTabs
@@ -108,8 +80,8 @@ function ManageJobsComponent() {
                   <Chip label={totalCreatedJobs} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${0}`}
-              aria-controls={`simple-tabpanel-${0}`}
+              id={`simple - tab - ${0}`}
+              aria-controls={`simple - tabpanel - ${0}`}
             />
             <AntTab
               label={
@@ -118,8 +90,8 @@ function ManageJobsComponent() {
                   <Chip label={totalApplications} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${1}`}
-              aria-controls={`simple-tabpanel-${1}`}
+              id={`simple - tab - ${1}`}
+              aria-controls={`simple - tabpanel - ${1}`}
             />
             <AntTab
               label={
@@ -128,11 +100,12 @@ function ManageJobsComponent() {
                   <Chip label={totalBlacklist} className="job-count" />
                 </Stack>
               }
-              id={`simple-tab-${1}`}
-              aria-controls={`simple-tabpanel-${1}`}
+              id={`simple - tab - ${1}`}
+              aria-controls={`simple - tabpanel - ${1}`}
             />
           </AntTabs>
         )}
+
         {isMobileView ? (
           <>
             <IconButton
@@ -150,7 +123,7 @@ function ManageJobsComponent() {
                 color: "#fff",
                 boxShadow: "0px 2px 15px 2px rgba(0, 44, 106, 0.25)",
                 position: "fixed",
-                bottom: "125px",
+                bottom: "115px",
                 right: "17px",
                 zIndex: 10,
                 "&:hover": {
@@ -192,7 +165,7 @@ function ManageJobsComponent() {
           key={index}
           role="tabpanel"
           hidden={index !== panel}
-          id={`simple-tabpanel-${index}`}
+          id={`simple - tabpanel - ${index}`}
           style={{ height: "100%" }}
         >
           <tab.component onTabChange={handlePageTab} />

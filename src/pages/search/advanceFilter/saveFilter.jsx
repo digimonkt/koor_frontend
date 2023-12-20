@@ -1,10 +1,21 @@
+import { LabeledInput } from "@components/input";
 import { OutlinedButton } from "../../../components/button";
-import { LabeledInput } from "../../../components/input";
 import { Box, Grid, Stack } from "@mui/material";
+import { USER_ROLES } from "@utils/enum";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 function SaveFilter({ handleSaveSearch, handleCancel }) {
   const [name, setName] = useState("");
+  const { role } = useSelector(({ auth }) => auth);
+
+  const JOBSEEKERCOLOR = role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593";
+
+  const handleInputChange = e => {
+    // Limiting input to 40 characters
+    const inputText = e.target.value.slice(0, 40);
+    setName(inputText);
+  };
 
   return (
     <div>
@@ -14,36 +25,31 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
         too much space but is informative for you.
       </div>
       <div className="form-content">
-        <form onSubmit={(e) => handleSaveSearch(e, name)}>
-          <div className="form-group mb-3">
-            <LabeledInput
-              placeholder="Name"
-              type="text"
-              style={{
-                border: "1px solid #CACACA",
-                borderRadius: "100px",
-              }}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <Box
-              sx={{
-                textAlign: "right",
-                mt: 1,
-                color: "#848484",
-                fontSize: "16px",
-              }}
-            >
-              0/40 characters
-            </Box>
-          </div>
-
+        <form onSubmit={e => handleSaveSearch(e, name)}>
+          <LabeledInput
+            placeholder="Name"
+            type="text"
+            style={{
+              border: "1px solid #CACACA",
+              borderRadius: "100px",
+            }}
+            value={name}
+            onChange={handleInputChange}
+          />
+          <Box
+            sx={{
+              textAlign: "right",
+              mt: 1,
+              color: "#848484",
+              fontSize: "16px",
+            }}>
+            {name.length}/40 characters
+          </Box>
           <Grid item xl={12} lg={12} xs={12}>
             <Stack
               direction="row"
               alignItems="center"
-              justifyContent="space-between"
-            >
+              justifyContent="space-between">
               <OutlinedButton
                 onClick={handleCancel}
                 title="Cancel"
@@ -66,8 +72,8 @@ function SaveFilter({ handleSaveSearch, handleCancel }) {
                 title={<>Save</>}
                 sx={{
                   "&.MuiButtonBase-root": {
-                    border: "1px solid #EEA23D !important",
-                    color: "#EEA23D !important",
+                    border: `1px solid ${JOBSEEKERCOLOR} !important`,
+                    color: `${JOBSEEKERCOLOR} !important`,
                     width: "100px",
                     height: "42px",
                     "@media (max-width: 480px)": {

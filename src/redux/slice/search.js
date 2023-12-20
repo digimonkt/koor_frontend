@@ -172,7 +172,6 @@ const searchSlice = createSlice({
       state.totalPages = pages;
     });
     builder.addCase(searchJobs.rejected, (state, action) => {
-      console.log({ action });
       state.isSearching = false;
     });
     // talent

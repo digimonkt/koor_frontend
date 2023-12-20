@@ -20,7 +20,6 @@ function RoleRouteComponent(authRole) {
             },
           });
         } else if (role !== authRole) {
-          console.log({ location, authRole });
           navigate(`/${role}/my-profile`);
         }
       } else {
@@ -31,6 +30,7 @@ function RoleRouteComponent(authRole) {
         });
       }
     }, [navigate, role, isLoggedIn]);
+
     return <>{children}</>;
   };
 }
