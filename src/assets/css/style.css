@@ -420,12 +420,17 @@ header {
 }
 
 .rfm-initial-child-container {
-  justify-content: space-between !important;
+  justify-content: space-around !important;
   width: 100% !important;
 }
 
+.rfm-marquee {
+  display: flex;
+  justify-content: space-around;
+}
+
 .initial-child-container {
-  justify-content: space-between !important;
+  justify-content: space-around !important;
   width: 100% !important;
 }
 
