@@ -101,6 +101,35 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
+            <Box
+              sx={{
+                display: "none",
+
+                "@media (max-width: 480px)": {
+                  display: "block",
+                  "& .btn_font_lower": {
+                    display: "inline-block !important",
+                  },
+                },
+              }}
+              className="text-start text-end mb-0 mb-lg-4"
+            >
+              <SolidButton
+                className={
+                  jobDetails?.expiredInDays > 0
+                    ? "btn_font_lower"
+                    : "btn_font_capitalize"
+                }
+                title={
+                  jobDetails?.expiredInDays > 0
+                    ? showDay(jobDetails?.expiredInDays)
+                    : "Closed"
+                }
+                color={getColorByRemainingDays(
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                )}
+              />
+            </Box>
             <Stack
               direction={"row"}
               spacing={2}
@@ -391,7 +420,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           }}
         >
           <Box
-            sx={{ display: "flex", justifyContent: "end" }}
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              "@media (max-width: 480px)": { display: "none" },
+            }}
             className="text-start text-lg-end text-sm-end mb-0 mb-lg-4"
           >
             <SolidButton
@@ -429,7 +462,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            <div className="pricebox py-3 upto-slide">
+            <Box
+              sx={{ "@media (max-width: 480px)": { display: "none" } }}
+              className="pricebox py-3 upto-slide"
+            >
               {jobDetails?.budgetAmount ? (
                 <>
                   <span className="d-block">UP TO</span>
@@ -442,7 +478,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               ) : (
                 ""
               )}
-            </div>
+            </Box>
             {Boolean(jobDetails?.budgetAmount) && selfJob && (
               <Box sx={{ width: "2px !important" }}>
                 <Box className="hr-border"></Box>
@@ -488,7 +524,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             ) : role === USER_ROLES.jobSeeker ? (
               <React.Fragment>
                 <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
-                  <div className="bookmark">
+                  <Box
+                    className="bookmark"
+                    sx={{ "@media (max-width: 480px)": { display: "none" } }}
+                  >
                     {isSaved ? (
                       <>
                         <SVG.SaveIcon />
@@ -500,7 +539,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         <span style={{ color: "#848484" }}>Save</span>
                       </>
                     )}
-                  </div>
+                  </Box>
                 </div>
               </React.Fragment>
             ) : (
