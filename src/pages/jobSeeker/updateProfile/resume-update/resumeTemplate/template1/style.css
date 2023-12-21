@@ -52,7 +52,7 @@
   font-family: "Bahnschrift";
   letter-spacing: 0.7px;
   color: #121212;
-  margin-bottom: 10px;
+  margin: 10px 0px 5px 0px;
   text-transform: uppercase;
 }
 
@@ -70,10 +70,6 @@
 .resume_template li {
   padding: 0px;
   margin: 0px;
-}
-
-.heading {
-  padding: 30px 0px;
 }
 
 .heading h1 {
@@ -127,6 +123,7 @@
   font-family: "Poppins";
   letter-spacing: 0.28px;
   opacity: 80%;
+  margin-right: 5px;
 }
 
 .education_div {
@@ -161,7 +158,6 @@
   letter-spacing: 0.28px;
   color: #121212;
   opacity: 80%;
-  margin-bottom: 5px;
 }
 
 .education_div h6 {
@@ -329,6 +325,17 @@
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+}
+
+.page {
+  flex-direction: row;
+  background-color: #ffffff;
+  padding: 30px;
+}
+.section {
+  margin: 10px;
+  padding: 10px 0px;
+  flex-grow: 1;
 }
 
 @media print {

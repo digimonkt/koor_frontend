@@ -55,6 +55,17 @@
   color: #121212;
 }
 
+.page {
+  flex-direction: row;
+  background-color: #ffffff;
+  padding: 30px;
+}
+.section {
+  margin: 10px;
+  padding: 10px;
+  flex-grow: 1;
+}
+
 @media print {
   footer {
     page-break-after: always;

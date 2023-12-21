@@ -34,78 +34,86 @@ function ResumeTemplate({ user, appliedJob = false }) {
     convertImageToBase64();
   }, []);
   return (
-    <div className="job-application" id="div-to-pdf">
+    <div className="job-application pages" id="div-to-pdf">
       <div className="container resume_template">
         <div className="heading">
           <h1>{applicantDetails.name}</h1>
           {/* <h5>UI/UX and Product Designer</h5> */}
         </div>
-
-        <div className="cv_first_div">
-          <div style={{ width: "44%", padding: "20px 15px 20px 0px" }}>
-            <div className="top_div">
-              <ul>
-                {applicantDetails.mobileNumber && (
-                  <li>
-                    {" "}
-                    <SVG.callTrik style={{ marginRight: "5px" }} />
-                    {applicantDetails.countryCode + " " + applicantDetails.mobileNumber}
-                  </li>
-                )}
-                {applicantDetails.email && (
-                  <li>
-                    <SVG.mailTrik style={{ marginRight: "5px" }} />
-                    {applicantDetails.email}
-                  </li>
-                )}
-                {applicantDetails?.profile?.website && (
-                  <li>
-                    <SVG.languageTrik style={{ marginRight: "5px" }} />
-                    {applicantDetails?.profile?.website}
-                  </li>
-                )}
-                {applicantDetails.profile?.country?.title && (
-                  <li>
-                    <SVG.locationTrik style={{ marginRight: "5px" }} />
-                    {applicantDetails.profile?.city &&
-                      applicantDetails.profile?.city.title + ", "}
-                    {applicantDetails.profile?.country?.title}
-                  </li>
-                )}
-              </ul>
-            </div>
-            <hr className="horizontal_line" />
-            {applicantDetails.skills.length &&
-              <>
-                <div className="skills_div">
-                  <h2>SKILLS</h2>
-                  {
-                    applicantDetails.skills.map((item, index) => (
-                      <button key={index} className="skills_btn">{item.skill.title}</button>
-                    ))
-                  }
-                </div>
-                <hr />
-              </>
-            }
-            {applicantDetails.educationRecord.length &&
-              <>
-                <div className="education">
-                  <h2>EDUCATION</h2>
-                  {applicantDetails.educationRecord.map((item, index) => (
-                    <div key={index} className="education_div">
-                      <p>{dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
-                        {item.present ? "Present" : dayjs(item.endDate).format(YEAR_FORMAT)}</p>
-                      <span>{item.educationLevel.title}</span>
-                      <h3>{item.institute}</h3>
-                      <h6>{item?.description}</h6>
-                    </div>
-                  ))}
-                </div>
-                <hr />
-              </>
-            }
-            {/* <div className="education">
+        <div className="section">
+          <div className="cv_first_div">
+            <div style={{ width: "44%", padding: "20px 15px 20px 0px" }}>
+              <div className="top_div">
+                <ul>
+                  {applicantDetails.mobileNumber && (
+                    <li>
+                      {" "}
+                      <SVG.callTrik style={{ marginRight: "5px" }} />
+                      {applicantDetails.countryCode +
+                        " " +
+                        applicantDetails.mobileNumber}
+                    </li>
+                  )}
+                  {applicantDetails.email && (
+                    <li>
+                      <SVG.mailTrik style={{ marginRight: "5px" }} />
+                      {applicantDetails.email}
+                    </li>
+                  )}
+                  {applicantDetails?.profile?.website && (
+                    <li>
+                      <SVG.languageTrik style={{ marginRight: "5px" }} />
+                      {applicantDetails?.profile?.website}
+                    </li>
+                  )}
+                  {applicantDetails.profile?.country?.title && (
+                    <li>
+                      <SVG.locationTrik style={{ marginRight: "5px" }} />
+                      {applicantDetails.profile?.city &&
+                        applicantDetails.profile?.city.title + ", "}
+                      {applicantDetails.profile?.country?.title}
+                    </li>
+                  )}
+                </ul>
+              </div>
+              <hr className="horizontal_line" />
+              {applicantDetails.skills.length && (
+                <>
+                  <div className="skills_div">
+                    <h2>SKILLS</h2>
+                    {applicantDetails.skills.map((item, index) => (
+                      <button key={index} className="skills_btn">
+                        {item.skill.title}
+                      </button>
+                    ))}
+                  </div>
+                  <hr />
+                </>
+              )}
+              {applicantDetails.educationRecord.length && (
+                <>
+                  <div className="education">
+                    <h2>EDUCATION</h2>
+                    {applicantDetails.educationRecord.map((item, index) => (
+                      <div key={index} style={{ margin: "20px 0px" }}>
+                        <div className="education_div">
+                          <p>
+                            {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
+                            {item.present
+                              ? "Present"
+                              : dayjs(item.endDate).format(YEAR_FORMAT)}
+                          </p>
+                          <span>{item.educationLevel.title}</span>
+                          <h3>{item.institute}</h3>
+                          <h6>{item?.description}</h6>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <hr />
+                </>
+              )}
+              {/* <div className="education">
               <h2>Expertise</h2>
               <div className="education_div">
                 <h3>My expertise area</h3>
@@ -138,7 +146,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
               </div>
             </div>
             <hr /> */}
-            {/* <div className="refrence">
+              {/* <div className="refrence">
               <h2>Refrence</h2>
               <h3 style={{ marginBottom: "5px" }}>Abdimajid Omar</h3>
               <span>
@@ -162,7 +170,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
               </span>
             </div>
             <hr /> */}
-            {/* <div className="certification">
+              {/* <div className="certification">
               <h2>CERTIFICATION</h2>
               <div className="certification_div">
                 <p>2016-2018</p>
@@ -171,41 +179,46 @@ function ResumeTemplate({ user, appliedJob = false }) {
               </div>
             </div>
             <hr /> */}
-            {applicantDetails.languages.length &&
-              <div className="language">
-                <h2>LANGUAGE</h2>
-                <div className="language_div">
-                  {applicantDetails.languages.map((item, index) => (
-                    <div key={index} style={{ marginRight: "40px" }}>
-                      <h6>{item.language.title}</h6>
-                      <p>Spoken: {item?.spoken}</p>
-                      <p>Written: {item?.written}</p>
-                    </div>
-                  ))}
+              {applicantDetails.languages.length && (
+                <div className="language">
+                  <h2>LANGUAGE</h2>
+                  <div className="language_div">
+                    {applicantDetails.languages.map((item, index) => (
+                      <div key={index} style={{ marginRight: "40px" }}>
+                        <h6>{item.language.title}</h6>
+                        <p>Spoken: {item?.spoken}</p>
+                        <p>Written: {item?.written}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            }
-          </div>
-          <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
-          <div style={{ width: "54%", padding: "20px 0px 20px 15px" }}>
-            <div className="profile">
-              <h2>PROFILE</h2>
-              <p>
-                {applicantDetails.profile.description}
-              </p>
+              )}
             </div>
-            <hr />
-            {applicantDetails.workExperiences.length &&
-              <div className="work_experiance">
-                <h2>Work Experience</h2>
-                {
-                  applicantDetails.workExperiences.map((item, index) => (
-                    <div className="job_position" key={index} style={{ marginTop: "25px" }}>
+            <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
+            <div style={{ width: "54%", padding: "20px 0px 20px 15px" }}>
+              <div className="profile">
+                <h2>PROFILE</h2>
+                <p>{applicantDetails.profile.description}</p>
+              </div>
+              <hr />
+              {applicantDetails.workExperiences.length && (
+                <div className="work_experiance">
+                  <h2>Work Experience</h2>
+                  {applicantDetails.workExperiences.map((item, index) => (
+                    <div
+                      className="job_position"
+                      key={index}
+                      style={{ marginTop: "25px" }}
+                    >
                       <span>{item.title}</span>
                       <div className="work_experiance_div">
                         <h3>{item.organization}</h3>
-                        <h3>{dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
-                          {item.present ? "Present" : dayjs(item.endDate).format(YEAR_FORMAT)}</h3>
+                        <h3>
+                          {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
+                          {item.present
+                            ? "Present"
+                            : dayjs(item.endDate).format(YEAR_FORMAT)}
+                        </h3>
                       </div>
                       {item?.description && (
                         <p
@@ -219,21 +232,25 @@ function ResumeTemplate({ user, appliedJob = false }) {
                       )}
                     </div>
                   ))}
-              </div>
-            }
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        {
-          appliedJob && <>
+        {appliedJob && (
+          <>
             <div className="footer">
               <p>This resume is generated with</p>
               <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
             </div>
             <div id="page-break"></div>
-            <CoverLetter applicantDetails={applicantDetails} content={appliedJob} />
+            <CoverLetter
+              applicantDetails={applicantDetails}
+              content={appliedJob}
+            />
           </>
-        }
+        )}
         <div className="footer">
           <p>This resume is generated with</p>
           <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
