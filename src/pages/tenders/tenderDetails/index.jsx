@@ -34,9 +34,14 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
-import { Capacitor } from "@capacitor/core";
-import { Filesystem, Directory } from "@capacitor/filesystem";
-import writeBlob from "capacitor-blob-writer";
+// import { Capacitor } from "@capacitor/core";
+// import {
+//   Filesystem,
+//   FilesystemDirectory,
+//   FilesystemEncoding,
+// } from "@capacitor/filesystem";
+// import writeBlob from "capacitor-blob-writer";
+import { fileTypeExtactor, downloadUrlCreator } from "@utils/filesUtils";
 import { getColorByRemainingDays } from "@utils/generateColor";
 
 function TenderDetailsComponent() {
@@ -170,20 +175,7 @@ function TenderDetailsComponent() {
   };
 
   const handleLoadImage = async (url) => {
-    const fileType = (url) => {
-      const extension = "." + url.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".gif": "image/gif",
-        ".pdf": "application/pdf",
-      };
-
-      return mimeTypes[extension] || "application/octet-stream";
-    };
-
-    const fileName = "attachment";
+    const fileType = fileTypeExtactor(url);
     const response = await getJobAttachmentAPI(url);
 
     if (response.remote === "success") {
@@ -196,58 +188,13 @@ function TenderDetailsComponent() {
       }
 
       const blob = new Blob([byteArrays], {
-        type: fileType(url) || "application/octet-stream",
+        type: fileType || "application/octet-stream",
       });
 
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName || "file";
-
-      if (Capacitor.isNativePlatform()) {
-        const status = await Filesystem.checkPermissions();
-        const directory = Directory.ExternalStorage;
-        const doesDirectoryExist = await Filesystem.readdir({
-          path: "",
-          directory,
-        });
-        if (!doesDirectoryExist) {
-          // If the directory does not exist, create it
-          await Filesystem.mkdir({ path: "", directory, recursive: true });
-        }
-
-        const path =
-          Capacitor.platform === "ios" ? `${name}` : `Download/${name}`;
-        if (status.publicStorage !== "granted") {
-          const status = await Filesystem.requestPermissions();
-          if (status === "granted") {
-            await writeBlob({
-              path,
-              blob,
-              directory,
-              fast_mode: true,
-              on_fallback: console.error,
-            });
-          }
-        } else {
-          await writeBlob({
-            path,
-            blob,
-            directory,
-            fast_mode: true,
-            on_fallback: console.error,
-          });
-        }
-      } else {
-        // Open the download link in a new tab
-        a.target = "_blank";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      }
-      URL.revokeObjectURL(downloadUrl);
+      downloadUrlCreator(blob);
     }
   };
+
   function handleSendEmail(details) {
     const email = details.contactEmail;
     const ccEmail1 = details.cc1;
@@ -255,7 +202,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -321,7 +268,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -439,13 +386,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                })
+                                }),
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                })
+                                }),
                               );
                             }
                           } else {
