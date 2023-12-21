@@ -18,56 +18,33 @@ import {
 // import { Capacitor } from "@capacitor/core";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import JobPreferences from "@pages/jobSeeker/myProfile/job-preferences";
-// import ResumeUpdate from "@pages/jobSeeker/updateProfile/resume-update";
-// import Education from "@pages/jobSeeker/myProfile/education";
-// import WorkExperience from "@pages/jobSeeker/myProfile/work-experience";
-// import Skills from "@pages/jobSeeker/myProfile/skills";
-// import Languages from "@pages/jobSeeker/myProfile/languages";
 import { useDispatch, useSelector } from "react-redux";
-// import { setIsLoggedIn } from "@redux/slice/user";
-// import { LogoutUserAPI } from "@api/user";
 import { globalLocalStorage } from "@utils/localStorage";
 import { SVG } from "@assets/svg";
 import { setIsLoggedIn } from "@redux/slice/user";
 import { LogoutUserAPI } from "@api/user";
 
 function Dashboard() {
+  const dispatch = useDispatch();
   const [recentApplication, setRecentApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
+  const { isMobileView } = useSelector((state) => state.platform);
+
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
-  // const platform = Capacitor.getPlatform();
 
   const { currentUser } = useSelector(({ auth }) => auth);
-  const { isMobileView } = useSelector(({ platform }) => platform);
-  const dispatch = useDispatch();
-  // const [, setOpen] = useState(false);
-  // const [toggle, setToggle] = useState(["job"]);
 
   const logoutHandle = () => {
     userLogout();
     dispatch(setIsLoggedIn(false));
   };
+
   const userLogout = async () => {
     await LogoutUserAPI();
     globalLocalStorage.cleanLocalStorage();
   };
-
-  // const handleToggleModel = (type) => {
-  //   setToggle((prev) =>
-  //     prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
-  //   );
-  // };
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
 
   const getRecentApplications = async () => {
     setIsLoading(true);
@@ -79,8 +56,8 @@ function Dashboard() {
       setRecentApplication((prevState) =>
         [...prevState, ...res.data.results].filter(
           (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id),
-        ),
+            index === self.findIndex((t) => t.id === value.id)
+        )
       );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
@@ -96,6 +73,7 @@ function Dashboard() {
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
+
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>

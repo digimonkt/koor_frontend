@@ -183,7 +183,7 @@ function TenderDetailsComponent() {
       return mimeTypes[extension] || "application/octet-stream";
     };
 
-    const fileName = "attachmentcc";
+    const fileName = "attachment";
     const response = await getJobAttachmentAPI(url);
 
     if (response.remote === "success") {
@@ -202,15 +202,24 @@ function TenderDetailsComponent() {
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = downloadUrl;
-      a.download = fileName || "filecc";
+      a.download = fileName || "file";
 
       if (Capacitor.isNativePlatform()) {
         const status = await Filesystem.checkPermissions();
         const directory = Directory.ExternalStorage;
+        const doesDirectoryExist = await Filesystem.readdir({
+          path: "",
+          directory,
+        });
+        if (!doesDirectoryExist) {
+          // If the directory does not exist, create it
+          await Filesystem.mkdir({ path: "", directory, recursive: true });
+        }
+
         const path =
           Capacitor.platform === "ios" ? `${name}` : `Download/${name}`;
         if (status.publicStorage !== "granted") {
-          const status = Filesystem.requestPermissions();
+          const status = await Filesystem.requestPermissions();
           if (status === "granted") {
             await writeBlob({
               path,
@@ -230,6 +239,8 @@ function TenderDetailsComponent() {
           });
         }
       } else {
+        // Open the download link in a new tab
+        a.target = "_blank";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

@@ -11,6 +11,7 @@
   "server": {
     "androidScheme": "http",
     "cleartext": true,
-    "url": "http://192.168.0.192:8100"
+    "url": "http://192.168.0.192:8101",
+    "originalUrl": "http://192.168.0.192:8100"
   }
 }

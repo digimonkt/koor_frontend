@@ -325,7 +325,7 @@ function Search({ searchTypeForJob }) {
                     minHeight: "450px",
                     marginBottom:
                       platform === "android" || platform === "ios"
-                        ? "130px"
+                        ? "50px"
                         : "0px",
                     marginTop:
                       platform === "android" || platform === "ios"
@@ -512,6 +512,7 @@ function Search({ searchTypeForJob }) {
                       )}
                     </Stack>
                   </div>
+
                   <Component />
                 </Box>
                 {totalPages > 1 ? (
