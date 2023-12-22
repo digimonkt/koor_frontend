@@ -33,20 +33,18 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
-import { getJobAttachmentAPI } from "@api/job";
-// import { Capacitor } from "@capacitor/core";
-// import {
-//   Filesystem,
-//   FilesystemDirectory,
-//   FilesystemEncoding,
-// } from "@capacitor/filesystem";
-// import writeBlob from "capacitor-blob-writer";
-import { fileTypeExtactor, downloadUrlCreator } from "@utils/filesUtils";
+// import { getJobAttachmentAPI } from "@api/job";
+// import { fileTypeExtactor, downloadUrlCreator } from "@utils/filesUtils";
 import { getColorByRemainingDays } from "@utils/generateColor";
+// import { Capacitor } from "@capacitor/core";
+// import writeBlob from "capacitor-blob-writer";
+// import { Filesystem, Directory } from "@capacitor/filesystem";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 function TenderDetailsComponent() {
   const params = useParams();
   const navigate = useNavigate();
+  // const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const [details, setDetails] = useState({
     id: "",
@@ -174,26 +172,53 @@ function TenderDetailsComponent() {
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = fileTypeExtactor(url);
-    const response = await getJobAttachmentAPI(url);
+  // const handleLoadImage = async (url) => {
+  //   const fileType = fileTypeExtactor(url);
+  //   const response = await getJobAttachmentAPI(url);
 
-    if (response.remote === "success") {
-      const base64String = response.data.base_image;
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
+  //   if (response.remote === "success") {
+  //     const base64String = response.data.base_image;
+  //     const byteCharacters = atob(base64String);
+  //     const byteArrays = new Uint8Array(byteCharacters.length);
 
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
+  //     for (let i = 0; i < byteCharacters.length; i++) {
+  //       byteArrays[i] = byteCharacters.charCodeAt(i);
+  //     }
 
-      const blob = new Blob([byteArrays], {
-        type: fileType || "application/octet-stream",
-      });
+  //     const blob = new Blob([byteArrays], {
+  //       type: fileType || "application/octet-stream",
+  //     });
 
-      downloadUrlCreator(blob);
-    }
-  };
+  //     if (Capacitor.isNativePlatform()) {
+  //       const status = await Filesystem.checkPermissions();
+  //       const directory = Directory.ExternalStorage;
+  //       const path = platform === "ios" ? `${name}` : `Download/${name}`;
+
+  //       if (status.publicStorage !== "granted") {
+  //         const status = await Filesystem.requestPermissions();
+  //         if (status !== "granted") {
+  //           await writeBlob({
+  //             path,
+  //             blob,
+  //             directory,
+  //             fast_mode: true,
+  //             on_fallback: console.error,
+  //           });
+  //         }
+  //       } else {
+  //         await writeBlob({
+  //           path,
+  //           blob,
+  //           directory,
+  //           fast_mode: true,
+  //           on_fallback: console.error,
+  //         });
+  //       }
+  //     } else {
+  //       downloadUrlCreator(blob);
+  //     }
+  //   }
+  // };
 
   function handleSendEmail(details) {
     const email = details.contactEmail;
@@ -202,7 +227,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -268,7 +293,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -332,17 +357,23 @@ function TenderDetailsComponent() {
                         <span className="d-inline-flex me-2">
                           {<SVG.BlueAttach />}
                         </span>
-                        <span
-                          onClick={() => handleLoadImage(attachment.path)}
+                        <a
                           className="m-0"
+                          href={generateFileUrl(attachment.path)}
+                          target="_blank"
+                          rel="noreferrer"
                           style={{
+                            color:
+                              role === USER_ROLES.jobSeeker
+                                ? "#eea23d"
+                                : "#274593",
                             cursor: "pointer",
                             whiteSpace: "normal",
                             wordBreak: "break-all",
                           }}
                         >
                           {attachment.title}
-                        </span>
+                        </a>
                       </div>
                     );
                   })}
@@ -386,13 +417,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {
