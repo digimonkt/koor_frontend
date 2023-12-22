@@ -15,7 +15,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
     const convertImageToBase64 = async () => {
       try {
         const response = await fetch(
-          generateFileUrl(applicantDetails?.profileImage)
+          generateFileUrl(applicantDetails?.profileImage),
         );
         const blob = await response.blob();
         const reader = new FileReader();
@@ -38,7 +38,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
       <div className="container resume_template">
         <div className="heading">
           <h1>{applicantDetails.name}</h1>
-          {/* <h5>UI/UX and Product Designer</h5> */}
         </div>
         <div className="section">
           <div className="cv_first_div">
@@ -240,10 +239,10 @@ function ResumeTemplate({ user, appliedJob = false }) {
 
         {appliedJob && (
           <>
-            <div className="footer">
-              <p>This resume is generated with</p>
-              <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
-            </div>
+            {/* <div className="footer"> */}
+            {/*   <p>This resume is generated with</p> */}
+            {/*   <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} /> */}
+            {/* </div> */}
             <div id="page-break"></div>
             <CoverLetter
               applicantDetails={applicantDetails}
@@ -251,10 +250,10 @@ function ResumeTemplate({ user, appliedJob = false }) {
             />
           </>
         )}
-        <div className="footer">
+        {/* <div className="footer">
           <p>This resume is generated with</p>
           <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -25,6 +25,7 @@ import { generateFileUrl } from "../../../utils/generateFileUrl";
 import { NoRecordFoundAnimation } from "../../../components/animations";
 import urlcat from "urlcat";
 import { FilledButton } from "@components/button";
+import { KoorLogo } from "@assets/base64/index";
 import html2pdf from "html2pdf.js";
 import ResumeTemplate from "@pages/jobSeeker/updateProfile/resume-update/resumeTemplate/template1";
 import { GetUserDetailsAPI } from "@api/user";
@@ -59,13 +60,54 @@ const ApplicantDetails = () => {
     setIsDownloadingPDF(true);
     const element = document.getElementById("div-to-pdf");
     const options = {
-      margin: [10, 10],
+      margin: [20, 0],
       filename: `${userDetails.name || "Resume"}.pdf`,
       image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      jsPDF: { unit: "mm", format: "a4", orientation: "Portrait" },
+      pagebreak: {
+        before: "#page-break",
+      },
     };
-    await html2pdf().set(options).from(element).save();
+
+    const footerContent = "This resume is generated with";
+
+    await html2pdf()
+      .from(element)
+      .set(options)
+      .toPdf()
+      .get("pdf")
+      .then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(10);
+          pdf.setTextColor(150);
+          const imageX =
+            pdf.internal.pageSize.getWidth() -
+            pdf.internal.pageSize.getWidth() / 2 +
+            footerContent.length -
+            10;
+          pdf.addImage(
+            KoorLogo,
+            "PNG",
+            imageX,
+            pdf.internal.pageSize.getHeight() - 13,
+            10,
+            5,
+          );
+          pdf.text(
+            footerContent,
+            pdf.internal.pageSize.getWidth() -
+              pdf.internal.pageSize.getWidth() / 2 -
+              footerContent.length,
+            pdf.internal.pageSize.getHeight() - 10,
+          );
+        }
+      })
+      .save();
+
     setIsDownloadingPDF(false);
   };
   const getApplicantDetails = async () => {
@@ -74,7 +116,7 @@ const ApplicantDetails = () => {
       setApplicantsDetails(res.data);
     }
   };
-  const getUserDetails = async userId => {
+  const getUserDetails = async (userId) => {
     const res = await GetUserDetailsAPI({ userId });
     if (res.remote === "success") {
       setUserDetails(res.data);
@@ -96,30 +138,35 @@ const ApplicantDetails = () => {
               borderRadius: "10px",
               mb: 3,
             },
-          }}>
+          }}
+        >
           <CardContent
             sx={{
               "&.MuiCardContent-root": {
                 padding: "25px 25px 25px",
               },
-            }}>
+            }}
+          >
             {/* -------------- header  ------------ */}
 
             <Stack
               direction="row"
               spacing={2}
               alignItems={{ xs: "start", lg: "center" }}
-              className="recent-content job-border pb-2 mb-3">
+              className="recent-content job-border pb-2 mb-3"
+            >
               <IconButton
                 LinkComponent={Link}
                 onClick={() => navigate(-1)}
-                style={{ padding: "0px" }}>
+                style={{ padding: "0px" }}
+              >
                 <ArrowBackIcon />
               </IconButton>
               <Stack
                 direction={{ xs: "column", lg: "row", sm: "row" }}
                 alignItems={{ xs: "start", lg: "center" }}
-                spacing={2}>
+                spacing={2}
+              >
                 <h4>{applicantDetails.user.name}</h4>
                 <div
                   className="recent-research"
@@ -127,7 +174,8 @@ const ApplicantDetails = () => {
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "wrap",
-                  }}>
+                  }}
+                >
                   <span>
                     Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
@@ -149,7 +197,8 @@ const ApplicantDetails = () => {
                     <Link
                       to={urlcat("/job-seeker/:userId/profile", {
                         userId: applicantDetails.user.id || "a",
-                      })}>
+                      })}
+                    >
                       <h4>{applicantDetails.user.name}</h4>
                     </Link>
                     {applicantDetails.user.profile?.country ? (
@@ -171,7 +220,8 @@ const ApplicantDetails = () => {
                   direction="row"
                   spacing={0}
                   className="edit-button"
-                  alignItems="center">
+                  alignItems="center"
+                >
                   <ApplicationOptions
                     details={applicantDetails}
                     interviewPlanned
@@ -185,7 +235,8 @@ const ApplicantDetails = () => {
             </Grid>
             <Stack
               direction={{ xs: "column", lg: "row", sm: "row" }}
-              spacing={3}>
+              spacing={3}
+            >
               <Box className="user-descrition">
                 <Typography
                   sx={{
@@ -219,13 +270,14 @@ const ApplicantDetails = () => {
                 ) : (
                   ""
                 )}
-                {applicantDetails.attachments.map(attachment => {
+                {applicantDetails.attachments.map((attachment) => {
                   return (
                     <Stack
                       direction={"row"}
                       alignItems={"center"}
                       spacing={1}
-                      key={attachment.id}>
+                      key={attachment.id}
+                    >
                       <span className="d-inline-flex">
                         {<SVG.BlueAttach className="blue_attach_icon" />}
                       </span>
@@ -233,7 +285,8 @@ const ApplicantDetails = () => {
                         href={generateFileUrl(attachment.path)}
                         target="_blank"
                         rel="noreferrer"
-                        className="applicant_attack_anchor">
+                        className="applicant_attack_anchor"
+                      >
                         {attachment.title}
                       </a>
                     </Stack>
@@ -278,7 +331,7 @@ const ApplicantDetails = () => {
                             <li key={index}>
                               <EducationCard
                                 {...item}
-                              // handleEdit={() => handleEdit(item)}
+                                // handleEdit={() => handleEdit(item)}
                               />
                             </li>
                           ),
@@ -333,7 +386,7 @@ const ApplicantDetails = () => {
                 </Grid>
               </Grid>
             </div>
-            {applicantDetails.shortLetter &&
+            {applicantDetails.shortLetter && (
               <div>
                 <Divider sx={{ borderColor: "#ccc", my: 2 }} />
                 <Box>
@@ -343,27 +396,29 @@ const ApplicantDetails = () => {
                       fontSize: "26px",
                       fontFamily: "Bahnschrift",
                       fontWeight: "600",
-                    }}>
+                    }}
+                  >
                     Download resume
                   </Typography>
                   <Typography>
                     <FilledButton
                       title={
-                        isDownloadingPDF
-                          ? "Downloading PDF..."
-                          : "Download PDF"
+                        isDownloadingPDF ? "Downloading PDF..." : "Download PDF"
                       }
                       onClick={downloadPDF}
                       style={{ marginBottom: "10px" }}
                       disabled={isDownloadingPDF}
                     />
                     <div style={{ display: "none" }}>
-                      <ResumeTemplate user={userDetails} appliedJob={applicantDetails.shortLetter} />
+                      <ResumeTemplate
+                        user={userDetails}
+                        appliedJob={applicantDetails.shortLetter}
+                      />
                     </div>
                   </Typography>
                 </Box>
               </div>
-            }
+            )}
           </CardContent>
         </Card>
       </div>

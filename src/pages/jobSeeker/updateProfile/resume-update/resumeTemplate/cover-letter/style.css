@@ -2,12 +2,15 @@
   padding-left: 30px;
   padding-right: 30px;
 }
+
 .coverLetter {
   margin-bottom: 25px;
 }
+
 .coverletter_div p {
   text-align: justify;
 }
+
 .coverLetter h1 {
   font-size: 32px;
   font-weight: 600;
@@ -16,6 +19,7 @@
   color: #121212;
   text-align: center;
 }
+
 .coverLetter h3 {
   font-size: 16px;
   font-weight: 400;
@@ -60,6 +64,7 @@
   background-color: #ffffff;
   padding: 30px;
 }
+
 .section {
   margin: 10px;
   padding: 10px;
