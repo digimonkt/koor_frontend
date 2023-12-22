@@ -78,6 +78,9 @@ function SelectInputComponent({
             fontSize: "12px",
             color: "#121212",
           },
+          "&.MuiInputBase-input": {
+            padding: "9.5px 14px !important",
+          },
         }}
         size="small"
         fullWidth

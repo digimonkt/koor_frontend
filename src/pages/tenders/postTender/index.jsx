@@ -326,7 +326,7 @@ const PostTender = () => {
             <div className="form-content">
               <form onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
-                  <Grid item xl={8} lg={8} xs={12}>
+                  <Grid item xl={8} lg={8} sm={6} xs={12}>
                     <LabeledInput
                       title="Title of your tender"
                       className="add-form-control"
@@ -338,7 +338,7 @@ const PostTender = () => {
                       <ErrorMessage>{formik.errors.title}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4}>
+                  <Grid item xl={4} sm={6} xs={12} lg={4}>
                     <CurrencyInput
                       currency="USD"
                       title="Budget"
@@ -394,7 +394,7 @@ const PostTender = () => {
                       ) : null}
                     </Box>
                   </Grid>
-                  <Grid item xl={4} lg={4} xs={12}>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <label>
                       Location <span className="required-field">*</span>
                     </label>
@@ -411,7 +411,7 @@ const PostTender = () => {
                       <ErrorMessage>{formik.errors.country}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4} sm={6} xs={12}>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <label>
                       City <span className="required-field">*</span>
                     </label>
@@ -432,7 +432,7 @@ const PostTender = () => {
                       <ErrorMessage>{formik.errors.city}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4} sm={12} xs={12}>
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
                     <label>
                       Working place address{" "}
                       <span className="required-field">*</span>
@@ -561,7 +561,7 @@ const PostTender = () => {
                           <ErrorMessage>{formik.errors.tag}</ErrorMessage>
                         ) : null}
                       </Grid>
-                      <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                      <Grid item xl={3} lg={3} sm={6} xs={6} className="mt-2">
                         <div
                           style={{ display: "flex", flexDirection: "column" }}
                         >
@@ -593,7 +593,7 @@ const PostTender = () => {
                           ) : null}
                         </div>
                       </Grid>
-                      <Grid item xl={3} lg={3} xs={12} className="mt-2">
+                      <Grid item xl={3} lg={3} sm={6} xs={6} className="mt-2">
                         <div
                           style={{ display: "flex", flexDirection: "column" }}
                         >

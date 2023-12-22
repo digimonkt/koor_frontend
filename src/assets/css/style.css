@@ -46,7 +46,7 @@ body {
 .btn_font_lower {
   text-transform: lowercase !important;
   cursor: default !important;
-  display: block !important;
+  display: inline-block !important;
   margin-bottom: 10px !important;
 }
 
@@ -1106,9 +1106,8 @@ hr {
   font-weight: 500;
   font-size: 16px;
   line-height: 22px;
-  height: 38px;
+  height: 42px;
   letter-spacing: 0.02em;
-
   box-sizing: border-box;
   color: #121212;
   padding: 6px 12px;
@@ -1117,6 +1116,10 @@ hr {
 
 .location-select .MuiList-root .MuiMenu-list {
   height: 50px !important;
+}
+
+.MuiSelect-select.MuiInputBase-input.MuiOutlinedInput-input {
+  padding: 9.5px 14px !important;
 }
 
 .add-form-control::-webkit-input-placeholder {
@@ -2212,9 +2215,7 @@ span.count {
     background: #fff;
     visibility: hidden;
     opacity: 0;
-    transition:
-      visibility 1s,
-      opacity 0.5s linear;
+    transition: visibility 1s, opacity 0.5s linear;
     display: block;
   }
 

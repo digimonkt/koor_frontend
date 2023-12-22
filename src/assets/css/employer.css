@@ -803,6 +803,17 @@ span.arrowjobs svg {
   display: none;
 }
 
+@media screen and (min-width: 992px) and (max-width: 1024px) {
+  .recent-research {
+    margin-top: 5px !important;
+  }
+  .recent-research span {
+    font-size: 14px;
+    border-left: 0px;
+    padding-left: 0px;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .recent-content h4 {
     white-space: normal;
@@ -832,6 +843,8 @@ span.arrowjobs svg {
 
   .recent-research span {
     font-size: 14px;
+    border-left: 0px;
+    padding-left: 0px;
   }
 
   .job-content h2 {
@@ -925,7 +938,7 @@ span.arrowjobs svg {
   }
 
   .my-jobs h2 {
-    font-size: 14px !important;
+    font-size: 16px !important;
   }
 
   .recent-box h3 {

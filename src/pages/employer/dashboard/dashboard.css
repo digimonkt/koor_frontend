@@ -824,6 +824,10 @@ span.arrowjobs svg {
     font-size: 20px;
   }
 
+  .attachment-box ul li {
+    font-size: 12px;
+  }
+
   .series-box ul li {
     padding: 0px 0px;
   }

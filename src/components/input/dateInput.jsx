@@ -19,9 +19,9 @@ export const DateFiled = styled("div")(() => ({
     display: "none",
   },
   "& .MuiOutlinedInput-input": {
-    padding: "8.5px 14px",
+    padding: "9.5px 14px",
     "@media (max-width: 480px)": {
-      padding: "8.5px 8px",
+      padding: "9.5px 8px",
       fontSize: "14px",
     },
   },

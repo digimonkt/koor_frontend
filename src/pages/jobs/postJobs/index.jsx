@@ -528,6 +528,15 @@ function PostJobsComponent() {
                     </Box>
                   </Grid>
                   <Grid item xl={5} lg={5} sm={4} xs={12}>
+                    <Box
+                      sx={{
+                        display: "none",
+                        "@media (max-width: 320px)": {
+                          marginTop: "30px",
+                          display: "block",
+                        },
+                      }}
+                    ></Box>
                     <label>
                       Location<span className="required-field">*</span>
                     </label>
@@ -658,7 +667,7 @@ function PostJobsComponent() {
                       sx={{
                         marginLeft: "7px",
                         display: "flex",
-                        marginTop: "8px",
+                        marginTop: "-8px",
                       }}
                     >
                       <JobFormControl

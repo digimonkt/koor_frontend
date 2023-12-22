@@ -8,7 +8,13 @@ function CurrencyInput({ title, optionsValues, errors, ...rest }) {
   return (
     <>
       <label className="mb-2">{title}</label>
-      <Stack direction="row" spacing={0} alignItems="center" className="usd-bg">
+      <Stack
+        direction="row"
+        spacing={0}
+        sx={{ height: "42px", marginTop: "4px" }}
+        alignItems="center"
+        className="usd-bg"
+      >
         <SelectInput
           options={[
             {

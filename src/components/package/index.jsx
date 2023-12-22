@@ -14,8 +14,9 @@ export const Package = ({ packageData, handleBuyPackage }) => {
     return (
       <Grid key={index} item xl={4} lg={4} sm={4} xs={12}>
         <div
-          className={`credits_cards_div ${index === ispackage ? "package-active" : ""
-            }`}
+          className={`credits_cards_div ${
+            index === ispackage ? "package-active" : ""
+          }`}
           onClick={() => handleActivePackage(index)}
         >
           <h5 className="credits_title">{item.title}</h5>
