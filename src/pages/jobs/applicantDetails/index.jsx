@@ -71,7 +71,8 @@ const ApplicantDetails = () => {
     };
 
     const footerContent = "This resume is generated with";
-
+    const imageWidth = 13; // Set the desired width
+    const imageHeight = 5;
     await html2pdf()
       .from(element)
       .set(options)
@@ -93,16 +94,16 @@ const ApplicantDetails = () => {
             KoorLogo,
             "PNG",
             imageX,
-            pdf.internal.pageSize.getHeight() - 13,
-            10,
-            5,
+            pdf.internal.pageSize.getHeight() - 14,
+            imageWidth,
+            imageHeight
           );
           pdf.text(
             footerContent,
             pdf.internal.pageSize.getWidth() -
               pdf.internal.pageSize.getWidth() / 2 -
               footerContent.length,
-            pdf.internal.pageSize.getHeight() - 10,
+            pdf.internal.pageSize.getHeight() - 10
           );
         }
       })
@@ -313,7 +314,7 @@ const ApplicantDetails = () => {
                                 <WorkExperienceCard {...item} />
                               </div>
                             </li>
-                          ),
+                          )
                         )
                       )}
                     </ul>
@@ -334,7 +335,7 @@ const ApplicantDetails = () => {
                                 // handleEdit={() => handleEdit(item)}
                               />
                             </li>
-                          ),
+                          )
                         )
                       )}
                     </ul>
