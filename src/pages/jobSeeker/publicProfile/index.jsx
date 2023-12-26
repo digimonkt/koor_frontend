@@ -56,7 +56,7 @@ export default function PublicProfileComponent() {
     await html2pdf().set(options).from(element).save();
     setIsDownloadingPDF(false);
   };
-  const getUserDetails = async userId => {
+  const getUserDetails = async (userId) => {
     setIsLoading(true);
     const res = await GetUserDetailsAPI({ userId });
     if (res.remote === "success") {
@@ -64,7 +64,7 @@ export default function PublicProfileComponent() {
     }
     setIsLoading(false);
   };
-  const storeProfileAnalytics = async userId => {
+  const storeProfileAnalytics = async (userId) => {
     const res = await storeProfileAnalyticsAPI({ user_id: userId });
     if (res.remote === "success") {
       console.log(res);
@@ -78,14 +78,15 @@ export default function PublicProfileComponent() {
     const userId = params.userId;
     getUserDetails(userId);
   }, []);
-  const { isMobileView } = useSelector(state => state.platform);
+  const { isMobileView } = useSelector((state) => state.platform);
   return (
     <Box
       sx={{
         marginTop: isMobileView ? "0px" : "67px",
         py: 3,
         pb: isMobileView ? 15 : null,
-      }}>
+      }}
+    >
       {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
@@ -94,13 +95,15 @@ export default function PublicProfileComponent() {
             sx={{
               boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
               borderRadius: "20px",
-            }}>
+            }}
+          >
             <CardContent
               sx={{
                 "&.MuiCardContent-root": {
                   padding: "30px",
                 },
-              }}>
+              }}
+            >
               <Grid container spacing={2}>
                 <Grid
                   item
@@ -113,29 +116,31 @@ export default function PublicProfileComponent() {
                     "@media (max-width:992px)": {
                       borderRight: "0",
                     },
-                  }}>
+                  }}
+                >
                   <Box
                     sx={{
                       paddingRight: "45px",
                       "@media (max-width:992px)": {
                         paddingRight: "0px",
                       },
-                    }}>
+                    }}
+                  >
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
                       justifyContent={{ xs: "start", lg: "space-between" }}
-                      alignItems={{ xs: "start", lg: "center" }}>
+                      alignItems={{ xs: "start", lg: "center" }}
+                    >
                       <Stack
                         direction={"row"}
                         spacing={2}
                         alignItems={"center"}
-                        sx={{ width: "100%" }}>
+                        sx={{ width: "100%" }}
+                      >
                         <Avatar
                           src={generateFileUrl(userDetails.profileImage || "")}
                           sx={{
-                            // width: "88px",
-                            // height: "88px",
                             boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
                           }}
                         />
@@ -155,7 +160,8 @@ export default function PublicProfileComponent() {
                               "@media (max-width: 480px)": {
                                 fontSize: "16px",
                               },
-                            }}>
+                            }}
+                          >
                             {userDetails.name || userDetails.email}
                           </Typography>
                           <Typography
@@ -167,14 +173,16 @@ export default function PublicProfileComponent() {
                               "@media (max-width: 480px)": {
                                 fontSize: "14px",
                               },
-                            }}>
+                            }}
+                          >
                             {userDetails.profile.highestEducation?.title}
                           </Typography>
                           {userDetails.profile.country?.title ? (
                             <Stack
                               direction={"row"}
                               spacing={1}
-                              alignItems={"center"}>
+                              alignItems={"center"}
+                            >
                               <SVG.LocationIcon />
                               <Box
                                 component={"span"}
@@ -182,7 +190,8 @@ export default function PublicProfileComponent() {
                                   color: "rgb(18 18 18 / 50%)",
                                   fontFamily: "Poppins",
                                   fontSize: "14px  !important",
-                                }}>
+                                }}
+                              >
                                 {userDetails.profile.city?.title},{" "}
                                 {userDetails.profile.country?.title}
                               </Box>
@@ -200,7 +209,8 @@ export default function PublicProfileComponent() {
                               border: "1px solid #CACACA",
                               borderRadius: "5px",
                               p: 1,
-                            }}>
+                            }}
+                          >
                             <SVG.ClockIconSmall />{" "}
                             <Box>
                               <Typography
@@ -215,7 +225,8 @@ export default function PublicProfileComponent() {
                                   "@media (max-width:480px)": {
                                     fontSize: "12px",
                                   },
-                                }}>
+                                }}
+                              >
                                 {userDetails.profile.experience}{" "}
                                 {userDetails.profile.experience > 1
                                   ? "Years"
@@ -224,7 +235,8 @@ export default function PublicProfileComponent() {
 
                               <Box
                                 component={"span"}
-                                sx={{ fontSize: "10px", color: "#848484" }}>
+                                sx={{ fontSize: "10px", color: "#848484" }}
+                              >
                                 Experience
                               </Box>
                             </Box>
@@ -246,7 +258,8 @@ export default function PublicProfileComponent() {
                           "@media (max-width: 480px)": {
                             fontSize: "18px",
                           },
-                        }}>
+                        }}
+                      >
                         About
                       </Typography>
                       <Typography
@@ -259,7 +272,8 @@ export default function PublicProfileComponent() {
                           "@media (max-width: 480px)": {
                             fontSize: "12px",
                           },
-                        }}>
+                        }}
+                      >
                         {userDetails.profile.description}
                       </Typography>
                       <Divider sx={{ borderColor: "#ccc", my: 2 }} />
@@ -273,7 +287,8 @@ export default function PublicProfileComponent() {
                             "@media (max-width: 480px)": {
                               fontSize: "24px",
                             },
-                          }}>
+                          }}
+                        >
                           Work experience
                         </Typography>
                         <ul className="listitems">
@@ -287,7 +302,8 @@ export default function PublicProfileComponent() {
                                     userDetails.workExperiences.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
-                                }}>
+                                }}
+                              >
                                 <WorkExperienceCard {...item} noOptions />
                               </li>
                             ))
@@ -309,7 +325,8 @@ export default function PublicProfileComponent() {
                             "@media (max-width: 480px)": {
                               fontSize: "24px",
                             },
-                          }}>
+                          }}
+                        >
                           Education
                         </Typography>
                         {userDetails.educationRecord.length ? (
@@ -323,7 +340,8 @@ export default function PublicProfileComponent() {
                                     userDetails.educationRecord.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
-                                }}>
+                                }}
+                              >
                                 <EducationCard {...item} noOptions />
                               </li>
                             ))}
@@ -344,7 +362,8 @@ export default function PublicProfileComponent() {
                             fontSize: "26px",
                             fontFamily: "Bahnschrift",
                             fontWeight: "600",
-                          }}>
+                          }}
+                        >
                           Download resume
                         </Typography>
                         <Typography>
@@ -383,14 +402,16 @@ export default function PublicProfileComponent() {
                           "@media (max-width: 480px)": {
                             fontSize: "20px",
                           },
-                        }}>
+                        }}
+                      >
                         Contact info
                       </Typography>
                       {userDetails.countryCode && userDetails.mobileNumber ? (
                         <Stack
                           direction={"row"}
                           spacing={2}
-                          alignItems={"center"}>
+                          alignItems={"center"}
+                        >
                           <Box
                             sx={{
                               background: "#FEEFD3",
@@ -402,7 +423,8 @@ export default function PublicProfileComponent() {
                               display: "inline-flex",
                               alignItems: "center",
                               justifyContent: "center",
-                            }}>
+                            }}
+                          >
                             <SVG.Phone />
                           </Box>
                           <Box>
@@ -419,10 +441,11 @@ export default function PublicProfileComponent() {
                                 // "@media (max-width: 480px)": {
                                 //   fontSize: "12px",
                                 // },
-                              }}>
+                              }}
+                            >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
@@ -436,7 +459,8 @@ export default function PublicProfileComponent() {
                                 "@media (max-width: 480px)": {
                                   fontSize: "10px",
                                 },
-                              }}>
+                              }}
+                            >
                               Mobile
                             </Typography>
                           </Box>
@@ -445,7 +469,8 @@ export default function PublicProfileComponent() {
                       <Stack
                         direction={"row"}
                         spacing={2}
-                        alignItems={"center"}>
+                        alignItems={"center"}
+                      >
                         <Box
                           sx={{
                             background: "#FEEFD3",
@@ -457,7 +482,8 @@ export default function PublicProfileComponent() {
                             display: "inline-flex",
                             alignItems: "center",
                             justifyContent: "center",
-                          }}>
+                          }}
+                        >
                           <SVG.Mail />
                         </Box>
                         <Box>
@@ -476,7 +502,8 @@ export default function PublicProfileComponent() {
                               "@media (max-width: 480px)": {
                                 fontSize: "12px !important",
                               },
-                            }}>
+                            }}
+                          >
                             {userDetails.email}
                           </Typography>
                           <Typography
@@ -490,7 +517,8 @@ export default function PublicProfileComponent() {
                               "@media (max-width: 480px)": {
                                 fontSize: "10px",
                               },
-                            }}>
+                            }}
+                          >
                             Email
                           </Typography>
                         </Box>
@@ -510,7 +538,8 @@ export default function PublicProfileComponent() {
                           "@media (max-width: 480px)": {
                             fontSize: "20px",
                           },
-                        }}>
+                        }}
+                      >
                         Skills
                       </Typography>
                       <Box>
@@ -552,7 +581,8 @@ export default function PublicProfileComponent() {
                           "@media (max-width: 480px)": {
                             fontSize: "20px",
                           },
-                        }}>
+                        }}
+                      >
                         Languages
                       </Typography>
                       <Box>
@@ -566,7 +596,8 @@ export default function PublicProfileComponent() {
                                     index !== userDetails.languages.length - 1
                                       ? "1px solid #cacaca"
                                       : "",
-                                }}>
+                                }}
+                              >
                                 <LanguageCard {...item} />
                               </li>
                             ))
@@ -589,7 +620,8 @@ export default function PublicProfileComponent() {
                           "@media (max-width:768px)": {
                             fontSize: "18px",
                           },
-                        }}>
+                        }}
+                      >
                         ADVETRISEMENT
                       </Box>
                     </Stack>

@@ -133,8 +133,18 @@ import { ReactComponent as employeUserGroup } from "./employeUserGroup.svg";
 import { ReactComponent as myPosts } from "./my_posts.svg";
 import { ReactComponent as employerDashboard } from "./employerDashboard.svg";
 import { ReactComponent as CalendarMonth } from "./calendar_month.svg";
+import { ReactComponent as callTrik } from "./call-trik.svg";
+import { ReactComponent as mailTrik } from "./mail-trik.svg";
+import { ReactComponent as languageTrik } from "./language-trik.svg";
+import { ReactComponent as locationTrik } from "./location_on-trik.svg";
+import { ReactComponent as logoHorizontalTrik } from "./Logo_main_horizontal-trik.svg";
 
 export const SVG = {
+  logoHorizontalTrik,
+  locationTrik,
+  languageTrik,
+  mailTrik,
+  callTrik,
   KoorLogo,
   ArrowOutward,
   AdvancedDown,
