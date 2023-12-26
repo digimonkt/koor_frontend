@@ -1,0 +1,78 @@
+.container {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.coverLetter {
+  margin-bottom: 25px;
+}
+
+.coverletter_div p {
+  text-align: justify;
+}
+
+.coverLetter h1 {
+  font-size: 32px;
+  font-weight: 600;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+  color: #121212;
+  text-align: center;
+}
+
+.coverLetter h3 {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+  color: #848484;
+  text-align: center;
+}
+
+.coverletter_div {
+  border-bottom: 1.5px solid #cacaca;
+  border-top: 1.5px solid #cacaca;
+  padding: 20px 0px;
+}
+
+.coverletter_div h2 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Bahnschrift";
+  letter-spacing: 0.8px;
+  color: #121212;
+}
+
+.coverletter_div p {
+  font-size: 12px;
+  font-weight: 300;
+  font-family: "Poppins";
+  letter-spacing: 0.14px;
+  color: #121212;
+}
+
+.coverletter_div h3 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Bahnschrift";
+  letter-spacing: 0.8px;
+  color: #121212;
+}
+
+.page {
+  flex-direction: row;
+  background-color: #ffffff;
+  padding: 30px;
+}
+
+.section {
+  margin: 10px;
+  padding: 10px;
+  flex-grow: 1;
+}
+
+@media print {
+  footer {
+    page-break-after: always;
+  }
+}

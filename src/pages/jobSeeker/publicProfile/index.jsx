@@ -141,8 +141,6 @@ export default function PublicProfileComponent() {
                         <Avatar
                           src={generateFileUrl(userDetails.profileImage || "")}
                           sx={{
-                            // width: "88px",
-                            // height: "88px",
                             boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
                           }}
                         />

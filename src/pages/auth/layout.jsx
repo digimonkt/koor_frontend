@@ -54,7 +54,7 @@ function AuthLayout({
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { role, verifyEmail, userVerificationToken } = useSelector(
-      (state) => state.auth,
+      (state) => state.auth
     );
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -159,7 +159,7 @@ function AuthLayout({
     useEffect(() => {
       if (userVerificationToken) {
         setActivationLabel(
-          "Please wait while we are validating activation Link",
+          "Please wait while we are validating activation Link"
         );
       } else {
         setActivationLabel(selectedRoleTitle);

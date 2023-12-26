@@ -77,7 +77,7 @@ function LoginForm() {
         // navigate(`/${role}/my-profile/job-criteria`);
       } else {
         setIsLoading(false);
-        formik.setErrors({ password: "Invalid Credentials" });
+        formik.setErrors({ password: "Invalid Password" });
       }
     },
   });
