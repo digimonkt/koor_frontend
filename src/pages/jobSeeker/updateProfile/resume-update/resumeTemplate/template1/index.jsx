@@ -15,7 +15,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
     const convertImageToBase64 = async () => {
       try {
         const response = await fetch(
-          generateFileUrl(applicantDetails?.profileImage),
+          generateFileUrl(applicantDetails?.profileImage)
         );
         const blob = await response.blob();
         const reader = new FileReader();
@@ -76,7 +76,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 </ul>
               </div>
               <hr className="horizontal_line" />
-              {applicantDetails.skills.length && (
+              {Boolean(applicantDetails.skills.length) && (
                 <>
                   <div className="skills_div">
                     <h2>SKILLS</h2>
@@ -89,7 +89,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
                   <hr />
                 </>
               )}
-              {applicantDetails.educationRecord.length && (
+              {Boolean(applicantDetails.educationRecord.length) && (
                 <>
                   <div className="education">
                     <h2>EDUCATION</h2>
@@ -178,7 +178,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
               </div>
             </div>
             <hr /> */}
-              {applicantDetails.languages.length && (
+              {Boolean(applicantDetails.languages.length) && (
                 <div className="language">
                   <h2>LANGUAGE</h2>
                   <div className="language_div">
@@ -200,7 +200,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 <p>{applicantDetails.profile.description}</p>
               </div>
               <hr />
-              {applicantDetails.workExperiences.length && (
+              {Boolean(applicantDetails.workExperiences.length) && (
                 <div className="work_experiance">
                   <h2>Work Experience</h2>
                   {applicantDetails.workExperiences.map((item, index) => (
