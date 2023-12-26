@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { DownloadResumeAPI } from "../../../../api/jobSeeker";
 import { generateFileUrl } from "../../../../utils/generateFileUrl";
 import { Capacitor } from "@capacitor/core";
+import { KoorLogo } from "@assets/base64/index";
 const ResumeUpdate = ({
   title,
   bgcolor,
@@ -16,32 +17,67 @@ const ResumeUpdate = ({
   description,
   buttonWidth,
   toggle,
+  appliedJob,
   fun,
 }) => {
   const [openResume, setOpenResume] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
-
   const platform = Capacitor.getPlatform();
 
   const downloadPDF = async () => {
     setIsDownloadingPDF(true);
     const element = document.getElementById("div-to-pdf");
-    const images = document.getElementById("profile-avatar");
+    const options = {
+      margin: [20, 0],
+      filename: `${currentUser.name || "Resume"}.pdf`,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "Portrait" },
+      pagebreak: {
+        before: "#page-break",
+      },
+    };
 
-    if (images) {
-      const options = {
-        margin: [5, 5],
-        filename: `${currentUser.name || "Resume"}.pdf`,
-        image: { type: "jpeg", quality: 1 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-      };
-      await html2pdf().set(options).from(element).save();
-    } else {
-      console.log("loading");
-    }
+    const footerContent = "This resume is generated with";
+
+    await html2pdf()
+      .from(element)
+      .set(options)
+      .toPdf()
+      .get("pdf")
+      .then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(10);
+          pdf.setTextColor(150);
+          const imageX =
+            pdf.internal.pageSize.getWidth() -
+            pdf.internal.pageSize.getWidth() / 2 +
+            footerContent.length -
+            10;
+          pdf.addImage(
+            KoorLogo,
+            "PNG",
+            imageX,
+            pdf.internal.pageSize.getHeight() - 13,
+            10,
+            5,
+          );
+          pdf.text(
+            footerContent,
+            pdf.internal.pageSize.getWidth() -
+              pdf.internal.pageSize.getWidth() / 2 -
+              footerContent.length,
+            pdf.internal.pageSize.getHeight() - 10,
+          );
+        }
+      })
+      .save();
+
     setIsDownloadingPDF(false);
   };
 
@@ -50,16 +86,6 @@ const ResumeUpdate = ({
     const res = await DownloadResumeAPI();
     if (res.remote === "success") {
       window.open(generateFileUrl(res.data.url), "_blank");
-      // const response = await fetch(generateFileUrl(res.data.url));
-      // const blob = await response.blob();
-      // // const newFileName = `${currentUser.name || "Resume"}.docx`;
-      // const downloadLink = document.createElement("a");
-      // downloadLink.href = URL.createObjectURL(blob);
-      // // downloadLink.downtload = newFileName;
-      // downloadLink.target = "_blank";
-      // document.body.appendChild(downloadLink);
-      // downloadLink.click();
-      // document.body.removeChild(downloadLink);
     }
     setIsDownloadingDocs(false);
   };
@@ -201,15 +227,6 @@ const ResumeUpdate = ({
             </div>
           </div>
         )}
-
-        {/* <Divider />
-        <div className="text-resume  text-center mt-3 pb-1">
-          Don’t have a resume?
-        </div>
-        <div className="text-worry">
-          Don't worry if you don't have one yet,{" "}
-          <span>create resume from Jobseeker's</span>
-        </div> */}
       </div>
       <DialogBox
         open={openResume}
@@ -242,7 +259,7 @@ const ResumeUpdate = ({
             style={{ marginBottom: "10px" }}
             disabled={isDownloadingPDF || isDownloadingDocs}
           />
-          <ResumeTemplate />
+          <ResumeTemplate appliedJob={appliedJob} />
         </>
       </DialogBox>
     </>
