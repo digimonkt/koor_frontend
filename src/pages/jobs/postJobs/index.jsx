@@ -1106,11 +1106,13 @@ function PostJobsComponent() {
                   <Grid item xl={12} lg={12} xs={12}>
                     <h2 className="mt-2">Job Posting Plan</h2>
                   </Grid>
+                </Grid>
+                <Box>
                   <Package
                     packageData={packageData}
                     handleBuyPackage={handleBuyPackage}
                   />
-                </Grid>
+                </Box>
                 <hr className="mt-3" />
                 <Grid item xl={12} lg={12} xs={12}>
                   <Stack

@@ -1785,6 +1785,7 @@ span.count {
     border: 1px solid #d5e3f7;
     border-radius: 20px;
     padding: 20px 20px 20px 20px;
+    margin: 0px 10px;
   }
 
   .credits_title {
