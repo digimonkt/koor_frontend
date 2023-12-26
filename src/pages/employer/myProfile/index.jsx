@@ -53,6 +53,7 @@ function MyProfileComponent() {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
+  const [toggle, setToggle] = useState(["about"]);
   const { countries, cities, sectors } = useSelector((state) => state.choices);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const formik = useFormik({
@@ -226,11 +227,21 @@ function MyProfileComponent() {
     else setProfilePicLoading("error");
   };
 
+  const handleToggleModel2 = (type) => {
+    setToggle((prev) =>
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+    );
+  };
+
   const handleToggleModel = () => {
     if (Object.keys(formik.errors).length === 0) {
       setOpen(!open);
     }
   };
+
+  useEffect(() => {
+    console.log("first", { toggle });
+  }, [toggle]);
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
@@ -332,7 +343,7 @@ function MyProfileComponent() {
                     placeholder="Address"
                     className="add-form-control"
                     name={formik.getFieldProps("address").name}
-                    onBlur={(e) => formik.getFieldProps("address").onBlur}
+                    onBlur={() => formik.getFieldProps("address").onBlur}
                     onChange={(e) => setSearchValue(e.target.value)}
                     value={searchValue}
                   />
@@ -380,7 +391,7 @@ function MyProfileComponent() {
                       handleDrop={(e) => formik.setFieldValue("license", e)}
                       single
                       files={formik.values.license}
-                      deleteFile={(e) => formik.setFieldValue("license", [])}
+                      deleteFile={(_) => formik.setFieldValue("license", [])}
                     />
                   </Stack>
                   {formik.touched.license && formik.errors.license ? (
@@ -465,6 +476,8 @@ function MyProfileComponent() {
                 bgColor="rgba(40, 71, 146, 0.1)"
                 handleSave={handleProfilePicSave}
                 image={currentUser.profileImage}
+                fun={() => handleToggleModel2("vendor")}
+                toggle={toggle.includes("vendor")}
                 loading={profilePicLoading === "loading"}
               />
             </CardContent>

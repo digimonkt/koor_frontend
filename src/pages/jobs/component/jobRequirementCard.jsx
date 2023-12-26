@@ -18,9 +18,7 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
         </div>
       )}
       <div className={`${styles.required}`}>
-        {
-          languages.length > 0 && <h6 className="mb-0 mt-3">Languages</h6>
-        }
+        {languages.length > 0 && <h6 className="mb-0 mt-3">Languages</h6>}
 
         {languages.map((language) => {
           return (
@@ -33,18 +31,32 @@ function JobRequirementCard({ highestEducation, languages, skills }) {
         <div className={`${styles.skills}`}>
           {skills.length > 0 && <h6 className="mb-2  mt-3">Skills</h6>}
           <Box sx={{ overflow: "auto" }}>
-            <Stack direction={"row"} spacing={2} alignItems={"center"}>
+            <Stack
+              direction={"row"}
+              spacing={2}
+              alignItems={"center"}
+              flexWrap={"wrap"}
+              useFlexGap
+            >
               {skills.map((skill) => {
                 return (
                   <>
-                    <div style={{ marginTop: "20px" }}>
+                    <Box
+                      sx={{
+                        marginTop: "20px",
+                        marginRight: "5px",
+                        "@media (max-width:740px)": {
+                          marginTop: "10px",
+                        },
+                      }}
+                    >
                       <SearchButton
                         key={skill.id}
                         text={skill.title}
                         className={`${styles.grybtn}`}
                         sx={{ minWidth: "100%", whiteSpace: "nowrap" }}
                       />
-                    </div>
+                    </Box>
                   </>
                 );
               })}

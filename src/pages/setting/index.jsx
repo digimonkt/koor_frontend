@@ -1,10 +1,57 @@
 import { SVG } from "@assets/svg";
 import { Box, IconButton, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AndroidSwitch from "./switch";
+import { LogoutUserAPI } from "@api/user";
+import { globalLocalStorage } from "@utils/localStorage";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoggedIn } from "@redux/slice/user";
+import { Plugins } from "@capacitor/core";
+import { useState, useEffect } from "react";
+import { USER_ROLES } from "../../utils/enum";
 
 const Setting = () => {
+  const { Storage } = Plugins;
   const navigate = useNavigate();
+  const [cache, setCache] = useState(0);
+  const dispatch = useDispatch();
+  const { role } = useSelector(({ auth }) => auth);
+
+  const userLogout = async () => {
+    await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
+  };
+  const logoutHandle = () => {
+    userLogout();
+    dispatch(setIsLoggedIn(false));
+  };
+
+  const clearCache = async () => {
+    try {
+      await Storage.clear();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCacheSize = async () => {
+    try {
+      // Get the used space in bytes
+      const usedSpace = await Storage.getBytesUsed();
+
+      // Convert bytes to kilobytes
+      const usedSpaceKB = usedSpace / 1024;
+
+      setCache(usedSpaceKB.toFixed(2));
+      console.log(`Cache size: ${usedSpaceKB.toFixed(2)} KB`);
+    } catch (error) {
+      console.error("Error getting cache size:", error);
+    }
+  };
+
+  useEffect(() => {
+    getCacheSize();
+  }, [cache]);
   return (
     <Box
       sx={{
@@ -64,8 +111,10 @@ const Setting = () => {
             <Typography variant="span">System</Typography>
           </Box>
           <Box>
-            <Typography variant="body1">Clear app cache</Typography>
-            <Typography variant="span">136 MB</Typography>
+            <Typography variant="body1" onClick={() => clearCache()}>
+              Clear app cache
+            </Typography>
+            <Typography variant="span">{cache} KB</Typography>
           </Box>
         </Stack>
         <Stack
@@ -74,7 +123,17 @@ const Setting = () => {
           sx={{ borderBottom: "1px solid #F0F0F0", pb: 2.5 }}
         >
           <Box>
-            <Typography variant="body1">Profile info</Typography>
+            <Typography
+              variant="body1"
+              component={Link}
+              to={
+                role === USER_ROLES.jobSeeker
+                  ? `/${role}/my-profile/update-profile`
+                  : `/${role}/my-profile`
+              }
+            >
+              Profile info
+            </Typography>
           </Box>
           <Box>
             <Typography variant="body1">Password & security</Typography>
@@ -83,7 +142,9 @@ const Setting = () => {
             <Typography variant="body1">Change account</Typography>
           </Box>
           <Box>
-            <Typography variant="body1">Log out</Typography>
+            <Typography variant="body1" onClick={() => logoutHandle()}>
+              Log out
+            </Typography>
           </Box>
         </Stack>
         <Stack
@@ -98,7 +159,13 @@ const Setting = () => {
             </Box>
           </Stack>
           <Stack direction={"row"} justifyContent={"space-between"}>
-            <Typography variant="body1">Terms of service</Typography>
+            <Typography
+              component={Link}
+              to={"/terms-condition"}
+              variant="body1"
+            >
+              Terms of service
+            </Typography>
             <Box sx={{ color: "#848484" }}>
               <SVG.OpenNewIcon />
             </Box>
