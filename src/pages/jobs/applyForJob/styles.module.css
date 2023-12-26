@@ -349,6 +349,8 @@
   font-weight: 600 !important;
   padding: 10px 30px !important;
   border-radius: 80px !important;
+  font-family: Bahnschrift !important;
+  height: 42px;
 }
 .cancelbtn:hover {
   background: #feefd3 !important;
@@ -362,6 +364,7 @@
   height: 42px !important;
   border-radius: 60px !important;
   font-weight: 600 !important;
+  font-family: Bahnschrift !important;
 }
 .applybtn:hover {
   background: #d88b24 !important;
@@ -471,6 +474,12 @@
 @media screen and (max-width: 480px) {
   .cancel_card h1 {
     font-size: 20px;
+  }
+  .applybtn {
+    font-size: 14px !important;
+  }
+  .cancelbtn {
+    font-size: 14px !important;
   }
   .job_done_desc {
     font-size: 12px;
