@@ -33,18 +33,16 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
-// import { getJobAttachmentAPI } from "@api/job";
-// import { fileTypeExtactor, downloadUrlCreator } from "@utils/filesUtils";
 import { getColorByRemainingDays } from "@utils/generateColor";
-// import { Capacitor } from "@capacitor/core";
-// import writeBlob from "capacitor-blob-writer";
-// import { Filesystem, Directory } from "@capacitor/filesystem";
+import { fileTypeExtractor, downloadUrlCreator } from "@utils/filesUtils";
+import { Capacitor } from "@capacitor/core";
+import { getJobAttachmentAPI } from "@api/job";
 import { generateFileUrl } from "@utils/generateFileUrl";
 
 function TenderDetailsComponent() {
   const params = useParams();
   const navigate = useNavigate();
-  // const platform = Capacitor.getPlatform();
+  const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const [details, setDetails] = useState({
     id: "",
@@ -172,53 +170,30 @@ function TenderDetailsComponent() {
     }
   };
 
-  // const handleLoadImage = async (url) => {
-  //   const fileType = fileTypeExtactor(url);
-  //   const response = await getJobAttachmentAPI(url);
+  const handleLoadImage = async (url) => {
+    const fileType = fileTypeExtractor(url);
+    const response = await getJobAttachmentAPI(url);
 
-  //   if (response.remote === "success") {
-  //     const base64String = response.data.base_image;
-  //     const byteCharacters = atob(base64String);
-  //     const byteArrays = new Uint8Array(byteCharacters.length);
+    if (response.remote === "success") {
+      const base64String = response.data.base_image;
+      const byteCharacters = atob(base64String);
+      const byteArrays = new Uint8Array(byteCharacters.length);
 
-  //     for (let i = 0; i < byteCharacters.length; i++) {
-  //       byteArrays[i] = byteCharacters.charCodeAt(i);
-  //     }
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteArrays[i] = byteCharacters.charCodeAt(i);
+      }
 
-  //     const blob = new Blob([byteArrays], {
-  //       type: fileType || "application/octet-stream",
-  //     });
+      const blob = new Blob([byteArrays], {
+        type: fileType || "application/octet-stream",
+      });
 
-  //     if (Capacitor.isNativePlatform()) {
-  //       const status = await Filesystem.checkPermissions();
-  //       const directory = Directory.ExternalStorage;
-  //       const path = platform === "ios" ? `${name}` : `Download/${name}`;
-
-  //       if (status.publicStorage !== "granted") {
-  //         const status = await Filesystem.requestPermissions();
-  //         if (status !== "granted") {
-  //           await writeBlob({
-  //             path,
-  //             blob,
-  //             directory,
-  //             fast_mode: true,
-  //             on_fallback: console.error,
-  //           });
-  //         }
-  //       } else {
-  //         await writeBlob({
-  //           path,
-  //           blob,
-  //           directory,
-  //           fast_mode: true,
-  //           on_fallback: console.error,
-  //         });
-  //       }
-  //     } else {
-  //       downloadUrlCreator(blob);
-  //     }
-  //   }
-  // };
+      if (platform === "android" || platform === "ios") {
+        return "";
+      } else {
+        downloadUrlCreator(blob);
+      }
+    }
+  };
 
   function handleSendEmail(details) {
     const email = details.contactEmail;
@@ -251,13 +226,24 @@ function TenderDetailsComponent() {
       <Container
         maxWidth={false}
         sx={{
+          padding: platform === "android" || platform === "ios" ? "0px" : null,
           "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
         }}
       >
-        <div className={`${styles.Jobcard}`}>
+        <div
+          className={`${styles.Jobcard}`}
+          style={{
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
+            borderRadius:
+              platform === "android" || platform === "ios" ? "0px" : null,
+          }}
+        >
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -359,6 +345,7 @@ function TenderDetailsComponent() {
                         </span>
                         <a
                           className="m-0"
+                          onClick={(e) => handleLoadImage(attachment.path)}
                           href={generateFileUrl(attachment.path)}
                           target="_blank"
                           rel="noreferrer"
