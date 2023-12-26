@@ -1,6 +1,6 @@
 import { mimeTypes } from "./constants/constants.js";
 
-export function fileTypeExtactor(url) {
+export function fileTypeExtractor(url) {
   const extension = "." + url.split(".").pop().toLowerCase();
   return mimeTypes[extension] || "application/octet-stream";
 }
