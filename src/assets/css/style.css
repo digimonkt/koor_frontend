@@ -484,7 +484,7 @@ header {
   font-size: 14px !important;
   font-weight: 500 !important;
   color: #ffffff !important;
-  font-family: "Poppins" !important;
+  font-family: "Bahnschrift" !important;
   letter-spacing: 0.03em !important;
   border: 1px solid #eea23d !important;
   height: 42px;
@@ -2613,6 +2613,10 @@ input.employersearch {
 
 @media screen and (max-width: 480px) {
   .reset_password_btn {
+    font-size: 14px !important;
+  }
+
+  .outline-button {
     font-size: 14px !important;
   }
 
