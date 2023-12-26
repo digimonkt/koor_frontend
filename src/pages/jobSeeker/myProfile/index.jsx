@@ -12,18 +12,18 @@ import WorkExperience from "./work-experience";
 import Skills from "./skills";
 import AboutMe from "../aboutMe";
 import { Capacitor } from "@capacitor/core";
-import { IMAGES } from "@assets/images";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
 import { setIsLoggedIn } from "../../../redux/slice/user";
 import { LogoutUserAPI } from "@api/user";
 import { globalLocalStorage } from "@utils/localStorage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const MyProfile = () => {
+  const platform = Capacitor.getPlatform();
+  const { currentUser } = useSelector(({ auth }) => auth);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const platform = Capacitor.getPlatform();
   const [toggle, setToggle] = useState(["job"]);
 
   const userLogout = async () => {
@@ -37,7 +37,7 @@ const MyProfile = () => {
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
     );
   };
 
@@ -87,7 +87,7 @@ const MyProfile = () => {
                 <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
                   <img
                     alt="profile"
-                    src={IMAGES.RecentFive}
+                    src={currentUser?.profileImage}
                     style={{
                       width: "80px",
                       height: "80px",
@@ -115,9 +115,9 @@ const MyProfile = () => {
                       },
                     }}
                   >
-                    <h4>Vlad Blyshchyk</h4>
-                    <p>+51599268290</p>
-                    <p>vlad@gmail.com</p>
+                    <h4>{currentUser?.name || currentUser?.email}</h4>
+                    <p>{currentUser?.mobileNumber}</p>
+                    <p>{currentUser.email}</p>
                   </Box>
                 </Stack>
               </Grid>

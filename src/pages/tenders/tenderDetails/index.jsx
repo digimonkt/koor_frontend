@@ -33,12 +33,18 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
-import { getJobAttachmentAPI } from "@api/job";
+// import { getJobAttachmentAPI } from "@api/job";
+// import { fileTypeExtactor, downloadUrlCreator } from "@utils/filesUtils";
 import { getColorByRemainingDays } from "@utils/generateColor";
+// import { Capacitor } from "@capacitor/core";
+// import writeBlob from "capacitor-blob-writer";
+// import { Filesystem, Directory } from "@capacitor/filesystem";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 function TenderDetailsComponent() {
   const params = useParams();
   const navigate = useNavigate();
+  // const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const [details, setDetails] = useState({
     id: "",
@@ -101,14 +107,14 @@ function TenderDetailsComponent() {
     },
     attachments: [],
   });
-  const { role, isLoggedIn } = useSelector(state => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [addressGeoCode, setAddressGeoCode] = useState({});
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
 
-  const getTenderDetails = async tenderId => {
+  const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
       setDetails(res.data);
@@ -119,15 +125,15 @@ function TenderDetailsComponent() {
     }
   };
 
-  const getTenderSuggestion = async tenderId => {
+  const getTenderSuggestion = async (tenderId) => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
       setTenderSuggestion(res.data.results);
     }
   };
-  const handleSaveTender = async tenderId => {
+  const handleSaveTender = async (tenderId) => {
     if (isLoggedIn) {
-      setDetails(prevState => ({
+      setDetails((prevState) => ({
         ...prevState,
         isSaved: !prevState.isSaved,
       }));
@@ -165,49 +171,55 @@ function TenderDetailsComponent() {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
-  const handleLoadImage = async url => {
-    const fileType = url => {
-      const extension = "." + url.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".gif": "image/gif",
-        ".pdf": "application/pdf",
-      };
 
-      return mimeTypes[extension] || "application/octet-stream";
-    };
+  // const handleLoadImage = async (url) => {
+  //   const fileType = fileTypeExtactor(url);
+  //   const response = await getJobAttachmentAPI(url);
 
-    const fileName = "attachment";
-    const response = await getJobAttachmentAPI(url);
+  //   if (response.remote === "success") {
+  //     const base64String = response.data.base_image;
+  //     const byteCharacters = atob(base64String);
+  //     const byteArrays = new Uint8Array(byteCharacters.length);
 
-    if (response.remote === "success") {
-      const base64String = response.data.base_image;
-      // Convert base64 string to Blob
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
+  //     for (let i = 0; i < byteCharacters.length; i++) {
+  //       byteArrays[i] = byteCharacters.charCodeAt(i);
+  //     }
 
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
+  //     const blob = new Blob([byteArrays], {
+  //       type: fileType || "application/octet-stream",
+  //     });
 
-      const blob = new Blob([byteArrays], {
-        type: fileType(url) || "application/octet-stream",
-      });
+  //     if (Capacitor.isNativePlatform()) {
+  //       const status = await Filesystem.checkPermissions();
+  //       const directory = Directory.ExternalStorage;
+  //       const path = platform === "ios" ? `${name}` : `Download/${name}`;
 
-      // Create a download link
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName || "file";
+  //       if (status.publicStorage !== "granted") {
+  //         const status = await Filesystem.requestPermissions();
+  //         if (status !== "granted") {
+  //           await writeBlob({
+  //             path,
+  //             blob,
+  //             directory,
+  //             fast_mode: true,
+  //             on_fallback: console.error,
+  //           });
+  //         }
+  //       } else {
+  //         await writeBlob({
+  //           path,
+  //           blob,
+  //           directory,
+  //           fast_mode: true,
+  //           on_fallback: console.error,
+  //         });
+  //       }
+  //     } else {
+  //       downloadUrlCreator(blob);
+  //     }
+  //   }
+  // };
 
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(downloadUrl);
-    }
-  };
   function handleSendEmail(details) {
     const email = details.contactEmail;
     const ccEmail1 = details.cc1;
@@ -215,7 +227,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -243,7 +255,8 @@ function TenderDetailsComponent() {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
-        }}>
+        }}
+      >
         <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
@@ -256,7 +269,8 @@ function TenderDetailsComponent() {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate(-1)}>
+                    onClick={() => navigate(-1)}
+                  >
                     {<SVG.LeftArrow />}
                   </IconButton>
                   <p className="mb-0">{details.title}</p>
@@ -279,7 +293,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -294,7 +308,8 @@ function TenderDetailsComponent() {
                     className="job-description"
                     dangerouslySetInnerHTML={{
                       __html: details.description,
-                    }}></div>
+                    }}
+                  ></div>
                 </div>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
@@ -342,16 +357,23 @@ function TenderDetailsComponent() {
                         <span className="d-inline-flex me-2">
                           {<SVG.BlueAttach />}
                         </span>
-                        <span
-                          onClick={() => handleLoadImage(attachment.path)}
+                        <a
                           className="m-0"
+                          href={generateFileUrl(attachment.path)}
+                          target="_blank"
+                          rel="noreferrer"
                           style={{
+                            color:
+                              role === USER_ROLES.jobSeeker
+                                ? "#eea23d"
+                                : "#274593",
                             cursor: "pointer",
                             whiteSpace: "normal",
                             wordBreak: "break-all",
-                          }}>
+                          }}
+                        >
                           {attachment.title}
-                        </span>
+                        </a>
                       </div>
                     );
                   })}
@@ -395,13 +417,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {
@@ -431,7 +453,8 @@ function TenderDetailsComponent() {
                         lg: 1,
                       }}
                       alignItems="center"
-                      justifyContent="center">
+                      justifyContent="center"
+                    >
                       <OutlinedButton
                         title={
                           details.isSaved
@@ -492,7 +515,8 @@ function TenderDetailsComponent() {
                 <div
                   dangerouslySetInnerHTML={{
                     __html: details.applicationInstruction,
-                  }}></div>
+                  }}
+                ></div>
               </div>
               {role === USER_ROLES.vendor || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
@@ -503,7 +527,8 @@ function TenderDetailsComponent() {
                       "@media (max-width: 480px)": {
                         display: "block",
                       },
-                    }}>
+                    }}
+                  >
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
@@ -582,7 +607,8 @@ function TenderDetailsComponent() {
                       overflow: "hidden",
                       borderRadius: "5px",
                       position: "relative",
-                    }}>
+                    }}
+                  >
                     <GoogleMapWrapper>
                       <GoogleMap center={addressGeoCode} zoom={15} />
                     </GoogleMapWrapper>
@@ -592,7 +618,8 @@ function TenderDetailsComponent() {
             </Grid>
             <DialogBox
               open={registrationWarning}
-              handleClose={() => setRegistrationWarning(false)}>
+              handleClose={() => setRegistrationWarning(false)}
+            >
               <div>
                 <h1 className="heading">Register as vendor</h1>
                 <div className="form-content">
@@ -626,7 +653,8 @@ function TenderDetailsComponent() {
                           textDecoration: "none",
                           color: "#274593",
                           fontWeight: 600,
-                        }}>
+                        }}
+                      >
                         Login
                       </Link>
                     </span>
@@ -647,7 +675,8 @@ function TenderDetailsComponent() {
                   <Link
                     to={urlcat("/tender/details/:tenderId", {
                       tenderId: item.id,
-                    })}>
+                    })}
+                  >
                     {item?.title}
                   </Link>
                   <span>
@@ -668,7 +697,8 @@ function TenderDetailsComponent() {
             width: "700px",
             maxWidth: "857px",
           },
-        }}>
+        }}
+      >
         <ShareTender />
       </DialogBox>
     </>

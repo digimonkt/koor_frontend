@@ -39,23 +39,21 @@ const BottomBar = () => {
   };
 
   return (
-    <>
-      <BottomNavigation
-        sx={{
-          position: "fixed",
-          bottom: "20px",
-          left: 0,
-          right: 0,
-          height: "auto",
-          padding: "15px 0px",
-          borderTop: "1px solid #848484",
-          zIndex: 999,
-        }}
-        showLabels
-      >
-        {role && generatNavbar(role)}
-      </BottomNavigation>
-    </>
+    <BottomNavigation
+      sx={{
+        position: "fixed",
+        bottom: "20px",
+        left: 0,
+        right: 0,
+        height: "auto",
+        padding: "15px 0px",
+        borderTop: "1px solid #848484",
+        zIndex: 999,
+      }}
+      showLabels
+    >
+      {role && generatNavbar(role)}
+    </BottomNavigation>
   );
 };
 export default BottomBar;

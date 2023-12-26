@@ -44,8 +44,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "Talent"
         : ROLE === USER_ROLES.vendor
-        ? "Tenders"
-        : "Jobs",
+          ? "Tenders"
+          : "Jobs",
     icon:
       ROLE === USER_ROLES.employer ? (
         <SVG.employeUserGroup />
@@ -56,8 +56,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "search/talents"
         : ROLE === USER_ROLES.vendor
-        ? "search/tenders"
-        : "job_seeker/job-feed",
+          ? "search/tenders"
+          : "job_seeker/job-feed",
   },
   {
     label: ROLE === USER_ROLES.employer ? "My posts" : "Saved",
@@ -67,8 +67,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "employer/manage-jobs"
         : ROLE === USER_ROLES.vendor
-        ? "vendor/tender/saved"
-        : "job_seeker/jobs/saved",
+          ? "vendor/tender/saved"
+          : "job_seeker/jobs/saved",
   },
   {
     label: ROLE === USER_ROLES.employer ? "Messages" : "Messages",
@@ -77,8 +77,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "employer/chat"
         : ROLE === USER_ROLES.vendor
-        ? "vendor/chat"
-        : "job_seeker/chat",
+          ? "vendor/chat"
+          : "job_seeker/chat",
   },
 
   {
@@ -93,8 +93,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "employer/dashboard"
         : ROLE === USER_ROLES.vendor
-        ? "vendor/my-profile"
-        : "job_seeker/my-profile",
+          ? "vendor/dashboard"
+          : "job_seeker/my-profile",
   },
 ];
 
@@ -103,13 +103,22 @@ export const generateColor = (ROLE) => {
     ROLE === USER_ROLES.employer
       ? "#274593"
       : ROLE === USER_ROLES.vendor
-      ? "#274593"
-      : "#EEA23D";
+        ? "#274593"
+        : "#EEA23D";
 
   return color;
 };
+
 export const TABS_VALUE = {
   tab1: 0,
   tab2: 1,
   tab3: 2,
+};
+
+export const mimeTypes = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".gif": "image/gif",
+  ".pdf": "application/pdf",
 };

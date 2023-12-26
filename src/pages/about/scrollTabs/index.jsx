@@ -44,7 +44,7 @@ const ScrollTabs = ({ faqCategory }) => {
   const [activeCategory, setActiveCategory] = useState(0);
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
   const handleFAQQuestion = (role, categoryId) => {
@@ -90,7 +90,7 @@ const ScrollTabs = ({ faqCategory }) => {
               ))}
             </Box>
           </TabList>
-          {(faqCategory || []).map((category, index) => (
+          {(faqCategory || []).map((_, index) => (
             <>
               <TabPanel value={value} index={index}>
                 <Accordian faqCategory={faqCategory} />

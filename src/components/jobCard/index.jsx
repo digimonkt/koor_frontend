@@ -16,7 +16,7 @@ import { showDay } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
-  const { isLoggedIn, role } = useSelector(state => state.auth);
+  const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
@@ -25,7 +25,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [applicationStatus, setApplicationStatus] = useState("applied");
   const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
-    setNumLines(prevNumLines => (prevNumLines === 3 ? jobDetails?.length : 3));
+    setNumLines((prevNumLines) =>
+      prevNumLines === 3 ? jobDetails?.length : 3
+    );
   };
 
   const textWrapperStyle = {
@@ -51,7 +53,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
   };
-  const updateJob = async jobId => {
+  const updateJob = async (jobId) => {
     const res = await updateEmployerJobStatusAPI(jobId);
     if (res.remote === "success") {
       console.log(res);
@@ -79,8 +81,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A",
-          ),
+            "MMMM D, YYYY [at] h:mm A"
+          )
       );
     }
   }, [jobDetails]);
@@ -166,7 +168,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <p
                   dangerouslySetInnerHTML={{
                     __html: jobDetails?.description,
-                  }}></p>
+                  }}
+                ></p>
               </div>
               {jobDetails?.description?.length > 350 && (
                 <button
@@ -177,7 +180,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     color:
                       role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                   }}
-                  onClick={handleSeeMoreClick}>
+                  onClick={handleSeeMoreClick}
+                >
                   {numLines === 3 ? "See More" : "See Less"}
                 </button>
               )}

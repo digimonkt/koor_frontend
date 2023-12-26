@@ -15,13 +15,14 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
+// import { Capacitor } from "@capacitor/core";
 import React, { useEffect, useState } from "react";
-import { SVG } from "@assets/svg";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LogoutUserAPI } from "@api/user";
 import { globalLocalStorage } from "@utils/localStorage";
+import { SVG } from "@assets/svg";
 import { setIsLoggedIn } from "@redux/slice/user";
-import { IMAGES } from "@assets/images";
+import { LogoutUserAPI } from "@api/user";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -32,6 +33,19 @@ function Dashboard() {
 
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
+
+  const { currentUser } = useSelector(({ auth }) => auth);
+
+  const logoutHandle = () => {
+    userLogout();
+    dispatch(setIsLoggedIn(false));
+  };
+
+  const userLogout = async () => {
+    await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
+  };
+
   const getRecentApplications = async () => {
     setIsLoading(true);
     const res = await getAppliedTendersAPI({
@@ -59,14 +73,7 @@ function Dashboard() {
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
-  const userLogout = async () => {
-    await LogoutUserAPI();
-    globalLocalStorage.cleanLocalStorage();
-  };
-  const logoutHandle = () => {
-    userLogout();
-    dispatch(setIsLoggedIn(false));
-  };
+
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>
@@ -92,6 +99,12 @@ function Dashboard() {
                   <IconButton onClick={() => logoutHandle()}>
                     <SVG.AppGroup />
                   </IconButton>
+                  <IconButton LinkComponent={Link} to="/Setting">
+                    <SVG.Settings />
+                  </IconButton>
+                  <IconButton LinkComponent={Link} to="/notification">
+                    <SVG.NotificationIcon />
+                  </IconButton>
                 </Stack>
               </Stack>
             </Grid>
@@ -99,7 +112,7 @@ function Dashboard() {
               <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
                 <img
                   alt="profile"
-                  src={IMAGES.RecentFive}
+                  src={currentUser?.profileImage}
                   style={{
                     width: "80px",
                     height: "80px",
@@ -127,10 +140,10 @@ function Dashboard() {
                     },
                   }}
                 >
-                  <h4>Vendor Digimonk</h4>
-
-                  <p>+51599268290</p>
-                  <p>vendor009@gmail.com</p>
+                  <h4>{currentUser?.name || currentUser?.email}</h4>
+                  <p>{currentUser?.profile?.website}</p>
+                  <p>{currentUser?.moblieNumber}</p>
+                  <p>{currentUser?.email}</p>
                 </Box>
               </Stack>
             </Grid>
@@ -190,7 +203,6 @@ function Dashboard() {
             </CardContent>
           </Card>
         </Grid>
-
         <Grid item xl={12} lg={12} sm={12} xs={12}>
           <Card
             sx={{

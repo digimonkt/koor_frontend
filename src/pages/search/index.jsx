@@ -45,8 +45,8 @@ function Search({ searchTypeForJob }) {
   const {
     auth: { role },
     search: { totalItems, totalPages, page, advanceFilter },
-  } = useSelector(state => state);
-  const { jobs, tenders } = useSelector(state => state.search);
+  } = useSelector((state) => state);
+  const { jobs, tenders } = useSelector((state) => state.search);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState("");
   const [searchName, setSearchName] = useState("");
@@ -57,12 +57,12 @@ function Search({ searchTypeForJob }) {
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("1");
-  const { currentUser, isLoggedIn } = useSelector(state => state.auth);
-  const { adSense } = useSelector(state => state.adSense);
-  const { isMobileView } = useSelector(state => state.platform);
+  const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
+  const { adSense } = useSelector((state) => state.adSense);
+  const { isMobileView } = useSelector((state) => state.platform);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -72,17 +72,17 @@ function Search({ searchTypeForJob }) {
     setSortBy(shortBy);
     setOrderBy(orderBy);
   };
-  const handleSearch = value => {
+  const handleSearch = (value) => {
     setSearchParams({ search: value });
     if (!value) {
       setSearch(value);
     }
   };
 
-  const handlePageChange = page => {
+  const handlePageChange = (page) => {
     dispatch(setJobPage(page));
   };
-  const pageName = searchType => {
+  const pageName = (searchType) => {
     switch (searchType) {
       case "jobs":
         setSearchName("Job feed");
@@ -229,7 +229,7 @@ function Search({ searchTypeForJob }) {
                       ml: 1,
                     }}
                   >
-                    2,513
+                    {totalItems || 0}
                   </Box>
                 }
                 icon={

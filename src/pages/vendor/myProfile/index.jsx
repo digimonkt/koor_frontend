@@ -47,6 +47,7 @@ import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
+import { Link } from "react-router-dom";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -77,22 +78,22 @@ function MyProfile() {
 
   const handleToggleModel2 = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
     );
   };
   useEffect(() => {
     console.log("first", { toggle });
   }, [toggle]);
   const {
-    auth: { currentUser },
+    auth: { currentUser, role },
     choices: { countries, cities, sectors },
-  } = useSelector(state => state);
+  } = useSelector((state) => state);
   const [profilePicLoading, setProfilePicLoading] = useState("");
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const debouncedSearchValue = useDebounce(searchValue, 500);
-  const getSuggestedAddress = async search => {
+  const getSuggestedAddress = async (search) => {
     const res = await GetSuggestedAddressAPI(search);
     if (res.remote === "success") {
       setSuggestedAddress(res.data.predictions);
@@ -133,7 +134,7 @@ function MyProfile() {
       otherNotification: false,
     },
     validationSchema: validateVendorAboutMe,
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
@@ -171,7 +172,7 @@ function MyProfile() {
         // using only for files only !
         if (payload[keys] !== undefined && payload[keys] !== null) {
           if (payload[keys].forEach) {
-            payload[keys].forEach(data => {
+            payload[keys].forEach((data) => {
               if (payload[keys] instanceof File) {
                 newFormData.append(keys, data);
               }
@@ -202,15 +203,15 @@ function MyProfile() {
             operatingYears: values.operatingYears,
             jobsExperience: values.noOfJobsAsExperience,
             organizationType: sectors.data.find(
-              sector => sector.id === values.organizationType,
+              (sector) => sector.id === values.organizationType,
             ),
 
             address: values.address,
             country: countries.data.find(
-              country => country.id === values.country,
+              (country) => country.id === values.country,
             ),
             city: cities.data[values.country]?.find(
-              city => city.id === values.city,
+              (city) => city.id === values.city,
             ),
           },
         };
@@ -225,7 +226,7 @@ function MyProfile() {
     },
   });
 
-  const handleProfilePicSave = async file => {
+  const handleProfilePicSave = async (file) => {
     setProfilePicLoading("loading");
     const newFormData = new FormData();
     newFormData.append("profile_image", file);
@@ -303,9 +304,13 @@ function MyProfile() {
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
         <h1 className="heading m-0">Add info to complete your profile</h1>
-        <span className="later" style={{ color: "#274593" }}>
+        <Link
+          to={`/${role}/dashboard`}
+          className="later"
+          style={{ color: "#274593" }}
+        >
           Do it later
-        </span>
+        </Link>
       </Stack>
 
       <Grid container spacing={2}>
@@ -316,24 +321,28 @@ function MyProfile() {
                 boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
                 borderRadius: "10px",
               },
-            }}>
+            }}
+          >
             <CardContent
               sx={{
                 "&.MuiCardContent-root": {
                   padding: "30px",
                 },
-              }}>
+              }}
+            >
               <div className="add-content">
                 <Stack
                   spacing={2}
                   direction={"row"}
                   alignItems={"center"}
-                  justifyContent={"space-between"}>
+                  justifyContent={"space-between"}
+                >
                   <h2 className="mb-0">About</h2>
                   {platform === "android" || platform === "ios" ? (
                     <IconButton
                       size="small"
-                      onClick={() => handleToggleModel2("about")}>
+                      onClick={() => handleToggleModel2("about")}
+                    >
                       <SVG.ArrowUpIcon />
                     </IconButton>
                   ) : null}
@@ -343,7 +352,8 @@ function MyProfile() {
                     {toggle.includes("about") ? (
                       <form
                         onSubmit={formik.handleSubmit}
-                        style={{ marginTop: "10px" }}>
+                        style={{ marginTop: "10px" }}
+                      >
                         <HorizontalLabelInput
                           placeholder="Organization Name"
                           className="add-form-control"
@@ -361,7 +371,7 @@ function MyProfile() {
                           className="add-form-control"
                           placeholder="Select a type of your company"
                           type="select"
-                          options={sectors.data.map(sector => ({
+                          options={sectors.data.map((sector) => ({
                             value: sector.id,
                             label: sector.title,
                           }))}
@@ -376,15 +386,15 @@ function MyProfile() {
                         <HorizontalPhoneInput
                           label="Mobile Number (optional)"
                           value={formik.values.mobileNumber.value}
-                          onChange={e =>
+                          onChange={(e) =>
                             formik.setFieldValue("mobileNumber", e)
                           }
                           defaultCountry={formik.values.countryCode}
                           international
-                          onCountryChange={e =>
+                          onCountryChange={(e) =>
                             formik.setFieldValue("countryCode", e)
                           }
-                          isInvalidNumber={isValid => {
+                          isInvalidNumber={(isValid) => {
                             if (!isValid) {
                               formik.setFieldError(
                                 "mobileNumber",
@@ -405,7 +415,7 @@ function MyProfile() {
                           className="add-form-control"
                           label="Country"
                           type="select"
-                          options={countries.data.map(country => ({
+                          options={countries.data.map((country) => ({
                             value: country.id,
                             label: country.title,
                           }))}
@@ -421,7 +431,7 @@ function MyProfile() {
                           type="select"
                           options={(
                             cities.data[formik.values.country] || []
-                          ).map(country => ({
+                          ).map((country) => ({
                             value: country.id,
                             label: country.title,
                           }))}
@@ -436,14 +446,14 @@ function MyProfile() {
                           placeholder="Address"
                           className="add-form-control"
                           name={formik.getFieldProps("address").name}
-                          onBlur={e => formik.getFieldProps("address").onBlur}
-                          onChange={e => setSearchValue(e.target.value)}
+                          onBlur={(_) => formik.getFieldProps("address").onBlur}
+                          onChange={(e) => setSearchValue(e.target.value)}
                           value={searchValue}
                         />
                         {debouncedSearchValue &&
                           searchValue !== formik.values.address && (
                             <div className={styles.search_results_box}>
-                              {suggestedAddress.map(address => {
+                              {suggestedAddress.map((address) => {
                                 return (
                                   <div
                                     key={address.description}
@@ -454,7 +464,8 @@ function MyProfile() {
                                         address.description,
                                       );
                                       setSearchValue(address.description);
-                                    }}>
+                                    }}
+                                  >
                                     {address.description}
                                   </div>
                                 );
@@ -499,14 +510,15 @@ function MyProfile() {
                           direction="row"
                           spacing={2}
                           alignItems="center"
-                          className="dashedborder mb-3">
+                          className="dashedborder mb-3"
+                        >
                           <AttachmentDragNDropInput
-                            handleDrop={e =>
+                            handleDrop={(e) =>
                               formik.setFieldValue("businessLicense", e)
                             }
                             single
                             files={formik.values.businessLicense}
-                            deleteFile={e =>
+                            deleteFile={(_) =>
                               formik.setFieldValue("businessLicense", [])
                             }
                           />
@@ -532,14 +544,15 @@ function MyProfile() {
                           direction="row"
                           spacing={2}
                           alignItems="center"
-                          className="dashedborder mb-3">
+                          className="dashedborder mb-3"
+                        >
                           <AttachmentDragNDropInput
-                            handleDrop={e =>
+                            handleDrop={(e) =>
                               formik.setFieldValue("certification", e)
                             }
                             single
                             files={formik.values.certification}
-                            deleteFile={e =>
+                            deleteFile={(e) =>
                               formik.setFieldValue("certification", [])
                             }
                           />
@@ -575,9 +588,10 @@ function MyProfile() {
                         <FormGroup
                           row
                           aria-labelledby="demo-row-radio-buttons-group-label"
-                          name="row-radio-buttons-group">
+                          name="row-radio-buttons-group"
+                        >
                           <FormControlReminder
-                            onChange={e =>
+                            onChange={(e) =>
                               formik.setFieldValue(
                                 "otherNotification",
                                 e.target.checked,
@@ -591,9 +605,10 @@ function MyProfile() {
                         <FormGroup
                           row
                           aria-labelledby="demo-row-radio-buttons-group-label"
-                          name="row-radio-buttons-group">
+                          name="row-radio-buttons-group"
+                        >
                           <FormControlReminder
-                            onChange={e =>
+                            onChange={(e) =>
                               formik.setFieldValue(
                                 "marketingInformationNotification",
                                 e.target.checked,
@@ -639,7 +654,7 @@ function MyProfile() {
                         className="add-form-control"
                         placeholder="Select a type of your company"
                         type="select"
-                        options={sectors.data.map(sector => ({
+                        options={sectors.data.map((sector) => ({
                           value: sector.id,
                           label: sector.title,
                         }))}
@@ -654,13 +669,15 @@ function MyProfile() {
                       <HorizontalPhoneInput
                         label="Mobile Number (optional)"
                         value={formik.values.mobileNumber.value}
-                        onChange={e => formik.setFieldValue("mobileNumber", e)}
+                        onChange={(e) =>
+                          formik.setFieldValue("mobileNumber", e)
+                        }
                         defaultCountry={formik.values.countryCode}
                         international
-                        onCountryChange={e =>
+                        onCountryChange={(e) =>
                           formik.setFieldValue("countryCode", e)
                         }
-                        isInvalidNumber={isValid => {
+                        isInvalidNumber={(isValid) => {
                           if (!isValid) {
                             formik.setFieldError(
                               "mobileNumber",
@@ -681,7 +698,7 @@ function MyProfile() {
                         className="add-form-control"
                         label="Country"
                         type="select"
-                        options={countries.data.map(country => ({
+                        options={countries.data.map((country) => ({
                           value: country.id,
                           label: country.title,
                         }))}
@@ -696,7 +713,7 @@ function MyProfile() {
                         label="City"
                         type="select"
                         options={(cities.data[formik.values.country] || []).map(
-                          country => ({
+                          (country) => ({
                             value: country.id,
                             label: country.title,
                           }),
@@ -712,14 +729,14 @@ function MyProfile() {
                         placeholder="Address"
                         className="add-form-control"
                         name={formik.getFieldProps("address").name}
-                        onBlur={e => formik.getFieldProps("address").onBlur}
-                        onChange={e => setSearchValue(e.target.value)}
+                        onBlur={(e) => formik.getFieldProps("address").onBlur}
+                        onChange={(e) => setSearchValue(e.target.value)}
                         value={searchValue}
                       />
                       {debouncedSearchValue &&
                         searchValue !== formik.values.address && (
                           <div className={styles.search_results_box}>
-                            {suggestedAddress.map(address => {
+                            {suggestedAddress.map((address) => {
                               return (
                                 <div
                                   key={address.description}
@@ -730,7 +747,8 @@ function MyProfile() {
                                       address.description,
                                     );
                                     setSearchValue(address.description);
-                                  }}>
+                                  }}
+                                >
                                   {address.description}
                                 </div>
                               );
@@ -773,14 +791,15 @@ function MyProfile() {
                         direction="row"
                         spacing={2}
                         alignItems="center"
-                        className="dashedborder mb-3">
+                        className="dashedborder mb-3"
+                      >
                         <AttachmentDragNDropInput
-                          handleDrop={e =>
+                          handleDrop={(e) =>
                             formik.setFieldValue("businessLicense", e)
                           }
                           single
                           files={formik.values.businessLicense}
-                          deleteFile={e =>
+                          deleteFile={(e) =>
                             formik.setFieldValue("businessLicense", [])
                           }
                         />
@@ -806,14 +825,15 @@ function MyProfile() {
                         direction="row"
                         spacing={2}
                         alignItems="center"
-                        className="dashedborder mb-3">
+                        className="dashedborder mb-3"
+                      >
                         <AttachmentDragNDropInput
-                          handleDrop={e =>
+                          handleDrop={(e) =>
                             formik.setFieldValue("certification", e)
                           }
                           single
                           files={formik.values.certification}
-                          deleteFile={e =>
+                          deleteFile={(e) =>
                             formik.setFieldValue("certification", [])
                           }
                         />
@@ -849,9 +869,10 @@ function MyProfile() {
                       <FormGroup
                         row
                         aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group">
+                        name="row-radio-buttons-group"
+                      >
                         <FormControlReminder
-                          onChange={e =>
+                          onChange={(e) =>
                             formik.setFieldValue(
                               "otherNotification",
                               e.target.checked,
@@ -865,9 +886,10 @@ function MyProfile() {
                       <FormGroup
                         row
                         aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group">
+                        name="row-radio-buttons-group"
+                      >
                         <FormControlReminder
-                          onChange={e =>
+                          onChange={(e) =>
                             formik.setFieldValue(
                               "marketingInformationNotification",
                               e.target.checked,
@@ -903,13 +925,15 @@ function MyProfile() {
                   boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
                   borderRadius: "10px",
                 },
-              }}>
+              }}
+            >
               <CardContent
                 sx={{
                   "&.MuiCardContent-root": {
                     padding: "30px",
                   },
-                }}>
+                }}
+              >
                 <ProfilePicInput
                   title="Your organization logo"
                   textColor="#274593"
