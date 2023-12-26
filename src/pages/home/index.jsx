@@ -39,20 +39,51 @@ const platform = Capacitor.getPlatform();
 
 const Home = () => {
   const navigate = useNavigate();
-  // redux dispatch
   const dispatch = useDispatch();
   const { countries, jobCategories } = useSelector((state) => state.choices);
   const { role, isLoggedIn } = useSelector((state) => state.auth);
-  // state management
-  const [categories, setCategories] = useState("");
-  const [location, setLocation] = useState("");
   const [totalJobs, setTotalJobs] = useState(0);
-  const [searchValue, setSearchValue] = useState("");
   const [topJobCategories, setTopJobCategories] = useState([]);
   const [topListingCompanies, setTopListingCompanies] = useState([]);
   const [testimonialList, setTestimonialList] = useState([]);
   const [siteUpdates, setSiteUpdates] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [categories, setCategories] = useState("");
+  const [location, setLocation] = useState("");
+  const [message, setMessage] = useState(false);
 
+  const handleSearchValueChange = (e) => {
+    setSearchValue(e.target.value);
+    setMessage(false); // Reset the message when searchValue changes
+  };
+
+  const handleCategoriesChange = (vl) => {
+    setCategories(vl.target.value);
+    setMessage(false); // Reset the message when categories change
+  };
+
+  const handleLocationChange = (vl) => {
+    setLocation(vl.target.value);
+    setMessage(false); // Reset the message when location changes
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Check if required fields are filled
+    if (!searchValue && !categories && !location) {
+      setMessage(true); // Show a general message that at least one field is required
+      return;
+    }
+    // Clear any previous errors
+    setMessage(false);
+
+    // Navigate to the search page with the provided parameters
+    navigate(
+      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+    );
+  };
+  // console.log("Show error", error);
   const getTopJobCategories = async () => {
     const res = await getTopJobCategoriesAPI();
     if (res.remote === "success") {
@@ -99,7 +130,7 @@ const Home = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <div className="homepage">
         <Box className={styles.home_page}>
           <Box
@@ -144,18 +175,11 @@ const Home = () => {
                       // "@media(max-width:480px)": { paddingTop: "90%" },
                     }}
                   >
-                    <h2>Find you dream job</h2>
+                    <h2>Find your dream job</h2>
                     <h5 className="mb-5">
                       Search for the best opportunities in your area
                     </h5>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        navigate(
-                          `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
-                        );
-                      }}
-                    >
+                    <form onSubmit={handleSubmit}>
                       <Grid
                         container
                         spacing={2}
@@ -180,14 +204,28 @@ const Home = () => {
                                 width: "100% !important",
                               },
                             }}
-                            onChange={(e) => setSearchValue(e.target.value)}
+                            onChange={handleSearchValueChange}
                           />
+                          {message && (
+                            <p
+                              style={{
+                                color: "#eea23d",
+                                fontWeight: "300",
+                                fontFamily: "Poppins",
+                                fontSize: "14px",
+                                margin: "0",
+                                position: "absolute",
+                              }}
+                            >
+                              Please fill the required value
+                            </p>
+                          )}
                         </Grid>
                         <Grid className="mb-2 ">
                           <SelectInput
                             fullWidth
                             value={categories}
-                            onChange={(vl) => setCategories(vl.target.value)}
+                            onChange={handleCategoriesChange}
                             options={jobCategories.data.map((jobCategory) => ({
                               value: jobCategory.id,
                               label: jobCategory.title,
@@ -200,7 +238,7 @@ const Home = () => {
                         <Grid className="mb-2 ">
                           <SelectInput
                             value={location}
-                            onChange={(vl) => setLocation(vl.target.value)}
+                            onChange={handleLocationChange}
                             options={countries.data.map((country) => ({
                               value: country.id,
                               label: country.title,
@@ -209,6 +247,18 @@ const Home = () => {
                             placeholder={"Location"}
                             className={`${styles.location_select}`}
                           />
+                          {/* {message && (
+                            <p
+                              style={{
+                                color: "#eea23d",
+                                fontWeight: "300",
+                                fontFamily: "Poppins",
+                                fontSize: "14px",
+                              }}
+                            >
+                              Please fill the search value.
+                            </p>
+                          )} */}
                         </Grid>
                         <Grid className="mb-2">
                           <Button
@@ -216,11 +266,6 @@ const Home = () => {
                             variant="contained"
                             type="submit"
                             className={styles.home_btn_btn}
-                            // onClick={() => {
-                            //   navigate(
-                            //     `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
-                            //   );
-                            // }}
                           >
                             Search
                           </Button>
@@ -519,7 +564,7 @@ const Home = () => {
             </div>
           </DialogBox> */}
       </div>
-    </>
+    </div>
   );
 };
 

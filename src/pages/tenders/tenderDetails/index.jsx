@@ -125,7 +125,7 @@ function TenderDetailsComponent() {
     }
   };
 
-  const getTenderSuggestion = async (tenderId) => {
+  const getTenderSuggestion = async tenderId => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
       setTenderSuggestion(res.data.results);

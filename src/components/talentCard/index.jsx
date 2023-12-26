@@ -13,7 +13,6 @@ import { generateFileUrl } from "../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
 import { getConversationIdByUserIdAPI } from "../../api/chat";
-
 import { useState } from "react";
 import { USER_ROLES } from "@utils/enum";
 import { useSelector } from "react-redux";
@@ -50,7 +49,7 @@ function TalentCard({ talentDetails }) {
         urlcat("/employer/chat", {
           conversion: conversationId,
           userId: talentDetails?.id,
-        })
+        }),
       );
     }
   };
