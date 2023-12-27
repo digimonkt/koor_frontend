@@ -628,17 +628,12 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   return (
     <div>
       <div className={`${styles.searchResult}`}>
-        <Box
+        <div
           className={`${styles.label} lables`}
-          sx={{
+          style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            "@media (max-width: 992px)": {
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-            },
           }}
         >
           <Box
@@ -664,7 +659,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     : "space-between",
               }}
             >
-            {platform === "android" || platform === "ios" ? (
+              {platform === "android" || platform === "ios" ? (
                 <Box
                   sx={{
                     textAlign: "start",
@@ -895,9 +890,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                       role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                     cursor: "pointer",
                     fontSize: "12px",
+                    whiteSpace: "nowrap",
                     display: "flex",
                     alignItems: "center",
-                    whiteSpace: "nowrap",
                   }}
                 >
                   Advanced filter
@@ -936,7 +931,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           ) : (
             ""
           )}
-        </Box>
+        </div>
         {data ? <>{searchFilter()}</> : null}
         <DialogBox open={open} handleClose={handleToggleModel}>
           <SaveFilter
