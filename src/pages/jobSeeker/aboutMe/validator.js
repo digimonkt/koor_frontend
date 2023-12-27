@@ -13,14 +13,14 @@ export const validateJobSeekerAboutMe = Yup.object().shape({
         return true;
       }
       return isValidPhoneNumber(value.value);
-    }
+    },
   ),
   gender: Yup.string().required("Gender is required"),
-  dob: Yup.string()
-    .required("Date of birth is required"),
-    // .test("isFuture", "Date Must be of before 2005-01-01", (value, context) => {
-    //   return dayjs(value).isBefore(dayjs("2006-01-01"));
-    // }),
+  dob: Yup.string().required("Date of birth is required"),
+  // .test("isFuture", "Date Must be of before 2005-01-01", (value, context) => {
+  //   return dayjs(value).isBefore(dayjs("2006-01-01"));
+  // }),
   employmentStatus: Yup.string().required("Employment Status is required"),
+  profileTitle: Yup.string(),
   experience: Yup.number(),
 });
