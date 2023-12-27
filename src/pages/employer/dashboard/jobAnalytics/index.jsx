@@ -66,6 +66,7 @@ const OPTIONS = {
       "Dec",
     ],
     labels: {
+      hideOverlappingLabels: false,
       show: true,
       style: {
         colors: [
