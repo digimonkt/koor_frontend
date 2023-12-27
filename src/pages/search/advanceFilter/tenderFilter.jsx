@@ -2,13 +2,14 @@ import { ErrorMessage } from "../../../components/caption";
 import { DateInput, SelectInput } from "../../../components/input";
 import { FormControl, Grid, Stack } from "@mui/material";
 // import { JobFormControl } from "@pages/jobs/postJobs/style";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 // import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { getTenderSector } from "../../../redux/slice/choices";
 
 function TenderFilter({ formik, footer, responsive }) {
+  const [isSubmmited, setSubmmited] = useState(false);
   const dispatch = useDispatch();
   const {
     choices: {
@@ -28,7 +29,12 @@ function TenderFilter({ formik, footer, responsive }) {
     }
   }, []);
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        formik.handleSubmit(e);
+        setSubmmited(true);
+      }}
+    >
       <div className="SelectDropdown">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
@@ -95,7 +101,7 @@ function TenderFilter({ formik, footer, responsive }) {
                     (opportunityType) => ({
                       value: opportunityType.id,
                       label: opportunityType.title,
-                    })
+                    }),
                   )}
                   name={"opportunityType"}
                   value={formik.values.opportunityType}
@@ -168,7 +174,7 @@ function TenderFilter({ formik, footer, responsive }) {
                     (country) => ({
                       value: country.title,
                       label: country.title,
-                    })
+                    }),
                   )}
                   {...formik.getFieldProps("city")}
                 />
@@ -224,9 +230,12 @@ function TenderFilter({ formik, footer, responsive }) {
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>
-        <h5>
-          <b>{totalItems}</b> tenders found
-        </h5>
+        {isSubmmited && (
+          <h5>
+            <b>{totalItems}</b> tenders found
+          </h5>
+        )}
+
         <div className={`${styles.savesearch}`}>{footer}</div>
       </div>
     </form>
