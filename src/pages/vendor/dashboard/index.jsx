@@ -5,22 +5,47 @@ import { AreaChart } from "../../../components/charts";
 import TenderCard from "../../../components/tenderCard";
 import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
 import {
+  Box,
   Card,
   CardContent,
   Checkbox,
   Divider,
   FormControlLabel,
   Grid,
+  IconButton,
   Stack,
 } from "@mui/material";
+// import { Capacitor } from "@capacitor/core";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { globalLocalStorage } from "@utils/localStorage";
+import { SVG } from "@assets/svg";
+import { setIsLoggedIn } from "@redux/slice/user";
+import { LogoutUserAPI } from "@api/user";
 
 function Dashboard() {
+  const dispatch = useDispatch();
   const [recentApplication, setRecentApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
+  const { isMobileView } = useSelector((state) => state.platform);
+
   const [isMoreApplicationsAvailable, setIsMoreApplicationAvailable] =
     useState(true);
+
+  const { currentUser } = useSelector(({ auth }) => auth);
+
+  const logoutHandle = () => {
+    userLogout();
+    dispatch(setIsLoggedIn(false));
+  };
+
+  const userLogout = async () => {
+    await LogoutUserAPI();
+    globalLocalStorage.cleanLocalStorage();
+  };
+
   const getRecentApplications = async () => {
     setIsLoading(true);
     const res = await getAppliedTendersAPI({
@@ -48,9 +73,82 @@ function Dashboard() {
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
+
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>
+        {isMobileView ? (
+          <>
+            <Grid item xs={12}>
+              <Stack
+                direction={"row"}
+                alignItems={"center"}
+                spacing={2}
+                justifyContent={"space-between"}
+                sx={{
+                  mb: 1,
+                  "& h1": {
+                    fontFamily: "Bahnschrift",
+                    fontSize: "22px",
+                    fontWeight: "600",
+                  },
+                }}
+              >
+                <h1>Dashboard</h1>
+                <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
+                  <IconButton onClick={() => logoutHandle()}>
+                    <SVG.AppGroup />
+                  </IconButton>
+                  <IconButton LinkComponent={Link} to="/Setting">
+                    <SVG.Settings />
+                  </IconButton>
+                  <IconButton LinkComponent={Link} to="/notification">
+                    <SVG.NotificationIcon />
+                  </IconButton>
+                </Stack>
+              </Stack>
+            </Grid>
+            <Grid item xs={12}>
+              <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
+                <img
+                  alt="profile"
+                  src={currentUser?.profileImage}
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    borderRadius: "100%",
+                    boxShadow: "0px 5px 25px 0px rgba(0, 0, 0, 0.25)",
+                  }}
+                />
+                <Box
+                  sx={{
+                    "& h4": {
+                      fontSize: "18px",
+                      fontFamily: "Bahnschrift",
+                      letterSpacing: "0.54px",
+                      fontWeight: "700",
+                      mb: 1,
+                      mt: 0,
+                    },
+                    "& p": {
+                      fontSize: "14px",
+                      fontFamily: "Poppins",
+                      opacity: "0.5",
+                      color: "#121212",
+                      fontWeight: "400",
+                      my: 0,
+                    },
+                  }}
+                >
+                  <h4>{currentUser?.name || currentUser?.email}</h4>
+                  <p>{currentUser?.profile?.website}</p>
+                  <p>{currentUser?.moblieNumber}</p>
+                  <p>{currentUser?.email}</p>
+                </Box>
+              </Stack>
+            </Grid>
+          </>
+        ) : null}
         <Grid item xl={12} lg={12} sm={12}>
           <Card
             sx={{
@@ -105,7 +203,6 @@ function Dashboard() {
             </CardContent>
           </Card>
         </Grid>
-
         <Grid item xl={12} lg={12} sm={12} xs={12}>
           <Card
             sx={{

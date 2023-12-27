@@ -31,6 +31,7 @@ import { useFormik } from "formik";
 import DialogBox from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import SaveFilter from "./saveFilter";
+import { Capacitor } from "@capacitor/core";
 import TalentFilter from "./talentFilter";
 import { SEARCH_TYPE, USER_ROLES } from "../../../utils/enum";
 import {
@@ -59,7 +60,6 @@ import {
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Capacitor } from "@capacitor/core";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const matches = useMediaQuery("(max-width:768px)");
   const dispatch = useDispatch();
@@ -659,7 +659,18 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     : "space-between",
               }}
             >
-              {isLoggedIn && "Saved searches:"}
+              {platform === "android" || platform === "ios" ? (
+                <Box
+                  sx={{
+                    textAlign: "start",
+                    width: "100%",
+                  }}
+                >
+                  {isLoggedIn && "Saved searches:"}
+                </Box>
+              ) : (
+                <>{isLoggedIn && "Saved searches:"}</>
+              )}
               {platform === "android" || platform === "ios" ? null : (
                 <>
                   {matches ? (
@@ -827,6 +838,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                       cursor: "pointer",
                       fontSize: "12px",
+                      display: "flex",
+                      alignItems: "center",
+                      whiteSpace: "nowrap",
                     }}
                   >
                     Advanced filter
