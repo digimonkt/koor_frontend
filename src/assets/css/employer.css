@@ -321,7 +321,7 @@ span.arrowjobs svg {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 27px;
   /* identical to box height */
   letter-spacing: 0.02em;
@@ -925,7 +925,7 @@ span.arrowjobs svg {
   }
 
   .my-jobs h2 {
-    font-size: 14px !important;
+    font-size: 16px !important;
   }
 
   .recent-box h3 {
