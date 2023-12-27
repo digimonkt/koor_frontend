@@ -1,6 +1,6 @@
 import { generateFileUrl } from "../../utils/generateFileUrl";
 
-export const transformGetUserDetails = data => {
+export const transformGetUserDetails = (data) => {
   return {
     id: data.id,
     sessionId: data.session_id,
@@ -19,6 +19,7 @@ export const transformGetUserDetails = data => {
       gender: data.profile.gender || "",
       dob: data.profile.dob || "",
       employmentStatus: data.profile.employment_status || "",
+      profileTitle: data.profile.profile_title || "",
       highestEducation: data.profile.highest_education,
       marketInformationNotification:
         data.profile.market_information_notification || false,
@@ -51,7 +52,7 @@ export const transformGetUserDetails = data => {
           payPeriod: data.job_preferences.pay_period,
         }
       : {},
-    educationRecord: (data.education_record || []).map(record => ({
+    educationRecord: (data.education_record || []).map((record) => ({
       id: record.id,
       title: record.title,
       startDate: record.start_date,
@@ -63,7 +64,7 @@ export const transformGetUserDetails = data => {
         title: record.education_level.title,
       },
     })),
-    workExperiences: (data.work_experience || []).map(record => ({
+    workExperiences: (data.work_experience || []).map((record) => ({
       id: record.id,
       title: record.title,
       startDate: record.start_date,
@@ -72,34 +73,34 @@ export const transformGetUserDetails = data => {
       organization: record.organization,
       description: record.description,
     })),
-    languages: (data.languages || []).map(record => ({
+    languages: (data.languages || []).map((record) => ({
       id: record.id,
       language: record.language,
       written: record.written,
       spoken: record.spoken,
     })),
-    skills: (data.skills || []).map(record => ({
+    skills: (data.skills || []).map((record) => ({
       id: record.id,
       skill: record.skill,
     })),
-    resume: (data.resume || []).map(record => ({
+    resume: (data.resume || []).map((record) => ({
       id: record.id,
       title: record.title,
       filePath: record.file_path,
       createdAt: record.created_at,
     })),
-    sectors: (data.sector || []).map(record => ({
+    sectors: (data.sector || []).map((record) => ({
       id: record.id,
       sector: record.sector,
     })),
-    tags: (data.tag || []).map(record => ({
+    tags: (data.tag || []).map((record) => ({
       id: record.id,
       tag: record.tag,
     })),
   };
 };
 
-export const transformNotificationResponse = data => {
+export const transformNotificationResponse = (data) => {
   return {
     id: data.id,
     createdAt: data.created,
@@ -138,7 +139,7 @@ export const transformNotificationResponse = data => {
   };
 };
 
-export const transformSearchUserByRoleResponse = data => {
+export const transformSearchUserByRoleResponse = (data) => {
   return {
     id: data.id,
     role: data.role,
@@ -149,21 +150,22 @@ export const transformSearchUserByRoleResponse = data => {
     skills: data.skills || [],
     country: data.profile?.country?.title || "",
     address: data.profile?.address || "",
+    profileTitle: data.profile?.profile_title || "",
     city: data.profile?.city?.title || "",
     highestEducation: data.highest_education || "",
     readyForChat: data.ready_for_chat,
-    sectors: (data.sector || []).map(item => item.sector),
-    tags: (data.tag || []).map(item => item.tag),
+    sectors: (data.sector || []).map((item) => item.sector),
+    tags: (data.tag || []).map((item) => item.tag),
   };
 };
 
-export const transformSearchUserFilterResponse = data => {
+export const transformSearchUserFilterResponse = (data) => {
   return {
     id: data.id,
     title: data.title,
     country: data.country,
     city: data.city,
-    jobCategories: data.category.map(category => category.id),
+    jobCategories: data.category.map((category) => category.id),
     isFullTime: data.is_full_time,
     isPartTime: data.is_part_time,
     hasContract: data.has_contract,
