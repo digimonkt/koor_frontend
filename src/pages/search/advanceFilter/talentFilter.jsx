@@ -14,12 +14,13 @@ import {
   Stack,
 } from "@mui/material";
 import { JobFormControl } from "../../../pages/jobs/postJobs/style";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "../../../redux/slice/choices";
 
 function TalentFilter({ formik, footer, responsive }) {
+  const [isSubmmited, setSubmmited] = useState(false);
   const dispatch = useDispatch();
   const {
     choices: { countries, cities, jobCategories, jobSubCategories },
@@ -31,13 +32,18 @@ function TalentFilter({ formik, footer, responsive }) {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories })
+        getJobSubCategories({ categoryId: formik.values.jobCategories }),
       );
     }
   }, [formik.values.jobCategories]);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        formik.handleSubmit(e);
+        setSubmmited(true);
+      }}
+    >
       <div className="SelectDropdown">
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
@@ -128,7 +134,7 @@ function TalentFilter({ formik, footer, responsive }) {
                     (country) => ({
                       value: country.title,
                       label: country.title,
-                    })
+                    }),
                   )}
                   {...formik.getFieldProps("city")}
                 />
@@ -270,9 +276,11 @@ function TalentFilter({ formik, footer, responsive }) {
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>
-        <h5>
-          <b>{totalItems}</b> Talents found
-        </h5>
+        {isSubmmited && (
+          <h5>
+            <b>{totalItems}</b> Talents found
+          </h5>
+        )}
         <div className={`${styles.savesearch}`}>{footer}</div>
       </div>
     </form>

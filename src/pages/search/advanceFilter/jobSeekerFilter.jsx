@@ -2,7 +2,7 @@ import { ErrorMessage } from "../../../components/caption";
 import { CheckboxInput, SelectInput } from "../../../components/input";
 import { Box, FormControl, Grid } from "@mui/material";
 import { JobFormControl } from "../../../pages/jobs/postJobs/style";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "../../../redux/slice/choices";
@@ -10,11 +10,12 @@ import { Capacitor } from "@capacitor/core";
 
 function JobSeekerFilter({ formik, footer, responsive }) {
   const platform = Capacitor.getPlatform();
+  const [isSubmmited, setSubmmited] = useState(false);
   const dispatch = useDispatch();
   const {
     choices: { countries, cities, jobCategories, jobSubCategories },
     search: { totalItems },
-  } = useSelector(state => state);
+  } = useSelector((state) => state);
   useEffect(() => {
     if (
       formik.values.jobCategories &&
@@ -26,18 +27,25 @@ function JobSeekerFilter({ formik, footer, responsive }) {
     }
   }, [formik.values.jobCategories]);
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        formik.handleSubmit(e);
+        setSubmmited(true);
+      }}
+    >
       <div className="SelectDropdown">
         <Grid container spacing={2}>
           <Grid
             item
             xs={platform === "android" || platform === "ios" ? 6 : 12}
             lg={responsive ? 12 : 3}
-            sm={6}>
+            sm={6}
+          >
             <div>
               <FormControl
                 sx={{ m: 1, marginLeft: 0, width: 330 }}
-                className="filter_input">
+                className="filter_input"
+              >
                 <SelectInput
                   title="Category"
                   defaultValue=""
@@ -46,13 +54,13 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                       ? "Select category"
                       : "Select a Job category"
                   }
-                  options={jobCategories.data.map(jobCategory => ({
+                  options={jobCategories.data.map((jobCategory) => ({
                     value: jobCategory.id,
                     label: jobCategory.title,
                   }))}
                   name={"jobCategories"}
                   value={formik.values.jobCategories}
-                  onChange={e => {
+                  onChange={(e) => {
                     formik.handleChange(e);
                   }}
                   onBlur={formik.handleBlur}
@@ -67,11 +75,13 @@ function JobSeekerFilter({ formik, footer, responsive }) {
             item
             xs={platform === "android" || platform === "ios" ? 6 : 12}
             lg={responsive ? 12 : 3}
-            sm={6}>
+            sm={6}
+          >
             <div>
               <FormControl
                 sx={{ m: 1, marginLeft: 0, width: 330 }}
-                className="filter_input">
+                className="filter_input"
+              >
                 <SelectInput
                   multiple
                   title="SubCategory"
@@ -88,13 +98,13 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                   }
                   options={(
                     jobSubCategories.data[formik.values.jobCategories] || []
-                  ).map(jobCategory => ({
+                  ).map((jobCategory) => ({
                     value: jobCategory.id,
                     label: jobCategory.title,
                   }))}
                   name={"jobSubCategories"}
                   value={formik.values.jobSubCategories}
-                  onChange={e => {
+                  onChange={(e) => {
                     formik.handleChange(e);
                   }}
                   onBlur={formik.handleBlur}
@@ -110,14 +120,15 @@ function JobSeekerFilter({ formik, footer, responsive }) {
             item
             xs={platform === "android" || platform === "ios" ? 6 : 12}
             lg={responsive ? 12 : 3}
-            sm={6}>
+            sm={6}
+          >
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
                   title="Country"
                   placeholder="Country"
                   defaultValue=""
-                  options={countries.data.map(country => ({
+                  options={countries.data.map((country) => ({
                     value: country.id,
                     label: country.title,
                   }))}
@@ -130,7 +141,8 @@ function JobSeekerFilter({ formik, footer, responsive }) {
             item
             xs={platform === "android" || platform === "ios" ? 6 : 12}
             lg={responsive ? 12 : 3}
-            sm={6}>
+            sm={6}
+          >
             <div>
               <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
                 <SelectInput
@@ -146,7 +158,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                   }
                   disabled={!formik.values.country}
                   options={(cities.data[formik.values.country] || []).map(
-                    country => ({
+                    (country) => ({
                       value: country.title,
                       label: country.title,
                     }),
@@ -166,7 +178,8 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                 display: "flex",
                 alignItems: { xs: "center", lg: "flex-start" },
                 flexDirection: { xs: "row", lg: "column" },
-              }}>
+              }}
+            >
               <JobFormControl
                 sx={{
                   "&.MuiFormControlLabel-root .Mui-checked ~ .MuiTypography-root":
@@ -247,9 +260,11 @@ function JobSeekerFilter({ formik, footer, responsive }) {
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>
-        <h5 style={{ margin: "20px" }}>
-          <b>{totalItems}</b> jobs found
-        </h5>
+        {isSubmmited && (
+          <h5 style={{ margin: "20px" }}>
+            <b>{totalItems}</b> jobs found
+          </h5>
+        )}
         <div
           style={{
             marginTop: "0px",
@@ -261,7 +276,8 @@ function JobSeekerFilter({ formik, footer, responsive }) {
             justifyContent:
               platform === "android" || platform === "ios" ? "center" : null,
           }}
-          className={`${styles.savesearch}`}>
+          className={`${styles.savesearch}`}
+        >
           {footer}
         </div>
       </div>

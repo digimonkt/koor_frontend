@@ -1,12 +1,13 @@
 import { ErrorMessage } from "../../../components/caption";
 import { LabeledInput, SelectInput } from "../../../components/input";
 import { FormControl, Grid } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getTenderSector } from "../../../redux/slice/choices";
 
 function VendorFilter({ formik, footer, responsive }) {
+  const [isSubmmited, setSubmmited] = useState(false);
   const dispatch = useDispatch();
   const {
     choices: {
@@ -27,7 +28,12 @@ function VendorFilter({ formik, footer, responsive }) {
   }, []);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        formik.handleSubmit(e);
+        setSubmmited(true);
+      }}
+    >
       <div className="SelectDropdown">
         <Grid container spacing={2}>
           {/* <Grid item xs={12} lg={responsive ? 12 : 4}>
@@ -91,7 +97,7 @@ function VendorFilter({ formik, footer, responsive }) {
                     (opportunityType) => ({
                       value: opportunityType.id,
                       label: opportunityType.title,
-                    })
+                    }),
                   )}
                   name={"opportunityType"}
                   value={formik.values.opportunityType}
@@ -161,7 +167,7 @@ function VendorFilter({ formik, footer, responsive }) {
                     (country) => ({
                       value: country.title,
                       label: country.title,
-                    })
+                    }),
                   )}
                   {...formik.getFieldProps("city")}
                 />
@@ -186,9 +192,12 @@ function VendorFilter({ formik, footer, responsive }) {
         </Grid>
       </div>
       <div className={`${styles.historySearch}`}>
-        <h5>
-          <b>{totalItems}</b> Vendors found
-        </h5>
+        {isSubmmited && (
+          <h5>
+            <b>{totalItems}</b> Vendors found
+          </h5>
+        )}
+
         <div className={`${styles.savesearch}`}>{footer}</div>
       </div>
     </form>

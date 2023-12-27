@@ -1,5 +1,14 @@
 import { SVG } from "../../assets/svg";
-import { Avatar, Box, Button, Chip, Stack, useMediaQuery } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,6 +20,7 @@ import { useSelector } from "react-redux";
 
 function TalentCard({ talentDetails }) {
   const { role } = useSelector(({ auth }) => auth);
+
   const platform = Capacitor.getPlatform();
   const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
@@ -18,11 +28,11 @@ function TalentCard({ talentDetails }) {
   const [numLines, setNumLines] = useState(3);
 
   const handleSeeMoreClick = () => {
-    setNumLines(prevNumLines =>
+    setNumLines((prevNumLines) =>
       prevNumLines === 3 ? talentDetails.length : 3,
     );
   };
-
+  console.log(talentDetails?.profileTitle);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -50,7 +60,8 @@ function TalentCard({ talentDetails }) {
       direction={{ xs: "column", lg: "row", sm: "row" }}
       spacing={{ xs: 2, lg: 2 }}
       alignItems={{ xs: "start", lg: "center", sm: "center" }}
-      justifyContent={{ xs: "flex-start", lg: "space-between" }}>
+      justifyContent={{ xs: "flex-start", lg: "space-between" }}
+    >
       <Stack
         direction={{ xs: "column", lg: "row", sm: "row" }}
         spacing={{ xs: 2, lg: 2 }}
@@ -65,14 +76,16 @@ function TalentCard({ talentDetails }) {
             lg: "auto",
             "@media (max-width:600px)": { flex: "1 1 0%" },
           },
-        }}>
+        }}
+      >
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             "@media (max-width:600px)": { width: "100%" },
-          }}>
+          }}
+        >
           <Avatar
             src={generateFileUrl(talentDetails.profilePicture?.path || "")}
             sx={{
@@ -106,18 +119,34 @@ function TalentCard({ talentDetails }) {
         <div className="recent-content">
           <Stack
             direction={{ xs: "column", lg: "row" }}
-            spacing={2}
+            spacing={1}
             flexWrap="wrap"
             alignItems={{ xs: "flex-start", lg: "center" }}
-            sx={{ mb: 1 }}>
+            sx={{ mb: 1 }}
+          >
             <h4>
               <Link
                 to={urlcat("/job-seeker/:userId/profile", {
                   userId: talentDetails.id,
-                })}>
+                })}
+              >
                 {talentDetails.name || talentDetails.email}
               </Link>
             </h4>
+            <Divider
+              sx={{
+                display: { xs: "none", lg: "block" },
+              }}
+              orientation="vertical"
+            />
+            {talentDetails?.profile?.profileTitle && (
+              <>
+                <hr style={{ rotate: "90deg", width: "20px", height: "5px" }} />
+                <Typography size="small">
+                  {talentDetails?.profileTitle}
+                </Typography>
+              </>
+            )}
             <p className="job-description card-description mt-1 mb-2">
               {talentDetails?.profile?.description}
             </p>
@@ -130,7 +159,8 @@ function TalentCard({ talentDetails }) {
             spacing={1}
             alignItems="center"
             sx={{ mb: 1 }}
-            className="meets_div">
+            className="meets_div"
+          >
             {talentDetails.country ? (
               <>
                 <span className="meets">
@@ -151,7 +181,8 @@ function TalentCard({ talentDetails }) {
                 <p
                   dangerouslySetInnerHTML={{
                     __html: talentDetails.description,
-                  }}></p>
+                  }}
+                ></p>
               </div>
               {talentDetails.description.length > 350 && (
                 <button
@@ -162,7 +193,8 @@ function TalentCard({ talentDetails }) {
                     color:
                       role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                   }}
-                  onClick={handleSeeMoreClick}>
+                  onClick={handleSeeMoreClick}
+                >
                   {numLines === 3 ? "See More" : "See Less"}
                 </button>
               )}
@@ -175,9 +207,10 @@ function TalentCard({ talentDetails }) {
             sx={{ mb: 1, mt: 2 }}
             className="meets_div"
             flexWrap={"wrap"}
-            useFlexGap>
+            useFlexGap
+          >
             <>
-              {talentDetails.skills.map(skill => (
+              {talentDetails.skills.map((skill) => (
                 <Chip
                   key={skill.id}
                   label={skill.skill.title}
