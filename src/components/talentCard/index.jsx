@@ -31,7 +31,7 @@ function TalentCard({ talentDetails }) {
       prevNumLines === 3 ? talentDetails.length : 3
     );
   };
-
+  console.log(talentDetails?.profileTitle);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -49,7 +49,7 @@ function TalentCard({ talentDetails }) {
         urlcat("/employer/chat", {
           conversion: conversationId,
           userId: talentDetails?.id,
-        }),
+        })
       );
     }
   };
@@ -253,30 +253,11 @@ function TalentCard({ talentDetails }) {
                     height: "70px",
                   }}
                 />
-                {/* {matches ? (
-            <>
-              {talentDetails.readyForChat && (
-                <Stack direction="row" spacing={0} className="edit-button">
-                  <Button variant="link" onClick={handleMessageClick}>
-                    <SVG.MessageIcon
-                      style={{
-                        color: "#274593",
-                      }}
-                      className="application-option-icon"
-                    />
-                    <span>Message</span>
-                  </Button>
-                </Stack>
-              )}
-            </>
-          ) : (
-            ""
-          )} */}
               </Box>
               <div className="recent-content">
                 <Stack
                   direction={{ xs: "column", lg: "row" }}
-                  spacing={2}
+                  spacing={1}
                   flexWrap="wrap"
                   alignItems={{ xs: "flex-start", lg: "center" }}
                   sx={{ mb: 1 }}
@@ -290,11 +271,31 @@ function TalentCard({ talentDetails }) {
                       {talentDetails.name || talentDetails.email}
                     </Link>
                   </h4>
+                  <Divider
+                    sx={{
+                      display: { xs: "none", lg: "block" },
+                    }}
+                    orientation="vertical"
+                  />
+                  {talentDetails?.profile?.profileTitle && (
+                    <>
+                      <hr
+                        style={{
+                          rotate: "90deg",
+                          width: "20px",
+                          height: "5px",
+                        }}
+                      />
+                      <Typography size="small">
+                        {talentDetails?.profileTitle}
+                      </Typography>
+                    </>
+                  )}
                   <p className="job-description card-description mt-1 mb-2">
                     {talentDetails?.profile?.description}
                   </p>
                   <div className="recent-research" style={{ flexWrap: "wrap" }}>
-                    <span>{talentDetails.highestEducation} </span>
+                    <span>{talentDetails.highestEducation}</span>
                   </div>
                 </Stack>
                 <Stack

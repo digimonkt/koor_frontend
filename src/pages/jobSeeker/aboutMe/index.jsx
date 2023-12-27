@@ -72,6 +72,7 @@ const AboutMe = (props) => {
       gender: "",
       dob: "",
       employmentStatus: "",
+      profileTitle: "",
       description: "",
       highestEducation: "",
       marketInformationNotification: false,
@@ -84,7 +85,7 @@ const AboutMe = (props) => {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        ""
+        "",
       );
 
       const payload = {
@@ -95,6 +96,7 @@ const AboutMe = (props) => {
         dob: dayjs(values.dob).format(DATABASE_DATE_FORMAT),
         gender: values.gender,
         employment_status: values.employmentStatus,
+        profile_title: values.profileTitle,
         description: values.description,
         highest_education: values.highestEducation,
         market_information_notification: values.marketInformationNotification,
@@ -127,24 +129,25 @@ const AboutMe = (props) => {
             countryCode,
             profile: {
               country: countries.data.find(
-                (country) => country.id === values.country
+                (country) => country.id === values.country,
               ),
               city: cities.data[values.country].find(
-                (city) => city.id === values.city
+                (city) => city.id === values.city,
               ),
               gender: values.gender,
               dob: dayjs(values.dob).format(DATE_FORMAT),
               employmentStatus: values.employmentStatus,
+              profileTitle: values.profileTitle,
               description: values.description,
               highestEducation: educationLevels.data.find(
-                (level) => level.id === values.highestEducation
+                (level) => level.id === values.highestEducation,
               ),
               marketInformationNotification:
                 values.marketInformationNotification,
               jobNotification: values.jobNotification,
               experience: values.experience,
             },
-          })
+          }),
         );
       } else {
         formik.setErrors({ mobileNumber: res.error.errors.mobile_number });
@@ -152,8 +155,8 @@ const AboutMe = (props) => {
           setErrorToast(
             res.error.errors.dob ||
               res.error.errors.mobile_number ||
-              "Something went wrong"
-          )
+              "Something went wrong",
+          ),
         );
       }
       setLoading(false);
@@ -167,17 +170,18 @@ const AboutMe = (props) => {
       formik.setFieldValue("dob", filledData.dob);
       formik.setFieldValue("email", filledData.email);
       formik.setFieldValue("employmentStatus", filledData.employmentStatus);
+      formik.setFieldValue("profileTitle", filledData.profileTitle);
       formik.setFieldValue("experience", filledData.experience);
       formik.setFieldValue("fullName", filledData.fullName);
       formik.setFieldValue("gender", filledData.gender);
       formik.setFieldValue("highestEducation", filledData.highestEducation);
       formik.setFieldValue(
         "marketInformationNotification",
-        filledData.marketInformationNotification
+        filledData.marketInformationNotification,
       );
       formik.setFieldValue(
         "countryCode",
-        filledData.mobileNumber.international.split(" ")[0]
+        filledData.mobileNumber.international.split(" ")[0],
       );
       formik.setFieldValue("mobileNumber", {
         national: filledData.mobileNumber.national,
@@ -224,6 +228,7 @@ const AboutMe = (props) => {
       gender: currentUser.profile.gender,
       dob: currentUser.profile.dob ? dayjs(currentUser.profile.dob) : "",
       employmentStatus: currentUser.profile.employmentStatus,
+      profileTitle: currentUser.profile.profileTitle,
       description: currentUser.profile.description,
       highestEducation: currentUser.profile.highestEducation?.id || "",
       marketInformationNotification:
@@ -319,7 +324,7 @@ const AboutMe = (props) => {
                         if (!isValid) {
                           formik.setFieldError(
                             "mobileNumber",
-                            "Invalid Mobile Number"
+                            "Invalid Mobile Number",
                           );
                         }
                       }}
@@ -412,6 +417,15 @@ const AboutMe = (props) => {
                       </ErrorMessage>
                     ) : null}
                     <HorizontalLabelInput
+                      placeholder="Profile Title"
+                      label="Profile Title"
+                      {...formik.getFieldProps("profileTitle")}
+                    />
+                    {formik.touched.profileTitle &&
+                    formik.errors.profileTitle ? (
+                      <ErrorMessage>{formik.errors.profileTitle}</ErrorMessage>
+                    ) : null}
+                    <HorizontalLabelInput
                       label="Country"
                       type="select"
                       placeholder="Select Country"
@@ -435,7 +449,7 @@ const AboutMe = (props) => {
                         (educationLevel) => ({
                           value: educationLevel.id,
                           label: educationLevel.title,
-                        })
+                        }),
                       )}
                       {...formik.getFieldProps("city")}
                     />
@@ -501,7 +515,7 @@ const AboutMe = (props) => {
                         onChange={(e) =>
                           formik.setFieldValue(
                             "jobNotification",
-                            e.target.checked
+                            e.target.checked,
                           )
                         }
                         checked={formik.values.jobNotification || false}
@@ -527,7 +541,7 @@ const AboutMe = (props) => {
                         onChange={(e) =>
                           formik.setFieldValue(
                             "marketInformationNotification",
-                            e.target.checked
+                            e.target.checked,
                           )
                         }
                         checked={
@@ -616,7 +630,7 @@ const AboutMe = (props) => {
                       if (!isValid) {
                         formik.setFieldError(
                           "mobileNumber",
-                          "Invalid Mobile Number"
+                          "Invalid Mobile Number",
                         );
                       }
                     }}
@@ -708,6 +722,14 @@ const AboutMe = (props) => {
                     </ErrorMessage>
                   ) : null}
                   <HorizontalLabelInput
+                    placeholder="Profile Title"
+                    label="Profile Title"
+                    {...formik.getFieldProps("profileTitle")}
+                  />
+                  {formik.touched.profileTitle && formik.errors.profileTitle ? (
+                    <ErrorMessage>{formik.errors.profileTitle}</ErrorMessage>
+                  ) : null}
+                  <HorizontalLabelInput
                     label="Country"
                     type="select"
                     placeholder="Select Country"
@@ -731,7 +753,7 @@ const AboutMe = (props) => {
                       (educationLevel) => ({
                         value: educationLevel.id,
                         label: educationLevel.title,
-                      })
+                      }),
                     )}
                     {...formik.getFieldProps("city")}
                   />
@@ -797,7 +819,7 @@ const AboutMe = (props) => {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "jobNotification",
-                          e.target.checked
+                          e.target.checked,
                         )
                       }
                       checked={formik.values.jobNotification || false}
@@ -823,7 +845,7 @@ const AboutMe = (props) => {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "marketInformationNotification",
-                          e.target.checked
+                          e.target.checked,
                         )
                       }
                       checked={

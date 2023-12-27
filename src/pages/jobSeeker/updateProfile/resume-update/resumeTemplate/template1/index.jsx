@@ -15,7 +15,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
     const convertImageToBase64 = async () => {
       try {
         const response = await fetch(
-          generateFileUrl(applicantDetails?.profileImage)
+          generateFileUrl(applicantDetails?.profileImage),
         );
         const blob = await response.blob();
         const reader = new FileReader();
@@ -30,7 +30,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
         console.error("Error converting image to base64:", error);
       }
     };
-
     convertImageToBase64();
   }, []);
   return (
@@ -38,6 +37,9 @@ function ResumeTemplate({ user, appliedJob = false }) {
       <div className="container resume_template">
         <div className="heading">
           <h1>{applicantDetails.name}</h1>
+        </div>
+        <div className="heading">
+          <h5>{applicantDetails?.profile?.profileTitle}</h5>
         </div>
         <div className="section">
           <div className="cv_first_div">
