@@ -154,92 +154,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </Avatar>
               </div>
               {matches ? (
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  justifyContent={{ xs: "center", lg: "end" }}
-                  alignItems="center"
-                  // divider={<hr orientation="vertical" className="job_card_hr" />}
-                  sx={{ minHeight: "87%" }}
-                >
-                  <div className="pricebox py-3 me-lg-4">
-                    {jobDetails?.budgetAmount ? (
-                      <>
-                        <span className="d-block">UP TO</span>
-                        <h4>
-                          <small>{"$"}</small>
-                          {jobDetails?.budgetAmount || "3,500"}
-                        </h4>
-                        <span>{jobDetails?.budgetPayPeriod}</span>
-                      </>
-                    ) : (
-                      <h3></h3>
-                    )}
-                  </div>
-                  {selfJob ? (
-                    <div className="job-button-card">
-                      <button
-                        onClick={() => {
-                          handleStartPause();
-                        }}
-                      >
-                        {isStart === "active" ? (
-                          <>
-                            <SVG.PauseIcon />
-                            <span className="d-block">Hold</span>
-                          </>
-                        ) : (
-                          <>
-                            <SVG.StartIcon />
-                            <span className="d-block">Start</span>
-                          </>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (jobDetails?.id) {
-                            navigate(
-                              urlcat("/employer/jobs/post", {
-                                jobId: jobDetails?.id,
-                              })
-                            );
-                          }
-                        }}
-                      >
-                        {<SVG.Edit1 />}
-                        <span className="d-block">Edit</span>
-                      </button>
-                    </div>
-                  ) : isLoggedIn && role === USER_ROLES.jobSeeker ? (
-                    <React.Fragment>
-                      {!applied ? (
-                        <div
-                          onClick={handleToggleSave}
-                          style={{ marginLeft: "6px", cursor: "pointer" }}
-                        >
-                          <div
-                            className="bookmark"
-                            style={{ width: matches ? "auto" : "" }}
-                          >
-                            {isSaved ? (
-                              <>
-                                <SVG.SaveIcon />
-                                <span>Saved</span>
-                              </>
-                            ) : (
-                              <>
-                                <SVG.UnSave style={{ color: "#848484" }} />
-                                <span style={{ color: "#848484" }}>Save</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      ) : null}
-                    </React.Fragment>
-                  ) : (
-                    ""
-                  )}
-                </Stack>
+                <div className="my-jobs" style={{ flex: "1 1 " }}>
+                  <h2>
+                    <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
+                      {jobDetails?.title}
+                    </Link>
+                  </h2>
+                </div>
               ) : (
                 ""
               )}

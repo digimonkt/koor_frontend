@@ -79,6 +79,7 @@ function AuthLayout({
             delete payload[key];
           }
         }
+        console.log({ payload });
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           console.log({ result });
