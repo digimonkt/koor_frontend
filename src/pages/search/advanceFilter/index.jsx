@@ -630,11 +630,20 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       <div className={`${styles.searchResult}`}>
         <div
           className={`${styles.label} lables`}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
+          style={
+            !(platform === "android" || platform === "ios")
+              ? {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }
+              : {
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }
+          }
         >
           <Box
             sx={{
@@ -810,6 +819,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             resize: "none",
                             display: "flex",
                             alignItems: "center",
+                            width:
+                              platform === "android" || platform === "ios"
+                                ? "50px"
+                                : "",
                           }}
                           onClick={() => handleSelectFilter(filter)}
                         >
