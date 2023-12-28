@@ -838,9 +838,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                       cursor: "pointer",
                       fontSize: "12px",
+                      whiteSpace: "nowrap",
                       display: "flex",
                       alignItems: "center",
-                      whiteSpace: "nowrap",
                     }}
                   >
                     Advanced filter
