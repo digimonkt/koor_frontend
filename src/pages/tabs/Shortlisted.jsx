@@ -13,10 +13,9 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 import { IMAGES } from "@assets/images";
 import { SVG } from "@assets/svg";
-const SmallAvatar = styled(Avatar)(({ theme }) => ({
+const SmallAvatar = styled(Avatar)(() => ({
   width: 22,
   height: 22,
-
   color: "#274593",
   background: "#fff",
 }));

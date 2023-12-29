@@ -12,9 +12,7 @@ module.exports = defineConfig({
   viewportHeight: 1080,
 
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
+    setupNodeEvents(on, config) {},
     baseUrl: "http://localhost:3000",
   },
 });
