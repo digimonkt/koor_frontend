@@ -11,6 +11,7 @@ import { getColorByRemainingDays } from "../../utils/generateColor";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "../../api/employer";
+import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { showDay } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
@@ -407,7 +408,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     flexDirection="column"
                     alignItems="center"
                   >
-                    {jobDetails?.budgetAmount ? (
+                    {!isMobileView && jobDetails?.budgetAmount ? (
                       <>
                         <span className="d-block">UP TO</span>
                         <h4>
@@ -498,48 +499,114 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 ""
               )}
             </Box>
-            {Boolean(jobDetails?.budgetAmount) && selfJob && (
+            {!isMobileView && Boolean(jobDetails?.budgetAmount) && selfJob && (
               <Box sx={{ width: "2px !important" }}>
                 <Box className="hr-border"></Box>
               </Box>
             )}
             {selfJob ? (
-              <Box
-                className="job-button-card"
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <button
-                  onClick={() => {
-                    handleStartPause();
+              !isMobileView ? (
+                <Box
+                  className="job-button-card"
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <button
+                    onClick={() => {
+                      handleStartPause();
+                    }}
+                  >
+                    {isStart === "active" ? (
+                      <>
+                        <SVG.PauseIcon />
+                        <span className="d-block">Hold</span>
+                      </>
+                    ) : (
+                      <>
+                        <SVG.StartIcon />
+                        <span className="d-block">Start</span>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (jobDetails?.id) {
+                        navigate(
+                          urlcat("/employer/jobs/post", {
+                            jobId: jobDetails?.id,
+                          }),
+                        );
+                      }
+                    }}
+                  >
+                    {<SVG.Edit1 />}
+                    <span className="d-block">Edit</span>
+                  </button>
+                </Box>
+              ) : (
+                <Box
+                  className="job-button-card"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {isStart === "active" ? (
+                  {Boolean(jobDetails?.budgetAmount) && (
                     <>
-                      <SVG.PauseIcon />
-                      <span className="d-block">Hold</span>
-                    </>
-                  ) : (
-                    <>
-                      <SVG.StartIcon />
-                      <span className="d-block">Start</span>
+                      <Box style={{ fontSize: "12px" }}>
+                        <span className="d-block">UP TO</span>
+                        <h4>
+                          <small>{"$"}</small>
+                          {jobDetails?.budgetAmount || "3,500"}
+                        </h4>
+                        <span>{jobDetails?.budgetPayPeriod}</span>
+                      </Box>
+                      <Box sx={{ width: "2px !important" }}>
+                        <Box className="hr-border"></Box>
+                      </Box>
                     </>
                   )}
-                </button>
-                <button
-                  onClick={() => {
-                    if (jobDetails?.id) {
-                      navigate(
-                        urlcat("/employer/jobs/post", {
-                          jobId: jobDetails?.id,
-                        }),
-                      );
-                    }
-                  }}
-                >
-                  {<SVG.Edit1 />}
-                  <span className="d-block">Edit</span>
-                </button>
-              </Box>
+                  <Box mt={2}>
+                    <button
+                      onClick={() => {
+                        handleStartPause();
+                      }}
+                    >
+                      {isStart === "active" ? (
+                        <>
+                          <SVG.PauseIcon />
+                          <span className="d-block">Hold</span>
+                        </>
+                      ) : (
+                        <>
+                          <SVG.StartIcon />
+                          <span className="d-block">Start</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (jobDetails?.id) {
+                          navigate(
+                            urlcat("/employer/jobs/post", {
+                              jobId: jobDetails?.id,
+                            }),
+                          );
+                        }
+                      }}
+                    >
+                      {<SVG.Edit1 />}
+                      <span className="d-block">Edit</span>
+                    </button>
+                  </Box>
+                  <Box>
+                    <ApplicantList
+                      jobId={jobDetails.id}
+                      totalApplications={jobDetails.applicantCount}
+                    />
+                  </Box>
+                </Box>
+              )
             ) : role === USER_ROLES.jobSeeker ? (
               <React.Fragment>
                 <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>

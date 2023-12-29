@@ -9,10 +9,7 @@ import { useSelector } from "react-redux";
 import { DownloadResumeAPI } from "../../../../api/jobSeeker";
 import { generateFileUrl } from "../../../../utils/generateFileUrl";
 import { Capacitor } from "@capacitor/core";
-// import { KoorLogo } from "@assets/base64/index";
-import { Filesystem, Directory } from "@capacitor/filesystem";
-import { Browser } from "@capacitor/browser";
-
+import { KoorLogo } from "@assets/base64/index";
 const ResumeUpdate = ({
   title,
   bgcolor,
@@ -28,12 +25,10 @@ const ResumeUpdate = ({
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
+
   const downloadPDF = async () => {
     setIsDownloadingPDF(true);
     const element = document.getElementById("div-to-pdf");
-    // const footerContent = "This resume is generated with";
-    // const imageWidth = 13;
-    // const imageHeight = 5;
     const options = {
       margin: [20, 0],
       filename: `${currentUser.name || "Resume"}.pdf`,
@@ -45,70 +40,46 @@ const ResumeUpdate = ({
       },
     };
 
-    // if (platform === "android" || platform === "ios") {
-    console.log("in");
-    const { granted } = Filesystem.requestPermissions();
-    if (!granted) {
-      return;
-    }
-    console.log("in2");
-
+    const footerContent = "This resume is generated with";
+    const imageWidth = 13; // Set the desired width
+    const imageHeight = 5;
     await html2pdf()
       .from(element)
       .set(options)
       .toPdf()
       .get("pdf")
-      .output("blob")
-      .then(async function (blob) {
-        const fileName = `${currentUser.name || "Resume"}.pdf`;
-        console.log("writing");
-        const saveResult = await Filesystem.writeFile({
-          path: fileName,
-          data: blob,
-          directory: Directory.Documents,
-        });
-        console.log({ saveResult });
-        await Browser.open({ url: saveResult.uri });
-        console.log({ saveResult });
-        setIsDownloadingPDF(false);
-      });
-    // } else {
-    //   await html2pdf()
-    //     .from(element)
-    //     .set(options)
-    //     .toPdf()
-    //     .get("pdf")
-    //     .then(function (pdf) {
-    //       const totalPages = pdf.internal.getNumberOfPages();
+      .then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
 
-    //       for (let i = 1; i <= totalPages; i++) {
-    //         pdf.setPage(i);
-    //         pdf.setFontSize(10);
-    //         pdf.setTextColor(150);
-    //         const imageX =
-    //           pdf.internal.pageSize.getWidth() -
-    //           pdf.internal.pageSize.getWidth() / 2 +
-    //           footerContent.length -
-    //           10;
-    //         pdf.addImage(
-    //           KoorLogo,
-    //           "PNG",
-    //           imageX,
-    //           pdf.internal.pageSize.getHeight() - 14,
-    //           imageWidth,
-    //           imageHeight,
-    //         );
-    //         pdf.text(
-    //           footerContent,
-    //           pdf.internal.pageSize.getWidth() -
-    //             pdf.internal.pageSize.getWidth() / 2 -
-    //             footerContent.length,
-    //           pdf.internal.pageSize.getHeight() - 10,
-    //         );
-    //       }
-    //     })
-    //     .save();
-    // }
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(10);
+          pdf.setTextColor(150);
+          const imageX =
+            pdf.internal.pageSize.getWidth() -
+            pdf.internal.pageSize.getWidth() / 2 +
+            footerContent.length -
+            10;
+          pdf.addImage(
+            KoorLogo,
+            "PNG",
+            imageX,
+            pdf.internal.pageSize.getHeight() - 14,
+            imageWidth,
+            imageHeight,
+          );
+          pdf.text(
+            footerContent,
+            pdf.internal.pageSize.getWidth() -
+              pdf.internal.pageSize.getWidth() / 2 -
+              footerContent.length,
+            pdf.internal.pageSize.getHeight() - 10,
+          );
+        }
+      })
+      .save();
+
+    setIsDownloadingPDF(false);
   };
 
   const downloadDocs = async () => {

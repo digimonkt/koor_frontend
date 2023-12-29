@@ -56,7 +56,6 @@ function App() {
   useEffect(() => {
     checkLoginStatus();
   }, []);
-
   useEffect(() => {
     window.addEventListener("storage", checkLoginStatus);
     CapApp.addListener("backButton", backButtonAction);

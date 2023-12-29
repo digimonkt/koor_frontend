@@ -14,26 +14,23 @@ import AboutMe from "../aboutMe";
 import { Capacitor } from "@capacitor/core";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
-import { setIsLoggedIn } from "../../../redux/slice/user";
-import { LogoutUserAPI } from "@api/user";
-import { globalLocalStorage } from "@utils/localStorage";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const MyProfile = () => {
   const platform = Capacitor.getPlatform();
   const { currentUser } = useSelector(({ auth }) => auth);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(["job"]);
 
-  const userLogout = async () => {
-    await LogoutUserAPI();
-    globalLocalStorage.cleanLocalStorage();
-  };
-  const logoutHandle = () => {
-    userLogout();
-    dispatch(setIsLoggedIn(false));
-  };
+  // const userLogout = async () => {
+  //   await LogoutUserAPI();
+  //   globalLocalStorage.cleanLocalStorage();
+  // };
+  // const logoutHandle = () => {
+  //   userLogout();
+  //   dispatch(setIsLoggedIn(false));
+  // };
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
@@ -71,9 +68,9 @@ const MyProfile = () => {
                 >
                   <h1>My profile</h1>
                   <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
-                    <IconButton onClick={() => logoutHandle()}>
-                      <SVG.AppGroup />
-                    </IconButton>
+                    {/* <IconButton onClick={() => logoutHandle()}> */}
+                    {/*   <SVG.AppGroup /> */}
+                    {/* </IconButton> */}
                     <IconButton LinkComponent={Link} to="/Setting">
                       <SVG.Settings />
                     </IconButton>
