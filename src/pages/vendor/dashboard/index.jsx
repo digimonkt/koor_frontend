@@ -15,17 +15,16 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-// import { Capacitor } from "@capacitor/core";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { globalLocalStorage } from "@utils/localStorage";
+import { useSelector } from "react-redux";
+// import { globalLocalStorage } from "@utils/localStorage";
 import { SVG } from "@assets/svg";
-import { setIsLoggedIn } from "@redux/slice/user";
-import { LogoutUserAPI } from "@api/user";
+// import { setIsLoggedIn } from "@redux/slice/user";
+// import { LogoutUserAPI } from "@api/user";
 
 function Dashboard() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [recentApplication, setRecentApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
@@ -36,15 +35,15 @@ function Dashboard() {
 
   const { currentUser } = useSelector(({ auth }) => auth);
 
-  const logoutHandle = () => {
-    userLogout();
-    dispatch(setIsLoggedIn(false));
-  };
+  // const logoutHandle = () => {
+  //   userLogout();
+  //   dispatch(setIsLoggedIn(false));
+  // };
 
-  const userLogout = async () => {
-    await LogoutUserAPI();
-    globalLocalStorage.cleanLocalStorage();
-  };
+  // const userLogout = async () => {
+  //   await LogoutUserAPI();
+  //   globalLocalStorage.cleanLocalStorage();
+  // };
 
   const getRecentApplications = async () => {
     setIsLoading(true);
@@ -56,8 +55,8 @@ function Dashboard() {
       setRecentApplication((prevState) =>
         [...prevState, ...res.data.results].filter(
           (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id)
-        )
+            index === self.findIndex((t) => t.id === value.id),
+        ),
       );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
@@ -96,9 +95,9 @@ function Dashboard() {
               >
                 <h1>Dashboard</h1>
                 <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
-                  <IconButton onClick={() => logoutHandle()}>
-                    <SVG.AppGroup />
-                  </IconButton>
+                  {/* <IconButton onClick={() => logoutHandle()}> */}
+                  {/*   <SVG.AppGroup /> */}
+                  {/* </IconButton> */}
                   <IconButton LinkComponent={Link} to="/Setting">
                     <SVG.Settings />
                   </IconButton>

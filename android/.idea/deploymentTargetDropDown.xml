@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Digimonk\AppData\Local\.android\avd\Small_Phone_API_30.avd" />
+                  <value value="C:\Users\Digimonk\.android\avd\Small_Phone_API_30.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-12-25T07:07:09.272779100Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-12-29T11:05:23.324392500Z" />
         </State>
       </entry>
     </value>

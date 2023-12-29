@@ -123,7 +123,7 @@ function TenderDetailsComponent() {
     }
   };
 
-  const getTenderSuggestion = async tenderId => {
+  const getTenderSuggestion = async (tenderId) => {
     const res = await getTenderSuggestionAPI(tenderId);
     if (res.remote === "success") {
       setTenderSuggestion(res.data.results);
@@ -202,7 +202,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -279,7 +279,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -404,13 +404,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                })
+                                }),
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                })
+                                }),
                               );
                             }
                           } else {

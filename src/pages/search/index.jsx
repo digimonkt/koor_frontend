@@ -512,7 +512,6 @@ function Search({ searchTypeForJob }) {
                       )}
                     </Stack>
                   </div>
-
                   <Component />
                 </Box>
                 {totalPages > 1 ? (

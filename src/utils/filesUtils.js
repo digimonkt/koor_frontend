@@ -1,4 +1,5 @@
 import { mimeTypes } from "./constants/constants.js";
+import { Filesystem, Directory } from "@capacitor/filesystem";
 
 export function fileTypeExtractor(url) {
   const extension = "." + url.split(".").pop().toLowerCase();
@@ -21,3 +22,17 @@ export function downloadUrlCreator(blob) {
 
   URL.revokeObjectURL(downloadUrl);
 }
+
+export const fileDownloader = async (filename, file) => {
+  try {
+    const base64Data = file.split("base64,")[1];
+    await Filesystem.writeFile({
+      path: filename || "attachment",
+      data: base64Data,
+      directory: Directory.Documents,
+      recursive: true,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

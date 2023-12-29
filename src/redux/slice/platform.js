@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isMobileView: false,
+  version: "v1.0.0",
 };
 
 export const platformSlice = createSlice({
@@ -12,8 +13,11 @@ export const platformSlice = createSlice({
     setIsMobileView: (state, action) => {
       state.isMobileView = action.payload;
     },
+    setAppVersion: (state, action) => {
+      state.version = action.payload;
+    },
   },
 });
 
-export const { setIsMobileView } = platformSlice.actions;
+export const { setIsMobileView, setAppVersion } = platformSlice.actions;
 export default platformSlice.reducer;

@@ -75,6 +75,7 @@ const AreaChart = ({ title }) => {
           "Dec",
         ],
         labels: {
+          hideOverlappingLabels: false,
           show: true,
           rotate: -45,
           style: {

@@ -18,9 +18,6 @@ import ApplicantCard from "../../../components/applicantCard";
 import ApplicantCardSkeletonLoading from "../../../components/applicantCard/skeletonLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalAvailableCredits } from "../../../redux/slice/employer";
-import { LogoutUserAPI } from "@api/user";
-import { globalLocalStorage } from "@utils/localStorage";
-import { setIsLoggedIn } from "@redux/slice/user";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
 dayjs.extend(relativeTime);
@@ -121,15 +118,6 @@ const Dashboard = () => {
   useEffect(() => {
     getShareCountData();
   }, []);
-  const userLogout = async () => {
-    await LogoutUserAPI();
-    globalLocalStorage.cleanLocalStorage();
-  };
-  const logoutHandle = () => {
-    userLogout();
-    dispatch(setIsLoggedIn(false));
-  };
-  console.log({ currentUser });
   return (
     <>
       <div className="employer-dashboard">
@@ -153,9 +141,9 @@ const Dashboard = () => {
                 >
                   <h1>Dashboard</h1>
                   <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
-                    <IconButton onClick={() => logoutHandle()}>
-                      <SVG.AppGroup />
-                    </IconButton>
+                    {/* <IconButton onClick={() => logoutHandle()}> */}
+                    {/*   <SVG.AppGroup /> */}
+                    {/* </IconButton> */}
                     <IconButton LinkComponent={Link} to="/Setting">
                       <SVG.Settings />
                     </IconButton>
