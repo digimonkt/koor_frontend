@@ -48,41 +48,52 @@ function JobCostCard({ amount, payPeriod, user }) {
               "&.MuiAvatar-colorDefault": {
                 background: "#F0F0F0",
               },
+              "@media (max-width:992px)": {
+                width: "70px",
+                height: "70px",
+              },
             }}
             src={generateFileUrl(user.image?.path)}
           >
             <SVG.UserIcon />
           </Avatar>
-          <h3>
-            <Link
-              to={urlcat("/employer/:userId/profile", {
-                userId: user.id || "null",
-              })}
-              style={{
-                textDecoration: "none",
-                color: "black",
-              }}
+          <Box>
+            <h3>
+              <Link
+                to={urlcat("/employer/:userId/profile", {
+                  userId: user.id || "null",
+                })}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                }}
+              >
+                {user.name}
+              </Link>
+            </h3>
+            <div
+              className={`mt-4 text-break text-wrap  ${styles.Numbers}`}
+              style={{ marginLeft: "18px" }}
             >
-              {user.name}
-            </Link>
-          </h3>
-        </div>
-        <div className={`mt-4 text-break text-wrap  ${styles.Numbers}`}>
-          <span>{user.website}</span>
-          <span>
-            <Link
-              to={`tel:${formatPhoneNumberIntl(
-                user.countryCode + user.mobileNumber
-              )}`}
-            >
-              {user.countryCode && user.mobileNumber
-                ? formatPhoneNumberIntl(user.countryCode + user.mobileNumber)
-                : ""}
-            </Link>
-          </span>
-          <span>
-            <Link to={`mailto:${user.email}`}>{user.email}</Link>
-          </span>
+              <span>{user.website}</span>
+              <span>
+                <Link
+                  to={`tel:${formatPhoneNumberIntl(
+                    user.countryCode + user.mobileNumber
+                  )}`}
+                >
+                  {user.countryCode && user.mobileNumber
+                    ? formatPhoneNumberIntl(
+                        user.countryCode + user.mobileNumber
+                      )
+                    : ""}
+                </Link>
+              </span>
+              <span>
+                <Link to={`mailto:${user.email}`}>{user.email}</Link>
+              </span>
+            </div>
+          </Box>
         </div>
       </Box>
     </>
