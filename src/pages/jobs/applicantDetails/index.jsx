@@ -80,7 +80,7 @@ const ApplicantDetails = () => {
     const imageWidth = 13;
     const imageHeight = 5;
     try {
-      if (Capacitor.isNativePlatform) {
+      if (Capacitor.isNativePlatform()) {
         await html2pdf()
           .from(element)
           .set(options)
@@ -98,7 +98,6 @@ const ApplicantDetails = () => {
           .set(options)
           .toPdf()
           .get("pdf")
-          .output("datauristring")
           .then(async function (pdf) {
             const totalPages = pdf.internal.getNumberOfPages();
 
@@ -127,7 +126,8 @@ const ApplicantDetails = () => {
                 pdf.internal.pageSize.getHeight() - 10,
               );
             }
-          });
+          })
+          .save();
         setIsDownloadingPDF(false);
         dispatch(setSuccessToast("File saved successfully"));
       }

@@ -70,6 +70,7 @@ export default function PublicProfileComponent() {
       console.log(res);
     }
   };
+
   useEffect(() => {
     const userId = params.userId;
     storeProfileAnalytics(userId);
@@ -445,7 +446,7 @@ export default function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                  userDetails.mobileNumber,
                               )}
                             </Typography>
                             <Typography

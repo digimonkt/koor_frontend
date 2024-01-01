@@ -210,6 +210,12 @@ export const ROUTES = [
           path: "/verify-otp",
           component: VerifyOTP,
         },
+        {
+          id: "resetPassword",
+          name: "Reset Password",
+          path: "/reset-password",
+          component: ResetPassword,
+        },
       ]
     : [
         {

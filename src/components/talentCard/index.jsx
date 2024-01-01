@@ -12,10 +12,10 @@ import {
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
-import { getConversationIdByUserIdAPI } from "../../api/chat";
 import { useState } from "react";
 import { USER_ROLES } from "@utils/enum";
 import { useSelector } from "react-redux";
+import { chatRedirector } from "@utils/chatRedirector";
 
 function TalentCard({ talentDetails }) {
   const { role } = useSelector(({ auth }) => auth);
@@ -28,10 +28,9 @@ function TalentCard({ talentDetails }) {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? talentDetails.length : 3
+      prevNumLines === 3 ? talentDetails.length : 3,
     );
   };
-  console.log(talentDetails?.profileTitle);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -39,20 +38,10 @@ function TalentCard({ talentDetails }) {
     WebkitLineClamp: numLines,
   };
 
-  const handleMessageClick = async () => {
-    const res = await getConversationIdByUserIdAPI({
-      userId: talentDetails?.id,
-    });
-    if (res.remote === "success") {
-      const conversationId = res.data.conversation_id;
-      navigate(
-        urlcat("/employer/chat", {
-          conversion: conversationId,
-          userId: talentDetails?.id,
-        })
-      );
-    }
+  const handleMessageClick = async (id) => {
+    chatRedirector(id, navigate);
   };
+
   return (
     <>
       {isMobileView ? (
@@ -68,7 +57,7 @@ function TalentCard({ talentDetails }) {
                 <Avatar
                   alt="Remy Sharp"
                   src={generateFileUrl(
-                    talentDetails.profilePicture?.path || ""
+                    talentDetails.profilePicture?.path || "",
                   )}
                   SX={{ width: "40px", height: "40px" }}
                 />
@@ -106,7 +95,6 @@ function TalentCard({ talentDetails }) {
                     {talentDetails.country ? (
                       <>
                         <SVG.LocationIcon />
-
                         <Box component={"span"}>
                           {talentDetails.country}, {talentDetails.city}
                         </Box>
@@ -146,23 +134,27 @@ function TalentCard({ talentDetails }) {
                   }}
                 ></Typography>
               </div>
-
-              <Box sx={{ ml: "auto !important" }}>
-                <Button
-                  sx={{
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    textTransform: "capitalize",
-                    fontSize: "10px",
-                    color: "#274593",
-                  }}
-                  disableElevation={false}
-                  disableRipple={true}
+              {talentDetails.readyForChat && (
+                <Box
+                  sx={{ ml: "auto !important" }}
+                  onClick={() => handleMessageClick(talentDetails?.id)}
                 >
-                  <SVG.MessageIcon />
-                  <Box>Message</Box>
-                </Button>
-              </Box>
+                  <Button
+                    sx={{
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      textTransform: "capitalize",
+                      fontSize: "10px",
+                      color: "#274593",
+                    }}
+                    disableElevation={false}
+                    disableRipple={true}
+                  >
+                    <SVG.MessageIcon />
+                    <Box>Message</Box>
+                  </Button>
+                </Box>
+              )}
             </Stack>
             <Box sx={{ mb: 2 }}>
               {talentDetails.description.length > 300 && (
@@ -245,7 +237,7 @@ function TalentCard({ talentDetails }) {
               >
                 <Avatar
                   src={generateFileUrl(
-                    talentDetails.profilePicture?.path || ""
+                    talentDetails.profilePicture?.path || "",
                   )}
                   sx={{
                     borderRadius: "0px !important",
@@ -372,7 +364,10 @@ function TalentCard({ talentDetails }) {
               <Stack direction="row" spacing={2} alignItems="center">
                 {talentDetails.readyForChat && (
                   <Stack direction="row" spacing={0} className="edit-button">
-                    <Button variant="link" onClick={handleMessageClick}>
+                    <Button
+                      variant="link"
+                      onClick={() => handleMessageClick(talentDetails?.id)}
+                    >
                       <SVG.MessageIcon
                         style={{
                           color: "#274593",
