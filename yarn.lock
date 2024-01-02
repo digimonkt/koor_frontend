@@ -1316,6 +1316,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/splash-screen/-/splash-screen-5.0.6.tgz#d29320de49cc68add59e17fecb64aa2f1a08447f"
   integrity sha512-9B8wSm89D+LlshFw8B+mjPU8pJNf1WOx2mkMjMvcH0/EqxNaE+ZaO8lPCX+9WvWSEZs3O3l11qiSnOFHeK0t9A==
 
+"@capawesome-team/capacitor-file-opener@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@capawesome-team/capacitor-file-opener/-/capacitor-file-opener-5.0.4.tgz#3c5ca65ec0380fba39720ce5e12946bcc3576c96"
+  integrity sha512-l5jOFIos3QJJNg8bI1T7Vqi3cKUMsN2jOap8vTzbxuAqOO5J/5ECQrD77W7X50F7nTYQB/6LPy1BUO3oTCLmHA==
+
 "@colors/colors@1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"

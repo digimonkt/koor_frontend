@@ -5,6 +5,7 @@ import { AreaChart } from "../../../components/charts";
 import TenderCard from "../../../components/tenderCard";
 import TenderCardSkeletonLoader from "../../../components/tenderCard/tenderCardSkeletonLoader";
 import {
+  Avatar,
   Box,
   Card,
   CardContent,
@@ -18,13 +19,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { globalLocalStorage } from "@utils/localStorage";
 import { SVG } from "@assets/svg";
-// import { setIsLoggedIn } from "@redux/slice/user";
-// import { LogoutUserAPI } from "@api/user";
 
 function Dashboard() {
-  // const dispatch = useDispatch();
   const [recentApplication, setRecentApplication] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [recentApplicationPage, setRecentApplicationPage] = useState(1);
@@ -34,16 +31,6 @@ function Dashboard() {
     useState(true);
 
   const { currentUser } = useSelector(({ auth }) => auth);
-
-  // const logoutHandle = () => {
-  //   userLogout();
-  //   dispatch(setIsLoggedIn(false));
-  // };
-
-  // const userLogout = async () => {
-  //   await LogoutUserAPI();
-  //   globalLocalStorage.cleanLocalStorage();
-  // };
 
   const getRecentApplications = async () => {
     setIsLoading(true);
@@ -95,9 +82,6 @@ function Dashboard() {
               >
                 <h1>Dashboard</h1>
                 <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
-                  {/* <IconButton onClick={() => logoutHandle()}> */}
-                  {/*   <SVG.AppGroup /> */}
-                  {/* </IconButton> */}
                   <IconButton LinkComponent={Link} to="/Setting">
                     <SVG.Settings />
                   </IconButton>
@@ -109,7 +93,7 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12}>
               <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
-                <img
+                <Avatar
                   alt="profile"
                   src={currentUser?.profileImage}
                   style={{

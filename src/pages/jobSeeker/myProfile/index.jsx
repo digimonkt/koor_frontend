@@ -1,4 +1,12 @@
-import { Box, Card, CardContent, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React, { useState } from "react";
 // import ModalView from "../updateProfile/modal";
 import DialogBox from "../../../components/dialogBox";
@@ -82,7 +90,7 @@ const MyProfile = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
-                  <img
+                  <Avatar
                     alt="profile"
                     src={currentUser?.profileImage}
                     style={{

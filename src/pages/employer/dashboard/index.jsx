@@ -1,4 +1,12 @@
-import { Box, Card, CardContent, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import { DonutChart } from "../../../components/charts";
@@ -155,7 +163,7 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
-                  <img
+                  <Avatar
                     alt="profile"
                     src={currentUser?.profileImage}
                     style={{

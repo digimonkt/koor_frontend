@@ -345,7 +345,7 @@ function TenderDetailsComponent() {
                         </span>
                         <a
                           className="m-0"
-                          onClick={(e) => handleLoadImage(attachment.path)}
+                          onClick={() => handleLoadImage(attachment.path)}
                           href={generateFileUrl(attachment.path)}
                           target="_blank"
                           rel="noreferrer"

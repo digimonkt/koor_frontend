@@ -3,7 +3,7 @@ import { Box, Tab } from "@mui/material";
 import AppliedTenderComponent from "@pages/vendor/appliedTender";
 import { USER_ROLES } from "@utils/enum";
 import React from "react";
-import ShortlistedCard from "./Shortlisted";
+import ShortlistedTab from "./shortlisted/";
 
 const Tabs = ({ setValue, value, role }) => {
   const handleChange = (_, newValue) => {
@@ -47,7 +47,7 @@ const Tabs = ({ setValue, value, role }) => {
         <TabPanel value="2" sx={{ px: 0 }}>
           <Box sx={{ marginBottom: "130px" }}>
             {role === USER_ROLES.employer ? (
-              <ShortlistedCard />
+              <ShortlistedTab />
             ) : (
               <AppliedTenderComponent />
             )}

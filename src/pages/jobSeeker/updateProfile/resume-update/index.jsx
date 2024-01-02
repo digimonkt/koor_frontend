@@ -4,14 +4,11 @@ import React, { useState } from "react";
 import { SVG } from "../../../../assets/svg";
 import DialogBox from "../../../../components/dialogBox";
 import ResumeTemplate from "./resumeTemplate/template1";
-import html2pdf from "html2pdf.js";
 import { useSelector, useDispatch } from "react-redux";
 import { DownloadResumeAPI } from "../../../../api/jobSeeker";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { fileDownloader } from "@utils/filesUtils";
 import { Capacitor } from "@capacitor/core";
-import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
-import { KoorLogo } from "@assets/base64/index";
+import { pdfDownloader } from "../../../../utils/filesUtils";
 
 const ResumeUpdate = ({
   title,
@@ -31,79 +28,9 @@ const ResumeUpdate = ({
   const dispatch = useDispatch();
 
   const downloadPDF = async () => {
-    setIsDownloadingPDF(true);
-    const element = document.getElementById("div-to-pdf");
-    const options = {
-      margin: [20, 0],
-      filename: `${currentUser.name || "Resume"}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "Portrait" },
-      pagebreak: {
-        before: "#page-break",
-      },
-    };
-
-    const footerContent = "This resume is generated with";
-    const imageWidth = 13; // Set the desired width
-    const imageHeight = 5;
-    try {
-      if (Capacitor.isNativePlatform) {
-        await html2pdf()
-          .from(element)
-          .set(options)
-          .toPdf()
-          .get("pdf")
-          .output("datauristring")
-          .then(async function (pdf) {
-            fileDownloader(options.filename, pdf);
-          });
-        setIsDownloadingPDF(false);
-        dispatch(setSuccessToast("File saved successfully"));
-      } else {
-        await html2pdf()
-          .from(element)
-          .set(options)
-          .toPdf()
-          .get("pdf")
-          .output("datauristring")
-          .then(async function (pdf) {
-            const totalPages = pdf.internal.getNumberOfPages();
-
-            for (let i = 1; i <= totalPages; i++) {
-              pdf.setPage(i);
-              pdf.setFontSize(10);
-              pdf.setTextColor(150);
-              const imageX =
-                pdf.internal.pageSize.getWidth() -
-                pdf.internal.pageSize.getWidth() / 2 +
-                footerContent.length -
-                10;
-              pdf.addImage(
-                KoorLogo,
-                "PNG",
-                imageX,
-                pdf.internal.pageSize.getHeight() - 14,
-                imageWidth,
-                imageHeight,
-              );
-              pdf.text(
-                footerContent,
-                pdf.internal.pageSize.getWidth() -
-                  pdf.internal.pageSize.getWidth() / 2 -
-                  footerContent.length,
-                pdf.internal.pageSize.getHeight() - 10,
-              );
-            }
-          });
-        setIsDownloadingPDF(false);
-        dispatch(setSuccessToast("File saved successfully"));
-      }
-    } catch (err) {
-      console.log(err);
-      dispatch(setErrorToast("Something went wrong"));
-    }
+    pdfDownloader(currentUser?.name, setIsDownloadingPDF, dispatch);
   };
+
   const downloadDocs = async () => {
     setIsDownloadingDocs(true);
     const res = await DownloadResumeAPI();

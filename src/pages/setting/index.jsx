@@ -12,7 +12,7 @@ const Setting = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { role } = useSelector(({ auth }) => auth);
-  const { version } = useSelector(({ platform }) => platform);
+  const { appInfo } = useSelector(({ platform }) => platform);
 
   const userLogout = async () => {
     await LogoutUserAPI();
@@ -152,7 +152,7 @@ const Setting = () => {
           </Stack>
         </Stack>
         <Box sx={{ color: "#848484", fontSize: "14px", fontFamily: "Poppins" }}>
-          Version – {version || "v0"}
+          Version – {appInfo.version || "v0"}
         </Box>
       </Stack>
     </Box>
