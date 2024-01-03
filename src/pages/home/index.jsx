@@ -81,7 +81,7 @@ const Home = () => {
 
     // Navigate to the search page with the provided parameters
     navigate(
-      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
     );
   };
   // console.log("Show error", error);
