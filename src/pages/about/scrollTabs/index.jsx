@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Accordian from "../accordion";
 import { TabContext, TabList } from "@mui/lab";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getFAQQuestions } from "../../../redux/slice/faq";
 import { OutlinedButton } from "../../../components/button";
@@ -16,6 +16,9 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      style={{
+        transition: "all 1s cubic-bezier(.68,-0.55,.27,1.55)",
+      }}
       {...other}
     >
       {value === index && (
@@ -44,13 +47,19 @@ const ScrollTabs = ({ faqCategory }) => {
   const [activeCategory, setActiveCategory] = useState(0);
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
   const handleFAQQuestion = (role, categoryId) => {
     setActiveCategory(categoryId);
     dispatch(getFAQQuestions({ role, categoryId }));
   };
+  useEffect(() => {
+    // Set the active category when the component mounts
+    if (faqCategory && faqCategory.length > 0) {
+      handleFAQQuestion(faqCategory[0].role, faqCategory[0].id);
+    }
+  }, [faqCategory]);
   return (
     <>
       <Box>
@@ -90,7 +99,7 @@ const ScrollTabs = ({ faqCategory }) => {
               ))}
             </Box>
           </TabList>
-          {(faqCategory || []).map((category, index) => (
+          {(faqCategory || []).map((_, index) => (
             <>
               <TabPanel value={value} index={index}>
                 <Accordian faqCategory={faqCategory} />
