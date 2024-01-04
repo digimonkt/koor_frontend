@@ -444,9 +444,16 @@
   .job_done_desc {
     font-size: 12px;
   }
+  .startDate {
+    font-size: 10px;
+  }
   .job_done {
     font-size: 20px;
     text-align: center;
+  }
+
+  .startB {
+    font-size: 10px;
   }
 
   .clocs {

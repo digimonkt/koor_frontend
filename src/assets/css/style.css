@@ -10,6 +10,34 @@ body {
   height: 42px;
 }
 
+.create_resume_div h3 {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Bahnschrift" !important;
+  color: #121212;
+  text-align: center;
+  margin: 0;
+}
+
+.create_resume_div p {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14px;
+  font-family: "Poppins" !important;
+  color: #848484 !important;
+  text-align: center;
+  margin: 0;
+}
+
+.create_resume_div a {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14px;
+  font-family: "Poppins" !important;
+  color: #eea23d !important;
+  margin: 0;
+}
+
 .main_component_class {
   background: #e5e5e5;
   min-height: 544px;
@@ -3094,4 +3122,11 @@ input.employersearch {
   -webkit-line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+}
+
+@media screen and (max-width: 320px) {
+  .outline-button {
+    font-size: 13px !important;
+    padding: 10px 20px !important;
+  }
 }

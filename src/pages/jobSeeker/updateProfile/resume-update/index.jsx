@@ -1,5 +1,5 @@
 import { FilledButton, OutlinedButton } from "../../../../components/button";
-import { IconButton, Stack } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { SVG } from "../../../../assets/svg";
 import DialogBox from "../../../../components/dialogBox";
@@ -10,6 +10,7 @@ import { DownloadResumeAPI } from "../../../../api/jobSeeker";
 import { generateFileUrl } from "../../../../utils/generateFileUrl";
 import { Capacitor } from "@capacitor/core";
 import { KoorLogo } from "@assets/base64/index";
+import { Link } from "react-router-dom";
 const ResumeUpdate = ({
   title,
   bgcolor,
@@ -23,7 +24,7 @@ const ResumeUpdate = ({
   const [openResume, setOpenResume] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
-  const { currentUser } = useSelector((state) => state.auth);
+  const { currentUser, role } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
 
   const downloadPDF = async () => {
@@ -194,7 +195,7 @@ const ResumeUpdate = ({
               </IconButton>
               <div className="description">{description}</div>
             </Stack>
-            <div className="my-4 text-center">
+            <div className="mt-4 mb-3 text-center">
               <OutlinedButton
                 style={{ width: "100%" }}
                 title={
@@ -226,6 +227,16 @@ const ResumeUpdate = ({
                 }}
               />
             </div>
+            <hr style={{ borderColor: "#CACACA" }} />
+            <Box className="create_resume_div">
+              <h3>Don’t have a resume?</h3>
+              <p>
+                Don't worry if you don't have one yet,{" "}
+                <Link to={`/${role}/my-profile/create-resume`}>
+                  create it with our free tool!
+                </Link>
+              </p>
+            </Box>
           </div>
         )}
       </div>
