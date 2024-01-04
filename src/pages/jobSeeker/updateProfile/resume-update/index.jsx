@@ -67,14 +67,14 @@ const ResumeUpdate = ({
             imageX,
             pdf.internal.pageSize.getHeight() - 14,
             imageWidth,
-            imageHeight
+            imageHeight,
           );
           pdf.text(
             footerContent,
             pdf.internal.pageSize.getWidth() -
               pdf.internal.pageSize.getWidth() / 2 -
               footerContent.length,
-            pdf.internal.pageSize.getHeight() - 10
+            pdf.internal.pageSize.getHeight() - 10,
           );
         }
       })
@@ -203,7 +203,7 @@ const ResumeUpdate = ({
                     <span className="me-2 d-inline-flex">
                       <SVG.DownloadIcon />
                     </span>
-                    DOWNLOAD YOUR RESUME
+                    UPLOAD YOUR RESUME
                   </>
                 }
                 onClick={() => setOpenResume(true)}

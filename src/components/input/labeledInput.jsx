@@ -12,6 +12,7 @@ function LabeledInputComponent({
   limit,
   width,
   zIndex,
+  endplaceholder = "",
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -93,6 +94,8 @@ function LabeledInputComponent({
                   : "password"
                 : type
             }
+            value={rest?.value}
+            style={{ width, zIndex }}
             {...rest}
           />
           {icon && <div>{icon}</div>}
@@ -114,6 +117,18 @@ function LabeledInputComponent({
             </IconButton>
           ) : (
             ""
+          )}
+          {endplaceholder && (
+            <div
+              className="password_svg"
+              style={{
+                padding: "3px 40px 0px 0",
+                opacity: 0.2,
+                color: "#121212",
+              }}
+            >
+              {endplaceholder}
+            </div>
           )}
         </div>
       )}

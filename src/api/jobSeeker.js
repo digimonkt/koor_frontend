@@ -1,7 +1,10 @@
 import api from ".";
 import urlcat from "urlcat";
 import { transformJobListResponse } from "./transform/job";
-import { transformJobSeekerCategoriesResponse, transformProfileAnalytics } from "./transform/jobSeeker";
+import {
+  transformJobSeekerCategoriesResponse,
+  transformProfileAnalytics,
+} from "./transform/jobSeeker";
 export const updateJobSeekerAboutMeAPI = async (data) => {
   const res = await api.request({
     url: "/v1/users/job-seeker/about-me",
@@ -248,7 +251,15 @@ export const getProfileAnalyticsDataAPI = async (year) => {
   if (res.remote === "success") {
     return {
       remote: "success",
-      data: transformProfileAnalytics(res.data)
+      data: transformProfileAnalytics(res.data),
     };
-  };
+  }
+};
+
+export const editResumeDetailsAPI = async (data) => {
+  return await api.request({
+    url: "v1/users/job-seeker/job-preferences",
+    method: "PATCH",
+    data,
+  });
 };
