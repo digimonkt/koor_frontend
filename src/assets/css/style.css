@@ -10,6 +10,40 @@ body {
   height: 42px;
 }
 
+.modal-box.coverletter_dialog .MuiPaper-root {
+  width: 1060px;
+  max-width: none;
+  height: 562px;
+}
+
+.horizontal_input_width {
+  width: 70% !important;
+}
+
+.coverletter_textarea_box label {
+  width: initial !important;
+}
+
+.coverletter_textarea_box .horizontal_input_width {
+  width: 100% !important;
+}
+
+.coverletter_textarea_box .form-control-area {
+  height: 87px;
+}
+
+.coverLetter_input .add-form-control::placeholder {
+  color: #121212;
+  opacity: 50%;
+  font-size: 14px;
+  font-weight: 300;
+  font-family: "Poppins";
+}
+
+.coverletter_textarea_box textarea {
+  width: 100% !important;
+}
+
 .create_resume_div h3 {
   font-size: 16px;
   font-weight: 600;
@@ -3127,6 +3161,6 @@ input.employersearch {
 @media screen and (max-width: 320px) {
   .outline-button {
     font-size: 13px !important;
-    padding: 10px 20px !important;
+    padding: 10px 18px !important;
   }
 }

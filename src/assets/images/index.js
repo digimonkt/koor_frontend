@@ -42,8 +42,10 @@ import Article3 from "./article3.png";
 import JobPlaceholder from "./job-placeholder.png";
 import MobileApp from "./mobile-app.png";
 import MobileApp2 from "./mobile-app2.png";
+import CoverLetterImg from "./coverLetter_img.png";
 
 export const IMAGES = {
+  CoverLetterImg,
   MobileApp2,
   MobileApp,
   JobPlaceholder,
