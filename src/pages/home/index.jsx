@@ -35,6 +35,7 @@ import {
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import { Capacitor } from "@capacitor/core";
+import FeatureSection from "./featureSection";
 const platform = Capacitor.getPlatform();
 
 const Home = () => {
@@ -409,6 +410,7 @@ const Home = () => {
                 },
               }}
             >
+              <FeatureSection />
               <HomeSection />
             </Container>
           </Box>
