@@ -924,6 +924,7 @@ const JobDetails = () => {
         </div>
       </DialogBox>
       <DialogBox
+        className="coverletter_dialog"
         open={openCreateCoverLetter}
         handleClose={() => setOpenCreateCoverLetter(false)}
       >

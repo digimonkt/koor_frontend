@@ -21,7 +21,7 @@ function HorizontalLabelInputComponent({ label, type, options, ...rest }) {
           className="mb-3"
         >
           <label style={{ width: "30%" }}>{label}</label>
-          <div style={{ width: "70%" }}>
+          <div className="horizontal_input_width">
             {type === "select" ? (
               <SelectInputComponent options={options || []} {...rest} />
             ) : type === "textarea" ? (
@@ -41,7 +41,7 @@ function HorizontalLabelInputComponent({ label, type, options, ...rest }) {
           className="mb-3"
         >
           <label className="w-30">{label}</label>
-          <div className="w-70">
+          <div className="horizontal_input_width">
             {type === "select" ? (
               <SelectInputComponent options={options || []} {...rest} />
             ) : type === "textarea" ? (
