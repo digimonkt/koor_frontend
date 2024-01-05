@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Accordian from "../accordion";
 import { TabContext, TabList } from "@mui/lab";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getFAQQuestions } from "../../../redux/slice/faq";
 import { OutlinedButton } from "../../../components/button";
@@ -16,6 +16,9 @@ function TabPanel(props) {
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      style={{
+        transition: "all 1s cubic-bezier(.68,-0.55,.27,1.55)",
+      }}
       {...other}
     >
       {value === index && (
@@ -51,6 +54,12 @@ const ScrollTabs = ({ faqCategory }) => {
     setActiveCategory(categoryId);
     dispatch(getFAQQuestions({ role, categoryId }));
   };
+  useEffect(() => {
+    // Set the active category when the component mounts
+    if (faqCategory && faqCategory.length > 0) {
+      handleFAQQuestion(faqCategory[0].role, faqCategory[0].id);
+    }
+  }, [faqCategory]);
   return (
     <>
       <Box>

@@ -44,6 +44,14 @@ function TenderDetailsComponent() {
   const navigate = useNavigate();
   const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
+  const [numLines, setNumLines] = useState(3);
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    WebkitLineClamp: numLines,
+  };
+
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -111,6 +119,9 @@ function TenderDetailsComponent() {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
+  const handleSeeMoreClick = () => {
+    setNumLines((prevNumLines) => (prevNumLines === 3 ? details?.length : 3));
+  };
 
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
@@ -202,7 +213,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -279,7 +290,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -288,15 +299,50 @@ function TenderDetailsComponent() {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} sm={7}>
-                <div className={`mb-4 ${styles.contentJob}`}>
-                  <h4>Details :</h4>
-                  <div
-                    className="job-description"
-                    dangerouslySetInnerHTML={{
-                      __html: details.description,
+                <Box className={`mb-4 ${styles.contentJob}`}>
+                  <div className={`mb-4 ${styles.contentJob}`}>
+                    <h4>Details :</h4>
+                    <Box
+                      className="job-description"
+                      sx={textWrapperStyle}
+                      dangerouslySetInnerHTML={{
+                        __html: details?.description,
+                      }}
+                    ></Box>
+                  </div>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
-                  ></div>
-                </div>
+                  >
+                    {details?.description?.length > 350 && (
+                      <button
+                        style={{
+                          border: "none",
+                          cursor: "pointer",
+                          background: "none",
+                          color:
+                            role !== USER_ROLES.jobSeeker
+                              ? "#274593"
+                              : "#fe7f00",
+                        }}
+                        onClick={handleSeeMoreClick}
+                      >
+                        {numLines === 3 ? (
+                          <>
+                            More <SVG.arrowDown />
+                          </>
+                        ) : (
+                          <>
+                            Less <SVG.ArrowUpIcon />
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </Box>
+                </Box>
                 <div className={`${styles.iconbtn}`}>
                   <SearchButton
                     text={details?.country?.title}
@@ -404,13 +450,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {

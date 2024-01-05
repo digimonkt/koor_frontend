@@ -49,3 +49,6 @@
     font-size: 13px;
   }
 }
+.slick-active {
+  width: 20px;
+}
