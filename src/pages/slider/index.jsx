@@ -67,12 +67,12 @@ const SlickSlider = ({ items }) => {
   };
   return (
     <>
-      <Box>
+      <Box sx={items.length <= 2 ? { width: "700px" } : {}}>
         <Slider
           {...settings}
           slidesToShow={items?.length <= 4 ? items.length : 4}
         >
-          {(items || slideItem).map((item, index) => (
+          {(items || slideItem).map((item) => (
             <Box key="index" className="px-3">
               <Link to={`/search/jobs?&categories=${item.id}`}>
                 <Box className={`${styles.slider_box}`}>

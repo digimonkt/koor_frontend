@@ -30,7 +30,9 @@ const Accordian = ({ faqCategory }) => {
                 className={styles.accordion_first}
               >
                 <AccordionSummary
-                  expandIcon={expanded === `panel-${index}` ? <Minimize /> : <Add />}
+                  expandIcon={
+                    expanded === `panel-${index}` ? <Minimize /> : <Add />
+                  }
                   aria-controls={`panel-content-${index}`}
                   id={`panel-header-${index}`}
                 >
