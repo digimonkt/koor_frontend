@@ -31,7 +31,7 @@ const InnerFooter = () => {
   const [failedMessage, setFailedMessage] = useState(false);
   const [warningTrue, setWarningTrue] = useState(false);
   const [warningRole, setWarningRole] = useState(USER_ROLES.vendor);
-  const { isLoggedIn, role } = useSelector(state => state.auth);
+  const { isLoggedIn, role } = useSelector((state) => state.auth);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const jobCategoryId = searchParams.get("categories");
@@ -43,7 +43,7 @@ const InnerFooter = () => {
       setCategories(res.data);
     }
   };
-  const validateEmail = input => {
+  const validateEmail = (input) => {
     const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
     return emailPattern.test(input);
   };
@@ -82,7 +82,8 @@ const InnerFooter = () => {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
-        }}>
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item lg={8} xs={12} sm={12}>
             <Grid container spacing={2}>
@@ -97,7 +98,8 @@ const InnerFooter = () => {
                       "@media (max-width:992px)": {
                         fontSize: "16px",
                       },
-                    }}>
+                    }}
+                  >
                     {items.title}
                   </Typography>
                   <List>
@@ -136,7 +138,8 @@ const InnerFooter = () => {
                             LinkComponent={Link}
                             to={child.url}
                             dense={true}
-                            disableGutters={true}>
+                            disableGutters={true}
+                          >
                             {child.label}
                           </ListItemButton>
                         </ListItem>
@@ -159,7 +162,8 @@ const InnerFooter = () => {
                     currentURL === "/search/jobs"
                       ? "active-footer-tab"
                       : "not-active-footer-tab"
-                  }>
+                  }
+                >
                   Jobs
                 </Typography>
                 <List>
@@ -191,7 +195,8 @@ const InnerFooter = () => {
                           LinkComponent={Link}
                           to={`/search/jobs?categories=${child.id}`}
                           dense={true}
-                          disableGutters={true}>
+                          disableGutters={true}
+                        >
                           {child.title.length > 20
                             ? `${child.title.slice(0, 20)}...`
                             : child.title}
@@ -217,7 +222,8 @@ const InnerFooter = () => {
                       currentURL === "/search/tenders"
                         ? "active-footer-tab"
                         : "not-active-footer-tab"
-                    }>
+                    }
+                  >
                     Tenders
                   </Typography>
                   <List>
@@ -249,7 +255,8 @@ const InnerFooter = () => {
                             to={`/search/tenders?tenderCategories=${child.id}`}
                             dense={true}
                             // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
-                            disableGutters={true}>
+                            disableGutters={true}
+                          >
                             {child.title.length > 20
                               ? `${child.title.slice(0, 20)}...`
                               : child.title}
@@ -276,7 +283,8 @@ const InnerFooter = () => {
                       currentURL === "/search/talents"
                         ? "active-footer-tab"
                         : "not-active-footer-tab"
-                    }>
+                    }
+                  >
                     Talents
                   </Typography>
                   <List>
@@ -313,9 +321,10 @@ const InnerFooter = () => {
                             }
                             dense={true}
                             disableGutters={true}
-                            onClick={e =>
+                            onClick={(e) =>
                               checkUserLoggedIn(e, USER_ROLES.employer)
-                            }>
+                            }
+                          >
                             {child.title.length > 20
                               ? `${child.title.slice(0, 20)}...`
                               : child.title}
@@ -342,7 +351,8 @@ const InnerFooter = () => {
                     paddingLeft: "0rem",
                     justifyContent: "center",
                   },
-                }}>
+                }}
+              >
                 <Box
                   sx={{
                     marginLeft: "auto",
@@ -353,7 +363,8 @@ const InnerFooter = () => {
                     // "@media(max-width:480px)": { width: "340px" },
                     // "@media(max-width:375px)": { width: "340px" },
                     // "@media(max-width:320px)": { width: "290px" },
-                  }}>
+                  }}
+                >
                   <Typography
                     variant="h2"
                     sx={{
@@ -362,7 +373,8 @@ const InnerFooter = () => {
                       fontFamily: "Bahnschrift",
                       fontWeight: "600",
                       mb: 1,
-                    }}>
+                    }}
+                  >
                     Sign up for our newsletter
                   </Typography>
                   <Stack
@@ -380,11 +392,12 @@ const InnerFooter = () => {
                         padding: "0px 10px",
                         height: "50px",
                       },
-                    }}>
+                    }}
+                  >
                     <input
                       placeholder="Email..."
                       value={email}
-                      onChange={e => setEmail(e.target.value)}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <Button
                       onClick={() => saveNewsletter()}
@@ -403,7 +416,8 @@ const InnerFooter = () => {
                         "&:hover": {
                           background: "#274593",
                         },
-                      }}>
+                      }}
+                    >
                       Sign up
                     </Button>
                   </Stack>
@@ -428,7 +442,8 @@ const InnerFooter = () => {
             sm: "space-between",
           }}
           flexDirection={{ xs: "column-reverse", lg: "row", sm: "row" }}
-          sx={{ mt: 4, "@media (max-width:540px)": { mt: 0 } }}>
+          sx={{ mt: 4, "@media (max-width:540px)": { mt: 0 } }}
+        >
           <Stack
             direction={{ lg: "row", sx: "column" }}
             spacing={1}
@@ -438,7 +453,8 @@ const InnerFooter = () => {
                 justifyContent: "center",
                 width: "100%",
               },
-            }}>
+            }}
+          >
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <SVG.KoorLogo style={{ width: "90px" }} />
               <Typography
@@ -450,7 +466,8 @@ const InnerFooter = () => {
                   fontFamily: "Bahnschrift",
                   whiteSpace: "nowrap",
                   "@media (max-width:992px)": { fontSize: "16px" },
-                }}>
+                }}
+              >
                 © Copyright {dayjs().year()}, Koor
               </Typography>
             </Box>
@@ -461,10 +478,12 @@ const InnerFooter = () => {
                   display: "block",
                   marginTop: "10px",
                 },
-              }}>
+              }}
+            >
               <Link
                 to="/terms-condition"
-                style={{ color: "#848484", marginRight: "10px" }}>
+                style={{ color: "#848484", marginRight: "10px" }}
+              >
                 Terms of use
               </Link>
               <Link to="/privacy-policy" style={{ color: "#848484" }}>
@@ -482,17 +501,20 @@ const InnerFooter = () => {
               fontSize: "15px",
               fontWeight: "400",
               "@media (max-width:992px)": { width: "100%", fontSize: "12px" },
-            }}>
+            }}
+          >
             <Box
               sx={{
                 display: "block",
                 "@media (max-width: 480px)": {
                   display: "none",
                 },
-              }}>
+              }}
+            >
               <Link
                 to="/terms-condition"
-                style={{ color: "#848484", marginRight: "10px" }}>
+                style={{ color: "#848484", marginRight: "10px" }}
+              >
                 Terms of use
               </Link>
               <Link to="/privacy-policy" style={{ color: "#848484" }}>
@@ -513,7 +535,8 @@ const InnerFooter = () => {
                 my: 0,
                 "& svg": { width: "20px", height: "20px" },
               },
-            }}>
+            }}
+          >
             <a href="#!">
               <SVG.TwitterIcon />
             </a>
@@ -556,7 +579,8 @@ const InnerFooter = () => {
           />
           <h1
             className="heading"
-            style={{ textTransform: "capitalize", textAlign: "center" }}>
+            style={{ textTransform: "capitalize", textAlign: "center" }}
+          >
             {warningRole} login required
           </h1>
           <div className="form-content">

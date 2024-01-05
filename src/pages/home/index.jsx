@@ -35,6 +35,7 @@ import {
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import { Capacitor } from "@capacitor/core";
+import FeatureSection from "./featureSection";
 const platform = Capacitor.getPlatform();
 
 const Home = () => {
@@ -81,7 +82,7 @@ const Home = () => {
 
     // Navigate to the search page with the provided parameters
     navigate(
-      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
     );
   };
   // console.log("Show error", error);
@@ -409,6 +410,7 @@ const Home = () => {
                 },
               }}
             >
+              <FeatureSection />
               <HomeSection />
             </Container>
           </Box>

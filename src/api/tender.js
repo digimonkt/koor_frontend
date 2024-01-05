@@ -16,7 +16,7 @@ export const getTenderSearchAPI = async (data) => {
   }
   if (data.tenderCategories) {
     data.tenderCategories.forEach((category) => {
-      url += `&tenderCategory=${category}`;
+      url += `&tenderCategory=${category.title}`;
     });
   }
   if (data.opportunityType) {
