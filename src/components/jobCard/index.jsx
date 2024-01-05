@@ -11,12 +11,15 @@ import { getColorByRemainingDays } from "../../utils/generateColor";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "../../api/employer";
+import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { showDay } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
+
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const { isMobileView } = useSelector((state) => state.platform);
   const navigate = useNavigate();
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
@@ -26,7 +29,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3
+      prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
 
@@ -81,8 +84,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -126,7 +129,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -154,92 +157,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </Avatar>
               </div>
               {matches ? (
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  justifyContent={{ xs: "center", lg: "end" }}
-                  alignItems="center"
-                  // divider={<hr orientation="vertical" className="job_card_hr" />}
-                  sx={{ minHeight: "87%" }}
-                >
-                  <div className="pricebox py-3 me-lg-4">
-                    {jobDetails?.budgetAmount ? (
-                      <>
-                        <span className="d-block">UP TO</span>
-                        <h4>
-                          <small>{"$"}</small>
-                          {jobDetails?.budgetAmount || "3,500"}
-                        </h4>
-                        <span>{jobDetails?.budgetPayPeriod}</span>
-                      </>
-                    ) : (
-                      <h3></h3>
-                    )}
-                  </div>
-                  {selfJob ? (
-                    <div className="job-button-card">
-                      <button
-                        onClick={() => {
-                          handleStartPause();
-                        }}
-                      >
-                        {isStart === "active" ? (
-                          <>
-                            <SVG.PauseIcon />
-                            <span className="d-block">Hold</span>
-                          </>
-                        ) : (
-                          <>
-                            <SVG.StartIcon />
-                            <span className="d-block">Start</span>
-                          </>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (jobDetails?.id) {
-                            navigate(
-                              urlcat("/employer/jobs/post", {
-                                jobId: jobDetails?.id,
-                              })
-                            );
-                          }
-                        }}
-                      >
-                        {<SVG.Edit1 />}
-                        <span className="d-block">Edit</span>
-                      </button>
-                    </div>
-                  ) : isLoggedIn && role === USER_ROLES.jobSeeker ? (
-                    <React.Fragment>
-                      {!applied ? (
-                        <div
-                          onClick={handleToggleSave}
-                          style={{ marginLeft: "6px", cursor: "pointer" }}
-                        >
-                          <div
-                            className="bookmark"
-                            style={{ width: matches ? "auto" : "" }}
-                          >
-                            {isSaved ? (
-                              <>
-                                <SVG.SaveIcon />
-                                <span>Saved</span>
-                              </>
-                            ) : (
-                              <>
-                                <SVG.UnSave style={{ color: "#848484" }} />
-                                <span style={{ color: "#848484" }}>Save</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      ) : null}
-                    </React.Fragment>
-                  ) : (
-                    ""
-                  )}
-                </Stack>
+                <div className="my-jobs" style={{ flex: "1 1 " }}>
+                  <h2>
+                    <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
+                      {jobDetails?.title}
+                    </Link>
+                  </h2>
+                </div>
               ) : (
                 ""
               )}
@@ -275,32 +199,68 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <Box className="job-description mt-1 mb-3">
-              <div style={textWrapperStyle}>
-                <p
-                  dangerouslySetInnerHTML={{
-                    __html: jobDetails?.description,
-                  }}
-                ></p>
-              </div>
-              {jobDetails?.description?.length > 350 && (
-                <button
-                  style={{
-                    border: "none",
-                    cursor: "pointer",
-                    background: "none",
-                    color:
-                      role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
-                  }}
-                  onClick={handleSeeMoreClick}
-                >
-                  {numLines === 3 ? "See More" : "See Less"}
-                </button>
-              )}
-            </Box>
+            <Grid container spacing={1}>
+              <Grid
+                item
+                xs={isMobileView ? 10 : 12}
+                sm={isMobileView ? 10 : 12}
+              >
+                <Box className="job-description mt-1 mb-3">
+                  <div style={textWrapperStyle}>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: jobDetails?.description,
+                      }}
+                    ></p>
+                  </div>
+                  {jobDetails?.description?.length > 350 && (
+                    <button
+                      style={{
+                        border: "none",
+                        cursor: "pointer",
+                        background: "none",
+                        color:
+                          role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
+                      }}
+                      onClick={handleSeeMoreClick}
+                    >
+                      {numLines === 3 ? "See More" : "See Less"}
+                    </button>
+                  )}
+                </Box>
+              </Grid>
+              <Grid
+                item
+                xs={2}
+                sm={2}
+                sx={{
+                  display: "flex",
+                  justifyItems: "center",
+                  alignItems: "center",
+                }}
+              >
+                {isMobileView && role === USER_ROLES.jobSeeker && (
+                  <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
+                    <Box className="bookmark">
+                      {isSaved ? (
+                        <>
+                          <SVG.SaveIcon />
+                          <span>Saved</span>
+                        </>
+                      ) : (
+                        <>
+                          <SVG.UnSave style={{ color: "#848484" }} />
+                          <span style={{ color: "#848484" }}>Save</span>
+                        </>
+                      )}
+                    </Box>
+                  </div>
+                )}
+              </Grid>
+            </Grid>
             <Stack
               direction="row"
-              flexWrap="wrap"
+              flexWrap={isMobileView ? "nowrap" : "wrap"}
               spacing={{ xs: 2, sm: 1, md: 1 }}
               useFlexGap
               sx={{
@@ -353,58 +313,117 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <ChipBox label={"Contract"} icon={<>{<SVG.MoonCircle />}</>} />
               )}
             </Stack>
-            <Stack
-              direction="row"
-              spacing={2}
-              className="mt-3"
-              sx={{
-                "@media(max-width: 480px)": {
-                  display: "block",
-                },
-              }}
-            >
-              {!selfJob && (
-                <Stack direction="row" spacing={1}>
-                  <span>
-                    <SVG.BriefcaseIcon />
-                  </span>{" "}
-                  <div className="textdes">
-                    {jobDetails.company === null &&
-                    jobDetails.companyLogo === null
-                      ? "Company:"
-                      : "Posted By"}
-                    <span>
-                      {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
-                        ? jobDetails.user.name
-                        : " Koor"}
-                    </span>
-                  </div>
-                </Stack>
-              )}
+            {!isMobileView ? (
               <Stack
                 direction="row"
-                spacing={1}
+                spacing={2}
+                className="mt-3"
                 sx={{
-                  borderLeft: "1px solid #ccc",
-                  paddingLeft: "15px",
                   "@media(max-width: 480px)": {
-                    borderLeft: "0px",
-                    paddingLeft: "0px",
-                    marginLeft: "0px !important",
-                    marginTop: "10px !important",
+                    display: "block",
                   },
                 }}
               >
-                <span>
-                  <SVG.ClockIconSmall />
-                </span>{" "}
-                <div className="textdes">
-                  Posted At:{" "}
-                  <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
-                </div>
+                {!selfJob && (
+                  <Stack direction="row" spacing={1}>
+                    <span>
+                      <SVG.BriefcaseIcon />
+                    </span>{" "}
+                    <div className="textdes">
+                      {jobDetails.company === null &&
+                      jobDetails.companyLogo === null
+                        ? "Company:"
+                        : "Posted By"}
+                      <span>
+                        {jobDetails.company === null &&
+                        jobDetails.companyLogo === null
+                          ? jobDetails.user.name
+                          : " Koor"}
+                      </span>
+                    </div>
+                  </Stack>
+                )}
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{
+                    borderLeft: "1px solid #ccc",
+                    paddingLeft: "15px",
+                    "@media(max-width: 480px)": {
+                      borderLeft: "0px",
+                      paddingLeft: "0px",
+                      marginLeft: "0px !important",
+                      marginTop: "10px !important",
+                    },
+                  }}
+                >
+                  <span>
+                    <SVG.ClockIconSmall />
+                  </span>{" "}
+                  <div className="textdes">
+                    Posted At:{" "}
+                    <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
+                  </div>
+                </Stack>
               </Stack>
-            </Stack>
+            ) : (
+              <Grid container spacing={2} className="mt-3">
+                {/* Company and Posted At column */}
+                <Grid item xs={10} sm={10}>
+                  {!selfJob && (
+                    <Stack mt={2} direction="row" spacing={1}>
+                      <span>
+                        <SVG.BriefcaseIcon />
+                      </span>{" "}
+                      <div className="textdes">
+                        {jobDetails.company === null &&
+                        jobDetails.companyLogo === null
+                          ? "Company:"
+                          : "Posted By"}
+                        <span>
+                          {jobDetails.company === null &&
+                          jobDetails.companyLogo === null
+                            ? jobDetails.user.name
+                            : "Koor"}
+                        </span>
+                      </div>
+                    </Stack>
+                  )}
+                  <Stack mt={2} direction="row" spacing={1}>
+                    <span>
+                      <SVG.ClockIconSmall />
+                    </span>{" "}
+                    <div className="textdes">
+                      Posted At:{" "}
+                      <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
+                    </div>
+                  </Stack>
+                </Grid>
+                {/* Upto Grid column */}
+                <Grid item xs={2} sm={2}>
+                  <Box
+                    className="pricebox py-3 upto-slide"
+                    display="flex"
+                    justifyContent="center"
+                    flexDirection="column"
+                    alignItems="center"
+                  >
+                    {!isMobileView && jobDetails?.budgetAmount ? (
+                      <>
+                        <span className="d-block">UP TO</span>
+                        <h4>
+                          <small>{"$"}</small>
+                          {jobDetails?.budgetAmount || "3,500"}
+                        </h4>
+                        <span>{jobDetails?.budgetPayPeriod}</span>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </Box>
+                </Grid>
+              </Grid>
+            )}
           </div>
         </Grid>
         <Grid
@@ -439,7 +458,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -448,7 +467,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             spacing={1}
             justifyContent={{ xs: "center", lg: "end", sm: "flex-end" }}
             alignItems="center"
-            // divider={<hr orientation="vertical" className="job_card_hr" />}
             sx={{
               minHeight: "87%",
               "@media (max-width:768px)": {
@@ -463,7 +481,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             }}
           >
             <Box
-              sx={{ "@media (max-width: 480px)": { display: "none" } }}
+              sx={{
+                "@media (max-width: 480px)": { display: "none" },
+              }}
               className="pricebox py-3 upto-slide"
             >
               {jobDetails?.budgetAmount ? (
@@ -479,48 +499,114 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 ""
               )}
             </Box>
-            {Boolean(jobDetails?.budgetAmount) && selfJob && (
+            {!isMobileView && Boolean(jobDetails?.budgetAmount) && selfJob && (
               <Box sx={{ width: "2px !important" }}>
                 <Box className="hr-border"></Box>
               </Box>
             )}
             {selfJob ? (
-              <Box
-                className="job-button-card"
-                sx={{ display: "flex", alignItems: "center" }}
-              >
-                <button
-                  onClick={() => {
-                    handleStartPause();
+              !isMobileView ? (
+                <Box
+                  className="job-button-card"
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
+                  <button
+                    onClick={() => {
+                      handleStartPause();
+                    }}
+                  >
+                    {isStart === "active" ? (
+                      <>
+                        <SVG.PauseIcon />
+                        <span className="d-block">Hold</span>
+                      </>
+                    ) : (
+                      <>
+                        <SVG.StartIcon />
+                        <span className="d-block">Start</span>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (jobDetails?.id) {
+                        navigate(
+                          urlcat("/employer/jobs/post", {
+                            jobId: jobDetails?.id,
+                          }),
+                        );
+                      }
+                    }}
+                  >
+                    {<SVG.Edit1 />}
+                    <span className="d-block">Edit</span>
+                  </button>
+                </Box>
+              ) : (
+                <Box
+                  className="job-button-card"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {isStart === "active" ? (
+                  {Boolean(jobDetails?.budgetAmount) && (
                     <>
-                      <SVG.PauseIcon />
-                      <span className="d-block">Hold</span>
-                    </>
-                  ) : (
-                    <>
-                      <SVG.StartIcon />
-                      <span className="d-block">Start</span>
+                      <Box style={{ fontSize: "12px" }}>
+                        <span className="d-block">UP TO</span>
+                        <h4>
+                          <small>{"$"}</small>
+                          {jobDetails?.budgetAmount || "3,500"}
+                        </h4>
+                        <span>{jobDetails?.budgetPayPeriod}</span>
+                      </Box>
+                      <Box sx={{ width: "2px !important" }}>
+                        <Box className="hr-border"></Box>
+                      </Box>
                     </>
                   )}
-                </button>
-                <button
-                  onClick={() => {
-                    if (jobDetails?.id) {
-                      navigate(
-                        urlcat("/employer/jobs/post", {
-                          jobId: jobDetails?.id,
-                        })
-                      );
-                    }
-                  }}
-                >
-                  {<SVG.Edit1 />}
-                  <span className="d-block">Edit</span>
-                </button>
-              </Box>
+                  <Box mt={2}>
+                    <button
+                      onClick={() => {
+                        handleStartPause();
+                      }}
+                    >
+                      {isStart === "active" ? (
+                        <>
+                          <SVG.PauseIcon />
+                          <span className="d-block">Hold</span>
+                        </>
+                      ) : (
+                        <>
+                          <SVG.StartIcon />
+                          <span className="d-block">Start</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (jobDetails?.id) {
+                          navigate(
+                            urlcat("/employer/jobs/post", {
+                              jobId: jobDetails?.id,
+                            }),
+                          );
+                        }
+                      }}
+                    >
+                      {<SVG.Edit1 />}
+                      <span className="d-block">Edit</span>
+                    </button>
+                  </Box>
+                  <Box>
+                    <ApplicantList
+                      jobId={jobDetails.id}
+                      totalApplications={jobDetails.applicantCount}
+                    />
+                  </Box>
+                </Box>
+              )
             ) : role === USER_ROLES.jobSeeker ? (
               <React.Fragment>
                 <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>

@@ -82,9 +82,15 @@ const ProfilePicInputComponent = ({
           >
             <h2>{title}</h2>
             {platform === "android" || platform === "ios" ? (
-              <IconButton size="small" onClick={() => fun()}>
-                <SVG.ArrowUpIcon />
-              </IconButton>
+              toggle ? (
+                <IconButton size="small" onClick={() => fun()}>
+                  <SVG.ArrowUpIcon />
+                </IconButton>
+              ) : (
+                <IconButton size="small" onClick={() => fun()}>
+                  <SVG.Downarrow />
+                </IconButton>
+              )
             ) : null}
           </Stack>
           {toggle ? (

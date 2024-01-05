@@ -1,4 +1,12 @@
-import { Box, Card, CardContent, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "./dashboard.css";
 import { DonutChart } from "../../../components/charts";
@@ -18,12 +26,8 @@ import ApplicantCard from "../../../components/applicantCard";
 import ApplicantCardSkeletonLoading from "../../../components/applicantCard/skeletonLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalAvailableCredits } from "../../../redux/slice/employer";
-import { LogoutUserAPI } from "@api/user";
-import { globalLocalStorage } from "@utils/localStorage";
-import { setIsLoggedIn } from "@redux/slice/user";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
-import { IMAGES } from "@assets/images";
 dayjs.extend(relativeTime);
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -45,6 +49,7 @@ const Dashboard = () => {
     sites: [],
     total: 0,
   });
+  const { currentUser } = useSelector(({ auth }) => auth);
   const { jobPostUpdate } = useSelector((state) => state.employer);
   const { isMobileView } = useSelector((state) => state.platform);
   const getRecentApplications = async () => {
@@ -54,12 +59,11 @@ const Dashboard = () => {
       page: recentApplicationPage,
     });
     if (res.remote === "success") {
-      // ! This filter is temporary and need to be optimized, as somehow API is called two time due to this duplicate data is found to remove this `filter` is used, but need to be fix
       setRecentApplication((prevState) =>
         [...prevState, ...res.data.results].filter(
           (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id)
-        )
+            index === self.findIndex((t) => t.id === value.id),
+        ),
       );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
@@ -122,14 +126,6 @@ const Dashboard = () => {
   useEffect(() => {
     getShareCountData();
   }, []);
-  const userLogout = async () => {
-    await LogoutUserAPI();
-    globalLocalStorage.cleanLocalStorage();
-  };
-  const logoutHandle = () => {
-    userLogout();
-    dispatch(setIsLoggedIn(false));
-  };
   return (
     <>
       <div className="employer-dashboard">
@@ -153,9 +149,9 @@ const Dashboard = () => {
                 >
                   <h1>Dashboard</h1>
                   <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
-                    <IconButton onClick={() => logoutHandle()}>
-                      <SVG.AppGroup />
-                    </IconButton>
+                    {/* <IconButton onClick={() => logoutHandle()}> */}
+                    {/*   <SVG.AppGroup /> */}
+                    {/* </IconButton> */}
                     <IconButton LinkComponent={Link} to="/Setting">
                       <SVG.Settings />
                     </IconButton>
@@ -167,9 +163,9 @@ const Dashboard = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
-                  <img
+                  <Avatar
                     alt="profile"
-                    src={IMAGES.RecentFive}
+                    src={currentUser?.profileImage}
                     style={{
                       width: "80px",
                       height: "80px",
@@ -185,6 +181,7 @@ const Dashboard = () => {
                         letterSpacing: "0.54px",
                         fontWeight: "700",
                         mb: 1,
+                        mt: 0,
                       },
                       "& p": {
                         fontSize: "14px",
@@ -196,10 +193,10 @@ const Dashboard = () => {
                       },
                     }}
                   >
-                    <h4>Lotus'es Employment Group LLC</h4>
-                    <p>lotuss.us</p>
-                    <p>+51599268290</p>
-                    <p>contact@lotuss.us</p>
+                    <h4>{currentUser?.name || currentUser?.email}</h4>
+                    <p>{currentUser?.profile?.website}</p>
+                    <p>{currentUser?.moblieNumber}</p>
+                    <p>{currentUser?.email}</p>
                   </Box>
                 </Stack>
               </Grid>

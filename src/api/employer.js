@@ -260,7 +260,7 @@ export const getEmployerActiveJobsAPI = async (data) => {
         next: response.data.next,
         previous: response.data.previous,
         results: response.data.results.map((data) =>
-          transformFullJobDetails(data)
+          transformFullJobDetails(data),
         ),
       },
     };
@@ -344,7 +344,7 @@ export const buyCreditsAPI = async ({ employer, data }) => {
   const res = await api.request({
     url: urlcat("v1/admin/employer/:employer/recharge", { employer }),
     method: "PUT",
-    data
+    data,
   });
   if (res.remote === "success") {
     return {
@@ -360,4 +360,17 @@ export const unblockUserAPI = async (userId) => {
     method: "DELETE",
   });
   return res;
+};
+
+export const getApplicationByFilterAPI = async (filter) => {
+  const res = await api.request({
+    url: urlcat("v1/jobs/applications", { filterBy: filter }),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.results,
+    };
+  }
 };

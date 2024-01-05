@@ -29,6 +29,8 @@ import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
 import { Box } from "@mui/material";
 import { setIsMobileView } from "@redux/slice/platform";
+import { App as CapApp } from "@capacitor/app";
+import { setAppInfo } from "./redux/slice/platform";
 const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
@@ -38,22 +40,52 @@ function App() {
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { appInfo } = useSelector(({ platform }) => platform);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
     if (accessToken && refreshToken && !currentUser.id) {
-      console.log(" ");
       dispatch(getUserDetails());
     } else if (!accessToken || !refreshToken) {
       dispatch(setIsLoggedIn(false));
     }
   };
+
+  const fetchAppInfo = async () => {
+    try {
+      const appInfoResult = await CapApp.getInfo();
+      dispatch(setAppInfo(appInfoResult));
+    } catch (error) {
+      console.error("Error fetching app information:", error);
+    }
+  };
+
+  const backButtonAction = () => {
+    const history = window.history;
+
+    if (history.length > 1) {
+      navigate(-1);
+    } else {
+      if (Capacitor.isNativePlatform) {
+        CapApp.exitApp();
+      }
+    }
+  };
+
   useEffect(() => {
     checkLoginStatus();
   }, []);
   useEffect(() => {
     window.addEventListener("storage", checkLoginStatus);
-    return () => window.removeEventListener("storage", checkLoginStatus);
+    if (Capacitor.isNativePlatform) {
+      CapApp.addListener("backButton", backButtonAction);
+    }
+    return () => {
+      window.removeEventListener("storage", checkLoginStatus);
+      if (Capacitor.isNativePlatform) {
+        CapApp.remove();
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -70,7 +102,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            }),
+            })
           );
         }
       }
@@ -90,11 +122,12 @@ function App() {
   }, []);
   useEffect(() => {
     if (platform === "android" || platform === "ios") {
+      fetchAppInfo();
       dispatch(setIsMobileView(true));
     } else {
       dispatch(setIsMobileView(false));
     }
-  }, [platform]);
+  }, [platform, appInfo.name]);
   useEffect(() => {
     if (currentUser.role !== USER_ROLES.employer) {
       const isVerified = currentUser?.profile?.isVerified;
@@ -109,7 +142,7 @@ function App() {
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token="),
+          pair.startsWith("verify-token=")
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];

@@ -93,13 +93,32 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "employer/dashboard"
         : ROLE === USER_ROLES.vendor
-          ? "vendor/my-profile"
+          ? "vendor/dashboard"
           : "job_seeker/my-profile",
   },
 ];
+
+export const generateColor = (ROLE) => {
+  const color =
+    ROLE === USER_ROLES.employer
+      ? "#274593"
+      : ROLE === USER_ROLES.vendor
+        ? "#274593"
+        : "#EEA23D";
+
+  return color;
+};
 
 export const TABS_VALUE = {
   tab1: 0,
   tab2: 1,
   tab3: 2,
+};
+
+export const mimeTypes = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".gif": "image/gif",
+  ".pdf": "application/pdf",
 };

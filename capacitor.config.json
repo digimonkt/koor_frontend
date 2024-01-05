@@ -7,9 +7,5 @@
   "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
-  },
-  "server": {
-    "androidScheme": "http",
-    "cleartext": true
   }
 }
