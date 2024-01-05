@@ -168,7 +168,7 @@ const ApplicantDetails = () => {
                 alignItems={{ xs: "start", lg: "center" }}
                 spacing={2}
               >
-                <h4>{applicantDetails.user.name}</h4>
+                <h4 className="me-2">{applicantDetails.user.name}</h4>
                 <div
                   className="recent-research"
                   style={{
