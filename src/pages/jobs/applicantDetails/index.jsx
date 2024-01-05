@@ -153,35 +153,63 @@ const ApplicantDetails = () => {
             <Stack
               direction="row"
               spacing={2}
-              alignItems={{ xs: "start", lg: "center" }}
+              alignItems={{ xs: "baseline", md: "center", lg: "center" }}
               className="recent-content job-border pb-2 mb-3"
             >
-              <IconButton
-                LinkComponent={Link}
-                onClick={() => navigate(-1)}
-                style={{ padding: "0px" }}
-              >
-                <ArrowBackIcon />
-              </IconButton>
+              <Box sx={{ margin: "0px !important" }}>
+                <IconButton
+                  LinkComponent={Link}
+                  onClick={() => navigate(-1)}
+                  sx={{
+                    padding: "0px",
+                  }}
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+              </Box>
               <Stack
-                direction={{ xs: "column", lg: "row", sm: "row" }}
-                alignItems={{ xs: "start", lg: "center" }}
+                direction={{ xs: "column", lg: "row", sm: "column", md: "row" }}
+                alignItems={{ xs: "baseline", md: "baseline", lg: "center" }}
                 spacing={2}
               >
-                <h4 className="me-2">{applicantDetails.user.name}</h4>
-                <div
+                <Box
+                  sx={{
+                    display: "block",
+                    "@media (max-width: 992px)": {
+                      margin: "0px !important",
+                      display: "none",
+                    },
+                  }}
+                >
+                  <h4>{applicantDetails.user.name}</h4>
+                </Box>
+                <Box
+                  sx={{
+                    display: "none",
+                    "@media (max-width: 992px)": {
+                      margin: "0px !important",
+                      display: "block",
+                    },
+                  }}
+                >
+                  <h4 className="me-1">Job application</h4>
+                </Box>
+                <Box
                   className="recent-research"
-                  style={{
+                  sx={{
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "wrap",
+                    "@media (max-width: 992px)": {
+                      display: "block",
+                    },
                   }}
                 >
                   <span>
                     Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
                   <div>{applicantDetails.job.title}</div>
-                </div>
+                </Box>
               </Stack>
             </Stack>
 

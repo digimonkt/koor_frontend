@@ -88,7 +88,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   }, [jobDetails]);
   return (
     <div className="job_card">
-      <Grid container spacing={1.875} {...gridProps}>
+      <Grid
+        sx={{ justifyContent: "space-between" }}
+        container
+        spacing={1.875}
+        {...gridProps}
+      >
         {logo && (
           <Grid
             item
@@ -248,7 +253,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         )}
         <Grid
           item
-          // lg={logo ? 8 : 9}
+          lg={logo ? 8 : 7}
           xs={12}
           sm={7}
           sx={{
@@ -409,9 +414,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         </Grid>
         <Grid
           item
-          lg={logo ? 2 : 3}
+          lg={logo ? 2 : 5}
           xs={12}
-          sm={3}
+          sm={5}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "25%",
@@ -446,7 +451,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           <Stack
             direction="row"
             spacing={1}
-            justifyContent={{ xs: "center", lg: "end", sm: "flex-end" }}
+            justifyContent={{ xs: "center", lg: "end", sm: "end" }}
             alignItems="center"
             // divider={<hr orientation="vertical" className="job_card_hr" />}
             sx={{
@@ -463,12 +468,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             }}
           >
             <Box
-              sx={{ "@media (max-width: 480px)": { display: "none" } }}
+              sx={{ "@media (max-width: 480px)": { display: "block" } }}
               className="pricebox py-3 upto-slide"
             >
               {jobDetails?.budgetAmount ? (
                 <>
-                  <span className="d-block">UP TO</span>
+                  <span className="d-block">UP TOghgh</span>
                   <h4>
                     <small>{"$"}</small>
                     {jobDetails?.budgetAmount || "3,500"}
