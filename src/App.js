@@ -36,13 +36,12 @@ function App() {
   const {
     auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
-  } = useSelector(state => state);
-  const { isLoggedIn } = useSelector(state => state.auth);
+  } = useSelector((state) => state);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
     if (accessToken && refreshToken && !currentUser.id) {
-      console.log(" ");
       dispatch(getUserDetails());
     } else if (!accessToken || !refreshToken) {
       dispatch(setIsLoggedIn(false));
@@ -108,7 +107,7 @@ function App() {
         // Get the second part, which contains the query parameters
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
-        const verifyTokenPair = paramPairs.find(pair =>
+        const verifyTokenPair = paramPairs.find((pair) =>
           pair.startsWith("verify-token="),
         );
         if (verifyTokenPair) {
@@ -129,7 +128,7 @@ function App() {
         {platform === "android" || platform === "ios" ? null : <Header />}
 
         <Routes>
-          {ROUTES.map(route => {
+          {ROUTES.map((route) => {
             if (!route.path) {
               return null;
             }
@@ -151,7 +150,7 @@ function App() {
               />
             );
           })}
-          {UNAUTHENTICATED_ROUTES.map(route => {
+          {UNAUTHENTICATED_ROUTES.map((route) => {
             if (!route.path) {
               return null;
             }
@@ -176,7 +175,7 @@ function App() {
               />
             );
           })}
-          {AUTHENTICATED_ROUTES.map(route => {
+          {AUTHENTICATED_ROUTES.map((route) => {
             if (!route.path) {
               return null;
             }
@@ -218,7 +217,8 @@ function App() {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "20px",
-              }}>
+              }}
+            >
               <Box
                 component={"span"}
                 sx={{
@@ -227,7 +227,8 @@ function App() {
                   height: "4px",
                   background: "#121212",
                   display: "block",
-                }}></Box>
+                }}
+              ></Box>
             </Box>
           </>
         ) : (

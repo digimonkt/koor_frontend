@@ -1,6 +1,6 @@
 import { FilledButton, OutlinedButton } from "../../../../components/button";
 import { Box, IconButton, Stack } from "@mui/material";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SVG } from "../../../../assets/svg";
 import DialogBox from "../../../../components/dialogBox";
 import ResumeTemplate from "./resumeTemplate/template1";
@@ -26,6 +26,20 @@ const ResumeUpdate = ({
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
   const { currentUser, role } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
+  const fileInputRef = useRef();
+
+  const handleFileUpload = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      console.log("Selected File:", selectedFile);
+    }
+  };
 
   const downloadPDF = async () => {
     setIsDownloadingPDF(true);
@@ -91,6 +105,7 @@ const ResumeUpdate = ({
     }
     setIsDownloadingDocs(false);
   };
+
   return (
     <>
       <div className="add-content">
@@ -196,6 +211,12 @@ const ResumeUpdate = ({
               <div className="description">{description}</div>
             </Stack>
             <div className="mt-4 mb-3 text-center">
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
               <OutlinedButton
                 style={{ width: "100%" }}
                 title={
@@ -206,7 +227,7 @@ const ResumeUpdate = ({
                     UPLOAD YOUR RESUME
                   </>
                 }
-                onClick={() => setOpenResume(true)}
+                onClick={() => handleFileUpload()}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
