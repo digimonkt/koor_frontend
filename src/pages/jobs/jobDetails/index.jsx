@@ -46,6 +46,13 @@ const JobDetails = () => {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
+  const [numLines, setNumLines] = useState(3);
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    WebkitLineClamp: numLines,
+  };
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -138,7 +145,9 @@ const JobDetails = () => {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
-
+  const handleSeeMoreClick = () => {
+    setNumLines((prevNumLines) => (prevNumLines === 3 ? details?.length : 3));
+  };
   function handleSendEmail(details) {
     const email = details.contactEmail;
     const ccEmail1 = details.cc1;
@@ -306,15 +315,49 @@ const JobDetails = () => {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} md={7} sm={7}>
-                <div className={`mb-4 ${styles.contentJob}`}>
-                  <h4>Details :</h4>
+                <Box className={styles.job_detail_description}>
+                  <div className={`mb-4 ${styles.contentJob}`}>
+                    <h4>Details :</h4>
+                    <Box
+                      sx={textWrapperStyle}
+                      dangerouslySetInnerHTML={{
+                        __html: details?.description,
+                      }}
+                    ></Box>
+                  </div>
                   <Box
-                    className={styles.job_detail_description}
-                    dangerouslySetInnerHTML={{
-                      __html: details.description,
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
-                  ></Box>
-                </div>
+                  >
+                    {details?.description?.length > 350 && (
+                      <button
+                        style={{
+                          border: "none",
+                          cursor: "pointer",
+                          background: "none",
+                          color:
+                            role !== USER_ROLES.jobSeeker
+                              ? "#274593"
+                              : "#fe7f00",
+                        }}
+                        onClick={handleSeeMoreClick}
+                      >
+                        {numLines === 3 ? (
+                          <>
+                            More <SVG.arrowDown />
+                          </>
+                        ) : (
+                          <>
+                            Less <SVG.ArrowUpIcon />
+                          </>
+                        )}
+                      </button>
+                    )}
+                  </Box>
+                </Box>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}

@@ -52,6 +52,9 @@ import { ReactComponent as CreditIcon } from "./creditIcon.svg";
 import { ReactComponent as ClockIcon } from "./clockIcon.svg";
 import { ReactComponent as ClockIconSmall } from "./clock.svg";
 import { ReactComponent as FilterIcon } from "./filter.svg";
+import { ReactComponent as MessageCommunicationIcon } from "./messageCommunicationIcon.svg";
+import { ReactComponent as SearchAppIcon } from "./searchAppIcon.svg";
+import { ReactComponent as CollaborationIcon } from "./collaborationIcon.svg";
 import { ReactComponent as ActiveJob } from "./activeJob.svg";
 import { ReactComponent as OpenNewIcon } from "./openNewIcon.svg";
 import { ReactComponent as ArrowUpward } from "./arrow_upward.svg";
@@ -142,6 +145,9 @@ import { ReactComponent as resumeIcon } from "./resume_icon.svg";
 
 export const SVG = {
   resumeIcon,
+  CollaborationIcon,
+  SearchAppIcon,
+  MessageCommunicationIcon,
   logoHorizontalTrik,
   locationTrik,
   languageTrik,

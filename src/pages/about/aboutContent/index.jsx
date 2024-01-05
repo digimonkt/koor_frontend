@@ -44,7 +44,7 @@ const AboutContent = () => {
   const dispatch = useDispatch();
   const [faqCategory, setFaqCategory] = useState([]);
   const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
 
