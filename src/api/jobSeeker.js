@@ -258,7 +258,7 @@ export const getProfileAnalyticsDataAPI = async (year) => {
 
 export const editResumeDetailsAPI = async (data) => {
   return await api.request({
-    url: "v1/users/job-seeker/job-preferences",
+    url: "v1/users/job-seeker/resume-data",
     method: "PATCH",
     data,
   });
