@@ -1,6 +1,6 @@
 import { Avatar, Box, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { SVG } from "../../assets/svg";
 import { OutlinedButton, SolidButton } from "../button";
 import { ChipBox } from "./style";
@@ -17,7 +17,13 @@ import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const path = location.pathname;
+  const pathParts = path.split("/");
+  const endRouter = pathParts[pathParts.length - 1];
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState("");
+
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
@@ -86,6 +92,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       );
     }
   }, [jobDetails]);
+  useEffect(() => {
+    setSearchValue(endRouter);
+  }, [endRouter]);
   return (
     <div className="job_card">
       <Grid
@@ -416,7 +425,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           item
           lg={logo ? 2 : 5}
           xs={12}
-          sm={5}
+          sm={logo ? 3 : 5}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "25%",
@@ -468,12 +477,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             }}
           >
             <Box
-              sx={{ "@media (max-width: 480px)": { display: "block" } }}
+              sx={{
+                "@media (max-width: 480px)":
+                  searchValue === "manage-jobs" ? {} : { display: "none" },
+              }}
               className="pricebox py-3 upto-slide"
             >
               {jobDetails?.budgetAmount ? (
                 <>
-                  <span className="d-block">UP TOghgh</span>
+                  <span className="d-block">UP TO</span>
                   <h4>
                     <small>{"$"}</small>
                     {jobDetails?.budgetAmount || "3,500"}
