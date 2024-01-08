@@ -9,7 +9,13 @@ import { Capacitor } from "@capacitor/core";
  * @params {type} param1 select
  * @returns
  */
-function HorizontalLabelInputComponent({ label, type, options, ...rest }) {
+function HorizontalLabelInputComponent({
+  label,
+  type,
+  options,
+  endplaceholder,
+  ...rest
+}) {
   const platform = Capacitor.getPlatform();
   return (
     <>
@@ -25,7 +31,9 @@ function HorizontalLabelInputComponent({ label, type, options, ...rest }) {
             {type === "select" ? (
               <SelectInputComponent options={options || []} {...rest} />
             ) : type === "textarea" ? (
-              <textarea className="form-control-area" {...rest}></textarea>
+              <>
+                <textarea className="form-control-area" {...rest}></textarea>
+              </>
             ) : (
               <div className="showpassword">
                 <input className="add-form-control" {...rest} />
@@ -45,7 +53,25 @@ function HorizontalLabelInputComponent({ label, type, options, ...rest }) {
             {type === "select" ? (
               <SelectInputComponent options={options || []} {...rest} />
             ) : type === "textarea" ? (
-              <textarea className="form-control-area" {...rest}></textarea>
+              <div style={{ display: "flex", position: "relative" }}>
+                <textarea className="form-control-area" {...rest}></textarea>
+                {Boolean(endplaceholder) && (
+                  <div
+                    className="password_svg"
+                    style={{
+                      opacity: 0.2,
+                      color: "#121212",
+                      position: "absolute",
+                      right: "10px", // Adjust the right value as needed
+                      bottom: "10px", // Adjust the
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {endplaceholder}
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="showpassword">
                 <input className="add-form-control" {...rest} />

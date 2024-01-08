@@ -7,17 +7,29 @@ import { setErrorToast } from "../../../redux/slice/toast";
 import { validateCreateResume } from "./validator";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import { editResumeDetailsAPI } from "../../../api/jobSeeker";
+import {
+  DownloadResumeAPI,
+  editResumeDetailsAPI,
+} from "../../../api/jobSeeker";
 import { ErrorMessage } from "../../../components/caption";
+import { FilledButton } from "@components/button";
+import DialogBox from "@components/dialogBox";
+import { KoorLogo } from "@assets/base64/index";
+import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
+import html2pdf from "html2pdf.js";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const CreateResumeComponent = () => {
   const { currentUser } = useSelector(({ auth }) => auth);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({});
+  const [openResume, setOpenResume] = useState(false);
   const dispatch = useDispatch();
   const [referenceCount, setReferenceCount] = useState(1);
   const [word, setWord] = useState("");
   const maxWordCount = 300;
+  const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
+  const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -49,6 +61,7 @@ const CreateResumeComponent = () => {
         setData(payload);
         setLoading(false);
       } else {
+        setOpenResume(true); // for demo
         formik.setErrors("Something went wrong");
         dispatch(setErrorToast("Something went wrong"));
       }
@@ -66,15 +79,80 @@ const CreateResumeComponent = () => {
     formik.setFieldValue("jobSummary", inputText);
   };
 
+  const downloadPDF = async () => {
+    setIsDownloadingPDF(true);
+    const element = document.getElementById("div-to-pdf");
+    const options = {
+      margin: [20, 0],
+      filename: `${currentUser.name || "Resume"}.pdf`,
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "Portrait" },
+      pagebreak: {
+        before: "#page-break",
+      },
+    };
+
+    const footerContent = "This resume is generated with";
+    const imageWidth = 13; // Set the desired width
+    const imageHeight = 5;
+    await html2pdf()
+      .from(element)
+      .set(options)
+      .toPdf()
+      .get("pdf")
+      .then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+          pdf.setPage(i);
+          pdf.setFontSize(10);
+          pdf.setTextColor(150);
+          const imageX =
+            pdf.internal.pageSize.getWidth() -
+            pdf.internal.pageSize.getWidth() / 2 +
+            footerContent.length -
+            10;
+          pdf.addImage(
+            KoorLogo,
+            "PNG",
+            imageX,
+            pdf.internal.pageSize.getHeight() - 14,
+            imageWidth,
+            imageHeight,
+          );
+          pdf.text(
+            footerContent,
+            pdf.internal.pageSize.getWidth() -
+              pdf.internal.pageSize.getWidth() / 2 -
+              footerContent.length,
+            pdf.internal.pageSize.getHeight() - 10,
+          );
+        }
+      })
+      .save();
+
+    setIsDownloadingPDF(false);
+  };
+
+  const downloadDocs = async () => {
+    setIsDownloadingDocs(true);
+    const res = await DownloadResumeAPI();
+    if (res.remote === "success") {
+      window.open(generateFileUrl(res.data.url), "_blank");
+    }
+    setIsDownloadingDocs(false);
+  };
+
   useEffect(() => {
     const newState = {
       jobTitle: currentUser?.resume?.profile_title,
       jobSummary: currentUser?.resume?.job_summary,
       homeAddress: currentUser?.resume?.home_address,
       personalWebsite: currentUser?.resume?.personal_website,
-      refPhone: currentUser?.resume?.ref_phone,
-      refName: currentUser?.resume?.ref_name,
-      refEmail: currentUser?.resume?.ref_email,
+      // refPhone: currentUser?.resume?.ref_phone,
+      // refName: currentUser?.resume?.ref_name,
+      // refEmail: currentUser?.resume?.ref_email,
     };
     for (const key in newState) {
       formik.setFieldValue(key, newState[key]);
@@ -89,7 +167,7 @@ const CreateResumeComponent = () => {
       formik.setFieldValue("personalWebsite", data.personalWebsite);
     }
   }, [data]);
-  console.log(formik);
+  console.log({ formik });
   return (
     <>
       <Box className={styles.CreateResume_Page}>
@@ -192,11 +270,12 @@ const CreateResumeComponent = () => {
                       placeholder="Name"
                       {...formik.getFieldProps(`reference[${idx}].name`)}
                     />
-                    {formik.touched?.reference &&
+                    {formik.errors?.reference &&
+                    formik.touched?.reference &&
                     formik.touched.reference[idx]?.name &&
-                    formik.errors?.reference[idx]?.name ? (
+                    formik.errors.reference[idx]?.name ? (
                       <ErrorMessage>
-                        {formik.errors?.reference[idx]?.name}
+                        {formik.errors.reference[idx].name}
                       </ErrorMessage>
                     ) : null}
                   </Box>
@@ -206,36 +285,42 @@ const CreateResumeComponent = () => {
                     <HorizontalPhoneInput
                       label="Mobile Number"
                       onChange={(e) => {
-                        const number =
-                          e?.mobileNumber?.international?.split(" ")[0];
-
+                        const countryCode = e?.international.split(" ")[0];
+                        const mobileNumber = (e?.value || "").replace(
+                          countryCode,
+                          "",
+                        );
+                        console.log({ mobileNumber });
                         formik.setFieldValue(
                           `reference[${idx}].moblieNumber`,
-                          number
+                          mobileNumber,
+                        );
+                        formik.setFieldValue(
+                          `reference[${idx}].countryCode`,
+                          countryCode,
                         );
                       }}
-                      defaultCountry={formik.values.reference[idx]?.countryCode}
-                      international
-                      onCountryChange={(e) =>
-                        formik.setFieldValue(`reference[${idx}].countryCode`, e)
+                      defaultCountry={
+                        formik.values.reference[idx]?.countryCode || "IN"
                       }
+                      international
                       isInvalidNumber={(isValid) => {
                         if (!isValid) {
                           formik.setFieldError(
                             `reference[${idx}].moblieNumber`,
-                            "Invalid Mobile Number"
+                            "Invalid Mobile Number",
                           );
                         }
                       }}
-                      onBlur={formik.getFieldProps("mobileNumber").onBlur}
+                      onBlur={formik.handleBlur}
                       name="mobileNumber"
                     />
-                    {/* {formik.touched.reference[idx].moblieNumber &&
-                    formik.errors.reference[idx].moblieNumber ? (
+                    {formik.errors?.reference &&
+                    formik.errors.reference[idx]?.moblieNumber ? (
                       <ErrorMessage>
                         {formik.errors.reference[idx].moblieNumber}
                       </ErrorMessage>
-                    ) : null} */}
+                    ) : null}
                   </Box>
                 </Grid>
                 <Grid item lg={4} xs={12}>
@@ -277,6 +362,42 @@ const CreateResumeComponent = () => {
             </Button>
           </Box>
         </form>
+        <DialogBox
+          open={openResume}
+          handleClose={() => {
+            if (!isDownloadingPDF) setOpenResume(false);
+          }}
+          maxWidth="xxl"
+          sx={{
+            "& .MuiPaper-root": {
+              width: "900px",
+            },
+          }}
+        >
+          <>
+            <FilledButton
+              title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
+              onClick={downloadPDF}
+              style={{ marginBottom: "10px" }}
+              disabled={isDownloadingPDF || isDownloadingDocs}
+            />
+            <FilledButton
+              sx={{
+                marginLeft: "10px",
+                "@media (max-width: 480px)": {
+                  marginLeft: "0px",
+                },
+              }}
+              title={
+                isDownloadingDocs ? "Downloading Docs..." : "Download Docs"
+              }
+              onClick={downloadDocs}
+              style={{ marginBottom: "10px" }}
+              disabled={isDownloadingPDF || isDownloadingDocs}
+            />
+            <ResumeTemplate appliedJob={false} />
+          </>
+        </DialogBox>
       </Box>
     </>
   );
