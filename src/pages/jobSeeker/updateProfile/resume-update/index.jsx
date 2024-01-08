@@ -65,7 +65,6 @@ const ResumeUpdate = ({
       .get("pdf")
       .then(function (pdf) {
         const totalPages = pdf.internal.getNumberOfPages();
-
         for (let i = 1; i <= totalPages; i++) {
           pdf.setPage(i);
           pdf.setFontSize(10);
@@ -93,7 +92,6 @@ const ResumeUpdate = ({
         }
       })
       .save();
-
     setIsDownloadingPDF(false);
   };
 

@@ -58,11 +58,11 @@ const CreateResumeComponent = () => {
       console.log({ payload });
       const res = await editResumeDetailsAPI(payload);
       if (res.remote === "success") {
-        setData(payload);
         setLoading(false);
       } else {
+        setData(payload);
         setOpenResume(true); // for demo
-        formik.setErrors("Something went wrong");
+        // formik.setErrors("Something went wrong");
         dispatch(setErrorToast("Something went wrong"));
       }
       setLoading(false);
@@ -145,26 +145,50 @@ const CreateResumeComponent = () => {
   };
 
   useEffect(() => {
-    const newState = {
-      jobTitle: currentUser?.resume?.profile_title,
-      jobSummary: currentUser?.resume?.job_summary,
-      homeAddress: currentUser?.resume?.home_address,
-      personalWebsite: currentUser?.resume?.personal_website,
-      // refPhone: currentUser?.resume?.ref_phone,
-      // refName: currentUser?.resume?.ref_name,
-      // refEmail: currentUser?.resume?.ref_email,
-    };
-    for (const key in newState) {
-      formik.setFieldValue(key, newState[key]);
+    if (formik && currentUser?.resume) {
+      const newState = {
+        jobTitle: currentUser.resume.profile_title || "",
+        jobSummary: currentUser.resume.job_summary || "",
+        homeAddress: currentUser.resume.home_address || "",
+        personalWebsite: currentUser.resume.personal_website || "",
+        reference: currentUser.resume.reference || [],
+      };
+
+      for (const key in newState) {
+        formik.setFieldValue(key, newState[key]);
+      }
     }
   }, [currentUser]);
 
   useEffect(() => {
     if (data) {
-      formik.setFieldValue("jobTitle", data.jobTitle);
-      formik.setFieldValue("jobSummary", data.jobSummary);
-      formik.setFieldValue("homeAddress", data.homeAddress);
-      formik.setFieldValue("personalWebsite", data.personalWebsite);
+      formik.setFieldValue("jobTitle", data.profile_title || "");
+      formik.setFieldValue("jobSummary", data.job_summary || "");
+      formik.setFieldValue("homeAddress", data.home_address || "");
+      formik.setFieldValue("personalWebsite", data.personal_website || "");
+
+      try {
+        JSON.parse(data.reference)?.forEach((reference, referenceIndex) => {
+          formik.setFieldValue(
+            `reference[${referenceIndex}].name`,
+            reference?.name || "",
+          );
+          formik.setFieldValue(
+            `reference[${referenceIndex}].moblieNumber`,
+            reference?.moblieNumber || "",
+          );
+          formik.setFieldValue(
+            `reference[${referenceIndex}].countryCode`,
+            reference?.countryCode || "",
+          );
+          formik.setFieldValue(
+            `reference[${referenceIndex}].email`,
+            reference?.email || "",
+          );
+        });
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+      }
     }
   }, [data]);
   console.log({ formik });
