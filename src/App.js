@@ -50,7 +50,6 @@ function App() {
       dispatch(setIsLoggedIn(false));
     }
   };
-
   const fetchAppInfo = async () => {
     try {
       const appInfoResult = await CapApp.getInfo();
@@ -62,7 +61,6 @@ function App() {
 
   const backButtonAction = () => {
     const history = window.history;
-
     if (history.length > 1) {
       navigate(-1);
     } else {
@@ -75,6 +73,7 @@ function App() {
   useEffect(() => {
     checkLoginStatus();
   }, []);
+
   useEffect(() => {
     window.addEventListener("storage", checkLoginStatus);
     if (Capacitor.isNativePlatform) {
@@ -91,6 +90,7 @@ function App() {
   useEffect(() => {
     firebaseInitialize();
   }, []);
+
   useEffect(() => {
     const getPosition = async () => {
       const userIp = await getUserIpAPI();
@@ -102,7 +102,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            })
+            }),
           );
         }
       }
@@ -142,7 +142,7 @@ function App() {
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token=")
+          pair.startsWith("verify-token="),
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];

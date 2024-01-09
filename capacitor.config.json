@@ -2,10 +2,18 @@
   "appId": "org.reactjs.example.koor",
   "appName": "koor",
   "bundledWebRuntime": false,
-  "npmClient": "npm",
+  "npmClient": "yarn",
   "webDir": "build",
   "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "androidScaleType": "CENTER_CROP"
+    }
+  },
+  "server": {
+    "url": "http://192.168.0.192:8100"
   }
 }
