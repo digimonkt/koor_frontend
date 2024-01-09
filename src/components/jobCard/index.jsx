@@ -1,6 +1,6 @@
 import { Avatar, Box, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { SVG } from "../../assets/svg";
 import { OutlinedButton, SolidButton } from "../button";
 import { ChipBox } from "./style";
@@ -17,7 +17,13 @@ import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const path = location.pathname;
+  const pathParts = path.split("/");
+  const endRouter = pathParts[pathParts.length - 1];
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState("");
+
   const [registrationWarning, setRegistrationWarning] = useState(false);
   const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
@@ -86,9 +92,17 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       );
     }
   }, [jobDetails]);
+  useEffect(() => {
+    setSearchValue(endRouter);
+  }, [endRouter]);
   return (
     <div className="job_card">
-      <Grid container spacing={1.875} {...gridProps}>
+      <Grid
+        sx={{ justifyContent: "space-between" }}
+        container
+        spacing={1.875}
+        {...gridProps}
+      >
         {logo && (
           <Grid
             item
@@ -248,7 +262,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         )}
         <Grid
           item
-          // lg={logo ? 8 : 9}
+          lg={logo ? 8 : 7}
           xs={12}
           sm={7}
           sx={{
@@ -412,9 +426,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         </Grid>
         <Grid
           item
-          lg={logo ? 2 : 3}
+          lg={logo ? 2 : 5}
           xs={12}
-          sm={3}
+          sm={logo ? 3 : 5}
           sx={{
             "@media (min-width: 1200px)": {
               maxWidth: "25%",
@@ -449,7 +463,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           <Stack
             direction="row"
             spacing={1}
-            justifyContent={{ xs: "center", lg: "end", sm: "flex-end" }}
+            justifyContent={{ xs: "center", lg: "end", sm: "end" }}
             alignItems="center"
             // divider={<hr orientation="vertical" className="job_card_hr" />}
             sx={{
@@ -466,7 +480,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             }}
           >
             <Box
-              sx={{ "@media (max-width: 480px)": { display: "none" } }}
+              sx={{
+                "@media (max-width: 480px)":
+                  searchValue === "manage-jobs" ? {} : { display: "none" },
+              }}
               className="pricebox py-3 upto-slide"
             >
               {jobDetails?.budgetAmount ? (
