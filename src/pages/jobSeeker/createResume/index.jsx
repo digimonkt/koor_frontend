@@ -3,21 +3,17 @@ import React, { useEffect, useState } from "react";
 import styles from "./createResume.module.css";
 import { HorizontalPhoneInput, LabeledInput } from "@components/input";
 import { SVG } from "@assets/svg";
-import { setErrorToast } from "../../../redux/slice/toast";
+import { setErrorToast } from "@redux/slice/toast";
+import { setResumeData } from "@redux/slice/user";
 import { validateCreateResume } from "./validator";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import {
-  DownloadResumeAPI,
-  editResumeDetailsAPI,
-} from "../../../api/jobSeeker";
+import { editResumeDetailsAPI } from "../../../api/jobSeeker";
 import { ErrorMessage } from "../../../components/caption";
 import { FilledButton } from "@components/button";
 import DialogBox from "@components/dialogBox";
-import { KoorLogo } from "@assets/base64/index";
 import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
-import html2pdf from "html2pdf.js";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { pdfDownloader, docsDownloader } from "@utils/fileUtils";
 
 const CreateResumeComponent = () => {
   const { currentUser } = useSelector(({ auth }) => auth);
@@ -61,6 +57,7 @@ const CreateResumeComponent = () => {
         setLoading(false);
       } else {
         setData(payload);
+        dispatch(setResumeData(payload));
         setOpenResume(true); // for demo
         // formik.setErrors("Something went wrong");
         dispatch(setErrorToast("Something went wrong"));
@@ -80,68 +77,11 @@ const CreateResumeComponent = () => {
   };
 
   const downloadPDF = async () => {
-    setIsDownloadingPDF(true);
-    const element = document.getElementById("div-to-pdf");
-    const options = {
-      margin: [20, 0],
-      filename: `${currentUser.name || "Resume"}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "Portrait" },
-      pagebreak: {
-        before: "#page-break",
-      },
-    };
-
-    const footerContent = "This resume is generated with";
-    const imageWidth = 13; // Set the desired width
-    const imageHeight = 5;
-    await html2pdf()
-      .from(element)
-      .set(options)
-      .toPdf()
-      .get("pdf")
-      .then(function (pdf) {
-        const totalPages = pdf.internal.getNumberOfPages();
-
-        for (let i = 1; i <= totalPages; i++) {
-          pdf.setPage(i);
-          pdf.setFontSize(10);
-          pdf.setTextColor(150);
-          const imageX =
-            pdf.internal.pageSize.getWidth() -
-            pdf.internal.pageSize.getWidth() / 2 +
-            footerContent.length -
-            10;
-          pdf.addImage(
-            KoorLogo,
-            "PNG",
-            imageX,
-            pdf.internal.pageSize.getHeight() - 14,
-            imageWidth,
-            imageHeight,
-          );
-          pdf.text(
-            footerContent,
-            pdf.internal.pageSize.getWidth() -
-              pdf.internal.pageSize.getWidth() / 2 -
-              footerContent.length,
-            pdf.internal.pageSize.getHeight() - 10,
-          );
-        }
-      })
-      .save();
-
-    setIsDownloadingPDF(false);
+    pdfDownloader(currentUser?.name, setIsDownloadingPDF, dispatch);
   };
 
   const downloadDocs = async () => {
-    setIsDownloadingDocs(true);
-    const res = await DownloadResumeAPI();
-    if (res.remote === "success") {
-      window.open(generateFileUrl(res.data.url), "_blank");
-    }
-    setIsDownloadingDocs(false);
+    docsDownloader(setIsDownloadingDocs, dispatch);
   };
 
   useEffect(() => {

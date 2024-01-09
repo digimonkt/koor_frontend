@@ -88,6 +88,13 @@ const initialState = {
       },
      */
     resume: [],
+    resumeData: {
+      jobTitle: "",
+      jobSummary: "",
+      homeAddress: "",
+      personalWebsite: "",
+      reference: [],
+    },
     /**
      * {
         id: "",
@@ -158,6 +165,9 @@ export const authSlice = createSlice({
         profileImage: action.payload,
       };
     },
+    setResumeData: (state, action) => {
+      state.currentUser.resumeData = action.payload;
+    },
     setIsBlackListedByEmployer: (state, action) => {
       state.isBlackListedByEmployer = action.payload;
     },
@@ -185,7 +195,7 @@ export const authSlice = createSlice({
     updateEducationRecord: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
-        educationRecord: state.currentUser.educationRecord.map(education => {
+        educationRecord: state.currentUser.educationRecord.map((education) => {
           if (education.id === action.payload.id) {
             return {
               ...education,
@@ -200,7 +210,7 @@ export const authSlice = createSlice({
       state.currentUser = {
         ...state.currentUser,
         educationRecord: state.currentUser.educationRecord.filter(
-          record => record.id !== action.payload,
+          (record) => record.id !== action.payload,
         ),
       };
     },
@@ -214,7 +224,7 @@ export const authSlice = createSlice({
     updateLanguageRecord: (state, action) => {
       state.currentUser = {
         ...state.currentUser,
-        languages: state.currentUser.languages.map(language => {
+        languages: state.currentUser.languages.map((language) => {
           if (language.id === action.payload.id) {
             return {
               ...language,
@@ -229,7 +239,7 @@ export const authSlice = createSlice({
       state.currentUser = {
         ...state.currentUser,
         languages: state.currentUser.languages.filter(
-          record => record.id !== action.payload,
+          (record) => record.id !== action.payload,
         ),
       };
     },
@@ -244,7 +254,7 @@ export const authSlice = createSlice({
       state.currentUser = {
         ...state.currentUser,
         workExperiences: state.currentUser.workExperiences.map(
-          workExperience => {
+          (workExperience) => {
             if (workExperience.id === action.payload.id) {
               return {
                 ...workExperience,
@@ -260,7 +270,7 @@ export const authSlice = createSlice({
       state.currentUser = {
         ...state.currentUser,
         workExperiences: state.currentUser.workExperiences.filter(
-          record => record.id !== action.payload,
+          (record) => record.id !== action.payload,
         ),
       };
     },
@@ -277,8 +287,8 @@ export const authSlice = createSlice({
       state.userVerificationToken = action.payload;
     },
   },
-  extraReducers: builder => {
-    builder.addCase(getUserDetails.pending, state => {
+  extraReducers: (builder) => {
+    builder.addCase(getUserDetails.pending, (state) => {
       state.isGlobalLoading = true;
     });
     builder.addCase(getUserDetails.fulfilled, (state, action) => {
@@ -290,7 +300,7 @@ export const authSlice = createSlice({
       state.role = action.payload.role;
       state.isLoggedIn = true;
     });
-    builder.addCase(getUserDetails.rejected, state => {
+    builder.addCase(getUserDetails.rejected, (state) => {
       state.isGlobalLoading = false;
     });
   },
@@ -314,6 +324,7 @@ export const {
   setCurrentLocation,
   setSocialLoginError,
   setIsBlackListedByEmployer,
+  setResumeData,
   setUserVerificationToken,
 } = authSlice.actions;
 export default authSlice.reducer;
