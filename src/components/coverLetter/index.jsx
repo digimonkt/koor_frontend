@@ -1,26 +1,54 @@
 import { Avatar, Box, Divider, Grid, Typography } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import styles from "./coverLetter.module.css";
-import {
-  AttachmentDragNDropInput,
-  HorizontalLabelInput,
-  LabeledInput,
-} from "@components/input";
+import { HorizontalLabelInput, LabeledInput } from "@components/input";
 import { OutlinedButton } from "@components/button";
 import { SVG } from "@assets/svg";
 import { IMAGES } from "@assets/images";
 import { useFormik } from "formik";
-import { editResumeDetailsAPI } from "@api/jobSeeker";
+import { updateCoverLetterAPI } from "@api/job";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCoverLetterData } from "@redux/slice/user";
+import { useParams } from "react-router-dom";
+import { useDropzone } from "react-dropzone";
 
 const CreateCoverLetter = () => {
   const [loading, setLoading] = useState(false);
-  const [, setData] = useState({});
+  const { currentUser } = useSelector(({ auth }) => auth);
+  const [data, setData] = useState({});
   const [word, setWord] = useState("");
-
+  const [files, setFiles] = useState([]);
   const dispatch = useDispatch();
   const maxWordCount = 300;
+  const { jobId } = useParams();
+
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "image/*": [],
+    },
+    onDrop: (acceptedFiles) => {
+      setFiles(
+        acceptedFiles.slice(0, 1).map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          })
+        )
+      );
+    },
+    maxFiles: 1,
+  });
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      setFiles([
+        Object.assign(selectedFile, {
+          preview: URL.createObjectURL(selectedFile),
+        }),
+      ]);
+    }
+  };
 
   const handleInputChange = (e) => {
     const inputText = e.target.value.slice(0, maxWordCount);
@@ -28,37 +56,58 @@ const CreateCoverLetter = () => {
     formik.setFieldValue("coverLetter", inputText);
   };
 
+  const thumbs = files.length > 0 && (
+    <Fragment key={files[0].name}>
+      <Avatar
+        sx={{
+          width: 100,
+          height: 100,
+          color: "#CACACA",
+          "&.MuiAvatar-circular": {
+            background: "#F0F0F0",
+          },
+        }}
+        src={files[0].preview}
+        onLoad={() => {
+          URL.revokeObjectURL(files[0].preview);
+        }}
+      />
+    </Fragment>
+  );
+
   const formik = useFormik({
     initialValues: {
       jobTitle: "",
       addressee: "",
       coverLetter: "",
-      signgature: [],
-      signgatureRemove: [],
+      signature: [],
     },
     onSubmit: async (values) => {
       console.log({ values });
       setLoading(true);
       const payload = {
         profile_title: values.jobTitle,
-        addressee: values.addressee,
-        coverLetter: values.coverLetter,
-        signgature: values.signgature,
+        name_or_address: values.addressee,
+        cover_letter: values.coverLetter,
+        signature_file: files,
       };
-
-      const formData = new FormData();
-      formData.append("profile_title", values.jobTitle);
-      formData.append("addressee", values.addressee);
-      formData.append("coverLetter", values.coverLetter);
-      const signatureBlob = await fetch(values.signgature[0].preview).then(
-        (res) => res.blob(),
-      );
-      formData.append("signgature", signatureBlob);
-
-      console.log({ formData });
-      const res = await editResumeDetailsAPI(payload);
+      console.log({ payload });
+      const newFormData = new FormData();
+      for (const key in payload) {
+        if (key === "signature_file") {
+          payload.signature_file.forEach((attachment) => {
+            console.log(attachment, key);
+            newFormData.append(key, attachment);
+          });
+        } else {
+          newFormData.append(key, payload[key]);
+        }
+      }
+      console.log({ newFormData });
+      const res = await updateCoverLetterAPI(newFormData, jobId);
       if (res.remote === "success") {
         setData(payload);
+        dispatch(setCoverLetterData(payload));
         setLoading(false);
         dispatch(setSuccessToast("Cover letter updated successfully"));
       } else {
@@ -69,13 +118,36 @@ const CreateCoverLetter = () => {
     },
   });
 
+  useEffect(() => {
+    if (currentUser?.resume) {
+      const newState = {
+        jobTitle: currentUser?.coverLetterData?.profile_title,
+        addressee: currentUser?.coverLetterData?.name_or_address,
+        coverLetter: currentUser?.coverLetterData?.coverLetter,
+        signature: currentUser?.coverLetterData?.signature,
+      };
+
+      for (const key in newState) {
+        formik.setFieldValue(key, newState[key]);
+      }
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (data) {
+      formik.setFieldValue("jobTitle", data.profile_title || "");
+      formik.setFieldValue("addressee", data.name_or_address || "");
+      formik.setFieldValue("coverLetter||", data.coverLetter || "");
+      formik.setFieldValue("signature", data.signature || "");
+    }
+  }, [data]);
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
         <Box className={styles.createCoverLetter_box}>
           <h1 className={styles.heading}>Create a cover letter</h1>
           <Typography className={styles.letter_desc}>
-            Create a personalized conver letter and then click “Generate”. You
+            Create a personalized cover letter and then click “Generate”. You
             can attach it to your application to make it stand out more.
           </Typography>
         </Box>
@@ -134,54 +206,34 @@ const CreateCoverLetter = () => {
           <Box>
             <Grid container spacing={2} sx={{ alignItems: "center" }}>
               <Grid item lg={1.1} md={1.2} sm={1.6} xs={4}>
-                <Avatar
-                  src={IMAGES.CoverLetterImg}
-                  className={styles.coverletter_avatar}
-                />
+                {!files.length ? (
+                  <Avatar
+                    src={IMAGES.CoverLetterImg}
+                    className={styles.coverletter_avatar}
+                  />
+                ) : (
+                  <>{thumbs}</>
+                )}
               </Grid>
               <Grid item lg={10.9} md={10.8} sm={10.4} xs={8}>
-                <AttachmentDragNDropInput
-                  files={formik.getFieldProps("signgature").value}
-                  handleDrop={(file) => {
-                    const currentAttachments = formik.values.signgature;
-                    if (file.length + currentAttachments.length > 10) {
-                      formik.setFieldError(
-                        "signgature",
-                        `Maximum 10 files allowed. you can upload only ${
-                          10 - currentAttachments.length
-                        } remaining`,
-                      );
-                    } else {
-                      const filesTaken = file.slice(
-                        0,
-                        10 - currentAttachments.length,
-                      );
-                      formik.setFieldValue("signgature", [
-                        ...currentAttachments,
-                        ...filesTaken,
-                      ]);
-                    }
-                  }}
-                  deleteFile={(file, index) => {
-                    if (file.id) {
-                      formik.setFieldValue("attachmentsRemove", [
-                        ...formik.values.attachmentsRemove,
-                        file.id,
-                      ]);
-                      formik.setFieldValue(
-                        "signgature",
-                        formik.values.signgature.filter(
-                          (attachment) => attachment.path !== file.path,
-                        ),
-                      );
-                    } else {
-                      formik.setFieldValue(
-                        "signgature",
-                        formik.values.signgature.filter((_, i) => i !== index),
-                      );
-                    }
-                  }}
-                />
+                <Box
+                  className={styles.coverletter_drag_box}
+                  {...getRootProps({ className: "dropzone" })}
+                >
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    {...getInputProps()}
+                    {...formik.getFieldProps("signature")}
+                    onChange={handleFileChange}
+                  />
+                  <Typography className={styles.coverletter_drag}>
+                    Drag here or <span>upload a signature</span>
+                  </Typography>
+                  <Typography className={styles.coverletter_drag_drop}>
+                    PNG, JPEN and PDF files are supported
+                  </Typography>
+                </Box>
               </Grid>
             </Grid>
           </Box>

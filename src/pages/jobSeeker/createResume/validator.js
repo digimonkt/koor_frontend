@@ -8,10 +8,13 @@ export const validateCreateResume = Yup.object().shape({
   personalWebsite: Yup.string().matches(REGEX.website, "Invalid website"),
   reference: Yup.array().of(
     Yup.object().shape({
-      name: Yup.string(),
-      moblieNumber: Yup.string().matches(REGEX.mobile, "Invalid Phone Number"),
-      countryCode: Yup.string(),
-      email: Yup.string().matches(REGEX.email, "Invalid Email"),
-    }),
+      name: Yup.string().when(["email", "mobile_number"], {
+        is: (email, mobileNumber) => email || mobileNumber,
+        then: Yup.string().required("Name is required"),
+        otherwise: Yup.string().optional(),
+      }),
+      mobile_number: Yup.number(),
+      email: Yup.string(),
+    })
   ),
 });

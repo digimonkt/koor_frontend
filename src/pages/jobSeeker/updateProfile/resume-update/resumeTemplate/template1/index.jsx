@@ -15,7 +15,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
     const convertImageToBase64 = async () => {
       try {
         const response = await fetch(
-          generateFileUrl(applicantDetails?.profileImage),
+          generateFileUrl(applicantDetails?.profileImage)
         );
         const blob = await response.blob();
         const reader = new FileReader();
@@ -146,31 +146,30 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 </h6>
               </div>
             </div>
-            <hr /> */}
-              {/* <div className="refrence">
-              <h2>Refrence</h2>
-              <h3 style={{ marginBottom: "5px" }}>Abdimajid Omar</h3>
-              <span>
-                <SVG.callTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <span>
-                <SVG.mailTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <h3 style={{ marginBottom: "5px", marginTop: "10px" }}>
-                Second reference name
-              </h3>
-              <span>
-                <SVG.callTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <span>
-                <SVG.mailTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-            </div>
-            <hr /> */}
+             {Boolean(currentUser?.resumeData?.name) && (
+              <hr />
+              <div>
+                  <h2>References</h2>
+                  {currentUser?.resumeData?.references?.map(
+                    (reference, idx) => (
+                      <div key={idx} className="reference">
+                        <h3 style={{ marginBottom: "5px" }}>
+                          {reference?.name}
+                        </h3>
+                        <span>
+                          <SVG.callTrik style={{ marginRight: "5px" }} />
+                          {reference?.moblie_number}
+                        </span>
+                        <span>
+                          <SVG.mailTrik style={{ marginRight: "5px" }} />
+                          {reference?.email}
+                        </span>
+                      </div>
+                    )
+                  )}
+                </div>
+              )}
+              <hr />
               {/* <div className="certification">
               <h2>CERTIFICATION</h2>
               <div className="certification_div">

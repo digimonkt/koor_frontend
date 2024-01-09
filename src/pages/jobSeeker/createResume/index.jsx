@@ -35,31 +35,30 @@ const CreateResumeComponent = () => {
       personalWebsite: "",
       reference: Array.from({ length: referenceCount }, () => ({
         email: "",
-        moblieNumber: "",
-        countryCode: "",
+        mobile_number: "",
+        country_code: "",
         name: "",
       })),
     },
     validationSchema: validateCreateResume,
     onSubmit: async (values) => {
-      console.log({ values });
       setLoading(true);
       const payload = {
         profile_title: values.jobTitle,
         job_summary: values.jobSummary,
         home_address: values.homeAddress,
         personal_website: values.personalWebsite,
-        reference: JSON.stringify(values.reference),
+        reference: values.reference,
       };
-      console.log({ payload });
+
       const res = await editResumeDetailsAPI(payload);
       if (res.remote === "success") {
         setLoading(false);
-      } else {
         setData(payload);
         dispatch(setResumeData(payload));
-        setOpenResume(true); // for demo
-        // formik.setErrors("Something went wrong");
+        setOpenResume(true);
+      } else {
+        formik.setErrors("Something went wrong");
         dispatch(setErrorToast("Something went wrong"));
       }
       setLoading(false);
@@ -85,13 +84,13 @@ const CreateResumeComponent = () => {
   };
 
   useEffect(() => {
-    if (formik && currentUser?.resume) {
+    if (currentUser?.resume) {
       const newState = {
-        jobTitle: currentUser.resume.profile_title || "",
-        jobSummary: currentUser.resume.job_summary || "",
-        homeAddress: currentUser.resume.home_address || "",
-        personalWebsite: currentUser.resume.personal_website || "",
-        reference: currentUser.resume.reference || [],
+        jobTitle: currentUser.resumeData.profile_title || "",
+        jobSummary: currentUser.resumeData.job_summary || "",
+        homeAddress: currentUser.resumeData.home_address || "",
+        personalWebsite: currentUser.resumeData.personal_website || "",
+        reference: currentUser.resumeData.reference || [],
       };
 
       for (const key in newState) {
@@ -106,29 +105,21 @@ const CreateResumeComponent = () => {
       formik.setFieldValue("jobSummary", data.job_summary || "");
       formik.setFieldValue("homeAddress", data.home_address || "");
       formik.setFieldValue("personalWebsite", data.personal_website || "");
-
-      try {
-        JSON.parse(data.reference)?.forEach((reference, referenceIndex) => {
-          formik.setFieldValue(
-            `reference[${referenceIndex}].name`,
-            reference?.name || "",
-          );
-          formik.setFieldValue(
-            `reference[${referenceIndex}].moblieNumber`,
-            reference?.moblieNumber || "",
-          );
-          formik.setFieldValue(
-            `reference[${referenceIndex}].countryCode`,
-            reference?.countryCode || "",
-          );
-          formik.setFieldValue(
-            `reference[${referenceIndex}].email`,
-            reference?.email || "",
-          );
-        });
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
-      }
+      data?.reference?.forEach((reference, referenceIndex) => {
+        formik.setFieldValue(
+          `reference[${referenceIndex}].name`,
+          reference?.name || ""
+        );
+        formik.setFieldValue(
+          `reference[${referenceIndex}].mobile_number`,
+          reference?.mobile_number || ""
+        );
+        console.log(reference.countryCode || "");
+        formik.setFieldValue(
+          `reference[${referenceIndex}].email`,
+          reference?.email || ""
+        );
+      });
     }
   }, [data]);
   console.log({ formik });
@@ -245,47 +236,48 @@ const CreateResumeComponent = () => {
                   </Box>
                 </Grid>
                 <Grid item lg={4} xs={12}>
-                  <Box sx={{ marginBottom: "10px" }}>
-                    <HorizontalPhoneInput
-                      label="Mobile Number"
-                      onChange={(e) => {
-                        const countryCode = e?.international.split(" ")[0];
-                        const mobileNumber = (e?.value || "").replace(
-                          countryCode,
-                          "",
+                  <HorizontalPhoneInput
+                    placeholder="Enter mobile number"
+                    onChange={(e) => {
+                      const countryCode = e?.international.split(" ")[0];
+                      const mobileNumber = (e?.value || "").replace(
+                        countryCode,
+                        ""
+                      );
+                      console.log({ mobileNumber });
+                      formik.setFieldValue(
+                        `reference[${idx}].mobile_number`,
+                        mobileNumber
+                      );
+                      formik.setFieldValue(
+                        `reference[${idx}].country_code`,
+                        countryCode
+                      );
+                    }}
+                    defaultCountry={
+                      formik.values.reference[idx]?.country_code || "IN"
+                    }
+                    onCountryChange={(e) =>
+                      formik.setFieldValue(`reference[${idx}].country_code`, e)
+                    }
+                    international
+                    isInvalidNumber={(isValid) => {
+                      if (!isValid) {
+                        formik.setFieldError(
+                          `reference[${idx}].mobile_number`,
+                          "Invalid Mobile Number"
                         );
-                        console.log({ mobileNumber });
-                        formik.setFieldValue(
-                          `reference[${idx}].moblieNumber`,
-                          mobileNumber,
-                        );
-                        formik.setFieldValue(
-                          `reference[${idx}].countryCode`,
-                          countryCode,
-                        );
-                      }}
-                      defaultCountry={
-                        formik.values.reference[idx]?.countryCode || "IN"
                       }
-                      international
-                      isInvalidNumber={(isValid) => {
-                        if (!isValid) {
-                          formik.setFieldError(
-                            `reference[${idx}].moblieNumber`,
-                            "Invalid Mobile Number",
-                          );
-                        }
-                      }}
-                      onBlur={formik.handleBlur}
-                      name="mobileNumber"
-                    />
-                    {formik.errors?.reference &&
-                    formik.errors.reference[idx]?.moblieNumber ? (
+                    }}
+                    onBlur={formik.handleBlur}
+                    name="mobileNumber"
+                  />
+                  {/* formik.errors?.reference &&
+                    formik.errors.reference[idx]?.mobile_number? (
                       <ErrorMessage>
-                        {formik.errors.reference[idx].moblieNumber}
+                        {formik.errors.reference[idx].mobile_number}
                       </ErrorMessage>
-                    ) : null}
-                  </Box>
+                    ) : null */}
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <Box sx={{ marginBottom: "10px" }}>
