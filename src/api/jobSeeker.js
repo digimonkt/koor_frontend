@@ -263,3 +263,12 @@ export const editResumeDetailsAPI = async (data) => {
     data,
   });
 };
+
+export const uploadResumeAPI = async (data) => {
+  return await api.request({
+    url: "v1/users/job-seeker/upload-resume",
+    method: "POST",
+    headers: { "Content-Type": "multipart/form-data" },
+    data,
+  });
+};

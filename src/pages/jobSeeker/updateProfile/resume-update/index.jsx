@@ -1,10 +1,13 @@
 import { OutlinedButton } from "../../../../components/button";
 import { Box, IconButton, Stack } from "@mui/material";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { SVG } from "../../../../assets/svg";
 import { Capacitor } from "@capacitor/core";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { uploadResumeAPI } from "@api/jobSeeker";
+import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
+
 const ResumeUpdate = ({
   title,
   bgcolor,
@@ -16,6 +19,8 @@ const ResumeUpdate = ({
 }) => {
   const { role } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const fileInputRef = useRef();
 
   const handleFileUpload = () => {
@@ -24,10 +29,18 @@ const ResumeUpdate = ({
     }
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const selectedFile = event.target.files?.[0];
+    setLoading(true);
     if (selectedFile) {
+      const res = await uploadResumeAPI({ resume: selectedFile });
       console.log("Selected File:", selectedFile);
+      if (res.remote === "success") {
+        dispatch(setSuccessToast("File Uploaded Successfully"));
+      } else {
+        dispatch(setErrorToast("Something went wrong"));
+      }
+      setLoading(false);
     }
   };
 
@@ -73,12 +86,13 @@ const ResumeUpdate = ({
                 <div className="my-4 text-center">
                   <OutlinedButton
                     style={{ width: "100%" }}
+                    disabled={loading}
                     title={
                       <>
                         <span className="me-2 d-inline-flex">
                           <SVG.DownloadIcon />
                         </span>
-                        UPLOAD YOUR RESUME
+                        {loading ? "Loading..." : "UPLOAD YOUR RESUME"}
                       </>
                     }
                     onClick={() => handleFileUpload()}
@@ -141,12 +155,13 @@ const ResumeUpdate = ({
               />
               <OutlinedButton
                 style={{ width: "100%" }}
+                disabled={loading}
                 title={
                   <>
                     <span className="me-2 d-inline-flex">
                       <SVG.DownloadIcon />
                     </span>
-                    UPLOAD YOUR RESUME
+                    {loading ? "Loading..." : "UPLOAD YOUR RESUME"}
                   </>
                 }
                 onClick={() => handleFileUpload()}
