@@ -29,10 +29,9 @@ function TalentCard({ talentDetails }) {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? talentDetails.length : 3,
+      prevNumLines === 3 ? talentDetails.length : 3
     );
   };
-  console.log(talentDetails?.profileTitle);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -50,7 +49,7 @@ function TalentCard({ talentDetails }) {
         urlcat("/employer/chat", {
           conversion: conversationId,
           userId: talentDetails?.id,
-        }),
+        })
       );
     }
   };

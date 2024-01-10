@@ -39,6 +39,10 @@ export const transformGetUserDetails = (data) => {
       jobsExperience: data.profile.jobs_experience || "",
       website: data.profile.website || "",
       otherNotification: data.profile.other_notification || false,
+      personalWebsite: data.profile.personal_website || "",
+      homeAddress: data.profile.homeAddress || "",
+      referances: data.profile.referances || "",
+      shortSummary: data.profile.short_summary || "",
     },
     jobPreferences: data.job_preferences
       ? {

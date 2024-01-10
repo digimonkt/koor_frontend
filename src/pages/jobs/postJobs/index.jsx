@@ -224,7 +224,6 @@ function PostJobsComponent() {
       }
     },
   });
-  console.log({ formik });
 
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");

@@ -83,7 +83,6 @@ const CreateCoverLetter = () => {
       signature: [],
     },
     onSubmit: async (values) => {
-      console.log({ values });
       setLoading(true);
       const payload = {
         profile_title: values.jobTitle,
@@ -91,19 +90,16 @@ const CreateCoverLetter = () => {
         cover_letter: values.coverLetter,
         signature_file: files,
       };
-      console.log({ payload });
       const newFormData = new FormData();
       for (const key in payload) {
         if (key === "signature_file") {
           payload.signature_file.forEach((attachment) => {
-            console.log(attachment, key);
             newFormData.append(key, attachment);
           });
         } else {
           newFormData.append(key, payload[key]);
         }
       }
-      console.log({ newFormData });
       const res = await updateCoverLetterAPI(newFormData, jobId);
       if (res.remote === "success") {
         setData(payload);

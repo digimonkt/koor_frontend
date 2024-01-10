@@ -87,10 +87,10 @@ const CreateResumeComponent = () => {
     if (currentUser?.profile) {
       const newState = {
         jobTitle: currentUser.profile.profileTitle || "",
-        jobSummary: currentUser.resumeData.job_summary || "",
-        homeAddress: currentUser.resumeData.home_address || "",
-        personalWebsite: currentUser.resumeData.personal_website || "",
-        reference: currentUser.resumeData.reference || [],
+        jobSummary: currentUser.profile.jobSummary || "",
+        homeAddress: currentUser.profile.homeAddress || "",
+        personalWebsite: currentUser.profile.personalWebsite || "",
+        reference: currentUser.profile.reference || [],
       };
 
       for (const key in newState) {
@@ -114,7 +114,6 @@ const CreateResumeComponent = () => {
           `reference[${referenceIndex}].mobile_number`,
           reference?.mobile_number || "",
         );
-        console.log(reference.countryCode || "");
         formik.setFieldValue(
           `reference[${referenceIndex}].email`,
           reference?.email || "",
@@ -122,7 +121,6 @@ const CreateResumeComponent = () => {
       });
     }
   }, [data]);
-  console.log({ formik });
   return (
     <>
       <Box className={styles.CreateResume_Page}>
@@ -244,7 +242,6 @@ const CreateResumeComponent = () => {
                         countryCode,
                         "",
                       );
-                      console.log({ mobileNumber });
                       formik.setFieldValue(
                         `reference[${idx}].mobile_number`,
                         mobileNumber,

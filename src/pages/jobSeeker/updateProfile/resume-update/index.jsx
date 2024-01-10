@@ -34,7 +34,6 @@ const ResumeUpdate = ({
     setLoading(true);
     if (selectedFile) {
       const res = await uploadResumeAPI({ resume: selectedFile });
-      console.log("Selected File:", selectedFile);
       if (res.remote === "success") {
         dispatch(setSuccessToast("File Uploaded Successfully"));
       } else {
