@@ -55,6 +55,7 @@ function App() {
     return () => window.removeEventListener("storage", checkLoginStatus);
   }, []);
 
+  console.log({ currentUser });
   useEffect(() => {
     firebaseInitialize();
   }, []);

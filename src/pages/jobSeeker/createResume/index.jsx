@@ -84,9 +84,9 @@ const CreateResumeComponent = () => {
   };
 
   useEffect(() => {
-    if (currentUser?.resume) {
+    if (currentUser?.profile) {
       const newState = {
-        jobTitle: currentUser.resumeData.profile_title || "",
+        jobTitle: currentUser.profile.profileTitle || "",
         jobSummary: currentUser.resumeData.job_summary || "",
         homeAddress: currentUser.resumeData.home_address || "",
         personalWebsite: currentUser.resumeData.personal_website || "",
@@ -108,16 +108,16 @@ const CreateResumeComponent = () => {
       data?.reference?.forEach((reference, referenceIndex) => {
         formik.setFieldValue(
           `reference[${referenceIndex}].name`,
-          reference?.name || ""
+          reference?.name || "",
         );
         formik.setFieldValue(
           `reference[${referenceIndex}].mobile_number`,
-          reference?.mobile_number || ""
+          reference?.mobile_number || "",
         );
         console.log(reference.countryCode || "");
         formik.setFieldValue(
           `reference[${referenceIndex}].email`,
-          reference?.email || ""
+          reference?.email || "",
         );
       });
     }
@@ -242,16 +242,16 @@ const CreateResumeComponent = () => {
                       const countryCode = e?.international.split(" ")[0];
                       const mobileNumber = (e?.value || "").replace(
                         countryCode,
-                        ""
+                        "",
                       );
                       console.log({ mobileNumber });
                       formik.setFieldValue(
                         `reference[${idx}].mobile_number`,
-                        mobileNumber
+                        mobileNumber,
                       );
                       formik.setFieldValue(
                         `reference[${idx}].country_code`,
-                        countryCode
+                        countryCode,
                       );
                     }}
                     defaultCountry={
@@ -265,7 +265,7 @@ const CreateResumeComponent = () => {
                       if (!isValid) {
                         formik.setFieldError(
                           `reference[${idx}].mobile_number`,
-                          "Invalid Mobile Number"
+                          "Invalid Mobile Number",
                         );
                       }
                     }}

@@ -90,6 +90,7 @@ export const searchTalent = createAsyncThunk(
     }
   },
 );
+
 export const searchTender = createAsyncThunk(
   "search/tenders",
   async (data, { getState, rejectWithValue }) => {
@@ -102,7 +103,7 @@ export const searchTender = createAsyncThunk(
       ...advanceFilter,
       ...data,
     };
-    console.log({ state: data });
+    console.log({ state: advanceFilter });
     for (const key in payload) {
       if (!payload[key]) {
         delete payload[key];
