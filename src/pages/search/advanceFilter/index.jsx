@@ -126,6 +126,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           </span>
         )}
         <OutlinedButton
+          onClick={() => setData(false)}
           style={{
             pointer: "cursor",
             marginTop: "5px",
