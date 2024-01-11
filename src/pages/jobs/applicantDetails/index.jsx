@@ -204,7 +204,7 @@ const ApplicantDetails = () => {
                   }}
                 />
               </Box>
-              <Box sx={{ display: "contents" }}>
+              <Box sx={{ display: { xs: "none", lg: "contents" } }}>
                 {
                   <Divider
                     orientation="vertical"
@@ -266,7 +266,7 @@ const ApplicantDetails = () => {
                                 <WorkExperienceCard {...item} />
                               </div>
                             </li>
-                          ),
+                          )
                         )
                       )}
                     </ul>
@@ -287,7 +287,7 @@ const ApplicantDetails = () => {
                                 // handleEdit={() => handleEdit(item)}
                               />
                             </li>
-                          ),
+                          )
                         )
                       )}
                     </ul>

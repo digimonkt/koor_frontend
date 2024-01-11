@@ -127,7 +127,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
               mx: 2,
               cursor: "default",
               "@media(max-width:600px)": { pe: 0 },
-            }}>
+            }}
+          >
             {notification.length > 1 && (
               <TabList
                 className="tab_list"
@@ -144,6 +145,14 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                       platform === "android" || platform === "ios"
                         ? "0px !important"
                         : "15px",
+                    display:
+                      platform === "android" || platform === "ios"
+                        ? "flex !important"
+                        : null,
+                    justifyContent:
+                      platform === "android" || platform === "ios"
+                        ? "space-between !important"
+                        : null,
                   },
                   "&.tab_list .MuiTabs-indicator": {
                     display:
@@ -154,7 +163,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                     height: "3px",
                     borderRadius: "8px 12px 0px 0px",
                   },
-                }}>
+                }}
+              >
                 <Tab
                   label="All"
                   className={
@@ -255,7 +265,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                 <DateInput
                   value={filterByDate}
                   maxDate={dayjs().format("YYYY-MM-DD")}
-                  onChange={value =>
+                  onChange={(value) =>
                     setFilterByDate(dayjs(value).format("YYYY-MM-DD"))
                   }
                 />
@@ -267,7 +277,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                     setFilterData(notification);
                     setFilterByDate(dayjs().format("YYYY-MM-DD"));
                   }}
-                  className={styles.clear_btn}>
+                  className={styles.clear_btn}
+                >
                   Clear All
                 </Button>
               </Stack>
@@ -290,7 +301,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                           role === USER_ROLES.jobSeeker
                             ? styles.notification_card_job_seeker
                             : styles.notification_card_user
-                        }`}>
+                        }`}
+                      >
                         {getNotificationCardByType(item, handleClose, role)}
                       </div>
                     </>
@@ -302,7 +314,8 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                       alignItems: "center",
                       display: "flex",
                       justifyContent: "center",
-                    }}>
+                    }}
+                  >
                     <div className="text-center">
                       <SVG.Bell className={styles.no_notification_bell_icon} />
                       <p className={styles.no_notification_text}>
@@ -323,12 +336,14 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                   if (handleClose) {
                     handleClose();
                   }
-                }}>
+                }}
+              >
                 View All Notification
               </Link>
               <div
                 onClick={() => setSetting(true)}
-                className={styles.notification_setting}>
+                className={styles.notification_setting}
+              >
                 Settings
               </div>
             </div>
