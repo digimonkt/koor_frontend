@@ -146,30 +146,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 </h6>
               </div>
             </div>
-             {Boolean(currentUser?.resumeData?.name) && (
-              <hr />
-              <div>
-                  <h2>References</h2>
-                  {currentUser?.resumeData?.references?.map(
-                    (reference, idx) => (
-                      <div key={idx} className="reference">
-                        <h3 style={{ marginBottom: "5px" }}>
-                          {reference?.name}
-                        </h3>
-                        <span>
-                          <SVG.callTrik style={{ marginRight: "5px" }} />
-                          {reference?.moblie_number}
-                        </span>
-                        <span>
-                          <SVG.mailTrik style={{ marginRight: "5px" }} />
-                          {reference?.email}
-                        </span>
-                      </div>
-                    )
-                  )}
-                </div>
-              )}
-              <hr />
               {/* <div className="certification">
               <h2>CERTIFICATION</h2>
               <div className="certification_div">
@@ -188,11 +164,14 @@ function ResumeTemplate({ user, appliedJob = false }) {
                         <h3 style={{ marginBottom: "5px" }}>
                           {reference?.name}
                         </h3>
-                        {Boolean(reference?.moblie_numbe) && (
-                          <span>
-                            <SVG.callTrik style={{ marginRight: "5px" }} />
-                            {reference?.moblie_number}
-                          </span>
+                        {Boolean(reference?.mobile_number) && (
+                          <>
+                            <span>
+                              <SVG.callTrik style={{ marginRight: "5px" }} />
+                              {reference?.mobile_number}
+                            </span>
+                            <br />
+                          </>
                         )}
                         {Boolean(reference?.email) && (
                           <span>

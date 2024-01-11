@@ -1,7 +1,20 @@
 import React from "react";
 import "./style.css";
+// import { getCoverLetterDataAPI } from "@api/job";
 
 const CoverLetter = ({ applicantDetails, content }) => {
+  // const [data, setData] = useState({});
+
+  // const getCoverLetterData = async () => {
+  //   const res = await getCoverLetterDataAPI();
+  //   if (res.remote === "success") {
+  //     setData(res.data);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getCoverLetterData();
+  // }, [applicantDetails, data]);
   return (
     <>
       {/* <div className="coverLetter">

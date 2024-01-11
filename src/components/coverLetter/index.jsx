@@ -124,8 +124,8 @@ const CreateCoverLetter = () => {
     getCoverLetterData();
   }, []);
 
-  const thumbs = files.length > 0 && (
-    <Fragment key={files[0].name}>
+  const thumbs = files?.length > 0 && (
+    <Fragment key={files[0]?.name}>
       <Avatar
         sx={{
           width: 100,
@@ -142,7 +142,7 @@ const CreateCoverLetter = () => {
             : generateFileUrl(files[0]?.path)
         }
         onLoad={() => {
-          URL.revokeObjectURL(files[0].preview);
+          URL.revokeObjectURL(files[0]?.preview);
         }}
       />
     </Fragment>
@@ -213,7 +213,7 @@ const CreateCoverLetter = () => {
           <Box>
             <Grid container spacing={2} sx={{ alignItems: "center" }}>
               <Grid item lg={1.1} md={1.2} sm={1.6} xs={4}>
-                {!files.length ? (
+                {!files?.length ? (
                   <Avatar
                     src={IMAGES.CoverLetterImg}
                     className={styles.coverletter_avatar}

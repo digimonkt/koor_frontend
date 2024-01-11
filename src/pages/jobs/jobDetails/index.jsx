@@ -155,7 +155,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -306,7 +306,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -486,13 +486,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  })
+                                  }),
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  })
+                                  }),
                                 );
                               }
                             } else {

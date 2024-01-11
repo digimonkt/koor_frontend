@@ -4,21 +4,24 @@ import styles from "./createResume.module.css";
 import { HorizontalPhoneInput, LabeledInput } from "@components/input";
 import { SVG } from "@assets/svg";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { setResumeData } from "@redux/slice/user";
 import { validateCreateResume } from "./validator";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
+import { setResumeData } from "@redux/slice/user";
 import { editResumeDetailsAPI } from "../../../api/jobSeeker";
 import { ErrorMessage } from "../../../components/caption";
 import { FilledButton } from "@components/button";
 import DialogBox from "@components/dialogBox";
 import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
 import { pdfDownloader, docsDownloader } from "@utils/fileUtils";
+import {
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+} from "react-phone-number-input";
 
 const CreateResumeComponent = () => {
   const { currentUser } = useSelector(({ auth }) => auth);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({});
   const [openResume, setOpenResume] = useState(false);
   const dispatch = useDispatch();
   const [referenceCount, setReferenceCount] = useState(1);
@@ -42,30 +45,47 @@ const CreateResumeComponent = () => {
     },
     validationSchema: validateCreateResume,
     onSubmit: async (values) => {
+      console.log({ values });
       setLoading(true);
       const payload = {
         profile_title: values.jobTitle,
-        job_summary: values.shortSummary,
+        short_summary: values.shortSummary,
         home_address: values.homeAddress,
         personal_website: values.personalWebsite,
-        reference: values.reference,
+        reference: values.reference.map((val) => {
+          const countryCode = val.mobile_number.international.split(" ")[0];
+          const mobileNumber = (val.mobile_number.value || "").replace(
+            countryCode,
+            "",
+          );
+          return {
+            ...val,
+            mobile_number: mobileNumber,
+            country_code: countryCode,
+          };
+        }),
       };
+      console.log({ payload });
 
-      for (const key in payload) {
-        if (!payload[key]) {
-          delete payload[key];
-        } else {
-          if (key === "reference" && payload[key][0].name === "") {
-            delete payload[key];
-          }
-        }
+      if (
+        payload.mobile_number === currentUser.mobileNumber ||
+        !payload.mobile_number
+      ) {
+        delete payload.mobile_number;
+        delete payload.country_code;
       }
-
       const res = await editResumeDetailsAPI(payload);
       if (res.remote === "success") {
+        const newSate = {
+          homeAddress: payload.home_address || "",
+          shortSummary: payload.short_summary || "",
+          profileTitle: payload.profile_title || "",
+          personalWebsite: payload.personal_website || "",
+          references: payload.reference || [],
+        };
+
         setLoading(false);
-        setData(payload);
-        dispatch(setResumeData(payload));
+        dispatch(setResumeData(newSate));
         setOpenResume(true);
         dispatch(setSuccessToast(res?.data?.message));
       } else {
@@ -113,10 +133,26 @@ const CreateResumeComponent = () => {
               `reference[${referenceIndex}].name`,
               reference?.name || "",
             );
+
             formik.setFieldValue(
-              `reference[${referenceIndex}].mobile_number`,
-              reference?.country_code + reference?.mobile_number || "",
+              `reference[${referenceIndex}].country_code`,
+              reference?.country_code || "+91",
             );
+
+            formik.setFieldValue(`reference[${referenceIndex}].mobile_number`, {
+              national: reference?.mobile_number
+                ? formatPhoneNumber(
+                    reference.country_code + reference?.mobile_number,
+                  )
+                : "",
+              international: reference?.mobile_number
+                ? formatPhoneNumberIntl(
+                    reference.country_code + reference?.mobile_number,
+                  )
+                : "",
+              value: reference?.country_code + reference?.mobile_number,
+            });
+
             formik.setFieldValue(
               `reference[${referenceIndex}].email`,
               reference?.email || "",
@@ -126,31 +162,7 @@ const CreateResumeComponent = () => {
       }
     }
   }, [currentUser]);
-
-  console.log({ currentUser });
-  useEffect(() => {
-    if (data) {
-      formik.setFieldValue("jobTitle", data.profile_title || "");
-      formik.setFieldValue("shortSummary", data.job_summary || "");
-      formik.setFieldValue("homeAddress", data.home_address || "");
-      formik.setFieldValue("personalWebsite", data.personal_website || "");
-      data?.reference?.forEach((reference, referenceIndex) => {
-        formik.setFieldValue(
-          `reference[${referenceIndex}].name`,
-          reference?.name || "",
-        );
-        formik.setFieldValue(
-          `reference[${referenceIndex}].mobile_number`,
-          reference?.country_code + reference?.mobile_number || "",
-        );
-        formik.setFieldValue(
-          `reference[${referenceIndex}].email`,
-          reference?.email || "",
-        );
-      });
-    }
-  }, [data]);
-
+  console.log("currentUser", currentUser);
   return (
     <>
       <Box className={styles.CreateResume_Page}>
@@ -265,25 +277,15 @@ const CreateResumeComponent = () => {
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <HorizontalPhoneInput
-                    placeholder="Enter mobile number"
-                    onChange={(e) => {
-                      const countryCode = e?.international.split(" ")[0];
-                      const mobileNumber = (e?.value || "").replace(
-                        countryCode,
-                        "",
-                      );
-                      formik.setFieldValue(
-                        `reference[${idx}].mobile_number`,
-                        mobileNumber,
-                      );
-                    }}
-                    defaultCountry={
-                      formik.values.reference[idx]?.country_code || "IN"
+                    value={formik.values.reference[idx]?.mobile_number?.value}
+                    onChange={(e) =>
+                      formik.setFieldValue(`reference[${idx}].mobile_number`, e)
                     }
+                    international
+                    defaultCountry={formik.values.reference[idx]?.country_code}
                     onCountryChange={(e) =>
                       formik.setFieldValue(`reference[${idx}].country_code`, e)
                     }
-                    international
                     isInvalidNumber={(isValid) => {
                       if (!isValid) {
                         formik.setFieldError(
@@ -292,9 +294,18 @@ const CreateResumeComponent = () => {
                         );
                       }
                     }}
-                    onBlur={formik.handleBlur}
-                    name="mobile_number"
+                    onBlur={
+                      formik.getFieldProps(`reference[${idx}].mobile_number`)
+                        .onBlur
+                    }
+                    name={`reference[${idx}].mobile_number`}
                   />
+                  {formik.errors?.reference &&
+                  formik.errors.reference[idx]?.mobile_number ? (
+                    <ErrorMessage>
+                      {formik.errors.reference[idx].mobile_number}
+                    </ErrorMessage>
+                  ) : null}
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <Box sx={{ marginBottom: "10px" }}>

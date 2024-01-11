@@ -88,19 +88,7 @@ const initialState = {
       },
      */
     resume: [],
-    resumeData: {
-      jobTitle: "",
-      jobSummary: "",
-      homeAddress: "",
-      personalWebsite: "",
-      reference: [],
-    },
-    coverLetterData: {
-      profile_title: "",
-      name_or_address: "",
-      cover_letter: "",
-      signature_file: "",
-    },
+
     /**
      * {
         id: "",
@@ -144,7 +132,7 @@ export const getUserDetails = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  }
+  },
 );
 
 export const authSlice = createSlice({
@@ -175,7 +163,7 @@ export const authSlice = createSlice({
       state.currentUser.coverLetterData = action.payload;
     },
     setResumeData: (state, action) => {
-      state.currentUser.resumeData = action.payload;
+      state.currentUser.profile = action.payload;
     },
     setIsBlackListedByEmployer: (state, action) => {
       state.isBlackListedByEmployer = action.payload;
@@ -219,7 +207,7 @@ export const authSlice = createSlice({
       state.currentUser = {
         ...state.currentUser,
         educationRecord: state.currentUser.educationRecord.filter(
-          (record) => record.id !== action.payload
+          (record) => record.id !== action.payload,
         ),
       };
     },
@@ -248,7 +236,7 @@ export const authSlice = createSlice({
       state.currentUser = {
         ...state.currentUser,
         languages: state.currentUser.languages.filter(
-          (record) => record.id !== action.payload
+          (record) => record.id !== action.payload,
         ),
       };
     },
@@ -271,7 +259,7 @@ export const authSlice = createSlice({
               };
             }
             return workExperience;
-          }
+          },
         ),
       };
     },
@@ -279,7 +267,7 @@ export const authSlice = createSlice({
       state.currentUser = {
         ...state.currentUser,
         workExperiences: state.currentUser.workExperiences.filter(
-          (record) => record.id !== action.payload
+          (record) => record.id !== action.payload,
         ),
       };
     },
