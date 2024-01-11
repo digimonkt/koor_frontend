@@ -6,17 +6,18 @@ import { OutlinedButton } from "@components/button";
 import { SVG } from "@assets/svg";
 import { IMAGES } from "@assets/images";
 import { useFormik } from "formik";
-import { updateCoverLetterAPI } from "@api/job";
+import { updateCoverLetterAPI, getCoverLetterDataAPI } from "@api/job";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setCoverLetterData } from "@redux/slice/user";
 import { useParams } from "react-router-dom";
 import { useDropzone } from "react-dropzone";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const CreateCoverLetter = () => {
+  const { currentUser } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
-  const { currentUser } = useSelector(({ auth }) => auth);
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [word, setWord] = useState("");
   const [files, setFiles] = useState([]);
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ const CreateCoverLetter = () => {
         acceptedFiles.slice(0, 1).map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
-        )
+          }),
+        ),
       );
     },
     maxFiles: 1,
@@ -55,25 +56,6 @@ const CreateCoverLetter = () => {
     setWord(inputText);
     formik.setFieldValue("coverLetter", inputText);
   };
-
-  const thumbs = files.length > 0 && (
-    <Fragment key={files[0].name}>
-      <Avatar
-        sx={{
-          width: 100,
-          height: 100,
-          color: "#CACACA",
-          "&.MuiAvatar-circular": {
-            background: "#F0F0F0",
-          },
-        }}
-        src={files[0].preview}
-        onLoad={() => {
-          URL.revokeObjectURL(files[0].preview);
-        }}
-      />
-    </Fragment>
-  );
 
   const formik = useFormik({
     initialValues: {
@@ -100,6 +82,7 @@ const CreateCoverLetter = () => {
           newFormData.append(key, payload[key]);
         }
       }
+
       const res = await updateCoverLetterAPI(newFormData, jobId);
       if (res.remote === "success") {
         setData(payload);
@@ -114,29 +97,57 @@ const CreateCoverLetter = () => {
     },
   });
 
-  useEffect(() => {
-    if (currentUser?.resume) {
-      const newState = {
-        jobTitle: currentUser?.coverLetterData?.profile_title,
-        addressee: currentUser?.coverLetterData?.name_or_address,
-        coverLetter: currentUser?.coverLetterData?.coverLetter,
-        signature: currentUser?.coverLetterData?.signature,
-      };
-
-      for (const key in newState) {
-        formik.setFieldValue(key, newState[key]);
-      }
+  const getCoverLetterData = async () => {
+    const res = await getCoverLetterDataAPI();
+    if (res.remote === "success") {
+      const { data } = res;
+      formik.setFieldValue(
+        "jobTitle",
+        currentUser?.profile?.profileTitle || "",
+      );
+      formik.setFieldValue("addressee", data?.name_or_address || "");
+      formik.setFieldValue("coverLetter", data?.cover_letter || "");
+      setFiles([data.signature] || []);
     }
-  }, [currentUser]);
+  };
 
   useEffect(() => {
     if (data) {
       formik.setFieldValue("jobTitle", data.profile_title || "");
       formik.setFieldValue("addressee", data.name_or_address || "");
-      formik.setFieldValue("coverLetter||", data.coverLetter || "");
-      formik.setFieldValue("signature", data.signature || "");
+      formik.setFieldValue("coverLetter", data.cover_letter || "");
+      setFiles(data.signature_file || "");
     }
   }, [data]);
+
+  useEffect(() => {
+    getCoverLetterData();
+  }, []);
+
+  const thumbs = files.length > 0 && (
+    <Fragment key={files[0].name}>
+      <Avatar
+        sx={{
+          width: 100,
+          height: 100,
+          color: "#CACACA",
+          "&.MuiAvatar-circular": {
+            background: "#F0F0F0",
+          },
+        }}
+        alt={files[0]?.title}
+        src={
+          files[0] instanceof File
+            ? URL.createObjectURL(files[0])
+            : generateFileUrl(files[0]?.path)
+        }
+        onLoad={() => {
+          URL.revokeObjectURL(files[0].preview);
+        }}
+      />
+    </Fragment>
+  );
+
   return (
     <>
       <form onSubmit={formik.handleSubmit}>

@@ -40,8 +40,8 @@ export const transformGetUserDetails = (data) => {
       website: data.profile.website || "",
       otherNotification: data.profile.other_notification || false,
       personalWebsite: data.profile.personal_website || "",
-      homeAddress: data.profile.homeAddress || "",
-      referances: data.profile.referances || "",
+      homeAddress: data.profile.home_address || "",
+      references: data.profile.references || "",
       shortSummary: data.profile.short_summary || "",
     },
     jobPreferences: data.job_preferences

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./createResume.module.css";
 import { HorizontalPhoneInput, LabeledInput } from "@components/input";
 import { SVG } from "@assets/svg";
-import { setErrorToast } from "@redux/slice/toast";
+import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
 import { setResumeData } from "@redux/slice/user";
 import { validateCreateResume } from "./validator";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +30,7 @@ const CreateResumeComponent = () => {
   const formik = useFormik({
     initialValues: {
       jobTitle: "",
-      jobSummary: "",
+      shortSummary: "",
       homeAddress: "",
       personalWebsite: "",
       reference: Array.from({ length: referenceCount }, () => ({
@@ -45,11 +45,21 @@ const CreateResumeComponent = () => {
       setLoading(true);
       const payload = {
         profile_title: values.jobTitle,
-        job_summary: values.jobSummary,
+        job_summary: values.shortSummary,
         home_address: values.homeAddress,
         personal_website: values.personalWebsite,
         reference: values.reference,
       };
+
+      for (const key in payload) {
+        if (!payload[key]) {
+          delete payload[key];
+        } else {
+          if (key === "reference" && payload[key][0].name === "") {
+            delete payload[key];
+          }
+        }
+      }
 
       const res = await editResumeDetailsAPI(payload);
       if (res.remote === "success") {
@@ -57,6 +67,7 @@ const CreateResumeComponent = () => {
         setData(payload);
         dispatch(setResumeData(payload));
         setOpenResume(true);
+        dispatch(setSuccessToast(res?.data?.message));
       } else {
         formik.setErrors("Something went wrong");
         dispatch(setErrorToast("Something went wrong"));
@@ -72,7 +83,7 @@ const CreateResumeComponent = () => {
   const handleInputChange = (e) => {
     const inputText = e.target.value.slice(0, maxWordCount);
     setWord(inputText);
-    formik.setFieldValue("jobSummary", inputText);
+    formik.setFieldValue("shortSummary", inputText);
   };
 
   const downloadPDF = async () => {
@@ -87,22 +98,40 @@ const CreateResumeComponent = () => {
     if (currentUser?.profile) {
       const newState = {
         jobTitle: currentUser.profile.profileTitle || "",
-        jobSummary: currentUser.profile.jobSummary || "",
+        shortSummary: currentUser.profile.shortSummary || "",
         homeAddress: currentUser.profile.homeAddress || "",
         personalWebsite: currentUser.profile.personalWebsite || "",
-        reference: currentUser.profile.reference || [],
+        reference: currentUser.profile.references || [],
       };
 
       for (const key in newState) {
         formik.setFieldValue(key, newState[key]);
+        if (key === "reference") {
+          setReferenceCount(newState[key].length);
+          newState[key]?.forEach((reference, referenceIndex) => {
+            formik.setFieldValue(
+              `reference[${referenceIndex}].name`,
+              reference?.name || "",
+            );
+            formik.setFieldValue(
+              `reference[${referenceIndex}].mobile_number`,
+              reference?.country_code + reference?.mobile_number || "",
+            );
+            formik.setFieldValue(
+              `reference[${referenceIndex}].email`,
+              reference?.email || "",
+            );
+          });
+        }
       }
     }
   }, [currentUser]);
 
+  console.log({ currentUser });
   useEffect(() => {
     if (data) {
       formik.setFieldValue("jobTitle", data.profile_title || "");
-      formik.setFieldValue("jobSummary", data.job_summary || "");
+      formik.setFieldValue("shortSummary", data.job_summary || "");
       formik.setFieldValue("homeAddress", data.home_address || "");
       formik.setFieldValue("personalWebsite", data.personal_website || "");
       data?.reference?.forEach((reference, referenceIndex) => {
@@ -112,7 +141,7 @@ const CreateResumeComponent = () => {
         );
         formik.setFieldValue(
           `reference[${referenceIndex}].mobile_number`,
-          reference?.mobile_number || "",
+          reference?.country_code + reference?.mobile_number || "",
         );
         formik.setFieldValue(
           `reference[${referenceIndex}].email`,
@@ -121,6 +150,7 @@ const CreateResumeComponent = () => {
       });
     }
   }, [data]);
+
   return (
     <>
       <Box className={styles.CreateResume_Page}>
@@ -147,16 +177,16 @@ const CreateResumeComponent = () => {
             </Box>
             <Box sx={{ marginBottom: "10px" }}>
               <LabeledInput
-                name="jobSummary"
+                name="shortSummary"
                 title=""
                 className="add-form-control"
                 placeholder="A short summary about you"
-                value={formik.values.jobSummary}
+                value={formik.values.shortSummary}
                 endplaceholder={`${word.length}/${maxWordCount}`}
                 onChange={(e) => handleInputChange(e)}
               />
-              {formik.touched.jobSummary && formik.errors.jobSummary ? (
-                <ErrorMessage>{formik.errors.jobSummary}</ErrorMessage>
+              {formik.touched.shortSummary && formik.errors.shortSummary ? (
+                <ErrorMessage>{formik.errors.shortSummary}</ErrorMessage>
               ) : null}
             </Box>
           </Box>
@@ -246,10 +276,6 @@ const CreateResumeComponent = () => {
                         `reference[${idx}].mobile_number`,
                         mobileNumber,
                       );
-                      formik.setFieldValue(
-                        `reference[${idx}].country_code`,
-                        countryCode,
-                      );
                     }}
                     defaultCountry={
                       formik.values.reference[idx]?.country_code || "IN"
@@ -267,14 +293,8 @@ const CreateResumeComponent = () => {
                       }
                     }}
                     onBlur={formik.handleBlur}
-                    name="mobileNumber"
+                    name="mobile_number"
                   />
-                  {/* formik.errors?.reference &&
-                    formik.errors.reference[idx]?.mobile_number? (
-                      <ErrorMessage>
-                        {formik.errors.reference[idx].mobile_number}
-                      </ErrorMessage>
-                    ) : null */}
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <Box sx={{ marginBottom: "10px" }}>

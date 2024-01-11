@@ -179,3 +179,17 @@ export const updateCoverLetterAPI = async (data, jobId) => {
   }
   return response;
 };
+
+export const getCoverLetterDataAPI = async () => {
+  const response = await api.request({
+    url: "v1/users/job-seeker/get-cover-letter",
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data,
+    };
+  }
+  return response;
+};
