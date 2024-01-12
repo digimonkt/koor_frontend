@@ -17,7 +17,7 @@ const ResumeUpdate = ({
   toggle,
   fun,
 }) => {
-  const { role } = useSelector((state) => state.auth);
+  const { role, currentUser } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -29,6 +29,7 @@ const ResumeUpdate = ({
     }
   };
 
+  console.log("currentUser", currentUser);
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files?.[0];
     setLoading(true);
@@ -143,6 +144,18 @@ const ResumeUpdate = ({
               >
                 <SVG.ResumeIcon />
               </IconButton>
+              <div>
+                <h4>Resume Information</h4>
+                {currentUser?.resume?.map((resume, index) => (
+                  <Link to={gene(resume.id)} target="_blank">
+                    <div key={index}>
+                      <p>ID: {resume.id}</p>
+                      <p>Title: {resume.title}</p>
+                      <p>File Path: {resume.filePath.path}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
               <div className="description">{description}</div>
             </Stack>
             <div className="mt-4 mb-3 text-center">
