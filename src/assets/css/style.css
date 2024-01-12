@@ -3071,6 +3071,13 @@ input.employersearch {
 }
 
 @media only screen and (max-width: 640px) {
+  .buttonbox {
+
+    font-size: 9px !important;
+  }
+  .edit-button button{
+    font-size: 9px !important;
+  }
   .registerApp {
     background: url("../images/joobseekerAppBg.png") no-repeat center top !important;
     background-size: contain !important;

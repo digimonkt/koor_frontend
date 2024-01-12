@@ -10,7 +10,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
@@ -29,10 +29,12 @@ import { pdfDownloader } from "@utils/filesUtils";
 import ResumeTemplate from "@pages/jobSeeker/updateProfile/resume-update/resumeTemplate/template1";
 import { GetUserDetailsAPI } from "@api/user";
 import { useDispatch } from "react-redux";
+import { Capacitor } from "@capacitor/core";
 
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
+  const platform = Capacitor.getPlatform();
   // navigate
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -83,12 +85,21 @@ const ApplicantDetails = () => {
   }, [params.applicationId]);
   return (
     <>
-      <div className="job-application">
+      <Box
+        className="job-application"
+        sx={{
+          margin:
+            platform === "android" || platform === "ios"
+              ? "-17px -17px 0px -17px"
+              : null,
+        }}
+      >
         <Card
+          elevation={0}
           sx={{
             "&.MuiCard-root": {
               boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-              borderRadius: "10px",
+
               mb: 3,
             },
           }}
@@ -111,9 +122,9 @@ const ApplicantDetails = () => {
               <IconButton
                 LinkComponent={Link}
                 onClick={() => navigate(-1)}
-                style={{ padding: "0px" }}
+                style={{ padding: "0px", marginTop: "6px" }}
               >
-                <ArrowBackIcon />
+                <SVG.LeftArrow />
               </IconButton>
               <Stack
                 direction={{ xs: "column", lg: "row", sm: "row" }}
@@ -374,7 +385,7 @@ const ApplicantDetails = () => {
             )}
           </CardContent>
         </Card>
-      </div>
+      </Box>
     </>
   );
 };
