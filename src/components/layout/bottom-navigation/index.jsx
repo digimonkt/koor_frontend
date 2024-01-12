@@ -25,6 +25,12 @@ const BottomBar = () => {
                 location.pathname.includes(item.address) && role
                   ? generateColor(role)
                   : "#848484",
+              "& svg": {
+                fill:
+                  location.pathname.includes(item.address) && role
+                    ? generateColor(role)
+                    : "#848484",
+              },
             },
             "& .MuiBottomNavigationAction-label": {
               fontSize: "12px",
