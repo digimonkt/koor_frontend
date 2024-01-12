@@ -180,9 +180,9 @@ export const updateCoverLetterAPI = async (data, jobId) => {
   return response;
 };
 
-export const getCoverLetterDataAPI = async () => {
+export const getCoverLetterDataAPI = async (jobId) => {
   const response = await api.request({
-    url: "v1/users/job-seeker/get-cover-letter",
+    url: urlcat("v1/users/job-seeker/get-cover-letter", { jobId }),
     method: "GET",
   });
   if (response.remote === "success") {

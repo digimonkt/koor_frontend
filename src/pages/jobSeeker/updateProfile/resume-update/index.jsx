@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { uploadResumeAPI } from "@api/jobSeeker";
 import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const ResumeUpdate = ({
   title,
@@ -147,8 +148,8 @@ const ResumeUpdate = ({
               <div>
                 <h4>Resume Information</h4>
                 {currentUser?.resume?.map((resume, index) => (
-                  <Link to={gene(resume.id)} target="_blank">
-                    <div key={index}>
+                  <Link key={index} to={generateFileUrl(resume.id)} target="_blank">
+                    <div >
                       <p>ID: {resume.id}</p>
                       <p>Title: {resume.title}</p>
                       <p>File Path: {resume.filePath.path}</p>

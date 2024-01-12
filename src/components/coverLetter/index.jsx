@@ -97,8 +97,8 @@ const CreateCoverLetter = () => {
     },
   });
 
-  const getCoverLetterData = async () => {
-    const res = await getCoverLetterDataAPI();
+  const getCoverLetterData = async (jobId) => {
+    const res = await getCoverLetterDataAPI(jobId);
     if (res.remote === "success") {
       const { data } = res;
       formik.setFieldValue(
@@ -121,8 +121,8 @@ const CreateCoverLetter = () => {
   }, [data]);
 
   useEffect(() => {
-    getCoverLetterData();
-  }, []);
+    getCoverLetterData(jobId);
+  }, [jobId]);
 
   const thumbs = files?.length > 0 && (
     <Fragment key={files[0]?.name}>
