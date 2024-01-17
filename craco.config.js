@@ -8,6 +8,7 @@ const alias = (prefix = "src") => ({
   "@api": `${prefix}/api`,
   "@firebaseProvider": `${prefix}/firebaseProvider`,
   "@pages": `${prefix}/pages`,
+  "@hooks": `${prefix}/hooks`,
 });
 
 const SRC = "./src";
@@ -17,7 +18,7 @@ const resolvedAliases = Object.fromEntries(
   Object.entries(aliases).map(([key, value]) => [
     key,
     path.resolve(__dirname, value),
-  ])
+  ]),
 );
 
 module.exports = {

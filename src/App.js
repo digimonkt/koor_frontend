@@ -30,6 +30,8 @@ import BottomBar from "@components/layout/bottom-navigation";
 import { setIsMobileView } from "@redux/slice/platform";
 import { App as CapApp } from "@capacitor/app";
 import { setAppInfo } from "./redux/slice/platform";
+import { useScrollTop } from "@hooks/";
+
 const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
@@ -154,6 +156,7 @@ function App() {
     }
   }, [currentUser?.id, window.location.pathname]);
 
+  useScrollTop();
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}

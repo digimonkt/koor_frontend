@@ -53,7 +53,6 @@ function PublicProfileComponent() {
     const userId = params.userId;
     getUserDetails(userId);
   }, []);
-  console.log({ isMobileView });
   return (
     <Box
       sx={
