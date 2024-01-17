@@ -19,9 +19,11 @@ import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
 import { NoRecordFoundAnimation } from "../../../components/animations";
+import { useSelector } from "react-redux";
 
 function PublicProfileComponent() {
   const params = useParams();
+  const { isMobileView } = useSelector((state) => state.platform);
   const [isLoading, setIsLoading] = useState(true);
   const contractsExperience = [];
   const [userDetails, setUserDetails] = useState({
@@ -51,8 +53,15 @@ function PublicProfileComponent() {
     const userId = params.userId;
     getUserDetails(userId);
   }, []);
+  console.log({ isMobileView });
   return (
-    <Box sx={{ marginTop: "67px", py: 3 }}>
+    <Box
+      sx={
+        isMobileView
+          ? { py: 3, marginBottom: "20px" }
+          : { marginTop: "67px", py: 3 }
+      }
+    >
       {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
