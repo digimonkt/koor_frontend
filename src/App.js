@@ -27,7 +27,6 @@ import { getUserCountryByIpAPI, getUserIpAPI, postUserIpAPI } from "./api/user";
 import InnerFooter from "./components/footer/innerfooter";
 import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
-import { Box } from "@mui/material";
 import { setIsMobileView } from "@redux/slice/platform";
 import { App as CapApp } from "@capacitor/app";
 import { setAppInfo } from "./redux/slice/platform";
@@ -239,31 +238,6 @@ function App() {
         {(platform === "android" || platform === "ios") && isLoggedIn ? (
           <>
             <BottomBar />
-            <Box
-              sx={{
-                position: "fixed",
-                bottom: "0px",
-                left: 0,
-                right: 0,
-                background: "#fff",
-                textAlign: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "20px",
-              }}
-            >
-              <Box
-                component={"span"}
-                sx={{
-                  borderRadius: "10px",
-                  width: "100px",
-                  height: "4px",
-                  background: "#121212",
-                  display: "block",
-                }}
-              ></Box>
-            </Box>
           </>
         ) : (
           <></>

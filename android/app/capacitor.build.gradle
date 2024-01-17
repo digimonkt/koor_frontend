@@ -12,7 +12,6 @@ dependencies {
     implementation project(':capacitor-app')
     implementation project(':capacitor-browser')
     implementation project(':capacitor-filesystem')
-    implementation project(':capacitor-splash-screen')
     implementation project(':capawesome-team-capacitor-file-opener')
 
 }
