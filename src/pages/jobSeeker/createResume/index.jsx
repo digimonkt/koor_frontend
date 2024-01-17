@@ -23,8 +23,8 @@ const CreateResumeComponent = () => {
   const { currentUser } = useSelector(({ auth }) => auth);
   const [loading, setLoading] = useState(false);
   const [openResume, setOpenResume] = useState(false);
+  const [removedReferenceIds, setRemovedReferenceIds] = useState([]);
   const dispatch = useDispatch();
-  const [referenceCount, setReferenceCount] = useState(1);
   const [word, setWord] = useState("");
   const maxWordCount = 300;
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
@@ -36,12 +36,7 @@ const CreateResumeComponent = () => {
       shortSummary: "",
       homeAddress: "",
       personalWebsite: "",
-      reference: Array.from({ length: referenceCount }, () => ({
-        email: "",
-        mobile_number: "",
-        country_code: "",
-        name: "",
-      })),
+      reference: [],
     },
     validationSchema: validateCreateResume,
     onSubmit: async (values) => {
@@ -64,8 +59,8 @@ const CreateResumeComponent = () => {
             country_code: countryCode,
           };
         }),
+        reference_remove: removedReferenceIds.map((id) => id),
       };
-      console.log({ payload });
 
       if (
         payload.mobile_number === currentUser.mobileNumber ||
@@ -95,15 +90,37 @@ const CreateResumeComponent = () => {
       setLoading(false);
     },
   });
-
-  const handleAddReference = () => {
-    setReferenceCount((prevCount) => prevCount + 1);
-  };
-
   const handleInputChange = (e) => {
     const inputText = e.target.value.slice(0, maxWordCount);
     setWord(inputText);
     formik.setFieldValue("shortSummary", inputText);
+  };
+
+  const handleAddReference = () => {
+    const newReference = {
+      id: Date.now(),
+      name: "",
+      country_code: "",
+      mobile_number: { national: "", international: "", value: "" },
+      email: "",
+    };
+
+    formik.setFieldValue("reference", [
+      ...formik.values.reference,
+      newReference,
+    ]);
+  };
+
+  const handleRemoveReference = (idToRemove) => {
+    console.log({ idToRemove });
+    const updatedReferences = formik.values.reference.filter(
+      (ref) => ref.id !== idToRemove,
+    );
+
+    formik.setFieldValue("reference", updatedReferences);
+
+    // Add removed ID to state
+    setRemovedReferenceIds((prevIds) => [...prevIds, idToRemove]);
   };
 
   const downloadPDF = async () => {
@@ -115,6 +132,7 @@ const CreateResumeComponent = () => {
   };
 
   useEffect(() => {
+    setRemovedReferenceIds([]);
     if (currentUser?.profile) {
       const newState = {
         jobTitle: currentUser.profile.profileTitle || "",
@@ -127,7 +145,6 @@ const CreateResumeComponent = () => {
       for (const key in newState) {
         formik.setFieldValue(key, newState[key]);
         if (key === "reference") {
-          setReferenceCount(newState[key].length);
           newState[key]?.forEach((reference, referenceIndex) => {
             formik.setFieldValue(
               `reference[${referenceIndex}].name`,
@@ -162,7 +179,6 @@ const CreateResumeComponent = () => {
       }
     }
   }, [currentUser]);
-  console.log("currentUser", currentUser);
   return (
     <>
       <Box className={styles.CreateResume_Page}>
@@ -249,12 +265,12 @@ const CreateResumeComponent = () => {
               Add contact info of your previous employer(s), who can recommend
               you to others.
             </p>
-            {[...Array(referenceCount)].map((_, idx) => (
+            {formik.values.reference.map((ref, idx) => (
               <Grid
-                mt={referenceCount > 1 ? 4 : 0}
+                mt={formik.values.reference.length > 1 ? 4 : 0}
                 container
                 spacing={2}
-                key={idx}
+                key={ref.id}
               >
                 <Grid item lg={4} xs={12}>
                   <Box sx={{ marginBottom: "10px" }}>
@@ -324,6 +340,21 @@ const CreateResumeComponent = () => {
                         {formik.errors?.reference[idx]?.email}
                       </ErrorMessage>
                     ) : null}
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "flex-end",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Button
+                      sx={{ color: "#eea23d" }}
+                      variant="text"
+                      onClick={() => handleRemoveReference(ref.id)}
+                    >
+                      Remove
+                    </Button>
                   </Box>
                 </Grid>
               </Grid>

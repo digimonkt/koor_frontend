@@ -301,18 +301,13 @@ export const UNAUTHENTICATED_ROUTES = [
     path: "/verify-otp",
     component: VerifyOTP,
   },
-  {
-    id: "verifyAccount",
-    name: "Verify OTP",
-    path: "/account-verification",
-    component: VerifyAccount,
-  },
-  {
-    id: "verifyAccount",
-    name: "Verify OTP",
-    path: "/activation",
-    component: VerifyAccount,
-  },
+
+  // {
+  //   id: "verifyAccount",
+  //   name: "Verify OTP",
+  //   path: "/activation",
+  //   component: VerifyAccount,
+  // },
   {
     id: "resetPassword",
     name: "Reset Password",
@@ -353,6 +348,12 @@ export const AUTHENTICATED_ROUTES = [
     name: "Notifications",
     path: "/notification",
     component: Notification,
+  },
+  {
+    id: "verifyAccount",
+    name: "Verify OTP",
+    path: "/account-verification",
+    component: VerifyAccount,
   },
   platform === "android" || platform === "ios"
     ? {

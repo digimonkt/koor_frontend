@@ -30,7 +30,6 @@ const ResumeUpdate = ({
     }
   };
 
-  console.log("currentUser", currentUser);
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files?.[0];
     setLoading(true);
@@ -145,19 +144,37 @@ const ResumeUpdate = ({
               >
                 <SVG.ResumeIcon />
               </IconButton>
-              <div>
-                <h4>Resume Information</h4>
-                {currentUser?.resume?.map((resume, index) => (
-                  <Link key={index} to={generateFileUrl(resume.id)} target="_blank">
-                    <div >
-                      <p>ID: {resume.id}</p>
-                      <p>Title: {resume.title}</p>
-                      <p>File Path: {resume.filePath.path}</p>
-                    </div>
-                  </Link>
-                ))}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "20px",
+                }}
+              >
+                <div>
+                  {currentUser?.resume?.map((resume) => (
+                    <Link
+                      key={resume.id}
+                      to={generateFileUrl(resume.filePath?.path)}
+                      target="_blank"
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          color: "#EEA23D",
+                        }}
+                      >
+                        <SVG.AttachIcon style={{ color: "#EEA23D" }} /> Your
+                        Resume
+                      </span>{" "}
+                    </Link>
+                  ))}
+                </div>
+                <div className="description">{description}</div>
               </div>
-              <div className="description">{description}</div>
             </Stack>
             <div className="mt-4 mb-3 text-center">
               <input

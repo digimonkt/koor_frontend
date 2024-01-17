@@ -39,14 +39,14 @@ function Header() {
   const location = useLocation();
   const [searchParams] = useSearchParams({});
 
-  const { role, isLoggedIn, currentUser } = useSelector(state => state.auth);
+  const { role, isLoggedIn, currentUser } = useSelector((state) => state.auth);
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const [warningTrue, setWarningTrue] = useState(false);
 
-  const checkUserVerified = e => {
+  const checkUserVerified = (e) => {
     if (!currentUser.profile.isVerified) {
       setAccountVerifiedWarning(true);
       e.preventDefault();
@@ -97,11 +97,13 @@ function Header() {
             paddingLeft: "24px",
             paddingRight: "24px",
           },
-        }}>
+        }}
+      >
         <Stack
           direction="row"
           spacing={{ xs: 10, lg: 3 }}
-          alignItems={{ xs: "center", lg: "center" }}>
+          alignItems={{ xs: "center", lg: "center" }}
+        >
           <Link to="/" className="navbar-brand">
             <SVG.KoorLogo />
           </Link>
@@ -120,7 +122,8 @@ function Header() {
                     flex: "1 1 0%",
                   },
                 },
-              }}>
+              }}
+            >
               <Box sx={{ position: "relative" }}>
                 <SearchCategory direction="row" spacing={0} alignItems="center">
                   {role === "employer" ? (
@@ -131,13 +134,15 @@ function Header() {
                           fontSize: "16px",
                         },
                       }}
-                      size="small">
+                      size="small"
+                    >
                       <SelectBox
                         value={search}
-                        onChange={e => setSearch(e.target.value)}
+                        onChange={(e) => setSearch(e.target.value)}
                         inputProps={{ "aria-label": "Without label" }}
                         displayEmpty
-                        sx={{ width: "102px", marginLeft: "50px" }}>
+                        sx={{ width: "102px", marginLeft: "50px" }}
+                      >
                         <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
                         <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
                       </SelectBox>
@@ -146,7 +151,7 @@ function Header() {
                     ""
                   )}
                   <input
-                    onKeyDown={e => {
+                    onKeyDown={(e) => {
                       if (e.key === "enter" || e.key === "Enter") {
                         switch (search) {
                           case SEARCH_TYPE.jobs:
@@ -186,7 +191,7 @@ function Header() {
                     placeholder={
                       role === USER_ROLES.employer ? "" : searchPlaceholder
                     }
-                    onChange={e => setSearchValue(e.target.value)}
+                    onChange={(e) => setSearchValue(e.target.value)}
                     value={searchValue}
                   />
                   <SVG.SearchIcon className="login_header_search_icon" />
@@ -215,10 +220,12 @@ function Header() {
                         sm: "none",
                         lg: "none",
                       },
-                    }}>
+                    }}
+                  >
                     <Box
                       component={"span"}
-                      sx={{ "& svg": { width: "24px", height: "24px" } }}>
+                      sx={{ "& svg": { width: "24px", height: "24px" } }}
+                    >
                       <SVG.SearchIcon className="me-3 header_icon_search" />
                     </Box>
                   </IconButton>
@@ -237,7 +244,8 @@ function Header() {
                       "@media (min-width: 1025px) and (max-width: 1200px)": {
                         display: "none",
                       },
-                    }}>
+                    }}
+                  >
                     <NotificationPopup />
                   </IconButton>
                 </>
@@ -259,7 +267,8 @@ function Header() {
                         onClick={() => {
                           dispatch(setUserRole(""));
                           navigate("/register");
-                        }}>
+                        }}
+                      >
                         <OutlinedButton title="Register" />
                       </Box>
 
@@ -269,7 +278,8 @@ function Header() {
                         onClick={() => {
                           dispatch(setUserRole(""));
                           navigate("/login");
-                        }}>
+                        }}
+                      >
                         <FilledButton title="Log in" />
                       </Box>
                     </>
@@ -291,21 +301,24 @@ function Header() {
                   "@media (min-width: 1025px) and (max-width: 1200px)": {
                     display: "none",
                   },
-                }}>
+                }}
+              >
                 <SVG.HamburgerMenu className="ms-3" />
               </IconButton>
             </Stack>
             <ul
               className={`menu ${ismenu && "menu-selected"} ${
                 role !== USER_ROLES.jobSeeker ? "color-change" : null
-              }`}>
+              }`}
+            >
               <li onClick={() => setIsmenu(false)}>
                 <Link
                   to="/"
                   className="active"
                   style={{
                     color: location.pathname === "/" ? "#274593" : "",
-                  }}>
+                  }}
+                >
                   Home
                 </Link>
               </li>
@@ -316,7 +329,8 @@ function Header() {
                     color: location.pathname.includes("/search/jobs")
                       ? "#274593"
                       : "",
-                  }}>
+                  }}
+                >
                   Browse jobs
                 </Link>
               </li>
@@ -331,9 +345,10 @@ function Header() {
                         ? "#274593"
                         : "",
                     }}
-                    onClick={e => {
+                    onClick={(e) => {
                       checkUserVerified(e);
-                    }}>
+                    }}
+                  >
                     Browse Talents
                   </Link>
                 </li>
@@ -351,9 +366,10 @@ function Header() {
                         ? "#274593"
                         : "",
                     }}
-                    onClick={e => {
+                    onClick={(e) => {
                       checkUserVerified(e);
-                    }}>
+                    }}
+                  >
                     Browse Vendors
                   </Link>
                 </li>
@@ -382,7 +398,8 @@ function Header() {
                       color: location.pathname.includes("/about")
                         ? "#274593"
                         : "",
-                    }}>
+                    }}
+                  >
                     About us
                   </Link>
                 </li>
@@ -394,7 +411,8 @@ function Header() {
                     color: location.pathname.includes("/resource")
                       ? "#274593"
                       : "",
-                  }}>
+                  }}
+                >
                   Resources
                 </Link>
               </li>
@@ -409,7 +427,8 @@ function Header() {
                           p: 0,
                           mt: 1,
                         },
-                      }}>
+                      }}
+                    >
                       <NotificationPopup />
                     </IconButton>
                   </li>
@@ -440,7 +459,8 @@ function Header() {
                           onClick={() => {
                             dispatch(setUserRole(""));
                             navigate("/register");
-                          }}>
+                          }}
+                        >
                           <OutlinedButton title="Register" />
                         </Box>
                       </li>
@@ -450,7 +470,8 @@ function Header() {
                           onClick={() => {
                             dispatch(setUserRole(""));
                             navigate("/login");
-                          }}>
+                          }}
+                        >
                           <FilledButton title="Log in" />
                         </Box>
                       </li>
@@ -474,12 +495,14 @@ function Header() {
                 sm: "none",
                 paddingLeft: "0px !important",
               },
-            }}>
+            }}
+          >
             <SearchCategory
               direction="row"
               spacing={1}
               alignItems="center"
-              sx={{ width: "100%" }}>
+              sx={{ width: "100%" }}
+            >
               {role === "employer" ? (
                 <FormControl
                   sx={{
@@ -488,13 +511,15 @@ function Header() {
                       fontSize: "16px",
                     },
                   }}
-                  size="small">
+                  size="small"
+                >
                   <SelectBox
                     value={search}
-                    onChange={e => setSearch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                     inputProps={{ "aria-label": "Without label" }}
                     displayEmpty
-                    sx={{ width: "100px" }}>
+                    sx={{ width: "100px" }}
+                  >
                     <MenuItem value={SEARCH_TYPE.talents}>Talent</MenuItem>
                     <MenuItem value={SEARCH_TYPE.vendors}>Vendors</MenuItem>
                   </SelectBox>
@@ -503,7 +528,7 @@ function Header() {
                 ""
               )}
               <input
-                onKeyDown={e => {
+                onKeyDown={(e) => {
                   if (e.key === "enter" || e.key === "Enter") {
                     switch (search) {
                       case SEARCH_TYPE.jobs:
@@ -543,7 +568,7 @@ function Header() {
                 placeholder={
                   role === USER_ROLES.employer ? "" : searchPlaceholder
                 }
-                onChange={e => setSearchValue(e.target.value)}
+                onChange={(e) => setSearchValue(e.target.value)}
                 value={searchValue}
               />
             </SearchCategory>
@@ -553,7 +578,8 @@ function Header() {
         )}
         <DialogBox
           open={accountVerifiedWarning}
-          handleClose={() => setAccountVerifiedWarning(false)}>
+          handleClose={() => setAccountVerifiedWarning(false)}
+        >
           <div>
             <SVG.Warning
               style={{
