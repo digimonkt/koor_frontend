@@ -98,7 +98,6 @@ const CreateResumeComponent = () => {
 
   const handleAddReference = () => {
     const newReference = {
-      id: Date.now(),
       name: "",
       country_code: "",
       mobile_number: { national: "", international: "", value: "" },
