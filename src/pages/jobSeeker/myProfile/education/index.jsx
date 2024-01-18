@@ -60,8 +60,12 @@ const Education = (props) => {
             >
               <h2 className="mb-0">Education</h2>
               {platform === "android" || platform === "ios" ? (
-                <IconButton size="small" onClick={() => props.fun()}>
-                  <SVG.ArrowUpIcon />
+                <IconButton
+                  size="small"
+                  onClick={() => props.fun()}
+                  sx={{ "& svg": { width: "18px", height: "11px" } }}
+                >
+                  {props.toggle ? <SVG.ArrowUpIcon /> : <SVG.Downarrow />}
                 </IconButton>
               ) : null}
             </Stack>

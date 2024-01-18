@@ -18,7 +18,8 @@ const Spalsh = () => {
           alignItems: "center",
           justifyContent: "center",
           height: "100vh",
-        }}>
+        }}
+      >
         <SVG.SplashLogo />
       </Box>
     </>

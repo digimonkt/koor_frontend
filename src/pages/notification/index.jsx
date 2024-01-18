@@ -13,8 +13,9 @@ function Notification() {
     <div
       style={{
         paddingTop:
-          platform === "android" || platform === "ios" ? "0px ! important" : "",
-      }}>
+          platform === "android" || platform === "ios" ? "0px !important" : "",
+      }}
+    >
       <Container
         sx={{
           padding:
@@ -29,12 +30,18 @@ function Notification() {
         // }}
       >
         <div
-          style={{ marginTop: "130px" }}
+          style={{
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 80px 0px"
+                : "130px 0 0 0px",
+          }}
           className={`${styles.content} ${
             platform === "android" || platform === "ios"
               ? styles.contentapp
               : ""
-          }`}>
+          }`}
+        >
           <h3 className={`${styles.content_heading}`}>
             {platform === "android" || platform === "ios" ? (
               <IconButton onClick={() => navigate(-1)}>

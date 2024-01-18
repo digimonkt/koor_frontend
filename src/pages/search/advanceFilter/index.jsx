@@ -31,6 +31,7 @@ import { useFormik } from "formik";
 import DialogBox from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import SaveFilter from "./saveFilter";
+import { Capacitor } from "@capacitor/core";
 import TalentFilter from "./talentFilter";
 import { SEARCH_TYPE, USER_ROLES } from "../../../utils/enum";
 import {
@@ -59,7 +60,6 @@ import {
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Capacitor } from "@capacitor/core";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const matches = useMediaQuery("(max-width:768px)");
   const dispatch = useDispatch();
@@ -126,6 +126,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           </span>
         )}
         <OutlinedButton
+          onClick={() => setData(false)}
           style={{
             pointer: "cursor",
             marginTop: "5px",
@@ -630,11 +631,20 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       <div className={`${styles.searchResult}`}>
         <div
           className={`${styles.label} lables`}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
+          style={
+            !(platform === "android" || platform === "ios")
+              ? {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }
+              : {
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }
+          }
         >
           <Box
             sx={{
@@ -659,7 +669,18 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                     : "space-between",
               }}
             >
-              {isLoggedIn && "Saved searches:"}
+              {platform === "android" || platform === "ios" ? (
+                <Box
+                  sx={{
+                    textAlign: "start",
+                    width: "100%",
+                  }}
+                >
+                  {isLoggedIn && "Saved searches:"}
+                </Box>
+              ) : (
+                <>{isLoggedIn && "Saved searches:"}</>
+              )}
               {platform === "android" || platform === "ios" ? null : (
                 <>
                   {matches ? (
@@ -799,6 +820,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             resize: "none",
                             display: "flex",
                             alignItems: "center",
+                            width:
+                              platform === "android" || platform === "ios"
+                                ? "50px"
+                                : "",
                           }}
                           onClick={() => handleSelectFilter(filter)}
                         >
@@ -827,6 +852,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                         role === USER_ROLES.jobSeeker ? "#FFA500" : "#274593",
                       cursor: "pointer",
                       fontSize: "12px",
+                      whiteSpace: "nowrap",
+                      display: "flex",
+                      alignItems: "center",
                     }}
                   >
                     Advanced filter

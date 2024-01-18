@@ -43,7 +43,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { countries, jobCategories } = useSelector((state) => state.choices);
   const { role, isLoggedIn } = useSelector((state) => state.auth);
-
   const [totalJobs, setTotalJobs] = useState(0);
   const [topJobCategories, setTopJobCategories] = useState([]);
   const [topListingCompanies, setTopListingCompanies] = useState([]);

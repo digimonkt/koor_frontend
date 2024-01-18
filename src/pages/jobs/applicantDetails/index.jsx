@@ -10,7 +10,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
@@ -29,13 +29,15 @@ import ResumeTemplate from "@pages/jobSeeker/updateProfile/resume-update/resumeT
 import { GetUserDetailsAPI } from "@api/user";
 import { pdfDownloader } from "@utils/fileUtils";
 import { useDispatch } from "react-redux";
+import { Capacitor } from "@capacitor/core";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
+  const platform = Capacitor.getPlatform();
   // navigate
   const navigate = useNavigate();
-  const params = useParams();
   const dispatch = useDispatch();
+  const params = useParams();
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [applicantDetails, setApplicantsDetails] = useState({
     user: {
@@ -82,12 +84,21 @@ const ApplicantDetails = () => {
   }, [params.applicationId]);
   return (
     <>
-      <div className="job-application">
+      <Box
+        className="job-application"
+        sx={{
+          margin:
+            platform === "android" || platform === "ios"
+              ? "-17px -17px 0px -17px"
+              : null,
+        }}
+      >
         <Card
+          elevation={0}
           sx={{
             "&.MuiCard-root": {
               boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-              borderRadius: "10px",
+
               mb: 3,
             },
           }}
@@ -115,7 +126,7 @@ const ApplicantDetails = () => {
                     padding: "0px",
                   }}
                 >
-                  <ArrowBackIcon />
+                  <SVG.ArrowBackIcon />
                 </IconButton>
               </Box>
               <Stack
@@ -231,7 +242,7 @@ const ApplicantDetails = () => {
                   }}
                 />
               </Box>
-              <Box sx={{ display: "contents" }}>
+              <Box sx={{ display: { xs: "none", lg: "contents" } }}>
                 {
                   <Divider
                     orientation="vertical"
@@ -293,7 +304,7 @@ const ApplicantDetails = () => {
                                 <WorkExperienceCard {...item} />
                               </div>
                             </li>
-                          ),
+                          )
                         )
                       )}
                     </ul>
@@ -314,7 +325,7 @@ const ApplicantDetails = () => {
                                 // handleEdit={() => handleEdit(item)}
                               />
                             </li>
-                          ),
+                          )
                         )
                       )}
                     </ul>
@@ -401,7 +412,7 @@ const ApplicantDetails = () => {
             )}
           </CardContent>
         </Card>
-      </div>
+      </Box>
     </>
   );
 };
