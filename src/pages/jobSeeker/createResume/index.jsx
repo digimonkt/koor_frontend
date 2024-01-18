@@ -77,6 +77,7 @@ const CreateResumeComponent = () => {
           profileTitle: payload.profile_title || "",
           personalWebsite: payload.personal_website || "",
           references: payload.reference || [],
+          isVerified: true,
         };
 
         setLoading(false);
