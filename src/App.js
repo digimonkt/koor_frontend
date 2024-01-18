@@ -22,7 +22,6 @@ import { MESSAGE_TYPE, USER_ROLES } from "./utils/enum";
 import { resetToast } from "./redux/slice/toast";
 import { FallbackLoading } from "./components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
-// eslint-disable-next-line no-unused-vars
 import { getUserCountryByIpAPI, getUserIpAPI, postUserIpAPI } from "./api/user";
 import InnerFooter from "./components/footer/innerfooter";
 import { Capacitor } from "@capacitor/core";
