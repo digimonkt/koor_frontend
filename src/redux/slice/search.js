@@ -60,7 +60,7 @@ export const searchJobs = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
 export const searchTalent = createAsyncThunk(
   "search/searchTalent",
@@ -88,8 +88,9 @@ export const searchTalent = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
+
 export const searchTender = createAsyncThunk(
   "search/tenders",
   async (data, { getState, rejectWithValue }) => {
@@ -102,7 +103,6 @@ export const searchTender = createAsyncThunk(
       ...advanceFilter,
       ...data,
     };
-    console.log({ state: data });
     for (const key in payload) {
       if (!payload[key]) {
         delete payload[key];
@@ -116,7 +116,7 @@ export const searchTender = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
 export const searchVendor = createAsyncThunk(
   "search/searchVendor",
@@ -144,7 +144,7 @@ export const searchVendor = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
 const searchSlice = createSlice({
   name: "search",

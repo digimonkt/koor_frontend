@@ -122,7 +122,7 @@ export const GetNotificationAPI = async ({ type, created, exactDate }) => {
       data: {
         ...res.data,
         results: res.data.results.map((data) =>
-          transformNotificationResponse(data),
+          transformNotificationResponse(data)
         ),
       },
     };
@@ -258,7 +258,7 @@ export const searchUserByRole = async (data) => {
       data: {
         ...res.data,
         results: res.data.results.map((data) =>
-          transformSearchUserByRoleResponse(data),
+          transformSearchUserByRoleResponse(data)
         ),
       },
     };

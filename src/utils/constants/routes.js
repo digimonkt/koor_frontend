@@ -72,6 +72,11 @@ const JobSeekerUpdateProfile = lazy(() =>
     default: module.UpdateProfile,
   })),
 );
+const CreateResume = lazy(() =>
+  import("../../pages/jobSeeker").then((module) => ({
+    default: module.CreateResume,
+  })),
+);
 const AppliedJobs = lazy(() =>
   import("../../pages/jobSeeker").then((module) => ({
     default: module.AppliedJobs,
@@ -322,18 +327,13 @@ export const UNAUTHENTICATED_ROUTES = [
     path: "/verify-otp",
     component: VerifyOTP,
   },
-  {
-    id: "verifyAccount",
-    name: "Verify OTP",
-    path: "/account-verification",
-    component: VerifyAccount,
-  },
-  {
-    id: "verifyAccount",
-    name: "Verify OTP",
-    path: "/activation",
-    component: VerifyAccount,
-  },
+
+  // {
+  //   id: "verifyAccount",
+  //   name: "Verify OTP",
+  //   path: "/activation",
+  //   component: VerifyAccount,
+  // },
   {
     id: "resetPassword",
     name: "Reset Password",
@@ -375,6 +375,12 @@ export const AUTHENTICATED_ROUTES = [
     path: "/notification",
     component: Notification,
   },
+  {
+    id: "verifyAccount",
+    name: "Verify OTP",
+    path: "/account-verification",
+    component: VerifyAccount,
+  },
   platform === "android" || platform === "ios"
     ? {
         id: "setting",
@@ -392,6 +398,12 @@ export const JOB_SEEKER_ROUTES = [
     name: "My Profile",
     path: "/my-profile",
     component: JobSeekerProfile,
+  },
+  {
+    id: "createResume",
+    name: "Create Resume",
+    path: "/my-profile/create-resume",
+    component: CreateResume,
   },
   {
     id: "jobCriteria",

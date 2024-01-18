@@ -61,10 +61,10 @@ function ResumeTemplate({ user, appliedJob = false }) {
                       {applicantDetails.email}
                     </li>
                   )}
-                  {applicantDetails?.profile?.website && (
+                  {applicantDetails?.profile?.personalWebsite && (
                     <li>
                       <SVG.languageTrik style={{ marginRight: "5px" }} />
-                      {applicantDetails?.profile?.website}
+                      {applicantDetails?.profile?.personalWebsite}
                     </li>
                   )}
                   {applicantDetails.profile?.country?.title && (
@@ -146,31 +146,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 </h6>
               </div>
             </div>
-            <hr /> */}
-              {/* <div className="refrence">
-              <h2>Refrence</h2>
-              <h3 style={{ marginBottom: "5px" }}>Abdimajid Omar</h3>
-              <span>
-                <SVG.callTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <span>
-                <SVG.mailTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <h3 style={{ marginBottom: "5px", marginTop: "10px" }}>
-                Second reference name
-              </h3>
-              <span>
-                <SVG.callTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <span>
-                <SVG.mailTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-            </div>
-            <hr /> */}
               {/* <div className="certification">
               <h2>CERTIFICATION</h2>
               <div className="certification_div">
@@ -180,6 +155,36 @@ function ResumeTemplate({ user, appliedJob = false }) {
               </div>
             </div>
             <hr /> */}
+              {Boolean(currentUser?.profile?.references[0]?.name) && (
+                <>
+                  <div>
+                    <h2>References</h2>
+                    {currentUser?.profile?.references?.map((reference, idx) => (
+                      <div key={idx} className="reference">
+                        <h3 style={{ marginBottom: "5px" }}>
+                          {reference?.name}
+                        </h3>
+                        {Boolean(reference?.mobile_number) && (
+                          <>
+                            <span>
+                              <SVG.callTrik style={{ marginRight: "5px" }} />
+                              {reference?.mobile_number}
+                            </span>
+                            <br />
+                          </>
+                        )}
+                        {Boolean(reference?.email) && (
+                          <span>
+                            <SVG.mailTrik style={{ marginRight: "5px" }} />
+                            {reference?.email}
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+              <hr />
               {Boolean(applicantDetails.languages.length) && (
                 <div className="language">
                   <h2>LANGUAGE</h2>
@@ -198,8 +203,8 @@ function ResumeTemplate({ user, appliedJob = false }) {
             <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
             <div style={{ width: "54%", padding: "20px 0px 20px 15px" }}>
               <div className="profile">
-                <h2>PROFILE</h2>
-                <p>{applicantDetails.profile.description}</p>
+                <h2>Overview</h2>
+                <p>{applicantDetails.profile?.shortSummary}</p>
               </div>
               <hr />
               {Boolean(applicantDetails.workExperiences.length) && (
