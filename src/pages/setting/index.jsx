@@ -107,9 +107,6 @@ const Setting = () => {
               Profile info
             </Typography>
           </Box>
-          {/* <Box> */}
-          {/*   <Typography variant="body1">Change account</Typography> */}
-          {/* </Box> */}
           <Box>
             <Typography
               variant="body1"

@@ -3,6 +3,11 @@
   "appName": "koor",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
+  "cleartext": true,
+  "hostname": "192.168.0.192",
+  "allowNavigation": [
+    "*"
+  ],
   "webDir": "build",
   "cordova": {},
   "android": {
@@ -14,7 +19,6 @@
     }
   },
   "server": {
-    "url": "http://192.168.0.192:8102",
-    "originalUrl": "http://192.168.0.192:8101"
+    "url": "http://192.168.0.192:8101"
   }
 }

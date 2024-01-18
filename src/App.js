@@ -62,7 +62,7 @@ function App() {
   const backButtonAction = () => {
     const history = window.history;
     if (history.length > 1) {
-      navigate(-1);
+      history.back();
     } else {
       if (Capacitor.isNativePlatform) {
         CapApp.exitApp();
