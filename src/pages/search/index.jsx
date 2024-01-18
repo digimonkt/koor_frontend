@@ -32,6 +32,7 @@ import {
   setJobPage,
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
+import { useScrollTop } from "@hooks";
 import urlcat from "urlcat";
 import { Capacitor } from "@capacitor/core";
 import { getAdSenseAPI } from "@api/adSense";
@@ -159,6 +160,7 @@ function Search({ searchTypeForJob }) {
       }
     }
   }, []);
+  useScrollTop();
   const pagination = () => {
     return (
       <Pagination
