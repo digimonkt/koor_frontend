@@ -327,7 +327,7 @@ function Search({ searchTypeForJob }) {
                     minHeight: "450px",
                     marginBottom:
                       platform === "android" || platform === "ios"
-                        ? "50px"
+                        ? "40px"
                         : "0px",
                     marginTop:
                       platform === "android" || platform === "ios"
@@ -517,7 +517,13 @@ function Search({ searchTypeForJob }) {
                   <Component />
                 </Box>
                 {totalPages > 1 ? (
-                  <div className="paginations pt-4">{pagination()}</div>
+                  <div
+                    className={
+                      isMobileView ? "paginations" : "paginations pt-4"
+                    }
+                  >
+                    {pagination()}
+                  </div>
                 ) : (
                   <div style={{ marginTop: "20px" }}></div>
                 )}

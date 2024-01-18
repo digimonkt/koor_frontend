@@ -10,7 +10,7 @@ function JobSearchComponent() {
   const { jobs, isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
   const adSenseData = adSense.data.find(
-    (item) => item.pageName === "browseJobs"
+    (item) => item.pageName === "browseJobs",
   );
   return (
     <div>

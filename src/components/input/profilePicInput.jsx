@@ -1,5 +1,5 @@
 import { OutlinedButton } from "../../components/button";
-import { Avatar, IconButton, Stack } from "@mui/material";
+import { Avatar, IconButton, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { SVG } from "../../assets/svg";
@@ -83,11 +83,11 @@ const ProfilePicInputComponent = ({
             <h2>{title}</h2>
             {platform === "android" || platform === "ios" ? (
               toggle ? (
-                <IconButton size="small" onClick={() => fun()}>
+                <IconButton size="large" onClick={() => fun()}>
                   <SVG.ArrowUpIcon />
                 </IconButton>
               ) : (
-                <IconButton size="small" onClick={() => fun()}>
+                <IconButton size="large" onClick={() => fun()}>
                   <SVG.Downarrow />
                 </IconButton>
               )
@@ -137,7 +137,9 @@ const ProfilePicInputComponent = ({
                   <div>
                     <div {...getRootProps({ className: "dropzone" })}>
                       <input {...getInputProps()} disabled={loading} />
-                      <p>Upload another photo</p>
+                      <Typography variant="caption">
+                        Upload another photo
+                      </Typography>
                     </div>
                   </div>
                 </Stack>

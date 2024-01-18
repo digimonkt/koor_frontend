@@ -170,12 +170,6 @@ const MyProfile = () => {
                       />
                     </CardContent>
                   </Card>
-                  <AboutMe
-                    handleClickOpen={handleClickOpen}
-                    fun={() => handleToggleModel("about")}
-                    toggle={toggle.includes("about")}
-                  />
-
                   <Card
                     sx={{
                       "&.MuiCard-root": {

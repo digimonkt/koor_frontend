@@ -40,10 +40,11 @@ import {
   DATE_FORMAT,
 } from "../../../utils/constants/constants";
 import { setErrorToast } from "../../../redux/slice/toast";
-import { updateCurrentUser } from "../../../redux/slice/user";
+import { setUserRole, updateCurrentUser } from "../../../redux/slice/user";
 import DialogBox from "../../../components/dialogBox";
 import NoItem from "../myProfile/noItem";
 import { Capacitor } from "@capacitor/core";
+import { useNavigate } from "react-router-dom";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const AboutMe = (props) => {
   const [open, setOpen] = useState(false);
   const [filledData, setFilledData] = useState(null);
   const [countryId, setCountryId] = useState("");
+  const navigate = useNavigate();
   const currentYear = dayjs().year();
   const formik = useFormik({
     initialValues: {
@@ -269,7 +271,20 @@ const AboutMe = (props) => {
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <h2 className="mb-0">About</h2>
+              <h2 className="mb-0">
+                {platform === "android" || platform === "ios" ? (
+                  <IconButton
+                    size="small"
+                    onClick={() => {
+                      dispatch(setUserRole(""));
+                      navigate(-1);
+                    }}
+                  >
+                    <SVG.BackArrow />
+                  </IconButton>
+                ) : null}
+                About
+              </h2>
               {platform === "android" || platform === "ios" ? (
                 <>
                   <IconButton
