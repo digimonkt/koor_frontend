@@ -212,7 +212,7 @@ const CreateCoverLetter = () => {
           </Typography>
           <Box>
             <Grid container spacing={2} sx={{ alignItems: "center" }}>
-              <Grid item lg={1.1} md={1.2} sm={1.6} xs={4}>
+              <Grid item lg={2} md={2} sm={2} xs={4}>
                 {!files?.length ? (
                   <Avatar
                     src={IMAGES.CoverLetterImg}
@@ -222,7 +222,7 @@ const CreateCoverLetter = () => {
                   <>{thumbs}</>
                 )}
               </Grid>
-              <Grid item lg={10.9} md={10.8} sm={10.4} xs={8}>
+              <Grid item lg={10} md={10} sm={10} xs={8}>
                 <Box
                   className={styles.coverletter_drag_box}
                   {...getRootProps({ className: "dropzone" })}

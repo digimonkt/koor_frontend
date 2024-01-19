@@ -132,6 +132,7 @@ export const getApplicationDetailsAPI = async (applicationId) => {
         user: {
           ...transformGetUserDetails(res.data.user),
           isBlacklisted: res.data.user.is_blacklisted,
+          job: res.data.job,
         },
       },
     };
@@ -260,7 +261,7 @@ export const getEmployerActiveJobsAPI = async (data) => {
         next: response.data.next,
         previous: response.data.previous,
         results: response.data.results.map((data) =>
-          transformFullJobDetails(data)
+          transformFullJobDetails(data),
         ),
       },
     };
@@ -344,7 +345,7 @@ export const buyCreditsAPI = async ({ employer, data }) => {
   const res = await api.request({
     url: urlcat("v1/admin/employer/:employer/recharge", { employer }),
     method: "PUT",
-    data
+    data,
   });
   if (res.remote === "success") {
     return {

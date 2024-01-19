@@ -77,6 +77,7 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getUserDetails(applicantDetails.user.id);
   }, [applicantDetails.user.id]);
+
   useEffect(() => {
     getApplicantDetails();
   }, [params.applicationId]);
@@ -391,7 +392,10 @@ const ApplicantDetails = () => {
                     />
                     <div style={{ display: "none" }}>
                       <ResumeTemplate
-                        user={userDetails}
+                        user={{
+                          ...userDetails,
+                          job: applicantDetails?.job?.id,
+                        }}
                         appliedJob={applicantDetails.shortLetter}
                       />
                     </div>
