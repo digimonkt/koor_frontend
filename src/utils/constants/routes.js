@@ -195,13 +195,41 @@ export const ROUTES = [
     path: "/resources",
     component: Resources,
   },
-  {
-    id: "home",
-    name: "Home",
-    path: "/",
-    component: Home,
-  },
-
+  ...(platform === "android" || platform === "ios"
+    ? [
+        {
+          id: "spalsh",
+          name: "Spalsh",
+          path: "/",
+          component: Spalsh,
+        },
+        {
+          id: "forgot-password",
+          name: "Forgot Password",
+          path: "/forgot-password",
+          component: ForgotPassword,
+        },
+        {
+          id: "verifyOTP",
+          name: "Verify OTP",
+          path: "/verify-otp",
+          component: VerifyOTP,
+        },
+        {
+          id: "resetPassword",
+          name: "Reset Password",
+          path: "/reset-password",
+          component: ResetPassword,
+        },
+      ]
+    : [
+        {
+          id: "home",
+          name: "Home",
+          path: "/",
+          component: Home,
+        },
+      ]),
   {
     id: "resources",
     name: "Resources",
@@ -229,14 +257,12 @@ export const ROUTES = [
     path: "/privacy-policy",
     component: PrivacyPolicy,
   },
-
   {
     id: "search",
     name: "Search",
     path: "/search/:type",
     component: Search,
   },
-
   {
     id: "jobDetails",
     name: "Job Details",

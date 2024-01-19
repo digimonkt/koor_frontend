@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { Box, Container, Grid, Stack } from "@mui/material";
+import { Box, Container, Grid, IconButton, Stack } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { Card, CardContent } from "../../components/card";
 import { USER_ROLES } from "../../utils/enum";
@@ -79,6 +79,7 @@ function AuthLayout({
             delete payload[key];
           }
         }
+        console.log({ payload });
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           console.log({ result });
@@ -388,21 +389,17 @@ function AuthLayout({
                         //     : "none",
                         // }}
                         >
-                          {/* <IconButton
-                            onClick={() => {
-                              dispatch(setUserRole(""));
-                              navigate(-1);
-                            }}
-                            sx={{
-                              padding: "0px",
-                              marginRight: "10px",
-                              "@media(max-width:992px)": {
-                                display: "none",
-                              },
-                            }}
-                          >
-                            <SVG.BackArrow />
-                          </IconButton> */}
+                          {platform === "android" || platform === "ios" ? (
+                            <IconButton
+                              onClick={() => {
+                                dispatch(setUserRole(""));
+                                navigate(-1);
+                              }}
+                            >
+                              <SVG.BackArrow />
+                            </IconButton>
+                          ) : null}
+
                           {activationLabel
                             .replace("@role", processRoleToDisplay(role))
                             .replace("@email", verifyEmail)}

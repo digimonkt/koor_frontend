@@ -31,7 +31,7 @@ const Wrapper = ({ children, callback, ...options }) => {
 
     loader.load().then(
       () => setStatusAndExecuteCallback(Status.SUCCESS),
-      () => setStatusAndExecuteCallback(Status.FAILURE)
+      () => setStatusAndExecuteCallback(Status.FAILURE),
     );
   }, []);
 

@@ -19,7 +19,6 @@ import {
   FilledButton,
 } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
-// import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
@@ -35,6 +34,8 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
 import CreateCoverLetter from "../../../components/coverLetter";
+import { fileTypeExtractor, downloadUrlCreator } from "@utils/filesUtils";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const JobDetails = () => {
   const params = useParams();
@@ -53,6 +54,8 @@ const JobDetails = () => {
     overflow: "hidden",
     WebkitLineClamp: numLines,
   };
+  const platform = Capacitor.getPlatform();
+
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -155,7 +158,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -202,27 +205,12 @@ const JobDetails = () => {
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = (url) => {
-      const extension = "." + url.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".gif": "image/gif",
-        ".pdf": "application/pdf",
-        // Add more extensions and corresponding MIME types as needed
-      };
-
-      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
-    };
-
-    const fileName = "attachment";
+  const handleLoadImage = async (url, e) => {
+    const fileType = fileTypeExtractor(url);
     const response = await getJobAttachmentAPI(url);
 
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      // Convert base64 string to Blob
       const byteCharacters = atob(base64String);
       const byteArrays = new Uint8Array(byteCharacters.length);
 
@@ -231,23 +219,16 @@ const JobDetails = () => {
       }
 
       const blob = new Blob([byteArrays], {
-        type: fileType(url) || "application/octet-stream",
+        type: fileType || "application/octet-stream",
       });
 
-      // Create a download link
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName || "file"; // Default filename is "file"
-
-      // Append the link to the document and click it
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(downloadUrl);
+      if (platform === "android" || platform === "ios") {
+        return "";
+      } else {
+        downloadUrlCreator(blob);
+      }
     }
   };
-  const platform = Capacitor.getPlatform();
   return (
     <>
       <Container
@@ -263,7 +244,10 @@ const JobDetails = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}
@@ -280,10 +264,11 @@ const JobDetails = () => {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate("/search/jobs")}
+                    onClick={() => navigate(-1)}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
+
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -306,7 +291,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -361,7 +346,7 @@ const JobDetails = () => {
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
-                  spacing={{ xs: 1, lg: 0 }}
+                  spacing={{ xs: 2, lg: 0 }}
                   flexWrap={"wrap"}
                   useFlexGap
                   sx={{
@@ -434,15 +419,24 @@ const JobDetails = () => {
                           <span className="d-inline-flex  me-2">
                             {<SVG.OrangeIcon />}
                           </span>
-                          <span
-                            onClick={() => handleLoadImage(attachment.path)}
-                            // target="_blank"
-                            style={{ cursor: "pointer" }}
+                          <a
                             className="m-0"
+                            onClick={(e) => handleLoadImage(attachment.path)}
+                            href={generateFileUrl(attachment.path)}
+                            target="_blank"
                             rel="noreferrer"
+                            style={{
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#eea23d"
+                                  : "#274593",
+                              cursor: "pointer",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
+                            }}
                           >
                             {attachment.title}
-                          </span>
+                          </a>
                         </div>
                       );
                     })}
@@ -486,13 +480,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  }),
+                                  })
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  }),
+                                  })
                                 );
                               }
                             } else {

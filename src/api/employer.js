@@ -362,3 +362,16 @@ export const unblockUserAPI = async (userId) => {
   });
   return res;
 };
+
+export const getApplicationByFilterAPI = async (filter) => {
+  const res = await api.request({
+    url: urlcat("v1/jobs/applications", { filterBy: filter }),
+    method: "GET",
+  });
+  if (res.remote === "success") {
+    return {
+      remote: "success",
+      data: res.data.results,
+    };
+  }
+};

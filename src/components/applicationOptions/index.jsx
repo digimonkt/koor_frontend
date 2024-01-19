@@ -55,7 +55,7 @@ function ApplicationOptions({
   const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [loading, setLoading] = useState(false);
   const [applicationShortlistStatus, setApplicationShortlistStatus] = useState(
-    details.shortlistedAt
+    details.shortlistedAt,
   );
 
   const handleMessageClick = async () => {
@@ -68,7 +68,7 @@ function ApplicationOptions({
         urlcat("/employer/chat", {
           conversion: conversationId,
           userId: details?.user?.id,
-        })
+        }),
       );
     }
   };
@@ -109,7 +109,7 @@ function ApplicationOptions({
       case JOB_APPLICATION_OPTIONS.shortlisted:
         setIsShortlisted(true);
         setApplicationShortlistStatus(
-          !details.shortlistedAt ? true : details.shortlistedAt
+          !details.shortlistedAt ? true : details.shortlistedAt,
         );
         applicationStatus = {
           shortlisted: applicationsStatusCount.shortlisted + 1,
@@ -125,7 +125,7 @@ function ApplicationOptions({
         setTotalApplicationsByJob({
           jobId: details.job.id,
           data: applicationStatus,
-        })
+        }),
       );
     } else if (
       details.tender &&
@@ -135,7 +135,7 @@ function ApplicationOptions({
         setTotalApplicationsByTender({
           tenderId: details.tender.id,
           data: applicationStatus,
-        })
+        }),
       );
     }
     setLoading(true);
@@ -183,7 +183,7 @@ function ApplicationOptions({
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: { xs: "flex-start", lg: "end" },
+          justifyContent: { xs: "center", lg: "end" },
         }}
       >
         {applicationList &&

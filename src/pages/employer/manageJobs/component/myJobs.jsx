@@ -4,7 +4,7 @@ import { SVG } from "../../../../assets/svg";
 import JobCard from "../../../../components/jobCard";
 import ApplicantList from "./applicantList";
 import { getEmployerJobsAPI } from "../../../../api/employer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTotalCreatedJobs } from "../../../../redux/slice/employer";
 import { NoDataFoundAnimation } from "../../../../components/animations";
 import JobCardSkeletonLoader from "../../../../components/jobCard/jobCardSkeletonLoader";
@@ -16,6 +16,8 @@ function MyJobs({ onTabChange }) {
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { isMobileView } = useSelector(({ platform }) => platform);
+  console.log({ imo: isMobileView });
   const getAllJobs = useCallback(async () => {
     setIsLoading(true);
     const res = await getEmployerJobsAPI({ search });
@@ -112,10 +114,12 @@ function MyJobs({ onTabChange }) {
                   <EmployerMyPostTabs onTabChange={onTabChange} />
                 )}
                 <JobCard selfJob jobDetails={job} />
-                <ApplicantList
-                  jobId={job.id}
-                  totalApplications={job.applicantCount}
-                />
+                {!isMobileView && (
+                  <ApplicantList
+                    jobId={job.id}
+                    totalApplications={job.applicantCount}
+                  />
+                )}
               </CardContent>
             </Card>
           );
