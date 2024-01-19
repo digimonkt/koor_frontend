@@ -69,7 +69,7 @@ function ChatList({ setIsSeleted }) {
     const ws = new WebSocketClient(data);
     ws.connect();
     ws.onMessage(onUpdateChatActivity);
-    // Clean up WebSocket connection when component unmounts
+
     return () => {
       ws.close();
     };
