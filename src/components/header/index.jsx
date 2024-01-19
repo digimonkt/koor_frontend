@@ -316,7 +316,12 @@ function Header() {
                   to="/"
                   className="active"
                   style={{
-                    color: location.pathname === "/" ? "#274593" : "",
+                    color:
+                      location.pathname === "/"
+                        ? role === USER_ROLES.jobSeeker
+                          ? "#eea23d "
+                          : "#274593"
+                        : "",
                   }}
                 >
                   Home
@@ -327,7 +332,9 @@ function Header() {
                   to="/search/jobs"
                   style={{
                     color: location.pathname.includes("/search/jobs")
-                      ? "#274593"
+                      ? role === USER_ROLES.jobSeeker
+                        ? "#eea23d "
+                        : "#274593"
                       : "",
                   }}
                 >
@@ -342,7 +349,9 @@ function Header() {
                     }
                     style={{
                       color: location.pathname.includes("/search/talents")
-                        ? "#274593"
+                        ? role === USER_ROLES.jobSeeker
+                          ? "#eea23d "
+                          : "#274593"
                         : "",
                     }}
                     onClick={(e) => {
@@ -363,7 +372,9 @@ function Header() {
                     }
                     style={{
                       color: location.pathname.includes("/search/vendors")
-                        ? "#274593"
+                        ? role === USER_ROLES.jobSeeker
+                          ? "#eea23d "
+                          : "#274593"
                         : "",
                     }}
                     onClick={(e) => {
@@ -382,7 +393,9 @@ function Header() {
                   to="/search/tenders"
                   style={{
                     color: location.pathname.includes("/search/tenders")
-                      ? "#274593"
+                      ? role === USER_ROLES.jobSeeker
+                        ? "#eea23d "
+                        : "#274593"
                       : "",
                   }}
                   // onClick={(e) => checkUserLoggedIn(e)}
@@ -396,7 +409,9 @@ function Header() {
                     to="/about-us"
                     style={{
                       color: location.pathname.includes("/about")
-                        ? "#274593"
+                        ? role === USER_ROLES.jobSeeker
+                          ? "#eea23d "
+                          : "#274593"
                         : "",
                     }}
                   >
@@ -409,7 +424,9 @@ function Header() {
                   to="/resources"
                   style={{
                     color: location.pathname.includes("/resource")
-                      ? "#274593"
+                      ? role === USER_ROLES.jobSeeker
+                        ? "#eea23d "
+                        : "#274593"
                       : "",
                   }}
                 >
