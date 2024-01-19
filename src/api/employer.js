@@ -132,6 +132,7 @@ export const getApplicationDetailsAPI = async (applicationId) => {
         user: {
           ...transformGetUserDetails(res.data.user),
           isBlacklisted: res.data.user.is_blacklisted,
+          job: res.data.job,
         },
       },
     };

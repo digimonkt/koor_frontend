@@ -94,11 +94,21 @@ function LabeledInputComponent({
                   : "password"
                 : type
             }
-            value={rest?.value}
             style={{ width, zIndex }}
             {...rest}
           />
-          {icon && <div>{icon}</div>}
+          {icon && (
+            <div
+              className="password_svg"
+              style={{
+                padding: "3px 40px 0px 0",
+                opacity: 0.7,
+                color: "#121212",
+              }}
+            >
+              {icon && <div>{icon}</div>}
+            </div>
+          )}
           {type === "password" ? (
             <IconButton
               disableRipple={true}

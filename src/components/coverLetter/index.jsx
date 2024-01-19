@@ -97,6 +97,15 @@ const CreateCoverLetter = () => {
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      formik.setFieldValue("jobTitle", data.profile_title || "");
+      formik.setFieldValue("addressee", data.name_or_address || "");
+      formik.setFieldValue("coverLetter", data.cover_letter || "");
+      setFiles(data.signature_file || "");
+    }
+  }, [data]);
+
   const getCoverLetterData = async (jobId) => {
     const res = await getCoverLetterDataAPI(jobId);
     if (res.remote === "success") {
@@ -107,23 +116,26 @@ const CreateCoverLetter = () => {
       );
       formik.setFieldValue("addressee", data?.name_or_address || "");
       formik.setFieldValue("coverLetter", data?.cover_letter || "");
-      setFiles([data.signature] || []);
+      const response = await fetch(generateFileUrl(data.signature.path));
+      const blob = await response.blob();
+      const fileName = data.signature.title;
+      const fileType = blob.type;
+      const lastModified = new Date().getTime();
+      const preview = URL.createObjectURL(blob);
+
+      const file = new File([blob], fileName, {
+        type: fileType,
+        lastModified,
+        preview,
+      });
+      setFiles([file] || []);
     }
   };
 
   useEffect(() => {
-    if (data) {
-      formik.setFieldValue("jobTitle", data.profile_title || "");
-      formik.setFieldValue("addressee", data.name_or_address || "");
-      formik.setFieldValue("coverLetter", data.cover_letter || "");
-      setFiles(data.signature_file || "");
-    }
-  }, [data]);
-
-  useEffect(() => {
     getCoverLetterData(jobId);
   }, [jobId]);
-
+  console.log({ files });
   const thumbs = files?.length > 0 && (
     <Fragment key={files[0]?.name}>
       <Avatar
@@ -136,11 +148,7 @@ const CreateCoverLetter = () => {
           },
         }}
         alt={files[0]?.title}
-        src={
-          files[0] instanceof File
-            ? URL.createObjectURL(files[0])
-            : generateFileUrl(files[0]?.path)
-        }
+        src={URL.createObjectURL(files[0])}
         onLoad={() => {
           URL.revokeObjectURL(files[0]?.preview);
         }}
@@ -212,7 +220,7 @@ const CreateCoverLetter = () => {
           </Typography>
           <Box>
             <Grid container spacing={2} sx={{ alignItems: "center" }}>
-              <Grid item lg={1.1} md={1.2} sm={1.6} xs={4}>
+              <Grid item lg={2} md={2} sm={2} xs={4}>
                 {!files?.length ? (
                   <Avatar
                     src={IMAGES.CoverLetterImg}
@@ -222,7 +230,7 @@ const CreateCoverLetter = () => {
                   <>{thumbs}</>
                 )}
               </Grid>
-              <Grid item lg={10.9} md={10.8} sm={10.4} xs={8}>
+              <Grid item lg={10} md={10} sm={10} xs={8}>
                 <Box
                   className={styles.coverletter_drag_box}
                   {...getRootProps({ className: "dropzone" })}
@@ -231,7 +239,6 @@ const CreateCoverLetter = () => {
                     type="file"
                     style={{ display: "none" }}
                     {...getInputProps()}
-                    {...formik.getFieldProps("signature")}
                     onChange={handleFileChange}
                   />
                   <Typography className={styles.coverletter_drag}>

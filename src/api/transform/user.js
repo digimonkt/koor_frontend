@@ -41,7 +41,7 @@ export const transformGetUserDetails = (data) => {
       otherNotification: data.profile.other_notification || false,
       personalWebsite: data.profile.personal_website || "",
       homeAddress: data.profile.home_address || "",
-      references: data.profile.references || "",
+      references: data.profile.references || data.references || [],
       shortSummary: data.profile.short_summary || "",
     },
     jobPreferences: data.job_preferences

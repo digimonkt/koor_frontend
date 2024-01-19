@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./style.css";
-import { generateFileUrl } from "@utils/generateFileUrl";
 import { SVG } from "@assets/svg";
 import CoverLetter from "../cover-letter";
 import { YEAR_FORMAT } from "@utils/constants/constants";
@@ -10,28 +8,7 @@ import dayjs from "dayjs";
 function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
   const applicantDetails = user || currentUser;
-  const [, setBase64Image] = useState("");
-  useEffect(() => {
-    const convertImageToBase64 = async () => {
-      try {
-        const response = await fetch(
-          generateFileUrl(applicantDetails?.profileImage),
-        );
-        const blob = await response.blob();
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-          const base64String = reader.result;
-          setBase64Image(base64String);
-        };
-
-        reader.readAsDataURL(blob);
-      } catch (error) {
-        console.error("Error converting image to base64:", error);
-      }
-    };
-    convertImageToBase64();
-  }, []);
+  console.log({ user });
   return (
     <div className="job-application pages" id="div-to-pdf">
       <div className="container resume_template">
@@ -155,32 +132,34 @@ function ResumeTemplate({ user, appliedJob = false }) {
               </div>
             </div>
             <hr /> */}
-              {Boolean(currentUser?.profile?.references[0]?.name) && (
+              {Boolean(applicantDetails?.profile?.references[0]?.name) && (
                 <>
                   <div>
                     <h2>References</h2>
-                    {currentUser?.profile?.references?.map((reference, idx) => (
-                      <div key={idx} className="reference">
-                        <h3 style={{ marginBottom: "5px" }}>
-                          {reference?.name}
-                        </h3>
-                        {Boolean(reference?.mobile_number) && (
-                          <>
+                    {applicantDetails?.profile?.references?.map(
+                      (reference, idx) => (
+                        <div key={idx} className="reference">
+                          <h3 style={{ marginBottom: "5px" }}>
+                            {reference?.name}
+                          </h3>
+                          {Boolean(reference?.mobile_number) && (
+                            <>
+                              <span>
+                                <SVG.callTrik style={{ marginRight: "5px" }} />
+                                {reference?.mobile_number}
+                              </span>
+                              <br />
+                            </>
+                          )}
+                          {Boolean(reference?.email) && (
                             <span>
-                              <SVG.callTrik style={{ marginRight: "5px" }} />
-                              {reference?.mobile_number}
+                              <SVG.mailTrik style={{ marginRight: "5px" }} />
+                              {reference?.email}
                             </span>
-                            <br />
-                          </>
-                        )}
-                        {Boolean(reference?.email) && (
-                          <span>
-                            <SVG.mailTrik style={{ marginRight: "5px" }} />
-                            {reference?.email}
-                          </span>
-                        )}
-                      </div>
-                    ))}
+                          )}
+                        </div>
+                      ),
+                    )}
                   </div>
                 </>
               )}
