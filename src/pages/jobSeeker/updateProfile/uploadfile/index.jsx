@@ -15,8 +15,8 @@ const UploadFile = ({ title, color, bgcolor, textcolor }) => {
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
-        )
+          }),
+        ),
       );
     },
   });

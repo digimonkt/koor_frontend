@@ -42,7 +42,6 @@ function App() {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
     if (accessToken && refreshToken && !currentUser.id) {
-      console.log(" ");
       dispatch(getUserDetails());
     } else if (!accessToken || !refreshToken) {
       dispatch(setIsLoggedIn(false));
@@ -70,7 +69,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            }),
+            })
           );
         }
       }
@@ -109,7 +108,7 @@ function App() {
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token="),
+          pair.startsWith("verify-token=")
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];

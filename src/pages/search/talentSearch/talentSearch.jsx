@@ -10,7 +10,7 @@ function TalentSearchComponent() {
   const { talents, isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
   const adSenseData = adSense.data.find(
-    (item) => item.pageName === "browseTalents"
+    (item) => item.pageName === "browseTalents",
   );
   return (
     <div>
@@ -31,7 +31,7 @@ function TalentSearchComponent() {
             <React.Fragment key={talent.id}>
               <TalentCard logo talentDetails={talent} />
               <AdSenseCard
-                code={adSenseData.code}
+                code={adSenseData?.code}
                 show={index > 0 && index % AD_AFTER_RECORDS === 0}
               />
             </React.Fragment>

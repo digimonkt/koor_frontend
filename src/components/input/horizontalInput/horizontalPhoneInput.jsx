@@ -31,8 +31,8 @@ function HorizontalPhoneInputComponent({ label, ...rest }) {
           alignItems={{ xs: "start", lg: "center" }}
           className="mb-3"
         >
-          <label className="w-30">{label}</label>
-          <div className="w-70">
+          {Boolean(label) && <label className="w-30">{label}</label>}
+          <div className={label ? "w-70" : "w-100"}>
             <div className="showpassword">
               <PhoneNumberInputComponent
                 className="add-form-control"

@@ -285,6 +285,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   sx={{
                     marginLeft: "5px",
                     textTransform: "capitalize",
+                    "@media (max-width: 480px)": {
+                      marginLeft: "2px",
+                    },
                   }}
                 />
               ) : null}

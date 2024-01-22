@@ -161,3 +161,35 @@ export const getApplyJobByEmailAPI = async (jobId) => {
     method: "POST",
   });
 };
+
+export const updateCoverLetterAPI = async (data, jobId) => {
+  const response = await api.request({
+    url: urlcat("v1/users/job-seeker/cover-letter/:jobId", { jobId }),
+    method: "POST",
+    data,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data,
+    };
+  }
+  return response;
+};
+
+export const getCoverLetterDataAPI = async (jobId) => {
+  const response = await api.request({
+    url: urlcat("v1/users/job-seeker/get-cover-letter", { jobId }),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: response.data,
+    };
+  }
+  return response;
+};

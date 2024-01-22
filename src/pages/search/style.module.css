@@ -132,3 +132,9 @@
   background-color: rgb(207, 207, 207);
   border-radius: 15px;
 }
+
+@media screen and (max-width: 320px) {
+  .jobcards {
+    padding: 0px 20px;
+  }
+}

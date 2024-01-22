@@ -54,11 +54,11 @@ function EditLanguages({
             addLanguageRecord({
               id: res.data.data.id,
               language: languages.data.find(
-                (language) => language.id === res.data.data.language
+                (language) => language.id === res.data.data.language,
               ),
               written: res.data.data.written,
               spoken: res.data.data.spoken,
-            })
+            }),
           );
         } else {
           dispatch(setErrorToast("Language already in use"));
@@ -75,7 +75,7 @@ function EditLanguages({
             updateLanguageRecord({
               ...values,
               id: currentSelected.id,
-            })
+            }),
           );
         } else {
           dispatch(setErrorToast("Something went wrong"));
@@ -128,7 +128,9 @@ function EditLanguages({
               <div className={styles.search_results_box}>
                 {languages.data
                   .filter((lang) =>
-                    lang.title.toLowerCase().includes(searchValue.toLowerCase())
+                    lang.title
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase()),
                   )
                   .map((lang) => {
                     return (

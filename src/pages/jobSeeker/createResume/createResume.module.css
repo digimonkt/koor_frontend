@@ -1,0 +1,59 @@
+.CreateResume_Page {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.CreateResume_Page .heading {
+  font-size: 28px;
+  font-weight: 600;
+  color: #121212;
+  font-family: "Bahnschrift" !important;
+}
+
+.CreateResume_input_box h5 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #121212;
+  font-family: "Bahnschrift" !important;
+  margin: 0;
+}
+
+.CreateResume_input_box p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #121212;
+  font-family: "Poppins" !important;
+  letter-spacing: 0.14px;
+  margin: 0px 0px 10px 0px;
+}
+
+.plus_more_box span {
+  font-size: 12px;
+  font-weight: 500;
+  color: #eea23d;
+  font-family: "Poppins" !important;
+  letter-spacing: 0.14px;
+  margin: 0px 0px 10px 0px;
+}
+
+.resume_outlined_button {
+  font-family: "Bahnschrift" !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.42px !important;
+  border-radius: 100px !important;
+  color: #eea23d !important;
+  border: 1px solid #eea23d !important;
+  height: 42px !important;
+  padding: 10px 30px !important;
+  text-transform: initial !important;
+}
+
+.resume_outlined_button:hover {
+  background-color: rgba(255, 165, 0, 0.1) !important;
+  border: 1px solid #eea23d !important;
+  border-radius: 100px !important;
+  height: 42px !important;
+  padding: 10px 30px !important;
+}

@@ -40,7 +40,6 @@ const BlacklistCard = ({ details, reason, sx, handleUnblockUserId }) => {
     const res = await getConversationIdByUserIdAPI({
       userId: details?.user?.id,
     });
-    console.log({ res });
     if (res.remote === "success") {
       const conversationId = res.data.conversation_id;
       Navigate(
