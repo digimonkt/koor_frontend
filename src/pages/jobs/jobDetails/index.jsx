@@ -846,7 +846,8 @@ const JobDetails = () => {
                         right: "10px",
                         top: "37px",
                         transform: "translate(0%, -37%)",
-                        color: "#EEA23D",
+                        color:
+                          role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
                       }}
                     >
                       <SVG.ArrowAngle />
