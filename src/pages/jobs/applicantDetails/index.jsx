@@ -394,7 +394,7 @@ const ApplicantDetails = () => {
                       <ResumeTemplate
                         user={{
                           ...userDetails,
-                          job: applicantDetails?.job?.id,
+                          signature: applicantDetails?.signature,
                         }}
                         appliedJob={applicantDetails.shortLetter}
                       />
