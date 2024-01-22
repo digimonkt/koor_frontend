@@ -32,7 +32,7 @@ import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
-import { EMPLOYMENT_STATUS, USER_ROLES } from "../../../utils/enum";
+import { EMPLOYMENT_STATUS } from "../../../utils/enum";
 import { updateJobSeekerAboutMeAPI } from "../../../api/jobSeeker";
 import { FormControlReminder } from "../../../components/style";
 import {
@@ -276,7 +276,7 @@ const AboutMe = (props) => {
                   <IconButton
                     onClick={() => {
                       dispatch(setUserRole(""));
-                      navigate(`/${USER_ROLES.jobSeeker}/my-profile`);
+                      navigate(-1);
                     }}
                   >
                     <SVG.LeftArrow />

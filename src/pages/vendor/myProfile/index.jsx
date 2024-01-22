@@ -48,7 +48,6 @@ import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
 import { Link, useNavigate } from "react-router-dom";
-import { USER_ROLES } from "@utils/enum";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -341,11 +340,7 @@ function MyProfile() {
                 >
                   {platform === "android" || platform === "ios" ? (
                     <Stack direction="row" alignItems="flex-end">
-                      <IconButton
-                        onClick={() =>
-                          navigate(`/${USER_ROLES.vendor}/my-profile`)
-                        }
-                      >
+                      <IconButton onClick={() => navigate(-1)}>
                         <SVG.LeftArrow />
                       </IconButton>
                       <h2 className="mb-0">About</h2>

@@ -46,7 +46,7 @@ import {
 import { useDebounce } from "usehooks-ts";
 import styles from "./myProfile.module.css";
 import { setErrorToast } from "../../../redux/slice/toast";
-import { USER_ROLES } from "@utils/enum";
+// import { USER_ROLES } from "@utils/enum";
 import { Capacitor } from "@capacitor/core";
 import { useNavigate } from "react-router-dom";
 function MyProfileComponent() {
@@ -277,12 +277,7 @@ function MyProfileComponent() {
               <div className="add-content">
                 {platform === "android" || platform === "ios" ? (
                   <Stack direction="row" alignItems="flex-end">
-                    <IconButton
-                      onClick={() =>
-                        navigate(`/${USER_ROLES.employer}/my-profile`)
-                      }
-                      className="later"
-                    >
+                    <IconButton onClick={() => navigate(-1)}>
                       <SVG.LeftArrow />
                     </IconButton>
                     <h2 className="mb-0">About</h2>
