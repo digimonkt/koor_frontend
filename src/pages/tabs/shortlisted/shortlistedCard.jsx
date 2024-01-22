@@ -28,7 +28,6 @@ const ShortlistedCard = ({ applicantDetails }) => {
   const handleMessageClick = () => {
     chatRedirector(applicantDetails?.id, navigate);
   };
-
   return (
     <>
       <Box>
@@ -80,27 +79,29 @@ const ShortlistedCard = ({ applicantDetails }) => {
               >
                 <SVG.LocationIcon />{" "}
                 <Box component={"span"}>
-                  {applicantDetails?.user?.proflie?.city},
-                  {applicantDetails?.user?.proflie?.city}
+                  {applicantDetails?.user?.city?.title},{" "}
+                  {applicantDetails?.user?.country?.title}
                 </Box>
               </Stack>
             </Box>
           </Stack>
-          <Box
-            sx={{
-              borderLeft: "1px solid #CACACA",
-              fontFamily: "Poppins",
-              fontSize: "12px",
-              fontWeight: "400",
-              lineHeight: "16px",
-              height: "40px",
-              display: "flex",
-              alignItems: "center",
-              paddingLeft: "15px",
-            }}
-          >
-            {applicantDetails?.user?.profile?.profileTitle}
-          </Box>
+          {applicantDetails?.user?.profile_title && (
+            <Box
+              sx={{
+                borderLeft: "1px solid #CACACA",
+                fontFamily: "Poppins",
+                fontSize: "12px",
+                fontWeight: "400",
+                lineHeight: "16px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                paddingLeft: "15px",
+              }}
+            >
+              {applicantDetails?.user?.profile_title}
+            </Box>
+          )}
         </Stack>
         <Stack
           direction={"row"}
@@ -109,7 +110,7 @@ const ShortlistedCard = ({ applicantDetails }) => {
           sx={{ mb: 1 }}
         >
           <Typography className="text-truncate" sx={{ height: "32px" }}>
-            {applicantDetails?.user?.profile?.shortLetter}
+            {applicantDetails?.short_letter}
           </Typography>
           <Box>
             {applicantDetails?.readyForChat && (
@@ -133,27 +134,29 @@ const ShortlistedCard = ({ applicantDetails }) => {
             )}
           </Box>
         </Stack>
-        <Stack
-          direction={"row"}
-          spacing={1}
-          useFlexGap
-          flexWrap={"wrap"}
-          sx={{
-            "& .MuiChip-label": {
-              fontSize: "10px",
-              fontFamily: "Poppins",
-              "& .MuiChip-root": {
-                borderRadius: "73px",
-                background: "#F0F0F0",
+        {Boolean(applicantDetails?.user?.skills?.length) && (
+          <Stack
+            direction={"row"}
+            spacing={1}
+            flexWrap={"wrap"}
+            sx={{
+              "& .MuiChip-label": {
+                fontSize: "10px",
+                fontFamily: "Poppins",
+                "& .MuiChip-root": {
+                  borderRadius: "73px",
+                  background: "#F0F0F0",
+                },
               },
-            },
-          }}
-        >
-          <Chip label="UI/UX" />
-          <Chip label="Driving: Class B / B1 / B2 " />
-          <Chip label="Calls" />
-          <Chip label="Event Management" />
-        </Stack>
+            }}
+          >
+            {applicantDetails?.user?.skills?.map((itm, idx) => (
+              <>
+                <Chip key={idx} label={itm.skill.title} />
+              </>
+            ))}
+          </Stack>
+        )}
         <Divider sx={{ borderColor: "#CACACA", my: 1 }} />
       </Box>
     </>

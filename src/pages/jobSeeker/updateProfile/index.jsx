@@ -29,7 +29,7 @@ const UpdateProfile = () => {
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
     );
   };
 

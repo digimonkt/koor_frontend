@@ -14,7 +14,6 @@ function ShortlistedTab() {
 
   const getApplicantsData = async () => {
     const res = await getApplicationByFilterAPI("shortlisted");
-    console.log({ res });
     if (res.remote === "success") {
       setApplicantDetails(res.data);
     }
@@ -27,7 +26,6 @@ function ShortlistedTab() {
   useEffect(() => {
     getApplicantsData();
   }, [applicantDetails?.user?.id]);
-
   return (
     <div>
       {isSearching ? (

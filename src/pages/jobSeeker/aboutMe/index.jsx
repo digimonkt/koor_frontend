@@ -32,7 +32,7 @@ import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
-import { EMPLOYMENT_STATUS } from "../../../utils/enum";
+import { EMPLOYMENT_STATUS, USER_ROLES } from "../../../utils/enum";
 import { updateJobSeekerAboutMeAPI } from "../../../api/jobSeeker";
 import { FormControlReminder } from "../../../components/style";
 import {
@@ -57,8 +57,8 @@ const AboutMe = (props) => {
   const [open, setOpen] = useState(false);
   const [filledData, setFilledData] = useState(null);
   const [countryId, setCountryId] = useState("");
-  const navigate = useNavigate();
   const currentYear = dayjs().year();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -271,20 +271,21 @@ const AboutMe = (props) => {
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <h2 className="mb-0">
-                {platform === "android" || platform === "ios" ? (
+              {platform === "android" || platform === "ios" ? (
+                <Stack direction="row" alignItems="flex-end">
                   <IconButton
-                    size="small"
                     onClick={() => {
                       dispatch(setUserRole(""));
-                      navigate(-1);
+                      navigate(`/${USER_ROLES.jobSeeker}/my-profile`);
                     }}
                   >
-                    <SVG.BackArrow />
+                    <SVG.LeftArrow />
                   </IconButton>
-                ) : null}
-                About
-              </h2>
+                  <h2 className="mb-0">About</h2>
+                </Stack>
+              ) : (
+                <h2 className="mb-0">About</h2>
+              )}
               {platform === "android" || platform === "ios" ? (
                 <>
                   <IconButton

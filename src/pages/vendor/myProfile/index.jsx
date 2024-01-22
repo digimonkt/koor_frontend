@@ -47,7 +47,8 @@ import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { USER_ROLES } from "@utils/enum";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -75,9 +76,10 @@ function MyProfile() {
   const dispatch = useDispatch();
   const platform = Capacitor.getPlatform();
   const [toggle, setToggle] = useState(["about"]);
+  const navigate = useNavigate();
   const handleToggleModel2 = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
     );
   };
   useEffect(() => {
@@ -137,7 +139,7 @@ function MyProfile() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        ""
+        "",
       );
       const payload = {
         organization_name: values.organizationName,
@@ -202,15 +204,15 @@ function MyProfile() {
             operatingYears: values.operatingYears,
             jobsExperience: values.noOfJobsAsExperience,
             organizationType: sectors.data.find(
-              (sector) => sector.id === values.organizationType
+              (sector) => sector.id === values.organizationType,
             ),
 
             address: values.address,
             country: countries.data.find(
-              (country) => country.id === values.country
+              (country) => country.id === values.country,
             ),
             city: cities.data[values.country]?.find(
-              (city) => city.id === values.city
+              (city) => city.id === values.city,
             ),
           },
         };
@@ -278,6 +280,7 @@ function MyProfile() {
       }
     }
   }, [currentUser]);
+  console.log({ currentUser });
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -336,7 +339,20 @@ function MyProfile() {
                   alignItems={"center"}
                   justifyContent={"space-between"}
                 >
-                  <h2 className="mb-0">About</h2>
+                  {platform === "android" || platform === "ios" ? (
+                    <Stack direction="row" alignItems="flex-end">
+                      <IconButton
+                        onClick={() =>
+                          navigate(`/${USER_ROLES.vendor}/my-profile`)
+                        }
+                      >
+                        <SVG.LeftArrow />
+                      </IconButton>
+                      <h2 className="mb-0">About</h2>
+                    </Stack>
+                  ) : (
+                    <h2 className="mb-0">About</h2>
+                  )}
                   {platform === "android" || platform === "ios" ? (
                     <IconButton
                       size="small"
@@ -360,7 +376,7 @@ function MyProfile() {
                           {...formik.getFieldProps("organizationName")}
                         />
                         {formik.touched.organizationName &&
-                          formik.errors.organizationName ? (
+                        formik.errors.organizationName ? (
                           <ErrorMessage>
                             {formik.errors.organizationName}
                           </ErrorMessage>
@@ -377,7 +393,7 @@ function MyProfile() {
                           {...formik.getFieldProps("organizationType")}
                         />
                         {formik.touched.organizationType &&
-                          formik.errors.organizationType ? (
+                        formik.errors.organizationType ? (
                           <ErrorMessage>
                             {formik.errors.organizationType}
                           </ErrorMessage>
@@ -397,14 +413,14 @@ function MyProfile() {
                             if (!isValid) {
                               formik.setFieldError(
                                 "mobileNumber",
-                                "Invalid Mobile Number"
+                                "Invalid Mobile Number",
                               );
                             }
                           }}
                           onBlur={formik.getFieldProps("mobileNumber").onBlur}
                         />
                         {formik.touched.mobileNumber &&
-                          formik.errors.mobileNumber ? (
+                        formik.errors.mobileNumber ? (
                           <ErrorMessage>
                             {formik.errors.mobileNumber}
                           </ErrorMessage>
@@ -460,7 +476,7 @@ function MyProfile() {
                                     onClick={() => {
                                       formik.setFieldValue(
                                         "address",
-                                        address.description
+                                        address.description,
                                       );
                                       setSearchValue(address.description);
                                     }}
@@ -489,7 +505,7 @@ function MyProfile() {
                           {...formik.getFieldProps("description")}
                         />
                         {formik.touched.description &&
-                          formik.errors.description ? (
+                        formik.errors.description ? (
                           <ErrorMessage>
                             {formik.errors.description}
                           </ErrorMessage>
@@ -500,7 +516,7 @@ function MyProfile() {
                           {...formik.getFieldProps("businessLicenseId")}
                         />
                         {formik.touched.businessLicenseId &&
-                          formik.errors.businessLicenseId ? (
+                        formik.errors.businessLicenseId ? (
                           <ErrorMessage>
                             {formik.errors.businessLicenseId}
                           </ErrorMessage>
@@ -523,7 +539,7 @@ function MyProfile() {
                           />
                         </Stack>
                         {formik.touched.businessLicense &&
-                          formik.errors.businessLicense ? (
+                        formik.errors.businessLicense ? (
                           <ErrorMessage>
                             {formik.errors.businessLicense}
                           </ErrorMessage>
@@ -534,7 +550,7 @@ function MyProfile() {
                           {...formik.getFieldProps("certificationNumber")}
                         />
                         {formik.touched.certificationNumber &&
-                          formik.errors.certificationNumber ? (
+                        formik.errors.certificationNumber ? (
                           <ErrorMessage>
                             {formik.errors.certificationNumber}
                           </ErrorMessage>
@@ -557,7 +573,7 @@ function MyProfile() {
                           />
                         </Stack>
                         {formik.touched.certification &&
-                          formik.errors.certification ? (
+                        formik.errors.certification ? (
                           <ErrorMessage>
                             {formik.errors.certification}
                           </ErrorMessage>
@@ -568,7 +584,7 @@ function MyProfile() {
                           {...formik.getFieldProps("yearsOfOperating")}
                         />
                         {formik.touched.yearsOfOperating &&
-                          formik.errors.yearsOfOperating ? (
+                        formik.errors.yearsOfOperating ? (
                           <ErrorMessage>
                             {formik.errors.yearsOfOperating}
                           </ErrorMessage>
@@ -579,7 +595,7 @@ function MyProfile() {
                           {...formik.getFieldProps("noOfJobsAsExperience")}
                         />
                         {formik.touched.noOfJobsAsExperience &&
-                          formik.errors.noOfJobsAsExperience ? (
+                        formik.errors.noOfJobsAsExperience ? (
                           <ErrorMessage>
                             {formik.errors.noOfJobsAsExperience}
                           </ErrorMessage>
@@ -593,7 +609,7 @@ function MyProfile() {
                             onChange={(e) =>
                               formik.setFieldValue(
                                 "otherNotification",
-                                e.target.checked
+                                e.target.checked,
                               )
                             }
                             checked={formik.values.otherNotification}
@@ -610,7 +626,7 @@ function MyProfile() {
                             onChange={(e) =>
                               formik.setFieldValue(
                                 "marketingInformationNotification",
-                                e.target.checked
+                                e.target.checked,
                               )
                             }
                             checked={
@@ -643,7 +659,7 @@ function MyProfile() {
                         {...formik.getFieldProps("organizationName")}
                       />
                       {formik.touched.organizationName &&
-                        formik.errors.organizationName ? (
+                      formik.errors.organizationName ? (
                         <ErrorMessage>
                           {formik.errors.organizationName}
                         </ErrorMessage>
@@ -660,7 +676,7 @@ function MyProfile() {
                         {...formik.getFieldProps("organizationType")}
                       />
                       {formik.touched.organizationType &&
-                        formik.errors.organizationType ? (
+                      formik.errors.organizationType ? (
                         <ErrorMessage>
                           {formik.errors.organizationType}
                         </ErrorMessage>
@@ -680,14 +696,14 @@ function MyProfile() {
                           if (!isValid) {
                             formik.setFieldError(
                               "mobileNumber",
-                              "Invalid Mobile Number"
+                              "Invalid Mobile Number",
                             );
                           }
                         }}
                         onBlur={formik.getFieldProps("mobileNumber").onBlur}
                       />
                       {formik.touched.mobileNumber &&
-                        formik.errors.mobileNumber ? (
+                      formik.errors.mobileNumber ? (
                         <ErrorMessage>
                           {formik.errors.mobileNumber}
                         </ErrorMessage>
@@ -715,7 +731,7 @@ function MyProfile() {
                           (country) => ({
                             value: country.id,
                             label: country.title,
-                          })
+                          }),
                         )}
                         {...formik.getFieldProps("city")}
                       />
@@ -743,7 +759,7 @@ function MyProfile() {
                                   onClick={() => {
                                     formik.setFieldValue(
                                       "address",
-                                      address.description
+                                      address.description,
                                     );
                                     setSearchValue(address.description);
                                   }}
@@ -772,7 +788,7 @@ function MyProfile() {
                         {...formik.getFieldProps("description")}
                       />
                       {formik.touched.description &&
-                        formik.errors.description ? (
+                      formik.errors.description ? (
                         <ErrorMessage>{formik.errors.description}</ErrorMessage>
                       ) : null}
                       <HorizontalLabelInput
@@ -781,7 +797,7 @@ function MyProfile() {
                         {...formik.getFieldProps("businessLicenseId")}
                       />
                       {formik.touched.businessLicenseId &&
-                        formik.errors.businessLicenseId ? (
+                      formik.errors.businessLicenseId ? (
                         <ErrorMessage>
                           {formik.errors.businessLicenseId}
                         </ErrorMessage>
@@ -804,7 +820,7 @@ function MyProfile() {
                         />
                       </Stack>
                       {formik.touched.businessLicense &&
-                        formik.errors.businessLicense ? (
+                      formik.errors.businessLicense ? (
                         <ErrorMessage>
                           {formik.errors.businessLicense}
                         </ErrorMessage>
@@ -815,7 +831,7 @@ function MyProfile() {
                         {...formik.getFieldProps("certificationNumber")}
                       />
                       {formik.touched.certificationNumber &&
-                        formik.errors.certificationNumber ? (
+                      formik.errors.certificationNumber ? (
                         <ErrorMessage>
                           {formik.errors.certificationNumber}
                         </ErrorMessage>
@@ -838,7 +854,7 @@ function MyProfile() {
                         />
                       </Stack>
                       {formik.touched.certification &&
-                        formik.errors.certification ? (
+                      formik.errors.certification ? (
                         <ErrorMessage>
                           {formik.errors.certification}
                         </ErrorMessage>
@@ -849,7 +865,7 @@ function MyProfile() {
                         {...formik.getFieldProps("yearsOfOperating")}
                       />
                       {formik.touched.yearsOfOperating &&
-                        formik.errors.yearsOfOperating ? (
+                      formik.errors.yearsOfOperating ? (
                         <ErrorMessage>
                           {formik.errors.yearsOfOperating}
                         </ErrorMessage>
@@ -860,7 +876,7 @@ function MyProfile() {
                         {...formik.getFieldProps("noOfJobsAsExperience")}
                       />
                       {formik.touched.noOfJobsAsExperience &&
-                        formik.errors.noOfJobsAsExperience ? (
+                      formik.errors.noOfJobsAsExperience ? (
                         <ErrorMessage>
                           {formik.errors.noOfJobsAsExperience}
                         </ErrorMessage>
@@ -874,7 +890,7 @@ function MyProfile() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               "otherNotification",
-                              e.target.checked
+                              e.target.checked,
                             )
                           }
                           checked={formik.values.otherNotification}
@@ -891,7 +907,7 @@ function MyProfile() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               "marketingInformationNotification",
-                              e.target.checked
+                              e.target.checked,
                             )
                           }
                           checked={
