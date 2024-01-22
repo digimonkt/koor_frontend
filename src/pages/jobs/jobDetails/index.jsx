@@ -641,9 +641,13 @@ const JobDetails = () => {
                         "Create a cover letter",
                       ]}
                       // className={${styles.enablebtn}}
-                      disabled={details.isApplied && !details.isEditable}
+                      disabled={!details.isEditable && details.isApplied}
                       onClick={() => {
-                        setOpenCreateCoverLetter(true);
+                        if (details.expiredInDays <= 0) {
+                          setExpiredWarning(true);
+                        } else {
+                          setOpenCreateCoverLetter(true);
+                        }
                       }}
                     />
                     {!details.isApplied && details.isApplyThroughWebsite && (
