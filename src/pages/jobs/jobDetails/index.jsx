@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  // getApplyJobByEmailAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
@@ -19,7 +18,6 @@ import {
   FilledButton,
 } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
-// import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
@@ -609,16 +607,6 @@ const JobDetails = () => {
                     direction={{ xs: "column", lg: "row" }}
                     spacing={2}
                     alignItems={{ xs: "flex-start", lg: "center" }}
-
-                    // sx={{
-                    //   textAlign: "start",
-                    //   display: "flex",
-
-                    //   "@media (max-width: 480px)": {
-                    //     justifyContent: "center",
-                    //     flexDirection: "column",
-                    //   },
-                    // }}
                   >
                     <OutlinedButton
                       sx={{
