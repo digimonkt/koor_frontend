@@ -381,36 +381,38 @@ function TenderDetailsComponent() {
                     </b>
                   </p>
                 </div>
-                <div className={`${styles.downloadattachment}`}>
-                  <h6>Download attachments </h6>
-                  {details.attachments.map((attachment, i) => {
-                    return (
-                      <div key={i} className={`${styles.downloadtext}`}>
-                        <span className="d-inline-flex me-2">
-                          {<SVG.BlueAttach />}
-                        </span>
-                        <a
-                          className="m-0"
-                          onClick={() => handleLoadImage(attachment.path)}
-                          href={generateFileUrl(attachment.path)}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            color:
-                              role === USER_ROLES.jobSeeker
-                                ? "#eea23d"
-                                : "#274593",
-                            cursor: "pointer",
-                            whiteSpace: "normal",
-                            wordBreak: "break-all",
-                          }}
-                        >
-                          {attachment.title}
-                        </a>
-                      </div>
-                    );
-                  })}
-                </div>
+                {Boolean(details?.attachments.length) && (
+                  <div className={`${styles.downloadattachment}`}>
+                    <h6>Download attachments </h6>
+                    {details.attachments.map((attachment, i) => {
+                      return (
+                        <div key={i} className={`${styles.downloadtext}`}>
+                          <span className="d-inline-flex me-2">
+                            {<SVG.BlueAttach />}
+                          </span>
+                          <a
+                            className="m-0"
+                            onClick={() => handleLoadImage(attachment.path)}
+                            href={generateFileUrl(attachment.path)}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#eea23d"
+                                  : "#274593",
+                              cursor: "pointer",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
+                            }}
+                          >
+                            {attachment.title}
+                          </a>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </Grid>
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
