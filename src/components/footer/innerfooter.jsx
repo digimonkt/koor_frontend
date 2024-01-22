@@ -168,41 +168,44 @@ const InnerFooter = () => {
                 </Typography>
                 <List>
                   {categories.jobs?.map((child, index) => {
-                    return (
-                      <ListItem disablePadding={true} key={index}>
-                        <ListItemButton
-                          sx={{
-                            "&.MuiButtonBase-root": {
-                              fontFamily: "Poppins",
-                              fontSize: "15px",
-                              fontWeight: 400,
-                              color: "#121212",
-                              "&:hover": {
-                                background: "transparent",
-                                color: "#EEA23D",
+                    if (child.count !== 0) {
+                      return (
+                        <ListItem disablePadding={true} key={index}>
+                          <ListItemButton
+                            sx={{
+                              "&.MuiButtonBase-root": {
+                                fontFamily: "Poppins",
+                                fontSize: "15px",
+                                fontWeight: 400,
+                                color: "#121212",
+                                "&:hover": {
+                                  background: "transparent",
+                                  color: "#EEA23D",
+                                },
+                                "@media (max-width:992px)": {
+                                  fontSize: "12px",
+                                },
                               },
-                              "@media (max-width:992px)": {
-                                fontSize: "12px",
-                              },
-                            },
-                          }}
-                          className={
-                            currentURL === "/search/jobs" &&
-                            jobCategoryId === child.id
-                              ? "active-footer"
-                              : "not-active-footer"
-                          }
-                          LinkComponent={Link}
-                          to={`/search/jobs?categories=${child.id}`}
-                          dense={true}
-                          disableGutters={true}
-                        >
-                          {child.title.length > 20
-                            ? `${child.title.slice(0, 20)}...`
-                            : child.title}
-                        </ListItemButton>
-                      </ListItem>
-                    );
+                            }}
+                            className={
+                              currentURL === "/search/jobs" &&
+                              jobCategoryId === child.id
+                                ? "active-footer"
+                                : "not-active-footer"
+                            }
+                            LinkComponent={Link}
+                            to={`/search/jobs?categories=${child.id}`}
+                            dense={true}
+                            disableGutters={true}
+                          >
+                            {child.title.length > 20
+                              ? `${child.title.slice(0, 20)}...`
+                              : child.title}
+                          </ListItemButton>
+                        </ListItem>
+                      );
+                    }
+                    return null; // Return null if child.count is 0
                   })}
                 </List>
               </Grid>
@@ -228,41 +231,44 @@ const InnerFooter = () => {
                   </Typography>
                   <List>
                     {categories.tenders?.map((child, index) => {
-                      return (
-                        <ListItem disablePadding={true} key={index}>
-                          <ListItemButton
-                            sx={{
-                              "&.MuiButtonBase-root": {
-                                fontFamily: "Poppins",
-                                fontSize: "15px",
-                                fontWeight: 400,
-                                color: "#121212",
-                                "&:hover": {
-                                  background: "transparent",
-                                  color: "#EEA23D",
+                      if (child.count !== 0) {
+                        return (
+                          <ListItem disablePadding={true} key={index}>
+                            <ListItemButton
+                              sx={{
+                                "&.MuiButtonBase-root": {
+                                  fontFamily: "Poppins",
+                                  fontSize: "15px",
+                                  fontWeight: 400,
+                                  color: "#121212",
+                                  "&:hover": {
+                                    background: "transparent",
+                                    color: "#EEA23D",
+                                  },
+                                  "@media (max-width:992px)": {
+                                    fontSize: "12px",
+                                  },
                                 },
-                                "@media (max-width:992px)": {
-                                  fontSize: "12px",
-                                },
-                              },
-                            }}
-                            className={
-                              tenderCategoryId === child.id
-                                ? "active-footer"
-                                : "not-active-footer"
-                            }
-                            LinkComponent={Link}
-                            to={`/search/tenders?tenderCategories=${child.id}`}
-                            dense={true}
-                            // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
-                            disableGutters={true}
-                          >
-                            {child.title.length > 20
-                              ? `${child.title.slice(0, 20)}...`
-                              : child.title}
-                          </ListItemButton>
-                        </ListItem>
-                      );
+                              }}
+                              className={
+                                tenderCategoryId === child.id
+                                  ? "active-footer"
+                                  : "not-active-footer"
+                              }
+                              LinkComponent={Link}
+                              to={`/search/tenders?tenderCategories=${child.id}`}
+                              dense={true}
+                              // onClick={(e) => checkUserLoggedIn(e, USER_ROLES.vendor)}
+                              disableGutters={true}
+                            >
+                              {child.title.length > 20
+                                ? `${child.title.slice(0, 20)}...`
+                                : child.title}
+                            </ListItemButton>
+                          </ListItem>
+                        );
+                      }
+                      return null; // Return null if child.count is 0
                     })}
                   </List>
                 </>
@@ -289,48 +295,51 @@ const InnerFooter = () => {
                   </Typography>
                   <List>
                     {categories.talents?.map((child, index) => {
-                      return (
-                        <ListItem disablePadding={true} key={index}>
-                          <ListItemButton
-                            sx={{
-                              "&.MuiButtonBase-root": {
-                                fontFamily: "Poppins",
-                                fontSize: "15px",
-                                fontWeight: 400,
-                                color: "#121212",
-                                "&:hover": {
-                                  background: "transparent",
-                                  color: "#EEA23D",
+                      if (child.count !== 0) {
+                        return (
+                          <ListItem disablePadding={true} key={index}>
+                            <ListItemButton
+                              sx={{
+                                "&.MuiButtonBase-root": {
+                                  fontFamily: "Poppins",
+                                  fontSize: "15px",
+                                  fontWeight: 400,
+                                  color: "#121212",
+                                  "&:hover": {
+                                    background: "transparent",
+                                    color: "#EEA23D",
+                                  },
+                                  "@media (max-width:992px)": {
+                                    fontSize: "12px",
+                                  },
                                 },
-                                "@media (max-width:992px)": {
-                                  fontSize: "12px",
-                                },
-                              },
-                            }}
-                            className={
-                              currentURL === "/search/talents" &&
-                              talentCategoryId === child.id
-                                ? "active-footer"
-                                : "not-active-footer"
-                            }
-                            LinkComponent={Link}
-                            to={
-                              isLoggedIn
-                                ? `/search/talents?categories=${child.id}`
-                                : "#"
-                            }
-                            dense={true}
-                            disableGutters={true}
-                            onClick={(e) =>
-                              checkUserLoggedIn(e, USER_ROLES.employer)
-                            }
-                          >
-                            {child.title.length > 20
-                              ? `${child.title.slice(0, 20)}...`
-                              : child.title}
-                          </ListItemButton>
-                        </ListItem>
-                      );
+                              }}
+                              className={
+                                currentURL === "/search/talents" &&
+                                talentCategoryId === child.id
+                                  ? "active-footer"
+                                  : "not-active-footer"
+                              }
+                              LinkComponent={Link}
+                              to={
+                                isLoggedIn
+                                  ? `/search/talents?categories=${child.id}`
+                                  : "#"
+                              }
+                              dense={true}
+                              disableGutters={true}
+                              onClick={(e) =>
+                                checkUserLoggedIn(e, USER_ROLES.employer)
+                              }
+                            >
+                              {child.title.length > 20
+                                ? `${child.title.slice(0, 20)}...`
+                                : child.title}
+                            </ListItemButton>
+                          </ListItem>
+                        );
+                      }
+                      return null; // Return null if child.count is 0
                     })}
                   </List>
                 </Grid>

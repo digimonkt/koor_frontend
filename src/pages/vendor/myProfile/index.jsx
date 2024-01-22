@@ -76,7 +76,7 @@ function MyProfile() {
   const [toggle, setToggle] = useState(["about"]);
   const handleToggleModel2 = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
     );
   };
   useEffect(() => {
@@ -136,7 +136,7 @@ function MyProfile() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        ""
+        "",
       );
       const payload = {
         organization_name: values.organizationName,
@@ -201,15 +201,15 @@ function MyProfile() {
             operatingYears: values.operatingYears,
             jobsExperience: values.noOfJobsAsExperience,
             organizationType: sectors.data.find(
-              (sector) => sector.id === values.organizationType
+              (sector) => sector.id === values.organizationType,
             ),
 
             address: values.address,
             country: countries.data.find(
-              (country) => country.id === values.country
+              (country) => country.id === values.country,
             ),
             city: cities.data[values.country]?.find(
-              (city) => city.id === values.city
+              (city) => city.id === values.city,
             ),
           },
         };
@@ -300,9 +300,19 @@ function MyProfile() {
   }, [debouncedSearchValue]);
   return (
     <>
-      <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={{ xs: 2, md: 12 }}
+        className="mb-3"
+        alignItems={"flex-start"}
+      >
         <h1 className="heading m-0">Add info to complete your profile</h1>
-        <span className="later" style={{ color: "#274593" }}>
+        <span
+          className="later mt-2"
+          style={{
+            color: "#274593",
+          }}
+        >
           Do it later
         </span>
       </Stack>
@@ -392,7 +402,7 @@ function MyProfile() {
                             if (!isValid) {
                               formik.setFieldError(
                                 "mobileNumber",
-                                "Invalid Mobile Number"
+                                "Invalid Mobile Number",
                               );
                             }
                           }}
@@ -455,7 +465,7 @@ function MyProfile() {
                                     onClick={() => {
                                       formik.setFieldValue(
                                         "address",
-                                        address.description
+                                        address.description,
                                       );
                                       setSearchValue(address.description);
                                     }}
@@ -588,7 +598,7 @@ function MyProfile() {
                             onChange={(e) =>
                               formik.setFieldValue(
                                 "otherNotification",
-                                e.target.checked
+                                e.target.checked,
                               )
                             }
                             checked={formik.values.otherNotification}
@@ -605,7 +615,7 @@ function MyProfile() {
                             onChange={(e) =>
                               formik.setFieldValue(
                                 "marketingInformationNotification",
-                                e.target.checked
+                                e.target.checked,
                               )
                             }
                             checked={
@@ -675,7 +685,7 @@ function MyProfile() {
                           if (!isValid) {
                             formik.setFieldError(
                               "mobileNumber",
-                              "Invalid Mobile Number"
+                              "Invalid Mobile Number",
                             );
                           }
                         }}
@@ -710,7 +720,7 @@ function MyProfile() {
                           (country) => ({
                             value: country.id,
                             label: country.title,
-                          })
+                          }),
                         )}
                         {...formik.getFieldProps("city")}
                       />
@@ -738,7 +748,7 @@ function MyProfile() {
                                   onClick={() => {
                                     formik.setFieldValue(
                                       "address",
-                                      address.description
+                                      address.description,
                                     );
                                     setSearchValue(address.description);
                                   }}
@@ -869,7 +879,7 @@ function MyProfile() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               "otherNotification",
-                              e.target.checked
+                              e.target.checked,
                             )
                           }
                           checked={formik.values.otherNotification}
@@ -886,7 +896,7 @@ function MyProfile() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               "marketingInformationNotification",
-                              e.target.checked
+                              e.target.checked,
                             )
                           }
                           checked={

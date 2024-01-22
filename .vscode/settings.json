@@ -2,9 +2,11 @@
   "cSpell.words": [
     "Bahnschrift",
     "cwebsocket",
+    "endplaceholder",
     "formik",
     "Koor",
     "labelledby",
+    "moblie",
     "Partime",
     "urlcat"
   ],
@@ -26,5 +28,6 @@
     "titleBar.activeBackground": "#03122a",
     "titleBar.border": "#03122a",
     "titleBar.inactiveBackground": "#03122a99"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "disabled"
 }

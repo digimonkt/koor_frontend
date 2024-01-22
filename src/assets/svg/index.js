@@ -141,8 +141,10 @@ import { ReactComponent as mailTrik } from "./mail-trik.svg";
 import { ReactComponent as languageTrik } from "./language-trik.svg";
 import { ReactComponent as locationTrik } from "./location_on-trik.svg";
 import { ReactComponent as logoHorizontalTrik } from "./Logo_main_horizontal-trik.svg";
+import { ReactComponent as resumeIcon } from "./resume_icon.svg";
 
 export const SVG = {
+  resumeIcon,
   CollaborationIcon,
   SearchAppIcon,
   MessageCommunicationIcon,

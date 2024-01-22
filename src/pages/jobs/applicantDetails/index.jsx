@@ -25,16 +25,17 @@ import { generateFileUrl } from "../../../utils/generateFileUrl";
 import { NoRecordFoundAnimation } from "../../../components/animations";
 import urlcat from "urlcat";
 import { FilledButton } from "@components/button";
-import { KoorLogo } from "@assets/base64/index";
-import html2pdf from "html2pdf.js";
 import ResumeTemplate from "@pages/jobSeeker/updateProfile/resume-update/resumeTemplate/template1";
 import { GetUserDetailsAPI } from "@api/user";
+import { pdfDownloader } from "@utils/fileUtils";
+import { useDispatch } from "react-redux";
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
   // navigate
   const navigate = useNavigate();
   const params = useParams();
+  const dispatch = useDispatch();
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [applicantDetails, setApplicantsDetails] = useState({
     user: {
@@ -56,61 +57,11 @@ const ApplicantDetails = () => {
     skills: [],
     workExperiences: [],
   });
+
   const downloadPDF = async () => {
-    setIsDownloadingPDF(true);
-    const element = document.getElementById("div-to-pdf");
-    const options = {
-      margin: [20, 0],
-      filename: `${userDetails.name || "Resume"}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "Portrait" },
-      pagebreak: {
-        before: "#page-break",
-      },
-    };
-
-    const footerContent = "This resume is generated with";
-    const imageWidth = 13; // Set the desired width
-    const imageHeight = 5;
-    await html2pdf()
-      .from(element)
-      .set(options)
-      .toPdf()
-      .get("pdf")
-      .then(function (pdf) {
-        const totalPages = pdf.internal.getNumberOfPages();
-
-        for (let i = 1; i <= totalPages; i++) {
-          pdf.setPage(i);
-          pdf.setFontSize(10);
-          pdf.setTextColor(150);
-          const imageX =
-            pdf.internal.pageSize.getWidth() -
-            pdf.internal.pageSize.getWidth() / 2 +
-            footerContent.length -
-            10;
-          pdf.addImage(
-            KoorLogo,
-            "PNG",
-            imageX,
-            pdf.internal.pageSize.getHeight() - 14,
-            imageWidth,
-            imageHeight
-          );
-          pdf.text(
-            footerContent,
-            pdf.internal.pageSize.getWidth() -
-              pdf.internal.pageSize.getWidth() / 2 -
-              footerContent.length,
-            pdf.internal.pageSize.getHeight() - 10
-          );
-        }
-      })
-      .save();
-
-    setIsDownloadingPDF(false);
+    pdfDownloader(userDetails?.name, setIsDownloadingPDF, dispatch);
   };
+
   const getApplicantDetails = async () => {
     const res = await getApplicationDetailsAPI(params.applicationId);
     if (res.remote === "success") {
@@ -126,6 +77,7 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getUserDetails(applicantDetails.user.id);
   }, [applicantDetails.user.id]);
+
   useEffect(() => {
     getApplicantDetails();
   }, [params.applicationId]);
@@ -342,7 +294,7 @@ const ApplicantDetails = () => {
                                 <WorkExperienceCard {...item} />
                               </div>
                             </li>
-                          )
+                          ),
                         )
                       )}
                     </ul>
@@ -363,7 +315,7 @@ const ApplicantDetails = () => {
                                 // handleEdit={() => handleEdit(item)}
                               />
                             </li>
-                          )
+                          ),
                         )
                       )}
                     </ul>
@@ -440,7 +392,10 @@ const ApplicantDetails = () => {
                     />
                     <div style={{ display: "none" }}>
                       <ResumeTemplate
-                        user={userDetails}
+                        user={{
+                          ...userDetails,
+                          signature: applicantDetails?.signature,
+                        }}
                         appliedJob={applicantDetails.shortLetter}
                       />
                     </div>

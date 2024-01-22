@@ -103,3 +103,11 @@ export const TABS_VALUE = {
   tab2: 1,
   tab3: 2,
 };
+
+export const mimeTypes = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".gif": "image/gif",
+  ".pdf": "application/pdf",
+};

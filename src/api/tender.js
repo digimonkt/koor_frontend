@@ -8,12 +8,15 @@ import {
 export const getTenderSearchAPI = async (data) => {
   const newData = { ...data };
   delete newData.sector;
-  let url = urlcat("v1/tenders", { ...newData });
+
+  const { sector, tenderCategories, opportunityType, ...restData } = newData;
+  let url = urlcat("v1/tenders", { ...restData });
   if (data.sector) {
     data.sector.forEach((sector) => {
-      url += `&sector=${sector}`;
+      url += `&sector=${sector.title}`;
     });
   }
+
   if (data.tenderCategories) {
     data.tenderCategories.forEach((category) => {
       url += `&tenderCategory=${category.title}`;
@@ -21,7 +24,7 @@ export const getTenderSearchAPI = async (data) => {
   }
   if (data.opportunityType) {
     data.opportunityType.forEach((category) => {
-      url += `&opportunityType=${category}`;
+      url += `&opportunityType=${category.title}`;
     });
   }
 

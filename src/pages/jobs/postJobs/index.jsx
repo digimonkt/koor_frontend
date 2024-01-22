@@ -224,6 +224,7 @@ function PostJobsComponent() {
       }
     },
   });
+
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
@@ -1072,7 +1073,7 @@ function PostJobsComponent() {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment, i) => i !== index
+                            (_, i) => i !== index
                           )
                         );
                       }

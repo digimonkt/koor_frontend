@@ -42,6 +42,7 @@ import Article3 from "./article3.png";
 import JobPlaceholder from "./job-placeholder.png";
 import MobileApp from "./mobile-app.png";
 import MobileApp2 from "./mobile-app2.png";
+import CoverLetterImg from "./coverLetter_img.png";
 import Detail1 from "./detail1.png";
 import Detail2 from "./detail2.png";
 import Detail3 from "./detail3.png";
@@ -51,6 +52,7 @@ export const IMAGES = {
   Detail4,
   Detail3,
   Detail2,
+  CoverLetterImg,
   Detail1,
   MobileApp2,
   MobileApp,

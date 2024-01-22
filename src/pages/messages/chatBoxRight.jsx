@@ -114,7 +114,6 @@ function ChatBox({ setIsSeleted }) {
     } else if (action === "edit") {
       setOpenEditMessage(true);
     } else if (action === "quote") {
-      console.log("");
       setOpenReplyMessage(true);
     }
   };

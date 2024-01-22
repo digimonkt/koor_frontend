@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
-  // getApplyJobByEmailAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
@@ -19,7 +18,6 @@ import {
   FilledButton,
 } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
-// import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
@@ -34,6 +32,7 @@ import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
+import CreateCoverLetter from "../../../components/coverLetter";
 
 const JobDetails = () => {
   const params = useParams();
@@ -41,6 +40,7 @@ const JobDetails = () => {
   const dispatch = useDispatch();
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
+  const [openCreateCoverLetter, setOpenCreateCoverLetter] = useState(false);
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
@@ -607,17 +607,37 @@ const JobDetails = () => {
                     direction={{ xs: "column", lg: "row" }}
                     spacing={2}
                     alignItems={{ xs: "flex-start", lg: "center" }}
-
-                    // sx={{
-                    //   textAlign: "start",
-                    //   display: "flex",
-
-                    //   "@media (max-width: 480px)": {
-                    //     justifyContent: "center",
-                    //     flexDirection: "column",
-                    //   },
-                    // }}
                   >
+                    <OutlinedButton
+                      sx={{
+                        color: "#eea23d !important",
+                        borderColor: "#eea23d !important",
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                          width: "100%",
+                        },
+                        "@media (max-width: 320px)": {
+                          fontSize: "10px !important",
+                          padding: "10px 25px !important",
+                          width: "100%",
+                        },
+                      }}
+                      title={[
+                        <>
+                          <SVG.resumeIcon className="me-2" />
+                        </>,
+                        "Create a cover letter",
+                      ]}
+                      // className={${styles.enablebtn}}
+                      disabled={!details.isEditable && details.isApplied}
+                      onClick={() => {
+                        if (details.expiredInDays <= 0) {
+                          setExpiredWarning(true);
+                        } else {
+                          setOpenCreateCoverLetter(true);
+                        }
+                      }}
+                    />
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
@@ -937,6 +957,15 @@ const JobDetails = () => {
             </div>
           </div>
         </div>
+      </DialogBox>
+      <DialogBox
+        className="coverletter_dialog"
+        open={openCreateCoverLetter}
+        handleClose={() => setOpenCreateCoverLetter(false)}
+      >
+        <Box>
+          <CreateCoverLetter />
+        </Box>
       </DialogBox>
       <ExpiredBox
         open={expiredWarning}
