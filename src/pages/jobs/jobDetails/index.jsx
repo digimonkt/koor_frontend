@@ -589,16 +589,6 @@ const JobDetails = () => {
                     direction={{ xs: "column", lg: "row" }}
                     spacing={2}
                     alignItems={{ xs: "flex-start", lg: "center" }}
-
-                    // sx={{
-                    //   textAlign: "start",
-                    //   display: "flex",
-
-                    //   "@media (max-width: 480px)": {
-                    //     justifyContent: "center",
-                    //     flexDirection: "column",
-                    //   },
-                    // }}
                   >
                     <OutlinedButton
                       sx={{
@@ -621,9 +611,13 @@ const JobDetails = () => {
                         "Create a cover letter",
                       ]}
                       // className={${styles.enablebtn}}
-                      disabled={details.isApplied && !details.isEditable}
+                      disabled={!details.isEditable && details.isApplied}
                       onClick={() => {
-                        setOpenCreateCoverLetter(true);
+                        if (details.expiredInDays <= 0) {
+                          setExpiredWarning(true);
+                        } else {
+                          setOpenCreateCoverLetter(true);
+                        }
                       }}
                     />
                     {!details.isApplied && details.isApplyThroughWebsite && (

@@ -84,7 +84,10 @@ const CreateCoverLetter = () => {
       }
 
       const res = await updateCoverLetterAPI(newFormData, jobId);
-      if (res.remote === "success") {
+      console.log({ res });
+      if (res.data.message[0] === "Cover letter already added.") {
+        dispatch(setErrorToast("Cover letter already added."));
+      } else if (res.remote === "success") {
         setData(payload);
         dispatch(setCoverLetterData(payload));
         setLoading(false);
