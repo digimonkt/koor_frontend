@@ -19,10 +19,12 @@ import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const { isMobileView } = useSelector(({ platform }) => platform);
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
     jobPreferences: {},
@@ -60,7 +62,13 @@ function PublicProfileComponent() {
     getEmployersJob(userId);
   }, []);
   return (
-    <Box sx={{ marginTop: "67px", py: 3 }}>
+    <Box
+      sx={
+        isMobileView
+          ? { py: 3, marginBottom: "20px" }
+          : { marginTop: "67px", py: 3 }
+      }
+    >
       {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
@@ -69,12 +77,13 @@ function PublicProfileComponent() {
             sx={{
               boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
               borderRadius: "20px",
+              marginBottom: "50px",
             }}
           >
             <CardContent
               sx={{
                 "&.MuiCardContent-root": {
-                  padding: "30px",
+                  padding: "30px 0px 30px 40px",
                 },
               }}
             >
@@ -234,7 +243,14 @@ function PublicProfileComponent() {
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <Box>
-                    <Stack direction={"column"} spacing={2}>
+                    <Stack
+                      direction={"column"}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
                       <Typography
                         variant="h6"
                         sx={{
@@ -429,6 +445,7 @@ function PublicProfileComponent() {
                         sx={{
                           background: "#F2F2F2",
                           height: "300px",
+                          width: "90%",
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",

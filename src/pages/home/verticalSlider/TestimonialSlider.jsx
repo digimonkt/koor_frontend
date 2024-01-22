@@ -93,7 +93,7 @@ function TestimonialSlider({ testimonialList }) {
               },
             ]}
           >
-            {(testimonialList || []).map((item, index) => (
+            {(testimonialList || []).map((item) => (
               <>
                 <Box>
                   <Typography
@@ -130,7 +130,7 @@ function TestimonialSlider({ testimonialList }) {
                       dangerouslySetInnerHTML={{
                         __html: item.description.substring(
                           0,
-                          TESTIMONIAL_MAX_WORD
+                          TESTIMONIAL_MAX_WORD,
                         ),
                       }}
                     ></Box>

@@ -32,6 +32,7 @@ import {
   setJobPage,
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
+import { useScrollTop } from "@hooks";
 import urlcat from "urlcat";
 import { Capacitor } from "@capacitor/core";
 import { getAdSenseAPI } from "@api/adSense";
@@ -159,6 +160,7 @@ function Search({ searchTypeForJob }) {
       }
     }
   }, []);
+  useScrollTop();
   const pagination = () => {
     return (
       <Pagination
@@ -325,7 +327,7 @@ function Search({ searchTypeForJob }) {
                     minHeight: "450px",
                     marginBottom:
                       platform === "android" || platform === "ios"
-                        ? "50px"
+                        ? "40px"
                         : "0px",
                     marginTop:
                       platform === "android" || platform === "ios"
@@ -515,7 +517,13 @@ function Search({ searchTypeForJob }) {
                   <Component />
                 </Box>
                 {totalPages > 1 ? (
-                  <div className="paginations pt-4">{pagination()}</div>
+                  <div
+                    className={
+                      isMobileView ? "paginations" : "paginations pt-4"
+                    }
+                  >
+                    {pagination()}
+                  </div>
                 ) : (
                   <div style={{ marginTop: "20px" }}></div>
                 )}

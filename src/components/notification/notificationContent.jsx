@@ -1,6 +1,6 @@
 import { GetNotificationAPI } from "../../api/user";
 import { TabContext, TabList } from "@mui/lab";
-import { Box, Button, Stack, Tab, Typography } from "@mui/material";
+import { Box, Button, Divider, Stack, Tab, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
@@ -16,7 +16,7 @@ import dayjs from "dayjs";
 import { Capacitor } from "@capacitor/core";
 
 function NotificationContentComponent({ footer, header, handleClose, ref }) {
-  const { role } = useSelector(state => state.auth);
+  const { role } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
 
   const [loading, setLoading] = useState(false);
@@ -29,21 +29,21 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
     null,
   );
   const handleChangeSection = (event, newValue) => {
-    const filterNotification = type => {
+    const filterNotification = (type) => {
       const notificationData = [...notification];
       let notificationResult = "";
       if (newValue === "message") {
         notificationResult = notificationData.filter(
-          notification => notification.notificationType === "message",
+          (notification) => notification.notificationType === "message",
         );
       } else {
         notificationResult = notificationData.filter(
-          notification => notification.notificationType !== "message",
+          (notification) => notification.notificationType !== "message",
         );
       }
       if (role === USER_ROLES.employer) {
         notificationResult = notificationResult.filter(
-          notification => notification.notificationType !== "applied_tender",
+          (notification) => notification.notificationType !== "applied_tender",
         );
       }
       setFilterData(notificationResult);
@@ -90,7 +90,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
     setLoading(false);
   };
 
-  const formatDate = dateStr => {
+  const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     const today = new Date();
     const yesterday = new Date(today);
@@ -304,6 +304,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                         }`}
                       >
                         {getNotificationCardByType(item, handleClose, role)}
+                        <Divider />
                       </div>
                     </>
                   ))

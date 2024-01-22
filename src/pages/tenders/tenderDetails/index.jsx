@@ -213,7 +213,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -290,7 +290,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -381,36 +381,38 @@ function TenderDetailsComponent() {
                     </b>
                   </p>
                 </div>
-                <div className={`${styles.downloadattachment}`}>
-                  <h6>Download attachments </h6>
-                  {details.attachments.map((attachment, i) => {
-                    return (
-                      <div key={i} className={`${styles.downloadtext}`}>
-                        <span className="d-inline-flex me-2">
-                          {<SVG.BlueAttach />}
-                        </span>
-                        <a
-                          className="m-0"
-                          onClick={() => handleLoadImage(attachment.path)}
-                          href={generateFileUrl(attachment.path)}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            color:
-                              role === USER_ROLES.jobSeeker
-                                ? "#eea23d"
-                                : "#274593",
-                            cursor: "pointer",
-                            whiteSpace: "normal",
-                            wordBreak: "break-all",
-                          }}
-                        >
-                          {attachment.title}
-                        </a>
-                      </div>
-                    );
-                  })}
-                </div>
+                {Boolean(details?.attachments.length) && (
+                  <div className={`${styles.downloadattachment}`}>
+                    <h6>Download attachments </h6>
+                    {details.attachments.map((attachment, i) => {
+                      return (
+                        <div key={i} className={`${styles.downloadtext}`}>
+                          <span className="d-inline-flex me-2">
+                            {<SVG.BlueAttach />}
+                          </span>
+                          <a
+                            className="m-0"
+                            onClick={() => handleLoadImage(attachment.path)}
+                            href={generateFileUrl(attachment.path)}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#eea23d"
+                                  : "#274593",
+                              cursor: "pointer",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
+                            }}
+                          >
+                            {attachment.title}
+                          </a>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </Grid>
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
@@ -450,13 +452,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                })
+                                }),
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                })
+                                }),
                               );
                             }
                           } else {
@@ -565,8 +567,14 @@ function TenderDetailsComponent() {
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
+                          color:
+                            role === USER_ROLES.jobSeeker
+                              ? "#eea23d !important"
+                              : "#274593 !important",
+                          borderColor:
+                            role === USER_ROLES.jobSeeker
+                              ? "#eea23d !important"
+                              : "#274593 !important",
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             padding: "10px 22px !important",
@@ -594,8 +602,14 @@ function TenderDetailsComponent() {
                     {!details.isApplied && details.isApplyThroughEmail && (
                       <OutlinedButton
                         sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
+                          color:
+                            role === USER_ROLES.jobSeeker
+                              ? "#eea23d !important"
+                              : "#274593 !important",
+                          borderColor:
+                            role === USER_ROLES.jobSeeker
+                              ? "#eea23d !important"
+                              : "#274593 !important",
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             marginTop: "20px",

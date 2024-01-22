@@ -22,15 +22,15 @@ import { MESSAGE_TYPE, USER_ROLES } from "./utils/enum";
 import { resetToast } from "./redux/slice/toast";
 import { FallbackLoading } from "./components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
-// eslint-disable-next-line no-unused-vars
 import { getUserCountryByIpAPI, getUserIpAPI, postUserIpAPI } from "./api/user";
 import InnerFooter from "./components/footer/innerfooter";
 import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
-import { Box } from "@mui/material";
 import { setIsMobileView } from "@redux/slice/platform";
 import { App as CapApp } from "@capacitor/app";
 import { setAppInfo } from "./redux/slice/platform";
+import { useScrollTop } from "@hooks/";
+
 const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ function App() {
   const backButtonAction = () => {
     const history = window.history;
     if (history.length > 1) {
-      navigate(-1);
+      history.back();
     } else {
       if (Capacitor.isNativePlatform) {
         CapApp.exitApp();
@@ -155,6 +155,7 @@ function App() {
     }
   }, [currentUser?.id, window.location.pathname]);
 
+  useScrollTop();
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
@@ -239,31 +240,6 @@ function App() {
         {(platform === "android" || platform === "ios") && isLoggedIn ? (
           <>
             <BottomBar />
-            <Box
-              sx={{
-                position: "fixed",
-                bottom: "0px",
-                left: 0,
-                right: 0,
-                background: "#fff",
-                textAlign: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "20px",
-              }}
-            >
-              <Box
-                component={"span"}
-                sx={{
-                  borderRadius: "10px",
-                  width: "100px",
-                  height: "4px",
-                  background: "#121212",
-                  display: "block",
-                }}
-              ></Box>
-            </Box>
           </>
         ) : (
           <></>
