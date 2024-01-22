@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./style.css";
-import { generateFileUrl } from "@utils/generateFileUrl";
 import { SVG } from "@assets/svg";
 import CoverLetter from "../cover-letter";
 import { YEAR_FORMAT } from "@utils/constants/constants";
@@ -10,28 +8,7 @@ import dayjs from "dayjs";
 function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
   const applicantDetails = user || currentUser;
-  const [, setBase64Image] = useState("");
-  useEffect(() => {
-    const convertImageToBase64 = async () => {
-      try {
-        const response = await fetch(
-          generateFileUrl(applicantDetails?.profileImage),
-        );
-        const blob = await response.blob();
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-          const base64String = reader.result;
-          setBase64Image(base64String);
-        };
-
-        reader.readAsDataURL(blob);
-      } catch (error) {
-        console.error("Error converting image to base64:", error);
-      }
-    };
-    convertImageToBase64();
-  }, []);
+  console.log({ user });
   return (
     <div className="job-application pages" id="div-to-pdf">
       <div className="container resume_template">
@@ -61,10 +38,10 @@ function ResumeTemplate({ user, appliedJob = false }) {
                       {applicantDetails.email}
                     </li>
                   )}
-                  {applicantDetails?.profile?.website && (
+                  {applicantDetails?.profile?.personalWebsite && (
                     <li>
                       <SVG.languageTrik style={{ marginRight: "5px" }} />
-                      {applicantDetails?.profile?.website}
+                      {applicantDetails?.profile?.personalWebsite}
                     </li>
                   )}
                   {applicantDetails.profile?.country?.title && (
@@ -146,31 +123,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 </h6>
               </div>
             </div>
-            <hr /> */}
-              {/* <div className="refrence">
-              <h2>Refrence</h2>
-              <h3 style={{ marginBottom: "5px" }}>Abdimajid Omar</h3>
-              <span>
-                <SVG.callTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <span>
-                <SVG.mailTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <h3 style={{ marginBottom: "5px", marginTop: "10px" }}>
-                Second reference name
-              </h3>
-              <span>
-                <SVG.callTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-              <span>
-                <SVG.mailTrik style={{ marginRight: "5px" }} />
-                023-105-61-9018
-              </span>
-            </div>
-            <hr /> */}
               {/* <div className="certification">
               <h2>CERTIFICATION</h2>
               <div className="certification_div">
@@ -180,6 +132,38 @@ function ResumeTemplate({ user, appliedJob = false }) {
               </div>
             </div>
             <hr /> */}
+              {Boolean(applicantDetails?.profile?.references[0]?.name) && (
+                <>
+                  <div>
+                    <h2>References</h2>
+                    {applicantDetails?.profile?.references?.map(
+                      (reference, idx) => (
+                        <div key={idx} className="reference">
+                          <h3 style={{ marginBottom: "5px" }}>
+                            {reference?.name}
+                          </h3>
+                          {Boolean(reference?.mobile_number) && (
+                            <>
+                              <span>
+                                <SVG.callTrik style={{ marginRight: "5px" }} />
+                                {reference?.mobile_number}
+                              </span>
+                              <br />
+                            </>
+                          )}
+                          {Boolean(reference?.email) && (
+                            <span>
+                              <SVG.mailTrik style={{ marginRight: "5px" }} />
+                              {reference?.email}
+                            </span>
+                          )}
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </>
+              )}
+              <hr />
               {Boolean(applicantDetails.languages.length) && (
                 <div className="language">
                   <h2>LANGUAGE</h2>
@@ -198,8 +182,8 @@ function ResumeTemplate({ user, appliedJob = false }) {
             <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
             <div style={{ width: "54%", padding: "20px 0px 20px 15px" }}>
               <div className="profile">
-                <h2>PROFILE</h2>
-                <p>{applicantDetails.profile.description}</p>
+                <h2>Overview</h2>
+                <p>{applicantDetails.profile?.shortSummary}</p>
               </div>
               <hr />
               {Boolean(applicantDetails.workExperiences.length) && (

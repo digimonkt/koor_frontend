@@ -25,12 +25,11 @@ import { generateFileUrl } from "../../../utils/generateFileUrl";
 import { NoRecordFoundAnimation } from "../../../components/animations";
 import urlcat from "urlcat";
 import { FilledButton } from "@components/button";
-import { pdfDownloader } from "@utils/filesUtils";
 import ResumeTemplate from "@pages/jobSeeker/updateProfile/resume-update/resumeTemplate/template1";
 import { GetUserDetailsAPI } from "@api/user";
+import { pdfDownloader } from "@utils/fileUtils";
 import { useDispatch } from "react-redux";
 import { Capacitor } from "@capacitor/core";
-
 dayjs.extend(relativeTime);
 
 const ApplicantDetails = () => {
@@ -62,7 +61,7 @@ const ApplicantDetails = () => {
   });
 
   const downloadPDF = async () => {
-    pdfDownloader(applicantDetails?.name, setIsDownloadingPDF, dispatch);
+    pdfDownloader(userDetails?.name, setIsDownloadingPDF, dispatch);
   };
 
   const getApplicantDetails = async () => {
@@ -80,6 +79,7 @@ const ApplicantDetails = () => {
   useEffect(() => {
     getUserDetails(applicantDetails.user.id);
   }, [applicantDetails.user.id]);
+
   useEffect(() => {
     getApplicantDetails();
   }, [params.applicationId]);
@@ -116,35 +116,63 @@ const ApplicantDetails = () => {
             <Stack
               direction="row"
               spacing={2}
-              alignItems={{ xs: "start", lg: "center" }}
+              alignItems={{ xs: "baseline", md: "center", lg: "center" }}
               className="recent-content job-border pb-2 mb-3"
             >
-              <IconButton
-                LinkComponent={Link}
-                onClick={() => navigate(-1)}
-                style={{ padding: "0px", marginTop: "6px" }}
-              >
-                <SVG.LeftArrow />
-              </IconButton>
+              <Box sx={{ margin: "0px !important" }}>
+                <IconButton
+                  LinkComponent={Link}
+                  onClick={() => navigate(-1)}
+                  sx={{
+                    padding: "0px",
+                  }}
+                >
+                  <SVG.ArrowBackIcon />
+                </IconButton>
+              </Box>
               <Stack
-                direction={{ xs: "column", lg: "row", sm: "row" }}
-                alignItems={{ xs: "start", lg: "center" }}
+                direction={{ xs: "column", lg: "row", sm: "column", md: "row" }}
+                alignItems={{ xs: "baseline", md: "baseline", lg: "center" }}
                 spacing={2}
               >
-                <h4>{applicantDetails.user.name}</h4>
-                <div
+                <Box
+                  sx={{
+                    display: "block",
+                    "@media (max-width: 992px)": {
+                      margin: "0px !important",
+                      display: "none",
+                    },
+                  }}
+                >
+                  <h4>{applicantDetails.user.name}</h4>
+                </Box>
+                <Box
+                  sx={{
+                    display: "none",
+                    "@media (max-width: 992px)": {
+                      margin: "0px !important",
+                      display: "block",
+                    },
+                  }}
+                >
+                  <h4 className="me-1">Job application</h4>
+                </Box>
+                <Box
                   className="recent-research"
-                  style={{
+                  sx={{
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "wrap",
+                    "@media (max-width: 992px)": {
+                      display: "block",
+                    },
                   }}
                 >
                   <span>
                     Applied {dayjs(applicantDetails.createdAt).fromNow()} to:{" "}
                   </span>
                   <div>{applicantDetails.job.title}</div>
-                </div>
+                </Box>
               </Stack>
             </Stack>
 
@@ -375,7 +403,10 @@ const ApplicantDetails = () => {
                     />
                     <div style={{ display: "none" }}>
                       <ResumeTemplate
-                        user={userDetails}
+                        user={{
+                          ...userDetails,
+                          job: applicantDetails?.job?.id,
+                        }}
                         appliedJob={applicantDetails.shortLetter}
                       />
                     </div>

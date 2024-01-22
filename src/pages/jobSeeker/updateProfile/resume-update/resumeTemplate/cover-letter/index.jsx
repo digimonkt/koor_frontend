@@ -4,10 +4,6 @@ import "./style.css";
 const CoverLetter = ({ applicantDetails, content }) => {
   return (
     <>
-      {/* <div className="coverLetter">
-        <h1>Vlad Blyshchyk</h1>
-        <h3>UI/UX and Product Designer</h3>
-      </div> */}
       <div className="pages">
         <div className="coverletter_div section">
           <h2>To whom it may concern,</h2>

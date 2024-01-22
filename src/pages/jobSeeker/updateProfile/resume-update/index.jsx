@@ -1,14 +1,13 @@
-import { FilledButton, OutlinedButton } from "../../../../components/button";
-import { IconButton, Stack } from "@mui/material";
-import React, { useState } from "react";
+import { OutlinedButton } from "../../../../components/button";
+import { Box, IconButton, Stack } from "@mui/material";
+import React, { useRef, useState } from "react";
 import { SVG } from "../../../../assets/svg";
-import DialogBox from "../../../../components/dialogBox";
-import ResumeTemplate from "./resumeTemplate/template1";
-import { useSelector, useDispatch } from "react-redux";
-import { DownloadResumeAPI } from "../../../../api/jobSeeker";
-import { generateFileUrl } from "@utils/generateFileUrl";
 import { Capacitor } from "@capacitor/core";
-import { pdfDownloader } from "../../../../utils/filesUtils";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { uploadResumeAPI } from "@api/jobSeeker";
+import { setSuccessToast, setErrorToast } from "@redux/slice/toast";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const ResumeUpdate = ({
   title,
@@ -17,28 +16,34 @@ const ResumeUpdate = ({
   description,
   buttonWidth,
   toggle,
-  appliedJob,
   fun,
 }) => {
-  const [openResume, setOpenResume] = useState(false);
-  const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
-  const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
-  const { currentUser } = useSelector((state) => state.auth);
+  const { role, currentUser } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const fileInputRef = useRef();
 
-  const downloadPDF = async () => {
-    pdfDownloader(currentUser?.name, setIsDownloadingPDF, dispatch);
-  };
-
-  const downloadDocs = async () => {
-    setIsDownloadingDocs(true);
-    const res = await DownloadResumeAPI();
-    if (res.remote === "success") {
-      window.open(generateFileUrl(res.data.url), "_blank");
+  const handleFileUpload = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
-    setIsDownloadingDocs(false);
   };
+
+  const handleFileChange = async (event) => {
+    const selectedFile = event.target.files?.[0];
+    setLoading(true);
+    if (selectedFile) {
+      const res = await uploadResumeAPI({ resume: selectedFile });
+      if (res.remote === "success") {
+        dispatch(setSuccessToast("File Uploaded Successfully"));
+      } else {
+        dispatch(setErrorToast("Something went wrong"));
+      }
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="add-content">
@@ -85,24 +90,22 @@ const ResumeUpdate = ({
                 <div className="my-4 text-center">
                   <OutlinedButton
                     style={{ width: "100%" }}
+                    disabled={loading}
                     title={
                       <>
                         <span className="me-2 d-inline-flex">
                           <SVG.DownloadIcon />
                         </span>
-                        DOWNLOAD YOUR RESUME
+                        {loading ? "Loading..." : "UPLOAD YOUR RESUME"}
                       </>
                     }
-                    onClick={() => setOpenResume(true)}
+                    onClick={() => handleFileUpload()}
                     sx={{
                       "&.MuiButton-outlined": {
                         border: "1px solid #EEA23D !important",
                         color: "#EEA23D !important",
                         fontWeight: "500",
-                        fontSize:
-                          platform === "android" || platform === "ios"
-                            ? "15px !important"
-                            : "16px",
+                        fontSize: "16px",
                         padding: "6px 30px",
                         width: buttonWidth,
                         height: "42px",
@@ -145,20 +148,57 @@ const ResumeUpdate = ({
               >
                 <SVG.ResumeIcon />
               </IconButton>
-              <div className="description">{description}</div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "20px",
+                }}
+              >
+                <div>
+                  {currentUser?.resume?.map((resume) => (
+                    <Link
+                      key={resume.id}
+                      to={generateFileUrl(resume.filePath?.path)}
+                      target="_blank"
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "5px",
+                          color: "#EEA23D",
+                        }}
+                      >
+                        <SVG.AttachIcon style={{ color: "#EEA23D" }} /> Your
+                        Resume
+                      </span>{" "}
+                    </Link>
+                  ))}
+                </div>
+                <div className="description">{description}</div>
+              </div>
             </Stack>
-            <div className="my-4 text-center">
+            <div className="mt-4 mb-3 text-center">
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
               <OutlinedButton
                 style={{ width: "100%" }}
+                disabled={loading}
                 title={
                   <>
                     <span className="me-2 d-inline-flex">
                       <SVG.DownloadIcon />
                     </span>
-                    DOWNLOAD YOUR RESUME
+                    {loading ? "Loading..." : "UPLOAD YOUR RESUME"}
                   </>
                 }
-                onClick={() => setOpenResume(true)}
+                onClick={() => handleFileUpload()}
                 sx={{
                   "&.MuiButton-outlined": {
                     border: "1px solid #EEA23D !important",
@@ -179,43 +219,19 @@ const ResumeUpdate = ({
                 }}
               />
             </div>
+            <hr style={{ borderColor: "#CACACA" }} />
+            <Box className="create_resume_div">
+              <h3>Don’t have a resume?</h3>
+              <p>
+                Don't worry if you don't have one yet,{" "}
+                <Link to={`/${role}/my-profile/create-resume`}>
+                  create it with our free tool!
+                </Link>
+              </p>
+            </Box>
           </div>
         )}
       </div>
-      <DialogBox
-        open={openResume}
-        handleClose={() => {
-          if (!isDownloadingPDF) setOpenResume(false);
-        }}
-        maxWidth="xxl"
-        sx={{
-          "& .MuiPaper-root": {
-            width: "900px",
-          },
-        }}
-      >
-        <>
-          <FilledButton
-            title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
-            onClick={downloadPDF}
-            style={{ marginBottom: "10px" }}
-            disabled={isDownloadingPDF || isDownloadingDocs}
-          />
-          <FilledButton
-            sx={{
-              marginLeft: "10px",
-              "@media (max-width: 480px)": {
-                marginLeft: "0px",
-              },
-            }}
-            title={isDownloadingDocs ? "Downloading Docs..." : "Download Docs"}
-            onClick={downloadDocs}
-            style={{ marginBottom: "10px" }}
-            disabled={isDownloadingPDF || isDownloadingDocs}
-          />
-          <ResumeTemplate appliedJob={appliedJob} />
-        </>
-      </DialogBox>
     </>
   );
 };

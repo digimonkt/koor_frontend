@@ -783,10 +783,6 @@ span.arrowjobs svg {
   margin: 0;
 }
 
-.recent-content {
-  align-items: center !important;
-}
-
 .posting_tender_done_icon {
   width: 150.36px;
   height: 150.88px;
@@ -807,6 +803,10 @@ span.arrowjobs svg {
   .recent-content h4 {
     white-space: normal;
     word-break: break-all;
+  }
+
+  .recent-content {
+    align-items: baseline !important;
   }
 
   .posting_tender_done_icon {
@@ -887,7 +887,7 @@ span.arrowjobs svg {
   }
 
   .attachment-box ul li {
-    font-size: 12px;
+    font-size: 12px !important;
   }
 
   .attachment-box h2 {
@@ -946,10 +946,6 @@ span.arrowjobs svg {
   .form-content label {
     font-size: 12px !important;
     color: #121212;
-  }
-
-  .attachment-box ul li {
-    font-size: 12px;
   }
 
   .post_tender_done_dailog h1 {

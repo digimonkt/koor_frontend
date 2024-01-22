@@ -28,7 +28,7 @@ function TalentCard({ talentDetails }) {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? talentDetails.length : 3,
+      prevNumLines === 3 ? talentDetails.length : 3
     );
   };
   const textWrapperStyle = {
@@ -57,7 +57,7 @@ function TalentCard({ talentDetails }) {
                 <Avatar
                   alt="Remy Sharp"
                   src={generateFileUrl(
-                    talentDetails.profilePicture?.path || "",
+                    talentDetails.profilePicture?.path || ""
                   )}
                   SX={{ width: "40px", height: "40px" }}
                 />
@@ -237,7 +237,7 @@ function TalentCard({ talentDetails }) {
               >
                 <Avatar
                   src={generateFileUrl(
-                    talentDetails.profilePicture?.path || "",
+                    talentDetails.profilePicture?.path || ""
                   )}
                   sx={{
                     borderRadius: "0px !important",

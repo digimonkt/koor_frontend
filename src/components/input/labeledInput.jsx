@@ -12,6 +12,7 @@ function LabeledInputComponent({
   limit,
   width,
   zIndex,
+  endplaceholder = "",
   ...rest
 }) {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
@@ -93,9 +94,21 @@ function LabeledInputComponent({
                   : "password"
                 : type
             }
+            style={{ width, zIndex }}
             {...rest}
           />
-          {icon && <div>{icon}</div>}
+          {icon && (
+            <div
+              className="password_svg"
+              style={{
+                padding: "3px 40px 0px 0",
+                opacity: 0.7,
+                color: "#121212",
+              }}
+            >
+              {icon && <div>{icon}</div>}
+            </div>
+          )}
           {type === "password" ? (
             <IconButton
               disableRipple={true}
@@ -114,6 +127,18 @@ function LabeledInputComponent({
             </IconButton>
           ) : (
             ""
+          )}
+          {endplaceholder && (
+            <div
+              className="password_svg"
+              style={{
+                padding: "3px 40px 0px 0",
+                opacity: 0.2,
+                color: "#121212",
+              }}
+            >
+              {endplaceholder}
+            </div>
           )}
         </div>
       )}
