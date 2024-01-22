@@ -32,6 +32,7 @@ import {
   setJobPage,
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
+import { useScrollTop } from "@hooks";
 import urlcat from "urlcat";
 import { Capacitor } from "@capacitor/core";
 import { getAdSenseAPI } from "@api/adSense";
@@ -45,8 +46,8 @@ function Search({ searchTypeForJob }) {
   const {
     auth: { role },
     search: { totalItems, totalPages, page, advanceFilter },
-  } = useSelector(state => state);
-  const { jobs, tenders } = useSelector(state => state.search);
+  } = useSelector((state) => state);
+  const { jobs, tenders } = useSelector((state) => state.search);
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searchType, setSearchType] = useState("");
   const [searchName, setSearchName] = useState("");
@@ -57,12 +58,12 @@ function Search({ searchTypeForJob }) {
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("1");
-  const { currentUser, isLoggedIn } = useSelector(state => state.auth);
-  const { adSense } = useSelector(state => state.adSense);
-  const { isMobileView } = useSelector(state => state.platform);
+  const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
+  const { adSense } = useSelector((state) => state.adSense);
+  const { isMobileView } = useSelector((state) => state.platform);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -72,17 +73,17 @@ function Search({ searchTypeForJob }) {
     setSortBy(shortBy);
     setOrderBy(orderBy);
   };
-  const handleSearch = value => {
+  const handleSearch = (value) => {
     setSearchParams({ search: value });
     if (!value) {
       setSearch(value);
     }
   };
 
-  const handlePageChange = page => {
+  const handlePageChange = (page) => {
     dispatch(setJobPage(page));
   };
-  const pageName = searchType => {
+  const pageName = (searchType) => {
     switch (searchType) {
       case "jobs":
         setSearchName("Job feed");
@@ -159,6 +160,7 @@ function Search({ searchTypeForJob }) {
       }
     }
   }, []);
+  useScrollTop();
   const pagination = () => {
     return (
       <Pagination
@@ -198,7 +200,8 @@ function Search({ searchTypeForJob }) {
       className={`${styles.body}`}
       sx={{
         marginTop: platform === "android" || platform === "ios" ? "" : "118px",
-      }}>
+      }}
+    >
       <Container
         maxWidth={false}
         sx={{
@@ -208,7 +211,8 @@ function Search({ searchTypeForJob }) {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
-        }}>
+        }}
+      >
         {isMobileView ? (
           <>
             <Box sx={{ px: 3, pt: 3 }}>
@@ -225,8 +229,9 @@ function Search({ searchTypeForJob }) {
                       fontWeight: 600,
                       fontSize: "14px",
                       ml: 1,
-                    }}>
-                    2,513
+                    }}
+                  >
+                    {totalItems || 0}
                   </Box>
                 }
                 icon={
@@ -251,7 +256,8 @@ function Search({ searchTypeForJob }) {
               // top: "60px",
               // height: "580px",
               // overflow: "hidden",
-            }}>
+            }}
+          >
             <AdvanceFilter
               searchType={searchType || searchTypeForJob}
               defaultOpen
@@ -265,7 +271,8 @@ function Search({ searchTypeForJob }) {
                   platform === "android" || platform === "ios"
                     ? "0px 16px"
                     : "",
-              }}>
+              }}
+            >
               <SearchInput
                 key={searchType}
                 svg={
@@ -289,7 +296,8 @@ function Search({ searchTypeForJob }) {
                   platform === "android" || platform === "ios"
                     ? "0px 16px"
                     : "",
-              }}>
+              }}
+            >
               <AdvanceFilter searchType={searchType || searchTypeForJob} />
             </Box>
             {(platform === "android" || platform === "ios") &&
@@ -304,7 +312,8 @@ function Search({ searchTypeForJob }) {
                   "& .MuiTabs-indicator": {
                     background: "#274593 !important",
                   },
-                }}>
+                }}
+              >
                 <Tabs setValue={setValue} value={value} role={role} />
               </Box>
             ) : (
@@ -316,17 +325,23 @@ function Search({ searchTypeForJob }) {
                   className={`${styles.jobcards}`}
                   sx={{
                     minHeight: "450px",
+                    marginBottom:
+                      platform === "android" || platform === "ios"
+                        ? "40px"
+                        : "0px",
                     marginTop:
                       platform === "android" || platform === "ios"
                         ? ""
                         : "24px",
-                  }}>
+                  }}
+                >
                   <div className="saved-jobs">
                     <Stack
                       direction="row"
                       spacing={2}
                       justifyContent="space-between"
-                      alignItems="center">
+                      alignItems="center"
+                    >
                       <h2 className="m-0">
                         {searchName}
                         <Chip
@@ -352,7 +367,8 @@ function Search({ searchTypeForJob }) {
                         <>
                           <IconButton
                             sx={{ width: "50px", height: "50px" }}
-                            onClick={handleClick}>
+                            onClick={handleClick}
+                          >
                             {<SVG.FillterICon />}
                           </IconButton>
                           <Menu
@@ -397,7 +413,8 @@ function Search({ searchTypeForJob }) {
                             anchorOrigin={{
                               horizontal: "right",
                               vertical: "bottom",
-                            }}>
+                            }}
+                          >
                             <h5 className="px-3 mt-0 mb-1">Sort by :</h5>
                             {SEARCH_TYPE.jobs === searchType &&
                               [
@@ -421,7 +438,7 @@ function Search({ searchTypeForJob }) {
                                   sortBy: JOB_SORT_BY.salary,
                                   orderBy: JOB_ORDER_BY.descending,
                                 },
-                              ].map(data => {
+                              ].map((data) => {
                                 return (
                                   <MenuItem
                                     key={data.label}
@@ -438,7 +455,8 @@ function Search({ searchTypeForJob }) {
                                             ? "#FEEFD3"
                                             : "#D5E3F7"
                                           : "",
-                                    }}>
+                                    }}
+                                  >
                                     {data.label}
                                   </MenuItem>
                                 );
@@ -466,7 +484,7 @@ function Search({ searchTypeForJob }) {
                                   sortBy: TENDER_SORT_BY.budget,
                                   orderBy: TENDER_ORDER_BY.descending,
                                 },
-                              ].map(data => {
+                              ].map((data) => {
                                 return (
                                   <MenuItem
                                     key={data.label}
@@ -483,7 +501,8 @@ function Search({ searchTypeForJob }) {
                                             ? "#FEEFD3"
                                             : "#D5E3F7"
                                           : "",
-                                    }}>
+                                    }}
+                                  >
                                     {data.label}
                                   </MenuItem>
                                 );
@@ -498,7 +517,13 @@ function Search({ searchTypeForJob }) {
                   <Component />
                 </Box>
                 {totalPages > 1 ? (
-                  <div className="paginations pt-4">{pagination()}</div>
+                  <div
+                    className={
+                      isMobileView ? "paginations" : "paginations pt-4"
+                    }
+                  >
+                    {pagination()}
+                  </div>
                 ) : (
                   <div style={{ marginTop: "20px" }}></div>
                 )}

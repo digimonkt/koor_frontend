@@ -10,7 +10,8 @@
       "@redux/*": ["src/redux/*"],
       "@utils/*": ["src/utils/*"],
       "@api/*": ["src/api/*"],
-      "@pages/*": ["src/pages/*"]
+      "@pages/*": ["src/pages/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   },
   "exclude": ["node_modules/"]

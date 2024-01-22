@@ -18,7 +18,7 @@ export const ComponentSelector = (type) => {
     default:
       return function DefaultSearch() {
         return (
-          <div>
+          <div >
             <ComingSoonAnimation />
           </div>
         );

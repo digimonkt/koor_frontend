@@ -33,6 +33,8 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
 import CreateCoverLetter from "../../../components/coverLetter";
+import { fileTypeExtractor, downloadUrlCreator } from "@utils/filesUtils";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const JobDetails = () => {
   const params = useParams();
@@ -44,13 +46,9 @@ const JobDetails = () => {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
-  const [numLines, setNumLines] = useState(3);
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    WebkitLineClamp: numLines,
-  };
+  const [showMore, setShowMore] = useState(false);
+  const platform = Capacitor.getPlatform();
+
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -143,9 +141,7 @@ const JobDetails = () => {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
-  const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) => (prevNumLines === 3 ? details?.length : 3));
-  };
+
   function handleSendEmail(details) {
     const email = details.contactEmail;
     const ccEmail1 = details.cc1;
@@ -200,27 +196,12 @@ const JobDetails = () => {
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = (url) => {
-      const extension = "." + url.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".gif": "image/gif",
-        ".pdf": "application/pdf",
-        // Add more extensions and corresponding MIME types as needed
-      };
-
-      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
-    };
-
-    const fileName = "attachment";
+  const handleLoadImage = async (url, _) => {
+    const fileType = fileTypeExtractor(url);
     const response = await getJobAttachmentAPI(url);
 
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      // Convert base64 string to Blob
       const byteCharacters = atob(base64String);
       const byteArrays = new Uint8Array(byteCharacters.length);
 
@@ -229,23 +210,16 @@ const JobDetails = () => {
       }
 
       const blob = new Blob([byteArrays], {
-        type: fileType(url) || "application/octet-stream",
+        type: fileType || "application/octet-stream",
       });
 
-      // Create a download link
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName || "file"; // Default filename is "file"
-
-      // Append the link to the document and click it
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(downloadUrl);
+      if (platform === "android" || platform === "ios") {
+        return "";
+      } else {
+        downloadUrlCreator(blob);
+      }
     }
   };
-  const platform = Capacitor.getPlatform();
   return (
     <>
       <Container
@@ -261,7 +235,10 @@ const JobDetails = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}
@@ -278,10 +255,11 @@ const JobDetails = () => {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate("/search/jobs")}
+                    onClick={() => navigate(-1)}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
+
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -314,52 +292,47 @@ const JobDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} md={7} sm={7}>
                 <Box className={styles.job_detail_description}>
-                  <div className={`mb-4 ${styles.contentJob}`}>
-                    <h4>Details :</h4>
+                  {details?.description?.length > 350 && showMore ? (
                     <Box
-                      sx={textWrapperStyle}
                       dangerouslySetInnerHTML={{
                         __html: details?.description,
                       }}
                     ></Box>
-                  </div>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                  ) : (
+                    <Box
+                      dangerouslySetInnerHTML={{
+                        __html: details.description.substring(0, 350),
+                      }}
+                    ></Box>
+                  )}
+                  <button
+                    onClick={() => setShowMore((prev) => !prev)}
+                    style={{
+                      textAlign: "center",
+                      width: "100%",
+                      border: "none",
+                      cursor: "pointer",
+                      marginBottom: "20px",
+                      background: "none",
+                      color:
+                        role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                     }}
                   >
-                    {details?.description?.length > 350 && (
-                      <button
-                        style={{
-                          border: "none",
-                          cursor: "pointer",
-                          background: "none",
-                          color:
-                            role !== USER_ROLES.jobSeeker
-                              ? "#274593"
-                              : "#fe7f00",
-                        }}
-                        onClick={handleSeeMoreClick}
-                      >
-                        {numLines === 3 ? (
-                          <>
-                            More <SVG.arrowDown />
-                          </>
-                        ) : (
-                          <>
-                            Less <SVG.ArrowUpIcon />
-                          </>
-                        )}
-                      </button>
+                    {showMore ? (
+                      <>
+                        Less <SVG.ArrowUpIcon />
+                      </>
+                    ) : (
+                      <>
+                        More <SVG.Downarrow />
+                      </>
                     )}
-                  </Box>
+                  </button>
                 </Box>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
-                  spacing={{ xs: 1, lg: 0 }}
+                  spacing={{ xs: 2, lg: 0 }}
                   flexWrap={"wrap"}
                   useFlexGap
                   sx={{
@@ -432,15 +405,24 @@ const JobDetails = () => {
                           <span className="d-inline-flex  me-2">
                             {<SVG.OrangeIcon />}
                           </span>
-                          <span
-                            onClick={() => handleLoadImage(attachment.path)}
-                            // target="_blank"
-                            style={{ cursor: "pointer" }}
+                          <a
                             className="m-0"
+                            onClick={(_) => handleLoadImage(attachment.path)}
+                            href={generateFileUrl(attachment.path)}
+                            target="_blank"
                             rel="noreferrer"
+                            style={{
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#eea23d"
+                                  : "#274593",
+                              cursor: "pointer",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
+                            }}
                           >
                             {attachment.title}
-                          </span>
+                          </a>
                         </div>
                       );
                     })}
@@ -886,7 +868,8 @@ const JobDetails = () => {
                         right: "10px",
                         top: "37px",
                         transform: "translate(0%, -37%)",
-                        color: "#EEA23D",
+                        color:
+                          role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
                       }}
                     >
                       <SVG.ArrowAngle />

@@ -1,4 +1,12 @@
-import { Box, Card, CardContent, Grid, IconButton, Stack } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import React, { useState } from "react";
 // import ModalView from "../updateProfile/modal";
 import DialogBox from "../../../components/dialogBox";
@@ -12,32 +20,29 @@ import WorkExperience from "./work-experience";
 import Skills from "./skills";
 import AboutMe from "../aboutMe";
 import { Capacitor } from "@capacitor/core";
-import { IMAGES } from "@assets/images";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
-import { setIsLoggedIn } from "../../../redux/slice/user";
-import { LogoutUserAPI } from "@api/user";
-import { globalLocalStorage } from "@utils/localStorage";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const MyProfile = () => {
-  const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
   const platform = Capacitor.getPlatform();
+  const { currentUser } = useSelector(({ auth }) => auth);
+  // const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(["job"]);
 
-  const userLogout = async () => {
-    await LogoutUserAPI();
-    globalLocalStorage.cleanLocalStorage();
-  };
-  const logoutHandle = () => {
-    userLogout();
-    dispatch(setIsLoggedIn(false));
-  };
+  // const userLogout = async () => {
+  //   await LogoutUserAPI();
+  //   globalLocalStorage.cleanLocalStorage();
+  // };
+  // const logoutHandle = () => {
+  //   userLogout();
+  //   dispatch(setIsLoggedIn(false));
+  // };
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
     );
   };
 
@@ -71,9 +76,9 @@ const MyProfile = () => {
                 >
                   <h1>My profile</h1>
                   <Stack direction={"row"} spacing={0.5} alignItems={"center"}>
-                    <IconButton onClick={() => logoutHandle()}>
-                      <SVG.AppGroup />
-                    </IconButton>
+                    {/* <IconButton onClick={() => logoutHandle()}> */}
+                    {/*   <SVG.AppGroup /> */}
+                    {/* </IconButton> */}
                     <IconButton LinkComponent={Link} to="/Setting">
                       <SVG.Settings />
                     </IconButton>
@@ -85,9 +90,9 @@ const MyProfile = () => {
               </Grid>
               <Grid item xs={12}>
                 <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
-                  <img
+                  <Avatar
                     alt="profile"
-                    src={IMAGES.RecentFive}
+                    src={currentUser?.profileImage}
                     style={{
                       width: "80px",
                       height: "80px",
@@ -103,6 +108,7 @@ const MyProfile = () => {
                         letterSpacing: "0.54px",
                         fontWeight: "700",
                         mb: 1,
+                        mt: 0,
                       },
                       "& p": {
                         fontSize: "14px",
@@ -114,9 +120,9 @@ const MyProfile = () => {
                       },
                     }}
                   >
-                    <h4>Vlad Blyshchyk</h4>
-                    <p>+51599268290</p>
-                    <p>vlad@gmail.com</p>
+                    <h4>{currentUser?.name || currentUser?.email}</h4>
+                    <p>{currentUser?.mobileNumber}</p>
+                    <p>{currentUser.email}</p>
                   </Box>
                 </Stack>
               </Grid>
@@ -164,12 +170,6 @@ const MyProfile = () => {
                       />
                     </CardContent>
                   </Card>
-                  <AboutMe
-                    handleClickOpen={handleClickOpen}
-                    fun={() => handleToggleModel("about")}
-                    toggle={toggle.includes("about")}
-                  />
-
                   <Card
                     sx={{
                       "&.MuiCard-root": {

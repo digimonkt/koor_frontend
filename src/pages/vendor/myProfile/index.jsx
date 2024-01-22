@@ -47,6 +47,7 @@ import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
+import { Link, useNavigate } from "react-router-dom";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -74,16 +75,17 @@ function MyProfile() {
   const dispatch = useDispatch();
   const platform = Capacitor.getPlatform();
   const [toggle, setToggle] = useState(["about"]);
+  const navigate = useNavigate();
   const handleToggleModel2 = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
     );
   };
   useEffect(() => {
     console.log("first", { toggle });
   }, [toggle]);
   const {
-    auth: { currentUser },
+    auth: { currentUser, role },
     choices: { countries, cities, sectors },
   } = useSelector((state) => state);
   const [profilePicLoading, setProfilePicLoading] = useState("");
@@ -136,7 +138,7 @@ function MyProfile() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        "",
+        ""
       );
       const payload = {
         organization_name: values.organizationName,
@@ -201,15 +203,15 @@ function MyProfile() {
             operatingYears: values.operatingYears,
             jobsExperience: values.noOfJobsAsExperience,
             organizationType: sectors.data.find(
-              (sector) => sector.id === values.organizationType,
+              (sector) => sector.id === values.organizationType
             ),
 
             address: values.address,
             country: countries.data.find(
-              (country) => country.id === values.country,
+              (country) => country.id === values.country
             ),
             city: cities.data[values.country]?.find(
-              (city) => city.id === values.city,
+              (city) => city.id === values.city
             ),
           },
         };
@@ -277,6 +279,7 @@ function MyProfile() {
       }
     }
   }, [currentUser]);
+  console.log({ currentUser });
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -307,14 +310,13 @@ function MyProfile() {
         alignItems={"flex-start"}
       >
         <h1 className="heading m-0">Add info to complete your profile</h1>
-        <span
-          className="later mt-2"
-          style={{
-            color: "#274593",
-          }}
+        <Link
+          to={`/${role}/dashboard`}
+          className="later"
+          style={{ color: "#274593" }}
         >
           Do it later
-        </span>
+        </Link>
       </Stack>
 
       <Grid container spacing={2}>
@@ -341,7 +343,16 @@ function MyProfile() {
                   alignItems={"center"}
                   justifyContent={"space-between"}
                 >
-                  <h2 className="mb-0">About</h2>
+                  {platform === "android" || platform === "ios" ? (
+                    <Stack direction="row" alignItems="flex-end">
+                      <IconButton onClick={() => navigate(-1)}>
+                        <SVG.LeftArrow />
+                      </IconButton>
+                      <h2 className="mb-0">About</h2>
+                    </Stack>
+                  ) : (
+                    <h2 className="mb-0">About</h2>
+                  )}
                   {platform === "android" || platform === "ios" ? (
                     <IconButton
                       size="small"
@@ -402,7 +413,7 @@ function MyProfile() {
                             if (!isValid) {
                               formik.setFieldError(
                                 "mobileNumber",
-                                "Invalid Mobile Number",
+                                "Invalid Mobile Number"
                               );
                             }
                           }}
@@ -450,7 +461,7 @@ function MyProfile() {
                           placeholder="Address"
                           className="add-form-control"
                           name={formik.getFieldProps("address").name}
-                          onBlur={(e) => formik.getFieldProps("address").onBlur}
+                          onBlur={(_) => formik.getFieldProps("address").onBlur}
                           onChange={(e) => setSearchValue(e.target.value)}
                           value={searchValue}
                         />
@@ -465,7 +476,7 @@ function MyProfile() {
                                     onClick={() => {
                                       formik.setFieldValue(
                                         "address",
-                                        address.description,
+                                        address.description
                                       );
                                       setSearchValue(address.description);
                                     }}
@@ -522,7 +533,7 @@ function MyProfile() {
                             }
                             single
                             files={formik.values.businessLicense}
-                            deleteFile={(e) =>
+                            deleteFile={(_) =>
                               formik.setFieldValue("businessLicense", [])
                             }
                           />
@@ -598,7 +609,7 @@ function MyProfile() {
                             onChange={(e) =>
                               formik.setFieldValue(
                                 "otherNotification",
-                                e.target.checked,
+                                e.target.checked
                               )
                             }
                             checked={formik.values.otherNotification}
@@ -615,7 +626,7 @@ function MyProfile() {
                             onChange={(e) =>
                               formik.setFieldValue(
                                 "marketingInformationNotification",
-                                e.target.checked,
+                                e.target.checked
                               )
                             }
                             checked={
@@ -685,7 +696,7 @@ function MyProfile() {
                           if (!isValid) {
                             formik.setFieldError(
                               "mobileNumber",
-                              "Invalid Mobile Number",
+                              "Invalid Mobile Number"
                             );
                           }
                         }}
@@ -720,7 +731,7 @@ function MyProfile() {
                           (country) => ({
                             value: country.id,
                             label: country.title,
-                          }),
+                          })
                         )}
                         {...formik.getFieldProps("city")}
                       />
@@ -748,7 +759,7 @@ function MyProfile() {
                                   onClick={() => {
                                     formik.setFieldValue(
                                       "address",
-                                      address.description,
+                                      address.description
                                     );
                                     setSearchValue(address.description);
                                   }}
@@ -879,7 +890,7 @@ function MyProfile() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               "otherNotification",
-                              e.target.checked,
+                              e.target.checked
                             )
                           }
                           checked={formik.values.otherNotification}
@@ -896,7 +907,7 @@ function MyProfile() {
                           onChange={(e) =>
                             formik.setFieldValue(
                               "marketingInformationNotification",
-                              e.target.checked,
+                              e.target.checked
                             )
                           }
                           checked={

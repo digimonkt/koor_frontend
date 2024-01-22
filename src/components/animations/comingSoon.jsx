@@ -5,6 +5,8 @@ import styles from "./animations.module.css";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "../../utils/enum";
 function ComingSoonComponent({ title }) {
+  const { isMobileView } = useSelector((state) => state.platform);
+  console.log(isMobileView);
   const { role } = useSelector((state) => state.auth);
   const defaultOptions = {
     loop: true,
@@ -28,7 +30,7 @@ function ComingSoonComponent({ title }) {
       <Lottie
         options={defaultOptions}
         height={200}
-        width={500}
+        width={isMobileView ? 300 : 500}
         isStopped={false}
         isPaused={false}
       />

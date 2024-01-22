@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
+import {} from "@capacitor/core";
 import { SVG } from "../../assets/svg";
 import { SEARCH_TYPE, USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
@@ -158,28 +159,28 @@ function Header() {
                             navigate(
                               role === USER_ROLES.jobSeeker
                                 ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           case SEARCH_TYPE.talents:
                             navigate(
                               role === USER_ROLES.employer
                                 ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           case SEARCH_TYPE.vendors:
                             navigate(
                               role === USER_ROLES.employer
                                 ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           case SEARCH_TYPE.tenders:
                             navigate(
                               role === USER_ROLES.vendor
                                 ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           default:
@@ -552,28 +553,28 @@ function Header() {
                         navigate(
                           role === USER_ROLES.jobSeeker
                             ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       case SEARCH_TYPE.talents:
                         navigate(
                           role === USER_ROLES.employer
                             ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       case SEARCH_TYPE.vendors:
                         navigate(
                           role === USER_ROLES.employer
                             ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       case SEARCH_TYPE.tenders:
                         navigate(
                           role === USER_ROLES.vendors
                             ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       default:

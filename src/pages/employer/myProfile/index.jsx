@@ -12,6 +12,7 @@ import {
   // FormControl,
   FormGroup,
   Grid,
+  IconButton,
   Stack,
 } from "@mui/material";
 import { useFormik } from "formik";
@@ -45,6 +46,9 @@ import {
 import { useDebounce } from "usehooks-ts";
 import styles from "./myProfile.module.css";
 import { setErrorToast } from "../../../redux/slice/toast";
+// import { USER_ROLES } from "@utils/enum";
+import { Capacitor } from "@capacitor/core";
+import { useNavigate } from "react-router-dom";
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
@@ -53,6 +57,9 @@ function MyProfileComponent() {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
+  const platform = Capacitor.getPlatform();
+  const navigate = useNavigate();
+  const [toggle, setToggle] = useState(["about"]);
   const { countries, cities, sectors } = useSelector((state) => state.choices);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const formik = useFormik({
@@ -80,7 +87,7 @@ function MyProfileComponent() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        ""
+        "",
       );
 
       const payload = {
@@ -127,7 +134,7 @@ function MyProfileComponent() {
             profile: {
               // website: values.website,
               organizationType: sectors.data.find(
-                (sector) => sector.id === values.organizationType
+                (sector) => sector.id === values.organizationType,
               ),
               licenseId: values.licenseId,
               licenseIdFile: values.license[0],
@@ -135,21 +142,21 @@ function MyProfileComponent() {
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
               country: countries.data.find(
-                (country) => country.id === values.country
+                (country) => country.id === values.country,
               ),
               city: cities.data[values.country]?.find(
-                (city) => city.id === values.city
+                (city) => city.id === values.city,
               ),
               address: values.address,
             },
-          })
+          }),
         );
         setLoading(false);
       } else {
         dispatch(
           setErrorToast(
-            res.error.errors.mobile_number || "Something went wrong"
-          )
+            res.error.errors.mobile_number || "Something went wrong",
+          ),
         );
         setLoading(false);
       }
@@ -191,7 +198,7 @@ function MyProfileComponent() {
       formik.setFieldValue("organizationName", currentUser.name);
       formik.setFieldValue(
         "organizationType",
-        currentUser.profile.organizationType?.id
+        currentUser.profile.organizationType?.id,
       );
       formik.setFieldValue("country", currentUser.profile.country?.id || "");
       formik.setFieldValue("city", currentUser.profile.city?.id || "");
@@ -203,7 +210,7 @@ function MyProfileComponent() {
         "license",
         currentUser.profile.licenseIdFile
           ? [currentUser.profile.licenseIdFile]
-          : []
+          : [],
       );
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
@@ -226,11 +233,21 @@ function MyProfileComponent() {
     else setProfilePicLoading("error");
   };
 
+  const handleToggleModel2 = (type) => {
+    setToggle((prev) =>
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+    );
+  };
+
   const handleToggleModel = () => {
     if (Object.keys(formik.errors).length === 0) {
       setOpen(!open);
     }
   };
+
+  useEffect(() => {
+    console.log("first", { toggle });
+  }, [toggle]);
   return (
     <>
       <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
@@ -258,7 +275,16 @@ function MyProfileComponent() {
               }}
             >
               <div className="add-content">
-                <h2 className="mb-4">About</h2>
+                {platform === "android" || platform === "ios" ? (
+                  <Stack direction="row" alignItems="flex-end">
+                    <IconButton onClick={() => navigate(-1)}>
+                      <SVG.LeftArrow />
+                    </IconButton>
+                    <h2 className="mb-0">About</h2>
+                  </Stack>
+                ) : (
+                  <h2 className="mb-0">About</h2>
+                )}
                 <form onSubmit={formik.handleSubmit}>
                   <HorizontalLabelInput
                     placeholder="Organization Name"
@@ -295,7 +321,7 @@ function MyProfileComponent() {
                       if (!isValid) {
                         formik.setFieldError(
                           "mobileNumber",
-                          "Invalid Mobile Number"
+                          "Invalid Mobile Number",
                         );
                       }
                     }}
@@ -322,7 +348,7 @@ function MyProfileComponent() {
                       (country) => ({
                         value: country.id,
                         label: country.title,
-                      })
+                      }),
                     )}
                     {...formik.getFieldProps("city")}
                   />
@@ -332,7 +358,7 @@ function MyProfileComponent() {
                     placeholder="Address"
                     className="add-form-control"
                     name={formik.getFieldProps("address").name}
-                    onBlur={(e) => formik.getFieldProps("address").onBlur}
+                    onBlur={() => formik.getFieldProps("address").onBlur}
                     onChange={(e) => setSearchValue(e.target.value)}
                     value={searchValue}
                   />
@@ -347,7 +373,7 @@ function MyProfileComponent() {
                               onClick={() => {
                                 formik.setFieldValue(
                                   "address",
-                                  address.description
+                                  address.description,
                                 );
                                 setSearchValue(address.description);
                               }}
@@ -380,7 +406,7 @@ function MyProfileComponent() {
                       handleDrop={(e) => formik.setFieldValue("license", e)}
                       single
                       files={formik.values.license}
-                      deleteFile={(e) => formik.setFieldValue("license", [])}
+                      deleteFile={(_) => formik.setFieldValue("license", [])}
                     />
                   </Stack>
                   {formik.touched.license && formik.errors.license ? (
@@ -395,7 +421,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "otherNotification",
-                          e.target.checked
+                          e.target.checked,
                         )
                       }
                       checked={formik.values.otherNotification}
@@ -412,7 +438,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "marketingInformationNotification",
-                          e.target.checked
+                          e.target.checked,
                         )
                       }
                       checked={formik.values.marketingInformationNotification}
@@ -465,6 +491,8 @@ function MyProfileComponent() {
                 bgColor="rgba(40, 71, 146, 0.1)"
                 handleSave={handleProfilePicSave}
                 image={currentUser.profileImage}
+                fun={() => handleToggleModel2("vendor")}
+                toggle={toggle.includes("vendor")}
                 loading={profilePicLoading === "loading"}
               />
             </CardContent>
