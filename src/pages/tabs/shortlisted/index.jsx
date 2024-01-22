@@ -47,7 +47,7 @@ function ShortlistedTab() {
             <React.Fragment key={data.id}>
               <ShortlistedCard applicantDetails={data} />
               <AdSenseCard
-                code={adSenseData.code}
+                code={adSenseData?.code}
                 show={index > 0 && index % AD_AFTER_RECORDS === 0}
               />
             </React.Fragment>

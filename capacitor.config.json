@@ -5,7 +5,9 @@
   "npmClient": "yarn",
   "cleartext": true,
   "hostname": "192.168.0.192",
-  "allowNavigation": ["*"],
+  "allowNavigation": [
+    "*"
+  ],
   "webDir": "build",
   "cordova": {},
   "android": {
@@ -15,5 +17,8 @@
     "SplashScreen": {
       "androidScaleType": "CENTER_CROP"
     }
+  },
+  "server": {
+    "url": "http://192.168.0.192:8100"
   }
 }
