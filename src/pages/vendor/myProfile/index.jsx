@@ -312,7 +312,7 @@ function MyProfile() {
         >
           <h1 className="heading m-0">Add info to complete your profile</h1>
           <span
-            onClick={() => navigate(`/${USER_ROLES.vendor}/my-profile`)}
+            onClick={() => navigate(`/${USER_ROLES.vendor}/dashboard`)}
             className="later mt-2"
             style={{
               color: "#274593",
