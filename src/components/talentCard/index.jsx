@@ -28,7 +28,7 @@ function TalentCard({ talentDetails }) {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? talentDetails.length : 3
+      prevNumLines === 3 ? talentDetails.length : 3,
     );
   };
   const textWrapperStyle = {
@@ -57,11 +57,10 @@ function TalentCard({ talentDetails }) {
                 <Avatar
                   alt="Remy Sharp"
                   src={generateFileUrl(
-                    talentDetails.profilePicture?.path || ""
+                    talentDetails.profilePicture?.path || "",
                   )}
                   SX={{ width: "40px", height: "40px" }}
                 />
-
                 <Box>
                   <Typography
                     variant="h2"
@@ -105,21 +104,23 @@ function TalentCard({ talentDetails }) {
                   </Stack>
                 </Box>
               </Stack>
-              <Box
-                sx={{
-                  borderLeft: "1px solid #CACACA",
-                  fontFamily: "Poppins",
-                  fontSize: "12px",
-                  fontWeight: "400",
-                  lineHeight: "16px",
-                  height: "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  paddingLeft: "15px",
-                }}
-              >
-                {talentDetails.highestEducation}
-              </Box>
+              {talentDetails.profileTitle && (
+                <Box
+                  sx={{
+                    borderLeft: "1px solid #CACACA",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontWeight: "400",
+                    lineHeight: "16px",
+                    height: "40px",
+                    display: "flex",
+                    alignItems: "center",
+                    paddingLeft: "15px",
+                  }}
+                >
+                  {talentDetails.profileTitle}
+                </Box>
+              )}
             </Stack>
             <Stack
               direction={"row"}
@@ -172,7 +173,6 @@ function TalentCard({ talentDetails }) {
                 </button>
               )}
             </Box>
-
             <Stack
               direction={"row"}
               spacing={1}
@@ -237,7 +237,7 @@ function TalentCard({ talentDetails }) {
               >
                 <Avatar
                   src={generateFileUrl(
-                    talentDetails.profilePicture?.path || ""
+                    talentDetails.profilePicture?.path || "",
                   )}
                   sx={{
                     borderRadius: "0px !important",

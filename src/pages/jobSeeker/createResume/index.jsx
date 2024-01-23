@@ -13,7 +13,7 @@ import { ErrorMessage } from "../../../components/caption";
 import { FilledButton } from "@components/button";
 import DialogBox from "@components/dialogBox";
 import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
-import { pdfDownloader, docsDownloader } from "@utils/fileUtils";
+import { pdfDownloader, docsDownloader } from "@utils/filesUtils";
 import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
