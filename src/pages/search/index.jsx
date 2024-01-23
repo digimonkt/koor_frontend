@@ -217,7 +217,7 @@ function Search({ searchTypeForJob }) {
           <>
             <Box sx={{ px: 3, pt: 3 }}>
               <HeaddingSearch
-                title="Browse talents"
+                title="Browse Jobs"
                 count={
                   <Box
                     component={"span"}

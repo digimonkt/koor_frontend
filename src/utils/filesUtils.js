@@ -49,6 +49,7 @@ export const fileDownloader = async (filename, file) => {
     await FileOpener.openFile({
       path: fileData.uri,
     });
+    console.log({ fileData });
   } catch (err) {
     console.error("Error in fileDownloader:", err);
   }
