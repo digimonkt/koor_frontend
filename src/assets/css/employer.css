@@ -204,7 +204,7 @@ span.blueview {
   color: #274593;
   display: block;
   text-transform: capitalize !important;
-  padding: 6px 10px !important;
+  padding: 6px 10px;
 }
 
 .edit-button button span {
