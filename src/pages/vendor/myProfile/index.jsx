@@ -47,6 +47,8 @@ import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
+import { USER_ROLES } from "@utils/enum";
+import { useNavigate } from "react-router-dom";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -74,6 +76,7 @@ function MyProfile() {
   const dispatch = useDispatch();
   const platform = Capacitor.getPlatform();
   const [toggle, setToggle] = useState(["about"]);
+  const navigate = useNavigate();
   const handleToggleModel2 = (type) => {
     setToggle((prev) =>
       prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
@@ -300,22 +303,25 @@ function MyProfile() {
   }, [debouncedSearchValue]);
   return (
     <>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={{ xs: 2, md: 12 }}
-        className="mb-3"
-        alignItems={"flex-start"}
-      >
-        <h1 className="heading m-0">Add info to complete your profile</h1>
-        <span
-          className="later mt-2"
-          style={{
-            color: "#274593",
-          }}
+      {!currentUser?.profileCompleted && (
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          alignItems={{ xs: "start" }}
+          spacing={{ xs: 1, lg: 3 }}
+          className="mb-3"
         >
-          Do it later
-        </span>
-      </Stack>
+          <h1 className="heading m-0">Add info to complete your profile</h1>
+          <span
+            onClick={() => navigate(`/${USER_ROLES.vendor}/my-profile`)}
+            className="later mt-2"
+            style={{
+              color: "#274593",
+            }}
+          >
+            Do it later
+          </span>
+        </Stack>
+      )}
 
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>
