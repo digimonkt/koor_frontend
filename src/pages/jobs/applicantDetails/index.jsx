@@ -127,7 +127,7 @@ const ApplicantDetails = () => {
                     padding: "0px",
                   }}
                 >
-                  <SVG.ArrowBackIcon />
+                  <SVG.BackArrow />
                 </IconButton>
               </Box>
               <Stack
