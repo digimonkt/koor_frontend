@@ -50,6 +50,7 @@ const JobDetails = () => {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
+    textAlign: "justify",
     WebkitLineClamp: numLines,
   };
   const [details, setDetails] = useState({
