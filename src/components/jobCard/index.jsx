@@ -25,7 +25,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [searchValue, setSearchValue] = useState("");
 
   const [registrationWarning, setRegistrationWarning] = useState(false);
-  const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
   const [applicationStatus, setApplicationStatus] = useState("applied");
@@ -69,13 +68,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails) setIsSaved(jobDetails.isSaved);
   }, [jobDetails]);
   useEffect(() => {
-    if (logo) {
-      setGridProps({
-        sx: { my: 3 },
-      });
-    }
-  }, [logo]);
-  useEffect(() => {
     if (jobDetails.isShortlisted) {
       setApplicationStatus("Shortlisted");
     }
@@ -97,13 +89,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   return (
     <div className="job_card">
       <Grid
-        sx={{
-          justifyContent: "space-between",
-          alignItems: numLines === 3 ? "center" : "flex-start",
-        }}
+        justifyContent="space-between"
+        sx={{ alignItems: numLines === 3 ? "center" : "flex-start" }}
         container
         spacing={1.875}
-        {...gridProps}
       >
         {logo && (
           <Grid

@@ -45,6 +45,7 @@ const JobDetails = () => {
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
   const [numLines, setNumLines] = useState(3);
+  const hasData = (...arrays) => arrays.some((array) => array.length > 0);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -708,23 +709,56 @@ const JobDetails = () => {
           )}
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={7} sm={7}>
-                <JobRequirementCard
-                  highestEducation={details.highestEducation}
-                  languages={details.languages}
-                  skills={details.skills}
-                />
-              </Grid>
-              <Grid item xs={12} lg={5} sm={5}>
+              {hasData(
+                details.highestEducation,
+                details.languages,
+                details.skills,
+              ) && (
+                <Grid item xs={12} lg={7} sm={7}>
+                  <JobRequirementCard
+                    highestEducation={details.highestEducation}
+                    languages={details.languages}
+                    skills={details.skills}
+                  />
+                </Grid>
+              )}
+              <Grid
+                item
+                xs={12}
+                lg={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                  )
+                    ? 5
+                    : 6
+                }
+                sm={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                  )
+                    ? 5
+                    : 12
+                }
+              >
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
                   <Box
                     sx={{
-                      height: "75%",
                       overflow: "hidden",
                       borderRadius: "5px",
                       position: "relative",
+                      height: hasData(
+                        details.highestEducation,
+                        details.languages,
+                        details.skills,
+                      )
+                        ? "75%"
+                        : "250px",
                       "@media (max-width:992px)": {
                         height: "250px",
                       },
