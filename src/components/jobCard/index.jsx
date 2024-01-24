@@ -32,7 +32,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3
+      prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
 
@@ -71,7 +71,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   useEffect(() => {
     if (logo) {
       setGridProps({
-        alignItems: "center",
         sx: { my: 3 },
       });
     }
@@ -87,8 +86,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -98,7 +97,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   return (
     <div className="job_card">
       <Grid
-        sx={{ justifyContent: "space-between" }}
+        sx={{
+          justifyContent: "space-between",
+          alignItems: numLines === 3 ? "center" : "flex-start",
+        }}
         container
         spacing={1.875}
         {...gridProps}
@@ -140,7 +142,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -215,7 +217,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             navigate(
                               urlcat("/employer/jobs/post", {
                                 jobId: jobDetails?.id,
-                              })
+                              }),
                             );
                           }
                         }}
@@ -456,7 +458,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -472,6 +474,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 marginTop: "58px",
                 "& .bookmark": { width: "auto", marginLeft: "0px" },
               },
+
               "@media (max-width:480px)": {
                 marginTop: "0px",
                 minHeight: "0%",
@@ -532,7 +535,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        })
+                        }),
                       );
                     }
                   }}
