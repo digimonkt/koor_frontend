@@ -45,7 +45,15 @@ const JobDetails = () => {
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
   const [numLines, setNumLines] = useState(3);
-  const hasData = (...arrays) => arrays.some((array) => array.length > 0);
+  const hasData = (...values) =>
+    values.some((value) => {
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      } else if (typeof value === "number") {
+        return value !== 0;
+      }
+      return false;
+    });
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -714,12 +722,14 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
+                details.experience,
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
                     highestEducation={details.highestEducation}
                     languages={details.languages}
                     skills={details.skills}
+                    experience={details.experience}
                   />
                 </Grid>
               )}
@@ -731,6 +741,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
+                    details.experience,
                   )
                     ? 5
                     : 6
@@ -740,6 +751,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
+                    details.experience,
                   )
                     ? 5
                     : 12
@@ -757,6 +769,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
+                        details.experience,
                       )
                         ? "75%"
                         : "250px",
