@@ -149,12 +149,9 @@ const AboutUs = () => {
             </Grid>
           </Container>
         </Box>
-        <DialogBox
-          open={openDialog}
-          handleClose={() => handleCommingSoon(false)}
-        >
+        <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
           <div className="add-content">
-            <h2 className="mb-4">Coming Soom!</h2>
+            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
           </div>
         </DialogBox>
       </Box>
