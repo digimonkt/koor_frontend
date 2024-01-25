@@ -44,13 +44,6 @@ const JobDetails = () => {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
-  const [numLines, setNumLines] = useState(3);
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    WebkitLineClamp: numLines,
-  };
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -112,6 +105,23 @@ const JobDetails = () => {
     attachments: [],
   });
   const [addressGeoCode, setAddressGeoCode] = useState({});
+  const [numLines, setNumLines] = useState(details?.description?.length);
+  const hasData = (...values) =>
+    values.some((value) => {
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      } else if (typeof value === "number") {
+        return value !== 0;
+      }
+      return false;
+    });
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textAlign: "justify",
+    WebkitLineClamp: numLines,
+  };
 
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });
@@ -403,7 +413,7 @@ const JobDetails = () => {
                   )}
                   {details.hasContract && (
                     <SearchButton
-                      text="Contract"
+                      text="Consultant"
                       leftIcon={<SVG.MoonCircle />}
                       className={`${styles.iconbutton}`}
                     />
@@ -708,23 +718,61 @@ const JobDetails = () => {
           )}
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={7} sm={7}>
-                <JobRequirementCard
-                  highestEducation={details.highestEducation}
-                  languages={details.languages}
-                  skills={details.skills}
-                />
-              </Grid>
-              <Grid item xs={12} lg={5} sm={5}>
+              {hasData(
+                details.highestEducation,
+                details.languages,
+                details.skills,
+                details.experience,
+              ) && (
+                <Grid item xs={12} lg={7} sm={7}>
+                  <JobRequirementCard
+                    highestEducation={details.highestEducation}
+                    languages={details.languages}
+                    skills={details.skills}
+                    experience={details.experience}
+                  />
+                </Grid>
+              )}
+              <Grid
+                item
+                xs={12}
+                lg={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                    details.experience,
+                  )
+                    ? 5
+                    : 6
+                }
+                sm={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                    details.experience,
+                  )
+                    ? 5
+                    : 12
+                }
+              >
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
                   <Box
                     sx={{
-                      height: "75%",
                       overflow: "hidden",
                       borderRadius: "5px",
                       position: "relative",
+                      height: hasData(
+                        details.highestEducation,
+                        details.languages,
+                        details.skills,
+                        details.experience,
+                      )
+                        ? "75%"
+                        : "250px",
                       "@media (max-width:992px)": {
                         height: "250px",
                       },

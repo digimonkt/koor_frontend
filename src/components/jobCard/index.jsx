@@ -25,14 +25,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [searchValue, setSearchValue] = useState("");
 
   const [registrationWarning, setRegistrationWarning] = useState(false);
-  const [gridProps, setGridProps] = useState({});
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
   const [applicationStatus, setApplicationStatus] = useState("applied");
   const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3
+      prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
 
@@ -69,14 +68,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     if (jobDetails) setIsSaved(jobDetails.isSaved);
   }, [jobDetails]);
   useEffect(() => {
-    if (logo) {
-      setGridProps({
-        alignItems: "center",
-        sx: { my: 3 },
-      });
-    }
-  }, [logo]);
-  useEffect(() => {
     if (jobDetails.isShortlisted) {
       setApplicationStatus("Shortlisted");
     }
@@ -87,8 +78,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -98,10 +89,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   return (
     <div className="job_card">
       <Grid
-        sx={{ justifyContent: "space-between" }}
+        justifyContent="space-between"
+        sx={{ alignItems: numLines === 3 ? "center" : "flex-start" }}
         container
         spacing={1.875}
-        {...gridProps}
       >
         {logo && (
           <Grid
@@ -140,7 +131,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -215,7 +206,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             navigate(
                               urlcat("/employer/jobs/post", {
                                 jobId: jobDetails?.id,
-                              })
+                              }),
                             );
                           }
                         }}
@@ -367,7 +358,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               )}
               {jobDetails?.hasContract && (
-                <ChipBox label={"Contract"} icon={<>{<SVG.MoonCircle />}</>} />
+                <ChipBox
+                  label={"Consultant"}
+                  icon={<>{<SVG.MoonCircle />}</>}
+                />
               )}
             </Stack>
             <Stack
@@ -456,7 +450,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -472,6 +466,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 marginTop: "58px",
                 "& .bookmark": { width: "auto", marginLeft: "0px" },
               },
+
               "@media (max-width:480px)": {
                 marginTop: "0px",
                 minHeight: "0%",
@@ -532,7 +527,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        })
+                        }),
                       );
                     }
                   }}
