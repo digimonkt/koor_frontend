@@ -426,7 +426,7 @@ const Home = () => {
                     cursor: "pointer",
                   }}
                   onClick={() => {
-                    navigate("/search/jobs");
+                    navigate("/search/tenders");
                   }}
                 >
                   See all {totalTenders} Tenders{" "}
@@ -437,6 +437,7 @@ const Home = () => {
               </Stack>
             </Box>
             <SlickSlider
+              categoryType="tenders"
               items={topTenderCategories.map((category) => ({
                 icon: <SVG.Market />,
                 title:
