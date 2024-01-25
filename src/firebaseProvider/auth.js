@@ -17,13 +17,13 @@ export const loginWithGooglePopupProvider = async () => {
   });
   try {
     const res = await signInWithPopup(auth, googleProvider);
-    console.log("Facebook Sign-In Success:", res.user);
+    alert("Facebook Sign-In Success:", res.user);
     return {
       remote: "success",
       data: res.user,
     };
   } catch (error) {
-    console.log("Facebook Sign-In:", error);
+    alert("Facebook Sign-In:", error);
     return {
       remote: "failure",
       errors: error,
@@ -39,13 +39,13 @@ export const loginWithFacebookPopupProvider = async () => {
   });
   try {
     const res = await signInWithPopup(auth, facebookProvider); // Fix: Use facebookProvider instead of googleProvider
-    console.log("Facebook Sign-In Success:", res.user);
+    alert("Facebook Sign-In Success:", res.user);
     return {
       remote: "success",
       data: res.user,
     };
   } catch (error) {
-    console.error("Facebook Sign-In Error:", error);
+    alert("Facebook Sign-In Error:", error);
     return {
       remote: "failure",
       errors: error,

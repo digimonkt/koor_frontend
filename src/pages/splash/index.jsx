@@ -8,8 +8,8 @@ const Spalsh = () => {
     const hidefun = async () => {
       await SplashScreen.show({
         showDuration: 5000,
-        autoHide: true,
       });
+      await SplashScreen.hide();
     };
     hidefun();
     navigate("/login");

@@ -5,8 +5,13 @@
   "npmClient": "yarn",
   "cleartext": true,
   "hostname": "192.168.0.192",
-  "allowNavigation": ["*"],
   "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "androidScaleType": "CENTER_CROP"
+    }
+  },
   "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
