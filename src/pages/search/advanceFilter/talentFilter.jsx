@@ -170,7 +170,7 @@ function TalentFilter({ formik, footer, responsive }) {
               />
               <JobFormControl
                 control={<CheckboxInput />}
-                label="Consultant "
+                label="Consultant"
                 {...formik.getFieldProps("hasContract")}
                 checked={formik.values.hasContract}
               />
