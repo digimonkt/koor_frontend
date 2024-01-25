@@ -143,6 +143,12 @@ export const getTopJobCategoriesAPI = async () => {
     method: "GET",
   });
 };
+export const getTopTenderCategoriesAPI = async () => {
+  return await api.request({
+    url: urlcat("v1/tenders/tender-categories"),
+    method: "GET",
+  });
+};
 export const getTopCategoriesAPI = async () => {
   return await api.request({
     url: urlcat("v1/jobs/categories"),
