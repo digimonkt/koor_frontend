@@ -44,23 +44,6 @@ const JobDetails = () => {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
-  const [numLines, setNumLines] = useState(3);
-  const hasData = (...values) =>
-    values.some((value) => {
-      if (Array.isArray(value)) {
-        return value.length > 0;
-      } else if (typeof value === "number") {
-        return value !== 0;
-      }
-      return false;
-    });
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    textAlign: "justify",
-    WebkitLineClamp: numLines,
-  };
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -122,6 +105,23 @@ const JobDetails = () => {
     attachments: [],
   });
   const [addressGeoCode, setAddressGeoCode] = useState({});
+  const [numLines, setNumLines] = useState(details?.description?.length);
+  const hasData = (...values) =>
+    values.some((value) => {
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      } else if (typeof value === "number") {
+        return value !== 0;
+      }
+      return false;
+    });
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textAlign: "justify",
+    WebkitLineClamp: numLines,
+  };
 
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });

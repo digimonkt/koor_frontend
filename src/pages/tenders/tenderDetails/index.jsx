@@ -40,13 +40,6 @@ function TenderDetailsComponent() {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [numLines, setNumLines] = useState(3);
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    WebkitLineClamp: numLines,
-  };
 
   const [details, setDetails] = useState({
     id: "",
@@ -115,8 +108,18 @@ function TenderDetailsComponent() {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
+  const [numLines, setNumLines] = useState(details?.description?.length);
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    WebkitLineClamp: numLines,
+  };
+
   const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) => (prevNumLines === 3 ? details?.length : 3));
+    setNumLines((prevNumLines) =>
+      prevNumLines === 3 ? details?.description?.length : 3,
+    );
   };
 
   const getTenderDetails = async (tenderId) => {
