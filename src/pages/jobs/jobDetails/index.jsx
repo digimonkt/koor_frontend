@@ -413,7 +413,7 @@ const JobDetails = () => {
                   )}
                   {details.hasContract && (
                     <SearchButton
-                      text="Contract"
+                      text="Consultant"
                       leftIcon={<SVG.MoonCircle />}
                       className={`${styles.iconbutton}`}
                     />

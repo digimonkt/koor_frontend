@@ -358,7 +358,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               )}
               {jobDetails?.hasContract && (
-                <ChipBox label={"Contract"} icon={<>{<SVG.MoonCircle />}</>} />
+                <ChipBox
+                  label={"Consultant"}
+                  icon={<>{<SVG.MoonCircle />}</>}
+                />
               )}
             </Stack>
             <Stack
