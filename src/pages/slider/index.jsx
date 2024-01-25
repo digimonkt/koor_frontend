@@ -35,7 +35,7 @@ const slideItem = [
   },
 ];
 
-const SlickSlider = ({ items }) => {
+const SlickSlider = ({ items, categoryType = "jobs" }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -74,7 +74,11 @@ const SlickSlider = ({ items }) => {
         >
           {(items || slideItem).map((item) => (
             <Box key="index" className="px-3">
-              <Link to={`/search/jobs?&categories=${item.id}`}>
+              <Link
+                to={`/search/${categoryType}?&${
+                  categoryType === "tenders" ? "tenderCategories" : "categories"
+                }=${item.id}`}
+              >
                 <Box className={`${styles.slider_box}`}>
                   <Box className={`${styles.slider_icon_box}`}>{item.icon}</Box>
                   <Box>

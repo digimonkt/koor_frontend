@@ -251,7 +251,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                     }}
                   />
                 }
-                label="Contract"
+                label="Consultant"
                 {...formik.getFieldProps("hasContract")}
                 checked={formik.values.hasContract}
               />

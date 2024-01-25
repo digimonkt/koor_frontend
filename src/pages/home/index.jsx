@@ -16,17 +16,18 @@ import { Container } from "@mui/system";
 import SlickSlider from "../../pages/slider";
 import InputSearch from "../../components/inputSearch";
 import { SVG } from "../../assets/svg";
-// import VerticalSlider from "./verticalSlider";
 import { Link, useNavigate } from "react-router-dom";
 import TextSlide from "./textSlide";
-import HomeSection from "./homeSection";
 import { SelectInput } from "../../components/input";
 import { getCountries, getJobCategories } from "../../redux/slice/choices";
 import { USER_ROLES } from "../../utils/enum";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CoravImg from "../../assets/images/corav-bg.png";
-import { getTopJobCategoriesAPI } from "../../api/job";
-// import { isPlatform } from "@ionic/react";
+import {
+  getTopJobCategoriesAPI,
+  getTopTenderCategoriesAPI,
+} from "../../api/job";
+
 import {
   getTestimonialListAPI,
   getTopListingCompaniesAPI,
@@ -35,7 +36,7 @@ import {
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import { Capacitor } from "@capacitor/core";
-import FeatureSection from "./featureSection";
+import DialogBox from "../../components/dialogBox";
 const platform = Capacitor.getPlatform();
 
 const Home = () => {
@@ -44,9 +45,12 @@ const Home = () => {
   const { countries, jobCategories } = useSelector((state) => state.choices);
   const { role, isLoggedIn } = useSelector((state) => state.auth);
 
+  const [totalTenders, setTotalTenders] = useState(0);
+  const [topTenderCategories, setTopTenderCategories] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
   const [topJobCategories, setTopJobCategories] = useState([]);
   const [topListingCompanies, setTopListingCompanies] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
   const [testimonialList, setTestimonialList] = useState([]);
   const [siteUpdates, setSiteUpdates] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -93,6 +97,13 @@ const Home = () => {
       setTotalJobs(res.data.total_jobs);
     }
   };
+  const getTopTenderCategories = async () => {
+    const res = await getTopTenderCategoriesAPI();
+    if (res.remote === "success") {
+      setTopTenderCategories(res.data.tender_categories);
+      setTotalTenders(res.data.total_tenders);
+    }
+  };
   const getSiteUpdates = async () => {
     const res = await getSiteUpdatesAPI();
     if (res.remote === "success") {
@@ -112,7 +123,12 @@ const Home = () => {
     }
   };
 
+  const handleCommingSoon = () => {
+    setOpenDialog(true);
+  };
+
   useEffect(() => {
+    getTopTenderCategories();
     getTopJobCategories();
     getTopListingCompanies();
     getTestimonialList();
@@ -399,21 +415,41 @@ const Home = () => {
                 id: category.id,
               }))}
             />
+            <Box>
+              <Stack direction="row" spacing={2} className={styles.stack_box}>
+                <Typography className={styles.popular_job}>
+                  Popular Tenders categories
+                </Typography>
+                <Typography
+                  className={`ms-auto ${styles.see_all_jobs}`}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    navigate("/search/tenders");
+                  }}
+                >
+                  See all {totalTenders} Tenders{" "}
+                  <IconButton>
+                    <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                  </IconButton>
+                </Typography>
+              </Stack>
+            </Box>
+            <SlickSlider
+              categoryType="tenders"
+              items={topTenderCategories.map((category) => ({
+                icon: <SVG.Market />,
+                title:
+                  (category?.title || "").length > 15
+                    ? `${category.title.slice(0, 12)}...`
+                    : category.title,
+                text: `${category.count || 0} tenders`,
+                id: category.id,
+              }))}
+            />
           </Container>
-          <Box sx={{ paddingTop: "50px" }}>
-            <Container
-              maxWidth={false}
-              sx={{
-                "@media(min-width:992px)": {
-                  paddingLeft: "100px",
-                  paddingRight: "100px",
-                },
-              }}
-            >
-              <FeatureSection />
-              <HomeSection />
-            </Container>
-          </Box>
+
           <Box className={`${styles.home_back}`}>
             <Box className={`${styles.home_powerfull_box}`}>
               <Box>
@@ -485,13 +521,26 @@ const Home = () => {
                           },
                         }}
                       >
-                        <img src={IMAGES.Googleplay} alt="" rel="nofollow" />
-                        <img
-                          src={IMAGES.Appstore}
-                          alt=""
-                          className="mx-3"
-                          rel="nofollow"
-                        />
+                        <Box className={styles.about_social}>
+                          <Link to="/" onClick={handleCommingSoon}>
+                            <img
+                              src={IMAGES.Googleplay}
+                              rel="nofollow"
+                              alt="img"
+                            />
+                          </Link>
+                          <Link
+                            to="/"
+                            onClick={handleCommingSoon}
+                            className="mx-3"
+                          >
+                            <img
+                              src={IMAGES.Appstore}
+                              rel="nofollow"
+                              alt="img"
+                            />
+                          </Link>
+                        </Box>
                       </Box>
                     </Box>
                   </Grid>
@@ -527,45 +576,11 @@ const Home = () => {
             </Box>
           </Box>
         </Box>
-
-        {/* <DialogBox
-            open={registrationWarning}
-            handleClose={() => setRegistrationWarning(false)}
-          >
-            <div>
-              <h1 className="heading">Register as jobseeker</h1>
-              <div className="form-content">
-                <p>
-                  To apply for the job and have many other useful features to
-                  find a job, please register on Koor.
-                </p>
-                <div style={{ textAlign: "center", lineHeight: "40px" }}>
-                  <Link to="/register?role=job_seeker">
-                    <OutlinedButton
-                      title="Register as jobseeker"
-                      jobSeeker
-                      style={{
-                        width: "100%",
-                      }}
-                    />
-                  </Link>
-                  <span>
-                    Already have an account?{" "}
-                    <Link
-                      to={`/login?role=${USER_ROLES.jobSeeker}`}
-                      style={{
-                        textDecoration: "none",
-                        color: "#EEA23D",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Login
-                    </Link>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </DialogBox> */}
+        <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
+          <div className="add-content">
+            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
+          </div>
+        </DialogBox>
       </div>
     </div>
   );
