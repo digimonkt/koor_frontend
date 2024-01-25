@@ -16,17 +16,15 @@ import { Container } from "@mui/system";
 import SlickSlider from "../../pages/slider";
 import InputSearch from "../../components/inputSearch";
 import { SVG } from "../../assets/svg";
-// import VerticalSlider from "./verticalSlider";
 import { Link, useNavigate } from "react-router-dom";
 import TextSlide from "./textSlide";
-import HomeSection from "./homeSection";
 import { SelectInput } from "../../components/input";
 import { getCountries, getJobCategories } from "../../redux/slice/choices";
 import { USER_ROLES } from "../../utils/enum";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CoravImg from "../../assets/images/corav-bg.png";
 import { getTopJobCategoriesAPI } from "../../api/job";
-// import { isPlatform } from "@ionic/react";
+
 import {
   getTestimonialListAPI,
   getTopListingCompaniesAPI,
@@ -35,7 +33,6 @@ import {
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import { Capacitor } from "@capacitor/core";
-import FeatureSection from "./featureSection";
 const platform = Capacitor.getPlatform();
 
 const Home = () => {
@@ -399,21 +396,40 @@ const Home = () => {
                 id: category.id,
               }))}
             />
+            <Box>
+              <Stack direction="row" spacing={2} className={styles.stack_box}>
+                <Typography className={styles.popular_job}>
+                  Popular Tenders categories
+                </Typography>
+                <Typography
+                  className={`ms-auto ${styles.see_all_jobs}`}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    navigate("/search/jobs");
+                  }}
+                >
+                  See all {totalJobs} Tenders{" "}
+                  <IconButton>
+                    <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                  </IconButton>
+                </Typography>
+              </Stack>
+            </Box>
+            <SlickSlider
+              items={topJobCategories.map((category) => ({
+                icon: <SVG.Market />,
+                title:
+                  (category?.title || "").length > 15
+                    ? `${category.title.slice(0, 12)}...`
+                    : category.title,
+                text: `${category.count || 0} tenders`,
+                id: category.id,
+              }))}
+            />
           </Container>
-          <Box sx={{ paddingTop: "50px" }}>
-            <Container
-              maxWidth={false}
-              sx={{
-                "@media(min-width:992px)": {
-                  paddingLeft: "100px",
-                  paddingRight: "100px",
-                },
-              }}
-            >
-              <FeatureSection />
-              <HomeSection />
-            </Container>
-          </Box>
+
           <Box className={`${styles.home_back}`}>
             <Box className={`${styles.home_powerfull_box}`}>
               <Box>

@@ -5,6 +5,9 @@ import { IMAGES } from "../../assets/images";
 import { Link } from "react-router-dom";
 import AboutContent from "./aboutContent";
 import { OTHER_BUTTON } from "../../utils/constants/constants";
+import HomeSection from "../home/homeSection";
+import FeatureSection from "../home/featureSection";
+
 const aboutImg = [
   {
     img: IMAGES.AboutBanner,
@@ -68,6 +71,21 @@ const AboutUs = () => {
             </Grid>
           </Container>
         </Box>
+        <Box sx={{ paddingTop: "50px" }}>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:992px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
+            <FeatureSection />
+            <HomeSection />
+          </Container>
+        </Box>
+
         <Box>
           <AboutContent />
         </Box>
