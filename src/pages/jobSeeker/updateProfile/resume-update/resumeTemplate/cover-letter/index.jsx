@@ -3,8 +3,6 @@ import "./style.css";
 import { generateFileUrl } from "@utils/generateFileUrl";
 
 const CoverLetter = ({ applicantDetails, content }) => {
-  console.log(applicantDetails.signature.id);
-
   const [base64Image, setBase64Image] = useState("");
 
   useEffect(() => {
@@ -37,12 +35,12 @@ const CoverLetter = ({ applicantDetails, content }) => {
           <h2>To whom it may concern,</h2>
           <p>{content}</p>
           <h3 style={{ marginTop: "50px" }}>Sincerely,</h3>
-          {Boolean(applicantDetails.signature.id) && (
+          {Boolean(applicantDetails?.signature?.id) && (
             <img
               width={135}
               height={85}
               src={base64Image}
-              alt={applicantDetails.signature.title}
+              alt={applicantDetails?.signature?.title}
             />
           )}
           <h3>{applicantDetails.name}</h3>
