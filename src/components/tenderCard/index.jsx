@@ -183,8 +183,8 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                     <span
                                       style={{
                                         color: USER_ROLES.jobSeeker
-                                          ? " #274593"
-                                          : "#eea23d",
+                                          ? "#eea23d"
+                                          : "#274593",
                                       }}
                                     >
                                       Saved
@@ -411,7 +411,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       <span className="d-block">Edit</span>
                     </button>
                   </Box>
-                ) : isLoggedIn ? (
+                ) : isLoggedIn && role !== USER_ROLES.jobSeeker ? (
                   <React.Fragment>
                     {!applied ? (
                       <div

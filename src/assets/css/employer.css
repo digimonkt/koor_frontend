@@ -251,6 +251,18 @@ span.blueview {
   box-sizing: border-box;
 }
 
+.jobsearch::placeholder {
+  box-sizing: border-box;
+  width: 100%;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  opacity: 0.9;
+  line-height: 24px;
+  color: #848484;
+}
+
 .searchjob-box {
   background: #ffffff;
   border: 1px solid #cacaca;

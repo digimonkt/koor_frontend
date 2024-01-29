@@ -32,7 +32,7 @@ import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
-import CreateCoverLetter from "../../../components/coverLetter";
+import CreateCoverLetter from "@components/coverLetter";
 
 const JobDetails = () => {
   const params = useParams();
@@ -115,6 +115,7 @@ const JobDetails = () => {
       }
       return false;
     });
+
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -156,6 +157,7 @@ const JobDetails = () => {
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) => (prevNumLines === 3 ? details?.length : 3));
   };
+
   function handleSendEmail(details) {
     const email = details.contactEmail;
     const ccEmail1 = details.cc1;
@@ -288,7 +290,13 @@ const JobDetails = () => {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate("/search/jobs")}
+                    onClick={() => {
+                      if (window.history.length > 1) {
+                        navigate(-1);
+                      } else {
+                        navigate("/");
+                      }
+                    }}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
