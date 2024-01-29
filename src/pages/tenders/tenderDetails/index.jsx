@@ -121,7 +121,6 @@ function TenderDetailsComponent() {
       prevNumLines === 3 ? details?.description?.length : 3,
     );
   };
-
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
@@ -271,7 +270,13 @@ function TenderDetailsComponent() {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate(-1)}
+                    onClick={() => {
+                      if (window.history.length > 1) {
+                        navigate(-1);
+                      } else {
+                        navigate("/");
+                      }
+                    }}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
