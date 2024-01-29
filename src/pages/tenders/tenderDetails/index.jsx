@@ -525,7 +525,6 @@ function TenderDetailsComponent() {
                         sx={{
                           height: "44px",
                           border: "0px !important",
-                          color: "#274593 !important",
                         }}
                         onClick={() => {
                           setIsSharing(true);
