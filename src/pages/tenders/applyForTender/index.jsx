@@ -466,6 +466,8 @@ function ApplyForTender() {
           "& .MuiPaper-root": {
             maxWidth: "734px",
             width: "734px",
+            height: "299px",
+            overflow: "hidden",
           },
         }}
       >
