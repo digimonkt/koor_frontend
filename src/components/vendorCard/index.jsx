@@ -24,7 +24,7 @@ function VendorCard({ vendorDetails }) {
         urlcat("/employer/chat", {
           conversion: conversationId,
           userId: vendorDetails?.id,
-        })
+        }),
       );
     }
   };
@@ -41,8 +41,13 @@ function VendorCard({ vendorDetails }) {
       alignItems={{ xs: "start", lg: "center" }}
       justifyContent={{ xs: "center", lg: "space-between" }}
       className="border-recent"
+      textAlign="justify"
     >
-      <Stack direction="row" spacing={2} alignItems={"center"}>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{ alignItems: showFullText ? "flex-start" : "center" }}
+      >
         <Avatar
           src={generateFileUrl(vendorDetails.profilePicture?.path || "")}
           sx={{ width: "70px", height: "70px", borderRadius: "0px !important" }}

@@ -44,13 +44,6 @@ function TenderDetailsComponent() {
   const navigate = useNavigate();
   const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
-  const [numLines, setNumLines] = useState(3);
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    WebkitLineClamp: numLines,
-  };
 
   const [details, setDetails] = useState({
     id: "",
@@ -119,10 +112,19 @@ function TenderDetailsComponent() {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
-  const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) => (prevNumLines === 3 ? details?.length : 3));
+  const [numLines, setNumLines] = useState(details?.description?.length);
+  const textWrapperStyle = {
+    display: "-webkit-box",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    WebkitLineClamp: numLines,
   };
 
+  const handleSeeMoreClick = () => {
+    setNumLines((prevNumLines) =>
+      prevNumLines === 3 ? details?.description?.length : 3,
+    );
+  };
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
@@ -266,7 +268,13 @@ function TenderDetailsComponent() {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => navigate(-1)}
+                    onClick={() => {
+                      if (window.history.length > 1) {
+                        navigate(-1);
+                      } else {
+                        navigate("/");
+                      }
+                    }}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
@@ -529,7 +537,6 @@ function TenderDetailsComponent() {
                         sx={{
                           height: "44px",
                           border: "0px !important",
-                          color: "#274593 !important",
                         }}
                         onClick={() => {
                           setIsSharing(true);

@@ -3,11 +3,24 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Box, Stack } from "@mui/material";
 
-function JobRequirementCard({ highestEducation, languages, skills }) {
+function JobRequirementCard({
+  highestEducation,
+  languages,
+  skills,
+  experience,
+}) {
   return (
     <div className={`${styles.requirement}`}>
       <h5>Requirements:</h5>
-
+      {experience && (
+        <div className={`${styles.required}`}>
+          <h6>Experience</h6>
+          <div className={`${styles.educations}`}>
+            <span></span>
+            <p className="m-0">{experience}</p>
+          </div>
+        </div>
+      )}
       {highestEducation.id && (
         <div className={`${styles.required}`}>
           <h6>Education</h6>

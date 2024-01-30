@@ -295,7 +295,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
@@ -334,6 +334,7 @@ function PublicProfileComponent() {
                           <Typography
                             variant="h6"
                             sx={{
+                              wordBreak: "break-all",
                               fontSize: "16px",
                               fontFamily: "Poppins",
                               fontWeight: "600",
@@ -379,6 +380,7 @@ function PublicProfileComponent() {
                               sx={{
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
+                                wordBreak: "break-all",
                                 fontWeight: "600",
                               }}
                             >

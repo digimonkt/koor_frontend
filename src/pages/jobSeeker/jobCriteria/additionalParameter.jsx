@@ -53,13 +53,13 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
           },
           profile: {
             country: countries.data.find(
-              (country) => country.id === payload.country
+              (country) => country.id === payload.country,
             ),
             city: cities.data[payload.country].find(
-              (city) => city.id === payload.city
+              (city) => city.id === payload.city,
             ),
           },
-        })
+        }),
       );
       navigate(`/${USER_ROLES.jobSeeker}/my-profile/update-profile`);
     }
@@ -130,7 +130,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                   (country) => ({
                     value: country.id,
                     label: country.title,
-                  })
+                  }),
                 )}
                 onChange={(e) => setSelectedCity(e.target.value)}
                 value={selectedCity}
@@ -239,7 +239,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
                   }))
                 }
                 checked={jobType.contract}
-                label="Contract"
+                label="Consultant"
               />
             </FormGroup>
             {platform === "android" || platform === "ios" ? (

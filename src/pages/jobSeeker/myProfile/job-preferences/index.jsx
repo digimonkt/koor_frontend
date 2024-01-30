@@ -59,7 +59,7 @@ const JobPreferences = (props) => {
             expectedSalary: payload.expected_salary,
             payPeriod: payload.pay_period,
           },
-        })
+        }),
       );
     }
     setLoading(false);
@@ -191,7 +191,7 @@ const JobPreferences = (props) => {
                         control={<CheckboxInput />}
                         onChange={handleChangeCheckbox("hasContract")}
                         checked={jobPreferences.hasContract}
-                        label="Contract"
+                        label="Consultant"
                       />
                     </FormGroup>
                   </div>
@@ -327,7 +327,7 @@ const JobPreferences = (props) => {
                     control={<CheckboxInput />}
                     onChange={handleChangeCheckbox("hasContract")}
                     checked={jobPreferences.hasContract}
-                    label="Contract"
+                    label="Consultant"
                   />
                 </FormGroup>
               </div>

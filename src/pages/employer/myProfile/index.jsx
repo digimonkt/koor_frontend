@@ -34,8 +34,8 @@ import {
 import { ErrorToast, SuccessToast } from "../../../components/toast";
 import { setProfilePic, updateCurrentUser } from "../../../redux/slice/user";
 import { FormControlReminder } from "../../../components/style";
-// import { setSuccessToast } from "@redux/slice/toast";
 import DialogBox from "../../../components/dialogBox";
+import { useNavigate } from "react-router-dom";
 import NoItem from "../../../pages/jobSeeker/myProfile/noItem";
 import { SVG } from "../../../assets/svg";
 import {
@@ -48,7 +48,7 @@ import styles from "./myProfile.module.css";
 import { setErrorToast } from "../../../redux/slice/toast";
 // import { USER_ROLES } from "@utils/enum";
 import { Capacitor } from "@capacitor/core";
-import { useNavigate } from "react-router-dom";
+import { USER_ROLES } from "@utils/enum";
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
@@ -58,10 +58,10 @@ function MyProfileComponent() {
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const platform = Capacitor.getPlatform();
-  const navigate = useNavigate();
   const [toggle, setToggle] = useState(["about"]);
   const { countries, cities, sectors } = useSelector((state) => state.choices);
   const debouncedSearchValue = useDebounce(searchValue, 500);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       organizationName: "",
@@ -87,7 +87,7 @@ function MyProfileComponent() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        "",
+        ""
       );
 
       const payload = {
@@ -134,7 +134,7 @@ function MyProfileComponent() {
             profile: {
               // website: values.website,
               organizationType: sectors.data.find(
-                (sector) => sector.id === values.organizationType,
+                (sector) => sector.id === values.organizationType
               ),
               licenseId: values.licenseId,
               licenseIdFile: values.license[0],
@@ -142,21 +142,21 @@ function MyProfileComponent() {
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
               country: countries.data.find(
-                (country) => country.id === values.country,
+                (country) => country.id === values.country
               ),
               city: cities.data[values.country]?.find(
-                (city) => city.id === values.city,
+                (city) => city.id === values.city
               ),
               address: values.address,
             },
-          }),
+          })
         );
         setLoading(false);
       } else {
         dispatch(
           setErrorToast(
-            res.error.errors.mobile_number || "Something went wrong",
-          ),
+            res.error.errors.mobile_number || "Something went wrong"
+          )
         );
         setLoading(false);
       }
@@ -198,7 +198,7 @@ function MyProfileComponent() {
       formik.setFieldValue("organizationName", currentUser.name);
       formik.setFieldValue(
         "organizationType",
-        currentUser.profile.organizationType?.id,
+        currentUser.profile.organizationType?.id
       );
       formik.setFieldValue("country", currentUser.profile.country?.id || "");
       formik.setFieldValue("city", currentUser.profile.city?.id || "");
@@ -210,7 +210,7 @@ function MyProfileComponent() {
         "license",
         currentUser.profile.licenseIdFile
           ? [currentUser.profile.licenseIdFile]
-          : [],
+          : []
       );
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
@@ -235,7 +235,7 @@ function MyProfileComponent() {
 
   const handleToggleModel2 = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
     );
   };
 
@@ -250,13 +250,25 @@ function MyProfileComponent() {
   }, [toggle]);
   return (
     <>
-      <Stack direction="row" spacing={3} className="mb-3" alignItems={"center"}>
-        <h1 className="heading m-0">Add info to complete your profile</h1>
-        {/* <span className="later" style={{ color: "#274593" }}>
-          Do it later
-        </span> */}
-      </Stack>
-
+      {!currentUser?.profileCompleted && (
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          alignItems={{ xs: "start" }}
+          spacing={{ xs: 1, lg: 3 }}
+          className="mb-3"
+        >
+          <h1 className="heading m-0">Add info to complete your profile</h1>
+          <span
+            onClick={() => navigate(`/${USER_ROLES.employer}/dashboard`)}
+            className="later mt-2"
+            style={{
+              color: "#274593",
+            }}
+          >
+            Do it later
+          </span>
+        </Stack>
+      )}
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>
           <Card
@@ -321,7 +333,7 @@ function MyProfileComponent() {
                       if (!isValid) {
                         formik.setFieldError(
                           "mobileNumber",
-                          "Invalid Mobile Number",
+                          "Invalid Mobile Number"
                         );
                       }
                     }}
@@ -348,7 +360,7 @@ function MyProfileComponent() {
                       (country) => ({
                         value: country.id,
                         label: country.title,
-                      }),
+                      })
                     )}
                     {...formik.getFieldProps("city")}
                   />
@@ -373,7 +385,7 @@ function MyProfileComponent() {
                               onClick={() => {
                                 formik.setFieldValue(
                                   "address",
-                                  address.description,
+                                  address.description
                                 );
                                 setSearchValue(address.description);
                               }}
@@ -421,7 +433,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "otherNotification",
-                          e.target.checked,
+                          e.target.checked
                         )
                       }
                       checked={formik.values.otherNotification}
@@ -438,7 +450,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "marketingInformationNotification",
-                          e.target.checked,
+                          e.target.checked
                         )
                       }
                       checked={formik.values.marketingInformationNotification}

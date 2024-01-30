@@ -1,10 +1,14 @@
 import { Box, Container, Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./about.module.css";
 import { IMAGES } from "../../assets/images";
 import { Link } from "react-router-dom";
 import AboutContent from "./aboutContent";
 import { OTHER_BUTTON } from "../../utils/constants/constants";
+import HomeSection from "../home/homeSection";
+import FeatureSection from "../home/featureSection";
+import DialogBox from "@components/dialogBox";
+
 const aboutImg = [
   {
     img: IMAGES.AboutBanner,
@@ -12,6 +16,12 @@ const aboutImg = [
 ];
 
 const AboutUs = () => {
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleCommingSoon = () => {
+    setOpenDialog(true);
+  };
+
   return (
     <>
       <Box className={styles.about}>
@@ -45,10 +55,10 @@ const AboutUs = () => {
                   </p>
                 </Box>
                 <Box className={styles.about_social}>
-                  <Link to="/">
+                  <Link onClick={handleCommingSoon}>
                     <img src={IMAGES.Googleplay} rel="nofollow" alt="img" />
                   </Link>
-                  <Link to="/" className="mx-3">
+                  <Link onClick={handleCommingSoon} className="mx-3">
                     <img src={IMAGES.Appstore} rel="nofollow" alt="img" />
                   </Link>
                 </Box>
@@ -68,6 +78,21 @@ const AboutUs = () => {
             </Grid>
           </Container>
         </Box>
+        <Box sx={{ paddingTop: "50px" }}>
+          <Container
+            maxWidth={false}
+            sx={{
+              "@media(min-width:992px)": {
+                paddingLeft: "100px",
+                paddingRight: "100px",
+              },
+            }}
+          >
+            <FeatureSection />
+            <HomeSection />
+          </Container>
+        </Box>
+
         <Box>
           <AboutContent />
         </Box>
@@ -124,6 +149,11 @@ const AboutUs = () => {
             </Grid>
           </Container>
         </Box>
+        <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
+          <div className="add-content">
+            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
+          </div>
+        </DialogBox>
       </Box>
     </>
   );
