@@ -129,14 +129,15 @@ export const getApplicationDetailsAPI = async (applicationId) => {
         shortLetter: res.data.short_letter,
         shortlistedAt: res.data.shortlisted_at,
         attachments: res.data.attachments,
+        signature: res.data.signature,
         user: {
           ...transformGetUserDetails(res.data.user),
           isBlacklisted: res.data.user.is_blacklisted,
-          job: res.data.job,
         },
       },
     };
   }
+
   return res;
 };
 
