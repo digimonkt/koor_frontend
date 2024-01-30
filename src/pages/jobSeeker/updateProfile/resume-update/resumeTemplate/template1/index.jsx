@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
   const applicantDetails = user || currentUser;
-  console.log({ user });
   return (
     <div className="job-application pages" id="div-to-pdf">
       <div className="container resume_template">

@@ -262,7 +262,7 @@ function ApplicationOptions({
               onClick={() => {
                 if (details.id) {
                   handlerChangeApplicationStatus(
-                    JOB_APPLICATION_OPTIONS.shortlisted
+                    JOB_APPLICATION_OPTIONS.shortlisted,
                   );
                 } else {
                   dispatch(setErrorToast("No Application Found"));
@@ -351,8 +351,8 @@ function ApplicationOptions({
                         applicationId: details.id,
                         role: USER_ROLES.employer,
                         jobId: details.job.id,
-                      }
-                    )
+                      },
+                    ),
                   );
                 } else if (details.tender) {
                   navigate(
@@ -362,15 +362,15 @@ function ApplicationOptions({
                         applicationId: details.id,
                         role: USER_ROLES.employer,
                         tenderId: details.tender.id,
-                      }
-                    )
+                      },
+                    ),
                   );
                 } else {
                   navigate(
                     urlcat("/:role/:userId/profile", {
                       userId: details.user.id,
                       role: details.user.role.replace("_", "-"),
-                    })
+                    }),
                   );
                 }
               }}
@@ -384,17 +384,20 @@ function ApplicationOptions({
         )}
         {message && (
           <Grid item className="me-0 me-lg-3">
-            <Button
+            <OutlinedButton
+              style={{ display: "flex", gap: "8px" }}
+              title={
+                <>
+                  <SVG.MessageIcon
+                    style={{ color: "#274593" }}
+                    className="application-option-icon"
+                  />
+                  <span>Message</span>
+                </>
+              }
               variant="link"
-              sx={{ minWidth: "auto" }}
               onClick={handleMessageClick}
-            >
-              <SVG.MessageIcon
-                style={{ color: "#274593" }}
-                className="application-option-icon"
-              />
-              <span>Message</span>
-            </Button>
+            />
           </Grid>
         )}
       </Grid>
@@ -478,7 +481,7 @@ function ApplicationOptions({
               title="Block the user"
               onClick={() =>
                 handlerChangeApplicationStatus(
-                  JOB_APPLICATION_OPTIONS.blacklisted
+                  JOB_APPLICATION_OPTIONS.blacklisted,
                 )
               }
             />
@@ -511,11 +514,11 @@ function ApplicationOptions({
                 if (interviewTime) {
                   setInvalidPlannedInterviewAlert("");
                   handlerChangeApplicationStatus(
-                    JOB_APPLICATION_OPTIONS.plannedInterviews
+                    JOB_APPLICATION_OPTIONS.plannedInterviews,
                   );
                 } else {
                   setInvalidPlannedInterviewAlert(
-                    "Please select date and time"
+                    "Please select date and time",
                   );
                 }
               }}

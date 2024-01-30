@@ -48,6 +48,7 @@ import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
 import { Link, useNavigate } from "react-router-dom";
+import { USER_ROLES } from "@utils/enum";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -303,21 +304,25 @@ function MyProfile() {
   }, [debouncedSearchValue]);
   return (
     <>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={{ xs: 2, md: 12 }}
-        className="mb-3"
-        alignItems={"flex-start"}
-      >
-        <h1 className="heading m-0">Add info to complete your profile</h1>
-        <Link
-          to={`/${role}/dashboard`}
-          className="later"
-          style={{ color: "#274593" }}
+      {!currentUser?.profileCompleted && (
+        <Stack
+          direction={{ xs: "column", lg: "row" }}
+          alignItems={{ xs: "start" }}
+          spacing={{ xs: 1, lg: 3 }}
+          className="mb-3"
         >
-          Do it later
-        </Link>
-      </Stack>
+          <h1 className="heading m-0">Add info to complete your profile</h1>
+          <span
+            onClick={() => navigate(`/${USER_ROLES.vendor}/dashboard`)}
+            className="later mt-2"
+            style={{
+              color: "#274593",
+            }}
+          >
+            Do it later
+          </span>
+        </Stack>
+      )}
 
       <Grid container spacing={2}>
         <Grid item lg={6} xs={12}>

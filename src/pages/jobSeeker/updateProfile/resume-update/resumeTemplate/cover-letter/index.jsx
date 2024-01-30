@@ -27,6 +27,7 @@ const CoverLetter = ({ applicantDetails, content }) => {
 
     convertImageToBase64();
   }, []);
+
   return (
     <>
       <div className="pages">
@@ -35,7 +36,12 @@ const CoverLetter = ({ applicantDetails, content }) => {
           <p>{content}</p>
           <h3 style={{ marginTop: "50px" }}>Sincerely,</h3>
           {Boolean(applicantDetails?.signature?.id) && (
-            <img src={base64Image} width={135} height={85} />
+            <img
+              width={135}
+              height={85}
+              src={base64Image}
+              alt={applicantDetails?.signature?.title}
+            />
           )}
           <h3>{applicantDetails.name}</h3>
         </div>

@@ -21,9 +21,7 @@ export const validateCreateJobInput = Yup.object()
     isApplyThroughKoor: Yup.boolean(),
     isApplyThroughEmail: Yup.boolean(),
     isApplyThroughWebsite: Yup.boolean(),
-    applicationInstruction: Yup.string()
-      .nullable()
-      .required("Application instructions are required"),
+    applicationInstruction: Yup.string().nullable(),
     websiteLink: Yup.string().when("isApplyThroughWebsite", {
       is: true,
       then: Yup.string().required("Website link is required"),
@@ -36,7 +34,7 @@ export const validateCreateJobInput = Yup.object()
     deadline: Yup.string()
       .nullable()
       .required("Deadline is required")
-      .test("isFuture", "Date Must be of Future", value => {
+      .test("isFuture", "Date Must be of Future", (value) => {
         return dayjs(value).isSameOrAfter(dayjs(), "days");
       }),
     startDate: Yup.string().nullable().required("Start Date is required"),
@@ -125,16 +123,14 @@ export const validateCreateTenderInput = Yup.object()
     deadline: Yup.string()
       .nullable()
       .required("Deadline is required")
-      .test("isFuture", "Date Must be of Future", value => {
+      .test("isFuture", "Date Must be of Future", (value) => {
         return dayjs(value).isSameOrAfter(dayjs(), "days");
       }),
     isContactEmail: Yup.boolean(),
     isApplyThroughKoor: Yup.boolean(),
     isApplyThroughEmail: Yup.boolean(),
     isApplyThroughWebsite: Yup.boolean(),
-    applicationInstruction: Yup.string()
-      .nullable()
-      .required("Application instructions are required"),
+    applicationInstruction: Yup.string().nullable(),
     websiteLink: Yup.string().when("isApplyThroughWebsite", {
       is: true,
       then: Yup.string().required("Website link is required"),
