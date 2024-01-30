@@ -241,7 +241,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-        (typeof filter.country === "string" ? filter.country : ""),
+        (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -311,7 +311,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
         tag: "",
         // vendor
         yearsInMarket: "",
-      }),
+      })
     );
   };
   const handleSaveJobSearch = async (title) => {
@@ -329,7 +329,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       data.city = city?.id;
     }
@@ -361,7 +361,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -397,7 +397,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -430,7 +430,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -557,18 +557,18 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
 
     onSubmit: async (values) => {
       const country = countries.data.find(
-        (country) => country.id === values.country,
+        (country) => country.id === values.country
       );
       const payload = {
         country: country ? country.title : "",
         city: values.city,
         jobCategory: jobCategories.data.find(
-          (val) => val.id === values.jobCategories,
+          (val) => val.id === values.jobCategories
         )?.title,
         jobSubCategories: (values.jobSubCategories || [])
           .map((subCategories) => {
             return jobSubCategories.data[values.jobCategories]?.find(
-              (subCategory) => subCategory.id === subCategories,
+              (subCategory) => subCategory.id === subCategories
             );
           })
           .filter((e) => e),
@@ -584,16 +584,16 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
         sector: values.sector?.map((sector) =>
-          sectors.data.find((i) => i.id === sector),
+          sectors.data.find((i) => i.id === sector)
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
         opportunityType: values.opportunityType?.map((type) =>
-          opportunityTypes.data.find((i) => i.id === type),
+          opportunityTypes.data.find((i) => i.id === type)
         ),
         tag: values.tag?.map((tag) => tags.data.find((i) => i.id === tag)),
         tenderCategories: values.tenderCategories?.map((tenderCategory) =>
-          tenderCategories.data.find((i) => i.id === tenderCategory),
+          tenderCategories.data.find((i) => i.id === tenderCategory)
         ),
         // vendor
         years_in_market: values.yearsInMarket,
@@ -610,7 +610,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories }),
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
       );
     }
   }, [formik.values.country, formik.values.jobCategories]);
@@ -787,8 +787,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                           platform === "android" || platform === "ios"
                             ? "50px !important"
                             : matches
-                              ? "42px !important"
-                              : "42px !important",
+                            ? "42px !important"
+                            : "42px !important",
                       }}
                       className={`${
                         selectedFilter === filter.id
@@ -823,7 +823,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             width:
                               platform === "android" || platform === "ios"
                                 ? "50px"
-                                : "",
+                                : "auto",
                           }}
                           onClick={() => handleSelectFilter(filter)}
                         >

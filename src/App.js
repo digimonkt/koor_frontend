@@ -79,12 +79,6 @@ function App() {
     if (Capacitor.isNativePlatform) {
       CapApp.addListener("backButton", backButtonAction);
     }
-    return () => {
-      window.removeEventListener("storage", checkLoginStatus);
-      if (Capacitor.isNativePlatform) {
-        CapApp.remove();
-      }
-    };
   }, []);
 
   useEffect(() => {

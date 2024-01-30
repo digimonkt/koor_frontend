@@ -110,7 +110,6 @@ const JobDetails = () => {
     attachments: [],
   });
   const [addressGeoCode, setAddressGeoCode] = useState({});
-  const [numLines, setNumLines] = useState(details?.description?.length);
   const hasData = (...values) =>
     values.some((value) => {
       if (Array.isArray(value)) {
@@ -120,14 +119,6 @@ const JobDetails = () => {
       }
       return false;
     });
-
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    textAlign: "justify",
-    WebkitLineClamp: numLines,
-  };
 
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });

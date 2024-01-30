@@ -47,7 +47,7 @@ import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { USER_ROLES } from "@utils/enum";
 
 export const SelectBox = styled(Select)`
@@ -86,7 +86,7 @@ function MyProfile() {
     console.log("first", { toggle });
   }, [toggle]);
   const {
-    auth: { currentUser, role },
+    auth: { currentUser },
     choices: { countries, cities, sectors },
   } = useSelector((state) => state);
   const [profilePicLoading, setProfilePicLoading] = useState("");
