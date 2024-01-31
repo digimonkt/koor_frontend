@@ -22,7 +22,7 @@ export const toastSlice = createSlice({
       state.message = action.payload;
       state.type = MESSAGE_TYPE.warning;
     },
-    resetToast: (state, action) => {
+    resetToast: (state) => {
       state.message = "";
       state.type = MESSAGE_TYPE.null;
     },

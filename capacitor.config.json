@@ -5,22 +5,21 @@
   "npmClient": "yarn",
   "cleartext": true,
   "hostname": "192.168.0.192",
-  "allowNavigation": [
-    "*"
-  ],
+  "allowNavigation": ["*"],
   "webDir": "build",
   "plugins": {
     "SplashScreen": {
       "launchAutoHide": false,
       "androidScaleType": "CENTER_CROP"
+    },
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "1086861312348-ard5ifg2dl0mt8e2jn5o53nkk64ktggf.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
     }
   },
   "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
-  },
-  "server": {
-    "url": "http://192.168.0.192:8100",
-    "originalUrl": "http://192.168.0.192:8100"
   }
 }

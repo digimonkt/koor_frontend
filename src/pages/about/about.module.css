@@ -136,16 +136,20 @@
     max-width: 236.21px;
     height: 329.38px;
   }
+
   .btn_about {
     font-size: 16px !important;
     padding: 15px 16px !important;
   }
+
   .about_text_box {
     margin-top: 0%;
   }
+
   .about_text_box h2 {
     font-size: 40px;
   }
+
   .about_text_box p {
     font-size: 16px;
     line-height: 20px;
