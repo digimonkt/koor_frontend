@@ -11,7 +11,7 @@ import { USER_ROLES } from "../../utils/enum";
 const Setting = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { role } = useSelector((state) => state.auth);
+  const { role } = useSelector(({ auth }) => auth);
   const { appInfo } = useSelector(({ platform }) => platform);
 
   const userLogout = async () => {
@@ -100,8 +100,8 @@ const Setting = () => {
               component={Link}
               to={
                 role === USER_ROLES.jobSeeker
-                  ? "/job_seeker/my-profile/update-profile"
-                  : `${role}./my-profile`
+                  ? `/${role}/my-profile/update-profile`
+                  : `/${role}/my-profile`
               }
             >
               Profile info

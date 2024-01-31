@@ -40,7 +40,7 @@ import {
   DATE_FORMAT,
 } from "../../../utils/constants/constants";
 import { setErrorToast } from "../../../redux/slice/toast";
-import { setUserRole, updateCurrentUser } from "../../../redux/slice/user";
+import { updateCurrentUser } from "../../../redux/slice/user";
 import DialogBox from "../../../components/dialogBox";
 import NoItem from "../myProfile/noItem";
 import { Capacitor } from "@capacitor/core";
@@ -275,7 +275,6 @@ const AboutMe = (props) => {
                 <Stack direction="row" alignItems="flex-end">
                   <IconButton
                     onClick={() => {
-                      dispatch(setUserRole(""));
                       navigate(-1);
                     }}
                   >
