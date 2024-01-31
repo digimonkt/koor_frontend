@@ -5,7 +5,9 @@
   "npmClient": "yarn",
   "cleartext": true,
   "hostname": "192.168.0.192",
-  "allowNavigation": ["*"],
+  "allowNavigation": [
+    "*"
+  ],
   "webDir": "build",
   "plugins": {
     "SplashScreen": {
@@ -16,5 +18,8 @@
   "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
+  },
+  "server": {
+    "url": "http://192.168.0.192:8100"
   }
 }
