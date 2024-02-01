@@ -182,9 +182,10 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                     )}
                                     <span
                                       style={{
-                                        color: USER_ROLES.jobSeeker
-                                          ? "#eea23d"
-                                          : "#274593",
+                                        color:
+                                          role === USER_ROLES.jobSeeker
+                                            ? "#eea23d"
+                                            : "#274593",
                                       }}
                                     >
                                       Saved
