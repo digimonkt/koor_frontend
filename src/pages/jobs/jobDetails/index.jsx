@@ -907,7 +907,13 @@ const JobDetails = () => {
             {suggestionJobs.map((item, key) => {
               return (
                 <p key={key}>
-                  <Link to={urlcat("/jobs/details/:jobId", { jobId: item.id })}>
+                  <Link
+                    style={{
+                      color:
+                        role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
+                    }}
+                    to={urlcat("/jobs/details/:jobId", { jobId: item.id })}
+                  >
                     {item.title}
                   </Link>
                   <span>
