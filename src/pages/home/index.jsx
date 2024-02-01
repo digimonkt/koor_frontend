@@ -200,7 +200,7 @@ const Home = () => {
                     <form onSubmit={handleSubmit}>
                       <Grid
                         container
-                        spacing={2}
+                        justifyContent="space-between"
                         sx={{
                           "@media(max-width:480px)": {
                             padding: "0px 0px 0px 14px !important",
@@ -210,14 +210,11 @@ const Home = () => {
                             },
                           },
                         }}
-                        style={{
-                          padding: "0px 0px 0px 16px",
-                          justifyContent: "space-between",
-                        }}
                       >
-                        <Grid className="mb-2">
+                        <Grid item className="mb-2">
                           <InputSearch
                             sx={{
+                              marginRight: "16px",
                               "@media(max-width:480px)": {
                                 width: "100% !important",
                               },
@@ -239,7 +236,7 @@ const Home = () => {
                             </p>
                           )}
                         </Grid>
-                        <Grid className="mb-2 ">
+                        <Grid item className="mb-2 ">
                           <SelectInput
                             fullWidth
                             value={categories}
@@ -253,7 +250,7 @@ const Home = () => {
                             className={`${styles.category_select}`}
                           />
                         </Grid>
-                        <Grid className="mb-2 ">
+                        <Grid item className="mb-2 ">
                           <SelectInput
                             value={location}
                             onChange={handleLocationChange}
@@ -278,7 +275,7 @@ const Home = () => {
                             </p>
                           )} */}
                         </Grid>
-                        <Grid className="mb-2">
+                        <Grid item className="mb-2">
                           <Button
                             fullWidth
                             variant="contained"
