@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid } from "@mui/material";
+import { Box, Button, Divider, Grid, IconButton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./createResume.module.css";
 import { HorizontalPhoneInput, LabeledInput } from "@components/input";
@@ -18,10 +18,12 @@ import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
+import { useNavigate } from "react-router-dom";
 
 const CreateResumeComponent = () => {
   const { currentUser } = useSelector(({ auth }) => auth);
   const [loading, setLoading] = useState(false);
+  const { isMobileView } = useSelector((state) => state.platform);
   const [openResume, setOpenResume] = useState(false);
   const [removedReferenceIds, setRemovedReferenceIds] = useState([]);
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ const CreateResumeComponent = () => {
   const maxWordCount = 300;
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -183,7 +186,16 @@ const CreateResumeComponent = () => {
     <>
       <Box className={styles.CreateResume_Page}>
         <form onSubmit={formik.handleSubmit}>
-          <h1 className={styles.heading}>Create a resume</h1>
+          {isMobileView ? (
+            <Stack direction="row" alignItems="flex-end">
+              <IconButton onClick={() => navigate(-1)}>
+                <SVG.LeftArrow />
+              </IconButton>
+              <h1 className={styles.heading}>Create a resume</h1>
+            </Stack>
+          ) : (
+            <h1 className={styles.heading}>Create a resume</h1>
+          )}
           <Box className={styles.CreateResume_input_box}>
             <h5>Main info</h5>
             <p>
