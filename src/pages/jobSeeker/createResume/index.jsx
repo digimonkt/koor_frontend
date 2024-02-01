@@ -187,7 +187,11 @@ const CreateResumeComponent = () => {
       <Box className={styles.CreateResume_Page}>
         <form onSubmit={formik.handleSubmit}>
           {isMobileView ? (
-            <Stack direction="row" alignItems="flex-end">
+            <Stack
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+            >
               <IconButton onClick={() => navigate(-1)}>
                 <SVG.LeftArrow />
               </IconButton>
