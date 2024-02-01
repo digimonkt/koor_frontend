@@ -158,7 +158,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -297,7 +297,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -481,13 +481,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  })
+                                  }),
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  })
+                                  }),
                                 );
                               }
                             } else {
@@ -709,7 +709,7 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
-                details.experience
+                details.experience,
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
@@ -728,7 +728,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience
+                    details.experience,
                   )
                     ? 5
                     : 6
@@ -738,7 +738,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience
+                    details.experience,
                   )
                     ? 5
                     : 12
@@ -756,7 +756,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience
+                        details.experience,
                       )
                         ? "75%"
                         : "250px",
@@ -911,8 +911,9 @@ const JobDetails = () => {
                     {item.title}
                   </Link>
                   <span>
-                    – {item.city.title}, {item.country.title}
-                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}{" "}
+                    – {item.city.title ? item.city.title + "," : ""}{" "}
+                    {item.country.title}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b
