@@ -580,7 +580,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               }}
               className="pricebox py-3 upto-slide"
             >
-              {jobDetails?.budgetAmount ? (
+              {!isMobileView && jobDetails?.budgetAmount ? (
                 <>
                   <span className="d-block">UP TO</span>
                   <h4>
