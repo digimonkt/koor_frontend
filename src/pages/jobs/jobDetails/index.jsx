@@ -333,13 +333,17 @@ const JobDetails = () => {
                         role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                     }}
                   >
-                    {showMore ? (
+                    {details?.description?.length > 350 && (
                       <>
-                        Less <SVG.ArrowUpIcon />
-                      </>
-                    ) : (
-                      <>
-                        More <SVG.Downarrow />
+                        {showMore ? (
+                          <>
+                            Less <SVG.ArrowUpIcon />
+                          </>
+                        ) : (
+                          <>
+                            More <SVG.Downarrow />
+                          </>
+                        )}
                       </>
                     )}
                   </button>
