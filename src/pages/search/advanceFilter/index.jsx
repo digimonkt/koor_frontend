@@ -126,7 +126,6 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           </span>
         )}
         <OutlinedButton
-          onClick={() => setData(false)}
           style={{
             pointer: "cursor",
             marginTop: "5px",
@@ -556,6 +555,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     },
 
     onSubmit: async (values) => {
+      setData(false);
       const country = countries.data.find(
         (country) => country.id === values.country
       );

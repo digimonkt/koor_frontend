@@ -14,8 +14,8 @@ function HorizontalPhoneInputComponent({ label, ...rest }) {
           alignItems={{ xs: "center", lg: "center" }}
           className="mb-3"
         >
-          <label style={{ width: "30%" }}>{label}</label>
-          <div style={{ width: "70%" }}>
+          {Boolean(label) && <label className="w-30">{label}</label>}
+          <div style={{ width: label ? "70%" : "100%" }}>
             <div className="showpassword">
               <PhoneNumberInputComponent
                 className="add-form-control"

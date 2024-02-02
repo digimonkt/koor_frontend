@@ -217,7 +217,7 @@ function Search({ searchTypeForJob }) {
           <>
             <Box sx={{ px: 3, pt: 3 }}>
               <HeaddingSearch
-                title="Browse talents"
+                title="Browse Jobs"
                 count={
                   <Box
                     component={"span"}
@@ -234,11 +234,11 @@ function Search({ searchTypeForJob }) {
                     {totalItems || 0}
                   </Box>
                 }
-                icon={
-                  <IconButton>
-                    <SVG.CalendarMonth />
-                  </IconButton>
-                }
+                // icon={
+                //   <IconButton>
+                //     <SVG.CalendarMonth />
+                //   </IconButton>
+                // }
               />
             </Box>
           </>

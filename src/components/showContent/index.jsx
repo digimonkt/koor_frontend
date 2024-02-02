@@ -64,7 +64,10 @@ const ShowContent = ({ content }) => {
             </Grid>
           </Container>
         </Box>
-        <Box className={styles.about_black_color}>
+        <Box
+          className={styles.about_black_color}
+          sx={isMobileView ? { marginBottom: "50px" } : {}}
+        >
           <Container
             maxWidth={false}
             sx={{

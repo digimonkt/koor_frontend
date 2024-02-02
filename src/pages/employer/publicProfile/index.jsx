@@ -121,6 +121,7 @@ function PublicProfileComponent() {
                             variant="h4"
                             sx={{
                               fontFamily: "Bahnschrift",
+                              wordBreak: "break-all",
                               fontSize: "24px",
                               fontWeight: "700",
                               letterSpacing: "0.03em",
@@ -295,7 +296,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                  userDetails.mobileNumber,
                               )}
                             </Typography>
                             <Typography
@@ -335,6 +336,7 @@ function PublicProfileComponent() {
                             variant="h6"
                             sx={{
                               wordBreak: "break-all",
+                              marginRight: "20px",
                               fontSize: "16px",
                               fontFamily: "Poppins",
                               fontWeight: "600",
@@ -380,6 +382,7 @@ function PublicProfileComponent() {
                               sx={{
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
+                                marginRight: "20px",
                                 wordBreak: "break-all",
                                 fontWeight: "600",
                               }}
@@ -435,6 +438,8 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
+                                marginRight: "20px",
+                                wordBreak: "break-all",
                               }}
                             >
                               Address

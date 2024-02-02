@@ -19,7 +19,7 @@ function ShareTender() {
   useState(() => {
     setShareUrl(window.location.href);
     setShareMessage(
-      "I wanted to bring your attention to this tender opportunity"
+      "I wanted to bring your attention to this tender opportunity",
     );
   }, []);
   return (
@@ -43,7 +43,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.WhatsappIcon />
+            <SVG.WhatsappIcon width="50px" />
           </a>
           <a
             href={generateFacebookShareUrl(shareUrl)}
@@ -54,7 +54,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.Facebook />
+            <SVG.Facebook width="50px" />
           </a>
           <a
             href={generateTelegramShareUrl(shareMessage, shareUrl)}
@@ -65,7 +65,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.TelegramIcon />
+            <SVG.TelegramIcon width="50px" />
           </a>
           <a
             href={generateLinkedinShareUrl(shareMessage, shareUrl)}
@@ -76,7 +76,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.LinkedIn />
+            <SVG.LinkedIn width="50px" />
           </a>
           <a
             href={generateMailtoUrl({ subject: shareMessage, body: shareUrl })}

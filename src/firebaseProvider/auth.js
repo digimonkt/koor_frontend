@@ -17,11 +17,13 @@ export const loginWithGooglePopupProvider = async () => {
   });
   try {
     const res = await signInWithPopup(auth, googleProvider);
+    alert("Facebook Sign-In Success:", res.user);
     return {
       remote: "success",
       data: res.user,
     };
   } catch (error) {
+    alert("Facebook Sign-In:", error);
     return {
       remote: "failure",
       errors: error,
@@ -36,18 +38,21 @@ export const loginWithFacebookPopupProvider = async () => {
     prompt: "select_account",
   });
   try {
-    const res = await signInWithPopup(auth, facebookProvider);
+    const res = await signInWithPopup(auth, facebookProvider); // Fix: Use facebookProvider instead of googleProvider
+    alert("Facebook Sign-In Success:", res.user);
     return {
       remote: "success",
       data: res.user,
     };
   } catch (error) {
+    alert("Facebook Sign-In Error:", error);
     return {
       remote: "failure",
       errors: error,
     };
   }
 };
+
 export const loginWithAppleFacebookPopupProvider = async () => {
   try {
     const res = await signInWithPopup(auth, appleProvider);

@@ -143,6 +143,7 @@ export default function PublicProfileComponent() {
                               fontFamily: "Bahnschrift",
                               fontSize: "24px",
                               fontWeight: "700",
+                              wordBreak: "break-all",
                               letterSpacing: "0.03em",
                               mb: 0,
                               color: "#121212  !important",

@@ -43,7 +43,8 @@ const verifyOTP = {
 const activeAcount = {
   title: "Active Account",
   subTitle: "Verify Your Account...",
-  selectedRoleTitle: "We have sent you an activation email. Please click on the activation button. If you have not received the activation link yet, please click on the resend button",
+  selectedRoleTitle:
+    "We have sent you an activation email. Please click on the activation button. If you have not received the activation link yet, please click on the resend button",
   children: <ActivatioinUser />,
   isRoleSelection: false,
   options: false,

@@ -35,7 +35,13 @@ const Tabs = ({ setValue, value, role }) => {
             },
           }}
         >
-          <Tab label="Talents feed" value="1" disableRipple={true} />
+          <Tab
+            label={
+              role === USER_ROLES.employer ? "Talents Feed" : "Tenders Feed"
+            }
+            value="1"
+            disableRipple={true}
+          />
           <Tab
             label={
               role === USER_ROLES.employer ? "Shortlisted" : "Applied tenders"

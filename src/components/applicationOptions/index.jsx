@@ -183,7 +183,7 @@ function ApplicationOptions({
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: { xs: "center", lg: "end" },
+          justifyContent: { xs: "flex-start", lg: "end" },
         }}
       >
         {applicationList &&
@@ -385,14 +385,18 @@ function ApplicationOptions({
         {message && (
           <Grid item className="me-0 me-lg-3">
             <OutlinedButton
-              style={{ display: "flex", gap: "8px" }}
+              className="px-5"
+              style={{
+                display: "flex",
+                gap: "8px",
+              }}
               title={
                 <>
                   <SVG.MessageIcon
                     style={{ color: "#274593" }}
                     className="application-option-icon"
                   />
-                  <span>Message</span>
+                  <span style={{ fontSize: "12px" }}>Message</span>
                 </>
               }
               variant="link"

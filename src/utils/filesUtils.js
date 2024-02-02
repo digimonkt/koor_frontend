@@ -1,4 +1,6 @@
 import html2pdf from "html2pdf.js";
+import { DownloadResumeAPI } from "@api/jobSeeker";
+import { generateFileUrl } from "./generateFileUrl";
 import { mimeTypes } from "./constants/constants.js";
 import { Filesystem, Directory } from "@capacitor/filesystem";
 import { setErrorToast, setSuccessToast } from "../redux/slice/toast.js";
@@ -47,6 +49,7 @@ export const fileDownloader = async (filename, file) => {
     await FileOpener.openFile({
       path: fileData.uri,
     });
+    console.log({ fileData });
   } catch (err) {
     console.error("Error in fileDownloader:", err);
   }
@@ -120,6 +123,21 @@ export const pdfDownloader = async (name, state, action) => {
         .save();
       state(false);
     }
+    action(setSuccessToast("File saved successfully"));
+  } catch (err) {
+    console.error(err);
+    state(false);
+    action(setErrorToast("Something went wrong"));
+  }
+};
+
+export const docsDownloader = async (state, action) => {
+  try {
+    const res = await DownloadResumeAPI();
+    if (res.remote === "success") {
+      window.open(generateFileUrl(res.data.url), "_blank");
+    }
+    state(false);
     action(setSuccessToast("File saved successfully"));
   } catch (err) {
     console.error(err);
