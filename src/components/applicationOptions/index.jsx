@@ -42,7 +42,6 @@ function ApplicationOptions({
   const {
     auth: { role },
   } = useSelector((state) => state);
-  console.log({ totalApplicationsByJob, totalApplicationsByTender });
   const [isInterviewPlanned, setIsInterviewPlanned] = useState(false);
   const [isBlacklisted, setIsBlacklisted] = useState(false);
   const [isRejected, setIsRejected] = useState(false);
@@ -74,7 +73,6 @@ function ApplicationOptions({
     }
   };
   const handlerChangeApplicationStatus = async (action) => {
-    console.log({ action });
     const data = { reason: blackListReason, interview_at: interviewTime };
     for (const key in data) {
       if (!data[key]) {
@@ -85,8 +83,10 @@ function ApplicationOptions({
     let applicationStatus = {};
     console.log(details, totalApplicationsByJob);
     const applicationsStatusCount = details?.job
-      ? totalApplicationsByJob?.data[details.job?.id]
-      : totalApplicationsByTender?.data[details.tender?.id];
+      ? totalApplicationsByJob?.data
+        ? totalApplicationsByJob?.data[details?.job?.id]
+        : ""
+      : totalApplicationsByTender?.data[details?.tender?.id];
     switch (action) {
       case JOB_APPLICATION_OPTIONS.blacklisted:
         // setIsBlacklisted(true);
