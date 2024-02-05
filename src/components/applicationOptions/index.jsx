@@ -81,9 +81,12 @@ function ApplicationOptions({
     }
 
     let applicationStatus = {};
-    const applicationsStatusCount = details.job
-      ? totalApplicationsByJob.data[details.job?.id]
-      : totalApplicationsByTender.data[details.tender?.id];
+    console.log(details, totalApplicationsByJob);
+    const applicationsStatusCount = details?.job
+      ? totalApplicationsByJob?.data
+        ? totalApplicationsByJob?.data[details?.job?.id]
+        : ""
+      : totalApplicationsByTender?.data[details?.tender?.id];
     switch (action) {
       case JOB_APPLICATION_OPTIONS.blacklisted:
         // setIsBlacklisted(true);

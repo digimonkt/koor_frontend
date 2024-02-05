@@ -65,11 +65,11 @@ function ChatBox({ setIsSeleted }) {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { role, currentUser, isBlackListedByEmployer } = useSelector(
-    (state) => state.auth
+    (state) => state.auth,
   );
   const { isMobileView } = useSelector((state) => state.platform);
   const { jobSeekerJobApplication, vendorTenderApplication } = useSelector(
-    (state) => state.employer
+    (state) => state.employer,
   );
   const [messages, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -163,7 +163,7 @@ function ChatBox({ setIsSeleted }) {
     setLoading(true);
     const res = await updateMessageAttachmentAPI(
       selectedMessage.id,
-      messageForUpdate
+      messageForUpdate,
     );
     if (res.remote === "success") {
       setMessage(updateMessageInArray());
@@ -191,7 +191,7 @@ function ChatBox({ setIsSeleted }) {
     return messages.map((message) =>
       message.id === selectedMessage.id
         ? { ...message, message: messageForUpdate }
-        : message
+        : message,
     );
   };
   const getMessageHistory = async ({ data, isScrollToBottom, initialLoad }) => {
@@ -254,7 +254,7 @@ function ChatBox({ setIsSeleted }) {
     setMessage((prevMessage) => [transformedMessage, ...prevMessage]);
     if (!searchParams.get("conversion")) {
       navigate(
-        urlcat("/employer/chat", { conversion: message.conversation.id })
+        urlcat("/employer/chat", { conversion: message.conversation.id }),
       );
     }
 
@@ -275,7 +275,7 @@ function ChatBox({ setIsSeleted }) {
       const conversationId = res.data.conversation_id;
       if (conversationId) {
         navigate(
-          urlcat("/employer/chat", { conversion: conversationId, userId: id })
+          urlcat("/employer/chat", { conversion: conversationId, userId: id }),
         );
       }
     }
@@ -385,8 +385,8 @@ function ChatBox({ setIsSeleted }) {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
     const chatHtml = draftToHtml(
       convertToRaw(
-        RichUtils.toggleInlineStyle(editorState, "BOLD").getCurrentContent()
-      )
+        RichUtils.toggleInlineStyle(editorState, "BOLD").getCurrentContent(),
+      ),
     );
     setNewMessage(chatHtml);
   });
@@ -394,8 +394,8 @@ function ChatBox({ setIsSeleted }) {
     setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
     const chatHtml = draftToHtml(
       convertToRaw(
-        RichUtils.toggleInlineStyle(editorState, "ITALIC").getCurrentContent()
-      )
+        RichUtils.toggleInlineStyle(editorState, "ITALIC").getCurrentContent(),
+      ),
     );
     setNewMessage(chatHtml);
   });
@@ -405,9 +405,9 @@ function ChatBox({ setIsSeleted }) {
       convertToRaw(
         RichUtils.toggleInlineStyle(
           editorState,
-          "UNDERLINE"
-        ).getCurrentContent()
-      )
+          "UNDERLINE",
+        ).getCurrentContent(),
+      ),
     );
     setNewMessage(chatHtml);
   });
@@ -573,7 +573,7 @@ function ChatBox({ setIsSeleted }) {
               rejected: totalRejected,
               plannedInterview: totalPlannedInterview,
             },
-          })
+          }),
         );
       }
     } else if (userDetails.role === USER_ROLES.vendor) {
@@ -586,7 +586,7 @@ function ChatBox({ setIsSeleted }) {
               rejected: totalRejected,
               plannedInterview: totalPlannedInterview,
             },
-          })
+          }),
         );
       }
     }
@@ -731,8 +731,8 @@ function ChatBox({ setIsSeleted }) {
                                 message.user.id === currentUser.id
                                   ? ""
                                   : role === USER_ROLES.jobSeeker
-                                  ? "#D5E3F7"
-                                  : "#FEEFD3",
+                                    ? "#D5E3F7"
+                                    : "#FEEFD3",
                             }}
                           >
                             {message.user.id === currentUser.id ? (
@@ -759,7 +759,7 @@ function ChatBox({ setIsSeleted }) {
                                     <div className="reply-attachment">
                                       {" "}
                                       {renderAttachment(
-                                        message.reply.attachment
+                                        message.reply.attachment,
                                       )}
                                     </div>
                                   ) : (
@@ -831,7 +831,7 @@ function ChatBox({ setIsSeleted }) {
               handleMenuCloseMedia={handleMenuCloseMedia}
               option={ImageDataDelete(
                 messageIsMedia,
-                selectedMessage?.user?.id === currentUser?.id
+                selectedMessage?.user?.id === currentUser?.id,
               )}
               message={selectedMessage}
             />
@@ -1071,14 +1071,14 @@ function ChatBox({ setIsSeleted }) {
                       if (userDetails.role === USER_ROLES.jobSeeker) {
                         setApplicationDetails(
                           jobSeekerJobApplication.find(
-                            (application) => application.id === applicationId
-                          )
+                            (application) => application.id === applicationId,
+                          ),
                         );
                       } else {
                         setApplicationDetails(
                           vendorTenderApplication.find(
-                            (application) => application.id === applicationId
-                          )
+                            (application) => application.id === applicationId,
+                          ),
                         );
                       }
                       setOpenSelectApplicationModal(false);

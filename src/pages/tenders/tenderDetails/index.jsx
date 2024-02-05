@@ -118,7 +118,7 @@ function TenderDetailsComponent() {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? details?.description?.length : 3,
+      prevNumLines === 3 ? details?.description?.length : 3
     );
   };
   const getTenderDetails = async (tenderId) => {
@@ -228,7 +228,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -300,7 +300,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -391,29 +391,31 @@ function TenderDetailsComponent() {
                     </b>
                   </p>
                 </div>
-                <div className={`${styles.downloadattachment}`}>
-                  <h6>Download attachments </h6>
-                  {details.attachments.map((attachment, i) => {
-                    return (
-                      <div key={i} className={`${styles.downloadtext}`}>
-                        <span className="d-inline-flex me-2">
-                          {<SVG.BlueAttach />}
-                        </span>
-                        <span
-                          onClick={() => handleLoadImage(attachment.path)}
-                          className="m-0"
-                          style={{
-                            cursor: "pointer",
-                            whiteSpace: "normal",
-                            wordBreak: "break-all",
-                          }}
-                        >
-                          {attachment.title}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
+                {details.attachments.length > 0 && (
+                  <div className={`${styles.downloadattachment}`}>
+                    <h6>Download attachments </h6>
+                    {details.attachments.map((attachment, i) => {
+                      return (
+                        <div key={i} className={`${styles.downloadtext}`}>
+                          <span className="d-inline-flex me-2">
+                            {<SVG.BlueAttach />}
+                          </span>
+                          <span
+                            onClick={() => handleLoadImage(attachment.path)}
+                            className="m-0"
+                            style={{
+                              cursor: "pointer",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
+                            }}
+                          >
+                            {attachment.title}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </Grid>
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
@@ -453,13 +455,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {
