@@ -83,7 +83,7 @@ function ApplicationOptions({
     }
 
     let applicationStatus = {};
-    console.log(details);
+    console.log(details, totalApplicationsByJob);
     const applicationsStatusCount = details?.job
       ? totalApplicationsByJob?.data[details.job?.id]
       : totalApplicationsByTender?.data[details.tender?.id];

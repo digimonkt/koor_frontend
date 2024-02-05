@@ -473,20 +473,24 @@ const Home = () => {
                 </Box>
               </Box>
             </Box>
-            <Box className={styles.home_testi_box}>
-              <Container
-                maxWidth={false}
-                sx={{
-                  "@media(min-width:992px)": {
-                    paddingLeft: "100px",
-                    paddingRight: "100px",
-                  },
-                }}
-              >
-                <TestimonialSlider testimonialList={testimonialList} />
-              </Container>
-            </Box>
-            <Box>
+            {Boolean(testimonialList.length) > 0 && (
+              <Box className={styles.home_testi_box}>
+                <Container
+                  maxWidth={false}
+                  sx={{
+                    "@media(min-width:992px)": {
+                      paddingLeft: "100px",
+                      paddingRight: "100px",
+                    },
+                  }}
+                >
+                  <TestimonialSlider testimonialList={testimonialList} />
+                </Container>
+              </Box>
+            )}
+            <Box
+              marginTop={Boolean(testimonialList.length) > 0 ? "0px" : "60px"}
+            >
               <TextSlide />
             </Box>
             <Box className={styles.stay_back_img} sx={{ marginTop: "50px" }}>
