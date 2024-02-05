@@ -17,7 +17,7 @@ function JobRequirementCard({
           <h6>Experience</h6>
           <div className={`${styles.educations}`}>
             <span></span>
-            <p className="m-0">{experience}</p>
+            <p className="m-0">{experience} years</p>
           </div>
         </div>
       )}
