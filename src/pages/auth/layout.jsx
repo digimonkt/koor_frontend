@@ -17,6 +17,8 @@ import {
 } from "src/firebaseProvider/auth";
 import Marquee from "react-fast-marquee";
 import { Capacitor } from "@capacitor/core";
+// eslint-disable-next-line
+import { OAuth2Client } from "@byteowls/capacitor-oauth2";
 
 const platform = Capacitor.getPlatform();
 const AuthOptions = [
@@ -54,8 +56,11 @@ function AuthLayout({
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { role, verifyEmail, userVerificationToken } = useSelector(
-      (state) => state.auth,
+      (state) => state.auth
     );
+    const [accessToken, setAccessToken] = useState("");
+    const [refreshToken, setRefreshToken] = useState("");
+
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [activationLabel, setActivationLabel] = useState(selectedRoleTitle);
@@ -65,29 +70,82 @@ function AuthLayout({
         return;
       }
       setLoading(false);
-      const res = await loginWithGooglePopupProvider();
-      if (res.remote === "success") {
-        const payload = {
-          email: res.data.email,
-          role,
-          name: res.data.displayName,
-          display_image: res.data.photoURL,
-          source: "google",
-        };
-        for (const key in payload) {
-          if (!payload[key]) {
-            delete payload[key];
+      if (platform === "android") {
+        try {
+          // GoogleAuth.initialize({
+          //   scopes: ["profile", "email"],
+          //   serverClientId:
+          //     "902039448819-246pitulvdq9vcu6f32e785c3ncrs4s6.apps.googleusercontent.com",
+          //   forceCodeForRefreshToken: true,
+          // });
+          // console.log(GoogleAuth);
+          OAuth2Client.authenticate({
+            authorizationBaseUrl: "https://accounts.google.com/o/oauth2/auth",
+            accessTokenEndpoint: "https://www.googleapis.com/oauth2/v4/token",
+            scope: "email profile",
+            resourceUrl: "https://localhost:8100",
+            logsEnabled: true,
+            web: {
+              appId: "org.reactjs.example.koor",
+              responseType: "token", // implicit flow
+              accessTokenEndpoint: "", // clear the tokenEndpoint as we know that implicit flow gets the accessToken from the authorizationRequest
+              redirectUrl: "http://localhost:4200",
+              windowOptions: "height=600,left=0,top=0",
+            },
+            android: {
+              appId: "org.reactjs.example.koor",
+              responseType: "code", // if you configured a android app in google dev console the value must be "code"
+              redirectUrl: "com.companyname.appname:/", // package name from google dev console
+            },
+            ios: {
+              appId: "org.reactjs.example.koor",
+              responseType: "code", // if you configured a ios app in google dev console the value must be "code"
+              redirectUrl: "com.companyname.appname:/", // Bundle ID from google dev console
+            },
+          })
+            .then((response) => {
+              setAccessToken(response["access_token"]); // storage recommended for android logout
+              setRefreshToken(response["refresh_token"]);
+              console.log({ accessToken, refreshToken });
+              // only if you include a resourceUrl protected user values are included in the response!
+              const oauthUserId = response["id"];
+              const name = response["name"];
+
+              console.log(name, response, oauthUserId);
+            })
+            .catch((reason) => {
+              console.error("OAuth rejected", reason);
+            });
+          const googleUser = await loginWithGooglePopupProvider();
+          console.log(googleUser);
+        } catch (error) {
+          console.error("GoogleAuth.signIn failed", error);
+        }
+      } else {
+        const res = await loginWithGooglePopupProvider();
+        if (res.remote === "success") {
+          const payload = {
+            email: res.data.email,
+            role,
+            name: res.data.displayName,
+            display_image: res.data.photoURL,
+            source: "google",
+          };
+          for (const key in payload) {
+            if (!payload[key]) {
+              delete payload[key];
+            }
+          }
+          console.log({ payload });
+          const result = await SocialLoginAPI(payload);
+          if (result.remote === "success") {
+            console.log({ result });
+          } else {
+            dispatch(setSocialLoginError(result.error.errors.message));
           }
         }
-        console.log({ payload });
-        const result = await SocialLoginAPI(payload);
-        if (result.remote === "success") {
-          console.log({ result });
-        } else {
-          dispatch(setSocialLoginError(result.error.errors.message));
-        }
+        setLoading(true);
       }
-      setLoading(true);
     };
     const loginWithApple = async () => {
       if (!role) {
@@ -159,7 +217,7 @@ function AuthLayout({
     useEffect(() => {
       if (userVerificationToken) {
         setActivationLabel(
-          "Please wait while we are validating activation Link",
+          "Please wait while we are validating activation Link"
         );
       } else {
         setActivationLabel(selectedRoleTitle);

@@ -1,8 +1,11 @@
 apply plugin: 'com.android.application'
-
 android {
     namespace "org.reactjs.example.koor"
     compileSdkVersion rootProject.ext.compileSdkVersion
+android.defaultConfig.manifestPlaceholders = [
+  // change to the 'custom_url_scheme' value in your strings.xml. They need to be the same. e.g.
+  "appAuthRedirectScheme": "com.example.yourapp"
+]
     defaultConfig {
         applicationId "org.reactjs.example.koor"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -31,6 +34,8 @@ repositories {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:32.7.1')
+    implementation 'com.google.firebase:firebase-analytics'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"

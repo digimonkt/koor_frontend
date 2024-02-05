@@ -9,13 +9,13 @@
               <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="emulator-5554" />
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Digimonk\.android\avd\Medium_Phone_API_30_2.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-01T12:33:55.571213100Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-02T12:47:56.822684200Z" />
         </State>
       </entry>
     </value>

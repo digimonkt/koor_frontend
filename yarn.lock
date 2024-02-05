@@ -1215,6 +1215,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@byteowls/capacitor-oauth2@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@byteowls/capacitor-oauth2/-/capacitor-oauth2-5.0.0.tgz#faefb7633e2d367dddea6c9c7493515477a4008e"
+  integrity sha512-yW50GypmyPJcH/95NwR2jJcgT78vBN3FYKL2w6A3vrT04bRLQyw2K0fLqfj8Zws6DJy43Ck1wPs0Bcdvbsub7A==
+
 "@capacitor/android@^5.4.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-5.5.1.tgz#128dc5ab00f68c80d64ea18e961876b34b4ed859"
@@ -1284,6 +1289,11 @@
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/@capawesome-team/capacitor-file-opener/-/capacitor-file-opener-5.0.4.tgz#3c5ca65ec0380fba39720ce5e12946bcc3576c96"
   integrity sha512-l5jOFIos3QJJNg8bI1T7Vqi3cKUMsN2jOap8vTzbxuAqOO5J/5ECQrD77W7X50F7nTYQB/6LPy1BUO3oTCLmHA==
+
+"@codetrix-studio/capacitor-google-auth@^3.3.6":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@codetrix-studio/capacitor-google-auth/-/capacitor-google-auth-3.3.6.tgz#3323bdd3bdfcbd821cd367d284b251ee351d6bf4"
+  integrity sha512-SiMjYq5O2rWzEdKrmu3VZQ2nmFdq6LUXPzsNbjs4Ri6WTJVCtzp1HI12t4Dcwi5YoSw8g94Iyi3Can8msj57QA==
 
 "@colors/colors@1.5.0":
   version "1.5.0"
