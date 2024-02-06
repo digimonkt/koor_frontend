@@ -33,8 +33,8 @@ const CreateCoverLetter = () => {
         acceptedFiles.slice(0, 1).map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          }),
-        ),
+          })
+        )
       );
     },
     maxFiles: 1,
@@ -84,7 +84,6 @@ const CreateCoverLetter = () => {
       }
 
       const res = await updateCoverLetterAPI(newFormData, jobId);
-      console.log({ res });
       if (res.data.message[0] === "Cover letter already added.") {
         dispatch(setErrorToast("Cover letter already added."));
       } else if (res.remote === "success") {
@@ -115,7 +114,7 @@ const CreateCoverLetter = () => {
       const { data } = res;
       formik.setFieldValue(
         "jobTitle",
-        currentUser?.profile?.profileTitle || "",
+        currentUser?.profile?.profileTitle || ""
       );
       formik.setFieldValue("addressee", data?.name_or_address || "");
       formik.setFieldValue("coverLetter", data?.cover_letter || "");
@@ -138,7 +137,6 @@ const CreateCoverLetter = () => {
   useEffect(() => {
     getCoverLetterData(jobId);
   }, [jobId]);
-  console.log({ files });
   const thumbs = files?.length > 0 && (
     <Fragment key={files[0]?.name}>
       <Avatar

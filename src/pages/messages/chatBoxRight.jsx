@@ -1066,6 +1066,7 @@ function ChatBox({ setIsSeleted }) {
                   }}
                 >
                   <OutlinedButton
+                    sx={{ mr: 2 }}
                     title="Click"
                     onClick={() => {
                       if (userDetails.role === USER_ROLES.jobSeeker) {
