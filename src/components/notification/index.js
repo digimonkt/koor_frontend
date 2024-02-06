@@ -10,7 +10,12 @@ import RejectedCard from "./rejectedCard";
 
 const NotificationContent = NotificationContentComponent;
 
-export const getNotificationCardByType = (item, handleClose, role) => {
+export const getNotificationCardByType = (
+  item,
+  handleClose,
+  role,
+  handleRemoveMessages,
+) => {
   switch (item.notificationType) {
     case NOTIFICATION_TYPE.advanceFilter:
       return (
@@ -57,6 +62,7 @@ export const getNotificationCardByType = (item, handleClose, role) => {
         <MessageNotificationCard
           {...item}
           handleClose={() => handleClose()}
+          handleRemoveMessages={handleRemoveMessages}
           role={role}
         />
       );

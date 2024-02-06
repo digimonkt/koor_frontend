@@ -19,7 +19,7 @@ import { JOB_APPLICATION_OPTIONS, USER_ROLES } from "../../utils/enum";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import urlcat from "urlcat";
 import "./style.css";
 import dayjs from "dayjs";
@@ -37,6 +37,8 @@ function ApplicationOptions({
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [param] = useSearchParams();
+  const conversionId = param.get("conversion");
   const { totalBlacklist, totalApplicationsByJob, totalApplicationsByTender } =
     useSelector((state) => state.employer);
   const {
@@ -57,7 +59,6 @@ function ApplicationOptions({
   const [applicationShortlistStatus, setApplicationShortlistStatus] = useState(
     details.shortlistedAt,
   );
-
   const handleMessageClick = async () => {
     const res = await getConversationIdByUserIdAPI({
       userId: details?.user?.id,
@@ -192,25 +193,94 @@ function ApplicationOptions({
         {applicationList &&
           applicationList.length > 1 &&
           role === USER_ROLES.employer && (
-            <Grid item className="me-0 me-lg-3">
-              <Button
-                className="buttonbox"
-                sx={{ minWidth: "auto" }}
-                fullWidth
-                onClick={() => handleOpenList(true)}
-                style={{
-                  fontWeight: 700,
-                }}
-              >
-                <div>
-                  <SVG.HamburgerMenu className="application-option-icon" />
-                  <span>{"Applications"}</span>
-                </div>
-              </Button>
-            </Grid>
+            <>
+              <Grid item className="me-0 me-lg-3">
+                <Button
+                  className="buttonbox"
+                  sx={{ minWidth: "auto" }}
+                  fullWidth
+                  onClick={() => handleOpenList(true)}
+                  style={{
+                    fontWeight: 700,
+                  }}
+                >
+                  <div>
+                    <SVG.HamburgerMenu className="application-option-icon" />
+                    <span>{"Applications"}</span>
+                  </div>
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  className="buttonbox"
+                  sx={{ minWidth: "auto" }}
+                  fullWidth
+                  disabled={
+                    (isInterviewPlanned && !isApplicationSelect) ||
+                    isBlacklisted ||
+                    isRejected
+                  }
+                  style={{
+                    fontWeight: isInterviewPlanned ? 700 : "",
+                  }}
+                  onClick={() => {
+                    if (
+                      !isApplicationSelect &&
+                      applicationList &&
+                      applicationList.length > 1
+                    ) {
+                      handleOpenList(true);
+                    } else if (details.id) {
+                      setInvalidPlannedInterviewAlert("");
+                      setIsInterviewPlanning(true);
+                    } else {
+                      dispatch(setErrorToast("No Application Found"));
+                    }
+                  }}
+                >
+                  <div>
+                    <SVG.EventIcon className="application-option-icon" />
+                    <span>
+                      {!isInterviewPlanned
+                        ? "Plan Interview"
+                        : "Interview Planned"}
+                    </span>
+                  </div>
+                </Button>
+              </Grid>
+              <Grid item className="me-0 me-lg-3">
+                <Button
+                  className="buttonbox"
+                  sx={{ minWidth: "auto" }}
+                  disabled={
+                    isInterviewPlanned ||
+                    isBlacklisted ||
+                    isRejected ||
+                    isShortlisted
+                  }
+                  style={{
+                    fontWeight: isShortlisted ? 700 : "",
+                  }}
+                  onClick={() => {
+                    if (details.id) {
+                      handlerChangeApplicationStatus(
+                        JOB_APPLICATION_OPTIONS.shortlisted,
+                      );
+                    } else {
+                      dispatch(setErrorToast("No Application Found"));
+                    }
+                  }}
+                >
+                  <div>
+                    <SVG.StarIcon className="application-option-icon" />
+                    <span>{!isShortlisted ? "Shortlist" : "Shortlisted"}</span>
+                  </div>
+                </Button>
+              </Grid>
+            </>
           )}
 
-        {interviewPlanned && !details.tender && (
+        {!conversionId && interviewPlanned && !details.tender && (
           <Grid item>
             <Button
               className="buttonbox"
@@ -248,7 +318,7 @@ function ApplicationOptions({
             </Button>
           </Grid>
         )}
-        {shortlist && (
+        {!conversionId && shortlist && (
           <Grid item className="me-0 me-lg-3">
             <Button
               className="buttonbox"

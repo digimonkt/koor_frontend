@@ -16,11 +16,13 @@ function MessageNotificationCard({
   role,
   conversion,
   userId,
+  handleRemoveMessages,
 }) {
   return (
     <Link
       onClick={() => handleClose()}
-      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}>
+      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}
+    >
       <div
         className={`${styles.content_div}`}
         //   style={{ background: item.color }}
@@ -36,7 +38,8 @@ function MessageNotificationCard({
                 background: "#F0F0F0",
               },
             }}
-            src={generateFileUrl(sender?.image) || <SVG.UserIcon />}>
+            src={generateFileUrl(sender?.image) || <SVG.UserIcon />}
+          >
             <SVG.UserIcon />
           </Avatar>
         </div>
@@ -47,7 +50,8 @@ function MessageNotificationCard({
             "&:hover .MuiIconButton-root": {
               display: "inline-flex",
             },
-          }}>
+          }}
+        >
           <IconButton
             sx={{
               width: "15px",
@@ -58,7 +62,8 @@ function MessageNotificationCard({
               right: "0",
               display: "none",
             }}
-            onClick={() => handleClose()}>
+            onClick={() => handleRemoveMessages(messageId)}
+          >
             <Close fontSize="inherit" />
           </IconButton>
           <h2 className={styles.title}>
