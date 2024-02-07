@@ -86,7 +86,7 @@ const Home = () => {
 
     // Navigate to the search page with the provided parameters
     navigate(
-      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
     );
   };
   const getTopJobCategories = async () => {
@@ -199,9 +199,15 @@ const Home = () => {
                     <form onSubmit={handleSubmit}>
                       <Grid
                         container
-                        justifyContent="space-between"
+                        columnGap={10}
                         sx={{
+                          "@media(max-width:1274px)": {
+                            justifyContent: "space-between",
+                            gap: "0px",
+                          },
                           "@media(max-width:480px)": {
+                            justifyContent: "space-between",
+                            columnGap: "0px",
                             padding: "0px 0px 0px 14px !important",
                             "& .MuiGrid-root": {
                               width: "50%",
