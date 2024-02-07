@@ -121,7 +121,7 @@ const AreaChart = () => {
   const [isSelect, setIsSelect] = useState(new Date().getFullYear());
   const [lastMonthViews, setLastMonthViews] = useState(0);
   const [lastMonthComparing, setLastMonthComparing] = useState(0);
-  const handleChange = event => {
+  const handleChange = (event) => {
     setIsSelect(event.target.value);
   };
   const currentYear = new Date().getFullYear();
@@ -140,6 +140,7 @@ const AreaChart = () => {
   });
   const getLastMonthComparing = (lastMonthViews, currentMonthViews) => {
     setLastMonthComparing(0);
+
     if (lastMonthViews > 0 && currentMonthViews > 0) {
       setLastMonthComparing(
         (((currentMonthViews - lastMonthViews) / lastMonthViews) * 100).toFixed(
@@ -175,7 +176,8 @@ const AreaChart = () => {
         spacing={2}
         justifyContent="space-between"
         alignItems="center"
-        sx={{ marginBottom: "29px" }}>
+        sx={{ marginBottom: "29px" }}
+      >
         <h2>Profile analytics</h2>
         <FormControl
           sx={{
@@ -185,13 +187,15 @@ const AreaChart = () => {
               fontSize: "12px",
             },
           }}
-          size="small">
+          size="small"
+        >
           <SelectBox
             value={isSelect}
             onChange={handleChange}
             inputProps={{ "aria-label": "Without label" }}
             IconComponent={KeyboardArrowDownIcon}
-            displayEmpty>
+            displayEmpty
+          >
             {lastFiveYears.map((year, index) => (
               <MenuItem key={index} value={year}>
                 {year}
@@ -207,15 +211,11 @@ const AreaChart = () => {
         </div>
         <div className="chart-view">
           <h5>
-            {" "}
-            {lastMonthComparing > 0
-              ? "+"
-              : lastMonthComparing === 0
-                ? ""
-                : "-"}{" "}
-            {lastMonthComparing || 0}%
+            {lastMonthComparing !== 0
+              ? `${lastMonthComparing > 0 ? "+" : ""}${lastMonthComparing}%`
+              : "0%"}
           </h5>
-          <p>comparing to previous period</p>
+          <p>comparing to the previous period</p>
         </div>
       </Stack>
       <div className="chart-space">
