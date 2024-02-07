@@ -1,12 +1,13 @@
-<?xml version='1.0' encoding='utf-8' ?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">koor</string>
-    <string name="title_activity_main">koor</string>
-    <string name="package_name">org.reactjs.example.koor</string>
-    <string name="custom_url_scheme">org.reactjs.example.koor</string>
+  <string name="app_name">koor</string>
+  <string name="title_activity_main">koor</string>
+  <string name="package_name">org.reactjs.example.koor</string>
+  <string name="custom_url_scheme">org.reactjs.example.koor</string>
 
-<string
+  <string
     name="REACT_APP_GOOGLE_API_KEY"
   >AIzaSyC83TvpwMNOyyVvBGlabNnnP9XrGK4xqHg</string>
-      <string name="server_client_id">902039448819-246pitulvdq9vcu6f32e785c3ncrs4s6.apps.googleusercontent.com</string>
+  <string name="server_client_id">
+    499634179107-ai3mgdne2j70gh808jo9ajcrt21osi6g.apps.googleusercontent.com</string>
 </resources>

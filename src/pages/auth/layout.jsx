@@ -173,7 +173,12 @@ function AuthLayout({
       }
     }, [userVerificationToken]);
     useEffect(() => {
-      GoogleAuth.initialize();
+      GoogleAuth.initialize({
+        clientId:
+          "499634179107-ai3mgdne2j70gh808jo9ajcrt21osi6g.apps.googleusercontent.com",
+        scopes: ["profile", "email"],
+        grantOfflineAccess: true,
+      });
     }, []);
     return (
       <div
