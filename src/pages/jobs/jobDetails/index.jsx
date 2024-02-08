@@ -652,10 +652,14 @@ const JobDetails = () => {
                       // className={${styles.enablebtn}}
                       disabled={!details.isEditable && details.isApplied}
                       onClick={() => {
-                        if (details.expiredInDays <= 0) {
-                          setExpiredWarning(true);
+                        if (details.expiredInDays > 0) {
+                          if (isLoggedIn) {
+                            setOpenCreateCoverLetter(true);
+                          } else {
+                            setRegistrationWarning(true);
+                          }
                         } else {
-                          setOpenCreateCoverLetter(true);
+                          setExpiredWarning(true);
                         }
                       }}
                     />
@@ -683,10 +687,14 @@ const JobDetails = () => {
                         // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              window.open(details.websiteLink, "_blank");
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            window.open(details.websiteLink, "_blank");
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -713,10 +721,14 @@ const JobDetails = () => {
                           "Apply by email",
                         ]}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSendEmail(details);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            handleSendEmail(details);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
