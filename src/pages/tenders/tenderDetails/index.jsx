@@ -198,14 +198,12 @@ function TenderDetailsComponent() {
 
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      // Convert base64 string to Blob
       const byteCharacters = atob(base64String);
       const byteArrays = new Uint8Array(byteCharacters.length);
 
       for (let i = 0; i < byteCharacters.length; i++) {
         byteArrays[i] = byteCharacters.charCodeAt(i);
       }
-
       const blob = new Blob([byteArrays], {
         type: fileType(url) || "application/octet-stream",
       });
