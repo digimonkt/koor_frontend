@@ -551,16 +551,17 @@ const JobDetails = () => {
 
           {(details?.isApplyThroughEmail || details?.isApplyThroughWebsite) && (
             <>
-              {cleanHtmlContent(details?.applicationInstruction) && (
-                <div className={`${styles.LikeJob}`}>
-                  <h2>Application Instructions:</h2>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: details?.applicationInstruction,
-                    }}
-                  ></div>
-                </div>
-              )}{" "}
+              {details?.applicationInstruction &&
+                Boolean(cleanHtmlContent(details?.applicationInstruction)) && (
+                  <div className={`${styles.LikeJob}`}>
+                    <h2>Application Instructions:</h2>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: details?.applicationInstruction,
+                      }}
+                    ></div>
+                  </div>
+                )}
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
                   <Stack

@@ -107,6 +107,5 @@ export const docsDownloader = async (state, action) => {
 };
 
 export const cleanHtmlContent = (html) => {
-  // Remove HTML tags and trim white spaces
-  return html.replace(/<[^>]*>/g, "").trim();
+  return html?.replace(/<[^>]*>/g, "").trim();
 };
