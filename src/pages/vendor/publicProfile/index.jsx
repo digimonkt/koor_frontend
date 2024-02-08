@@ -284,18 +284,21 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#FEEFD3",
                               borderRadius: "5px",
                               p: 1,
-                              color: "#EEA23D",
                               width: "40px",
                               height: "40px",
+                              background: "#D5E3F7",
                               display: "inline-flex",
                               alignItems: "center",
                               justifyContent: "center",
                             }}
                           >
-                            <SVG.Phone />
+                            <SVG.Phone
+                              style={{
+                                color: "#274593",
+                              }}
+                            />
                           </Box>
                           <Box>
                             <Typography
