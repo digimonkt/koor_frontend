@@ -518,10 +518,6 @@
     width: 100% !important;
   }
 
-  .home_btn_btn {
-    width: 100% !important;
-  }
-
   .back_img_div {
     clip-path: polygon(0 0, 100% 1%, 100% 100%, 0 100%, 0 49%);
   }

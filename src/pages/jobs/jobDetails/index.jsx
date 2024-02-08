@@ -105,6 +105,17 @@ const JobDetails = () => {
     },
     attachments: [],
   });
+
+  const hasData = (...values) =>
+    values.some((value) => {
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      } else if (typeof value === "number") {
+        return value !== 0;
+      }
+      return false;
+    });
+
   const [addressGeoCode, setAddressGeoCode] = useState({});
 
   const getJobDetails = async (jobId) => {
@@ -649,23 +660,61 @@ const JobDetails = () => {
           )}
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={7} sm={7}>
-                <JobRequirementCard
-                  highestEducation={details.highestEducation}
-                  languages={details.languages}
-                  skills={details.skills}
-                />
-              </Grid>
-              <Grid item xs={12} lg={5} sm={5}>
+              {hasData(
+                details.highestEducation,
+                details.languages,
+                details.skills,
+                details.experience,
+              ) && (
+                <Grid item xs={12} lg={7} sm={7}>
+                  <JobRequirementCard
+                    highestEducation={details.highestEducation}
+                    languages={details.languages}
+                    skills={details.skills}
+                    experience={details.experience}
+                  />
+                </Grid>
+              )}
+              <Grid
+                item
+                xs={12}
+                lg={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                    details.experience,
+                  )
+                    ? 5
+                    : 6
+                }
+                sm={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                    details.experience,
+                  )
+                    ? 5
+                    : 12
+                }
+              >
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
                   <Box
                     sx={{
-                      height: "75%",
                       overflow: "hidden",
                       borderRadius: "5px",
                       position: "relative",
+                      height: hasData(
+                        details.highestEducation,
+                        details.languages,
+                        details.skills,
+                        details.experience,
+                      )
+                        ? "75%"
+                        : "250px",
                       "@media (max-width:992px)": {
                         height: "250px",
                       },
