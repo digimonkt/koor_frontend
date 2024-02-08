@@ -807,7 +807,12 @@ const JobDetails = () => {
                     To apply for the job and have many other useful features to
                     find a job, please register on Koor.
                   </p>
-                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      lineHeight: "40px",
+                    }}
+                  >
                     <Link to="/register?role=job_seeker">
                       <OutlinedButton
                         title="Register"
