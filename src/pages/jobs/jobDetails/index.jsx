@@ -819,8 +819,8 @@ const JobDetails = () => {
                     To apply for the job and have many other useful features to
                     find a job, please register on Koor.
                   </p>
-                  <div
-                    style={{
+                  <Box
+                    sx={{
                       textAlign: "center",
                       lineHeight: "40px",
                     }}
@@ -841,6 +841,7 @@ const JobDetails = () => {
                         }}
                       />
                     </Link>
+
                     <span className="jobs_dailog_login_line">
                       Already have an account?{" "}
                       <Link
@@ -854,7 +855,7 @@ const JobDetails = () => {
                         Login
                       </Link>
                     </span>
-                  </div>
+                  </Box>
                 </div>
               </div>
             </DialogBox>
