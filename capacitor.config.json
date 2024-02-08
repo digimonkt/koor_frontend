@@ -14,7 +14,9 @@
     },
     "GoogleAuth": {
       "scopes": ["profile", "email"],
-      "serverClientId": "499634179107-ai3mgdne2j70gh808jo9ajcrt21osi6g.apps.googleusercontent.com",
+      "serverClientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
+      "clientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
+      "androidClientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
       "forceCodeForRefreshToken": true
     }
   },
@@ -23,6 +25,7 @@
     "namespace": "org.reactjs.example.koor"
   },
   "server": {
-    "url": "http://192.168.0.192:8100"
+    "url": "http://192.168.0.192:8100",
+    "originalUrl": "http://192.168.0.192:8100"
   }
 }

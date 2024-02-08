@@ -55,7 +55,7 @@ function AuthLayout({
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { role, verifyEmail, userVerificationToken } = useSelector(
-      (state) => state.auth,
+      (state) => state.auth
     );
 
     const [isLoginPage, setIsLoginPage] = useState(false);
@@ -166,19 +166,14 @@ function AuthLayout({
     useEffect(() => {
       if (userVerificationToken) {
         setActivationLabel(
-          "Please wait while we are validating activation Link",
+          "Please wait while we are validating activation Link"
         );
       } else {
         setActivationLabel(selectedRoleTitle);
       }
     }, [userVerificationToken]);
     useEffect(() => {
-      GoogleAuth.initialize({
-        clientId:
-          "499634179107-ai3mgdne2j70gh808jo9ajcrt21osi6g.apps.googleusercontent.com",
-        scopes: ["profile", "email"],
-        grantOfflineAccess: true,
-      });
+      GoogleAuth.initialize();
     }, []);
     return (
       <div
