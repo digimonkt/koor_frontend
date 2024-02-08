@@ -32,6 +32,7 @@ import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
+import { cleanHtmlContent } from "@utils/fileUtils";
 import CreateCoverLetter from "@components/coverLetter";
 
 const JobDetails = () => {
@@ -165,7 +166,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -322,7 +323,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -502,13 +503,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  })
+                                  }),
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  })
+                                  }),
                                 );
                               }
                             } else {
@@ -611,14 +612,16 @@ const JobDetails = () => {
 
           {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
             <>
-              <div className={`${styles.LikeJob}`}>
-                <h2>Application Instructions:</h2>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: details.applicationInstruction,
-                  }}
-                ></div>
-              </div>
+              {cleanHtmlContent(details?.applicationInstruction) && (
+                <div className={`${styles.LikeJob}`}>
+                  <h2>Application Instructions:</h2>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: details.applicationInstruction,
+                    }}
+                  ></div>
+                </div>
+              )}
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
                   <Stack
@@ -649,10 +652,14 @@ const JobDetails = () => {
                       // className={${styles.enablebtn}}
                       disabled={!details.isEditable && details.isApplied}
                       onClick={() => {
-                        if (details.expiredInDays <= 0) {
-                          setExpiredWarning(true);
+                        if (details.expiredInDays > 0) {
+                          if (isLoggedIn) {
+                            setOpenCreateCoverLetter(true);
+                          } else {
+                            setRegistrationWarning(true);
+                          }
                         } else {
-                          setOpenCreateCoverLetter(true);
+                          setExpiredWarning(true);
                         }
                       }}
                     />
@@ -680,10 +687,14 @@ const JobDetails = () => {
                         // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              window.open(details.websiteLink, "_blank");
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            window.open(details.websiteLink, "_blank");
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -710,10 +721,14 @@ const JobDetails = () => {
                           "Apply by email",
                         ]}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSendEmail(details);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            handleSendEmail(details);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -730,7 +745,7 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
-                details.experience
+                details.experience,
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
@@ -749,7 +764,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience
+                    details.experience,
                   )
                     ? 5
                     : 6
@@ -759,7 +774,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience
+                    details.experience,
                   )
                     ? 5
                     : 12
@@ -777,7 +792,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience
+                        details.experience,
                       )
                         ? "75%"
                         : "250px",
@@ -804,7 +819,12 @@ const JobDetails = () => {
                     To apply for the job and have many other useful features to
                     find a job, please register on Koor.
                   </p>
-                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      lineHeight: "40px",
+                    }}
+                  >
                     <Link to="/register?role=job_seeker">
                       <OutlinedButton
                         title="Register"
@@ -932,8 +952,11 @@ const JobDetails = () => {
                     {item.title}
                   </Link>
                   <span>
-                    – {item.city.title}, {item.country.title}
-                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}{" "}
+                    {item.city.title ? "- " + item.city.title + "," : ""}{" "}
+                    {item.city.title
+                      ? item.country.title
+                      : "- " + item.country.title}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b

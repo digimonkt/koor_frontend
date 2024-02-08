@@ -79,12 +79,12 @@ function JobCostCard({ amount, payPeriod, user }) {
               <span>
                 <Link
                   to={`tel:${formatPhoneNumberIntl(
-                    user.countryCode + user.mobileNumber
+                    user.countryCode + user.mobileNumber,
                   )}`}
                 >
                   {user.countryCode && user.mobileNumber
                     ? formatPhoneNumberIntl(
-                        user.countryCode + user.mobileNumber
+                        user.countryCode + user.mobileNumber,
                       )
                     : ""}
                 </Link>
