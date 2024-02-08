@@ -105,3 +105,8 @@ export const docsDownloader = async (state, action) => {
     action(setErrorToast("Something went wrong"));
   }
 };
+
+export const cleanHtmlContent = (html) => {
+  // Remove HTML tags and trim white spaces
+  return html.replace(/<[^>]*>/g, "").trim();
+};

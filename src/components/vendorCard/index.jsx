@@ -102,7 +102,11 @@ function VendorCard({ vendorDetails }) {
             <p>{textToShow}</p>
           </div>
           {description.length > maxLength && (
-            <a onClick={toggleText} className="see_more_anchor">
+            <a
+              style={{ color: "#274593" }}
+              onClick={toggleText}
+              className="see_more_anchor"
+            >
               {showFullText ? "See less" : "See more"}
             </a>
           )}

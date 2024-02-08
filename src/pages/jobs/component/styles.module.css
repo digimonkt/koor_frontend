@@ -40,7 +40,7 @@
 .lotusimg h3 {
   font-size: 18px;
   margin-left: 18px;
-  text-transform: capitalize !important;
+  /* text-transform: capitalize !important; */
 }
 
 .Numbers {

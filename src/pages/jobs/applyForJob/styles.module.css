@@ -155,7 +155,7 @@
 .lotusimg h3 {
   font-size: 18px;
   margin-left: 18px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 .Numbers {
   text-align: center;

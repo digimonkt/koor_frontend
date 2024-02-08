@@ -46,7 +46,6 @@ const Home = () => {
   const { role, isLoggedIn } = useSelector((state) => state.auth);
 
   const [totalTenders, setTotalTenders] = useState(0);
-  const [topTenderCategories, setTopTenderCategories] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
   const [topJobCategories, setTopJobCategories] = useState([]);
   const [topListingCompanies, setTopListingCompanies] = useState([]);
@@ -89,18 +88,56 @@ const Home = () => {
       `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
     );
   };
+  // const getTopJobCategories = async () => {
+  //    const res = await getTopJobCategoriesAPI();
+  //    if (res.remote === "success") {
+  //      setTopJobCategories(res.data.job_categories);
+  //      setTotalJobs(res.data.total_jobs);
+  //    }
+  //  };
+  //  const getTopTenderCategories = async () => {
+  //    const res = await getTopTenderCategoriesAPI();
+  //    if (res.remote === "success") {
+  //      setTopTenderCategories(res.data.tender_categories);
+  //      setTotalTenders(res.data.total_tenders);
+  //    }
+  //  };
   const getTopJobCategories = async () => {
     const res = await getTopJobCategoriesAPI();
     if (res.remote === "success") {
-      setTopJobCategories(res.data.job_categories);
-      setTotalJobs(res.data.total_jobs);
+      const displayValue =
+        res.data.total_jobs > 100
+          ? `${Math.ceil(res.data.total_jobs / 100) * 100}+`
+          : res.data.total_jobs;
+      const jobsrCategoriesWithTypes = res.data.job_categories.map(
+        (jobCategories) => ({
+          ...jobCategories,
+          categoryType: "job",
+        }),
+      );
+
+      setTopJobCategories((prev) => [...prev, ...jobsrCategoriesWithTypes]);
+      setTotalJobs(displayValue);
     }
   };
+
   const getTopTenderCategories = async () => {
     const res = await getTopTenderCategoriesAPI();
     if (res.remote === "success") {
-      setTopTenderCategories(res.data.tender_categories);
-      setTotalTenders(res.data.total_tenders);
+      const displayValue =
+        res.data.total_tenders > 100
+          ? `${Math.ceil(res.data.total_tenders / 100) * 100}+`
+          : res.data.total_tenders;
+
+      const tenderCategoriesWithTypes = res.data.tender_categories.map(
+        (tenderCategory) => ({
+          ...tenderCategory,
+          categoryType: "tender",
+        }),
+      );
+
+      setTopJobCategories((prev) => [...prev, ...tenderCategoriesWithTypes]);
+      setTotalTenders(displayValue);
     }
   };
   const getSiteUpdates = async () => {
@@ -375,24 +412,56 @@ const Home = () => {
               />
             </Box>
             <Box>
-              <Stack direction="row" spacing={2} className={styles.stack_box}>
+              <Stack
+                direction="row"
+                spacing={2}
+                className={styles.stack_box}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
                 <Typography className={styles.popular_job}>
                   Popular job categories
                 </Typography>
-                <Typography
-                  className={`ms-auto ${styles.see_all_jobs}`}
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    navigate("/search/jobs");
+                <Box
+                  sx={{
+                    marginLeft: "auto !important",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
                   }}
                 >
-                  See all {totalJobs} jobs{" "}
-                  <IconButton>
-                    <ArrowForwardIcon sx={{ color: "#eea23d" }} />
-                  </IconButton>
-                </Typography>
+                  <Typography
+                    className={`ms-auto ${styles.see_all_jobs}`}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      navigate("/search/jobs");
+                    }}
+                  >
+                    See all {totalJobs} jobs{" "}
+                    <IconButton>
+                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                    </IconButton>
+                  </Typography>
+                  <Typography
+                    className={styles.see_all_jobs}
+                    style={{
+                      cursor: "pointer",
+                      marginLeft: "8em",
+                    }}
+                    onClick={() => {
+                      navigate("/search/tenders");
+                    }}
+                  >
+                    See all {totalTenders} Tenders{" "}
+                    <IconButton>
+                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                    </IconButton>
+                  </Typography>
+                </Box>
               </Stack>
             </Box>
           </Container>
@@ -413,43 +482,46 @@ const Home = () => {
                   (category?.title || "").length > 15
                     ? `${category.title.slice(0, 12)}...`
                     : category.title,
-                text: `${category.count || 0} jobs`,
+                text: `${category.count || 0} ${
+                  category.categoryType === "tender" ? "tenders" : "jobs"
+                }`,
                 id: category.id,
+                categoryType: category.categoryType,
               }))}
             />
-            <Box>
-              <Stack direction="row" spacing={2} className={styles.stack_box}>
-                <Typography className={styles.popular_job}>
-                  Popular Tenders categories
-                </Typography>
-                <Typography
-                  className={`ms-auto ${styles.see_all_jobs}`}
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    navigate("/search/tenders");
-                  }}
-                >
-                  See all {totalTenders} Tenders{" "}
-                  <IconButton>
-                    <ArrowForwardIcon sx={{ color: "#eea23d" }} />
-                  </IconButton>
-                </Typography>
-              </Stack>
-            </Box>
-            <SlickSlider
-              categoryType="tenders"
-              items={topTenderCategories.map((category) => ({
-                icon: <SVG.Market />,
-                title:
-                  (category?.title || "").length > 15
-                    ? `${category.title.slice(0, 12)}...`
-                    : category.title,
-                text: `${category.count || 0} tenders`,
-                id: category.id,
-              }))}
-            />
+            {/* <Box> */}
+            {/*   <Stack direction="row" spacing={2} className={styles.stack_box}> */}
+            {/*     <Typography className={styles.popular_job}> */}
+            {/*       Popular Tenders categories */}
+            {/*     </Typography> */}
+            {/*     <Typography */}
+            {/*       className={`ms-auto ${styles.see_all_jobs}`} */}
+            {/*       style={{ */}
+            {/*         cursor: "pointer", */}
+            {/*       }} */}
+            {/*       onClick={() => { */}
+            {/*         navigate("/search/tenders"); */}
+            {/*       }} */}
+            {/*     > */}
+            {/*       See all {totalTenders} Tenders{" "} */}
+            {/*       <IconButton> */}
+            {/*         <ArrowForwardIcon sx={{ color: "#eea23d" }} /> */}
+            {/*       </IconButton> */}
+            {/*     </Typography> */}
+            {/*   </Stack> */}
+            {/* </Box> */}
+            {/* <SlickSlider */}
+            {/*   categoryType="tenders" */}
+            {/*   items={topTenderCategories.map((category) => ({ */}
+            {/*     icon: <SVG.Market />, */}
+            {/*     title: */}
+            {/*       (category?.title || "").length > 15 */}
+            {/*         ? `${category.title.slice(0, 12)}...` */}
+            {/*         : category.title, */}
+            {/*     text: `${category.count || 0} tenders`, */}
+            {/*     id: category.id, */}
+            {/*   }))} */}
+            {/* /> */}
           </Container>
 
           <Box className={`${styles.home_back}`}>
