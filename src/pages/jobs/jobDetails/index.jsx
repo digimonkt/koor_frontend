@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  // getApplyJobByEmailAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
@@ -18,8 +19,10 @@ import {
   FilledButton,
 } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
+// import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
+import { cleanHtmlContent } from "@utils/fileUtils";
 import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,8 +35,6 @@ import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
-import { cleanHtmlContent } from "@utils/fileUtils";
-import CreateCoverLetter from "@components/coverLetter";
 
 const JobDetails = () => {
   const params = useParams();
@@ -41,7 +42,6 @@ const JobDetails = () => {
   const dispatch = useDispatch();
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
-  const [openCreateCoverLetter, setOpenCreateCoverLetter] = useState(false);
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
@@ -106,24 +106,6 @@ const JobDetails = () => {
     attachments: [],
   });
   const [addressGeoCode, setAddressGeoCode] = useState({});
-  const [numLines, setNumLines] = useState(details?.description?.length);
-  const hasData = (...values) =>
-    values.some((value) => {
-      if (Array.isArray(value)) {
-        return value.length > 0;
-      } else if (typeof value === "number") {
-        return value !== 0;
-      }
-      return false;
-    });
-
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    textAlign: "justify",
-    WebkitLineClamp: numLines,
-  };
 
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });
@@ -154,9 +136,6 @@ const JobDetails = () => {
     } else {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
-  };
-  const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) => (prevNumLines === 3 ? details?.length : 3));
   };
 
   function handleSendEmail(details) {
@@ -291,13 +270,7 @@ const JobDetails = () => {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => {
-                      if (window.history.length > 1) {
-                        navigate(-1);
-                      } else {
-                        navigate("/");
-                      }
-                    }}
+                    onClick={() => navigate("/search/jobs")}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
@@ -332,49 +305,15 @@ const JobDetails = () => {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} md={7} sm={7}>
-                <Box className={styles.job_detail_description}>
-                  <div className={`mb-4 ${styles.contentJob}`}>
-                    <h4>Details :</h4>
-                    <Box
-                      sx={textWrapperStyle}
-                      dangerouslySetInnerHTML={{
-                        __html: details?.description,
-                      }}
-                    ></Box>
-                  </div>
+                <div className={`mb-4 ${styles.contentJob}`}>
+                  <h4>Details :</h4>
                   <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                    className={styles.job_detail_description}
+                    dangerouslySetInnerHTML={{
+                      __html: details.description,
                     }}
-                  >
-                    {details?.description?.length > 350 && (
-                      <button
-                        style={{
-                          border: "none",
-                          cursor: "pointer",
-                          background: "none",
-                          color:
-                            role !== USER_ROLES.jobSeeker
-                              ? "#274593"
-                              : "#fe7f00",
-                        }}
-                        onClick={handleSeeMoreClick}
-                      >
-                        {numLines === 3 ? (
-                          <>
-                            More <SVG.arrowDown />
-                          </>
-                        ) : (
-                          <>
-                            Less <SVG.ArrowUpIcon />
-                          </>
-                        )}
-                      </button>
-                    )}
-                  </Box>
-                </Box>
+                  ></Box>
+                </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
@@ -422,7 +361,7 @@ const JobDetails = () => {
                   )}
                   {details.hasContract && (
                     <SearchButton
-                      text="Consultant"
+                      text="Contract"
                       leftIcon={<SVG.MoonCircle />}
                       className={`${styles.iconbutton}`}
                     />
@@ -610,59 +549,35 @@ const JobDetails = () => {
             </Grid>
           </div>
 
-          {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+          {(details?.isApplyThroughEmail || details?.isApplyThroughWebsite) && (
             <>
               {cleanHtmlContent(details?.applicationInstruction) && (
                 <div className={`${styles.LikeJob}`}>
                   <h2>Application Instructions:</h2>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: details.applicationInstruction,
+                      __html: details?.applicationInstruction,
                     }}
                   ></div>
                 </div>
-              )}
+              )}{" "}
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
                   <Stack
                     direction={{ xs: "column", lg: "row" }}
                     spacing={2}
                     alignItems={{ xs: "flex-start", lg: "center" }}
+
+                    // sx={{
+                    //   textAlign: "start",
+                    //   display: "flex",
+
+                    //   "@media (max-width: 480px)": {
+                    //     justifyContent: "center",
+                    //     flexDirection: "column",
+                    //   },
+                    // }}
                   >
-                    <OutlinedButton
-                      sx={{
-                        color: "#eea23d !important",
-                        borderColor: "#eea23d !important",
-                        "@media (max-width: 480px)": {
-                          fontSize: "14px !important",
-                          width: "100%",
-                        },
-                        "@media (max-width: 320px)": {
-                          fontSize: "10px !important",
-                          padding: "10px 25px !important",
-                          width: "100%",
-                        },
-                      }}
-                      title={[
-                        <>
-                          <SVG.resumeIcon className="me-2" />
-                        </>,
-                        "Create a cover letter",
-                      ]}
-                      // className={${styles.enablebtn}}
-                      disabled={!details.isEditable && details.isApplied}
-                      onClick={() => {
-                        if (details.expiredInDays > 0) {
-                          if (isLoggedIn) {
-                            setOpenCreateCoverLetter(true);
-                          } else {
-                            setRegistrationWarning(true);
-                          }
-                        } else {
-                          setExpiredWarning(true);
-                        }
-                      }}
-                    />
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
@@ -687,14 +602,10 @@ const JobDetails = () => {
                         // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (details.expiredInDays > 0) {
-                            if (isLoggedIn) {
-                              window.open(details.websiteLink, "_blank");
-                            } else {
-                              setRegistrationWarning(true);
-                            }
-                          } else {
+                          if (details.expiredInDays <= 0) {
                             setExpiredWarning(true);
+                          } else {
+                            window.open(details.websiteLink, "_blank");
                           }
                         }}
                       />
@@ -721,14 +632,10 @@ const JobDetails = () => {
                           "Apply by email",
                         ]}
                         onClick={() => {
-                          if (details.expiredInDays > 0) {
-                            if (isLoggedIn) {
-                              handleSendEmail(details);
-                            } else {
-                              setRegistrationWarning(true);
-                            }
-                          } else {
+                          if (details.expiredInDays <= 0) {
                             setExpiredWarning(true);
+                          } else {
+                            handleSendEmail(details);
                           }
                         }}
                       />
@@ -741,61 +648,23 @@ const JobDetails = () => {
           )}
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              {hasData(
-                details.highestEducation,
-                details.languages,
-                details.skills,
-                details.experience,
-              ) && (
-                <Grid item xs={12} lg={7} sm={7}>
-                  <JobRequirementCard
-                    highestEducation={details.highestEducation}
-                    languages={details.languages}
-                    skills={details.skills}
-                    experience={details.experience}
-                  />
-                </Grid>
-              )}
-              <Grid
-                item
-                xs={12}
-                lg={
-                  hasData(
-                    details.highestEducation,
-                    details.languages,
-                    details.skills,
-                    details.experience,
-                  )
-                    ? 5
-                    : 6
-                }
-                sm={
-                  hasData(
-                    details.highestEducation,
-                    details.languages,
-                    details.skills,
-                    details.experience,
-                  )
-                    ? 5
-                    : 12
-                }
-              >
+              <Grid item xs={12} lg={7} sm={7}>
+                <JobRequirementCard
+                  highestEducation={details.highestEducation}
+                  languages={details.languages}
+                  skills={details.skills}
+                />
+              </Grid>
+              <Grid item xs={12} lg={5} sm={5}>
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
                   <Box
                     sx={{
+                      height: "75%",
                       overflow: "hidden",
                       borderRadius: "5px",
                       position: "relative",
-                      height: hasData(
-                        details.highestEducation,
-                        details.languages,
-                        details.skills,
-                        details.experience,
-                      )
-                        ? "75%"
-                        : "250px",
                       "@media (max-width:992px)": {
                         height: "250px",
                       },
@@ -819,12 +688,7 @@ const JobDetails = () => {
                     To apply for the job and have many other useful features to
                     find a job, please register on Koor.
                   </p>
-                  <Box
-                    sx={{
-                      textAlign: "center",
-                      lineHeight: "40px",
-                    }}
-                  >
+                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
                     <Link to="/register?role=job_seeker">
                       <OutlinedButton
                         title="Register"
@@ -841,7 +705,6 @@ const JobDetails = () => {
                         }}
                       />
                     </Link>
-
                     <span className="jobs_dailog_login_line">
                       Already have an account?{" "}
                       <Link
@@ -855,7 +718,7 @@ const JobDetails = () => {
                         Login
                       </Link>
                     </span>
-                  </Box>
+                  </div>
                 </div>
               </div>
             </DialogBox>
@@ -953,11 +816,8 @@ const JobDetails = () => {
                     {item.title}
                   </Link>
                   <span>
-                    {item.city.title ? "- " + item.city.title + "," : ""}{" "}
-                    {item.city.title
-                      ? item.country.title
-                      : "- " + item.country.title}
-                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
+                    – {item.city.title}, {item.country.title}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}{" "}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b
@@ -1037,15 +897,6 @@ const JobDetails = () => {
             </div>
           </div>
         </div>
-      </DialogBox>
-      <DialogBox
-        className="coverletter_dialog"
-        open={openCreateCoverLetter}
-        handleClose={() => setOpenCreateCoverLetter(false)}
-      >
-        <Box>
-          <CreateCoverLetter />
-        </Box>
       </DialogBox>
       <ExpiredBox
         open={expiredWarning}
