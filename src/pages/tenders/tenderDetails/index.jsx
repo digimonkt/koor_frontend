@@ -15,6 +15,7 @@ import {
   SearchButton,
   SolidButton,
 } from "../../../components/button";
+import { cleanHtmlContent } from "@utils/fileUtils";
 import JobCostCard from "../../../pages/jobs/component/jobCostCard";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -118,7 +119,7 @@ function TenderDetailsComponent() {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? details?.description?.length : 3
+      prevNumLines === 3 ? details?.description?.length : 3,
     );
   };
   const getTenderDetails = async (tenderId) => {
@@ -228,7 +229,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -300,7 +301,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
                     )}
                   />
                 </div>
@@ -455,13 +456,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                })
+                                }),
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                })
+                                }),
                               );
                             }
                           } else {
@@ -472,6 +473,7 @@ function TenderDetailsComponent() {
                         }
                       }}
                     />
+
                     {details.isEditable && details.isApplied && isLoggedIn && (
                       <FilledButton
                         sx={{ width: "100%", marginBottom: "20px" }}
@@ -547,14 +549,16 @@ function TenderDetailsComponent() {
           </div>
           {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
             <>
-              <div className={`${styles.LikeJob}`}>
-                <h2>Application Instructions:</h2>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: details.applicationInstruction,
-                  }}
-                ></div>
-              </div>
+              {cleanHtmlContent(details?.applicationInstruction) && (
+                <div className={`${styles.LikeJob}`}>
+                  <h2>Application Instructions:</h2>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: details.applicationInstruction,
+                    }}
+                  ></div>
+                </div>
+              )}
               {role === USER_ROLES.vendor || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
                   <Box
@@ -717,7 +721,9 @@ function TenderDetailsComponent() {
                     {item?.title}
                   </Link>
                   <span>
-                    – {item?.city}, {item?.country} ${item.budgetAmount}{" "}
+                    {item?.city ? "- " + item.city + "," : ""}{" "}
+                    {item?.city ? item?.country : "- " + item?.country}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                 </p>
               );
