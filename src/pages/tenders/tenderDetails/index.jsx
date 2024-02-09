@@ -35,7 +35,7 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
-import { getColorByRemainingDays } from "@utils/generateColor";
+import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -114,6 +114,7 @@ function TenderDetailsComponent() {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
+    textAlign: "justify",
     WebkitLineClamp: numLines,
   };
 
@@ -332,10 +333,9 @@ function TenderDetailsComponent() {
                           border: "none",
                           cursor: "pointer",
                           background: "none",
-                          color:
-                            role !== USER_ROLES.jobSeeker
-                              ? "#274593"
-                              : "#fe7f00",
+                          color: getColorByRole(
+                            !role ? USER_ROLES.employer : role,
+                          ),
                         }}
                         onClick={handleSeeMoreClick}
                       >
@@ -418,6 +418,7 @@ function TenderDetailsComponent() {
               </Grid>
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
+                  color={getColorByRole(!role ? USER_ROLES.employer : role)}
                   amount={details.budgetAmount}
                   user={details?.user}
                 />
@@ -528,10 +529,10 @@ function TenderDetailsComponent() {
                           </>,
                           "Share",
                         ]}
-                        jobSeeker
                         sx={{
                           height: "44px",
-                          border: "0px !important",
+                          color: getColorByRole(role),
+                          border: `2px solid ${getColorByRole(role)}`,
                         }}
                         onClick={() => {
                           setIsSharing(true);
@@ -571,8 +572,12 @@ function TenderDetailsComponent() {
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
+                          color: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
+                          borderColor: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             padding: "10px 22px !important",
@@ -599,9 +604,14 @@ function TenderDetailsComponent() {
                     )}
                     {!details.isApplied && details.isApplyThroughEmail && (
                       <OutlinedButton
+                        vendor
                         sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
+                          color: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
+                          borderColor: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             marginTop: "20px",
@@ -667,30 +677,29 @@ function TenderDetailsComponent() {
                     to find a tender, please register on Koor.
                   </p>
                   <div style={{ textAlign: "center", lineHeight: "40px" }}>
-                    <Link to="/register?role=vendor">
-                      <OutlinedButton
-                        title="Register"
-                        jobSeeker
-                        sx={{
+                    <OutlinedButton
+                      title="Register"
+                      jobSeeker
+                      component={Link}
+                      to="/register?role=vendor"
+                      sx={{
+                        width: "100%",
+                        fontSize: "16px !important",
+                        "@media (max-width: 992px)": {
                           fontSize: "16px !important",
-                          width: "100%",
-                          color: "#274593 !important",
-                          "@media (max-width: 992px)": {
-                            fontSize: "16px !important",
-                          },
-                          "@media (max-width: 480px)": {
-                            fontSize: "14px !important",
-                          },
-                        }}
-                      />
-                    </Link>
+                        },
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                        },
+                      }}
+                    />
                     <span className="jobs_dailog_login_line">
                       Already have an account?{" "}
                       <Link
-                        to={`/login?role=${USER_ROLES.vendor}`}
+                        to={`/login?role=${USER_ROLES.jobSeeker}`}
                         style={{
                           textDecoration: "none",
-                          color: "#274593",
+                          color: "#EEA23D",
                           fontWeight: 600,
                         }}
                       >
@@ -712,6 +721,9 @@ function TenderDetailsComponent() {
               return (
                 <p key={key}>
                   <Link
+                    style={{
+                      color: getColorByRole(!role ? USER_ROLES.employer : role),
+                    }}
                     to={urlcat("/tender/details/:tenderId", {
                       tenderId: item.id,
                     })}
