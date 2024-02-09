@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -30,7 +29,7 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { USER_ROLES } from "../../../utils/enum";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
-import { Box, Divider, IconButton, Stack } from "@mui/material";
+import { Box, Divider, IconButton, Stack, Container } from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
@@ -105,6 +104,17 @@ const JobDetails = () => {
     },
     attachments: [],
   });
+
+  const hasData = (...values) =>
+    values.some((value) => {
+      if (Array.isArray(value)) {
+        return value.length > 0;
+      } else if (typeof value === "number") {
+        return value !== 0;
+      }
+      return false;
+    });
+
   const [addressGeoCode, setAddressGeoCode] = useState({});
 
   const getJobDetails = async (jobId) => {
@@ -145,7 +155,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -296,7 +306,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -442,13 +452,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  }),
+                                  })
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  }),
+                                  })
                                 );
                               }
                             } else {
@@ -649,23 +659,61 @@ const JobDetails = () => {
           )}
           <div className={`${styles.secondDiv}`}>
             <Grid container spacing={2}>
-              <Grid item xs={12} lg={7} sm={7}>
-                <JobRequirementCard
-                  highestEducation={details.highestEducation}
-                  languages={details.languages}
-                  skills={details.skills}
-                />
-              </Grid>
-              <Grid item xs={12} lg={5} sm={5}>
+              {hasData(
+                details.highestEducation,
+                details.languages,
+                details.skills,
+                details.experience
+              ) && (
+                <Grid item xs={12} lg={7} sm={7}>
+                  <JobRequirementCard
+                    highestEducation={details.highestEducation}
+                    languages={details.languages}
+                    skills={details.skills}
+                    experience={details.experience}
+                  />
+                </Grid>
+              )}
+              <Grid
+                item
+                xs={12}
+                lg={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                    details.experience
+                  )
+                    ? 5
+                    : 6
+                }
+                sm={
+                  hasData(
+                    details.highestEducation,
+                    details.languages,
+                    details.skills,
+                    details.experience
+                  )
+                    ? 5
+                    : 12
+                }
+              >
                 <div className={`${styles.location}`}>
                   <h3 className="mb-0">Location :</h3>
                   <p>{details.address}</p>
                   <Box
                     sx={{
-                      height: "75%",
                       overflow: "hidden",
                       borderRadius: "5px",
                       position: "relative",
+                      height: hasData(
+                        details.highestEducation,
+                        details.languages,
+                        details.skills,
+                        details.experience
+                      )
+                        ? "75%"
+                        : "250px",
                       "@media (max-width:992px)": {
                         height: "250px",
                       },
@@ -689,23 +737,30 @@ const JobDetails = () => {
                     To apply for the job and have many other useful features to
                     find a job, please register on Koor.
                   </p>
-                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
-                    <Link to="/register?role=job_seeker">
-                      <OutlinedButton
-                        title="Register"
-                        jobSeeker
-                        sx={{
-                          width: "100%",
+                  <div
+                    style={{
+                      textAlign: "center",
+                      lineHeight: "40px",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <OutlinedButton
+                      title="Register"
+                      jobSeeker
+                      component={Link}
+                      to="/register?role=job_seeker"
+                      sx={{
+                        width: "100%",
+                        fontSize: "16px !important",
+                        "@media (max-width: 992px)": {
                           fontSize: "16px !important",
-                          "@media (max-width: 992px)": {
-                            fontSize: "16px !important",
-                          },
-                          "@media (max-width: 480px)": {
-                            fontSize: "14px !important",
-                          },
-                        }}
-                      />
-                    </Link>
+                        },
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                        },
+                      }}
+                    />
                     <span className="jobs_dailog_login_line">
                       Already have an account?{" "}
                       <Link
@@ -854,14 +909,14 @@ const JobDetails = () => {
       >
         <ShareJob />
       </DialogBox>
-      <DialogBox
+      {/* <DialogBox
         open={registrationWarning}
         handleClose={() => setRegistrationWarning(false)}
       >
         <div>
           <h1 className="heading">Register as jobseeker</h1>
           <div className="form-content">
-            <p className="jobs_dailog_content">
+            <p>
               To apply for the job and have many other useful features to find a
               job, please register on Koor.
             </p>
@@ -898,7 +953,7 @@ const JobDetails = () => {
             </div>
           </div>
         </div>
-      </DialogBox>
+                </DialogBox> */}
       <ExpiredBox
         open={expiredWarning}
         handleClose={() => setExpiredWarning(false)}
