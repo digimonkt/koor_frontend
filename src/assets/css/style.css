@@ -2280,7 +2280,9 @@ span.count {
     background: #fff;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 1s, opacity 0.5s linear;
+    transition:
+      visibility 1s,
+      opacity 0.5s linear;
     display: block;
   }
 
