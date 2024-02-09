@@ -736,9 +736,6 @@ function PostJobsComponent() {
                         type="date"
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
-                        minDate={dayjs()
-                          .subtract(1, "month")
-                          .format("YYYY-MM-DD")} // Set minDate to one month ago
                         onBlur={formik.getFieldProps("startDate").onBlur}
                       />
                       {formik.touched.startDate && formik.errors.startDate ? (
