@@ -60,7 +60,7 @@ export const searchJobs = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  }
+  },
 );
 export const searchTalent = createAsyncThunk(
   "search/searchTalent",
@@ -88,7 +88,7 @@ export const searchTalent = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  }
+  },
 );
 
 export const searchTender = createAsyncThunk(
@@ -116,8 +116,9 @@ export const searchTender = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  }
+  },
 );
+
 export const searchVendor = createAsyncThunk(
   "search/searchVendor",
   async (data, { getState, rejectWithValue }) => {
@@ -144,7 +145,7 @@ export const searchVendor = createAsyncThunk(
     } else {
       return rejectWithValue(res.error);
     }
-  }
+  },
 );
 const searchSlice = createSlice({
   name: "search",

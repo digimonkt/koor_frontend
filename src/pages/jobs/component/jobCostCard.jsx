@@ -9,7 +9,7 @@ import urlcat from "urlcat";
 import { useSelector } from "react-redux";
 import { getColorByRole } from "@utils/generateColor";
 
-function JobCostCard({ amount, payPeriod, user }) {
+function JobCostCard({ amount, payPeriod, user, color = "" }) {
   const { role } = useSelector((state) => state.auth);
   return (
     <>
@@ -20,7 +20,7 @@ function JobCostCard({ amount, payPeriod, user }) {
             <p
               className="m-0"
               style={{
-                color: getColorByRole(role),
+                color: color ? getColorByRole(role) : color,
               }}
             >
               $ <span>{amount}</span>

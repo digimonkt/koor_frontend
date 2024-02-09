@@ -333,7 +333,9 @@ function TenderDetailsComponent() {
                           border: "none",
                           cursor: "pointer",
                           background: "none",
-                          color: getColorByRole(role),
+                          color: getColorByRole(
+                            !role ? USER_ROLES.employer : role,
+                          ),
                         }}
                         onClick={handleSeeMoreClick}
                       >
@@ -416,6 +418,7 @@ function TenderDetailsComponent() {
               </Grid>
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
+                  color={getColorByRole(!role ? USER_ROLES.employer : role)}
                   amount={details.budgetAmount}
                   user={details?.user}
                 />
@@ -526,7 +529,6 @@ function TenderDetailsComponent() {
                           </>,
                           "Share",
                         ]}
-                        jobSeeker
                         sx={{
                           height: "44px",
                           color: getColorByRole(role),
@@ -570,8 +572,12 @@ function TenderDetailsComponent() {
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
+                          color: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
+                          borderColor: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             padding: "10px 22px !important",
@@ -598,9 +604,14 @@ function TenderDetailsComponent() {
                     )}
                     {!details.isApplied && details.isApplyThroughEmail && (
                       <OutlinedButton
+                        vendor
                         sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
+                          color: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
+                          borderColor: `${getColorByRole(
+                            role === undefined ? USER_ROLES.employer : role,
+                          )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             marginTop: "20px",
@@ -710,6 +721,9 @@ function TenderDetailsComponent() {
               return (
                 <p key={key}>
                   <Link
+                    style={{
+                      color: getColorByRole(!role ? USER_ROLES.employer : role),
+                    }}
                     to={urlcat("/tender/details/:tenderId", {
                       tenderId: item.id,
                     })}
