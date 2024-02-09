@@ -55,6 +55,7 @@ const AboutContent = () => {
       setFaqCategory(res.data.results);
     }
   };
+
   useEffect(() => {
     handleFAQCategory(USER_ROLES.jobSeeker);
   }, []);
