@@ -85,7 +85,7 @@ const Home = () => {
 
     // Navigate to the search page with the provided parameters
     navigate(
-      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
+      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
     );
   };
   // const getTopJobCategories = async () => {
@@ -113,7 +113,7 @@ const Home = () => {
         (jobCategories) => ({
           ...jobCategories,
           categoryType: "job",
-        })
+        }),
       );
 
       setTopJobCategories((prev) => [...prev, ...jobsrCategoriesWithTypes]);
@@ -133,7 +133,7 @@ const Home = () => {
         (tenderCategory) => ({
           ...tenderCategory,
           categoryType: "tender",
-        })
+        }),
       );
 
       setTopJobCategories((prev) => [...prev, ...tenderCategoriesWithTypes]);
@@ -236,7 +236,7 @@ const Home = () => {
                     <form onSubmit={handleSubmit}>
                       <Grid
                         container
-                        columnGap={10}
+                        columnGap={2}
                         sx={{
                           "@media(max-width:1274px)": {
                             justifyContent: "space-between",
@@ -257,6 +257,7 @@ const Home = () => {
                           <InputSearch
                             sx={{
                               marginRight: "16px",
+                              width: 100,
                               "@media(max-width:480px)": {
                                 width: "100% !important",
                               },
@@ -434,6 +435,22 @@ const Home = () => {
                   }}
                 >
                   <Typography
+                    className={styles.see_all_jobs}
+                    style={{
+                      cursor: "pointer",
+                      marginRight: "8em",
+                    }}
+                    onClick={() => {
+                      navigate("/search/tenders");
+                    }}
+                  >
+                    See all {totalTenders} Tenders{" "}
+                    <IconButton>
+                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                    </IconButton>
+                  </Typography>
+
+                  <Typography
                     className={`ms-auto ${styles.see_all_jobs}`}
                     style={{
                       cursor: "pointer",
@@ -443,21 +460,6 @@ const Home = () => {
                     }}
                   >
                     See all {totalJobs} jobs{" "}
-                    <IconButton>
-                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
-                    </IconButton>
-                  </Typography>
-                  <Typography
-                    className={styles.see_all_jobs}
-                    style={{
-                      cursor: "pointer",
-                      marginLeft: "8em",
-                    }}
-                    onClick={() => {
-                      navigate("/search/tenders");
-                    }}
-                  >
-                    See all {totalTenders} Tenders{" "}
                     <IconButton>
                       <ArrowForwardIcon sx={{ color: "#eea23d" }} />
                     </IconButton>

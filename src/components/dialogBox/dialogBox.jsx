@@ -17,7 +17,8 @@ const DialogBoxComponent = ({
         className={`modal-box ${className}`}
         fullWidth
         maxWidth="sm"
-        {...rest}>
+        {...rest}
+      >
         <div>{children}</div>
       </Dialog>
     </>
