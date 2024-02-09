@@ -257,6 +257,7 @@ const Home = () => {
                           <InputSearch
                             sx={{
                               marginRight: "16px",
+                              width: 100,
                               "@media(max-width:480px)": {
                                 width: "100% !important",
                               },
