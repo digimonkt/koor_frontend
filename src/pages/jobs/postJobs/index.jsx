@@ -761,7 +761,7 @@ function PostJobsComponent() {
                         type="date"
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
-                        minDate={formik.values.startDate}
+                        minDate={dayjs().format("YYYY-MM-DD")}
                       />
                       {formik.touched.deadline && formik.errors.deadline ? (
                         <ErrorMessage>{formik.errors.deadline}</ErrorMessage>

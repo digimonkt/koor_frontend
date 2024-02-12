@@ -170,10 +170,7 @@ const JobDetails = () => {
     tag.click();
     document.body.removeChild(tag);
   }
-  // const getApplyJobByEmail = async (jobId) => {
-  //   dispatch(setSuccessToast("Job apply by email successfully"));
-  //   await getApplyJobByEmailAPI(jobId);
-  // };
+
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
@@ -211,10 +208,9 @@ const JobDetails = () => {
         ".png": "image/png",
         ".gif": "image/gif",
         ".pdf": "application/pdf",
-        // Add more extensions and corresponding MIME types as needed
       };
 
-      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
+      return mimeTypes[extension] || "application/octet-stream";
     };
 
     const fileName = "attachment";
@@ -292,7 +288,7 @@ const JobDetails = () => {
                 <div className={`${styles.clocs}`}>
                   {<SVG.ClockIconSmall />}
                   <p className="mb-0 mt-0 me-1">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     className={
@@ -616,10 +612,14 @@ const JobDetails = () => {
                         // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              window.open(details.websiteLink, "_blank");
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            window.open(details.websiteLink, "_blank");
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -829,8 +829,11 @@ const JobDetails = () => {
                     {item.title}
                   </Link>
                   <span>
-                    – {item.city.title}, {item.country.title}
-                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}{" "}
+                    {item?.city.title ? "- " + item.city.title + "," : ""}{" "}
+                    {item?.city.title
+                      ? item?.country.title
+                      : "- " + item?.country.title}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                   {platform === "android" || platform === "ios" ? (
                     <b

@@ -137,7 +137,7 @@ export const transformApplicationOnTenderListData = (data) => {
         },
         tender: {
           id: result.tender.id,
-          title: result.tender.title
+          title: result.tender.title,
         },
         education: result.education,
         language: result.language,

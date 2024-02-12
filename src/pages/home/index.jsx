@@ -225,8 +225,6 @@ const Home = () => {
                     className={styles.headding}
                     sx={{
                       paddingTop: "26%",
-                      // "@media(max-width:992px)": { paddingTop: "40%" },
-                      // "@media(max-width:480px)": { paddingTop: "90%" },
                     }}
                   >
                     <h2>Find your dream job</h2>

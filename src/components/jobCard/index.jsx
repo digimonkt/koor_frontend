@@ -34,7 +34,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
-
+  console.log(jobDetails);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -412,7 +412,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 </span>{" "}
                 <div className="textdes">
                   Posted At:{" "}
-                  <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
+                  <span>{dayjs(jobDetails?.startDate).format("ll")}</span>
                 </div>
               </Stack>
             </Stack>
