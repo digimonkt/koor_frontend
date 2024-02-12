@@ -1,4 +1,3 @@
-import { SVG } from "../../../assets/svg";
 import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React from "react";
@@ -42,10 +41,12 @@ function JobCostCard({ amount, payPeriod, user, color = "" }) {
       >
         <div className={`${styles.lotusimg}`}>
           <Avatar
+            square={true}
             sx={{
               width: 100,
               height: 100,
               color: "#CACACA",
+              borderRadius: "10px",
               "&.MuiAvatar-colorDefault": {
                 background: "#F0F0F0",
               },
@@ -55,9 +56,7 @@ function JobCostCard({ amount, payPeriod, user, color = "" }) {
               },
             }}
             src={generateFileUrl(user.image?.path)}
-          >
-            <SVG.UserIcon />
-          </Avatar>
+          />
           <Box>
             <h3>
               <Link
