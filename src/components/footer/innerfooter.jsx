@@ -20,7 +20,6 @@ import { ErrorToast, SuccessToast } from "../../components/toast";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "../../utils/enum";
-import DialogBox from "../../components/dialogBox";
 
 const InnerFooter = () => {
   const currentURL = window.location.pathname;
@@ -29,8 +28,8 @@ const InnerFooter = () => {
   const [successToastPopup, setSuccessToastPopup] = useState(false);
   const [failedToastPopup, setFailedToastPopup] = useState(false);
   const [failedMessage, setFailedMessage] = useState(false);
-  const [warningTrue, setWarningTrue] = useState(false);
-  const [warningRole, setWarningRole] = useState(USER_ROLES.vendor);
+  // const [warningTrue, setWarningTrue] = useState(false);
+  // const [warningRole, setWarningRole] = useState(USER_ROLES.vendor);
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -63,13 +62,13 @@ const InnerFooter = () => {
     }
   };
 
-  const checkUserLoggedIn = (e, role) => {
-    if (!isLoggedIn) {
-      e.preventDefault();
-      setWarningTrue(true);
-      setWarningRole(role);
-    }
-  };
+  // const checkUserLoggedIn = (e, role) => {
+  //   if (!isLoggedIn) {
+  //     e.preventDefault();
+  //     setWarningTrue(true);
+  //     setWarningRole(role);
+  //   }
+  // };
   useEffect(() => {
     getCategories();
   }, []);
@@ -321,16 +320,9 @@ const InnerFooter = () => {
                                   : "not-active-footer"
                               }
                               LinkComponent={Link}
-                              to={
-                                isLoggedIn
-                                  ? `/search/talents?categories=${child.id}`
-                                  : "#"
-                              }
+                              to={`/search/talents?categories=${child.id}`}
                               dense={true}
                               disableGutters={true}
-                              onClick={(e) =>
-                                checkUserLoggedIn(e, USER_ROLES.employer)
-                              }
                             >
                               {child.title.length > 20
                                 ? `${child.title.slice(0, 20)}...`
@@ -576,30 +568,30 @@ const InnerFooter = () => {
         }}
         message={failedMessage}
       />
-      <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
-        <div>
-          <SVG.Warning
-            style={{
-              marginLeft: "46%",
-              height: "50px",
-              width: "50px",
-              color: "red",
-            }}
-          />
-          <h1
-            className="heading"
-            style={{ textTransform: "capitalize", textAlign: "center" }}
-          >
-            {warningRole} login required
-          </h1>
-          <div className="form-content">
-            <p>
-              Dear user, to access this content, please log in as a{" "}
-              {warningRole}.
-            </p>
-          </div>
-        </div>
-      </DialogBox>
+      {/* <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}> */}
+      {/*   <div> */}
+      {/*     <SVG.Warning */}
+      {/*       style={{ */}
+      {/*         marginLeft: "46%", */}
+      {/*         height: "50px", */}
+      {/*         width: "50px", */}
+      {/*         color: "red", */}
+      {/*       }} */}
+      {/*     /> */}
+      {/*     <h1 */}
+      {/*       className="heading" */}
+      {/*       style={{ textTransform: "capitalize", textAlign: "center" }} */}
+      {/*     > */}
+      {/*       {warningRole} login required */}
+      {/*     </h1> */}
+      {/*     <div className="form-content"> */}
+      {/*       <p> */}
+      {/*         Dear user, to access this content, please log in as a{" "} */}
+      {/*         {warningRole}. */}
+      {/*       </p> */}
+      {/*     </div> */}
+      {/*   </div> */}
+      {/* </DialogBox> */}
     </Box>
   );
 };
