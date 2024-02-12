@@ -292,7 +292,7 @@ const JobDetails = () => {
                 <div className={`${styles.clocs}`}>
                   {<SVG.ClockIconSmall />}
                   <p className="mb-0 mt-0 me-1">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     className={

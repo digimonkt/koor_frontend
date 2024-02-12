@@ -287,7 +287,7 @@ function TenderDetailsComponent() {
                 <div className={`${styles.clocs}`}>
                   <SVG.ClockIconSmall />
                   <p className="mb-0 mt-0 me-1">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     title={
@@ -379,17 +379,17 @@ function TenderDetailsComponent() {
                     );
                   })}
                 </div>
-                <div className={`${styles.datesatrt}`}>
-                  <span>{<SVG.StartDate />}</span>
-                  <p className="m-0 ms-2">
-                    <span className={`${styles.startDate}`}>Start date:</span>{" "}
-                    <b className={`${styles.startB}`}>
-                      {details?.startDate
-                        ? dayjs(details.startDate).format("ll")
-                        : ""}
-                    </b>
-                  </p>
-                </div>
+                {/* <div className={`${styles.datesatrt}`}> */}
+                {/*   <span>{<SVG.StartDate />}</span> */}
+                {/*   <p className="m-0 ms-2"> */}
+                {/*     <span className={`${styles.startDate}`}>Start date:</span>{" "} */}
+                {/*     <b className={`${styles.startB}`}> */}
+                {/*       {details?.startDate */}
+                {/*         ? dayjs(details.startDate).format("ll") */}
+                {/*         : ""} */}
+                {/*     </b> */}
+                {/*   </p> */}
+                {/* </div> */}
                 {details.attachments.length > 0 && (
                   <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
