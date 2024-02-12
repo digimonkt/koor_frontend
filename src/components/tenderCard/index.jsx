@@ -334,7 +334,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 </span>{" "}
                 <div className="textdes">
                   Posted At:{" "}
-                  <span>{dayjs(tenderDetails?.createdAt).format("ll")}</span>
+                  <span>{dayjs(tenderDetails?.startDate).format("ll")}</span>
                 </div>
               </Stack>
             </Stack>

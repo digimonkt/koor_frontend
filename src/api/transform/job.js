@@ -32,6 +32,7 @@ export const transformJobListResponse = (data) => {
         hasContract: res.has_contract,
         workingDays: res.working_days,
         deadline: res.deadline,
+        startDate: res.start_date,
         company: res.company,
         companyLogo: res.company_logo,
         expiredInDays: deadline.diff(tomorrow, "day", true),
@@ -52,7 +53,8 @@ export const transformFullJobDetails = (data) => {
   const today = dayjs(new Date().toISOString().split("T")[0]);
   const tomorrow = today.add(-1, "day");
   const deadline = dayjs(data.deadline);
-  const description = data.description !== "<p><br></p>" ? data.description : "";
+  const description =
+    data.description !== "<p><br></p>" ? data.description : "";
   return {
     id: data.id,
     title: data.title,
@@ -116,7 +118,7 @@ export const transformSavedFilter = (data) => {
     id: data.id,
     jobCategories: data.job_category.map((category) => category.id || category),
     jobSubCategory: data.job_sub_category.map(
-      (subCategory) => subCategory.id || subCategory
+      (subCategory) => subCategory.id || subCategory,
     ),
     country: data.country,
     city: data.city,

@@ -613,10 +613,7 @@ const PostTender = () => {
                             type="date"
                             value={formik.values.deadline}
                             onBlur={formik.getFieldProps("deadline").onBlur}
-                            minDate={
-                              formik.values.startDate ||
-                              dayjs().format("YYYY-MM-DD")
-                            }
+                            minDate={dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.deadline && formik.errors.deadline ? (
                             <ErrorMessage>

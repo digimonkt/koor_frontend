@@ -43,15 +43,15 @@ function Header() {
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
+  // const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const [warningTrue, setWarningTrue] = useState(false);
 
-  const checkUserVerified = (e) => {
-    if (!currentUser.profile.isVerified) {
-      setAccountVerifiedWarning(true);
-      e.preventDefault();
-    }
-  };
+  // const checkUserVerified = (e) => {
+  //   if (!currentUser.profile.isVerified) {
+  //     setAccountVerifiedWarning(true);
+  //     e.preventDefault();
+  //   }
+  // };
   const userLogout = async () => {
     await LogoutUserAPI();
     globalLocalStorage.cleanLocalStorage();
@@ -341,21 +341,16 @@ function Header() {
                   Browse jobs
                 </Link>
               </li>
-              {isLoggedIn && role === USER_ROLES.employer ? (
+              {!isLoggedIn || role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to={
-                      currentUser.profile.isVerified ? "/search/talents" : "#"
-                    }
+                    to={"/search/talents"}
                     style={{
                       color: location.pathname.includes("/search/talents")
                         ? role === USER_ROLES.jobSeeker
                           ? "#eea23d "
                           : "#274593"
                         : "",
-                    }}
-                    onClick={(e) => {
-                      checkUserVerified(e);
                     }}
                   >
                     Browse Talents
@@ -364,21 +359,16 @@ function Header() {
               ) : (
                 ""
               )}
-              {isLoggedIn && role === USER_ROLES.employer ? (
+              {!isLoggedIn || role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to={
-                      currentUser.profile.isVerified ? "/search/vendors" : "#"
-                    }
+                    to={"/search/vendors"}
                     style={{
                       color: location.pathname.includes("/search/vendors")
                         ? role === USER_ROLES.jobSeeker
                           ? "#eea23d "
                           : "#274593"
                         : "",
-                    }}
-                    onClick={(e) => {
-                      checkUserVerified(e);
                     }}
                   >
                     Browse Vendors
@@ -593,29 +583,29 @@ function Header() {
         ) : (
           ""
         )}
-        <DialogBox
-          open={accountVerifiedWarning}
-          handleClose={() => setAccountVerifiedWarning(false)}
-        >
-          <div>
-            <SVG.Warning
-              style={{
-                marginLeft: "39%",
-                height: "50px",
-                width: "50px",
-                color: "red",
-              }}
-            />
-            <h1 className="heading">Account Verification Status</h1>
-            <div className="form-content">
-              <p>
-                Dear {currentUser.name || currentUser.email}, your account is
-                not verified by the administrator. Please contact the
-                administrator for further assistance.
-              </p>
-            </div>
-          </div>
-        </DialogBox>
+        {/* <DialogBox */}
+        {/*   open={accountVerifiedWarning} */}
+        {/*   handleClose={() => setAccountVerifiedWarning(false)} */}
+        {/* > */}
+        {/*   <div> */}
+        {/*     <SVG.Warning */}
+        {/*       style={{ */}
+        {/*         marginLeft: "39%", */}
+        {/*         height: "50px", */}
+        {/*         width: "50px", */}
+        {/*         color: "red", */}
+        {/*       }} */}
+        {/*     /> */}
+        {/*     <h1 className="heading">Account Verification Status</h1> */}
+        {/*     <div className="form-content"> */}
+        {/*       <p> */}
+        {/*         Dear {currentUser.name || currentUser.email}, your account is */}
+        {/*         not verified by the administrator. Please contact the */}
+        {/*         administrator for further assistance. */}
+        {/*       </p> */}
+        {/*     </div> */}
+        {/*   </div> */}
+        {/* </DialogBox> */}
         <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
           <div>
             <SVG.Warning

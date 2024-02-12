@@ -287,7 +287,7 @@ function TenderDetailsComponent() {
                 <div className={`${styles.clocs}`}>
                   <SVG.ClockIconSmall />
                   <p className="mb-0 mt-0 me-1">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     title={
@@ -379,17 +379,17 @@ function TenderDetailsComponent() {
                     );
                   })}
                 </div>
-                <div className={`${styles.datesatrt}`}>
-                  <span>{<SVG.StartDate />}</span>
-                  <p className="m-0 ms-2">
-                    <span className={`${styles.startDate}`}>Start date:</span>{" "}
-                    <b className={`${styles.startB}`}>
-                      {details?.startDate
-                        ? dayjs(details.startDate).format("ll")
-                        : ""}
-                    </b>
-                  </p>
-                </div>
+                {/* <div className={`${styles.datesatrt}`}> */}
+                {/*   <span>{<SVG.StartDate />}</span> */}
+                {/*   <p className="m-0 ms-2"> */}
+                {/*     <span className={`${styles.startDate}`}>Start date:</span>{" "} */}
+                {/*     <b className={`${styles.startB}`}> */}
+                {/*       {details?.startDate */}
+                {/*         ? dayjs(details.startDate).format("ll") */}
+                {/*         : ""} */}
+                {/*     </b> */}
+                {/*   </p> */}
+                {/* </div> */}
                 {details.attachments.length > 0 && (
                   <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
@@ -594,10 +594,14 @@ function TenderDetailsComponent() {
                           "Apply on employer's website",
                         ]}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              window.open(details.websiteLink, "_blank");
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            window.open(details.websiteLink, "_blank");
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -630,10 +634,14 @@ function TenderDetailsComponent() {
                         ]}
                         className="ms-3"
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSendEmail(details);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            handleSendEmail(details);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -676,14 +684,23 @@ function TenderDetailsComponent() {
                     To apply for the vendor and have many other useful features
                     to find a tender, please register on Koor.
                   </p>
-                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      lineHeight: "40px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      width: "100%",
+                    }}
+                  >
                     <OutlinedButton
                       title="Register"
                       jobSeeker
                       component={Link}
                       to="/register?role=vendor"
                       sx={{
-                        width: "100%",
+                        width: "100% !important",
                         fontSize: "16px !important",
                         "@media (max-width: 992px)": {
                           fontSize: "16px !important",
@@ -693,7 +710,15 @@ function TenderDetailsComponent() {
                         },
                       }}
                     />
-                    <span className="jobs_dailog_login_line">
+                    <span
+                      className="jobs_dailog_login_line"
+                      style={{
+                        display: "flex",
+                        flexdirection: "column",
+                        justifyContent: "center",
+                        width: "100%",
+                      }}
+                    >
                       Already have an account?{" "}
                       <Link
                         to={`/login?role=${USER_ROLES.jobSeeker}`}
@@ -703,6 +728,7 @@ function TenderDetailsComponent() {
                           fontWeight: 600,
                         }}
                       >
+                        {" "}
                         Login
                       </Link>
                     </span>
@@ -710,6 +736,7 @@ function TenderDetailsComponent() {
                 </div>
               </div>
             </DialogBox>
+
             <ExpiredBox
               open={expiredWarning}
               handleClose={() => setExpiredWarning(false)}
