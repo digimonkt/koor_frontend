@@ -576,10 +576,10 @@ function TenderDetailsComponent() {
                       <OutlinedButton
                         sx={{
                           color: `${getColorByRole(
-                            role === undefined ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role,
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === undefined ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role,
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
@@ -611,13 +611,12 @@ function TenderDetailsComponent() {
                     )}
                     {!details.isApplied && details.isApplyThroughEmail && (
                       <OutlinedButton
-                        vendor
                         sx={{
                           color: `${getColorByRole(
-                            role === undefined ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role,
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === undefined ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role,
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
