@@ -22,7 +22,7 @@ function TalentSearchComponent() {
             </React.Fragment>
           );
         })
-      ) : talents.length < 0 ? (
+      ) : !talents.length ? (
         <NoDataFoundAnimation title="We apologize, but there doesn't seem to be any available talent matching your search criteria." />
       ) : (
         talents.map((talent, index) => {
