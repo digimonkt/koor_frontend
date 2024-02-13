@@ -155,7 +155,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -302,7 +302,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -376,17 +376,6 @@ const JobDetails = () => {
                     />
                   )}
                 </Stack>
-                {details.startDate && (
-                  <div className={`${styles.datesatrt}`}>
-                    <span>{<SVG.StartDate />}</span>
-                    <p className="m-0 ms-2">
-                      <span className={`${styles.startDate}`}>Start date:</span>{" "}
-                      <b className={`${styles.startB}`}>
-                        {dayjs(details.startDate).format("ll")}
-                      </b>
-                    </p>
-                  </div>
-                )}
                 {details.attachments.length > 0 && (
                   <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
@@ -451,13 +440,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  }),
+                                  })
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  }),
+                                  })
                                 );
                               }
                             } else {
@@ -670,7 +659,7 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
-                details.experience,
+                details.experience
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
@@ -689,7 +678,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 6
@@ -699,7 +688,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 12
@@ -717,7 +706,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience,
+                        details.experience
                       )
                         ? "75%"
                         : "250px",

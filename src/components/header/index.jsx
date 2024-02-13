@@ -43,15 +43,9 @@ function Header() {
   const [searchPlaceholder, setSearchPlaceholder] = useState("Jobs");
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
-  // const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
+  const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const [warningTrue, setWarningTrue] = useState(false);
 
-  // const checkUserVerified = (e) => {
-  //   if (!currentUser.profile.isVerified) {
-  //     setAccountVerifiedWarning(true);
-  //     e.preventDefault();
-  //   }
-  // };
   const userLogout = async () => {
     await LogoutUserAPI();
     globalLocalStorage.cleanLocalStorage();
@@ -158,28 +152,28 @@ function Header() {
                             navigate(
                               role === USER_ROLES.jobSeeker
                                 ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           case SEARCH_TYPE.talents:
                             navigate(
                               role === USER_ROLES.employer
                                 ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           case SEARCH_TYPE.vendors:
                             navigate(
                               role === USER_ROLES.employer
                                 ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           case SEARCH_TYPE.tenders:
                             navigate(
                               role === USER_ROLES.vendor
                                 ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
-                                : "/",
+                                : "/"
                             );
                             break;
                           default:
@@ -341,7 +335,7 @@ function Header() {
                   Browse jobs
                 </Link>
               </li>
-              {!isLoggedIn || role === USER_ROLES.employer ? (
+              {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
                     to={"/search/talents"}
@@ -359,7 +353,7 @@ function Header() {
               ) : (
                 ""
               )}
-              {!isLoggedIn || role === USER_ROLES.employer ? (
+              {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
                     to={"/search/vendors"}
@@ -542,28 +536,28 @@ function Header() {
                         navigate(
                           role === USER_ROLES.jobSeeker
                             ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       case SEARCH_TYPE.talents:
                         navigate(
                           role === USER_ROLES.employer
                             ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       case SEARCH_TYPE.vendors:
                         navigate(
                           role === USER_ROLES.employer
                             ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       case SEARCH_TYPE.tenders:
                         navigate(
                           role === USER_ROLES.vendors
                             ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
-                            : "/",
+                            : "/"
                         );
                         break;
                       default:
@@ -583,29 +577,29 @@ function Header() {
         ) : (
           ""
         )}
-        {/* <DialogBox */}
-        {/*   open={accountVerifiedWarning} */}
-        {/*   handleClose={() => setAccountVerifiedWarning(false)} */}
-        {/* > */}
-        {/*   <div> */}
-        {/*     <SVG.Warning */}
-        {/*       style={{ */}
-        {/*         marginLeft: "39%", */}
-        {/*         height: "50px", */}
-        {/*         width: "50px", */}
-        {/*         color: "red", */}
-        {/*       }} */}
-        {/*     /> */}
-        {/*     <h1 className="heading">Account Verification Status</h1> */}
-        {/*     <div className="form-content"> */}
-        {/*       <p> */}
-        {/*         Dear {currentUser.name || currentUser.email}, your account is */}
-        {/*         not verified by the administrator. Please contact the */}
-        {/*         administrator for further assistance. */}
-        {/*       </p> */}
-        {/*     </div> */}
-        {/*   </div> */}
-        {/* </DialogBox> */}
+        <DialogBox
+          open={accountVerifiedWarning}
+          handleClose={() => setAccountVerifiedWarning(false)}
+        >
+          <div>
+            <SVG.Warning
+              style={{
+                marginLeft: "39%",
+                height: "50px",
+                width: "50px",
+                color: "red",
+              }}
+            />
+            <h1 className="heading">Account Verification Status</h1>
+            <div className="form-content">
+              <p>
+                Dear {currentUser.name || currentUser.email}, your account is
+                not verified by the administrator. Please contact the
+                administrator for further assistance.
+              </p>
+            </div>
+          </div>
+        </DialogBox>
         <DialogBox open={warningTrue} handleClose={() => setWarningTrue(false)}>
           <div>
             <SVG.Warning
