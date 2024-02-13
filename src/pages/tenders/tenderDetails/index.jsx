@@ -5,6 +5,7 @@ import {
   Grid,
   IconButton,
   Stack,
+  Link as MuiLink,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
@@ -418,7 +419,9 @@ function TenderDetailsComponent() {
               </Grid>
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
-                  color={getColorByRole(!role ? USER_ROLES.employer : role)}
+                  color={getColorByRole(
+                    role === "" ? USER_ROLES.employer : role,
+                  )}
                   amount={details.budgetAmount}
                   user={details?.user}
                 />
@@ -696,11 +699,11 @@ function TenderDetailsComponent() {
                   >
                     <OutlinedButton
                       title="Register"
-                      jobSeeker
                       component={Link}
                       to="/register?role=vendor"
                       sx={{
                         width: "100% !important",
+                        color: getColorByRole(role ?? USER_ROLES.employer),
                         fontSize: "16px !important",
                         "@media (max-width: 992px)": {
                           fontSize: "16px !important",
@@ -715,22 +718,25 @@ function TenderDetailsComponent() {
                       style={{
                         display: "flex",
                         flexdirection: "column",
+                        gap: "10px",
                         justifyContent: "center",
                         width: "100%",
                       }}
                     >
                       Already have an account?{" "}
-                      <Link
+                      <MuiLink
+                        component={Link}
                         to={`/login?role=${USER_ROLES.jobSeeker}`}
-                        style={{
+                        sx={{
                           textDecoration: "none",
-                          color: "#EEA23D",
+                          color: getColorByRole(
+                            !role ? USER_ROLES.employer : role,
+                          ),
                           fontWeight: 600,
                         }}
                       >
-                        {" "}
                         Login
-                      </Link>
+                      </MuiLink>
                     </span>
                   </div>
                 </div>
