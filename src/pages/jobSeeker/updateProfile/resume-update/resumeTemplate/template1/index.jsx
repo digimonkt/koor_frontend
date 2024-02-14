@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 
 function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
+  const { isMobileView } = useSelector((state) => state.platform);
+  console.log({ isMobileView });
   const applicantDetails = user || currentUser;
   return (
     <div className="job-application pages" id="div-to-pdf">

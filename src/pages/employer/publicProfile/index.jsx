@@ -64,19 +64,17 @@ function PublicProfileComponent() {
   return (
     <Box
       sx={
-        isMobileView
-          ? { py: 3, marginBottom: "20px" }
-          : { marginTop: "67px", py: 3 }
+        isMobileView ? { marginBottom: "60px" } : { marginTop: "67px", py: 3 }
       }
     >
       {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
-        <Container>
+        <Container sx={isMobileView ? { padding: 0 } : {}}>
           <Card
             sx={{
               boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
+              borderRadius: isMobileView ? "0" : "20px",
               marginBottom: "50px",
             }}
           >
@@ -113,7 +111,10 @@ function PublicProfileComponent() {
                           sx={{
                             width: "88px",
                             height: "88px",
-                            boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
+                            boxShadow: isMobileView
+                              ? ""
+                              : "0px 5px 25px rgba(0, 0, 0, 0.25)",
+                            borderRadius: isMobileView ? "10%" : "",
                           }}
                         />
                         <Box>
@@ -296,7 +297,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
