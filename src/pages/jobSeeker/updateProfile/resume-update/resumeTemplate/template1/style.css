@@ -6,50 +6,63 @@
 .container {
   padding-left: 30px;
   padding-right: 30px;
+
 }
 
 .resume_template p {
   text-align: justify;
+  word-break: break-all;
+
 }
 
 .resume_template hr {
   margin: 20px 0px;
+  word-break: break-all;
+
 }
 
 .resume_template h1 {
   padding: 0;
   margin: 0;
+  word-break: break-all;
+
 }
 
 .resume_template h2 {
   padding: 0;
   margin: 0;
+  word-break: break-all;
 }
 
 .resume_template h3 {
   padding: 0;
   margin: 0;
+  word-break: break-all;
 }
 
 .resume_template h4 {
   padding: 0;
   margin: 0;
+  word-break: break-all;
 }
 
 .resume_template h5 {
   padding: 0;
   margin: 0;
+  word-break: break-all;
 }
 
 .resume_template h6 {
   padding: 0;
   margin: 0;
+  word-break: break-all;
 }
 
 .resume_template h2 {
   font-size: 24px;
   font-weight: 600;
   font-family: "Bahnschrift";
+  word-break: break-all;
   letter-spacing: 0.7px;
   color: #121212;
   margin: 10px 0px 5px 0px;
@@ -60,16 +73,19 @@
   display: flex;
   border-top: 2px solid #cacaca;
   border-bottom: 2px solid #cacaca;
+  word-break: break-all;
 }
 
 .resume_template p {
   padding: 0;
   margin: 0;
+  word-break: break-all;
 }
 
 .resume_template li {
   padding: 0px;
   margin: 0px;
+  word-break: break-all;
 }
 
 .heading h1 {
@@ -332,6 +348,7 @@
   background-color: #ffffff;
   padding: 30px;
 }
+
 .section {
   margin: 10px;
   padding: 10px 0px;

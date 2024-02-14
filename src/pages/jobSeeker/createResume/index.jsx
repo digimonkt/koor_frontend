@@ -398,36 +398,47 @@ const CreateResumeComponent = () => {
           handleClose={() => {
             if (!isDownloadingPDF) setOpenResume(false);
           }}
-          maxWidth="xxl"
+          maxWidth="xl"
           sx={{
             "& .MuiPaper-root": {
-              width: "900px",
+              width: isMobileView ? "100%" : "900px",
+              padding: isMobileView ? "0px  !important" : "30px",
+              margin: isMobileView ? "0px  !important" : "",
             },
           }}
         >
-          <>
-            <FilledButton
-              title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
-              onClick={downloadPDF}
-              style={{ marginBottom: "10px" }}
-              disabled={isDownloadingPDF || isDownloadingDocs}
-            />
-            <FilledButton
-              sx={{
-                marginLeft: "10px",
-                "@media (max-width: 480px)": {
-                  marginLeft: "0px",
-                },
-              }}
-              title={
-                isDownloadingDocs ? "Downloading Docs..." : "Download Docs"
-              }
-              onClick={downloadDocs}
-              style={{ marginBottom: "10px" }}
-              disabled={isDownloadingPDF || isDownloadingDocs}
-            />
+          <Box
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+            flexDirection="column"
+          >
+            <Box mt={2}>
+              {isMobileView && (
+                <IconButton onClick={() => setOpenResume(false)}>
+                  <SVG.LeftArrow />
+                </IconButton>
+              )}
+              <FilledButton
+                title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
+                onClick={downloadPDF}
+                style={{ marginBottom: "10px" }}
+                disabled={isDownloadingPDF || isDownloadingDocs}
+              />
+              <FilledButton
+                sx={{
+                  marginLeft: "10px",
+                }}
+                title={
+                  isDownloadingDocs ? "Downloading Docs..." : "Download Docs"
+                }
+                onClick={downloadDocs}
+                style={{ marginBottom: "10px" }}
+                disabled={isDownloadingPDF || isDownloadingDocs}
+              />
+            </Box>
             <ResumeTemplate appliedJob={false} />
-          </>
+          </Box>
         </DialogBox>
       </Box>
     </>

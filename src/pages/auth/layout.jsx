@@ -17,6 +17,7 @@ import {
 } from "src/firebaseProvider/auth";
 import Marquee from "react-fast-marquee";
 import { Capacitor } from "@capacitor/core";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 const platform = Capacitor.getPlatform();
 const AuthOptions = [
@@ -54,8 +55,9 @@ function AuthLayout({
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { role, verifyEmail, userVerificationToken } = useSelector(
-      (state) => state.auth,
+      (state) => state.auth
     );
+
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [activationLabel, setActivationLabel] = useState(selectedRoleTitle);
@@ -65,29 +67,34 @@ function AuthLayout({
         return;
       }
       setLoading(false);
-      const res = await loginWithGooglePopupProvider();
-      if (res.remote === "success") {
-        const payload = {
-          email: res.data.email,
-          role,
-          name: res.data.displayName,
-          display_image: res.data.photoURL,
-          source: "google",
-        };
-        for (const key in payload) {
-          if (!payload[key]) {
-            delete payload[key];
+      if (platform === "android") {
+        const user = await GoogleAuth.signIn();
+        console.log({ user });
+      } else {
+        const res = await loginWithGooglePopupProvider();
+        if (res.remote === "success") {
+          const payload = {
+            email: res.data.email,
+            role,
+            name: res.data.displayName,
+            display_image: res.data.photoURL,
+            source: "google",
+          };
+          for (const key in payload) {
+            if (!payload[key]) {
+              delete payload[key];
+            }
+          }
+          console.log({ payload });
+          const result = await SocialLoginAPI(payload);
+          if (result.remote === "success") {
+            console.log({ result });
+          } else {
+            dispatch(setSocialLoginError(result.error.errors.message));
           }
         }
-        console.log({ payload });
-        const result = await SocialLoginAPI(payload);
-        if (result.remote === "success") {
-          console.log({ result });
-        } else {
-          dispatch(setSocialLoginError(result.error.errors.message));
-        }
+        setLoading(true);
       }
-      setLoading(true);
     };
     const loginWithApple = async () => {
       if (!role) {
@@ -159,12 +166,15 @@ function AuthLayout({
     useEffect(() => {
       if (userVerificationToken) {
         setActivationLabel(
-          "Please wait while we are validating activation Link",
+          "Please wait while we are validating activation Link"
         );
       } else {
         setActivationLabel(selectedRoleTitle);
       }
     }, [userVerificationToken]);
+    useEffect(() => {
+      GoogleAuth.initialize();
+    }, []);
     return (
       <div
         className={`register pb-0 py-lg-5 registerApp ${
