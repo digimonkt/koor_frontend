@@ -43,7 +43,6 @@ const CreateResumeComponent = () => {
     },
     validationSchema: validateCreateResume,
     onSubmit: async (values) => {
-      console.log({ values });
       setLoading(true);
       const payload = {
         profile_title: values.jobTitle,
