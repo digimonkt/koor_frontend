@@ -29,7 +29,7 @@ function TalentCard({ talentDetails }) {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? talentDetails.length : 3
+      prevNumLines === 3 ? talentDetails.description.length : 3,
     );
   };
   const textWrapperStyle = {
@@ -49,7 +49,7 @@ function TalentCard({ talentDetails }) {
         urlcat("/employer/chat", {
           conversion: conversationId,
           userId: talentDetails?.id,
-        })
+        }),
       );
     }
   };
