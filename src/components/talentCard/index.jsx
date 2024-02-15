@@ -35,6 +35,7 @@ function TalentCard({ talentDetails }) {
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
+    textAlign: "justify",
     overflow: "hidden",
     WebkitLineClamp: numLines,
   };
@@ -58,13 +59,16 @@ function TalentCard({ talentDetails }) {
       className="border-recent"
       direction={{ xs: "column", lg: "row", sm: "row" }}
       spacing={{ xs: 2, lg: 2 }}
-      alignItems={{ xs: "start", lg: "center", sm: "center" }}
+      alignItems={{ xs: "start", lg: numLines === 3 ? "center" : "flex-start" }}
       justifyContent={{ xs: "flex-start", lg: "space-between" }}
     >
       <Stack
         direction={{ xs: "column", lg: "row", sm: "row" }}
         spacing={{ xs: 2, lg: 2 }}
-        alignItems={{ xs: "start", lg: "center", sm: "center" }}
+        alignItems={{
+          xs: "start",
+          lg: numLines === 3 ? "center" : "flex-start",
+        }}
         justifyContent={{ xs: "flex-start", lg: "space-between" }}
         sx={{
           display: "flex",
