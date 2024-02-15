@@ -434,9 +434,11 @@ const Home = () => {
                 >
                   <Typography
                     className={styles.see_all_jobs}
-                    style={{
+                    sx={{
                       cursor: "pointer",
-                      marginRight: "8em",
+                      "@media(min-width:600px)": {
+                        marginRight: "8em",
+                      },
                     }}
                     onClick={() => {
                       navigate("/search/tenders");
@@ -656,9 +658,21 @@ const Home = () => {
           </Box>
         </Box>
         <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
-          <div className="add-content">
-            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
-          </div>
+          <Box
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              width: "100%",
+              textDecoration: "capitalize",
+              color: "#eea23d",
+            }}
+          >
+            <h2 className="mb-4">Stay In Touch</h2>
+            <h1 className="mb-4" style={{ color: "#000" }}>
+              Mobile App Is Coming Soon!
+            </h1>
+          </Box>
         </DialogBox>
       </div>
     </div>
