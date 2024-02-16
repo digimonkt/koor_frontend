@@ -541,7 +541,7 @@ const Home = () => {
               <Box className={styles.home_new_job_box} useflexGap>
                 <Box className={`${styles.new_jobs}`}>
                   <h2>{siteUpdates.jobs}</h2>
-                  <p>New jobs posted every day</p>
+                  <p>New jobs posted today</p>
                 </Box>
                 <Box className={`${styles.new_jobs}`}>
                   <h2>{siteUpdates.employer}</h2>
