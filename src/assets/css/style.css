@@ -2174,7 +2174,7 @@ span.count {
   position: absolute;
   left: 0px;
   top: 50%;
-  background: #eea23d;
+  /* background: #eea23d; */
   border-radius: 100%;
   transform: translate(-50%, -50%);
 }

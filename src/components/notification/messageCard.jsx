@@ -1,12 +1,11 @@
 import { SVG } from "../../assets/svg";
-import { Avatar, Box, IconButton } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import styles from "./notification.module.css";
-import Close from "@mui/icons-material/Close";
 function MessageNotificationCard({
   sender,
   message,
@@ -16,11 +15,13 @@ function MessageNotificationCard({
   role,
   conversion,
   userId,
+  // handleRemoveMessages,
 }) {
   return (
     <Link
       onClick={() => handleClose()}
-      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}>
+      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}
+    >
       <div
         className={`${styles.content_div}`}
         //   style={{ background: item.color }}
@@ -36,7 +37,8 @@ function MessageNotificationCard({
                 background: "#F0F0F0",
               },
             }}
-            src={generateFileUrl(sender?.image) || <SVG.UserIcon />}>
+            src={generateFileUrl(sender?.image) || <SVG.UserIcon />}
+          >
             <SVG.UserIcon />
           </Avatar>
         </div>
@@ -47,20 +49,22 @@ function MessageNotificationCard({
             "&:hover .MuiIconButton-root": {
               display: "inline-flex",
             },
-          }}>
-          <IconButton
-            sx={{
-              width: "15px",
-              height: "15px",
-              fontSize: "15px",
-              position: "absolute",
-              top: "0",
-              right: "0",
-              display: "none",
-            }}
-            onClick={() => handleClose()}>
-            <Close fontSize="inherit" />
-          </IconButton>
+          }}
+        >
+          {/* <IconButton */}
+          {/*   sx={{ */}
+          {/*     width: "15px", */}
+          {/*     height: "15px", */}
+          {/*     fontSize: "15px", */}
+          {/*     position: "absolute", */}
+          {/*     top: "0", */}
+          {/*     right: "0", */}
+          {/*     display: "none", */}
+          {/*   }} */}
+          {/*   onClick={() => handleRemoveMessages(messageId)} */}
+          {/* > */}
+          {/*   <Close fontSize="inherit" /> */}
+          {/* </IconButton> */}
           <h2 className={styles.title}>
             <b style={{ textTransform: "capitalize" }}>{sender?.name}</b> sent
             you a message

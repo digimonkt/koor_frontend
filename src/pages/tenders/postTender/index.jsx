@@ -583,9 +583,6 @@ const PostTender = () => {
                             type="date"
                             value={formik.values.startDate}
                             onBlur={formik.getFieldProps("startDate").onBlur}
-                            minDate={dayjs()
-                              .subtract(1, "month")
-                              .format("YYYY-MM-DD")}
                           />
                           {formik.touched.startDate &&
                           formik.errors.startDate ? (
@@ -616,10 +613,7 @@ const PostTender = () => {
                             type="date"
                             value={formik.values.deadline}
                             onBlur={formik.getFieldProps("deadline").onBlur}
-                            minDate={
-                              formik.values.startDate ||
-                              dayjs().format("YYYY-MM-DD")
-                            }
+                            minDate={dayjs().format("YYYY-MM-DD")}
                           />
                           {formik.touched.deadline && formik.errors.deadline ? (
                             <ErrorMessage>

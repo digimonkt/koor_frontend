@@ -273,7 +273,7 @@ const InnerFooter = () => {
                   </List>
                 </>
               </Grid>
-              {(isLoggedIn && role === USER_ROLES.employer) || !isLoggedIn ? (
+              {isLoggedIn && role === USER_ROLES.employer ? (
                 <Grid item lg={3} xs={6} sm={3}>
                   <Typography
                     sx={{

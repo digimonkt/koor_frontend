@@ -1,4 +1,3 @@
-import { SVG } from "../../../assets/svg";
 import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React from "react";
@@ -6,9 +5,10 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 import styles from "./styles.module.css";
 import { Link } from "react-router-dom";
 import urlcat from "urlcat";
-import { USER_ROLES } from "../../../utils/enum";
 import { useSelector } from "react-redux";
-function JobCostCard({ amount, payPeriod, user }) {
+import { getColorByRole } from "@utils/generateColor";
+
+function JobCostCard({ amount, payPeriod, user, color }) {
   const { role } = useSelector((state) => state.auth);
   return (
     <>
@@ -19,7 +19,7 @@ function JobCostCard({ amount, payPeriod, user }) {
             <p
               className="m-0"
               style={{
-                color: role === USER_ROLES.jobSeeker ? "#eea23d" : "#274593",
+                color: color ?? getColorByRole(role),
               }}
             >
               $ <span>{amount}</span>
@@ -41,10 +41,12 @@ function JobCostCard({ amount, payPeriod, user }) {
       >
         <div className={`${styles.lotusimg}`}>
           <Avatar
+            square={true}
             sx={{
               width: 100,
               height: 100,
               color: "#CACACA",
+              padding: "10px",
               "&.MuiAvatar-colorDefault": {
                 background: "#F0F0F0",
               },
@@ -54,9 +56,7 @@ function JobCostCard({ amount, payPeriod, user }) {
               },
             }}
             src={generateFileUrl(user.image?.path)}
-          >
-            <SVG.UserIcon />
-          </Avatar>
+          />
           <Box>
             <h3>
               <Link
@@ -79,12 +79,12 @@ function JobCostCard({ amount, payPeriod, user }) {
               <span>
                 <Link
                   to={`tel:${formatPhoneNumberIntl(
-                    user.countryCode + user.mobileNumber
+                    user.countryCode + user.mobileNumber,
                   )}`}
                 >
                   {user.countryCode && user.mobileNumber
                     ? formatPhoneNumberIntl(
-                        user.countryCode + user.mobileNumber
+                        user.countryCode + user.mobileNumber,
                       )
                     : ""}
                 </Link>

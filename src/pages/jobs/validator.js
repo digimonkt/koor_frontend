@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import * as Yup from "yup";
+import { REGEX } from "@utils/constants/regex";
+
 dayjs.extend(isSameOrAfter);
 export const validateCreateJobInput = Yup.object()
   .shape({
@@ -24,8 +26,14 @@ export const validateCreateJobInput = Yup.object()
     applicationInstruction: Yup.string().nullable(),
     websiteLink: Yup.string().when("isApplyThroughWebsite", {
       is: true,
-      then: Yup.string().required("Website link is required"),
-      otherwise: Yup.string().nullable(), // Allow null or other values when isApplyThroughWebsite is false
+      then: () =>
+        Yup.string()
+          .required("Website link is required")
+          .matches(REGEX.website, "website link not valid"),
+      otherwise: () =>
+        Yup.string()
+          .notRequired()
+          .matches(REGEX.website, "website link not valid"),
     }),
     duration: Yup.number(),
     experience: Yup.number()
@@ -133,8 +141,14 @@ export const validateCreateTenderInput = Yup.object()
     applicationInstruction: Yup.string().nullable(),
     websiteLink: Yup.string().when("isApplyThroughWebsite", {
       is: true,
-      then: Yup.string().required("Website link is required"),
-      otherwise: Yup.string().nullable(), // Allow null or other values when isApplyThroughWebsite is false
+      then: () =>
+        Yup.string()
+          .required("Website link is required")
+          .matches(REGEX.website, "website link not valid"),
+      otherwise: () =>
+        Yup.string()
+          .notRequired()
+          .matches(REGEX.website, "website link not valid"),
     }),
     contactEmail: Yup.string()
       .email("Invalid Email")

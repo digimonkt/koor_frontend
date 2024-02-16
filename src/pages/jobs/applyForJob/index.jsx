@@ -123,7 +123,7 @@ const ApplyForJob = () => {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
-        (attachment) => !attachment.id
+        (attachment) => !attachment.id,
       );
       for (const key in newValues) {
         if (newValues[key].forEach) {
@@ -281,7 +281,7 @@ const ApplyForJob = () => {
                 <div className={`${styles.clocs}`}>
                   <span>{<SVG.ClockIconSmall />}</span>
                   <p className="mb-0 mt-0">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     title={
@@ -290,7 +290,7 @@ const ApplyForJob = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details.expiredInDays > -1 ? details.expiredInDays : -1
+                      details.expiredInDays > -1 ? details.expiredInDays : -1,
                     )}
                     className="apply_dd_btn"
                   />
@@ -361,7 +361,9 @@ const ApplyForJob = () => {
                   <span>{<SVG.StartDate />}</span>
                   <p className="m-0 ms-2">
                     <span className={`${styles.startDate}`}>Start date:</span>
-                    <b className={`${styles.startB}`}>Septermber 13</b>
+                    <b className={`${styles.startB}`}>
+                      {dayjs(details.startDate).format("ll")}
+                    </b>
                   </p>
                 </div>
               </Grid>
@@ -424,14 +426,14 @@ const ApplyForJob = () => {
                       ]);
                       formik.setFieldValue("attachments", [
                         ...formik.values.attachments.filter(
-                          (attachment) => attachment.id !== file.id
+                          (attachment) => attachment.id !== file.id,
                         ),
                       ]);
                     } else {
                       formik.setValues({
                         ...formik.values,
                         attachments: formik.values.attachments.filter(
-                          (el) => el !== file
+                          (el) => el !== file,
                         ),
                       });
                     }
@@ -462,8 +464,8 @@ const ApplyForJob = () => {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                      ? "Update"
-                      : "Apply"
+                        ? "Update"
+                        : "Apply"
                   }
                   className={`${styles.applybtn} ${
                     platform === "android" || platform === "ios"

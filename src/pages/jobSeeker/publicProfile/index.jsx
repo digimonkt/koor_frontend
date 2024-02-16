@@ -11,10 +11,11 @@ import {
   Typography,
   Divider,
   Chip,
+  alpha,
 } from "@mui/material";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import WorkExperienceCard from "../../../components/workExperienceCard";
 import { NoRecordFoundAnimation } from "../../../components/animations";
 import EducationCard from "../../../components/educationCard";
@@ -25,12 +26,14 @@ import { FilledButton } from "../../../components/button";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 import { useSelector, useDispatch } from "react-redux";
 import { pdfDownloader } from "@utils/filesUtils";
+import { getColorByRole } from "@utils/generateColor";
 
 export default function PublicProfileComponent() {
   const params = useParams();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
+  const { role } = useSelector((state) => state.auth);
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
     jobPreferences: {},
@@ -133,6 +136,9 @@ export default function PublicProfileComponent() {
                         <Avatar
                           src={generateFileUrl(userDetails.profileImage || "")}
                           sx={{
+                            height: "100px",
+                            width: "100px",
+                            borderRadius: "10%",
                             boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
                           }}
                         />
@@ -407,10 +413,10 @@ export default function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#FEEFD3",
                               borderRadius: "5px",
                               p: 1,
-                              color: "#EEA23D",
+                              background: alpha(getColorByRole(role), 0.2),
+                              color: getColorByRole(role),
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
@@ -438,7 +444,7 @@ export default function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
@@ -466,13 +472,13 @@ export default function PublicProfileComponent() {
                       >
                         <Box
                           sx={{
-                            background: "#FEEFD3",
                             borderRadius: "5px",
                             p: 1,
-                            color: "#EEA23D",
                             width: "40px",
                             height: "40px",
                             display: "inline-flex",
+                            background: alpha(getColorByRole(role), 0.2),
+                            color: getColorByRole(role),
                             alignItems: "center",
                             justifyContent: "center",
                           }}
@@ -481,6 +487,8 @@ export default function PublicProfileComponent() {
                         </Box>
                         <Box>
                           <Typography
+                            component={Link}
+                            to={`mailto:${userDetails.email}`}
                             variant="h6"
                             sx={{
                               fontSize: "16px !important",

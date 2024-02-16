@@ -13,7 +13,7 @@ import {
   Pagination,
   Stack,
 } from "@mui/material";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { ComponentSelector } from "./helper";
 import {
   JOB_ORDER_BY,
@@ -33,7 +33,6 @@ import {
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import { useScrollTop } from "@hooks";
-import urlcat from "urlcat";
 import { Capacitor } from "@capacitor/core";
 import { getAdSenseAPI } from "@api/adSense";
 import { setAdSense } from "@redux/slice/adSense";
@@ -58,10 +57,8 @@ function Search({ searchTypeForJob }) {
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [search, setSearch] = useState("");
   const [value, setValue] = useState("1");
-  const { currentUser, isLoggedIn } = useSelector((state) => state.auth);
   const { adSense } = useSelector((state) => state.adSense);
   const { isMobileView } = useSelector((state) => state.platform);
-  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -150,16 +147,7 @@ function Search({ searchTypeForJob }) {
         break;
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
-  useEffect(() => {
-    if (
-      SEARCH_TYPE.talents === params.type ||
-      SEARCH_TYPE.vendors === params.type
-    ) {
-      if (isLoggedIn && !currentUser.profile.isVerified) {
-        navigate(urlcat("../employer/dashboard"));
-      }
-    }
-  }, []);
+
   useScrollTop();
   const pagination = () => {
     return (

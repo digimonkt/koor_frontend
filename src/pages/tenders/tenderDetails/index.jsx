@@ -5,6 +5,7 @@ import {
   Grid,
   IconButton,
   Stack,
+  Link as MuiLink,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styles from "./tenderDetails.module.css";
@@ -15,6 +16,7 @@ import {
   SearchButton,
   SolidButton,
 } from "../../../components/button";
+import { cleanHtmlContent } from "@utils/fileUtils";
 import JobCostCard from "../../../pages/jobs/component/jobCostCard";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -33,11 +35,10 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
-import { getColorByRemainingDays } from "@utils/generateColor";
+import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
 import { fileTypeExtractor, downloadUrlCreator } from "@utils/filesUtils";
 import { Capacitor } from "@capacitor/core";
 import { getJobAttachmentAPI } from "@api/job";
-import { generateFileUrl } from "@utils/generateFileUrl";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -117,12 +118,13 @@ function TenderDetailsComponent() {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
+    textAlign: "justify",
     WebkitLineClamp: numLines,
   };
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? details?.description?.length : 3,
+      prevNumLines === 3 ? details?.description?.length : 3
     );
   };
   const getTenderDetails = async (tenderId) => {
@@ -195,7 +197,6 @@ function TenderDetailsComponent() {
       for (let i = 0; i < byteCharacters.length; i++) {
         byteArrays[i] = byteCharacters.charCodeAt(i);
       }
-
       const blob = new Blob([byteArrays], {
         type: fileType || "application/octet-stream",
       });
@@ -215,7 +216,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -285,7 +286,7 @@ function TenderDetailsComponent() {
                 <div className={`${styles.clocs}`}>
                   <SVG.ClockIconSmall />
                   <p className="mb-0 mt-0 me-1">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     title={
@@ -298,7 +299,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -331,10 +332,9 @@ function TenderDetailsComponent() {
                           border: "none",
                           cursor: "pointer",
                           background: "none",
-                          color:
-                            role !== USER_ROLES.jobSeeker
-                              ? "#274593"
-                              : "#fe7f00",
+                          color: getColorByRole(
+                            !role ? USER_ROLES.employer : role
+                          ),
                         }}
                         onClick={handleSeeMoreClick}
                       >
@@ -378,18 +378,18 @@ function TenderDetailsComponent() {
                     );
                   })}
                 </div>
-                <div className={`${styles.datesatrt}`}>
-                  <span>{<SVG.StartDate />}</span>
-                  <p className="m-0 ms-2">
-                    <span className={`${styles.startDate}`}>Start date:</span>{" "}
-                    <b className={`${styles.startB}`}>
-                      {details?.startDate
-                        ? dayjs(details.startDate).format("ll")
-                        : ""}
-                    </b>
-                  </p>
-                </div>
-                {Boolean(details?.attachments.length) && (
+                {/* <div className={`${styles.datesatrt}`}> */}
+                {/*   <span>{<SVG.StartDate />}</span> */}
+                {/*   <p className="m-0 ms-2"> */}
+                {/*     <span className={`${styles.startDate}`}>Start date:</span>{" "} */}
+                {/*     <b className={`${styles.startB}`}> */}
+                {/*       {details?.startDate */}
+                {/*         ? dayjs(details.startDate).format("ll") */}
+                {/*         : ""} */}
+                {/*     </b> */}
+                {/*   </p> */}
+                {/* </div> */}
+                {details.attachments.length > 0 && (
                   <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
                     {details.attachments.map((attachment, i) => {
@@ -398,24 +398,17 @@ function TenderDetailsComponent() {
                           <span className="d-inline-flex me-2">
                             {<SVG.BlueAttach />}
                           </span>
-                          <a
-                            className="m-0"
+                          <span
                             onClick={() => handleLoadImage(attachment.path)}
-                            href={generateFileUrl(attachment.path)}
-                            target="_blank"
-                            rel="noreferrer"
+                            className="m-0"
                             style={{
-                              color:
-                                role === USER_ROLES.jobSeeker
-                                  ? "#eea23d"
-                                  : "#274593",
                               cursor: "pointer",
                               whiteSpace: "normal",
                               wordBreak: "break-all",
                             }}
                           >
                             {attachment.title}
-                          </a>
+                          </span>
                         </div>
                       );
                     })}
@@ -424,6 +417,9 @@ function TenderDetailsComponent() {
               </Grid>
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
+                  color={getColorByRole(
+                    role === "" ? USER_ROLES.employer : role
+                  )}
                   amount={details.budgetAmount}
                   user={details?.user}
                 />
@@ -460,13 +456,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {
@@ -477,6 +473,7 @@ function TenderDetailsComponent() {
                         }
                       }}
                     />
+
                     {details.isEditable && details.isApplied && isLoggedIn && (
                       <FilledButton
                         sx={{ width: "100%", marginBottom: "20px" }}
@@ -533,10 +530,10 @@ function TenderDetailsComponent() {
                           </>,
                           "Share",
                         ]}
-                        jobSeeker
                         sx={{
                           height: "44px",
-                          border: "0px !important",
+                          color: getColorByRole(role),
+                          border: `2px solid ${getColorByRole(role)}`,
                         }}
                         onClick={() => {
                           setIsSharing(true);
@@ -552,14 +549,16 @@ function TenderDetailsComponent() {
           </div>
           {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
             <>
-              <div className={`${styles.LikeJob}`}>
-                <h2>Application Instructions:</h2>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: details.applicationInstruction,
-                  }}
-                ></div>
-              </div>
+              {cleanHtmlContent(details?.applicationInstruction) && (
+                <div className={`${styles.LikeJob}`}>
+                  <h2>Application Instructions:</h2>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: details.applicationInstruction,
+                    }}
+                  ></div>
+                </div>
+              )}
               {role === USER_ROLES.vendor || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
                   <Box
@@ -574,14 +573,12 @@ function TenderDetailsComponent() {
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
-                          color:
-                            role === USER_ROLES.jobSeeker
-                              ? "#eea23d !important"
-                              : "#274593 !important",
-                          borderColor:
-                            role === USER_ROLES.jobSeeker
-                              ? "#eea23d !important"
-                              : "#274593 !important",
+                          color: `${getColorByRole(
+                            role === "" ? USER_ROLES.employer : role
+                          )} !important`,
+                          borderColor: `${getColorByRole(
+                            role === "" ? USER_ROLES.employer : role
+                          )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             padding: "10px 22px !important",
@@ -598,10 +595,14 @@ function TenderDetailsComponent() {
                           "Apply on employer's website",
                         ]}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              window.open(details.websiteLink, "_blank");
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            window.open(details.websiteLink, "_blank");
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -609,14 +610,12 @@ function TenderDetailsComponent() {
                     {!details.isApplied && details.isApplyThroughEmail && (
                       <OutlinedButton
                         sx={{
-                          color:
-                            role === USER_ROLES.jobSeeker
-                              ? "#eea23d !important"
-                              : "#274593 !important",
-                          borderColor:
-                            role === USER_ROLES.jobSeeker
-                              ? "#eea23d !important"
-                              : "#274593 !important",
+                          color: `${getColorByRole(
+                            role === "" ? USER_ROLES.employer : role
+                          )} !important`,
+                          borderColor: `${getColorByRole(
+                            role === "" ? USER_ROLES.employer : role
+                          )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
                             marginTop: "20px",
@@ -635,10 +634,14 @@ function TenderDetailsComponent() {
                         ]}
                         className="ms-3"
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSendEmail(details);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            handleSendEmail(details);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -681,41 +684,62 @@ function TenderDetailsComponent() {
                     To apply for the vendor and have many other useful features
                     to find a tender, please register on Koor.
                   </p>
-                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
-                    <Link to="/register?role=vendor">
-                      <OutlinedButton
-                        title="Register"
-                        jobSeeker
-                        sx={{
+                  <div
+                    style={{
+                      textAlign: "center",
+                      lineHeight: "40px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <OutlinedButton
+                      title="Register"
+                      component={Link}
+                      to="/register?role=vendor"
+                      sx={{
+                        width: "100% !important",
+                        color: getColorByRole(role ?? USER_ROLES.employer),
+                        fontSize: "16px !important",
+                        "@media (max-width: 992px)": {
                           fontSize: "16px !important",
-                          width: "100%",
-                          color: "#274593 !important",
-                          "@media (max-width: 992px)": {
-                            fontSize: "16px !important",
-                          },
-                          "@media (max-width: 480px)": {
-                            fontSize: "14px !important",
-                          },
-                        }}
-                      />
-                    </Link>
-                    <span className="jobs_dailog_login_line">
+                        },
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                        },
+                      }}
+                    />
+                    <span
+                      className="jobs_dailog_login_line"
+                      style={{
+                        display: "flex",
+                        flexdirection: "column",
+                        gap: "10px",
+                        justifyContent: "center",
+                        width: "100%",
+                      }}
+                    >
                       Already have an account?{" "}
-                      <Link
-                        to={`/login?role=${USER_ROLES.vendor}`}
-                        style={{
+                      <MuiLink
+                        component={Link}
+                        to={`/login?role=${USER_ROLES.jobSeeker}`}
+                        sx={{
                           textDecoration: "none",
-                          color: "#274593",
+                          color: getColorByRole(
+                            !role ? USER_ROLES.employer : role
+                          ),
                           fontWeight: 600,
                         }}
                       >
                         Login
-                      </Link>
+                      </MuiLink>
                     </span>
                   </div>
                 </div>
               </div>
             </DialogBox>
+
             <ExpiredBox
               open={expiredWarning}
               handleClose={() => setExpiredWarning(false)}
@@ -727,6 +751,9 @@ function TenderDetailsComponent() {
               return (
                 <p key={key}>
                   <Link
+                    style={{
+                      color: getColorByRole(!role ? USER_ROLES.employer : role),
+                    }}
                     to={urlcat("/tender/details/:tenderId", {
                       tenderId: item.id,
                     })}
@@ -734,7 +761,9 @@ function TenderDetailsComponent() {
                     {item?.title}
                   </Link>
                   <span>
-                    – {item?.city}, {item?.country} ${item.budgetAmount}{" "}
+                    {item?.city ? "- " + item.city + "," : ""}{" "}
+                    {item?.city ? item?.country : "- " + item?.country}
+                    {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                 </p>
               );

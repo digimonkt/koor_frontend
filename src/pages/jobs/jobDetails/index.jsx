@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  // getApplyJobByEmailAPI,
   getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
@@ -17,9 +17,11 @@ import {
   OutlinedButton,
   FilledButton,
 } from "@components/button";
-import { getColorByRemainingDays } from "@utils/generateColor";
+import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
+// import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
+import { cleanHtmlContent } from "@utils/fileUtils";
 import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,12 +29,11 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { USER_ROLES } from "../../../utils/enum";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
-import { Box, Divider, IconButton, Stack } from "@mui/material";
+import { Box, Divider, IconButton, Stack, Container } from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
-import CreateCoverLetter from "../../../components/coverLetter";
 import { fileTypeExtractor, downloadUrlCreator } from "@utils/filesUtils";
 import { generateFileUrl } from "@utils/generateFileUrl";
 
@@ -42,7 +43,6 @@ const JobDetails = () => {
   const dispatch = useDispatch();
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [registrationWarning, setRegistrationWarning] = useState(false);
-  const [openCreateCoverLetter, setOpenCreateCoverLetter] = useState(false);
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
@@ -158,7 +158,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -173,10 +173,7 @@ const JobDetails = () => {
     tag.click();
     document.body.removeChild(tag);
   }
-  // const getApplyJobByEmail = async (jobId) => {
-  //   dispatch(setSuccessToast("Job apply by email successfully"));
-  //   await getApplyJobByEmailAPI(jobId);
-  // };
+
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
@@ -264,13 +261,7 @@ const JobDetails = () => {
                       padding: "0px",
                       cursor: "pointer",
                     }}
-                    onClick={() => {
-                      if (window.history.length > 1) {
-                        navigate(-1);
-                      } else {
-                        navigate("/");
-                      }
-                    }}
+                    onClick={() => navigate("/search/jobs")}
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
@@ -283,7 +274,7 @@ const JobDetails = () => {
                 <div className={`${styles.clocs}`}>
                   {<SVG.ClockIconSmall />}
                   <p className="mb-0 mt-0 me-1">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     className={
@@ -297,7 +288,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -395,23 +386,12 @@ const JobDetails = () => {
                   )}
                   {details.hasContract && (
                     <SearchButton
-                      text="Consultant"
+                      text="Contract"
                       leftIcon={<SVG.MoonCircle />}
                       className={`${styles.iconbutton}`}
                     />
                   )}
                 </Stack>
-                {details.startDate && (
-                  <div className={`${styles.datesatrt}`}>
-                    <span>{<SVG.StartDate />}</span>
-                    <p className="m-0 ms-2">
-                      <span className={`${styles.startDate}`}>Start date:</span>{" "}
-                      <b className={`${styles.startB}`}>
-                        {dayjs(details.startDate).format("ll")}
-                      </b>
-                    </p>
-                  </div>
-                )}
                 {details.attachments.length > 0 && (
                   <div className={`${styles.downloadattachment}`}>
                     <h6>Download attachments </h6>
@@ -485,13 +465,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  }),
+                                  })
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  }),
+                                  })
                                 );
                               }
                             } else {
@@ -592,53 +572,36 @@ const JobDetails = () => {
             </Grid>
           </div>
 
-          {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
+          {(details?.isApplyThroughEmail || details?.isApplyThroughWebsite) && (
             <>
-              <div className={`${styles.LikeJob}`}>
-                <h2>Application Instructions:</h2>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: details.applicationInstruction,
-                  }}
-                ></div>
-              </div>
+              {details?.applicationInstruction &&
+                Boolean(cleanHtmlContent(details?.applicationInstruction)) && (
+                  <div className={`${styles.LikeJob}`}>
+                    <h2>Application Instructions:</h2>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: details?.applicationInstruction,
+                      }}
+                    ></div>
+                  </div>
+                )}
               {role === USER_ROLES.jobSeeker || role === "" ? (
                 <div className={`${styles.jobpostbtn} `}>
                   <Stack
                     direction={{ xs: "column", lg: "row" }}
                     spacing={2}
                     alignItems={{ xs: "flex-start", lg: "center" }}
+
+                    // sx={{
+                    //   textAlign: "start",
+                    //   display: "flex",
+
+                    //   "@media (max-width: 480px)": {
+                    //     justifyContent: "center",
+                    //     flexDirection: "column",
+                    //   },
+                    // }}
                   >
-                    <OutlinedButton
-                      sx={{
-                        color: "#eea23d !important",
-                        borderColor: "#eea23d !important",
-                        "@media (max-width: 480px)": {
-                          fontSize: "14px !important",
-                          width: "100%",
-                        },
-                        "@media (max-width: 320px)": {
-                          fontSize: "10px !important",
-                          padding: "10px 25px !important",
-                          width: "100%",
-                        },
-                      }}
-                      title={[
-                        <>
-                          <SVG.resumeIcon className="me-2" />
-                        </>,
-                        "Create a cover letter",
-                      ]}
-                      // className={${styles.enablebtn}}
-                      disabled={!details.isEditable && details.isApplied}
-                      onClick={() => {
-                        if (details.expiredInDays <= 0) {
-                          setExpiredWarning(true);
-                        } else {
-                          setOpenCreateCoverLetter(true);
-                        }
-                      }}
-                    />
                     {!details.isApplied && details.isApplyThroughWebsite && (
                       <OutlinedButton
                         sx={{
@@ -663,10 +626,14 @@ const JobDetails = () => {
                         // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              window.open(details.websiteLink, "_blank");
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            window.open(details.websiteLink, "_blank");
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -693,10 +660,14 @@ const JobDetails = () => {
                           "Apply by email",
                         ]}
                         onClick={() => {
-                          if (details.expiredInDays <= 0) {
-                            setExpiredWarning(true);
+                          if (details.expiredInDays > 0) {
+                            if (isLoggedIn) {
+                              handleSendEmail(details);
+                            } else {
+                              setRegistrationWarning(true);
+                            }
                           } else {
-                            handleSendEmail(details);
+                            setExpiredWarning(true);
                           }
                         }}
                       />
@@ -713,7 +684,7 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
-                details.experience,
+                details.experience
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
@@ -732,7 +703,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 6
@@ -742,7 +713,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 12
@@ -760,7 +731,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience,
+                        details.experience
                       )
                         ? "75%"
                         : "250px",
@@ -787,23 +758,30 @@ const JobDetails = () => {
                     To apply for the job and have many other useful features to
                     find a job, please register on Koor.
                   </p>
-                  <div style={{ textAlign: "center", lineHeight: "40px" }}>
-                    <Link to="/register?role=job_seeker">
-                      <OutlinedButton
-                        title="Register"
-                        jobSeeker
-                        sx={{
-                          width: "100%",
+                  <div
+                    style={{
+                      textAlign: "center",
+                      lineHeight: "40px",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <OutlinedButton
+                      title="Register"
+                      jobSeeker
+                      component={Link}
+                      to="/register?role=job_seeker"
+                      sx={{
+                        width: "100%",
+                        fontSize: "16px !important",
+                        "@media (max-width: 992px)": {
                           fontSize: "16px !important",
-                          "@media (max-width: 992px)": {
-                            fontSize: "16px !important",
-                          },
-                          "@media (max-width: 480px)": {
-                            fontSize: "14px !important",
-                          },
-                        }}
-                      />
-                    </Link>
+                        },
+                        "@media (max-width: 480px)": {
+                          fontSize: "14px !important",
+                        },
+                      }}
+                    />
                     <span className="jobs_dailog_login_line">
                       Already have an account?{" "}
                       <Link
@@ -822,62 +800,7 @@ const JobDetails = () => {
               </div>
             </DialogBox>
           </div>
-          {/* {(details.isApplyThroughEmail || details.isApplyThroughWebsite) && (
-            <>
-              <div className={`${styles.LikeJob}`}>
-                <h2>Application Instructions:</h2>
-                {details.applicationInstruction}
-              </div>
-              {role === USER_ROLES.jobSeeker || role === "" ? (
-                <div className={`${styles.jobpostbtn} `}>
-                  <Box sx={{ textAlign: "start", display: "flex" }}>
-                    {!details.isApplied && details.isApplyThroughWebsite && (
-                      <OutlinedButton
-                        sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
-                        }}
-                        title={[
-                          <>
-                            <SVG.ArrowOutward className="me-2" />
-                          </>,
-                          "Apply on employer's website",
-                        ]}
-                        // className={`${styles.enablebtn}`}
-                        disabled={details.isApplied && !details.isEditable}
-                        onClick={() => {
-                          if (isLoggedIn) {
-                            window.open(details.websiteLink, "_blank");
-                          } else {
-                            setRegistrationWarning(true);
-                          }
-                        }}
-                      />
-                    )}
-                    {!details.isApplied && details.isApplyThroughEmail && (
-                      <OutlinedButton
-                        sx={{
-                          color: "#eea23d !important",
-                          borderColor: "#eea23d !important",
-                        }}
-                        title={[
-                          <>
-                            <SVG.ArrowOutward className="me-2" />
-                          </>,
-                          "Apply by email",
-                        ]}
-                        className="ms-3"
-                        onClick={() => {
-                          handleSendEmail(details.id);
-                        }}
-                      />
-                    )}
-                  </Box>
-                </div>
-              ) : null}
-              <Divider />
-            </>
-          )} */}
+
           <Box
             className={`${styles.LikeJob}`}
             sx={{
@@ -913,16 +836,17 @@ const JobDetails = () => {
                 <p key={key}>
                   <Link
                     style={{
-                      color:
-                        role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
+                      color: getColorByRole(role),
                     }}
                     to={urlcat("/jobs/details/:jobId", { jobId: item.id })}
                   >
                     {item.title}
                   </Link>
                   <span>
-                    – {item.city.title ? item.city.title + "," : ""}{" "}
-                    {item.country.title}
+                    {item?.city.title ? "- " + item.city.title + "," : ""}{" "}
+                    {item?.city.title
+                      ? item?.country.title
+                      : "- " + item?.country.title}
                     {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                   {platform === "android" || platform === "ios" ? (
@@ -932,8 +856,6 @@ const JobDetails = () => {
                         right: "10px",
                         top: "37px",
                         transform: "translate(0%, -37%)",
-                        color:
-                          role === USER_ROLES.jobSeeker ? "#EEA23D" : "#274593",
                       }}
                     >
                       <SVG.ArrowAngle />
@@ -960,60 +882,7 @@ const JobDetails = () => {
       >
         <ShareJob />
       </DialogBox>
-      <DialogBox
-        open={registrationWarning}
-        handleClose={() => setRegistrationWarning(false)}
-      >
-        <div>
-          <h1 className="heading">Register as jobseeker</h1>
-          <div className="form-content">
-            <p className="jobs_dailog_content">
-              To apply for the job and have many other useful features to find a
-              job, please register on Koor.
-            </p>
-            <div style={{ textAlign: "center", lineHeight: "40px" }}>
-              <Link to="/register?role=job_seeker">
-                <OutlinedButton
-                  title="Register"
-                  jobSeeker
-                  sx={{
-                    width: "100%",
-                    fontSize: "16px !important",
-                    "@media (max-width: 992px)": {
-                      fontSize: "16px !important",
-                    },
-                    "@media (max-width: 480px)": {
-                      fontSize: "14px !important",
-                    },
-                  }}
-                />
-              </Link>
-              <span className="jobs_dailog_login_line">
-                Already have an account?{" "}
-                <Link
-                  to={`/login?role=${USER_ROLES.jobSeeker}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "#EEA23D",
-                    fontWeight: 600,
-                  }}
-                >
-                  Login
-                </Link>
-              </span>
-            </div>
-          </div>
-        </div>
-      </DialogBox>
-      <DialogBox
-        className="coverletter_dialog"
-        open={openCreateCoverLetter}
-        handleClose={() => setOpenCreateCoverLetter(false)}
-      >
-        <Box>
-          <CreateCoverLetter />
-        </Box>
-      </DialogBox>
+
       <ExpiredBox
         open={expiredWarning}
         handleClose={() => setExpiredWarning(false)}

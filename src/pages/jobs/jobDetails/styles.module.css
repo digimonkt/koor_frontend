@@ -6,6 +6,7 @@
   margin-top: 110px;
   margin-bottom: 40px;
 }
+
 .job_detail_description {
   font-family: "Poppins";
   font-weight: 300;
@@ -13,10 +14,12 @@
   color: #121212;
   word-break: break-word;
 }
+
 .postJob {
   display: flex;
   align-items: center;
 }
+
 .postJob p {
   margin-left: 24px;
   margin-top: 0;
@@ -25,21 +28,25 @@
   font-size: 18px;
   word-break: break-word;
 }
+
 .clocs {
   display: flex;
   align-items: baseline;
   justify-content: flex-end;
 }
+
 .clocs p {
   font-size: 12px;
   margin-left: 3%;
   font-weight: 600;
   font-family: "Poppins";
 }
+
 .clocs span {
   font-weight: 300 !important;
   font-family: "Poppins";
 }
+
 .greenbtn {
   background-color: #4caf50 !important;
   width: 100px !important;
@@ -49,13 +56,15 @@
   color: #fff !important;
   margin: 0 20px !important;
 }
+
 .contentJob p {
   font-size: 14px;
   font-weight: 300;
   font-family: "Poppins";
   word-break: break-word;
-  margin-bottom: 10px !important;
+  margin: 0px !important;
 }
+
 .contentJob h4 {
   text-transform: uppercase;
   font-size: 18px;
@@ -81,11 +90,13 @@
   color: #fff !important;
   border-radius: 60px !important;
 }
+
 .enablebtn span {
   position: relative;
   top: 4px;
   right: 4px;
 }
+
 .outlinebtn {
   width: 250px !important;
   height: 44px !important;
@@ -95,18 +106,22 @@
   font-size: 16px !important;
   font-weight: 600 !important;
 }
+
 .outlinebtn svg path {
   fill: #ffa500 !important;
 }
+
 .outlinebtn span {
   position: relative;
   right: 10px;
   top: 4px;
 }
+
 .jobpostbtn {
-  padding-top: 30px;
+  padding-top: 10px;
   text-align: center;
 }
+
 .iconbutton {
   background-color: #f0f0f0 !important;
   font-size: 12px !important;
@@ -118,41 +133,50 @@
   cursor: default !important;
   margin-bottom: 10px !important;
 }
+
 .iconbtn {
   display: flex;
   align-items: center;
 }
+
 .details_day_button {
   margin-left: 20px;
   cursor: default;
 }
+
 .iconbutton span {
   position: relative;
   right: 4px;
   top: 3px;
 }
+
 .datesatrt {
   display: flex;
   align-items: center;
   padding-top: 20px;
 }
+
 .datesatrt span {
   margin-right: 1%;
   display: inline-flex;
 }
+
 .datesatrt p {
   font-size: 16px;
   white-space: nowrap;
 }
+
 .downloadtext {
   display: flex;
   align-items: center;
   padding-bottom: 10px;
 }
+
 .grids {
   border-bottom: 1px solid #cacaca;
   padding-bottom: 16px;
 }
+
 .downloadtext a {
   color: #eea23d;
   font-size: 16px;
@@ -160,19 +184,23 @@
   font-family: "Poppins";
   word-break: break-all;
 }
+
 .downloadtext svg {
   width: 32px;
   height: 32px;
 }
+
 .downloadattachment h6 {
   font-size: 16px;
   margin-bottom: 26px !important;
   margin-top: 40px !important;
 }
+
 .required h6 {
   font-size: 16px;
   margin: 0;
 }
+
 .educations {
   display: flex;
   align-items: center;
@@ -192,15 +220,18 @@
   font-family: "poppins";
   padding-top: 4px;
 }
+
 .location p {
   color: #274593;
   font-size: 12px;
   word-break: break-word;
 }
+
 .educations p {
   font-size: 14px;
   margin-left: 2% !important;
 }
+
 .educations span {
   width: 8px !important;
   height: 8px !important;
@@ -208,10 +239,12 @@
   display: block;
   background: #eea23d;
 }
+
 .skilssbtn {
   display: flex;
   align-items: center;
 }
+
 .grybtn {
   background-color: #f0f0f0 !important;
   font-size: 12px !important;
@@ -222,14 +255,17 @@
   font-family: "poppins";
   margin-right: 15px !important;
 }
+
 .secondDiv {
   border-bottom: 1px solid #cacaca;
   padding-bottom: 25px;
   padding-top: 11px;
 }
+
 .LikeJob p {
   word-break: break-word;
 }
+
 .LikeJob p a {
   color: #eea23d;
   font-size: 16px;
@@ -237,9 +273,11 @@
   font-weight: 600;
   word-break: break-word;
 }
+
 .LikeJob span {
   color: #848484;
 }
+
 .LikeJob h2 {
   color: #121212;
   font-size: 18px;
@@ -248,11 +286,13 @@
   padding-bottom: 11px;
   text-transform: uppercase;
 }
+
 .requirement h5 {
   font-size: 18px;
   margin-top: 15px;
   text-transform: uppercase;
 }
+
 /* h3 {
   text-transform: uppercase;
 } */
@@ -260,10 +300,12 @@
   border-right: 1px solid #cacaca;
   margin-right: 20px;
 }
+
 .location {
   margin-right: 18px;
   height: 100%;
 }
+
 .startDate {
   font-family: "Poppins";
   font-style: normal;
@@ -280,6 +322,7 @@
 
   opacity: 0.7;
 }
+
 .startB {
   font-family: "Poppins";
   font-weight: 600;

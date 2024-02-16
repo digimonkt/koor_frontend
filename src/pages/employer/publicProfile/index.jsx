@@ -13,18 +13,22 @@ import {
   Avatar,
   Typography,
   Divider,
+  alpha,
 } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
+import { getColorByRole } from "@utils/generateColor";
 import { useSelector } from "react-redux";
 
 function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const { isMobileView } = useSelector(({ platform }) => platform);
+  const { role } = useSelector(({ auth }) => auth);
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
     jobPreferences: {},
@@ -273,10 +277,10 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#FEEFD3",
+                              background: alpha(getColorByRole(role), 0.2),
+                              color: getColorByRole(role),
                               borderRadius: "5px",
                               p: 1,
-                              color: "#EEA23D",
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
@@ -319,10 +323,10 @@ function PublicProfileComponent() {
                       >
                         <Box
                           sx={{
-                            background: "#FEEFD3",
+                            background: alpha(getColorByRole(role), 0.2),
+                            color: getColorByRole(role),
                             borderRadius: "5px",
                             p: 1,
-                            color: "#EEA23D",
                             width: "40px",
                             height: "40px",
                             display: "inline-flex",
@@ -335,7 +339,11 @@ function PublicProfileComponent() {
                         <Box>
                           <Typography
                             variant="h6"
+                            component={Link}
+                            to={`mailto:${userDetails.email}`}
+                            target="_blank"
                             sx={{
+                              color: "inherit",
                               wordBreak: "break-all",
                               marginRight: "20px",
                               fontSize: "16px",
@@ -364,10 +372,10 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#FEEFD3",
+                              background: alpha(getColorByRole(role), 0.2),
+                              color: getColorByRole(role),
                               borderRadius: "5px",
                               p: 1,
-                              color: "#EEA23D",
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
@@ -375,12 +383,16 @@ function PublicProfileComponent() {
                               justifyContent: "center",
                             }}
                           >
-                            <SVG.Mail />
+                            <LanguageIcon />
                           </Box>
                           <Box>
                             <Typography
+                              component={Link}
                               variant="h6"
+                              target="_blank"
+                              to={userDetails.profile.website}
                               sx={{
+                                color: "inherit",
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
                                 marginRight: "20px",
@@ -410,10 +422,10 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#FEEFD3",
+                              background: alpha(getColorByRole(role), 0.2),
+                              color: getColorByRole(role),
                               borderRadius: "5px",
                               p: 1,
-                              color: "#EEA23D",
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
