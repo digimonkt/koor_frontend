@@ -19,6 +19,7 @@ import JobCategory from "./jobCategory";
 import AdditionalParameter from "./additionalParameter";
 import { Capacitor } from "@capacitor/core";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // styles
 
@@ -57,6 +58,7 @@ const JobCriteria = () => {
   const [city, setCity] = useState("");
   const [age, setAge] = useState("");
   const navigate = useNavigate();
+  const { isMobileView } = useSelector((state) => state.platform);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -108,12 +110,14 @@ const JobCriteria = () => {
                       fontFamily: "Bahnschrift",
                     }}
                   >
-                    <span
-                      style={{ cursor: "pointer" }}
-                      onClick={() => navigate(-1)}
-                    >
-                      {<SVG.LeftArrow />}
-                    </span>
+                    {isMobileView && (
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => navigate(-1)}
+                      >
+                        {<SVG.LeftArrow />}
+                      </span>
+                    )}
                     <Box
                       component={"span"}
                       sx={{
