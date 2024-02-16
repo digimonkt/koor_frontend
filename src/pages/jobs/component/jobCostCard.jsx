@@ -46,7 +46,7 @@ function JobCostCard({ amount, payPeriod, user, color }) {
               width: 100,
               height: 100,
               color: "#CACACA",
-              borderRadius: "10px",
+              padding: "10px",
               "&.MuiAvatar-colorDefault": {
                 background: "#F0F0F0",
               },

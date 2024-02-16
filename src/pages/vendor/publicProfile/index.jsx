@@ -12,6 +12,7 @@ import {
   Typography,
   Divider,
   Chip,
+  alpha,
 } from "@mui/material";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
@@ -19,10 +20,13 @@ import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
 import { NoRecordFoundAnimation } from "../../../components/animations";
+import { getColorByRole } from "@utils/generateColor.js";
+import { useSelector } from "react-redux";
 
 function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const { role } = useSelector((state) => state.auth);
   const contractsExperience = [];
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
@@ -102,6 +106,7 @@ function PublicProfileComponent() {
                           sx={{
                             width: "88px",
                             height: "88px",
+                            borderRadius: "10%",
                             boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
                             "@media (max-width:768px)": {
                               width: "60px",
@@ -288,7 +293,7 @@ function PublicProfileComponent() {
                               p: 1,
                               width: "40px",
                               height: "40px",
-                              background: "#D5E3F7",
+                              background: alpha(getColorByRole(role), 0.2),
                               display: "inline-flex",
                               alignItems: "center",
                               justifyContent: "center",
@@ -296,7 +301,7 @@ function PublicProfileComponent() {
                           >
                             <SVG.Phone
                               style={{
-                                color: "#274593",
+                                color: getColorByRole(role),
                               }}
                             />
                           </Box>
@@ -322,7 +327,7 @@ function PublicProfileComponent() {
                             </Typography>
                             <Typography
                               sx={{
-                                color: "#848484",
+                                color: getColorByRole(role),
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
                                 "@media (max-width: 992px)": {
@@ -342,10 +347,10 @@ function PublicProfileComponent() {
                       >
                         <Box
                           sx={{
-                            background: "#D5E3F7",
+                            background: alpha(getColorByRole(role), 0.2),
+                            color: getColorByRole(role),
                             borderRadius: "5px",
                             p: 1,
-                            color: "#274593",
                             width: "40px",
                             height: "40px",
                             display: "inline-flex",
@@ -358,7 +363,10 @@ function PublicProfileComponent() {
                         <Box>
                           <Typography
                             variant="h6"
+                            component={Link}
+                            to={`mailto:${userDetails.email}`}
                             sx={{
+                              color: "inherit",
                               fontSize: "16px",
                               fontFamily: "Poppins",
                               fontWeight: "500",
@@ -394,10 +402,10 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#D5E3F7",
+                              background: alpha(getColorByRole(role), 0.2),
+                              color: getColorByRole(role),
                               borderRadius: "5px",
                               p: 1,
-                              color: "#274593",
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
@@ -410,8 +418,11 @@ function PublicProfileComponent() {
                           <Box>
                             <Typography
                               variant="h6"
+                              component={Link}
+                              to={userDetails.profile.website}
                               sx={{
                                 fontSize: "16px",
+                                color: "inherit",
                                 fontFamily: "Poppins",
                                 fontWeight: "500",
                                 "@media (max-width: 992px)": {
@@ -447,10 +458,10 @@ function PublicProfileComponent() {
                         >
                           <Box
                             sx={{
-                              background: "#D5E3F7",
                               borderRadius: "5px",
                               p: 1,
-                              color: "#274593",
+                              background: alpha(getColorByRole(role), 0.2),
+                              color: getColorByRole(role),
                               width: "40px",
                               height: "40px",
                               display: "inline-flex",
