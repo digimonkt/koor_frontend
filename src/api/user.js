@@ -8,6 +8,7 @@ import {
 } from "./transform/user";
 import env from "../utils/validateEnv";
 import { USER_ROLES } from "../utils/enum";
+
 export const CreateUserAPI = async (data) => {
   return await api.request({
     url: "/v1/users",
@@ -122,7 +123,7 @@ export const GetNotificationAPI = async ({ type, created, exactDate }) => {
       data: {
         ...res.data,
         results: res.data.results.map((data) =>
-          transformNotificationResponse(data)
+          transformNotificationResponse(data),
         ),
       },
     };
@@ -258,7 +259,7 @@ export const searchUserByRole = async (data) => {
       data: {
         ...res.data,
         results: res.data.results.map((data) =>
-          transformSearchUserByRoleResponse(data)
+          transformSearchUserByRoleResponse(data),
         ),
       },
     };
