@@ -74,41 +74,23 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Check if required fields are filled
     if (!searchValue && !categories && !location) {
       setMessage(true); // Show a general message that at least one field is required
       return;
     }
-    // Clear any previous errors
     setMessage(false);
-
-    // Navigate to the search page with the provided parameters
     navigate(
       `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
     );
   };
-  // const getTopJobCategories = async () => {
-  //    const res = await getTopJobCategoriesAPI();
-  //    if (res.remote === "success") {
-  //      setTopJobCategories(res.data.job_categories);
-  //      setTotalJobs(res.data.total_jobs);
-  //    }
-  //  };
-  //  const getTopTenderCategories = async () => {
-  //    const res = await getTopTenderCategoriesAPI();
-  //    if (res.remote === "success") {
-  //      setTopTenderCategories(res.data.tender_categories);
-  //      setTotalTenders(res.data.total_tenders);
-  //    }
-  //  };
   const getTopJobCategories = async () => {
     const res = await getTopJobCategoriesAPI();
     if (res.remote === "success") {
       const displayValue =
         res.data.total_jobs > 100
-          ? `${Math.ceil(res.data.total_jobs / 100) * 100}+`
+          ? `${Math.round(res.data.total_jobs / 100) * 100}+`
           : res.data.total_jobs;
+      console.log(displayValue);
       const jobsrCategoriesWithTypes = res.data.job_categories.map(
         (jobCategories) => ({
           ...jobCategories,
