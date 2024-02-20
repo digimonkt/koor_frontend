@@ -722,10 +722,7 @@ const PostTender = () => {
                         height: { xs: "320px", sm: "270px", md: "250px" },
                       }}
                     >
-                      <label>
-                        Application Instructions
-                        <span className="required-field">*</span>
-                      </label>
+                      <label>Application Instructions</label>
                       <QuillInput
                         className="work-experience-text-editor"
                         placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."

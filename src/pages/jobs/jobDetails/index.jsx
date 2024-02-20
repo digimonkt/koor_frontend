@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import Grid from "@mui/material/Grid";
 import { SVG } from "../../../assets/svg";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import AttachmentIcon from "@mui/icons-material/Attachment";
 import {
   // getApplyJobByEmailAPI,
   getJobAttachmentAPI,
@@ -29,7 +30,14 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { USER_ROLES } from "../../../utils/enum";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
-import { Box, Divider, IconButton, Stack, Container } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Stack,
+  Container,
+  alpha,
+} from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay } from "@utils/constants/utility";
@@ -386,7 +394,22 @@ const JobDetails = () => {
                           key={attachment.id}
                         >
                           <span className="d-inline-flex  me-2">
-                            {<SVG.OrangeIcon />}
+                            <AttachmentIcon
+                              sx={{
+                                color: getColorByRole(
+                                  role === "" ? USER_ROLES.employer : role,
+                                ),
+                                rotate: "45deg",
+                                background: alpha(
+                                  getColorByRole(
+                                    role === "" ? USER_ROLES.employer : role,
+                                  ),
+                                  0.3,
+                                ),
+                                padding: "3px",
+                                borderRadius: "50%",
+                              }}
+                            />
                           </span>
                           <span
                             onClick={() => handleLoadImage(attachment.path)}
@@ -650,7 +673,10 @@ const JobDetails = () => {
                   </Stack>
                 </div>
               ) : null}
-              <Divider />
+              {(details.isApplyThroughEmail ||
+                details.isApplyThroughWebsite ||
+                details.isApplyThroughWebsite ||
+                details.applicationInstruction) && <Divider />}
             </>
           )}
           <div className={`${styles.secondDiv}`}>
@@ -811,7 +837,9 @@ const JobDetails = () => {
                 <p key={key}>
                   <Link
                     style={{
-                      color: getColorByRole(role),
+                      color: getColorByRole(
+                        role === "" ? USER_ROLES.employer : role,
+                      ),
                     }}
                     to={urlcat("/jobs/details/:jobId", { jobId: item.id })}
                   >
