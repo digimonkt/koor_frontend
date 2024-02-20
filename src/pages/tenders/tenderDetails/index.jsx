@@ -334,7 +334,7 @@ function TenderDetailsComponent() {
                           cursor: "pointer",
                           background: "none",
                           color: getColorByRole(
-                            !role ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role,
                           ),
                         }}
                         onClick={handleSeeMoreClick}
@@ -533,8 +533,12 @@ function TenderDetailsComponent() {
                         ]}
                         sx={{
                           height: "44px",
-                          color: getColorByRole(role),
-                          border: `2px solid ${getColorByRole(role)}`,
+                          color: getColorByRole(
+                            role === "" ? USER_ROLES.employer : role,
+                          ),
+                          border: `2px solid ${getColorByRole(
+                            role === "" ? USER_ROLES.employer : role,
+                          )}`,
                         }}
                         onClick={() => {
                           setIsSharing(true);
