@@ -673,7 +673,10 @@ const JobDetails = () => {
                   </Stack>
                 </div>
               ) : null}
-              <Divider />
+              {(details.isApplyThroughEmail ||
+                details.isApplyThroughWebsite ||
+                details.isApplyThroughWebsite ||
+                details.applicationInstruction) && <Divider />}
             </>
           )}
           <div className={`${styles.secondDiv}`}>
