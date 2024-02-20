@@ -97,7 +97,6 @@ const Home = () => {
           categoryType: "job",
         }),
       );
-
       setTopJobCategories((prev) => [...prev, ...jobsrCategoriesWithTypes]);
       setTotalJobs(displayValue);
     }
@@ -319,6 +318,7 @@ const Home = () => {
               maxWidth={false}
               sx={{
                 "@media(min-width:992px)": {
+                  marginBottom: "10rem",
                   paddingLeft: "100px",
                   paddingRight: "100px",
                 },
@@ -361,38 +361,6 @@ const Home = () => {
               },
             }}
           >
-            <Box sx={{ width: "100%" }}>
-              <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
-                Listings from the top companies
-              </Typography>
-              <Grid
-                container
-                spacing={{ xs: 2, lg: 10 }}
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-              >
-                {(topListingCompanies || []).map((item, key) => {
-                  return (
-                    <>
-                      <Grid key={{ key }} item xs={4} lg={2} sm={1}>
-                        <img
-                          src={generateFileUrl(item.logo.path)}
-                          alt="img"
-                          className={`${styles.mintra}`}
-                        />
-                      </Grid>
-                    </>
-                  );
-                })}
-              </Grid>
-              <Divider
-                sx={{
-                  marginTop: "110px",
-                  "@media(max-width:992px)": { marginTop: "24px" },
-                }}
-              />
-            </Box>
             <Box>
               <Stack
                 direction="row"
@@ -449,64 +417,54 @@ const Home = () => {
                 </Box>
               </Stack>
             </Box>
-          </Container>
-
-          <Container
-            maxWidth={false}
-            sx={{
-              "@media(min-width:992px)": {
-                paddingLeft: "100px",
-                paddingRight: "100px",
-              },
-            }}
-          >
-            <SlickSlider
-              items={topJobCategories.map((category) => ({
-                icon: <SVG.Market />,
-                title:
-                  (category?.title || "").length > 15
-                    ? `${category.title.slice(0, 12)}...`
-                    : category.title,
-                text: `${category.count || 0} ${
-                  category.categoryType === "tender" ? "tenders" : "jobs"
-                }`,
-                id: category.id,
-                categoryType: category.categoryType,
-              }))}
-            />
-            {/* <Box> */}
-            {/*   <Stack direction="row" spacing={2} className={styles.stack_box}> */}
-            {/*     <Typography className={styles.popular_job}> */}
-            {/*       Popular Tenders categories */}
-            {/*     </Typography> */}
-            {/*     <Typography */}
-            {/*       className={`ms-auto ${styles.see_all_jobs}`} */}
-            {/*       style={{ */}
-            {/*         cursor: "pointer", */}
-            {/*       }} */}
-            {/*       onClick={() => { */}
-            {/*         navigate("/search/tenders"); */}
-            {/*       }} */}
-            {/*     > */}
-            {/*       See all {totalTenders} Tenders{" "} */}
-            {/*       <IconButton> */}
-            {/*         <ArrowForwardIcon sx={{ color: "#eea23d" }} /> */}
-            {/*       </IconButton> */}
-            {/*     </Typography> */}
-            {/*   </Stack> */}
-            {/* </Box> */}
-            {/* <SlickSlider */}
-            {/*   categoryType="tenders" */}
-            {/*   items={topTenderCategories.map((category) => ({ */}
-            {/*     icon: <SVG.Market />, */}
-            {/*     title: */}
-            {/*       (category?.title || "").length > 15 */}
-            {/*         ? `${category.title.slice(0, 12)}...` */}
-            {/*         : category.title, */}
-            {/*     text: `${category.count || 0} tenders`, */}
-            {/*     id: category.id, */}
-            {/*   }))} */}
-            {/* /> */}
+            <Box>
+              <SlickSlider
+                items={topJobCategories.map((category) => ({
+                  icon: <SVG.Market />,
+                  title:
+                    (category?.title || "").length > 15
+                      ? `${category.title.slice(0, 12)}...`
+                      : category.title,
+                  text: `${category.count || 0} ${
+                    category.categoryType === "tender" ? "tenders" : "jobs"
+                  }`,
+                  id: category.id,
+                  categoryType: category.categoryType,
+                }))}
+              />
+              <Divider
+                sx={{
+                  marginTop: "110px",
+                  "@media(max-width:992px)": { marginTop: "24px" },
+                }}
+              />
+            </Box>
+            <Box sx={{ width: "100%" }}>
+              <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
+                Listings from the top companies
+              </Typography>
+              <Grid
+                container
+                spacing={{ xs: 2, lg: 10 }}
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+              >
+                {(topListingCompanies || []).map((item, key) => {
+                  return (
+                    <>
+                      <Grid key={{ key }} item xs={4} lg={2} sm={1}>
+                        <img
+                          src={generateFileUrl(item.logo.path)}
+                          alt="img"
+                          className={`${styles.mintra}`}
+                        />
+                      </Grid>
+                    </>
+                  );
+                })}
+              </Grid>
+            </Box>
           </Container>
 
           <Box className={`${styles.home_back}`}>
