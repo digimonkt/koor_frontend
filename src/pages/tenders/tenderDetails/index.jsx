@@ -314,7 +314,6 @@ function TenderDetailsComponent() {
                   <div className={`mb-4 ${styles.contentJob}`}>
                     <h4>Details :</h4>
                     <Box
-                      className="job-description"
                       sx={textWrapperStyle}
                       dangerouslySetInnerHTML={{
                         __html: details?.description,
