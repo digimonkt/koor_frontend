@@ -44,7 +44,7 @@
 }
 .contentJob p {
   font-size: 14px;
-  font-weight: 300;
+  /* font-weight: 300; */
   font-family: "Poppins";
   margin-bottom: 10px !important;
 }

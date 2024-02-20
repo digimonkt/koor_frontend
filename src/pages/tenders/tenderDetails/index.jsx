@@ -314,7 +314,6 @@ function TenderDetailsComponent() {
                   <div className={`mb-4 ${styles.contentJob}`}>
                     <h4>Details :</h4>
                     <Box
-                      className="job-description"
                       sx={textWrapperStyle}
                       dangerouslySetInnerHTML={{
                         __html: details?.description,
@@ -335,7 +334,7 @@ function TenderDetailsComponent() {
                           cursor: "pointer",
                           background: "none",
                           color: getColorByRole(
-                            !role ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role,
                           ),
                         }}
                         onClick={handleSeeMoreClick}
@@ -534,8 +533,12 @@ function TenderDetailsComponent() {
                         ]}
                         sx={{
                           height: "44px",
-                          color: getColorByRole(role),
-                          border: `2px solid ${getColorByRole(role)}`,
+                          color: getColorByRole(
+                            role === "" ? USER_ROLES.employer : role,
+                          ),
+                          border: `2px solid ${getColorByRole(
+                            role === "" ? USER_ROLES.employer : role,
+                          )}`,
                         }}
                         onClick={() => {
                           setIsSharing(true);
@@ -651,7 +654,10 @@ function TenderDetailsComponent() {
                   </Box>
                 </div>
               ) : null}
-              <Divider />
+              {(details.isApplyThroughEmail ||
+                details.isApplyThroughWebsite ||
+                details.isApplyThroughWebsite ||
+                details.applicationInstruction) && <Divider />}
             </>
           )}
           <div className={`${styles.secondDiv}`}>

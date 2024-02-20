@@ -9,7 +9,7 @@
 
 .job_detail_description {
   font-family: "Poppins";
-  font-weight: 300;
+  /* font-weight: 300; */
   font-size: 14px;
   color: #121212;
   word-break: break-word;
@@ -59,7 +59,7 @@
 
 .contentJob p {
   font-size: 14px;
-  font-weight: 300;
+  /* font-weight: 300; */
   font-family: "Poppins";
   word-break: break-word;
   margin: 0px !important;
