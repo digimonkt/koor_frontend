@@ -34,7 +34,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3
+      prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
   console.log(jobDetails);
@@ -81,8 +81,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -134,7 +134,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -209,7 +209,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             navigate(
                               urlcat("/employer/jobs/post", {
                                 jobId: jobDetails?.id,
-                              })
+                              }),
                             );
                           }
                         }}
@@ -269,7 +269,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           }}
         >
           <div className="my-jobs">
-            <h2>
+            <h2
+            >
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
                 {jobDetails?.title}
               </Link>
@@ -279,6 +280,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   size="small"
                   label={applicationStatus}
                   sx={{
+                    flex: "1",
                     marginLeft: "5px",
                     textTransform: "capitalize",
                     "@media (max-width: 480px)": {
@@ -550,7 +552,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -627,7 +629,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         navigate(
                           urlcat("/employer/jobs/post", {
                             jobId: jobDetails?.id,
-                          })
+                          }),
                         );
                       }
                     }}
@@ -684,7 +686,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                           navigate(
                             urlcat("/employer/jobs/post", {
                               jobId: jobDetails?.id,
-                            })
+                            }),
                           );
                         }
                       }}

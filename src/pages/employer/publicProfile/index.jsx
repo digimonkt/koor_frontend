@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
-import { generateFileUrl } from "../../../utils/generateFileUrl";
+import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
@@ -115,19 +115,18 @@ function PublicProfileComponent() {
                           sx={{
                             width: "88px",
                             height: "88px",
-                            boxShadow: isMobileView
-                              ? ""
-                              : "0px 5px 25px rgba(0, 0, 0, 0.25)",
-                            borderRadius: isMobileView ? "10%" : "",
+                            boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
+                            borderRadius: "10%",
                           }}
                         />
                         <Box>
                           <Typography
                             variant="h4"
+                            ml={2}
                             sx={{
                               fontFamily: "Bahnschrift",
                               wordBreak: "break-all",
-                              fontSize: "24px",
+                              fontSize: "23px",
                               fontWeight: "700",
                               letterSpacing: "0.03em",
                               mb: 0,
@@ -301,7 +300,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                  userDetails.mobileNumber,
                               )}
                             </Typography>
                             <Typography

@@ -25,7 +25,7 @@ import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/templa
 import { FilledButton } from "../../../components/button";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 import { useSelector, useDispatch } from "react-redux";
-import { pdfDownloader } from "@utils/filesUtils";
+import { pdfDownloader } from "@utils/fileUtils";
 import { getColorByRole } from "@utils/generateColor";
 
 export default function PublicProfileComponent() {
@@ -444,7 +444,7 @@ export default function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                  userDetails.mobileNumber,
                               )}
                             </Typography>
                             <Typography

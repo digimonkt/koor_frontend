@@ -171,7 +171,6 @@ const JobCriteria = () => {
                     </Box>
                     <Box component={"span"}>Additional parameters</Box>
                   </Stack>
-
                   <AdditionalParameter
                     age={age}
                     city={city}

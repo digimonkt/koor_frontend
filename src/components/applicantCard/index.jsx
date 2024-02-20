@@ -1,4 +1,4 @@
-import { Avatar, Chip, Divider, Stack } from "@mui/material";
+import { Avatar, Chip, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
@@ -42,9 +42,9 @@ function ApplicantCard({
             height: "70px",
             "@media(max-width:768px)": {
               width:
-                platform === "android" || platform === "ios" ? "40px" : "86px",
+                platform === "android" || platform === "ios" ? "50px" : "86px",
               height:
-                platform === "android" || platform === "ios" ? "40px" : "86px",
+                platform === "android" || platform === "ios" ? "50px" : "86px",
             },
           }}
         />
@@ -52,13 +52,6 @@ function ApplicantCard({
           <Stack
             flexWrap={"wrap"}
             direction={{ xs: "column", lg: "row" }}
-            divider={
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ display: { xs: "none", lg: "block" } }}
-              />
-            }
             spacing={{ xs: 0, lg: 2 }}
             alignItems={{ xs: "flex-start", lg: "flex-startr" }}
             sx={{ mb: 1, ...sx }}

@@ -29,7 +29,7 @@ import {
 import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { useDispatch, useSelector } from "react-redux";
-import { USER_ROLES } from "../../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
@@ -39,7 +39,7 @@ import {
   cleanHtmlContent,
   fileTypeExtractor,
   downloadUrlCreator,
-} from "@utils/filesUtils";
+} from "@utils/fileUtils";
 import { Capacitor } from "@capacitor/core";
 import { getJobAttachmentAPI } from "@api/job";
 

@@ -25,7 +25,7 @@ import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
 import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
-import { USER_ROLES } from "../../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Box, Divider, IconButton, Stack, Container } from "@mui/material";
@@ -37,7 +37,7 @@ import {
   fileTypeExtractor,
   downloadUrlCreator,
   cleanHtmlContent,
-} from "@utils/filesUtils";
+} from "@utils/fileUtils";
 import { generateFileUrl } from "@utils/generateFileUrl";
 
 const JobDetails = () => {
