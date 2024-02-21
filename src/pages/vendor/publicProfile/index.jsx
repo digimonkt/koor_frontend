@@ -334,7 +334,7 @@ function PublicProfileComponent() {
                             </Typography>
                             <Typography
                               sx={{
-                                color: getColorByRole(role),
+                                color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
                                 "@media (max-width: 992px)": {
