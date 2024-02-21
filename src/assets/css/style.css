@@ -172,6 +172,7 @@ body {
 
 .ql-align-justify {
   word-break: break-word;
+  margin: 0px !important;
 }
 
 .credits_button {
