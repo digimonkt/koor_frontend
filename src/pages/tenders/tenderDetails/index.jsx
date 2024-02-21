@@ -310,8 +310,8 @@ function TenderDetailsComponent() {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} sm={7}>
-                <Box className={`mb-4 ${styles.contentJob}`}>
-                  <div className={`mb-4 ${styles.contentJob}`}>
+                <Box className={styles.contentJob}>
+                  <div className={styles.contentJob}>
                     <h4>Details :</h4>
                     <Box
                       sx={textWrapperStyle}
