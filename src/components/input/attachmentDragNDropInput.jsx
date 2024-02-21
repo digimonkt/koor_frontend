@@ -86,7 +86,7 @@ function AttachmentDragNDropInputComponent({
                   upload an attachment
                 </span>
               </p>
-              {!single && <small>Max 10 files, each one under 50MB</small>}
+              {!single && <small>Max 10 files, each one under 5MB</small>}
             </div>
           </div>
         </Grid>
