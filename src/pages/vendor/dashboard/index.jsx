@@ -59,7 +59,6 @@ function Dashboard() {
   useEffect(() => {
     getRecentApplications();
   }, [recentApplicationPage]);
-
   return (
     <div className="employer-dashboard">
       <Grid container spacing={2}>

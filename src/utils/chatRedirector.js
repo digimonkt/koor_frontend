@@ -6,6 +6,7 @@ export const chatRedirector = async (userId, navigateFn) => {
     const res = await getConversationIdByUserIdAPI({
       userId,
     });
+    console.log(res);
 
     if (res.remote === "success") {
       const conversationId = res.data?.conversation_id;
