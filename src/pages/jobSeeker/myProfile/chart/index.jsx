@@ -132,7 +132,7 @@ const AreaChart = () => {
   const lastMonth = currentDate.getMonth();
   const lastFiveYears = Array.from(
     { length: 5 },
-    (_, index) => currentYear - index,
+    (_, index) => currentYear - index
   );
   const [chartData, setChartData] = useState({
     options: OPTIONS,
@@ -144,8 +144,8 @@ const AreaChart = () => {
     if (lastMonthViews > 0 && currentMonthViews > 0) {
       setLastMonthComparing(
         (((currentMonthViews - lastMonthViews) / lastMonthViews) * 100).toFixed(
-          0,
-        ),
+          0
+        )
       );
     }
   };
@@ -211,9 +211,13 @@ const AreaChart = () => {
         </div>
         <div className="chart-view">
           <h5>
-            {lastMonthComparing !== 0
-              ? `${lastMonthComparing > 0 ? "+" : ""}${lastMonthComparing}%`
-              : "0%"}
+            {" "}
+            {lastMonthComparing > 0
+              ? "+"
+              : lastMonthComparing === 0
+              ? ""
+              : "-"}{" "}
+            {lastMonthComparing}%
           </h5>
           <p>comparing to the previous period</p>
         </div>

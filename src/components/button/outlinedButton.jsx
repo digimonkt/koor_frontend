@@ -8,6 +8,8 @@ function OutlinedButtonComponent({
   title,
   jobSeeker,
   onClick,
+  sx,
+  component,
   ...rest
 }) {
   const query = {};
@@ -30,9 +32,11 @@ function OutlinedButtonComponent({
   }
   return (
     <Button
+      sx={sx}
       variant="outlined"
       className={`outline-button ${className}`}
       onClick={(e) => (onClick ? onClick(e) : null)}
+      component={component}
       {...query}
       {...rest}
     >

@@ -26,7 +26,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [settings, setSetting] = useState(false);
   const [filterByDate, setFilterByDate] = useState(
     // dayjs().format("YYYY-MM-DD")
-    null,
+    null
   );
   const handleChangeSection = (event, newValue) => {
     const filterNotification = (type) => {
@@ -34,16 +34,16 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       let notificationResult = "";
       if (newValue === "message") {
         notificationResult = notificationData.filter(
-          (notification) => notification.notificationType === "message",
+          (notification) => notification.notificationType === "message"
         );
       } else {
         notificationResult = notificationData.filter(
-          (notification) => notification.notificationType !== "message",
+          (notification) => notification.notificationType !== "message"
         );
       }
       if (role === USER_ROLES.employer) {
         notificationResult = notificationResult.filter(
-          (notification) => notification.notificationType !== "applied_tender",
+          (notification) => notification.notificationType !== "applied_tender"
         );
       }
       setFilterData(notificationResult);
@@ -68,6 +68,13 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       default:
         break;
     }
+  };
+
+  const handleRemoveMessages = (id) => {
+    const updatedNotifications = notification.filter(
+      (item) => item.messageId !== id
+    );
+    setNotification(updatedNotifications);
   };
 
   const getNotifications = async () => {
@@ -303,7 +310,12 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                             : styles.notification_card_user
                         }`}
                       >
-                        {getNotificationCardByType(item, handleClose, role)}
+                        {getNotificationCardByType(
+                          item,
+                          handleClose,
+                          role,
+                          handleRemoveMessages
+                        )}
                         <Divider />
                       </div>
                     </>

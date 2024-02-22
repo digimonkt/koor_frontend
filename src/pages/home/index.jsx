@@ -46,7 +46,6 @@ const Home = () => {
   const { role, isLoggedIn } = useSelector((state) => state.auth);
 
   const [totalTenders, setTotalTenders] = useState(0);
-  const [topTenderCategories, setTopTenderCategories] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
   const [topJobCategories, setTopJobCategories] = useState([]);
   const [topListingCompanies, setTopListingCompanies] = useState([]);
@@ -75,33 +74,51 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Check if required fields are filled
     if (!searchValue && !categories && !location) {
       setMessage(true); // Show a general message that at least one field is required
       return;
     }
-    // Clear any previous errors
     setMessage(false);
-
-    // Navigate to the search page with the provided parameters
     navigate(
       `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
     );
   };
-  // console.log("Show error", error);
   const getTopJobCategories = async () => {
     const res = await getTopJobCategoriesAPI();
     if (res.remote === "success") {
-      setTopJobCategories(res.data.job_categories);
-      setTotalJobs(res.data.total_jobs);
+      const displayValue =
+        res.data.total_jobs > 100
+          ? `${Math.round(res.data.total_jobs / 100) * 100}+`
+          : res.data.total_jobs;
+      console.log(displayValue);
+      const jobsrCategoriesWithTypes = res.data.job_categories.map(
+        (jobCategories) => ({
+          ...jobCategories,
+          categoryType: "job",
+        }),
+      );
+      setTopJobCategories((prev) => [...prev, ...jobsrCategoriesWithTypes]);
+      setTotalJobs(displayValue);
     }
   };
+
   const getTopTenderCategories = async () => {
     const res = await getTopTenderCategoriesAPI();
     if (res.remote === "success") {
-      setTopTenderCategories(res.data.tender_categories);
-      setTotalTenders(res.data.total_tenders);
+      const displayValue =
+        res.data.total_tenders > 100
+          ? `${Math.ceil(res.data.total_tenders / 100) * 100}+`
+          : res.data.total_tenders;
+
+      const tenderCategoriesWithTypes = res.data.tender_categories.map(
+        (tenderCategory) => ({
+          ...tenderCategory,
+          categoryType: "tender",
+        }),
+      );
+
+      setTopJobCategories((prev) => [...prev, ...tenderCategoriesWithTypes]);
+      setTotalTenders(displayValue);
     }
   };
   const getSiteUpdates = async () => {
@@ -189,8 +206,6 @@ const Home = () => {
                     className={styles.headding}
                     sx={{
                       paddingTop: "26%",
-                      // "@media(max-width:992px)": { paddingTop: "40%" },
-                      // "@media(max-width:480px)": { paddingTop: "90%" },
                     }}
                   >
                     <h2>Find your dream job</h2>
@@ -200,9 +215,15 @@ const Home = () => {
                     <form onSubmit={handleSubmit}>
                       <Grid
                         container
-                        spacing={2}
+                        columnGap={2}
                         sx={{
+                          "@media(max-width:1274px)": {
+                            justifyContent: "space-between",
+                            gap: "0px",
+                          },
                           "@media(max-width:480px)": {
+                            justifyContent: "space-between",
+                            columnGap: "0px",
                             padding: "0px 0px 0px 14px !important",
                             "& .MuiGrid-root": {
                               width: "50%",
@@ -210,14 +231,12 @@ const Home = () => {
                             },
                           },
                         }}
-                        style={{
-                          padding: "0px 0px 0px 16px",
-                          justifyContent: "space-between",
-                        }}
                       >
-                        <Grid className="mb-2">
+                        <Grid item className="mb-2">
                           <InputSearch
                             sx={{
+                              marginRight: "16px",
+                              width: 100,
                               "@media(max-width:480px)": {
                                 width: "100% !important",
                               },
@@ -239,7 +258,7 @@ const Home = () => {
                             </p>
                           )}
                         </Grid>
-                        <Grid className="mb-2 ">
+                        <Grid item className="mb-2 ">
                           <SelectInput
                             fullWidth
                             value={categories}
@@ -253,7 +272,7 @@ const Home = () => {
                             className={`${styles.category_select}`}
                           />
                         </Grid>
-                        <Grid className="mb-2 ">
+                        <Grid item className="mb-2 ">
                           <SelectInput
                             value={location}
                             onChange={handleLocationChange}
@@ -278,12 +297,13 @@ const Home = () => {
                             </p>
                           )} */}
                         </Grid>
-                        <Grid className="mb-2">
+                        <Grid item className="mb-2">
                           <Button
                             fullWidth
                             variant="contained"
                             type="submit"
                             className={styles.home_btn_btn}
+                            style={{ width: "100%" }}
                           >
                             Search
                           </Button>
@@ -298,6 +318,7 @@ const Home = () => {
               maxWidth={false}
               sx={{
                 "@media(min-width:992px)": {
+                  marginBottom: "10rem",
                   paddingLeft: "100px",
                   paddingRight: "100px",
                 },
@@ -340,6 +361,84 @@ const Home = () => {
               },
             }}
           >
+            <Box>
+              <Stack
+                direction="row"
+                spacing={2}
+                className={styles.stack_box}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <Typography className={styles.popular_job}>
+                  Popular job categories
+                </Typography>
+                <Box
+                  sx={{
+                    marginLeft: "auto !important",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Typography
+                    className={styles.see_all_jobs}
+                    sx={{
+                      cursor: "pointer",
+                      "@media(min-width:600px)": {
+                        marginRight: "8em",
+                      },
+                    }}
+                    onClick={() => {
+                      navigate("/search/tenders");
+                    }}
+                  >
+                    See all {totalTenders} Tenders{" "}
+                    <IconButton>
+                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                    </IconButton>
+                  </Typography>
+
+                  <Typography
+                    className={`ms-auto ${styles.see_all_jobs}`}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      navigate("/search/jobs");
+                    }}
+                  >
+                    See all {totalJobs} jobs{" "}
+                    <IconButton>
+                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                    </IconButton>
+                  </Typography>
+                </Box>
+              </Stack>
+            </Box>
+            <Box>
+              <SlickSlider
+                items={topJobCategories.map((category) => ({
+                  icon: <SVG.Market />,
+                  title:
+                    (category?.title || "").length > 15
+                      ? `${category.title.slice(0, 12)}...`
+                      : category.title,
+                  text: `${category.count || 0} ${
+                    category.categoryType === "tender" ? "tenders" : "jobs"
+                  }`,
+                  id: category.id,
+                  categoryType: category.categoryType,
+                }))}
+              />
+              <Divider
+                sx={{
+                  marginTop: "110px",
+                  "@media(max-width:992px)": { marginTop: "24px" },
+                }}
+              />
+            </Box>
             <Box sx={{ width: "100%" }}>
               <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
                 Listings from the top companies
@@ -365,89 +464,7 @@ const Home = () => {
                   );
                 })}
               </Grid>
-              <Divider
-                sx={{
-                  marginTop: "110px",
-                  "@media(max-width:992px)": { marginTop: "24px" },
-                }}
-              />
             </Box>
-            <Box>
-              <Stack direction="row" spacing={2} className={styles.stack_box}>
-                <Typography className={styles.popular_job}>
-                  Popular job categories
-                </Typography>
-                <Typography
-                  className={`ms-auto ${styles.see_all_jobs}`}
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    navigate("/search/jobs");
-                  }}
-                >
-                  See all {totalJobs} jobs{" "}
-                  <IconButton>
-                    <ArrowForwardIcon sx={{ color: "#eea23d" }} />
-                  </IconButton>
-                </Typography>
-              </Stack>
-            </Box>
-          </Container>
-
-          <Container
-            maxWidth={false}
-            sx={{
-              "@media(min-width:992px)": {
-                paddingLeft: "100px",
-                paddingRight: "100px",
-              },
-            }}
-          >
-            <SlickSlider
-              items={topJobCategories.map((category) => ({
-                icon: <SVG.Market />,
-                title:
-                  (category?.title || "").length > 15
-                    ? `${category.title.slice(0, 12)}...`
-                    : category.title,
-                text: `${category.count || 0} jobs`,
-                id: category.id,
-              }))}
-            />
-            <Box>
-              <Stack direction="row" spacing={2} className={styles.stack_box}>
-                <Typography className={styles.popular_job}>
-                  Popular Tenders categories
-                </Typography>
-                <Typography
-                  className={`ms-auto ${styles.see_all_jobs}`}
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    navigate("/search/tenders");
-                  }}
-                >
-                  See all {totalTenders} Tenders{" "}
-                  <IconButton>
-                    <ArrowForwardIcon sx={{ color: "#eea23d" }} />
-                  </IconButton>
-                </Typography>
-              </Stack>
-            </Box>
-            <SlickSlider
-              categoryType="tenders"
-              items={topTenderCategories.map((category) => ({
-                icon: <SVG.Market />,
-                title:
-                  (category?.title || "").length > 15
-                    ? `${category.title.slice(0, 12)}...`
-                    : category.title,
-                text: `${category.count || 0} tenders`,
-                id: category.id,
-              }))}
-            />
           </Container>
 
           <Box className={`${styles.home_back}`}>
@@ -464,7 +481,7 @@ const Home = () => {
               <Box className={styles.home_new_job_box} useflexGap>
                 <Box className={`${styles.new_jobs}`}>
                   <h2>{siteUpdates.jobs}</h2>
-                  <p>New jobs posted every day</p>
+                  <p>New jobs posted today</p>
                 </Box>
                 <Box className={`${styles.new_jobs}`}>
                   <h2>{siteUpdates.employer}</h2>
@@ -476,20 +493,24 @@ const Home = () => {
                 </Box>
               </Box>
             </Box>
-            <Box className={styles.home_testi_box}>
-              <Container
-                maxWidth={false}
-                sx={{
-                  "@media(min-width:992px)": {
-                    paddingLeft: "100px",
-                    paddingRight: "100px",
-                  },
-                }}
-              >
-                <TestimonialSlider testimonialList={testimonialList} />
-              </Container>
-            </Box>
-            <Box>
+            {Boolean(testimonialList.length) > 0 && (
+              <Box className={styles.home_testi_box}>
+                <Container
+                  maxWidth={false}
+                  sx={{
+                    "@media(min-width:992px)": {
+                      paddingLeft: "100px",
+                      paddingRight: "100px",
+                    },
+                  }}
+                >
+                  <TestimonialSlider testimonialList={testimonialList} />
+                </Container>
+              </Box>
+            )}
+            <Box
+              marginTop={Boolean(testimonialList.length) > 0 ? "0px" : "60px"}
+            >
               <TextSlide />
             </Box>
             <Box className={styles.stay_back_img} sx={{ marginTop: "50px" }}>
@@ -577,9 +598,21 @@ const Home = () => {
           </Box>
         </Box>
         <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
-          <div className="add-content">
-            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
-          </div>
+          <Box
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              width: "100%",
+              textDecoration: "capitalize",
+              color: "#eea23d",
+            }}
+          >
+            <h2 className="mb-4">Stay In Touch</h2>
+            <h1 className="mb-4" style={{ color: "#000" }}>
+              Mobile App Is Coming Soon!
+            </h1>
+          </Box>
         </DialogBox>
       </div>
     </div>

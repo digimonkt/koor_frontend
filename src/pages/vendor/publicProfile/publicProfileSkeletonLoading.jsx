@@ -104,7 +104,7 @@ function PublicProfileComponent() {
                     }}
                   >
                     <Skeleton
-                      width={1000}
+                      width={100}
                       count={3}
                       style={{ lineHeight: "10px" }}
                     />

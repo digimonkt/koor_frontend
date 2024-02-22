@@ -145,3 +145,7 @@ export const docsDownloader = async (state, action) => {
     action(setErrorToast("Something went wrong"));
   }
 };
+
+export const cleanHtmlContent = (html) => {
+  return html?.replace(/<[^>]*>/g, "").trim();
+};

@@ -303,7 +303,7 @@
 }
 
 .back_img_div {
-  background-image: url(../../assets/images/banner.png);
+  background-image: url(../../assets/images/newbanner.jpg);
   background-size: cover;
   height: 630px;
   background-position: center;
@@ -312,6 +312,7 @@
   display: flex;
   align-items: flex-end;
   padding-bottom: 135px;
+  clip-path: ellipse(99% 50% at 50% 45%);
 }
 
 .home_page {
@@ -357,8 +358,8 @@
 }
 @media screen and (min-width: 1440px) {
   .back_img_div {
-    height: 880px;
     padding-bottom: 170px;
+    clip-path: ellipse(99% 50% at 50% 45%);
   }
 }
 @media screen and (max-width: 992px) {
@@ -366,7 +367,18 @@
     bottom: 38px;
     height: 50%;
   }
-
+  .back_img_div {
+    clip-path: polygon(0 0, 100% 1%, 100% 100%, 0 100%, 0 49%);
+    background-image: url(../../assets/images/banner3.png);
+    background-size: cover;
+    height: 800px;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 135px;
+  }
   .stay_text_box {
     padding: 30px 0px 50px 0px;
   }
@@ -505,10 +517,10 @@
     width: 100% !important;
   }
 
-  .home_btn_btn {
-    width: 100% !important;
+  .back_img_div {
+    clip-path: polygon(0 0, 100% 1%, 100% 100%, 0 100%, 0 49%);
+    height: 680px;
   }
-
   .bg_corav:before {
     bottom: 30px;
     height: 100%;
@@ -523,7 +535,6 @@
   .back_img_div {
     background-image: url(../../assets/images/banner3.png);
     background-size: cover;
-    height: 800px;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
@@ -535,6 +546,4 @@
     top: 6rem;
     position: relative;
   }
- 
 }
-

@@ -37,7 +37,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
-
+  console.log(jobDetails);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
@@ -269,7 +269,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           }}
         >
           <div className="my-jobs">
-            <h2>
+            <h2
+            >
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
                 {jobDetails?.title}
               </Link>
@@ -279,6 +280,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   size="small"
                   label={applicationStatus}
                   sx={{
+                    flex: "1",
                     marginLeft: "5px",
                     textTransform: "capitalize",
                     "@media (max-width: 480px)": {

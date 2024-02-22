@@ -7,6 +7,7 @@ import {
   Divider,
   Stack,
   Typography,
+  Link,
   styled,
 } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
@@ -25,6 +26,7 @@ const SmallAvatar = styled(Avatar)(() => ({
 
 const ShortlistedCard = ({ applicantDetails }) => {
   const navigate = useNavigate();
+  console.log(applicantDetails, "applicantDetails");
   const handleMessageClick = () => {
     chatRedirector(applicantDetails?.id, navigate);
   };
@@ -50,17 +52,22 @@ const ShortlistedCard = ({ applicantDetails }) => {
               <Avatar
                 alt="Remy Sharp"
                 src={generateFileUrl(applicantDetails?.user?.image?.path)}
-                SX={{ width: "40px", height: "40px" }}
+                sx={{ width: "40px", height: "40px" }}
               />
             </Badge>
 
             <Box>
               <Typography
                 variant="h2"
+                component={Link}
+                to={`/talent/${applicantDetails?.user?.id}`}
                 sx={{
                   fontFamily: "Poppins",
+                  textDecoration: "none",
+                  color: "inherit",
                   fontSize: "14px",
                   fontWeight: "600",
+                  cursor: "pointer",
                   mb: 0.5,
                 }}
               >
@@ -107,6 +114,7 @@ const ShortlistedCard = ({ applicantDetails }) => {
           direction={"row"}
           spacing={1}
           alignItems={"center"}
+          justifyContent={"space-between"}
           sx={{ mb: 1 }}
         >
           <Typography className="text-truncate" sx={{ height: "32px" }}>

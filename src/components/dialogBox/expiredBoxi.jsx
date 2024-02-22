@@ -17,13 +17,14 @@ const ExpiredBoxComponent = ({ open, handleClose }) => {
         </h1>
         <div className="form-content">
           <p className="jobs_dailog_content">
-            This {pageType === "tenders" ? "tender" : "job"} has expired. So you can't apply for this {pageType === "tenders" ? "tender" : "job"}.
+            This {pageType === "tenders" ? "tender" : "job"} has expired. So you
+            can't apply for this {pageType === "tenders" ? "tender" : "job"}.
           </p>
           <div style={{ textAlign: "center", lineHeight: "40px" }}>
             <Link to={`/search/${pageType}`}>
               <OutlinedButton
                 title="Go Back"
-                jobSeeker
+                vendor
                 sx={{
                   fontSize: "16px !important",
                   width: "100%",

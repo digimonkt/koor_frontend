@@ -27,7 +27,7 @@ import urlcat from "urlcat";
 import { FilledButton } from "@components/button";
 import ResumeTemplate from "@pages/jobSeeker/updateProfile/resume-update/resumeTemplate/template1";
 import { GetUserDetailsAPI } from "@api/user";
-import { pdfDownloader } from "@utils/filesUtils";
+import { pdfDownloader } from "@utils/fileUtils";
 import { useDispatch } from "react-redux";
 import { Capacitor } from "@capacitor/core";
 dayjs.extend(relativeTime);

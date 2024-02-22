@@ -47,12 +47,6 @@ function Header() {
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const [warningTrue, setWarningTrue] = useState(false);
 
-  const checkUserVerified = (e) => {
-    if (!currentUser.profile.isVerified) {
-      setAccountVerifiedWarning(true);
-      e.preventDefault();
-    }
-  };
   const userLogout = async () => {
     await LogoutUserAPI();
     globalLocalStorage.cleanLocalStorage();
@@ -345,18 +339,13 @@ function Header() {
               {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to={
-                      currentUser.profile.isVerified ? "/search/talents" : "#"
-                    }
+                    to={"/search/talents"}
                     style={{
                       color: location.pathname.includes("/search/talents")
                         ? role === USER_ROLES.jobSeeker
                           ? "#eea23d "
                           : "#274593"
                         : "",
-                    }}
-                    onClick={(e) => {
-                      checkUserVerified(e);
                     }}
                   >
                     Browse Talents
@@ -368,18 +357,13 @@ function Header() {
               {isLoggedIn && role === USER_ROLES.employer ? (
                 <li onClick={() => setIsmenu(false)}>
                   <Link
-                    to={
-                      currentUser.profile.isVerified ? "/search/vendors" : "#"
-                    }
+                    to={"/search/vendors"}
                     style={{
                       color: location.pathname.includes("/search/vendors")
                         ? role === USER_ROLES.jobSeeker
                           ? "#eea23d "
                           : "#274593"
                         : "",
-                    }}
-                    onClick={(e) => {
-                      checkUserVerified(e);
                     }}
                   >
                     Browse Vendors

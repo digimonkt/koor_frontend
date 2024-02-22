@@ -242,7 +242,7 @@ function ApplyForTender() {
                 <div className={`${styles.clocs}`}>
                   <span>{<SVG.ClockIconSmall />}</span>
                   <p className="mb-0 mt-0">
-                    <span>Posted:</span> {dayjs(details.createdAt).format("ll")}
+                    <span>Posted:</span> {dayjs(details.startDate).format("ll")}
                   </p>
                   <SolidButton
                     title={
@@ -341,19 +341,19 @@ function ApplyForTender() {
                     );
                   })}
                 </div>
-                {details.startDate && (
-                  <div className={`${styles.datesatrt}`}>
-                    <span>{<SVG.StartDate />}</span>
-                    <p className="m-0 ms-2">
-                      <span className={`${styles.startDate}`}>Start date:</span>
-                      <b className={`${styles.startB}`}>
-                        {details?.startDate
-                          ? dayjs(details.startDate).format("ll")
-                          : ""}
-                      </b>
-                    </p>
-                  </div>
-                )}
+                {/* {details.startDate && ( */}
+                {/*   <div className={`${styles.datesatrt}`}> */}
+                {/*     <span>{<SVG.StartDate />}</span> */}
+                {/*     <p className="m-0 ms-2"> */}
+                {/*       <span className={`${styles.startDate}`}>Start date:</span> */}
+                {/*       <b className={`${styles.startB}`}> */}
+                {/*         {details?.startDate */}
+                {/*           ? dayjs(details.startDate).format("ll") */}
+                {/*           : ""} */}
+                {/*       </b> */}
+                {/*     </p> */}
+                {/*   </div> */}
+                {/* )} */}
               </Grid>
 
               <Grid item xs={12} sm={5}>

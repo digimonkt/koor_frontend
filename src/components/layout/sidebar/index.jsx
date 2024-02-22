@@ -33,7 +33,7 @@ function Sidebar(props) {
     const currentUserMobileNumber =
       currentUser.countryCode && currentUser.mobileNumber
         ? formatPhoneNumberIntl(
-            currentUser.countryCode + currentUser.mobileNumber
+            currentUser.countryCode + currentUser.mobileNumber,
           )
         : "";
     setMobileNumber(currentUserMobileNumber);
@@ -56,6 +56,7 @@ function Sidebar(props) {
             width: 100,
             height: 100,
             margin: "auto",
+            borderRadius: "10%",
             color: "#CACACA",
             "&.MuiAvatar-colorDefault": {
               background: "#F0F0F0",
@@ -112,8 +113,8 @@ function Sidebar(props) {
               role === USER_ROLES.employer
                 ? "#274593"
                 : role === USER_ROLES.vendor
-                ? "#274593"
-                : null,
+                  ? "#274593"
+                  : null,
           }}
         >
           <Stack direction="row" spacing={2} alignItems="center">

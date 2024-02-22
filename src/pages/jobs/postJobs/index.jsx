@@ -736,9 +736,6 @@ function PostJobsComponent() {
                         type="date"
                         onChange={(e) => formik.setFieldValue("startDate", e)}
                         value={formik.values.startDate}
-                        minDate={dayjs()
-                          .subtract(1, "month")
-                          .format("YYYY-MM-DD")} // Set minDate to one month ago
                         onBlur={formik.getFieldProps("startDate").onBlur}
                       />
                       {formik.touched.startDate && formik.errors.startDate ? (
@@ -764,7 +761,7 @@ function PostJobsComponent() {
                         type="date"
                         value={formik.values.deadline}
                         onBlur={formik.getFieldProps("deadline").onBlur}
-                        minDate={formik.values.startDate}
+                        minDate={dayjs().format("YYYY-MM-DD")}
                       />
                       {formik.touched.deadline && formik.errors.deadline ? (
                         <ErrorMessage>{formik.errors.deadline}</ErrorMessage>
@@ -868,10 +865,7 @@ function PostJobsComponent() {
                         height: { xs: "320px", sm: "270px", md: "250px" },
                       }}
                     >
-                      <label>
-                        Application Instructions{" "}
-                        <span className="required-field">*</span>
-                      </label>
+                      <label>Application Instructions </label>
                       <QuillInput
                         type="textarea"
                         placeholder="Write a brief text overview of your application process. You can also include links, emails, etc."

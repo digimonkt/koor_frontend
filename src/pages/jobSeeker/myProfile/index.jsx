@@ -89,14 +89,20 @@ const MyProfile = () => {
                 </Stack>
               </Grid>
               <Grid item xs={12}>
-                <Stack direction={"row"} spacing={3} sx={{ mb: 2 }}>
+                <Stack
+                  direction={"row"}
+                  spacing={3}
+                  sx={{ mb: 2 }}
+                  justifyContent="center"
+                  alignItems="center"
+                >
                   <Avatar
                     alt="profile"
                     src={currentUser?.profileImage}
                     style={{
                       width: "80px",
                       height: "80px",
-                      borderRadius: "100%",
+                      borderRadius: "10%",
                       boxShadow: "0px 5px 25px 0px rgba(0, 0, 0, 0.25)",
                     }}
                   />
