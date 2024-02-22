@@ -107,7 +107,7 @@ const Home = () => {
     if (res.remote === "success") {
       const displayValue =
         res.data.total_tenders > 100
-          ? `${Math.ceil(res.data.total_tenders / 100) * 100}+`
+          ? `${Math.round(res.data.total_tenders / 100) * 100}+`
           : res.data.total_tenders;
 
       const tenderCategoriesWithTypes = res.data.tender_categories.map(
