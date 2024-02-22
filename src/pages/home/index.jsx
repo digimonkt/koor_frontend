@@ -80,7 +80,7 @@ const Home = () => {
     }
     setMessage(false);
     navigate(
-      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
+      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
     );
   };
   const getTopJobCategories = async () => {
@@ -95,7 +95,7 @@ const Home = () => {
         (jobCategories) => ({
           ...jobCategories,
           categoryType: "job",
-        }),
+        })
       );
       setTopJobCategories((prev) => [...prev, ...jobsrCategoriesWithTypes]);
       setTotalJobs(displayValue);
@@ -107,14 +107,14 @@ const Home = () => {
     if (res.remote === "success") {
       const displayValue =
         res.data.total_tenders > 100
-          ? `${Math.ceil(res.data.total_tenders / 100) * 100}+`
+          ? `${Math.round(res.data.total_tenders / 100) * 100}+`
           : res.data.total_tenders;
 
       const tenderCategoriesWithTypes = res.data.tender_categories.map(
         (tenderCategory) => ({
           ...tenderCategory,
           categoryType: "tender",
-        }),
+        })
       );
 
       setTopJobCategories((prev) => [...prev, ...tenderCategoriesWithTypes]);
@@ -303,7 +303,11 @@ const Home = () => {
                             variant="contained"
                             type="submit"
                             className={styles.home_btn_btn}
-                            style={{ width: "100%" }}
+                            sx={{
+                              "@media (max-width: 700px)": {
+                                width: "100% !important",
+                              },
+                            }}
                           >
                             Search
                           </Button>
