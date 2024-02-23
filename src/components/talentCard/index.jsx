@@ -213,7 +213,7 @@ function TalentCard({ talentDetails }) {
             useFlexGap
           >
             <>
-              {talentDetails.skills.map((skill) => (
+              {talentDetails?.skills?.map((skill) => (
                 <Chip
                   key={skill.id}
                   label={skill.skill.title}
@@ -227,7 +227,7 @@ function TalentCard({ talentDetails }) {
       </Stack>
       {!matches ? (
         <Stack direction="row" spacing={2} alignItems="center">
-          {talentDetails.readyForChat && (
+          {talentDetails?.readyForChat && (
             <Stack direction="row" spacing={0} className="edit-button">
               <Button variant="link" onClick={handleMessageClick}>
                 <SVG.MessageIcon
