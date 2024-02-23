@@ -190,15 +190,9 @@ const JobDetails = () => {
         isSaved: !prevState.isSaved,
       }));
       if (!details.isSaved) {
-        const resp = await saveJobAPI(jobId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await saveJobAPI(jobId);
       } else {
-        const resp = await unSaveJobAPI(jobId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await unSaveJobAPI(jobId);
       }
     } else if (details.expiredInDays <= 0) {
       setExpiredWarning(true);
@@ -428,6 +422,7 @@ const JobDetails = () => {
               </Grid>
               <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
+                  color={getColorByRole(role)}
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
                   user={details.user}
@@ -829,9 +824,7 @@ const JobDetails = () => {
                 <p key={key}>
                   <Link
                     style={{
-                      color: getColorByRole(
-                        role === "" ? USER_ROLES.employer : role
-                      ),
+                      color: getColorByRole(role),
                     }}
                     to={urlcat("/jobs/details/:jobId", { jobId: item.id })}
                   >
@@ -879,6 +872,7 @@ const JobDetails = () => {
       </DialogBox>
 
       <ExpiredBox
+        color={getColorByRole(role)}
         open={expiredWarning}
         handleClose={() => setExpiredWarning(false)}
       />
