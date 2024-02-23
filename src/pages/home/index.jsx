@@ -88,9 +88,8 @@ const Home = () => {
     if (res.remote === "success") {
       const displayValue =
         res.data.total_jobs > 100
-          ? `${Math.round(res.data.total_jobs / 100) * 100}+`
+          ? `${Math.floor(res.data.total_jobs / 100) * 100}+`
           : res.data.total_jobs;
-      console.log(displayValue);
       const jobsrCategoriesWithTypes = res.data.job_categories.map(
         (jobCategories) => ({
           ...jobCategories,
@@ -107,7 +106,7 @@ const Home = () => {
     if (res.remote === "success") {
       const displayValue =
         res.data.total_tenders > 100
-          ? `${Math.round(res.data.total_tenders / 100) * 100}+`
+          ? `${Math.floor(res.data.total_tenders / 100) * 100}+`
           : res.data.total_tenders;
 
       const tenderCategoriesWithTypes = res.data.tender_categories.map(

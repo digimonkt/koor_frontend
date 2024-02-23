@@ -148,15 +148,9 @@ function TenderDetailsComponent() {
         isSaved: !prevState.isSaved,
       }));
       if (!details.isSaved) {
-        const resp = await saveTenderAPI(tenderId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await saveTenderAPI(tenderId);
       } else {
-        const resp = await unSaveTenderAPI(tenderId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await unSaveTenderAPI(tenderId);
       }
     } else if (details.expiredInDays <= 0) {
       setExpiredWarning(true);
@@ -727,7 +721,7 @@ function TenderDetailsComponent() {
                         sx={{
                           textDecoration: "none",
                           color: getColorByRole(
-                            !role ? USER_ROLES.employer : role
+                            role === "" ? USER_ROLES.employer : role
                           ),
                           fontWeight: 600,
                         }}
@@ -739,8 +733,8 @@ function TenderDetailsComponent() {
                 </div>
               </div>
             </DialogBox>
-
             <ExpiredBox
+              color={role === "" ? USER_ROLES.employer : role}
               open={expiredWarning}
               handleClose={() => setExpiredWarning(false)}
             />
@@ -752,7 +746,9 @@ function TenderDetailsComponent() {
                 <p key={key}>
                   <Link
                     style={{
-                      color: getColorByRole(!role ? USER_ROLES.employer : role),
+                      color: getColorByRole(
+                        role === "" ? USER_ROLES.employer : role
+                      ),
                     }}
                     to={urlcat("/tender/details/:tenderId", {
                       tenderId: item.id,

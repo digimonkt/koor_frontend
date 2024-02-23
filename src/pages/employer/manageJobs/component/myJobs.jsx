@@ -22,8 +22,6 @@ function MyJobs({ onTabChange }) {
     if (res.remote === "success") {
       setJobs(res.data.results);
       dispatch(setTotalCreatedJobs(res.data.totalCount || res.data.count));
-    } else {
-      console.log(res);
     }
     setIsLoading(false);
   }, [search]);

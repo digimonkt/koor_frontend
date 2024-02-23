@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NoDataFoundAnimation } from "../../../components/animations";
 import JobCard from "../../../components/jobCard";
 import JobCardSkeletonLoader from "../../../components/jobCard/jobCardSkeletonLoader";
@@ -12,17 +12,29 @@ function JobSearchComponent() {
   const adSenseData = adSense.data.find(
     (item) => item.pageName === "browseJobs"
   );
+
+  // fixing flecking issue by delayed loading of job card
+  const [renderJobCard, setRenderJobCard] = useState(false);
+
+  useEffect(() => {
+    if (!isSearching) {
+      const timeoutId = setTimeout(() => {
+        setRenderJobCard(true);
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isSearching]);
+
   return (
     <div>
-      {isSearching ? (
-        [1, 2, 3, 4, 5].map((loader) => {
-          return (
-            <React.Fragment key={loader}>
-              <JobCardSkeletonLoader logo />
-              <Divider />
-            </React.Fragment>
-          );
-        })
+      {!renderJobCard || isSearching ? (
+        [1, 2, 3, 4, 5].map((loader) => (
+          <React.Fragment key={loader}>
+            <JobCardSkeletonLoader logo />
+            <Divider />
+          </React.Fragment>
+        ))
       ) : !jobs.length ? (
         <NoDataFoundAnimation title="We apologize, but we couldn't find any jobs that match your search criteria." />
       ) : (
@@ -30,12 +42,16 @@ function JobSearchComponent() {
           index = index + 1;
           return (
             <React.Fragment key={job.id}>
-              <JobCard logo jobDetails={job} />
-              <AdSenseCard
-                code={adSenseData?.code}
-                show={index > 0 && index % AD_AFTER_RECORDS === 0}
-              />
-              <Divider />
+              {renderJobCard && (
+                <>
+                  <JobCard logo jobDetails={job} />
+                  <AdSenseCard
+                    code={adSenseData?.code}
+                    show={index > 0 && index % AD_AFTER_RECORDS === 0}
+                  />
+                  <Divider />
+                </>
+              )}
             </React.Fragment>
           );
         })

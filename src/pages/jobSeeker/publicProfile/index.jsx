@@ -68,10 +68,7 @@ export default function PublicProfileComponent() {
     setIsLoading(false);
   };
   const storeProfileAnalytics = async (userId) => {
-    const res = await storeProfileAnalyticsAPI({ user_id: userId });
-    if (res.remote === "success") {
-      console.log(res);
-    }
+    await storeProfileAnalyticsAPI({ user_id: userId });
   };
   useEffect(() => {
     const userId = params.userId;
@@ -451,7 +448,7 @@ export default function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
