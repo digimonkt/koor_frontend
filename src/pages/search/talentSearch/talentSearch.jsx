@@ -10,7 +10,7 @@ function TalentSearchComponent() {
   const { talents, isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
   const adSenseData = adSense.data.find(
-    (item) => item.pageName === "browseTalents"
+    (item) => item.pageName === "browseTalents",
   );
 
   // fixing flecking issue by delayed loading of talent card
@@ -24,7 +24,6 @@ function TalentSearchComponent() {
       return () => clearTimeout(timeoutId);
     }
   }, [isSearching]);
-  console.log(talents);
   return (
     <div>
       {!renderTalentCard || isSearching ? (
