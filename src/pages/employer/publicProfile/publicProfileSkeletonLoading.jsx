@@ -11,20 +11,23 @@ import {
 } from "@mui/material";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
 
 function PublicProfileComponent() {
+  const { isMobileView } = useSelector(({ platform }) => platform);
+
   return (
     <Container>
       <Card
         sx={{
           boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-          borderRadius: "20px",
+          borderRadius: isMobileView ? "0" : "20px",
         }}
       >
         <CardContent
           sx={{
             "&.MuiCardContent-root": {
-              padding: "30px",
+              padding: isMobileView ? "0px" : "30px",
             },
           }}
         >
@@ -35,7 +38,6 @@ function PublicProfileComponent() {
               xs={12}
               sx={{
                 borderRight: "1px solid #CACACA",
-
                 "@media (max-width:992px)": {
                   borderRight: "0",
                 },
@@ -104,9 +106,8 @@ function PublicProfileComponent() {
                     }}
                   >
                     <Skeleton
-                      width={1000}
                       count={3}
-                      style={{ lineHeight: "10px" }}
+                      style={{ lineHeight: "10px", width: "100%" }}
                     />
                   </Typography>
                   <Divider sx={{ borderColor: "#ccc", my: 2 }} />
@@ -152,7 +153,7 @@ function PublicProfileComponent() {
                       mb: 2,
                     }}
                   >
-                    Contact infodsfdfghgh
+                    Contact info
                   </Typography>
                   <Stack direction={"row"} spacing={2} alignItems={"center"}>
                     <Box
@@ -306,7 +307,6 @@ function PublicProfileComponent() {
                       </Typography>
                     </Box>
                   </Stack>
-
                   <Divider sx={{ borderColor: "#cacaca" }} />
                 </Stack>
               </Box>

@@ -23,6 +23,7 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
 import { getColorByRole } from "@utils/generateColor";
 import { useSelector } from "react-redux";
+import { USER_ROLES } from "@utils/enum";
 
 function PublicProfileComponent() {
   const params = useParams();
@@ -71,7 +72,7 @@ function PublicProfileComponent() {
         isMobileView ? { marginBottom: "60px" } : { marginTop: "67px", py: 3 }
       }
     >
-      {isLoading ? (
+      {!isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
         <Container sx={isMobileView ? { padding: 0 } : {}}>
@@ -85,7 +86,9 @@ function PublicProfileComponent() {
             <CardContent
               sx={{
                 "&.MuiCardContent-root": {
-                  padding: "30px 0px 30px 40px",
+                  padding: isMobileView
+                    ? "30px 0px 30px 16px"
+                    : "30px 0px 30px 40px",
                 },
               }}
             >
@@ -102,7 +105,7 @@ function PublicProfileComponent() {
                     },
                   }}
                 >
-                  <Box sx={{ paddingRight: "45px" }}>
+                  <Box sx={{ paddingRight: isMobileView ? "16px" : "45px" }}>
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
@@ -224,6 +227,11 @@ function PublicProfileComponent() {
                           {jobList.length ? (
                             jobList.map((item, index) => (
                               <li
+                                className={
+                                  role === USER_ROLES.jobSeeker
+                                    ? "beforeClass1"
+                                    : "beforeClass2"
+                                }
                                 key={index}
                                 style={{
                                   borderBottom:
@@ -300,7 +308,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
