@@ -1,6 +1,5 @@
 import Header from "./components/header";
 import React, { Suspense, useEffect } from "react";
-// import Footer from "./components/footer";
 import {
   AUTHENTICATED_ROUTES,
   ROUTES,
