@@ -80,7 +80,7 @@ const Home = () => {
     }
     setMessage(false);
     navigate(
-      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`,
+      `/search/jobs?search=${searchValue}&categories=${categories}&location=${location}`
     );
   };
   const getTopJobCategories = async () => {
@@ -90,12 +90,11 @@ const Home = () => {
         res.data.total_jobs > 100
           ? `${Math.floor(res.data.total_jobs / 100) * 100}+`
           : res.data.total_jobs;
-      console.log(displayValue);
       const jobsrCategoriesWithTypes = res.data.job_categories.map(
         (jobCategories) => ({
           ...jobCategories,
           categoryType: "job",
-        }),
+        })
       );
       setTopJobCategories((prev) => [...prev, ...jobsrCategoriesWithTypes]);
       setTotalJobs(displayValue);
@@ -114,7 +113,7 @@ const Home = () => {
         (tenderCategory) => ({
           ...tenderCategory,
           categoryType: "tender",
-        }),
+        })
       );
 
       setTopJobCategories((prev) => [...prev, ...tenderCategoriesWithTypes]);

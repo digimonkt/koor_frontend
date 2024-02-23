@@ -55,8 +55,7 @@ const JobCategory = ({ handleNext }) => {
         payload.append("category", key);
       }
     }
-    const res = await UpdateJobSeekerCategoriesAPI(payload);
-    console.log({ updated: res });
+    await UpdateJobSeekerCategoriesAPI(payload);
     setUpdating(false);
     handleNext();
   };

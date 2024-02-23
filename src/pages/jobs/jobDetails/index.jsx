@@ -163,7 +163,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -190,15 +190,9 @@ const JobDetails = () => {
         isSaved: !prevState.isSaved,
       }));
       if (!details.isSaved) {
-        const resp = await saveJobAPI(jobId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await saveJobAPI(jobId);
       } else {
-        const resp = await unSaveJobAPI(jobId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await unSaveJobAPI(jobId);
       }
     } else if (details.expiredInDays <= 0) {
       setExpiredWarning(true);
@@ -310,7 +304,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -397,14 +391,14 @@ const JobDetails = () => {
                             <AttachmentIcon
                               sx={{
                                 color: getColorByRole(
-                                  role === "" ? USER_ROLES.employer : role,
+                                  role === "" ? USER_ROLES.employer : role
                                 ),
                                 rotate: "45deg",
                                 background: alpha(
                                   getColorByRole(
-                                    role === "" ? USER_ROLES.employer : role,
+                                    role === "" ? USER_ROLES.employer : role
                                   ),
-                                  0.3,
+                                  0.3
                                 ),
                                 padding: "3px",
                                 borderRadius: "50%",
@@ -464,13 +458,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  }),
+                                  })
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  }),
+                                  })
                                 );
                               }
                             } else {
@@ -678,7 +672,7 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
-                details.experience,
+                details.experience
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
@@ -697,7 +691,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 6
@@ -707,7 +701,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 12
@@ -725,7 +719,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience,
+                        details.experience
                       )
                         ? "75%"
                         : "250px",
