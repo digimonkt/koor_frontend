@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";
 import { getColorByRole } from "@utils/generateColor";
+// import { USER_ROLES } from "../../../utils/enum";
 
-function JobCostCard({ amount, payPeriod, user, color }) {
+function JobCostCard({ amount, payPeriod, user, color = "" }) {
   const { role } = useSelector((state) => state.auth);
   return (
     <>
@@ -46,7 +47,7 @@ function JobCostCard({ amount, payPeriod, user, color }) {
               width: 100,
               height: 100,
               color: "#CACACA",
-              padding: "10px",
+              borderRadius: "10px",
               "&.MuiAvatar-colorDefault": {
                 background: "#F0F0F0",
               },
