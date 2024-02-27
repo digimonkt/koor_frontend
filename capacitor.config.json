@@ -19,9 +19,9 @@
         "profile",
         "email"
       ],
-      "serverClientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
-      "clientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
-      "androidClientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
+      "serverClientId": "902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com",
+      "clientId": "902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com",
+      "androidClientId": "902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com",
       "forceCodeForRefreshToken": true
     }
   },
@@ -30,6 +30,7 @@
     "namespace": "org.reactjs.example.koor"
   },
   "server": {
-    "url": "http://192.168.0.192:8100"
+    "url": "http://192.168.0.192:8100",
+    "originalUrl": "http://192.168.0.192:8100"
   }
 }

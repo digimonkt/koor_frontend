@@ -2,22 +2,29 @@ import JobCardSkeletonLoader from "../../../components/jobCard/jobCardSkeletonLo
 import {
   Box,
   CardContent,
-  Container,
   Card,
   Grid,
   Stack,
   Typography,
   Divider,
+  Container,
 } from "@mui/material";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 
+const Wrapper = ({ children, isMobileView }) => {
+  if (isMobileView) {
+    return <>{children}</>;
+  }
+  return <Container>{children}</Container>;
+};
+
 function PublicProfileComponent() {
   const { isMobileView } = useSelector(({ platform }) => platform);
 
   return (
-    <Container>
+    <Wrapper isMobileView={isMobileView}>
       <Card
         sx={{
           boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
@@ -27,7 +34,7 @@ function PublicProfileComponent() {
         <CardContent
           sx={{
             "&.MuiCardContent-root": {
-              padding: isMobileView ? "0px" : "30px",
+              padding: isMobileView ? "10px" : "30px",
             },
           }}
         >
@@ -50,10 +57,14 @@ function PublicProfileComponent() {
                   justifyContent={{ xs: "start", lg: "space-between" }}
                   alignItems={"center"}
                 >
-                  <Stack direction={"row"} spacing={2}>
+                  <Stack direction={"row"} p={2} gap={2}>
                     <Skeleton
                       circle
-                      style={{ width: "88px", height: "88px" }}
+                      style={{
+                        width: "88px",
+                        height: "88px",
+                        marginLeft: "50px",
+                      }}
                     />
                     <Box>
                       <Typography
@@ -107,7 +118,11 @@ function PublicProfileComponent() {
                   >
                     <Skeleton
                       count={3}
-                      style={{ lineHeight: "10px", width: "100%" }}
+                      style={{
+                        lineHeight: "10px",
+                        width: "100%",
+                        marginLeft: "10px",
+                      }}
                     />
                   </Typography>
                   <Divider sx={{ borderColor: "#ccc", my: 2 }} />
@@ -314,7 +329,7 @@ function PublicProfileComponent() {
           </Grid>
         </CardContent>
       </Card>
-    </Container>
+    </Wrapper>
   );
 }
 

@@ -72,7 +72,7 @@ function PublicProfileComponent() {
         isMobileView ? { marginBottom: "60px" } : { marginTop: "67px", py: 3 }
       }
     >
-      {!isLoading ? (
+      {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
         <Container sx={isMobileView ? { padding: 0 } : {}}>
@@ -308,7 +308,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber
+                                  userDetails.mobileNumber,
                               )}
                             </Typography>
                             <Typography

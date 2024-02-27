@@ -54,7 +54,7 @@ const CreateResumeComponent = () => {
           const countryCode = val.mobile_number.international.split(" ")[0];
           const mobileNumber = (val.mobile_number.value || "").replace(
             countryCode,
-            ""
+            "",
           );
           return {
             ...val,
@@ -116,7 +116,7 @@ const CreateResumeComponent = () => {
 
   const handleRemoveReference = (idToRemove) => {
     const updatedReferences = formik.values.reference.filter(
-      (ref) => ref.id !== idToRemove
+      (ref) => ref.id !== idToRemove,
     );
 
     formik.setFieldValue("reference", updatedReferences);
@@ -150,23 +150,23 @@ const CreateResumeComponent = () => {
           newState[key]?.forEach((reference, referenceIndex) => {
             formik.setFieldValue(
               `reference[${referenceIndex}].name`,
-              reference?.name || ""
+              reference?.name || "",
             );
 
             formik.setFieldValue(
               `reference[${referenceIndex}].country_code`,
-              reference?.country_code || "+91"
+              reference?.country_code || "+91",
             );
 
             formik.setFieldValue(`reference[${referenceIndex}].mobile_number`, {
               national: reference?.mobile_number
                 ? formatPhoneNumber(
-                    reference.country_code + reference?.mobile_number
+                    reference.country_code + reference?.mobile_number,
                   )
                 : "",
               international: reference?.mobile_number
                 ? formatPhoneNumberIntl(
-                    reference.country_code + reference?.mobile_number
+                    reference.country_code + reference?.mobile_number,
                   )
                 : "",
               value: reference?.country_code + reference?.mobile_number,
@@ -174,7 +174,7 @@ const CreateResumeComponent = () => {
 
             formik.setFieldValue(
               `reference[${referenceIndex}].email`,
-              reference?.email || ""
+              reference?.email || "",
             );
           });
         }
@@ -321,7 +321,7 @@ const CreateResumeComponent = () => {
                       if (!isValid) {
                         formik.setFieldError(
                           `reference[${idx}].mobile_number`,
-                          "Invalid Mobile Number"
+                          "Invalid Mobile Number",
                         );
                       }
                     }}
@@ -412,7 +412,7 @@ const CreateResumeComponent = () => {
             display="flex"
             flexDirection="column"
           >
-            <Box mt={2}>
+            <Box mt={2} display="flex" flexWrap="nowrap">
               {isMobileView && (
                 <IconButton onClick={() => setOpenResume(false)}>
                   <SVG.LeftArrow />
