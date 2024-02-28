@@ -228,7 +228,6 @@ const searchSlice = createSlice({
     // jobs
     builder.addCase(searchJobs.pending, (state, action) => {
       state.isSearching = true;
-      state = initialState;
     });
     builder.addCase(searchJobs.fulfilled, (state, action) => {
       state.isSearching = false;
@@ -243,7 +242,6 @@ const searchSlice = createSlice({
     // talent
     builder.addCase(searchTalent.pending, (state, action) => {
       state.isSearching = true;
-      state = initialState;
     });
     builder.addCase(searchTalent.fulfilled, (state, action) => {
       state.isSearching = false;
@@ -258,7 +256,6 @@ const searchSlice = createSlice({
     // Tender
     builder.addCase(searchTender.pending, (state, action) => {
       state.isSearching = true;
-      state = initialState;
     });
     builder.addCase(searchTender.fulfilled, (state, action) => {
       state.isSearching = false;
@@ -273,7 +270,6 @@ const searchSlice = createSlice({
     // Vendor
     builder.addCase(searchVendor.pending, (state, action) => {
       state.isSearching = true;
-      state = initialState;
     });
     builder.addCase(searchVendor.fulfilled, (state, action) => {
       state.isSearching = false;
