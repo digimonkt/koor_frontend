@@ -96,7 +96,7 @@ function Search({ searchTypeForJob }) {
         break;
       default:
         setSearchName(searchType);
-        return "Unknown search type";
+        return "Unknown search type"; // Adding a defaultcase
     }
   };
   const getAdSenseList = async () => {
@@ -147,7 +147,7 @@ function Search({ searchTypeForJob }) {
       default:
         break;
     }
-  }, [search, page, totalPages, advanceFilter, orderBy, sortBy]);
+  }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
 
   const pagination = () => {
     return (

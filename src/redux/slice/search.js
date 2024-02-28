@@ -285,7 +285,6 @@ const searchSlice = createSlice({
     });
   },
 });
-
 export const { setJobPage, setAdvanceFilter, setSearchTrue, setTotalItems } =
   searchSlice.actions;
 export default searchSlice.reducer;
