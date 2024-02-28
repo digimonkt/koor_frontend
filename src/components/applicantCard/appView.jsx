@@ -17,8 +17,8 @@ function AppView({ prop }) {
       <Stack
         direction={{ xs: "column", lg: "row" }}
         spacing={{ xs: "2", lg: "2" }}
-        alignItems={{ xs: "flex-start", lg: "center" }}
-        justifyContent={{ xs: "center", lg: "space-between" }}
+        alignItems={{ xs: "flex-start" }}
+        justifyContent={{ xs: "space-evenly" }}
         className="border-recent"
       >
         <Stack
@@ -77,7 +77,9 @@ function AppView({ prop }) {
                 paddingLeft: "10px",
               }}
             >
-              {`${jobOrTenderDetails?.title?.substring(0, 50)}...`}
+              {jobOrTenderDetails?.title?.lenght > 50
+                ? `${jobOrTenderDetails?.title?.substring(0, 50)}...`
+                : jobOrTenderDetails?.title}
             </Box>
 
             <div className="recent-descrition">
@@ -125,7 +127,7 @@ function AppView({ prop }) {
               <br /> requirements with:{" "}
             </span>
             <Stack
-              sx={{ ...sx, overflowX: "scroll", width: "160px" }}
+              sx={{ ...sx, overflowX: "scroll", width: "210px" }}
               direction={"row"}
               alignItems={"center"}
               spacing={1}
