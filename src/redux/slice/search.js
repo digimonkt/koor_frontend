@@ -222,7 +222,9 @@ const searchSlice = createSlice({
     setSearchTrue: (state) => {
       state.isSearching = true;
     },
-    resetState: () => initialState,
+    setTotalItems: (state, action) => {
+      state.totalItems = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // jobs
@@ -284,6 +286,6 @@ const searchSlice = createSlice({
   },
 });
 
-export const { setJobPage, setAdvanceFilter, setSearchTrue, resetState } =
+export const { setJobPage, setAdvanceFilter, setSearchTrue, setTotalItems } =
   searchSlice.actions;
 export default searchSlice.reducer;
