@@ -30,6 +30,7 @@ import {
   searchTender,
   searchVendor,
   setJobPage,
+  setTotalItems,
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import { Capacitor } from "@capacitor/core";
@@ -106,12 +107,6 @@ function Search({ searchTypeForJob }) {
       console.log(response.error);
     }
   };
-
-  useEffect(() => {
-    if (adSense.data.length < 1) {
-      getAdSenseList();
-    }
-  }, [adSense]);
   useEffect(() => {
     setSearchType(params.type);
     const search = searchParams.get("search") || "";
@@ -120,12 +115,19 @@ function Search({ searchTypeForJob }) {
   }, [params]);
 
   useEffect(() => {
+    if (adSense.data.length < 1) {
+      getAdSenseList();
+    }
+  }, [adSense]);
+
+  useEffect(() => {
+    dispatch(setTotalItems(0));
     const payload = {
       search,
       order_by: orderBy,
       search_by: sortBy,
     };
-    switch (searchType || searchTypeForJob) {
+    switch (params.type || searchTypeForJob) {
       case SEARCH_TYPE.jobs:
         setSearchPlaceHolder("Jobs");
         dispatch(searchJobs(payload));
