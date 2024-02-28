@@ -30,7 +30,6 @@ import {
   searchTender,
   searchVendor,
   setJobPage,
-  setTotalItems,
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import { Capacitor } from "@capacitor/core";
@@ -96,7 +95,7 @@ function Search({ searchTypeForJob }) {
         break;
       default:
         setSearchName(searchType);
-        return "Unknown search type";
+        return "Unknown search type"; // Adding a defaultcase
     }
   };
   const getAdSenseList = async () => {
@@ -121,7 +120,6 @@ function Search({ searchTypeForJob }) {
   }, [params]);
 
   useEffect(() => {
-    dispatch(setTotalItems(0));
     const payload = {
       search,
       order_by: orderBy,
@@ -147,7 +145,7 @@ function Search({ searchTypeForJob }) {
       default:
         break;
     }
-  }, [search, page, totalPages, advanceFilter, orderBy, sortBy]);
+  }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
 
   const pagination = () => {
     return (
