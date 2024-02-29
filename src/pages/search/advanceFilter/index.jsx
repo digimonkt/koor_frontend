@@ -799,6 +799,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             resize: "none",
                             display: "flex",
                             alignItems: "center",
+                            color:
+                              selectedFilter === filter.id
+                                ? "#000 !important"
+                                : "gray !important",
                           }}
                           onClick={() => handleSelectFilter(filter)}
                         >

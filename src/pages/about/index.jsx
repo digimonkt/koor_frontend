@@ -8,6 +8,8 @@ import { OTHER_BUTTON } from "../../utils/constants/constants";
 import HomeSection from "../home/homeSection";
 import FeatureSection from "../home/featureSection";
 import DialogBox from "@components/dialogBox";
+import { useSelector } from "react-redux";
+import { USER_ROLES } from "../../utils/enum";
 
 const aboutImg = [
   {
@@ -16,6 +18,7 @@ const aboutImg = [
 ];
 
 const AboutUs = () => {
+  const { role } = useSelector((state) => state.auth);
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleCommingSoon = () => {
@@ -129,17 +132,24 @@ const AboutUs = () => {
                     {OTHER_BUTTON.map((item, index) => {
                       return (
                         <>
-                          <Link
-                            sx={{ textTransform: "capitalize" }}
-                            key={index}
-                            variant="contained"
-                            className={styles.btn_about}
-                            to={`${item.url}`}
-                          >
-                            <span className={styles.icon}>{item.icon}</span>
-                            <span className="mx-2">{item.text}</span>
-                            {item.svg}
-                          </Link>
+                          <>
+                            {item.section === "talents" &&
+                            role !== USER_ROLES.employer ? (
+                              ""
+                            ) : (
+                              <Link
+                                sx={{ textTransform: "capitalize" }}
+                                key={index}
+                                variant="contained"
+                                className={styles.btn_about}
+                                to={`${item.url}`}
+                              >
+                                <span className={styles.icon}>{item.icon}</span>
+                                <span className="mx-2">{item.text}</span>
+                                {item.svg}
+                              </Link>
+                            )}
+                          </>
                         </>
                       );
                     })}
@@ -150,9 +160,21 @@ const AboutUs = () => {
           </Container>
         </Box>
         <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
-          <div className="add-content">
-            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
-          </div>
+          <Box
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              width: "100%",
+              textDecoration: "capitalize",
+              color: "#eea23d",
+            }}
+          >
+            <h2 className="mb-4">Stay In Touch</h2>
+            <h1 className="mb-4" style={{ color: "#000" }}>
+              Mobile App Is Coming Soon!
+            </h1>
+          </Box>
         </DialogBox>
       </Box>
     </>

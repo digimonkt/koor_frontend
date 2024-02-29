@@ -12,6 +12,7 @@ import {
 
 import { Link, useLocation } from "react-router-dom";
 import { menu } from "./helper";
+import XIcon from "@mui/icons-material/X";
 import { SVG } from "../../assets/svg";
 import { useState, useEffect } from "react";
 import { getTopCategoriesAPI } from "../../api/job";
@@ -547,7 +548,7 @@ const InnerFooter = () => {
             }}
           >
             <a href="#!">
-              <SVG.TwitterIcon />
+              <XIcon />
             </a>
             <a href="#!">
               <SVG.YoutubeIcon />
