@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import styles from "./resource.module.css";
 import { Link, useParams } from "react-router-dom";
+import XIcon from "@mui/icons-material/X";
 import { SVG } from "../../assets/svg";
 import Content from "./Content";
 import { getResourceDetailsAPI } from "../../api/common";
@@ -57,7 +58,7 @@ const Resource = () => {
                       <p className={styles.resource_share_p}>Share:</p>
                       <div className={styles.resource_social_div}>
                         <Link className={styles.social_link}>
-                          <SVG.TwitterIcon className={styles.social_icon} />
+                          <XIcon className={styles.social_icon} />
                         </Link>
                         <Link className={styles.social_link}>
                           <SVG.InstagramIcon className={styles.social_icon} />
