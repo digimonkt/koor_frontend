@@ -150,9 +150,21 @@ const AboutUs = () => {
           </Container>
         </Box>
         <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
-          <div className="add-content">
-            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
-          </div>
+          <Box
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              width: "100%",
+              textDecoration: "capitalize",
+              color: "#eea23d",
+            }}
+          >
+            <h2 className="mb-4">Stay In Touch</h2>
+            <h1 className="mb-4" style={{ color: "#000" }}>
+              Mobile App Is Coming Soon!
+            </h1>
+          </Box>
         </DialogBox>
       </Box>
     </>

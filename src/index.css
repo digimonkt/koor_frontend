@@ -4,6 +4,9 @@
   height: 44px;
   width: 163px;
 }
+.ql-align-justify {
+  margin: 0px !important;
+}
 
 .resumelistContent ul li {
   list-style: none;

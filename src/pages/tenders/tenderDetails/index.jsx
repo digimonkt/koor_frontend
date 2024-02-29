@@ -31,6 +31,7 @@ import dayjs from "dayjs";
 import urlcat from "urlcat";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_ROLES } from "../../../utils/enum";
+import { formatCommaText } from "@utils/constants/utility";
 import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
@@ -756,9 +757,10 @@ function TenderDetailsComponent() {
                   >
                     {item?.title}
                   </Link>
+                  -
                   <span>
-                    {item?.city ? "- " + item.city + "," : ""}{" "}
-                    {item?.city ? item?.country : "- " + item?.country}
+                    {" "}
+                    {formatCommaText(item.city, item.country)}
                     {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                 </p>
