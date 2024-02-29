@@ -113,6 +113,7 @@ function TenderDetailsComponent() {
   const [isSharing, setIsSharing] = useState(false);
   const [numLines, setNumLines] = useState(details?.description?.length);
   const textWrapperStyle = {
+    margin: "0 !important",
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
