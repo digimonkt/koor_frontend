@@ -12,7 +12,7 @@ import { generateFileUrl } from "../../utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "../../api/employer";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { showDay } from "@utils/constants/utility";
+import { showDay, formatCommaText } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
@@ -31,7 +31,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3
+      prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
   const textWrapperStyle = {
@@ -74,8 +74,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -127,7 +127,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -202,7 +202,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             navigate(
                               urlcat("/employer/jobs/post", {
                                 jobId: jobDetails?.id,
-                              })
+                              }),
                             );
                           }
                         }}
@@ -322,7 +322,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             >
               <ChipBox
                 sx={{ px: 1.5 }}
-                label={jobDetails?.country.title || "Dusseldorf"}
+                label={formatCommaText(
+                  jobDetails?.city.title,
+                  jobDetails?.country.title,
+                )}
                 icon={<>{<SVG.LocationIcon />}</>}
               />
               {jobDetails?.duration ? (
@@ -446,7 +449,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -523,7 +526,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        })
+                        }),
                       );
                     }
                   }}
