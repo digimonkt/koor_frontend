@@ -220,7 +220,6 @@ const JobDetails = () => {
 
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      // Convert base64 string to Blob
       const byteCharacters = atob(base64String);
       const byteArrays = new Uint8Array(byteCharacters.length);
 
@@ -232,13 +231,10 @@ const JobDetails = () => {
         type: fileType(url) || "application/octet-stream",
       });
 
-      // Create a download link
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = downloadUrl;
-      a.download = fileName || "file"; // Default filename is "file"
-
-      // Append the link to the document and click it
+      a.download = fileName || "file";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
