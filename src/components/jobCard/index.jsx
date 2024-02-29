@@ -386,7 +386,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <span>
                       {jobDetails.company === null &&
                       jobDetails.companyLogo === null
-                        ? jobDetails.user.name
+                        ? ` ${jobDetails.user.name}`
                         : " Koor"}
                     </span>
                   </div>
