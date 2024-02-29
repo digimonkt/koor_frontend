@@ -113,7 +113,6 @@ function TenderDetailsComponent() {
   const [isSharing, setIsSharing] = useState(false);
   const [numLines, setNumLines] = useState(details?.description?.length);
   const textWrapperStyle = {
-    margin: "0 !important",
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
@@ -123,7 +122,7 @@ function TenderDetailsComponent() {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? details?.description?.length : 3,
+      prevNumLines === 3 ? details?.description?.length : 3
     );
   };
   const getTenderDetails = async (tenderId) => {
@@ -225,7 +224,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -297,7 +296,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -330,7 +329,7 @@ function TenderDetailsComponent() {
                           cursor: "pointer",
                           background: "none",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                         }}
                         onClick={handleSeeMoreClick}
@@ -415,7 +414,7 @@ function TenderDetailsComponent() {
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
                   color={getColorByRole(
-                    role === "" ? USER_ROLES.employer : role,
+                    role === "" ? USER_ROLES.employer : role
                   )}
                   amount={details.budgetAmount}
                   user={details?.user}
@@ -453,13 +452,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {
@@ -530,10 +529,10 @@ function TenderDetailsComponent() {
                         sx={{
                           height: "44px",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                           border: `2px solid ${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )}`,
                         }}
                         onClick={() => {
@@ -575,10 +574,10 @@ function TenderDetailsComponent() {
                       <OutlinedButton
                         sx={{
                           color: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
@@ -612,10 +611,10 @@ function TenderDetailsComponent() {
                       <OutlinedButton
                         sx={{
                           color: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
@@ -723,7 +722,7 @@ function TenderDetailsComponent() {
                         sx={{
                           textDecoration: "none",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                           fontWeight: 600,
                         }}
@@ -749,7 +748,7 @@ function TenderDetailsComponent() {
                   <Link
                     style={{
                       color: getColorByRole(
-                        role === "" ? USER_ROLES.employer : role,
+                        role === "" ? USER_ROLES.employer : role
                       ),
                     }}
                     to={urlcat("/tender/details/:tenderId", {
