@@ -2513,8 +2513,9 @@ input.employersearch {
 }
 
 .squer-width {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  object-fit: contain;
+  height: 100%;
 }
 
 .required-field {
