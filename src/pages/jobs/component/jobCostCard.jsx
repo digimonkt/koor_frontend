@@ -1,3 +1,4 @@
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React from "react";
@@ -41,23 +42,30 @@ function JobCostCard({ amount, payPeriod, user, color = "" }) {
         }}
       >
         <div className={`${styles.lotusimg}`}>
-          <Avatar
-            square={true}
-            sx={{
-              width: 100,
-              height: 100,
-              color: "#CACACA",
-              borderRadius: "10px",
-              "&.MuiAvatar-colorDefault": {
-                background: "#F0F0F0",
-              },
-              "@media (max-width:992px)": {
-                width: "70px",
-                height: "70px",
-              },
-            }}
-            src={generateFileUrl(user.image?.path)}
-          />
+          <div className="squer-width" style={{ width: "100px" }}>
+            <Avatar
+              sx={{
+                width: "100%",
+                height: "100%",
+                margin: "auto",
+                color: "#CACACA",
+                fontSize: "15rem",
+                borderRadius: "10px",
+                "&.MuiAvatar-colorDefault": {
+                  background: "#F0F0F0",
+                },
+              }}
+              src={generateFileUrl(user.image?.path)}
+            >
+              <BusinessCenterOutlinedIcon
+                sx={{
+                  width: "100%",
+                  padding: "30px",
+                  height: "100%",
+                }}
+              />
+            </Avatar>
+          </div>
           <Box>
             <h3>
               <Link

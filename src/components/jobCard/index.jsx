@@ -14,6 +14,7 @@ import { updateEmployerJobStatusAPI } from "../../api/employer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { showDay, formatCommaText } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import DialogBox from "@components/dialogBox";
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
@@ -144,14 +145,21 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     height: "100%",
                     margin: "auto",
                     color: "#CACACA",
-                    borderRadius: "0px",
+                    fontSize: "15rem",
+                    borderRadius: "10px",
                     "&.MuiAvatar-colorDefault": {
                       background: "#F0F0F0",
                     },
                   }}
                   src={generateFileUrl(jobDetails?.user?.image?.path || "")}
                 >
-                  <SVG.SuitcaseJob />
+                  <BusinessCenterOutlinedIcon
+                    sx={{
+                      width: "100%",
+                      padding: "30px",
+                      height: "100%",
+                    }}
+                  />
                 </Avatar>
               </div>
               {matches ? (
