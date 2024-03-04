@@ -616,11 +616,7 @@ const JobDetails = () => {
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
                           if (details.expiredInDays > 0) {
-                            if (isLoggedIn) {
-                              window.open(details.websiteLink, "_blank");
-                            } else {
-                              setRegistrationWarning(true);
-                            }
+                            window.open(details.websiteLink, "_blank");
                           } else {
                             setExpiredWarning(true);
                           }
