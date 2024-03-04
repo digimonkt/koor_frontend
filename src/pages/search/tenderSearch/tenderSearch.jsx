@@ -12,7 +12,7 @@ function TenderSearchComponent() {
   const { tenders, isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
   const adSenseData = adSense.data.find(
-    (item) => item.pageName === "browseTenders"
+    (item) => item.pageName === "browseTenders",
   );
 
   // fixing flecking issue by delayed loading of tender card
@@ -21,7 +21,7 @@ function TenderSearchComponent() {
     if (!isSearching) {
       const timeoutId = setTimeout(() => {
         setRenderTenderCard(true);
-      }, 1000);
+      }, 100);
 
       return () => clearTimeout(timeoutId);
     }

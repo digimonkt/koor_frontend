@@ -10,7 +10,7 @@ function VendorSearchComponent() {
   const { vendors, isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
   const adSenseData = adSense.data.find(
-    (item) => item.pageName === "browseVendors"
+    (item) => item.pageName === "browseVendors",
   );
 
   // fixing flecking issue by delayed loading of vendor card
@@ -20,7 +20,7 @@ function VendorSearchComponent() {
     if (!isSearching) {
       const timeoutId = setTimeout(() => {
         setRenderVendorCard(true);
-      }, 1000);
+      }, 100);
 
       return () => clearTimeout(timeoutId);
     }
