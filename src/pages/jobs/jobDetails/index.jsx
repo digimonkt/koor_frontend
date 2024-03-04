@@ -612,7 +612,6 @@ const JobDetails = () => {
                           </>,
                           "Apply on employer's website",
                         ]}
-                        // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
                           if (details.expiredInDays > 0) {
