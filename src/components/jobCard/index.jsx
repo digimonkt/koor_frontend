@@ -488,7 +488,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               }}
               className="pricebox py-3 upto-slide"
             >
-              {jobDetails?.budgetAmount ? (
+              {jobDetails?.budgetAmount > 0 && jobDetails?.budgetAmount ? (
                 <>
                   <span className="d-block">UP TO</span>
                   <h4>

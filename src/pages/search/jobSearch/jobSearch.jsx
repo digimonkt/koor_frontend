@@ -10,7 +10,7 @@ function JobSearchComponent() {
   const { jobs, isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
   const adSenseData = adSense.data.find(
-    (item) => item.pageName === "browseJobs"
+    (item) => item.pageName === "browseJobs",
   );
 
   // fixing flecking issue by delayed loading of job card
@@ -20,7 +20,7 @@ function JobSearchComponent() {
     if (!isSearching) {
       const timeoutId = setTimeout(() => {
         setRenderJobCard(true);
-      }, 1000);
+      }, 100);
 
       return () => clearTimeout(timeoutId);
     }

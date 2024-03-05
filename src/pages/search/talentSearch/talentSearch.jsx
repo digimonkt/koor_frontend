@@ -19,7 +19,7 @@ function TalentSearchComponent() {
     if (!isSearching) {
       const timeoutId = setTimeout(() => {
         setRenderTalentCard(true);
-      }, 1000);
+      }, 100);
 
       return () => clearTimeout(timeoutId);
     }
