@@ -444,7 +444,7 @@ const Home = () => {
             </Box>
             <Box sx={{ width: "100%" }}>
               <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
-                Listings from the top companies
+                Listings from the top institutions
               </Typography>
               <Grid
                 container
@@ -469,7 +469,6 @@ const Home = () => {
               </Grid>
             </Box>
           </Container>
-
           <Box className={`${styles.home_back}`}>
             <Box className={`${styles.home_powerfull_box}`}>
               <Box>
