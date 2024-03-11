@@ -58,7 +58,9 @@ export const JOB_ORDER_BY = {
 };
 
 export const JOB_SORT_BY = {
-  salary: "salary",
+  // salary: "salary",
+  active: "active",
+  expired: "expired",
   expiration: "expiration",
   created: "created_at",
 };
@@ -67,7 +69,9 @@ export const TENDER_ORDER_BY = {
   descending: "descending",
 };
 export const TENDER_SORT_BY = {
-  budget: "budget",
+  // budget: "budget",
+  active: "active",
+  expired: "expired",
   expiration: "expiration",
   created: "created_at",
 };
