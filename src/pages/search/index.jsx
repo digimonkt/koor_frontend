@@ -235,11 +235,6 @@ function Search({ searchTypeForJob }) {
                     {totalItems || 0}
                   </Box>
                 }
-                // icon={
-                //   <IconButton>
-                //     <SVG.CalendarMonth />
-                //   </IconButton>
-                // }
               />
             </Box>
           </>
