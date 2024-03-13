@@ -82,9 +82,7 @@ function MyProfile() {
       prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
     );
   };
-  useEffect(() => {
-    console.log("first", { toggle });
-  }, [toggle]);
+
   const {
     auth: { currentUser },
     choices: { countries, cities, sectors },

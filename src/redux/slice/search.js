@@ -39,7 +39,7 @@ const initialState = {
 
 export const searchJobs = createAsyncThunk(
   "search/searchJobs",
-  async (data, { getState, rejectWithValue }) => {
+  async (data, { getState, dispatch, rejectWithValue }) => {
     const {
       search: { page, limit, advanceFilter },
     } = getState();
@@ -54,17 +54,32 @@ export const searchJobs = createAsyncThunk(
         delete payload[key];
       }
     }
-    const res = await getSearchJobsAPI({ ...payload });
+    let res = await getSearchJobsAPI({ ...payload });
     if (res.remote === "success") {
+      dispatch(setSearchTrue(false));
       return res.data;
+    } else if (res.error.errors.detail === "I") {
+      res = await getTenderSearchAPI({
+        ...payload,
+        page: 1,
+      });
+      if (res.remote === "success") {
+        dispatch(setSearchTrue(false));
+        dispatch(setJobPage(1));
+        return res.data;
+      } else {
+        dispatch(setSearchTrue(false));
+        return rejectWithValue(res.error);
+      }
     } else {
+      dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
   },
 );
 export const searchTalent = createAsyncThunk(
   "search/searchTalent",
-  async (data, { getState, rejectWithValue }) => {
+  async (data, { getState, dispatch, rejectWithValue }) => {
     const {
       search: { page, limit, advanceFilter },
     } = getState();
@@ -79,13 +94,28 @@ export const searchTalent = createAsyncThunk(
         delete payload[key];
       }
     }
-    const res = await searchUserByRole({
+    let res = await searchUserByRole({
       ...payload,
       role: USER_ROLES.jobSeeker,
     });
     if (res.remote === "success") {
+      dispatch(setSearchTrue(false));
       return res.data;
+    } else if (res.error.errors.detail === "I") {
+      res = await getTenderSearchAPI({
+        ...payload,
+        page: 1,
+      });
+      if (res.remote === "success") {
+        dispatch(setSearchTrue(false));
+        dispatch(setJobPage(1));
+        return res.data;
+      } else {
+        dispatch(setSearchTrue(false));
+        return rejectWithValue(res.error);
+      }
     } else {
+      dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
   },
@@ -93,7 +123,7 @@ export const searchTalent = createAsyncThunk(
 
 export const searchTender = createAsyncThunk(
   "search/tenders",
-  async (data, { getState, rejectWithValue }) => {
+  async (data, { getState, dispatch, rejectWithValue }) => {
     const {
       search: { page, limit, advanceFilter },
     } = getState();
@@ -108,12 +138,27 @@ export const searchTender = createAsyncThunk(
         delete payload[key];
       }
     }
-    const res = await getTenderSearchAPI({
+    let res = await getTenderSearchAPI({
       ...payload,
     });
     if (res.remote === "success") {
+      dispatch(setSearchTrue(false));
       return res.data;
+    } else if (res.error.errors.detail === "I") {
+      res = await getTenderSearchAPI({
+        ...payload,
+        page: 1,
+      });
+      if (res.remote === "success") {
+        dispatch(setSearchTrue(false));
+        dispatch(setJobPage(1));
+        return res.data;
+      } else {
+        dispatch(setSearchTrue(false));
+        return rejectWithValue(res.error);
+      }
     } else {
+      dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
   },
@@ -121,7 +166,7 @@ export const searchTender = createAsyncThunk(
 
 export const searchVendor = createAsyncThunk(
   "search/searchVendor",
-  async (data, { getState, rejectWithValue }) => {
+  async (data, { getState, dispatch, rejectWithValue }) => {
     const {
       search: { page, limit, advanceFilter },
     } = getState();
@@ -136,17 +181,34 @@ export const searchVendor = createAsyncThunk(
         delete payload[key];
       }
     }
-    const res = await searchUserByRole({
+    let res = await searchUserByRole({
       ...payload,
       role: USER_ROLES.vendor,
     });
     if (res.remote === "success") {
+      dispatch(setSearchTrue(false));
       return res.data;
+    } else if (res.error.errors.detail === "I") {
+      dispatch(setSearchTrue(false));
+      res = await getTenderSearchAPI({
+        ...payload,
+        page: 1,
+      });
+      if (res.remote === "success") {
+        dispatch(setSearchTrue(false));
+        dispatch(setJobPage(1));
+        return res.data;
+      } else {
+        dispatch(setSearchTrue(false));
+        return rejectWithValue(res.error);
+      }
     } else {
+      dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
   },
 );
+
 const searchSlice = createSlice({
   name: "search",
   initialState,
@@ -157,8 +219,11 @@ const searchSlice = createSlice({
     setAdvanceFilter: (state, action) => {
       state.advanceFilter = action.payload;
     },
-    setSearchTrue: (state, action) => {
+    setSearchTrue: (state) => {
       state.isSearching = true;
+    },
+    setTotalItems: (state, action) => {
+      state.totalItems = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -220,6 +285,6 @@ const searchSlice = createSlice({
     });
   },
 });
-export const { setJobPage, setAdvanceFilter, setSearchTrue } =
+export const { setJobPage, setAdvanceFilter, setSearchTrue, setTotalItems } =
   searchSlice.actions;
 export default searchSlice.reducer;

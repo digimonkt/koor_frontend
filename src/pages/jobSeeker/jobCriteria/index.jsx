@@ -72,9 +72,6 @@ const JobCriteria = () => {
     setCity(cityVl);
   };
 
-  React.useEffect(() => {
-    console.log({ activeStep });
-  }, [activeStep]);
   return (
     <>
       <div>

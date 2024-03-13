@@ -1,3 +1,4 @@
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { SVG } from "../../assets/svg";
 import { ChipBox } from "../../components/jobCard/style";
 import { Avatar, Box, Chip, Divider, Grid, Stack } from "@mui/material";
@@ -43,10 +44,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
     }
   };
   const updateTender = async (tenderId) => {
-    const res = await updateEmployerTenderStatusAPI(tenderId);
-    if (res.remote === "success") {
-      console.log(res);
-    }
+    await updateEmployerTenderStatusAPI(tenderId);
   };
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
@@ -82,24 +80,30 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               spacing={2}
               justifyContent={"space-between"}
             >
-              <div className="squer-width">
+              <div className="squer-width" style={{ width: "100px" }}>
                 <Avatar
                   sx={{
                     width: "100%",
                     height: "100%",
                     margin: "auto",
                     color: "#CACACA",
-                    borderRadius: "0px !important",
+                    fontSize: "15rem",
+                    borderRadius: "10px",
                     "&.MuiAvatar-colorDefault": {
                       background: "#F0F0F0",
                     },
                   }}
                   src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
                 >
-                  <SVG.SuitcaseJob />
+                  <BusinessCenterOutlinedIcon
+                    sx={{
+                      width: "100%",
+                      padding: "30px",
+                      height: "100%",
+                    }}
+                  />
                 </Avatar>
               </div>
-
               {matches ? (
                 <div>
                   <div className="text-end w-100 mb-4">

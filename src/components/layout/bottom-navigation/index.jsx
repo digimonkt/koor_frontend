@@ -9,9 +9,6 @@ const BottomBar = () => {
   const generatNavbar = (role) => {
     const item = BOTOM_BAR_NAVBAR(role);
     return item.map((item, index) => {
-      if (!item.address) {
-        console.log({ item });
-      }
       return (
         <BottomNavigationAction
           key={index}

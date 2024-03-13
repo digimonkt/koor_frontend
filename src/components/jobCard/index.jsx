@@ -13,8 +13,9 @@ import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "../../api/employer";
 import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { showDay } from "@utils/constants/utility";
+import { showDay, formatCommaText } from "@utils/constants/utility";
 import { USER_ROLES } from "@utils/enum";
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import DialogBox from "@components/dialogBox";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
@@ -25,75 +26,82 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const endRouter = pathParts[pathParts.length - 1];
   const { isMobileView } = useSelector((state) => state.platform);
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState("");
 
-  const [registrationWarning, setRegistrationWarning] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-  const [isStart, setIsStart] = useState(jobDetails?.status);
-  const [applicationStatus, setApplicationStatus] = useState("applied");
-  const [numLines, setNumLines] = useState(3);
+  const [state, setState] = useState({
+    registrationWarning: false,
+    isSaved: false,
+    isStart: jobDetails?.status,
+    applicationStatus: "applied",
+    numLines: 3,
+    searchValue: "",
+  });
+
   const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3,
-    );
+    setState((prev) => ({
+      ...prev,
+      numLines: prev.numLines === 3 ? jobDetails.length : 3,
+    }));
   };
-  console.log(jobDetails);
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
-    WebkitLineClamp: numLines,
+    WebkitLineClamp: state.numLines,
   };
   const handleToggleSave = async () => {
     if (isLoggedIn) {
-      setIsSaved(!isSaved);
-      if (!isSaved) {
+      setState((prev) => ({ ...prev, isSaved: !state.isSaved }));
+      if (!state.isSaved) {
         await saveJobAPI(jobDetails.id);
       } else {
         await unSaveJobAPI(jobDetails.id);
       }
     } else {
-      setRegistrationWarning(true);
+      setState((prev) => ({ ...prev, registrationWarning: true }));
     }
   };
   const matches = useMediaQuery("(max-width:600px)");
   const handleStartPause = async () => {
-    setIsStart(isStart === "active" ? "inactive" : "active");
+    setState((prev) => ({
+      ...prev,
+      isSaved: prev === "active" ? "inactive" : "active",
+    }));
     updateJob(jobDetails.id);
   };
   const updateJob = async (jobId) => {
-    const res = await updateEmployerJobStatusAPI(jobId);
-    if (res.remote === "success") {
-      console.log(res);
-    }
+    await updateEmployerJobStatusAPI(jobId);
   };
   useEffect(() => {
-    if (jobDetails) setIsSaved(jobDetails.isSaved);
+    if (jobDetails) {
+      setState((prev) => ({ ...prev, isSaved: jobDetails.isSaved }));
+    }
   }, [jobDetails]);
   useEffect(() => {
     if (jobDetails.isShortlisted) {
-      setApplicationStatus("Shortlisted");
+      setState((prev) => ({ ...prev, applicationStatus: "Shortlisted" }));
     }
     if (jobDetails.isRejected) {
-      setApplicationStatus("Rejected");
+      setState((prev) => ({ ...prev, applicationStatus: "Rejected" }));
     }
     if (jobDetails.isPlannedInterview) {
-      setApplicationStatus(
-        "Interview planned on " +
+      setState((prev) => ({
+        ...prev,
+        applicationStatus:
+          "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A",
+            "MMMM D, YYYY [at] h:mm A"
           ),
-      );
+      }));
     }
   }, [jobDetails]);
   useEffect(() => {
-    setSearchValue(endRouter);
+    setState((prev) => ({ ...prev, searchValue: endRouter }));
   }, [endRouter]);
   return (
     <div className="job_card">
       <Grid
         justifyContent="space-between"
-        sx={{ alignItems: numLines === 3 ? "center" : "flex-start" }}
+        sx={{ alignItems: state.numLines === 3 ? "center" : "flex-start" }}
         container
         spacing={1.875}
       >
@@ -134,7 +142,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
                 )}
               />
             </Box>
@@ -151,14 +159,21 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     height: "100%",
                     margin: "auto",
                     color: "#CACACA",
-                    borderRadius: "0px",
+                    fontSize: "15rem",
+                    borderRadius: "10px",
                     "&.MuiAvatar-colorDefault": {
                       background: "#F0F0F0",
                     },
                   }}
                   src={generateFileUrl(jobDetails?.user?.image?.path || "")}
                 >
-                  <SVG.SuitcaseJob />
+                  <BusinessCenterOutlinedIcon
+                    sx={{
+                      width: "100%",
+                      padding: "30px",
+                      height: "100%",
+                    }}
+                  />
                 </Avatar>
               </div>
               {matches ? (
@@ -191,7 +206,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                           handleStartPause();
                         }}
                       >
-                        {isStart === "active" ? (
+                        {state.isStart === "active" ? (
                           <>
                             <SVG.PauseIcon />
                             <span className="d-block">Hold</span>
@@ -209,7 +224,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             navigate(
                               urlcat("/employer/jobs/post", {
                                 jobId: jobDetails?.id,
-                              }),
+                              })
                             );
                           }
                         }}
@@ -231,7 +246,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                             className="bookmark"
                             style={{ width: matches ? "auto" : "" }}
                           >
-                            {isSaved ? (
+                            {state.isSaved ? (
                               <>
                                 <SVG.SaveIcon />
                                 <span>Saved</span>
@@ -269,8 +284,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           }}
         >
           <div className="my-jobs">
-            <h2
-            >
+            <h2>
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
                 {jobDetails?.title}
               </Link>
@@ -278,7 +292,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <Chip
                   color={jobDetails.isRejected ? "error" : "success"}
                   size="small"
-                  label={applicationStatus}
+                  label={state.applicationStatus}
                   sx={{
                     flex: "1",
                     marginLeft: "5px",
@@ -315,7 +329,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       }}
                       onClick={handleSeeMoreClick}
                     >
-                      {numLines === 3 ? "See More" : "See Less"}
+                      {state.numLines === 3 ? "See More" : "See Less"}
                     </button>
                   )}
                 </Box>
@@ -333,7 +347,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 {isMobileView && role === USER_ROLES.jobSeeker && (
                   <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
                     <Box className="bookmark">
-                      {isSaved ? (
+                      {state.isSaved ? (
                         <>
                           <SVG.SaveIcon />
                           <span>Saved</span>
@@ -369,7 +383,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             >
               <ChipBox
                 sx={{ px: 1.5 }}
-                label={jobDetails?.country.title || "Dusseldorf"}
+                label={formatCommaText(
+                  jobDetails?.city.title,
+                  jobDetails?.country.title
+                )}
                 icon={<>{<SVG.LocationIcon />}</>}
               />
               {jobDetails?.duration ? (
@@ -552,7 +569,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
               )}
             />
           </Box>
@@ -578,7 +595,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <Box
               sx={{
                 "@media (max-width: 480px)":
-                  searchValue === "manage-jobs" ? {} : { display: "none" },
+                  state.searchValue === "manage-jobs"
+                    ? {}
+                    : { display: "none" },
               }}
               className="pricebox py-3 upto-slide"
             >
@@ -611,7 +630,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       handleStartPause();
                     }}
                   >
-                    {isStart === "active" ? (
+                    {state.isStart === "active" ? (
                       <>
                         <SVG.PauseIcon />
                         <span className="d-block">Hold</span>
@@ -629,7 +648,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         navigate(
                           urlcat("/employer/jobs/post", {
                             jobId: jobDetails?.id,
-                          }),
+                          })
                         );
                       }
                     }}
@@ -668,7 +687,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         handleStartPause();
                       }}
                     >
-                      {isStart === "active" ? (
+                      {state.isStart === "active" ? (
                         <>
                           <SVG.PauseIcon />
                           <span className="d-block">Hold</span>
@@ -686,7 +705,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                           navigate(
                             urlcat("/employer/jobs/post", {
                               jobId: jobDetails?.id,
-                            }),
+                            })
                           );
                         }
                       }}
@@ -710,7 +729,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     className="bookmark"
                     sx={{ "@media (max-width: 480px)": { display: "none" } }}
                   >
-                    {isSaved ? (
+                    {state.isSaved ? (
                       <>
                         <SVG.SaveIcon />
                         <span>Saved</span>
@@ -731,8 +750,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         </Grid>
       </Grid>
       <DialogBox
-        open={registrationWarning}
-        handleClose={() => setRegistrationWarning(false)}
+        open={state.registrationWarning}
+        handleClose={() =>
+          setState((prev) => ({
+            ...prev,
+            registrationWarning: false,
+          }))
+        }
       >
         <div>
           <h1 className="heading">Register as jobseeker</h1>

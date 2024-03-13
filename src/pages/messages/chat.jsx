@@ -1,5 +1,5 @@
 import { Box, Card } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ChatList from "./chatList";
 import ChatBox from "./chatBoxRight";
 import { useSearchParams } from "react-router-dom";
@@ -10,9 +10,7 @@ function ChatComponent() {
   const [searchParams] = useSearchParams();
   const [isSeleted, setIsSeleted] = useState(false);
   const { isMobileView } = useSelector((state) => state.platform);
-  useEffect(() => {
-    console.log({ searchParams });
-  }, [searchParams]);
+
   return (
     <>
       <Card
