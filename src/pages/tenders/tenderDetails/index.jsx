@@ -16,7 +16,6 @@ import {
   SearchButton,
   SolidButton,
 } from "../../../components/button";
-import { cleanHtmlContent } from "@utils/fileUtils";
 import JobCostCard from "../../../pages/jobs/component/jobCostCard";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -38,6 +37,11 @@ import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getJobAttachmentAPI } from "@api/job";
 import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
+import {
+  downloadUrlCreator,
+  fileTypeExtractor,
+  cleanHtmlContent,
+} from "@utils/fileUtils";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -122,7 +126,7 @@ function TenderDetailsComponent() {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? details?.description?.length : 3,
+      prevNumLines === 3 ? details?.description?.length : 3
     );
   };
   const getTenderDetails = async (tenderId) => {
@@ -177,44 +181,12 @@ function TenderDetailsComponent() {
     }
   };
   const handleLoadImage = async (url) => {
-    const fileType = (url) => {
-      const extension = "." + url.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".gif": "image/gif",
-        ".pdf": "application/pdf",
-      };
-
-      return mimeTypes[extension] || "application/octet-stream";
-    };
-
-    const fileName = "attachment";
+    const fileType = fileTypeExtractor(url);
     const response = await getJobAttachmentAPI(url);
 
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
-
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
-      const blob = new Blob([byteArrays], {
-        type: fileType(url) || "application/octet-stream",
-      });
-
-      // Create a download link
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName || "file";
-
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(downloadUrl);
+      downloadUrlCreator(fileType, base64String);
     }
   };
   function handleSendEmail(details) {
@@ -224,7 +196,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -296,7 +268,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -329,7 +301,7 @@ function TenderDetailsComponent() {
                           cursor: "pointer",
                           background: "none",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                         }}
                         onClick={handleSeeMoreClick}
@@ -414,7 +386,7 @@ function TenderDetailsComponent() {
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
                   color={getColorByRole(
-                    role === "" ? USER_ROLES.employer : role,
+                    role === "" ? USER_ROLES.employer : role
                   )}
                   amount={details.budgetAmount}
                   user={details?.user}
@@ -452,13 +424,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {
@@ -529,10 +501,10 @@ function TenderDetailsComponent() {
                         sx={{
                           height: "44px",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                           border: `2px solid ${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )}`,
                         }}
                         onClick={() => {
@@ -574,10 +546,10 @@ function TenderDetailsComponent() {
                       <OutlinedButton
                         sx={{
                           color: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
@@ -607,10 +579,10 @@ function TenderDetailsComponent() {
                       <OutlinedButton
                         sx={{
                           color: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
@@ -718,7 +690,7 @@ function TenderDetailsComponent() {
                         sx={{
                           textDecoration: "none",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                           fontWeight: 600,
                         }}
@@ -744,7 +716,7 @@ function TenderDetailsComponent() {
                   <Link
                     style={{
                       color: getColorByRole(
-                        role === "" ? USER_ROLES.employer : role,
+                        role === "" ? USER_ROLES.employer : role
                       ),
                     }}
                     to={urlcat("/tender/details/:tenderId", {

@@ -22,7 +22,6 @@ import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
 // import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
-import { cleanHtmlContent } from "@utils/fileUtils";
 import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,6 +41,11 @@ import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay, formatCommaText } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
+import {
+  downloadUrlCreator,
+  fileTypeExtractor,
+  cleanHtmlContent,
+} from "@utils/fileUtils";
 
 const JobDetails = () => {
   const params = useParams();
@@ -163,7 +167,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -202,43 +206,12 @@ const JobDetails = () => {
   };
 
   const handleLoadImage = async (url) => {
-    const fileType = (url) => {
-      const extension = "." + url.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".gif": "image/gif",
-        ".pdf": "application/pdf",
-      };
+    const fileType = fileTypeExtractor(url);
 
-      return mimeTypes[extension] || "application/octet-stream";
-    };
-
-    const fileName = "attachment";
     const response = await getJobAttachmentAPI(url);
-
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
-
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
-
-      const blob = new Blob([byteArrays], {
-        type: fileType(url) || "application/octet-stream",
-      });
-
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName || "file";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(downloadUrl);
+      downloadUrlCreator(fileType, base64String);
     }
   };
   const platform = Capacitor.getPlatform();
@@ -300,7 +273,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -387,14 +360,14 @@ const JobDetails = () => {
                             <AttachmentIcon
                               sx={{
                                 color: getColorByRole(
-                                  role === "" ? USER_ROLES.employer : role,
+                                  role === "" ? USER_ROLES.employer : role
                                 ),
                                 rotate: "45deg",
                                 background: alpha(
                                   getColorByRole(
-                                    role === "" ? USER_ROLES.employer : role,
+                                    role === "" ? USER_ROLES.employer : role
                                   ),
-                                  0.3,
+                                  0.3
                                 ),
                                 padding: "3px",
                                 borderRadius: "50%",
@@ -454,13 +427,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  }),
+                                  })
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  }),
+                                  })
                                 );
                               }
                             } else {
@@ -663,7 +636,7 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
-                details.experience,
+                details.experience
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
@@ -682,7 +655,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 6
@@ -692,7 +665,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 12
@@ -710,7 +683,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience,
+                        details.experience
                       )
                         ? "75%"
                         : "250px",

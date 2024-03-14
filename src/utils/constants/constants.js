@@ -44,8 +44,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "Talent"
         : ROLE === USER_ROLES.vendor
-          ? "Tenders"
-          : "Jobs",
+        ? "Tenders"
+        : "Jobs",
     icon:
       ROLE === USER_ROLES.employer ? (
         <SVG.employeUserGroup />
@@ -56,8 +56,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "search/talents"
         : ROLE === USER_ROLES.vendor
-          ? "search/tenders"
-          : "job_seeker/job-feed",
+        ? "search/tenders"
+        : "job_seeker/job-feed",
   },
   {
     label: ROLE === USER_ROLES.employer ? "My posts" : "Saved",
@@ -67,8 +67,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "employer/manage-jobs"
         : ROLE === USER_ROLES.vendor
-          ? "vendor/tender/saved"
-          : "job_seeker/jobs/saved",
+        ? "vendor/tender/saved"
+        : "job_seeker/jobs/saved",
   },
   {
     label: ROLE === USER_ROLES.employer ? "Messages" : "Messages",
@@ -77,8 +77,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "employer/chat"
         : ROLE === USER_ROLES.vendor
-          ? "vendor/chat"
-          : "job_seeker/chat",
+        ? "vendor/chat"
+        : "job_seeker/chat",
   },
 
   {
@@ -93,8 +93,8 @@ export const BOTOM_BAR_NAVBAR = (ROLE) => [
       ROLE === USER_ROLES.employer
         ? "employer/dashboard"
         : ROLE === USER_ROLES.vendor
-          ? "vendor/my-profile"
-          : "job_seeker/my-profile",
+        ? "vendor/my-profile"
+        : "job_seeker/my-profile",
   },
 ];
 
@@ -105,9 +105,36 @@ export const TABS_VALUE = {
 };
 
 export const mimeTypes = {
+  ".txt": "text/plain",
+  ".html": "text/html",
+  ".css": "text/css",
+  ".js": "text/javascript",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
   ".png": "image/png",
   ".gif": "image/gif",
+  ".bmp": "image/bmp",
+  ".webp": "image/webp",
+  ".svg": "image/svg+xml",
+  ".mp3": "audio/mpeg",
+  ".wav": "audio/wav",
+  ".midi": "audio/midi",
+  ".mid": "audio/midi",
+  ".ogg": "audio/ogg",
+  ".mp4": "video/mp4",
+  ".mpeg": "video/mpeg",
+  ".mpg": "video/mpeg",
+  ".mov": "video/quicktime",
+  ".webm": "video/webm",
   ".pdf": "application/pdf",
+  ".doc": "application/msword",
+  ".xls": "application/vnd.ms-excel",
+  ".ppt": "application/vnd.ms-powerpoint",
+  ".json": "application/json",
+  ".xml": "application/xml",
+  ".zip": "application/zip",
+  ".rar": "application/x-rar-compressed",
+  ".tar": "application/x-tar",
+  ".gz": "application/gzip",
+  ".7z": "application/x-7z-compressed",
 };
