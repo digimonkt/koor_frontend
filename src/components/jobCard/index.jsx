@@ -145,6 +145,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     height: "100%",
                     margin: "auto",
                     color: "#CACACA",
+                    maxWidth: "100px",
+                    maxhigh: "100px",
                     fontSize: "15rem",
                     borderRadius: "10px",
                     "&.MuiAvatar-colorDefault": {
@@ -158,6 +160,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       width: "100%",
                       padding: "30px",
                       height: "100%",
+                      maxWidth: "100px",
+                      maxhigh: "100px",
                     }}
                   />
                 </Avatar>
