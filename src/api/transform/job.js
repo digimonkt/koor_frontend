@@ -28,6 +28,7 @@ export const transformJobListResponse = (data) => {
         isApplied: res.is_applied,
         isShortlisted: res.is_shortlisted,
         isRejected: res.is_rejected,
+        isPostedByAdmin: res.post_by_admin,
         isPlannedInterview: res.interview_at,
         hasContract: res.has_contract,
         workingDays: res.working_days,
@@ -118,7 +119,7 @@ export const transformSavedFilter = (data) => {
     id: data.id,
     jobCategories: data.job_category.map((category) => category.id || category),
     jobSubCategory: data.job_sub_category.map(
-      (subCategory) => subCategory.id || subCategory,
+      (subCategory) => subCategory.id || subCategory
     ),
     country: data.country,
     city: data.city,
