@@ -321,12 +321,12 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   <div className="textdes">
                     {tenderDetails.company === null &&
                     tenderDetails.companyLogo === null
-                      ? "Company:"
+                      ? "Institution:"
                       : "Posted By"}
                     <span>
                       {tenderDetails.company === null &&
                       tenderDetails.companyLogo === null
-                        ? tenderDetails.user.name
+                        ? ` ${tenderDetails.user.name}`
                         : " Koor"}
                     </span>
                   </div>

@@ -389,7 +389,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <div className="textdes">
                     {jobDetails.company === null &&
                     jobDetails.companyLogo === null
-                      ? "Company:"
+                      ? "Institution:"
                       : "Posted By"}
                     <span>
                       {jobDetails.company === null &&
