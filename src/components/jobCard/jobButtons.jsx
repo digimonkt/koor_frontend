@@ -32,6 +32,11 @@ const AvatarComponent = ({ imageUrl }) => {
             height: "100%",
             maxWidth: "100px",
             maxhigh: "100px",
+            "@media (max-width: 600px)": {
+              minWidth: "100px",
+              minHeight: "100px",
+              height: "100%",
+            },
           }}
         />
       </Avatar>
@@ -53,12 +58,12 @@ const JobDetailsComponent = ({
   console.log(applied);
   return (
     <>
-      {Boolean(jobDetails) && (
+      {Boolean(jobDetails.budgetAmount) && (
         <div className="pricebox py-3 me-lg-4">
           <span className="d-block">UP TO</span>
           <h4>
             <small>{"$"}</small>
-            {jobDetails.budgetAmount || "3,500"}
+            {jobDetails?.budgetAmount || ""}
           </h4>
           <span>{jobDetails.budgetPayPeriod}</span>
         </div>
