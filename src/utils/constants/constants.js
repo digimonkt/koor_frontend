@@ -109,7 +109,7 @@ export const mimeTypes = {
   ".html": "text/html",
   ".css": "text/css",
   ".js": "text/javascript",
-  ".jpg": "image/jpeg",
+  ".jpg": "image/jpg",
   ".jpeg": "image/jpeg",
   ".png": "image/png",
   ".gif": "image/gif",

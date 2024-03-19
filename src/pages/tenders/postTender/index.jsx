@@ -181,7 +181,7 @@ const PostTender = () => {
     setDescData(content);
     formik.setFieldValue(
       "description",
-      content !== "<p><br></p>" ? content : "",
+      content !== "<p><br></p>" ? content : ""
     );
   };
   const getTenderDetailsById = useCallback(async (tenderId) => {
@@ -215,19 +215,19 @@ const PostTender = () => {
       formik.setFieldValue("cc2", data?.cc2 || "");
       formik.setFieldValue(
         "isApplyThroughKoor",
-        Boolean(data?.isApplyThroughKoor) || false,
+        Boolean(data?.isApplyThroughKoor) || false
       );
       formik.setFieldValue(
         "isApplyThroughEmail",
-        Boolean(data?.isApplyThroughEmail) || false,
+        Boolean(data?.isApplyThroughEmail) || false
       );
       formik.setFieldValue(
         "isApplyThroughWebsite",
-        Boolean(data?.isApplyThroughWebsite) || false,
+        Boolean(data?.isApplyThroughWebsite) || false
       );
       formik.setFieldValue(
         "applicationInstruction",
-        data.applicationInstruction || "",
+        data.applicationInstruction || ""
       );
       formik.setFieldValue("websiteLink", data?.websiteLink || "");
     }
@@ -236,7 +236,7 @@ const PostTender = () => {
     setApplicationInstructionData(content);
     formik.setFieldValue(
       "applicationInstruction",
-      content !== "<p><br></p>" ? content : "",
+      content !== "<p><br></p>" ? content : ""
     );
   };
   useEffect(() => {
@@ -424,7 +424,7 @@ const PostTender = () => {
                         (country) => ({
                           value: country.id,
                           label: country.title,
-                        }),
+                        })
                       )}
                       {...formik.getFieldProps("city")}
                     />
@@ -458,7 +458,7 @@ const PostTender = () => {
                                   onClick={() => {
                                     formik.setFieldValue(
                                       "address",
-                                      address.description,
+                                      address.description
                                     );
                                     setSearchValue(address.description);
                                   }}
@@ -531,7 +531,7 @@ const PostTender = () => {
                             (opportunityType) => ({
                               value: opportunityType.id,
                               label: opportunityType.title,
-                            }),
+                            })
                           )}
                           value={formik.values.opportunityType || ""}
                           {...formik.getFieldProps("opportunityType")}
@@ -763,7 +763,6 @@ const PostTender = () => {
                     </FormGroup>
                     <LabeledInput
                       title=""
-                      type="url"
                       className="add-form-control"
                       placeholder="Paste a link to your website’s application form"
                       required
@@ -792,12 +791,12 @@ const PostTender = () => {
                           "attachments",
                           `Maximum 10 files allowed. you can upload only ${
                             10 - currentAttachments.length
-                          } remaining`,
+                          } remaining`
                         );
                       } else {
                         const filesTaken = file.slice(
                           0,
-                          10 - currentAttachments.length,
+                          10 - currentAttachments.length
                         );
                         formik.setFieldValue("attachments", [
                           ...currentAttachments,
@@ -814,15 +813,15 @@ const PostTender = () => {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment) => attachment.path !== file.path,
-                          ),
+                            (attachment) => attachment.path !== file.path
+                          )
                         );
                       } else {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment, i) => i !== index,
-                          ),
+                            (attachment, i) => i !== index
+                          )
                         );
                       }
                     }}
@@ -884,8 +883,8 @@ const PostTender = () => {
                             ? "Updating..."
                             : "Posting..."
                           : tenderId
-                            ? "Update the tender"
-                            : "POST THE TENDER"
+                          ? "Update the tender"
+                          : "POST THE TENDER"
                       }
                       type="submit"
                       disabled={formik.isSubmitting}

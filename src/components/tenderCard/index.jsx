@@ -317,16 +317,19 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 <Stack direction="row" spacing={1}>
                   <span>
                     <SVG.BriefcaseIcon />
-                  </span>{" "}
+                  </span>
                   <div className="textdes">
-                    {tenderDetails.isPostedByAdmin
+                    {/*
+                    { tenderDetails.isPostedByAdmin
                       ? "Posted By"
                       : "Institution:"}
                     <span>
                       {tenderDetails.isPostedByAdmin
                         ? " Koor"
-                        : ` ${tenderDetails.user.name}`}
+                      : ` ${tenderDetails.user.name}` }
                     </span>
+                      */}
+                    Institution: <span>{tenderDetails.user.name}</span>{" "}
                   </div>
                 </Stack>
               )}
