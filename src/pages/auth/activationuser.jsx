@@ -11,13 +11,15 @@ import { Box } from "@mui/material";
 function ActivatioinUser() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentUser, userVerificationToken } = useSelector(state => state.auth);
+  const { currentUser, userVerificationToken } = useSelector(
+    (state) => state.auth
+  );
   const [sendingOTP, setSendingOTP] = useState(false);
   const handleResendOTP = async () => {
     setSendingOTP(true);
 
     const payload = {
-      email: currentUser?.email
+      email: currentUser?.email,
     };
     const res = await ResentActivation(payload);
     if (res.remote === "success") {
@@ -60,19 +62,17 @@ function ActivatioinUser() {
       const timeoutId = setTimeout(() => {
         handleActivationToken();
       }, delay);
-      // Cleanup function to clear the timeout in case the component unmounts before the delay is completed
       return () => clearTimeout(timeoutId);
     }
   }, [userVerificationToken]);
+
   return (
     <div className="form-group mb-3 enterotp_input">
       <Box sx={{ textAlign: "center", mt: 3 }}>
         <FilledButton
           type="button"
           onClick={handleResendOTP}
-          title={
-            sendingOTP ? <Loader loading={sendingOTP} /> : "Resend Mail"
-          }
+          title={sendingOTP ? <Loader loading={sendingOTP} /> : "Resend Mail"}
         />
       </Box>
     </div>
