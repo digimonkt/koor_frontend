@@ -213,12 +213,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
+                    {/*
                     {jobDetails.isPostedByAdmin ? "Posted By" : "Institution:"}
                     <span>
                       {jobDetails.isPostedByAdmin
                         ? " Koor"
                         : ` ${jobDetails.user.name}`}
                     </span>
+                      */}
+                    Institution: <span>{jobDetails.user.name}</span>
                   </div>
                 </Stack>
               )}
