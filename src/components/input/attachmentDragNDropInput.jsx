@@ -5,6 +5,8 @@ import { SVG } from "../../assets/svg";
 import { setErrorToast } from "../../redux/slice/toast";
 import { useDispatch, useSelector } from "react-redux";
 import { USER_ROLES } from "../../utils/enum";
+import { getKeysByValue } from "@utils/constants/utility";
+import { mimeTypes } from "@utils/constants/constants";
 
 function AttachmentDragNDropInputComponent({
   files,
@@ -15,25 +17,28 @@ function AttachmentDragNDropInputComponent({
   const dispatch = useDispatch();
   const { role } = useSelector((state) => state.auth);
   const { getRootProps, getInputProps } = useDropzone({
-    // onDrop: handleDrop || (() => {}),
     onDrop: (e, error) => {
       if (error.length && error[0]?.errors) {
-        dispatch(setErrorToast("File must be less then 5 MB"));
-      } else if (e.length && handleDrop) {
+        dispatch(setErrorToast("File is too large"));
+      }
+      if (e.length && handleDrop) {
         const renamedFiles = e.map((file) => {
-          const renamedFile = new File([file], file.name.slice(0, 40), {
-            type: file.type,
-          });
-
+          const renamedFile = new File(
+            [file],
+            file.name.replace(/\.[^/.]+$/, "").slice(0, 40) +
+              getKeysByValue(mimeTypes, file.type),
+            {
+              type: file.type,
+            }
+          );
           return renamedFile;
         });
-
         handleDrop(renamedFiles);
       }
     },
     multiple: !single,
     maxFiles: single ? 1 : 10,
-    maxSize: 5 * 1024 * 1024,
+    maxSize: 200 * 1024 * 1024,
     onError: (e) => console.log({ e }),
   });
   const acceptedFileItems = (files || []).map((file, index) => {
@@ -94,12 +99,7 @@ function AttachmentDragNDropInputComponent({
                   upload an attachment
                 </span>
               </p>
-              {!single && (
-                <small>
-                  Max 10 files, each one under 5MB, File name could be 40
-                  character long
-                </small>
-              )}
+              {!single && <small>File name could be 40 character long</small>}
             </div>
           </div>
         </Grid>
