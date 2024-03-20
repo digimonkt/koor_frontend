@@ -34,6 +34,7 @@ const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const {
     auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
@@ -70,6 +71,33 @@ function App() {
   };
 
   useEffect(() => {
+    const handleDeepLink = async (url) => {
+      const parsedUrl = new URL(url);
+
+      const verifyToken = parsedUrl.searchParams.get("verify-token");
+
+      console.log("Verify Token:", verifyToken);
+      navigate("/activation?verify-token=" + verifyToken);
+    };
+
+    const appUrlOpenListener = (data) => {
+      handleDeepLink(data.url);
+    };
+
+    CapApp.addListener("appUrlOpen", appUrlOpenListener);
+
+    CapApp.getLaunchUrl().then((launchUrl) => {
+      if (launchUrl && launchUrl.url) {
+        handleDeepLink(launchUrl.url);
+      }
+    });
+
+    return () => {
+      CapApp.removeAllListeners("appUrlOpen", appUrlOpenListener);
+    };
+  }, []);
+
+  useEffect(() => {
     checkLoginStatus();
   }, []);
 
@@ -95,7 +123,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            }),
+            })
           );
         }
       }
@@ -135,7 +163,7 @@ function App() {
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token="),
+          pair.startsWith("verify-token=")
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];
