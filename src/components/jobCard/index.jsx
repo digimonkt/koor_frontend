@@ -221,7 +221,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                         : ` ${jobDetails.user.name}`}
                     </span>
                       */}
-                    Institution: <span>{jobDetails.user.name}</span>
+                    Institution:{" "}
+                    <span>
+                      {!jobDetails.company
+                        ? jobDetails.user.name
+                        : jobDetails.company}
+                    </span>
                   </div>
                 </Stack>
               )}
