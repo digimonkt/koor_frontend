@@ -61,7 +61,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
       <Grid
         container
         spacing={1.875}
-        sx={{ alignItems: numLines === 3 ? "center" : "flex-start" }}
+        sx={{
+          alignItems: numLines === 3 ? "center" : "flex-start",
+        }}
       >
         {logo && (
           <Grid
@@ -72,6 +74,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               "@media (min-width: 1200px)": {
                 maxWidth: "10.555%",
                 flexBasis: "10.555%",
+              },
+              "@media (max-width:562px)": {
+                marginBottom: "20px",
               },
             }}
           >
@@ -85,6 +90,8 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   sx={{
                     width: "100%",
                     height: "100%",
+                    minWidth: "auto",
+                    minHeight: "100px",
                     margin: "auto",
                     color: "#CACACA",
                     fontSize: "15rem",
