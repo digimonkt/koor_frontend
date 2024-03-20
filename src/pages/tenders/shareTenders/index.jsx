@@ -43,7 +43,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.WhatsappIcon />
+            <SVG.WhatsappIcon className={styles.share__icon} />
           </a>
           <a
             href={generateFacebookShareUrl(shareUrl)}
@@ -54,7 +54,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.Facebook />
+            <SVG.Facebook className={styles.share__icon} />
           </a>
           <a
             href={generateTelegramShareUrl(shareMessage, shareUrl)}
@@ -65,7 +65,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.TelegramIcon />
+            <SVG.TelegramIcon className={styles.share__icon} />
           </a>
           <a
             href={generateLinkedinShareUrl(shareMessage, shareUrl)}
@@ -76,7 +76,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.LinkedIn />
+            <SVG.LinkedIn className={styles.share__icon} />
           </a>
           <a
             href={generateMailtoUrl({ subject: shareMessage, body: shareUrl })}
@@ -87,7 +87,7 @@ function ShareTender() {
             target="_blank"
             rel="noreferrer"
           >
-            <SVG.MailIcon width="50px" />
+            <SVG.MailIcon className={styles.share_mail_icon} />
           </a>
         </div>
       </div>
