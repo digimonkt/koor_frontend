@@ -15,6 +15,7 @@ export const transformTenderResponse = (data) => {
         sector: res.sector,
         isApplied: res.is_applied,
         isSaved: res.is_saved,
+        isPostedByAdmin: res.post_by_admin,
         vendor: res.vendor,
         status: res.status,
         createdAt: res.created,

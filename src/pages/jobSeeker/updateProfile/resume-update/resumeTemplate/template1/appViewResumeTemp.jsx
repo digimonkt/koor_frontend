@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import "./style.css";
+import "./appViewTempStyle.css";
 import { SVG } from "@assets/svg";
 import CoverLetter from "../cover-letter";
 import { YEAR_FORMAT } from "@utils/constants/constants";
@@ -12,7 +12,7 @@ function AppViewResumeTemp({ user, appliedJob = false }) {
   const applicantDetails = user || currentUser;
   return (
     <div className="job-application pages" id="div-to-pdf">
-      <div className="container resume_template">
+      <div className="resume_template">
         <div className="heading">
           <h1>{applicantDetails.name}</h1>
         </div>
@@ -129,7 +129,7 @@ function AppViewResumeTemp({ user, appliedJob = false }) {
                   <h2>LANGUAGE</h2>
                   <div className="language_div">
                     {applicantDetails.languages.map((item, index) => (
-                      <div key={index} style={{ marginRight: "40px" }}>
+                      <div key={index} style={{ marginBottom: "5px" }}>
                         <h6>{item.language.title}</h6>
                         <p>Spoken: {item?.spoken}</p>
                         <p>Written: {item?.written}</p>

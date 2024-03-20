@@ -39,11 +39,11 @@ import {
 } from "@mui/material";
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
-import { showDay } from "@utils/constants/utility";
+import { showDay, formatCommaText } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
 import {
-  fileTypeExtractor,
   downloadUrlCreator,
+  fileTypeExtractor,
   cleanHtmlContent,
 } from "@utils/fileUtils";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -169,7 +169,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -196,15 +196,9 @@ const JobDetails = () => {
         isSaved: !prevState.isSaved,
       }));
       if (!details.isSaved) {
-        const resp = await saveJobAPI(jobId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await saveJobAPI(jobId);
       } else {
-        const resp = await unSaveJobAPI(jobId);
-        if (resp.remote === "success") {
-          console.log("resp", resp);
-        }
+        await unSaveJobAPI(jobId);
       }
     } else if (details.expiredInDays <= 0) {
       setExpiredWarning(true);
@@ -213,28 +207,13 @@ const JobDetails = () => {
     }
   };
 
-  const handleLoadImage = async (url, _) => {
+  const handleLoadImage = async (url) => {
     const fileType = fileTypeExtractor(url);
-    const response = await getJobAttachmentAPI(url);
 
+    const response = await getJobAttachmentAPI(url);
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
-
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
-
-      const blob = new Blob([byteArrays], {
-        type: fileType || "application/octet-stream",
-      });
-
-      if (platform === "android" || platform === "ios") {
-        return "";
-      } else {
-        downloadUrlCreator(blob);
-      }
+      downloadUrlCreator(fileType, base64String);
     }
   };
   return (
@@ -299,7 +278,7 @@ const JobDetails = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > 0 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > 0 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -416,14 +395,14 @@ const JobDetails = () => {
                             <AttachmentIcon
                               sx={{
                                 color: getColorByRole(
-                                  role === "" ? USER_ROLES.employer : role,
+                                  role === "" ? USER_ROLES.employer : role
                                 ),
                                 rotate: "45deg",
                                 background: alpha(
                                   getColorByRole(
-                                    role === "" ? USER_ROLES.employer : role,
+                                    role === "" ? USER_ROLES.employer : role
                                   ),
-                                  0.3,
+                                  0.3
                                 ),
                                 padding: "3px",
                                 borderRadius: "50%",
@@ -456,6 +435,7 @@ const JobDetails = () => {
               </Grid>
               <Grid item xs={12} lg={3} md={5} sm={5}>
                 <JobCostCard
+                  color={getColorByRole(role)}
                   amount={details.budgetAmount}
                   payPeriod={details.budgetPayPeriod}
                   user={details.user}
@@ -491,13 +471,13 @@ const JobDetails = () => {
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
                                     applicationId: details.application.id,
-                                  }),
+                                  })
                                 );
                               } else {
                                 navigate(
                                   urlcat("../job/apply/:jobId", {
                                     jobId: params.jobId,
-                                  }),
+                                  })
                                 );
                               }
                             } else {
@@ -649,15 +629,10 @@ const JobDetails = () => {
                           </>,
                           "Apply on employer's website",
                         ]}
-                        // className={${styles.enablebtn}}
                         disabled={details.isApplied && !details.isEditable}
                         onClick={() => {
                           if (details.expiredInDays > 0) {
-                            if (isLoggedIn) {
-                              window.open(details.websiteLink, "_blank");
-                            } else {
-                              setRegistrationWarning(true);
-                            }
+                            window.open(details.websiteLink, "_blank");
                           } else {
                             setExpiredWarning(true);
                           }
@@ -686,15 +661,7 @@ const JobDetails = () => {
                           "Apply by email",
                         ]}
                         onClick={() => {
-                          if (details.expiredInDays > 0) {
-                            if (isLoggedIn) {
-                              handleSendEmail(details);
-                            } else {
-                              setRegistrationWarning(true);
-                            }
-                          } else {
-                            setExpiredWarning(true);
-                          }
+                          handleSendEmail(details);
                         }}
                       />
                     )}
@@ -713,7 +680,7 @@ const JobDetails = () => {
                 details.highestEducation,
                 details.languages,
                 details.skills,
-                details.experience,
+                details.experience
               ) && (
                 <Grid item xs={12} lg={7} sm={7}>
                   <JobRequirementCard
@@ -732,7 +699,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 6
@@ -742,7 +709,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   )
                     ? 5
                     : 12
@@ -760,7 +727,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience,
+                        details.experience
                       )
                         ? "75%"
                         : "250px",
@@ -865,19 +832,16 @@ const JobDetails = () => {
                 <p key={key}>
                   <Link
                     style={{
-                      color: getColorByRole(
-                        role === "" ? USER_ROLES.employer : role,
-                      ),
+                      color: getColorByRole(role),
                     }}
                     to={urlcat("/jobs/details/:jobId", { jobId: item.id })}
                   >
                     {item.title}
                   </Link>
+                  -
                   <span>
-                    {item?.city.title ? "- " + item.city.title + "," : ""}{" "}
-                    {item?.city.title
-                      ? item?.country.title
-                      : "- " + item?.country.title}
+                    {" "}
+                    {formatCommaText(item.city.title, item.country.title)}
                     {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                   </span>
                   {platform === "android" || platform === "ios" ? (
@@ -913,8 +877,8 @@ const JobDetails = () => {
       >
         <ShareJob />
       </DialogBox>
-
       <ExpiredBox
+        color={getColorByRole(role)}
         open={expiredWarning}
         handleClose={() => setExpiredWarning(false)}
       />

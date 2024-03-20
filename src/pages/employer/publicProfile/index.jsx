@@ -1,4 +1,5 @@
 import { getEmployerActiveJobsAPI } from "../../../api/employer";
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { GetUserDetailsAPI } from "../../../api/user";
 import { SVG } from "../../../assets/svg";
 import { NoRecordFoundAnimation } from "../../../components/animations";
@@ -23,6 +24,7 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
 import { getColorByRole } from "@utils/generateColor";
 import { useSelector } from "react-redux";
+import { USER_ROLES } from "@utils/enum";
 
 function PublicProfileComponent() {
   const params = useParams();
@@ -85,7 +87,9 @@ function PublicProfileComponent() {
             <CardContent
               sx={{
                 "&.MuiCardContent-root": {
-                  padding: "30px 0px 30px 40px",
+                  padding: isMobileView
+                    ? "30px 0px 30px 16px"
+                    : "30px 0px 30px 40px",
                 },
               }}
             >
@@ -102,7 +106,7 @@ function PublicProfileComponent() {
                     },
                   }}
                 >
-                  <Box sx={{ paddingRight: "45px" }}>
+                  <Box sx={{ paddingRight: isMobileView ? "16px" : "45px" }}>
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
@@ -110,15 +114,33 @@ function PublicProfileComponent() {
                       alignItems={"center"}
                     >
                       <Stack direction={"row"} spacing={2}>
-                        <Avatar
-                          src={generateFileUrl(userDetails.profileImage || "")}
-                          sx={{
-                            width: "88px",
-                            height: "88px",
-                            boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
-                            borderRadius: "10%",
-                          }}
-                        />
+                        <div className="squer-width" style={{ width: "100px" }}>
+                          <Avatar
+                            sx={{
+                              boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
+                              borderRadius: "10%",
+                              width: "100%",
+                              height: "100%",
+                              margin: "auto",
+                              color: "#CACACA",
+                              fontSize: "15rem",
+                              "&.MuiAvatar-colorDefault": {
+                                background: "#F0F0F0",
+                              },
+                            }}
+                            src={generateFileUrl(
+                              userDetails.profileImage || "",
+                            )}
+                          >
+                            <BusinessCenterOutlinedIcon
+                              sx={{
+                                width: "100%",
+                                padding: "30px",
+                                height: "100%",
+                              }}
+                            />
+                          </Avatar>
+                        </div>
                         <Box>
                           <Typography
                             variant="h4"
@@ -224,6 +246,11 @@ function PublicProfileComponent() {
                           {jobList.length ? (
                             jobList.map((item, index) => (
                               <li
+                                className={
+                                  role === USER_ROLES.jobSeeker
+                                    ? "beforeClass1"
+                                    : "beforeClass2"
+                                }
                                 key={index}
                                 style={{
                                   borderBottom:

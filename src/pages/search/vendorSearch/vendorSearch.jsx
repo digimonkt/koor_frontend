@@ -2,7 +2,7 @@ import AdSenseCard from "@components/adSense";
 import { NoDataFoundAnimation } from "../../../components/animations";
 import VendorCard from "../../../components/vendorCard";
 import VendorCardSkeletonLoader from "../../../components/vendorCard/vendorCardSkeletonLoader";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AD_AFTER_RECORDS } from "@utils/constants/constants";
 
@@ -12,9 +12,22 @@ function VendorSearchComponent() {
   const adSenseData = adSense.data.find(
     (item) => item.pageName === "browseVendors",
   );
+
+  // fixing flecking issue by delayed loading of vendor card
+  const [renderVendorCard, setRenderVendorCard] = useState(false);
+
+  useEffect(() => {
+    if (!isSearching) {
+      const timeoutId = setTimeout(() => {
+        setRenderVendorCard(true);
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isSearching]);
   return (
     <div>
-      {isSearching ? (
+      {!renderVendorCard || isSearching ? (
         [1, 2, 3, 4, 5].map((loader) => {
           return (
             <React.Fragment key={loader}>
@@ -29,11 +42,15 @@ function VendorSearchComponent() {
           index = index + 1;
           return (
             <React.Fragment key={vendor.id}>
-              <VendorCard logo vendorDetails={vendor} />
-              <AdSenseCard
-                code={adSenseData?.code}
-                show={index > 0 && index % AD_AFTER_RECORDS === 0}
-              />
+              {renderVendorCard && (
+                <>
+                  <VendorCard logo vendorDetails={vendor} />
+                  <AdSenseCard
+                    code={adSenseData?.code}
+                    show={index > 0 && index % AD_AFTER_RECORDS === 0}
+                  />
+                </>
+              )}
             </React.Fragment>
           );
         })

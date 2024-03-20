@@ -4,9 +4,10 @@
   <string name="title_activity_main">koor</string>
   <string name="package_name">org.reactjs.example.koor</string>
   <string name="custom_url_scheme">org.reactjs.example.koor</string>
+  <string name="custom_url_scheme_web">digimonk.co:1652/activation</string>
   <string
     name="REACT_APP_GOOGLE_API_KEY"
   >AIzaSyC83TvpwMNOyyVvBGlabNnnP9XrGK4xqHg</string>
   <string name="server_client_id">
-    788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com</string>
+    902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com</string>
 </resources>

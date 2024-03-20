@@ -824,6 +824,10 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                               platform === "android" || platform === "ios"
                                 ? "50px"
                                 : "auto",
+                            color:
+                              selectedFilter === filter.id
+                                ? "#000 !important"
+                                : "gray !important",
                           }}
                           onClick={() => handleSelectFilter(filter)}
                         >

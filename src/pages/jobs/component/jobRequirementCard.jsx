@@ -10,7 +10,7 @@ function JobRequirementCard({
   experience,
 }) {
   return (
-    <div className={`${styles.requirement}`}>
+    <div className={`${styles.requirement} mb-0 mt-3`}>
       <h5>Requirements:</h5>
       {experience && (
         <div className={`${styles.required}`}>
@@ -22,7 +22,7 @@ function JobRequirementCard({
         </div>
       )}
       {highestEducation.id && (
-        <div className={`${styles.required}`}>
+        <div className={`${styles.required} mb-0 mt-3`}>
           <h6>Education</h6>
           <div className={`${styles.educations}`}>
             <span></span>
@@ -32,7 +32,6 @@ function JobRequirementCard({
       )}
       <div className={`${styles.required}`}>
         {languages.length > 0 && <h6 className="mb-0 mt-3">Languages</h6>}
-
         {languages.map((language) => {
           return (
             <div className={`${styles.educations}`} key={language.id}>
@@ -41,6 +40,8 @@ function JobRequirementCard({
             </div>
           );
         })}
+      </div>
+      <div className={`${styles.required}`}>
         <div className={`${styles.skills}`}>
           {skills.length > 0 && <h6 className="mb-2  mt-3">Skills</h6>}
           <Box sx={{ overflow: "auto" }}>
@@ -54,22 +55,14 @@ function JobRequirementCard({
               {skills.map((skill) => {
                 return (
                   <>
-                    <Box
-                      sx={{
-                        marginTop: "20px",
-                        marginRight: "5px",
-                        "@media (max-width:740px)": {
-                          marginTop: "10px",
-                        },
-                      }}
-                    >
+                    <div style={{ marginTop: "10px" }}>
                       <SearchButton
                         key={skill.id}
                         text={skill.title}
                         className={`${styles.grybtn}`}
                         sx={{ minWidth: "100%", whiteSpace: "nowrap" }}
                       />
-                    </Box>
+                    </div>
                   </>
                 );
               })}

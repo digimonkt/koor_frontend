@@ -88,14 +88,13 @@ const Home = () => {
     if (res.remote === "success") {
       const displayValue =
         res.data.total_jobs > 100
-          ? `${Math.round(res.data.total_jobs / 100) * 100}+`
+          ? `${Math.floor(res.data.total_jobs / 100) * 100}+`
           : res.data.total_jobs;
-      console.log(displayValue);
       const jobsrCategoriesWithTypes = res.data.job_categories.map(
         (jobCategories) => ({
           ...jobCategories,
           categoryType: "job",
-        }),
+        })
       );
       setTopJobCategories((prev) => [...prev, ...jobsrCategoriesWithTypes]);
       setTotalJobs(displayValue);
@@ -107,14 +106,14 @@ const Home = () => {
     if (res.remote === "success") {
       const displayValue =
         res.data.total_tenders > 100
-          ? `${Math.ceil(res.data.total_tenders / 100) * 100}+`
+          ? `${Math.floor(res.data.total_tenders / 100) * 100}+`
           : res.data.total_tenders;
 
       const tenderCategoriesWithTypes = res.data.tender_categories.map(
         (tenderCategory) => ({
           ...tenderCategory,
           categoryType: "tender",
-        }),
+        })
       );
 
       setTopJobCategories((prev) => [...prev, ...tenderCategoriesWithTypes]);
@@ -303,7 +302,11 @@ const Home = () => {
                             variant="contained"
                             type="submit"
                             className={styles.home_btn_btn}
-                            style={{ width: "100%" }}
+                            sx={{
+                              "@media (max-width: 700px)": {
+                                width: "100% !important",
+                              },
+                            }}
                           >
                             Search
                           </Button>
@@ -338,7 +341,8 @@ const Home = () => {
                 >
                   <h5 className={styles.home_img_contents_h5}>
                     Are you an employer looking for applicants <br /> to fill
-                    your job openings fast?
+                    your job openings fast or explore new opportunities? <br />
+                    Connect with top talent and discover bids that match your needs.
                   </h5>
                   <Link
                     to={isLoggedIn ? "/employer/jobs/post" : "/login"}
@@ -372,7 +376,7 @@ const Home = () => {
                 }}
               >
                 <Typography className={styles.popular_job}>
-                  Popular job categories
+                  Trending opportunities
                 </Typography>
                 <Box
                   sx={{
@@ -425,9 +429,8 @@ const Home = () => {
                     (category?.title || "").length > 15
                       ? `${category.title.slice(0, 12)}...`
                       : category.title,
-                  text: `${category.count || 0} ${
-                    category.categoryType === "tender" ? "tenders" : "jobs"
-                  }`,
+                  text: `${category.count || 0} ${category.categoryType === "tender" ? "tenders" : "jobs"
+                    }`,
                   id: category.id,
                   categoryType: category.categoryType,
                 }))}
@@ -441,7 +444,7 @@ const Home = () => {
             </Box>
             <Box sx={{ width: "100%" }}>
               <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
-                Listings from the top companies
+                Listings from the top institutions
               </Typography>
               <Grid
                 container
@@ -466,7 +469,6 @@ const Home = () => {
               </Grid>
             </Box>
           </Container>
-
           <Box className={`${styles.home_back}`}>
             <Box className={`${styles.home_powerfull_box}`}>
               <Box>

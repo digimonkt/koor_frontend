@@ -1,3 +1,4 @@
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { SVG } from "../../assets/svg";
 import { ChipBox } from "../../components/jobCard/style";
 import { Avatar, Box, Chip, Divider, Grid, Stack } from "@mui/material";
@@ -24,7 +25,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? tenderDetails.length : 3,
+      prevNumLines === 3 ? tenderDetails.length : 3
     );
   };
 
@@ -43,10 +44,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
     }
   };
   const updateTender = async (tenderId) => {
-    const res = await updateEmployerTenderStatusAPI(tenderId);
-    if (res.remote === "success") {
-      console.log(res);
-    }
+    await updateEmployerTenderStatusAPI(tenderId);
   };
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
@@ -63,7 +61,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
       <Grid
         container
         spacing={1.875}
-        sx={{ alignItems: numLines === 3 ? "center" : "flex-start" }}
+        sx={{
+          alignItems: numLines === 3 ? "center" : "flex-start",
+        }}
       >
         {logo && (
           <Grid
@@ -75,6 +75,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 maxWidth: "10.555%",
                 flexBasis: "10.555%",
               },
+              "@media (max-width:562px)": {
+                marginBottom: "20px",
+              },
             }}
           >
             <Stack
@@ -82,24 +85,32 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               spacing={2}
               justifyContent={"space-between"}
             >
-              <div className="squer-width">
+              <div className="squer-width" style={{ width: "100px" }}>
                 <Avatar
                   sx={{
                     width: "100%",
                     height: "100%",
+                    minWidth: "auto",
+                    minHeight: "100px",
                     margin: "auto",
                     color: "#CACACA",
-                    borderRadius: "0px !important",
+                    fontSize: "15rem",
+                    borderRadius: "10px",
                     "&.MuiAvatar-colorDefault": {
                       background: "#F0F0F0",
                     },
                   }}
                   src={generateFileUrl(tenderDetails?.user?.image?.path || "")}
                 >
-                  <SVG.SuitcaseJob />
+                  <BusinessCenterOutlinedIcon
+                    sx={{
+                      width: "100%",
+                      padding: "30px",
+                      height: "100%",
+                    }}
+                  />
                 </Avatar>
               </div>
-
               {matches ? (
                 <div>
                   <div className="text-end w-100 mb-4">
@@ -117,7 +128,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       color={getColorByRemainingDays(
                         tenderDetails?.expiredInDays > 0
                           ? tenderDetails?.expiredInDays
-                          : 0,
+                          : 0
                       )}
                     />
                   </div>
@@ -156,7 +167,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                 navigate(
                                   urlcat("/employer/tender/post", {
                                     tenderId: tenderDetails?.id,
-                                  }),
+                                  })
                                 );
                               }
                             }}
@@ -284,7 +295,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               {tenderDetails.sector && (
                 <ChipBox
                   label={`Sector: ${capitalizeFirst(
-                    tenderDetails?.sector?.title || "",
+                    tenderDetails?.sector?.title || ""
                   )}`}
                   icon={<>{<SVG.SellIcon />}</>}
                 />
@@ -314,18 +325,24 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 <Stack direction="row" spacing={1}>
                   <span>
                     <SVG.BriefcaseIcon />
-                  </span>{" "}
+                  </span>
                   <div className="textdes">
-                    {tenderDetails.company === null &&
-                    tenderDetails.companyLogo === null
-                      ? "Company:"
-                      : "Posted By"}
+                    {/*
+                    { tenderDetails.isPostedByAdmin
+                      ? "Posted By"
+                      : "Institution:"}
                     <span>
-                      {tenderDetails.company === null &&
-                      tenderDetails.companyLogo === null
-                        ? tenderDetails.user.name
-                        : " Koor"}
+                      {tenderDetails.isPostedByAdmin
+                        ? " Koor"
+                      : ` ${tenderDetails.user.name}` }
                     </span>
+                      */}
+                    Institution:{" "}
+                    <span>
+                      {!tenderDetails.company
+                        ? tenderDetails.user.name
+                        : tenderDetails.company}
+                    </span>{" "}
                   </div>
                 </Stack>
               )}
@@ -365,7 +382,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 color={getColorByRemainingDays(
                   tenderDetails?.expiredInDays > 0
                     ? tenderDetails?.expiredInDays
-                    : 0,
+                    : 0
                 )}
               />
             </Box>
@@ -403,7 +420,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                           navigate(
                             urlcat("/employer/tender/post", {
                               tenderId: tenderDetails?.id,
-                            }),
+                            })
                           );
                         }
                       }}

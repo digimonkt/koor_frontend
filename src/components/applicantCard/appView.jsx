@@ -12,14 +12,13 @@ function AppView({ prop }) {
   useEffect(() => {
     setJobOrTenderDetails(details.tender || details.job);
   });
-
   return (
     <>
       <Stack
         direction={{ xs: "column", lg: "row" }}
         spacing={{ xs: "2", lg: "2" }}
-        alignItems={{ xs: "flex-start", lg: "center" }}
-        justifyContent={{ xs: "center", lg: "space-between" }}
+        alignItems={{ xs: "flex-start" }}
+        justifyContent={{ xs: "space-evenly" }}
         className="border-recent"
       >
         <Stack
@@ -40,11 +39,13 @@ function AppView({ prop }) {
             }}
           />
           <Stack
-            flexWrap={"wrap"}
             direction={{ xs: "column", lg: "row" }}
             spacing={{ xs: 0, lg: 2 }}
             alignItems={{ xs: "flex-start", lg: "flex-startr" }}
             sx={{ mb: 1, ...sx }}
+            width="100%"
+            display="flex"
+            flewWrap="nowrap"
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
             <div
@@ -76,7 +77,9 @@ function AppView({ prop }) {
                 paddingLeft: "10px",
               }}
             >
-              {jobOrTenderDetails.title}
+              {jobOrTenderDetails?.title?.lenght > 50
+                ? `${jobOrTenderDetails?.title?.substring(0, 50)}...`
+                : jobOrTenderDetails?.title}
             </Box>
 
             <div className="recent-descrition">
@@ -124,7 +127,7 @@ function AppView({ prop }) {
               <br /> requirements with:{" "}
             </span>
             <Stack
-              sx={{ ...sx, overflowX: "scroll", width: "160px" }}
+              sx={{ ...sx, overflowX: "scroll", width: "210px" }}
               direction={"row"}
               alignItems={"center"}
               spacing={1}

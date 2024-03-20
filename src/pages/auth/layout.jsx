@@ -103,7 +103,6 @@ function AuthLayout({
       }
       setLoading(false);
       const res = await loginWithAppleFacebookPopupProvider();
-      console.log({ apple: res });
       if (res.remote === "success") {
         const payload = {
           email: res.data.email,
@@ -133,7 +132,6 @@ function AuthLayout({
       }
       setLoading(false);
       const res = await loginWithFacebookPopupProvider();
-      // console.log({ FacebooK: res });
       if (res.remote === "success") {
         const payload = {
           email: res.data.email,

@@ -1,3 +1,4 @@
+import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import React from "react";
@@ -7,8 +8,9 @@ import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";
 import { getColorByRole } from "@utils/generateColor";
+// import { USER_ROLES } from "../../../utils/enum";
 
-function JobCostCard({ amount, payPeriod, user, color }) {
+function JobCostCard({ amount, payPeriod, user, color = "" }) {
   const { role } = useSelector((state) => state.auth);
   return (
     <>
@@ -40,23 +42,32 @@ function JobCostCard({ amount, payPeriod, user, color }) {
         }}
       >
         <div className={`${styles.lotusimg}`}>
-          <Avatar
-            square={true}
-            sx={{
-              width: 100,
-              height: 100,
-              color: "#CACACA",
-              padding: "10px",
-              "&.MuiAvatar-colorDefault": {
-                background: "#F0F0F0",
-              },
-              "@media (max-width:992px)": {
-                width: "70px",
-                height: "70px",
-              },
-            }}
-            src={generateFileUrl(user.image?.path)}
-          />
+          <div className="squer-width" style={{ width: "100px" }}>
+            <Avatar
+              sx={{
+                width: "100%",
+                height: "100%",
+                minWidth: "80px",
+                minHeight: "80px",
+                margin: "auto",
+                color: "#CACACA",
+                fontSize: "15rem",
+                borderRadius: "10px",
+                "&.MuiAvatar-colorDefault": {
+                  background: "#F0F0F0",
+                },
+              }}
+              src={generateFileUrl(user.image?.path)}
+            >
+              <BusinessCenterOutlinedIcon
+                sx={{
+                  width: "100%",
+                  padding: "30px",
+                  height: "100%",
+                }}
+              />
+            </Avatar>
+          </div>
           <Box>
             <h3>
               <Link
@@ -79,12 +90,12 @@ function JobCostCard({ amount, payPeriod, user, color }) {
               <span>
                 <Link
                   to={`tel:${formatPhoneNumberIntl(
-                    user.countryCode + user.mobileNumber,
+                    user.countryCode + user.mobileNumber
                   )}`}
                 >
                   {user.countryCode && user.mobileNumber
                     ? formatPhoneNumberIntl(
-                        user.countryCode + user.mobileNumber,
+                        user.countryCode + user.mobileNumber
                       )
                     : ""}
                 </Link>

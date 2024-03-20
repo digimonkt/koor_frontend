@@ -11,13 +11,23 @@ import { FileOpener } from "@capawesome-team/capacitor-file-opener";
 // mime type
 export function fileTypeExtractor(url) {
   const extension = "." + url.split(".").pop().toLowerCase();
-  return mimeTypes[extension] || "application/octet-stream";
+  return mimeTypes[extension] || "";
 }
 
 // url and element
-export function downloadUrlCreator(blob) {
-  const fileName = "attachment";
+export function downloadUrlCreator(fileType, base64String) {
+  const fileName = "attachment" + fileType;
+  // Convert base64 string to Blob
+  const byteCharacters = atob(base64String);
+  const byteArrays = new Uint8Array(byteCharacters.length);
 
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteArrays[i] = byteCharacters.charCodeAt(i);
+  }
+
+  const blob = new Blob([byteArrays], {
+    type: fileType || "",
+  });
   const downloadUrl = URL.createObjectURL(blob);
   const a = document.createElement("a");
 
@@ -109,14 +119,14 @@ export const pdfDownloader = async (name, state, action) => {
               imageX,
               pdf.internal.pageSize.getHeight() - 14,
               imageWidth,
-              imageHeight,
+              imageHeight
             );
             pdf.text(
               footerContent,
               pdf.internal.pageSize.getWidth() -
                 pdf.internal.pageSize.getWidth() / 2 -
                 footerContent.length,
-              pdf.internal.pageSize.getHeight() - 10,
+              pdf.internal.pageSize.getHeight() - 10
             );
           }
         })

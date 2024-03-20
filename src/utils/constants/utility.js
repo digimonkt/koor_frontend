@@ -20,3 +20,19 @@ export const showDay = (days) => {
     return days + " day left";
   }
 };
+
+export const formatCommaText = (valueFiert, valueSecond) => {
+  if (!valueFiert && !valueSecond) {
+    return "Dusseldorf";
+  } else if (!valueFiert) {
+    return valueSecond || "";
+  } else if (!valueSecond) {
+    return valueFiert || "";
+  } else {
+    return `${valueFiert}, ${valueSecond}`;
+  }
+};
+
+export function getKeysByValue(object, value) {
+  return Object.keys(object).filter((key) => object[key] === value);
+}

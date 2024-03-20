@@ -30,6 +30,7 @@ import {
   searchTender,
   searchVendor,
   setJobPage,
+  setTotalItems,
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
 import { useScrollTop } from "@hooks";
@@ -107,12 +108,6 @@ function Search({ searchTypeForJob }) {
       console.log(response.error);
     }
   };
-
-  useEffect(() => {
-    if (adSense.data.length < 1) {
-      getAdSenseList();
-    }
-  }, [adSense]);
   useEffect(() => {
     setSearchType(params.type);
     const search = searchParams.get("search") || "";
@@ -121,12 +116,30 @@ function Search({ searchTypeForJob }) {
   }, [params]);
 
   useEffect(() => {
-    const payload = {
-      search,
-      order_by: orderBy,
-      search_by: sortBy,
-    };
-    switch (searchType || searchTypeForJob) {
+    if (adSense.data.length < 1) {
+      getAdSenseList();
+    }
+  }, [adSense]);
+
+  useEffect(() => {
+    dispatch(setTotalItems(0));
+    let payload;
+
+    if (sortBy === JOB_SORT_BY.active || sortBy === JOB_SORT_BY.expired) {
+      payload = {
+        search,
+        order_by: orderBy,
+        filter_by: sortBy,
+      };
+    } else {
+      payload = {
+        search,
+        order_by: orderBy,
+        search_by: sortBy,
+      };
+    }
+
+    switch (params.type || searchTypeForJob) {
       case SEARCH_TYPE.jobs:
         setSearchPlaceHolder("Jobs");
         dispatch(searchJobs(payload));
@@ -222,11 +235,6 @@ function Search({ searchTypeForJob }) {
                     {totalItems || 0}
                   </Box>
                 }
-                // icon={
-                //   <IconButton>
-                //     <SVG.CalendarMonth />
-                //   </IconButton>
-                // }
               />
             </Box>
           </>
@@ -417,14 +425,14 @@ function Search({ searchTypeForJob }) {
                                   orderBy: JOB_ORDER_BY.ascending,
                                 },
                                 {
-                                  label: "Salary: Low to High",
-                                  sortBy: JOB_SORT_BY.salary,
+                                  label: "Active",
+                                  sortBy: JOB_SORT_BY.active,
                                   orderBy: JOB_ORDER_BY.ascending,
                                 },
                                 {
-                                  label: "Salary: High to Low",
-                                  sortBy: JOB_SORT_BY.salary,
-                                  orderBy: JOB_ORDER_BY.descending,
+                                  label: "Expired",
+                                  sortBy: JOB_SORT_BY.expired,
+                                  orderBy: JOB_ORDER_BY.ascending,
                                 },
                               ].map((data) => {
                                 return (
@@ -463,14 +471,14 @@ function Search({ searchTypeForJob }) {
                                   orderBy: TENDER_ORDER_BY.ascending,
                                 },
                                 {
-                                  label: "Budget: Low to High",
-                                  sortBy: TENDER_SORT_BY.budget,
+                                  label: "Active",
+                                  sortBy: TENDER_SORT_BY.active,
                                   orderBy: TENDER_ORDER_BY.ascending,
                                 },
                                 {
-                                  label: "Budget: High to Low",
-                                  sortBy: TENDER_SORT_BY.budget,
-                                  orderBy: TENDER_ORDER_BY.descending,
+                                  label: "Expired",
+                                  sortBy: TENDER_SORT_BY.expired,
+                                  orderBy: TENDER_ORDER_BY.ascending,
                                 },
                               ].map((data) => {
                                 return (

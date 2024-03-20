@@ -26,7 +26,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [settings, setSetting] = useState(false);
   const [filterByDate, setFilterByDate] = useState(
     // dayjs().format("YYYY-MM-DD")
-    null
+    null,
   );
   const handleChangeSection = (event, newValue) => {
     const filterNotification = (type) => {
@@ -34,16 +34,16 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
       let notificationResult = "";
       if (newValue === "message") {
         notificationResult = notificationData.filter(
-          (notification) => notification.notificationType === "message"
+          (notification) => notification.notificationType === "message",
         );
       } else {
         notificationResult = notificationData.filter(
-          (notification) => notification.notificationType !== "message"
+          (notification) => notification.notificationType !== "message",
         );
       }
       if (role === USER_ROLES.employer) {
         notificationResult = notificationResult.filter(
-          (notification) => notification.notificationType !== "applied_tender"
+          (notification) => notification.notificationType !== "applied_tender",
         );
       }
       setFilterData(notificationResult);
@@ -72,7 +72,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
 
   const handleRemoveMessages = (id) => {
     const updatedNotifications = notification.filter(
-      (item) => item.messageId !== id
+      (item) => item.messageId !== id,
     );
     setNotification(updatedNotifications);
   };
@@ -314,7 +314,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                           item,
                           handleClose,
                           role,
-                          handleRemoveMessages
+                          handleRemoveMessages,
                         )}
                         <Divider />
                       </div>
@@ -323,7 +323,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                 ) : (
                   <Box
                     sx={{
-                      minHeight: "610px",
+                      padding: "20px",
                       alignItems: "center",
                       display: "flex",
                       justifyContent: "center",

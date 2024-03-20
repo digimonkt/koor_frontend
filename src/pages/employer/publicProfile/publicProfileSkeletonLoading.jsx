@@ -2,29 +2,39 @@ import JobCardSkeletonLoader from "../../../components/jobCard/jobCardSkeletonLo
 import {
   Box,
   CardContent,
-  Container,
   Card,
   Grid,
   Stack,
   Typography,
   Divider,
+  Container,
 } from "@mui/material";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
+
+const Wrapper = ({ children, isMobileView }) => {
+  if (isMobileView) {
+    return <>{children}</>;
+  }
+  return <Container>{children}</Container>;
+};
 
 function PublicProfileComponent() {
+  const { isMobileView } = useSelector(({ platform }) => platform);
+
   return (
-    <Container>
+    <Wrapper isMobileView={isMobileView}>
       <Card
         sx={{
           boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-          borderRadius: "20px",
+          borderRadius: isMobileView ? "0" : "20px",
         }}
       >
         <CardContent
           sx={{
             "&.MuiCardContent-root": {
-              padding: "30px",
+              padding: isMobileView ? "10px" : "30px",
             },
           }}
         >
@@ -35,7 +45,6 @@ function PublicProfileComponent() {
               xs={12}
               sx={{
                 borderRight: "1px solid #CACACA",
-
                 "@media (max-width:992px)": {
                   borderRight: "0",
                 },
@@ -48,10 +57,14 @@ function PublicProfileComponent() {
                   justifyContent={{ xs: "start", lg: "space-between" }}
                   alignItems={"center"}
                 >
-                  <Stack direction={"row"} spacing={2}>
+                  <Stack direction={"row"} p={2} gap={2}>
                     <Skeleton
                       circle
-                      style={{ width: "88px", height: "88px" }}
+                      style={{
+                        width: "88px",
+                        height: "88px",
+                        marginLeft: "50px",
+                      }}
                     />
                     <Box>
                       <Typography
@@ -104,9 +117,12 @@ function PublicProfileComponent() {
                     }}
                   >
                     <Skeleton
-                      width={1000}
                       count={3}
-                      style={{ lineHeight: "10px" }}
+                      style={{
+                        lineHeight: "10px",
+                        width: "100%",
+                        marginLeft: "10px",
+                      }}
                     />
                   </Typography>
                   <Divider sx={{ borderColor: "#ccc", my: 2 }} />
@@ -152,7 +168,7 @@ function PublicProfileComponent() {
                       mb: 2,
                     }}
                   >
-                    Contact infodsfdfghgh
+                    Contact info
                   </Typography>
                   <Stack direction={"row"} spacing={2} alignItems={"center"}>
                     <Box
@@ -306,7 +322,6 @@ function PublicProfileComponent() {
                       </Typography>
                     </Box>
                   </Stack>
-
                   <Divider sx={{ borderColor: "#cacaca" }} />
                 </Stack>
               </Box>
@@ -314,7 +329,7 @@ function PublicProfileComponent() {
           </Grid>
         </CardContent>
       </Card>
-    </Container>
+    </Wrapper>
   );
 }
 

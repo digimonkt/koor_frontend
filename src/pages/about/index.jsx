@@ -8,6 +8,9 @@ import { OTHER_BUTTON } from "../../utils/constants/constants";
 import HomeSection from "../home/homeSection";
 import FeatureSection from "../home/featureSection";
 import DialogBox from "@components/dialogBox";
+import { useSelector } from "react-redux";
+import { USER_ROLES } from "../../utils/enum";
+import { Helmet } from "react-helmet";
 
 const aboutImg = [
   {
@@ -16,14 +19,83 @@ const aboutImg = [
 ];
 
 const AboutUs = () => {
+  const { role } = useSelector((state) => state.auth);
   const [openDialog, setOpenDialog] = useState(false);
-
   const handleCommingSoon = () => {
     setOpenDialog(true);
   };
 
   return (
     <>
+      <Helmet>
+        <script type="application/ld+json">
+          {`
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What sets your platform apart from other job search platforms ?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Our platform stands out due to its holistic approach, bringing together employers, job seekers, and vendors in one integrated ecosystem. The emphasis on collaboration and the seamless user experience make it a unique and powerful tool in the Somali employment landscape.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is there a cost associted with using your platform?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "While basic features are often available for free, we offer premium packages with advanced functionalities for employers, job seekers, and vendors. These packages are designed to provide additional benefits and a more tailored experience. Detailed pricing information is available on our website.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is your platform accessible via both web and mobile devices?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, our platform is designed to be accessible both through a web browser and a mobile app. This ensures flexibility and convenience for users, allowing them to connect anytime, anywhere, whether they are in the office or on the go.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What is the innovative web application and mobile app you offer?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Our revolutionary web application and mobile app serve as a dynamic platform, connecting employers, job seekers, and vendors in Somalia. It streamlines the recruitment process and facilitates seamless interactions, making it easier for all stakeholders to connect and collaborate.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How can I get started on your platform?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "To get started, simply visit our website or download our mobile app. Users can create accounts, customize profiles, and begin exploring the platform's features. Employers can post jobs, job seekers can browse listings, and vendors can establish connections to foster collaboration.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How does your platform ensure security and privacy?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "We take security and privacy seriously. Our platform employs robust encryption protocols to safeguard user data. Additionally, user information is handled with strict confidentiality, and we adhere to industry best practices to ensure a secure environment for all users.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What advantages does your platform offer to job seekers?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Job seekers benefit from a user-friendly interface that simplifies the job search process. They can create comprehensive profiles, explore job listings, and directly connect with potential employers. Our platform enhances visibility, making it easier for job seekers to showcase their skills and experience to prospective employers.",
+        },
+      },
+    ],
+  };
+
+`}
+        </script>
+      </Helmet>
       <Box className={styles.about}>
         <Box className={styles.about_back_color}>
           <Container
@@ -92,7 +164,6 @@ const AboutUs = () => {
             <HomeSection />
           </Container>
         </Box>
-
         <Box>
           <AboutContent />
         </Box>
@@ -129,17 +200,24 @@ const AboutUs = () => {
                     {OTHER_BUTTON.map((item, index) => {
                       return (
                         <>
-                          <Link
-                            sx={{ textTransform: "capitalize" }}
-                            key={index}
-                            variant="contained"
-                            className={styles.btn_about}
-                            to={`${item.url}`}
-                          >
-                            <span className={styles.icon}>{item.icon}</span>
-                            <span className="mx-2">{item.text}</span>
-                            {item.svg}
-                          </Link>
+                          <>
+                            {item.section === "talents" &&
+                            role !== USER_ROLES.employer ? (
+                              ""
+                            ) : (
+                              <Link
+                                sx={{ textTransform: "capitalize" }}
+                                key={index}
+                                variant="contained"
+                                className={styles.btn_about}
+                                to={`${item.url}`}
+                              >
+                                <span className={styles.icon}>{item.icon}</span>
+                                <span className="mx-2">{item.text}</span>
+                                {item.svg}
+                              </Link>
+                            )}
+                          </>
                         </>
                       );
                     })}
@@ -150,9 +228,21 @@ const AboutUs = () => {
           </Container>
         </Box>
         <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
-          <div className="add-content">
-            <h2 className="mb-4">Mobile App Is Coming Soom!</h2>
-          </div>
+          <Box
+            sx={{
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+              width: "100%",
+              textDecoration: "capitalize",
+              color: "#eea23d",
+            }}
+          >
+            <h2 className="mb-4">Stay In Touch</h2>
+            <h1 className="mb-4" style={{ color: "#000" }}>
+              Mobile App Is Coming Soon!
+            </h1>
+          </Box>
         </DialogBox>
       </Box>
     </>

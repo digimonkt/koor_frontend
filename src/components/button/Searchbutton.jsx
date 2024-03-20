@@ -1,5 +1,5 @@
 import { SVG } from "../../assets/svg";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import React from "react";
 
 export default function SearchButtonComponent({
@@ -11,9 +11,24 @@ export default function SearchButtonComponent({
 }) {
   return (
     <>
-      <Button className={className} {...rest} disableRipple={true}>
+      <Button
+        sx={{ width: "auto !important" }}
+        className={className}
+        {...rest}
+        disableRipple={true}
+      >
         <span>{leftIcon}</span>
-        {text}
+        <Typography
+          fontSize="small"
+          flexWrap="nowrap"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {text}
+        </Typography>
         {handleCross ? (
           <span className="close_icon_circle" onClick={handleCross}>
             <SVG.CrossCircle />

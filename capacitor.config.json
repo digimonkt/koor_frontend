@@ -19,9 +19,7 @@
         "profile",
         "email"
       ],
-      "serverClientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
-      "clientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
-      "androidClientId": "788879371406-qe2ta8m0sjfctjahs0qhld9i26fi3r1n.apps.googleusercontent.com",
+      "clientId": "526504815298-brq8034npfsoj6lrrm6vfa7m2dn6clrr.apps.googleusercontent.com",
       "forceCodeForRefreshToken": true
     }
   },
@@ -30,6 +28,7 @@
     "namespace": "org.reactjs.example.koor"
   },
   "server": {
-    "url": "http://192.168.0.192:8100"
+    "url": "http://192.168.0.192:8100",
+    "originalUrl": "http://192.168.0.192:8100"
   }
 }

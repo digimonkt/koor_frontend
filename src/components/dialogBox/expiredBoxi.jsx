@@ -3,9 +3,8 @@ import DialogBox from ".";
 import { Link } from "react-router-dom";
 import { OutlinedButton } from "@components/button";
 
-const ExpiredBoxComponent = ({ open, handleClose }) => {
+const ExpiredBoxComponent = ({ open, handleClose, color = "" }) => {
   const currentUrl = window.location.href;
-
   const isTenderPage = currentUrl.includes("tender");
   const pageType = isTenderPage ? "tenders" : "jobs";
 
@@ -20,7 +19,12 @@ const ExpiredBoxComponent = ({ open, handleClose }) => {
             This {pageType === "tenders" ? "tender" : "job"} has expired. So you
             can't apply for this {pageType === "tenders" ? "tender" : "job"}.
           </p>
-          <div style={{ textAlign: "center", lineHeight: "40px" }}>
+          <div
+            style={{
+              textAlign: "center",
+              lineHeight: "40px",
+            }}
+          >
             <Link to={`/search/${pageType}`}>
               <OutlinedButton
                 title="Go Back"
@@ -28,7 +32,8 @@ const ExpiredBoxComponent = ({ open, handleClose }) => {
                 sx={{
                   fontSize: "16px !important",
                   width: "100%",
-                  color: "#274593 !important",
+                  color: `${color} !important`,
+                  borderColor: `${color} !important`,
                   "@media (max-width: 992px)": {
                     fontSize: "16px !important",
                   },
