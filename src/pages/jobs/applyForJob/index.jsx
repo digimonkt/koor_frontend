@@ -32,6 +32,7 @@ import ApplySuccessfully from "./applySuccessfully";
 import { getApplicationDetailsAPI } from "../../../api/employer";
 import urlcat from "urlcat";
 import { Capacitor } from "@capacitor/core";
+import { downloadUrlCreator, fileTypeExtractor } from "@utils/fileUtils";
 const ApplyForJob = () => {
   const dispatch = useDispatch();
   // navigate
@@ -123,7 +124,7 @@ const ApplyForJob = () => {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
-        (attachment) => !attachment.id,
+        (attachment) => !attachment.id
       );
       for (const key in newValues) {
         if (newValues[key].forEach) {
@@ -180,48 +181,12 @@ const ApplyForJob = () => {
   };
 
   const handleLoadImage = async (url) => {
-    const fileType = (url) => {
-      const extension = "." + url.split(".").pop().toLowerCase();
-      const mimeTypes = {
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".png": "image/png",
-        ".gif": "image/gif",
-        ".pdf": "application/pdf",
-        // Add more extensions and corresponding MIME types as needed
-      };
+    const fileType = fileTypeExtractor(url);
 
-      return mimeTypes[extension] || "application/octet-stream"; // Default to binary if type is unknown
-    };
-
-    const fileName = "attachment";
     const response = await getJobAttachmentAPI(url);
-
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      // Convert base64 string to Blob
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
-
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
-
-      const blob = new Blob([byteArrays], {
-        type: fileType(url) || "application/octet-stream",
-      });
-
-      // Create a download link
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = fileName || "file"; // Default filename is "file"
-
-      // Append the link to the document and click it
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(downloadUrl);
+      downloadUrlCreator(fileType, base64String);
     }
   };
   useEffect(() => {
@@ -290,7 +255,7 @@ const ApplyForJob = () => {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details.expiredInDays > -1 ? details.expiredInDays : -1,
+                      details.expiredInDays > -1 ? details.expiredInDays : -1
                     )}
                     className="apply_dd_btn"
                   />
@@ -426,14 +391,14 @@ const ApplyForJob = () => {
                       ]);
                       formik.setFieldValue("attachments", [
                         ...formik.values.attachments.filter(
-                          (attachment) => attachment.id !== file.id,
+                          (attachment) => attachment.id !== file.id
                         ),
                       ]);
                     } else {
                       formik.setValues({
                         ...formik.values,
                         attachments: formik.values.attachments.filter(
-                          (el) => el !== file,
+                          (el) => el !== file
                         ),
                       });
                     }
@@ -464,8 +429,8 @@ const ApplyForJob = () => {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                        ? "Update"
-                        : "Apply"
+                      ? "Update"
+                      : "Apply"
                   }
                   className={`${styles.applybtn} ${
                     platform === "android" || platform === "ios"

@@ -42,8 +42,8 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay, formatCommaText } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
 import {
-  fileTypeExtractor,
   downloadUrlCreator,
+  fileTypeExtractor,
   cleanHtmlContent,
 } from "@utils/fileUtils";
 import { generateFileUrl } from "@utils/generateFileUrl";
@@ -207,28 +207,13 @@ const JobDetails = () => {
     }
   };
 
-  const handleLoadImage = async (url, _) => {
+  const handleLoadImage = async (url) => {
     const fileType = fileTypeExtractor(url);
-    const response = await getJobAttachmentAPI(url);
 
+    const response = await getJobAttachmentAPI(url);
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
-
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
-
-      const blob = new Blob([byteArrays], {
-        type: fileType || "application/octet-stream",
-      });
-
-      if (platform === "android" || platform === "ios") {
-        return "";
-      } else {
-        downloadUrlCreator(blob);
-      }
+      downloadUrlCreator(fileType, base64String);
     }
   };
   return (

@@ -25,7 +25,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
 
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? tenderDetails.length : 3,
+      prevNumLines === 3 ? tenderDetails.length : 3
     );
   };
 
@@ -121,7 +121,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       color={getColorByRemainingDays(
                         tenderDetails?.expiredInDays > 0
                           ? tenderDetails?.expiredInDays
-                          : 0,
+                          : 0
                       )}
                     />
                   </div>
@@ -160,7 +160,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                 navigate(
                                   urlcat("/employer/tender/post", {
                                     tenderId: tenderDetails?.id,
-                                  }),
+                                  })
                                 );
                               }
                             }}
@@ -288,7 +288,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               {tenderDetails.sector && (
                 <ChipBox
                   label={`Sector: ${capitalizeFirst(
-                    tenderDetails?.sector?.title || "",
+                    tenderDetails?.sector?.title || ""
                   )}`}
                   icon={<>{<SVG.SellIcon />}</>}
                 />
@@ -318,18 +318,19 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 <Stack direction="row" spacing={1}>
                   <span>
                     <SVG.BriefcaseIcon />
-                  </span>{" "}
+                  </span>
                   <div className="textdes">
-                    {tenderDetails.company === null &&
-                    tenderDetails.companyLogo === null
-                      ? "Company:"
-                      : "Posted By"}
+                    {/*
+                    { tenderDetails.isPostedByAdmin
+                      ? "Posted By"
+                      : "Institution:"}
                     <span>
-                      {tenderDetails.company === null &&
-                      tenderDetails.companyLogo === null
-                        ? tenderDetails.user.name
-                        : " Koor"}
+                      {tenderDetails.isPostedByAdmin
+                        ? " Koor"
+                      : ` ${tenderDetails.user.name}` }
                     </span>
+                      */}
+                    Institution: <span>{tenderDetails.user.name}</span>{" "}
                   </div>
                 </Stack>
               )}
@@ -369,7 +370,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 color={getColorByRemainingDays(
                   tenderDetails?.expiredInDays > 0
                     ? tenderDetails?.expiredInDays
-                    : 0,
+                    : 0
                 )}
               />
             </Box>
@@ -407,7 +408,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                           navigate(
                             urlcat("/employer/tender/post", {
                               tenderId: tenderDetails?.id,
-                            }),
+                            })
                           );
                         }
                       }}

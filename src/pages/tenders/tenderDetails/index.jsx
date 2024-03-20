@@ -37,12 +37,12 @@ import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
 import {
-  cleanHtmlContent,
-  fileTypeExtractor,
   downloadUrlCreator,
+  fileTypeExtractor,
+  cleanHtmlContent,
 } from "@utils/fileUtils";
-import { Capacitor } from "@capacitor/core";
 import { getJobAttachmentAPI } from "@api/job";
+import { Capacitor } from "@capacitor/core";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -189,21 +189,7 @@ function TenderDetailsComponent() {
 
     if (response.remote === "success") {
       const base64String = response.data.base_image;
-      const byteCharacters = atob(base64String);
-      const byteArrays = new Uint8Array(byteCharacters.length);
-
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteArrays[i] = byteCharacters.charCodeAt(i);
-      }
-      const blob = new Blob([byteArrays], {
-        type: fileType || "application/octet-stream",
-      });
-
-      if (platform === "android" || platform === "ios") {
-        return "";
-      } else {
-        downloadUrlCreator(blob);
-      }
+      downloadUrlCreator(fileType, base64String);
     }
   };
 

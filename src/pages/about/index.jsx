@@ -28,7 +28,8 @@ const AboutUs = () => {
   return (
     <>
       <Helmet>
-        <script type="application/ld+json">{`
+        <script type="application/ld+json">
+          {`
 {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -92,7 +93,8 @@ const AboutUs = () => {
     ],
   };
 
-`}</script>
+`}
+        </script>
       </Helmet>
       <Box className={styles.about}>
         <Box className={styles.about_back_color}>
@@ -162,7 +164,6 @@ const AboutUs = () => {
             <HomeSection />
           </Container>
         </Box>
-
         <Box>
           <AboutContent />
         </Box>

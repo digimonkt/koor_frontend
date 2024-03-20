@@ -1,22 +1,19 @@
-import { Avatar, Box, Chip, Grid, Stack } from "@mui/material";
+import { Box, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { SVG } from "../../assets/svg";
-import { OutlinedButton, SolidButton } from "../button";
-import { ChipBox } from "./style";
+import { SolidButton } from "../button";
+import Dialog from "./dialog";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import urlcat from "urlcat";
-import { getColorByRemainingDays } from "../../utils/generateColor";
-import { generateFileUrl } from "../../utils/generateFileUrl";
 import { saveJobAPI, unSaveJobAPI } from "../../api/jobSeeker";
 import { updateEmployerJobStatusAPI } from "../../api/employer";
-import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { showDay, formatCommaText } from "@utils/constants/utility";
+import { showDay } from "@utils/constants/utility";
+import { getColorByRemainingDays } from "@utils/generateColor";
 import { USER_ROLES } from "@utils/enum";
-import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
-import DialogBox from "@components/dialogBox";
+import JobBadges from "./badges";
+import JobButtons from "./jobButtons";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
@@ -24,84 +21,71 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const path = location.pathname;
   const pathParts = path.split("/");
   const endRouter = pathParts[pathParts.length - 1];
-  const { isMobileView } = useSelector((state) => state.platform);
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState("");
 
-  const [state, setState] = useState({
-    registrationWarning: false,
-    isSaved: false,
-    isStart: jobDetails?.status,
-    applicationStatus: "applied",
-    numLines: 3,
-    searchValue: "",
-  });
-
+  const [registrationWarning, setRegistrationWarning] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [isStart, setIsStart] = useState(jobDetails?.status);
+  const [applicationStatus, setApplicationStatus] = useState("applied");
+  const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
-    setState((prev) => ({
-      ...prev,
-      numLines: prev.numLines === 3 ? jobDetails.length : 3,
-    }));
+    setNumLines((prevNumLines) =>
+      prevNumLines === 3 ? jobDetails?.length : 3
+    );
   };
   const textWrapperStyle = {
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
-    WebkitLineClamp: state.numLines,
+    WebkitLineClamp: numLines,
   };
   const handleToggleSave = async () => {
     if (isLoggedIn) {
-      setState((prev) => ({ ...prev, isSaved: !state.isSaved }));
-      if (!state.isSaved) {
+      setIsSaved(!isSaved);
+      if (!isSaved) {
         await saveJobAPI(jobDetails.id);
       } else {
         await unSaveJobAPI(jobDetails.id);
       }
     } else {
-      setState((prev) => ({ ...prev, registrationWarning: true }));
+      setRegistrationWarning(true);
     }
   };
-  const matches = useMediaQuery("(max-width:600px)");
   const handleStartPause = async () => {
-    setState((prev) => ({
-      ...prev,
-      isSaved: prev === "active" ? "inactive" : "active",
-    }));
+    setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
   };
   const updateJob = async (jobId) => {
     await updateEmployerJobStatusAPI(jobId);
   };
   useEffect(() => {
-    if (jobDetails) {
-      setState((prev) => ({ ...prev, isSaved: jobDetails.isSaved }));
-    }
+    if (jobDetails) setIsSaved(jobDetails.isSaved);
   }, [jobDetails]);
   useEffect(() => {
     if (jobDetails.isShortlisted) {
-      setState((prev) => ({ ...prev, applicationStatus: "Shortlisted" }));
+      setApplicationStatus("Shortlisted");
     }
     if (jobDetails.isRejected) {
-      setState((prev) => ({ ...prev, applicationStatus: "Rejected" }));
+      setApplicationStatus("Rejected");
     }
     if (jobDetails.isPlannedInterview) {
-      setState((prev) => ({
-        ...prev,
-        applicationStatus:
-          "Interview planned on " +
+      setApplicationStatus(
+        "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
             "MMMM D, YYYY [at] h:mm A"
-          ),
-      }));
+          )
+      );
     }
   }, [jobDetails]);
   useEffect(() => {
-    setState((prev) => ({ ...prev, searchValue: endRouter }));
+    setSearchValue(endRouter);
   }, [endRouter]);
   return (
     <div className="job_card">
       <Grid
         justifyContent="space-between"
-        sx={{ alignItems: state.numLines === 3 ? "center" : "flex-start" }}
+        sx={{ alignItems: numLines === 3 ? "center" : "flex-start" }}
         container
         spacing={1.875}
       >
@@ -146,129 +130,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 )}
               />
             </Box>
-            <Stack
-              direction={"row"}
-              spacing={2}
-              alignItems={"center"}
-              justifyContent={"space-between"}
-            >
-              <div className="squer-width">
-                <Avatar
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    margin: "auto",
-                    color: "#CACACA",
-                    fontSize: "15rem",
-                    borderRadius: "10px",
-                    "&.MuiAvatar-colorDefault": {
-                      background: "#F0F0F0",
-                    },
-                  }}
-                  src={generateFileUrl(jobDetails?.user?.image?.path || "")}
-                >
-                  <BusinessCenterOutlinedIcon
-                    sx={{
-                      width: "100%",
-                      padding: "30px",
-                      height: "100%",
-                    }}
-                  />
-                </Avatar>
-              </div>
-              {matches ? (
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  justifyContent={{ xs: "center", lg: "end" }}
-                  alignItems="center"
-                  // divider={<hr orientation="vertical" className="job_card_hr" />}
-                  sx={{ minHeight: "87%" }}
-                >
-                  <div className="pricebox py-3 me-lg-4">
-                    {jobDetails?.budgetAmount ? (
-                      <>
-                        <span className="d-block">UP TO</span>
-                        <h4>
-                          <small>{"$"}</small>
-                          {jobDetails?.budgetAmount || "3,500"}
-                        </h4>
-                        <span>{jobDetails?.budgetPayPeriod}</span>
-                      </>
-                    ) : (
-                      <h3></h3>
-                    )}
-                  </div>
-                  {selfJob ? (
-                    <div className="job-button-card">
-                      <button
-                        onClick={() => {
-                          handleStartPause();
-                        }}
-                      >
-                        {state.isStart === "active" ? (
-                          <>
-                            <SVG.PauseIcon />
-                            <span className="d-block">Hold</span>
-                          </>
-                        ) : (
-                          <>
-                            <SVG.StartIcon />
-                            <span className="d-block">Start</span>
-                          </>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (jobDetails?.id) {
-                            navigate(
-                              urlcat("/employer/jobs/post", {
-                                jobId: jobDetails?.id,
-                              })
-                            );
-                          }
-                        }}
-                      >
-                        {<SVG.Edit1 />}
-                        <span className="d-block">Edit</span>
-                      </button>
-                    </div>
-                  ) : isLoggedIn &&
-                    role === USER_ROLES.jobSeeker &&
-                    !isMobileView ? (
-                    <React.Fragment>
-                      {!applied ? (
-                        <div
-                          onClick={handleToggleSave}
-                          style={{ marginLeft: "6px", cursor: "pointer" }}
-                        >
-                          <div
-                            className="bookmark"
-                            style={{ width: matches ? "auto" : "" }}
-                          >
-                            {state.isSaved ? (
-                              <>
-                                <SVG.SaveIcon />
-                                <span>Saved</span>
-                              </>
-                            ) : (
-                              <>
-                                <SVG.UnSave style={{ color: "#848484" }} />
-                                <span style={{ color: "#848484" }}>Save</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      ) : null}
-                    </React.Fragment>
-                  ) : (
-                    ""
-                  )}
-                </Stack>
-              ) : (
-                ""
-              )}
-            </Stack>
+            <JobButtons
+              jobDetails={jobDetails}
+              isStart={isStart}
+              selfJob={selfJob}
+              isLoggedIn={isLoggedIn}
+              isSaved={isSaved}
+              isApplied={applied}
+              handleSave={handleToggleSave}
+            />
           </Grid>
         )}
         <Grid
@@ -292,9 +162,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <Chip
                   color={jobDetails.isRejected ? "error" : "success"}
                   size="small"
-                  label={state.applicationStatus}
+                  label={applicationStatus}
                   sx={{
-                    flex: "1",
                     marginLeft: "5px",
                     textTransform: "capitalize",
                     "@media (max-width: 480px)": {
@@ -304,237 +173,81 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <Grid container spacing={1}>
-              <Grid
-                item
-                xs={isMobileView ? 10 : 12}
-                sm={isMobileView ? 10 : 12}
-              >
-                <Box className="job-description mt-1 mb-3">
-                  <div style={textWrapperStyle}>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: jobDetails?.description,
-                      }}
-                    ></p>
-                  </div>
-                  {jobDetails?.description?.length > 350 && (
-                    <button
-                      style={{
-                        border: "none",
-                        cursor: "pointer",
-                        background: "none",
-                        color:
-                          role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
-                      }}
-                      onClick={handleSeeMoreClick}
-                    >
-                      {state.numLines === 3 ? "See More" : "See Less"}
-                    </button>
-                  )}
-                </Box>
-              </Grid>
-              <Grid
-                item
-                xs={2}
-                sm={2}
-                sx={{
-                  display: "flex",
-                  justifyItems: "center",
-                  alignItems: "center",
-                }}
-              >
-                {isMobileView && role === USER_ROLES.jobSeeker && (
-                  <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
-                    <Box className="bookmark">
-                      {state.isSaved ? (
-                        <>
-                          <SVG.SaveIcon />
-                          <span>Saved</span>
-                        </>
-                      ) : (
-                        <>
-                          <SVG.UnSave style={{ color: "#848484" }} />
-                          <span style={{ color: "#848484" }}>Save</span>
-                        </>
-                      )}
-                    </Box>
-                  </div>
-                )}
-              </Grid>
-            </Grid>
+            <Box className="job-description mt-1 mb-3">
+              <div style={textWrapperStyle}>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: jobDetails?.description,
+                  }}
+                ></p>
+              </div>
+              {jobDetails?.description?.length > 350 && (
+                <button
+                  style={{
+                    border: "none",
+                    cursor: "pointer",
+                    background: "none",
+                    color:
+                      role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
+                  }}
+                  onClick={handleSeeMoreClick}
+                >
+                  {numLines === 3 ? "See More" : "See Less"}
+                </button>
+              )}
+            </Box>
+            <JobBadges jobDetails={jobDetails} />
             <Stack
               direction="row"
-              flexWrap={isMobileView ? "nowrap" : "wrap"}
-              spacing={{ xs: 2, sm: 1, md: 1 }}
-              useFlexGap
+              spacing={2}
+              className="mt-3"
               sx={{
-                width: "100%",
-
-                "@media (max-width: 992px)": {
-                  overflow: "hidden",
-                  overflowX: "auto",
-                },
-                "@media (max-width: 480px)": {
-                  "& .MuiChip-root": { marginRight: "5px" },
+                "@media(max-width: 480px)": {
+                  display: "block",
                 },
               }}
-              className="job_card_chip"
             >
-              <ChipBox
-                sx={{ px: 1.5 }}
-                label={formatCommaText(
-                  jobDetails?.city.title,
-                  jobDetails?.country.title
-                )}
-                icon={<>{<SVG.LocationIcon />}</>}
-              />
-              {jobDetails?.duration ? (
-                <ChipBox
-                  sx={{
-                    "@media (max-width: 992px)": {
-                      paddingLeft: "12px !important",
-                      paddingRight: "12px !important",
-                    },
-                  }}
-                  label={`${jobDetails?.duration} Months`}
-                  icon={<>{<SVG.BegClock />}</>}
-                />
-              ) : (
-                ""
+              {!selfJob && (
+                <Stack direction="row" spacing={1}>
+                  <span>
+                    <SVG.BriefcaseIcon />
+                  </span>{" "}
+                  <div className="textdes">
+                    {/*
+                    {jobDetails.isPostedByAdmin ? "Posted By" : "Institution:"}
+                    <span>
+                      {jobDetails.isPostedByAdmin
+                        ? " Koor"
+                        : ` ${jobDetails.user.name}`}
+                    </span>
+                      */}
+                    Institution: <span>{jobDetails.user.name}</span>
+                  </div>
+                </Stack>
               )}
-              {jobDetails?.isFullTime && (
-                <ChipBox
-                  sx={{ marginBottom: "10px !important" }}
-                  label={"Full Time"}
-                  icon={<>{<SVG.MoonCircle />}</>}
-                />
-              )}
-              {jobDetails?.isPartTime && (
-                <ChipBox
-                  sx={{ marginBottom: "10px !important" }}
-                  label={"Part time"}
-                  icon={<>{<SVG.MoonCircle />}</>}
-                />
-              )}
-              {jobDetails?.hasContract && (
-                <ChipBox
-                  label={"Consultant"}
-                  icon={<>{<SVG.MoonCircle />}</>}
-                />
-              )}
-            </Stack>
-            {!isMobileView ? (
               <Stack
                 direction="row"
-                spacing={2}
-                className="mt-3"
+                spacing={1}
                 sx={{
+                  borderLeft: "1px solid #ccc",
+                  paddingLeft: "15px",
                   "@media(max-width: 480px)": {
-                    display: "block",
+                    borderLeft: "0px",
+                    paddingLeft: "0px",
+                    marginLeft: "0px !important",
+                    marginTop: "10px !important",
                   },
                 }}
               >
-                {!selfJob && (
-                  <Stack direction="row" spacing={1}>
-                    <span>
-                      <SVG.BriefcaseIcon />
-                    </span>{" "}
-                    <div className="textdes">
-                      {jobDetails.company === null &&
-                      jobDetails.companyLogo === null
-                        ? "Company:"
-                        : "Posted By"}
-                      <span>
-                        {jobDetails.company === null &&
-                        jobDetails.companyLogo === null
-                          ? jobDetails.user.name
-                          : " Koor"}
-                      </span>
-                    </div>
-                  </Stack>
-                )}
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  sx={{
-                    borderLeft: "1px solid #ccc",
-                    paddingLeft: "15px",
-                    "@media(max-width: 480px)": {
-                      borderLeft: "0px",
-                      paddingLeft: "0px",
-                      marginLeft: "0px !important",
-                      marginTop: "10px !important",
-                    },
-                  }}
-                >
-                  <span>
-                    <SVG.ClockIconSmall />
-                  </span>{" "}
-                  <div className="textdes">
-                    Posted At:{" "}
-                    <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
-                  </div>
-                </Stack>
+                <span>
+                  <SVG.ClockIconSmall />
+                </span>{" "}
+                <div className="textdes">
+                  Posted At:{" "}
+                  <span>{dayjs(jobDetails?.startDate).format("ll")}</span>
+                </div>
               </Stack>
-            ) : (
-              <Grid container spacing={2} className="mt-3">
-                {/* Company and Posted At column */}
-                <Grid item xs={10} sm={10}>
-                  {!selfJob && (
-                    <Stack mt={2} direction="row" spacing={1}>
-                      <span>
-                        <SVG.BriefcaseIcon />
-                      </span>{" "}
-                      <div className="textdes">
-                        {jobDetails.company === null &&
-                        jobDetails.companyLogo === null
-                          ? "Company:"
-                          : "Posted By"}
-                        <span>
-                          {jobDetails.company === null &&
-                          jobDetails.companyLogo === null
-                            ? jobDetails.user.name
-                            : "Koor"}
-                        </span>
-                      </div>
-                    </Stack>
-                  )}
-                  <Stack mt={2} direction="row" spacing={1}>
-                    <span>
-                      <SVG.ClockIconSmall />
-                    </span>{" "}
-                    <div className="textdes">
-                      Posted At:{" "}
-                      <span>{dayjs(jobDetails?.createdAt).format("ll")}</span>
-                    </div>
-                  </Stack>
-                </Grid>
-                {/* Upto Grid column */}
-                <Grid item xs={2} sm={2}>
-                  <Box
-                    className="pricebox py-3 upto-slide"
-                    display="flex"
-                    justifyContent="center"
-                    flexDirection="column"
-                    alignItems="center"
-                  >
-                    {!isMobileView && jobDetails?.budgetAmount ? (
-                      <>
-                        <span className="d-block">UP TO</span>
-                        <h4>
-                          <small>{"$"}</small>
-                          {jobDetails?.budgetAmount || "3,500"}
-                        </h4>
-                        <span>{jobDetails?.budgetPayPeriod}</span>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </Box>
-                </Grid>
-              </Grid>
-            )}
+            </Stack>
           </div>
         </Grid>
         <Grid
@@ -578,6 +291,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             spacing={1}
             justifyContent={{ xs: "center", lg: "end", sm: "end" }}
             alignItems="center"
+            // divider={<hr orientation="vertical" className="job_card_hr" />}
             sx={{
               minHeight: "87%",
               "@media (max-width:768px)": {
@@ -595,13 +309,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <Box
               sx={{
                 "@media (max-width: 480px)":
-                  state.searchValue === "manage-jobs"
-                    ? {}
-                    : { display: "none" },
+                  searchValue === "manage-jobs" ? {} : { display: "none" },
               }}
               className="pricebox py-3 upto-slide"
             >
-              {!isMobileView && jobDetails?.budgetAmount ? (
+              {jobDetails?.budgetAmount > 0 && jobDetails?.budgetAmount ? (
                 <>
                   <span className="d-block">UP TO</span>
                   <h4>
@@ -614,114 +326,48 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 ""
               )}
             </Box>
-            {!isMobileView && Boolean(jobDetails?.budgetAmount) && selfJob && (
+            {Boolean(jobDetails?.budgetAmount) && selfJob && (
               <Box sx={{ width: "2px !important" }}>
                 <Box className="hr-border"></Box>
               </Box>
             )}
             {selfJob ? (
-              !isMobileView ? (
-                <Box
-                  className="job-button-card"
-                  sx={{ display: "flex", alignItems: "center" }}
-                >
-                  <button
-                    onClick={() => {
-                      handleStartPause();
-                    }}
-                  >
-                    {state.isStart === "active" ? (
-                      <>
-                        <SVG.PauseIcon />
-                        <span className="d-block">Hold</span>
-                      </>
-                    ) : (
-                      <>
-                        <SVG.StartIcon />
-                        <span className="d-block">Start</span>
-                      </>
-                    )}
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (jobDetails?.id) {
-                        navigate(
-                          urlcat("/employer/jobs/post", {
-                            jobId: jobDetails?.id,
-                          })
-                        );
-                      }
-                    }}
-                  >
-                    {<SVG.Edit1 />}
-                    <span className="d-block">Edit</span>
-                  </button>
-                </Box>
-              ) : (
-                <Box
-                  className="job-button-card"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+              <Box
+                className="job-button-card"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <button
+                  onClick={() => {
+                    handleStartPause();
                   }}
                 >
-                  {Boolean(jobDetails?.budgetAmount) && (
+                  {isStart === "active" ? (
                     <>
-                      <Box style={{ fontSize: "12px" }}>
-                        <span className="d-block">UP TO</span>
-                        <h4>
-                          <small>{"$"}</small>
-                          {jobDetails?.budgetAmount || "3,500"}
-                        </h4>
-                        <span>{jobDetails?.budgetPayPeriod}</span>
-                      </Box>
-                      <Box sx={{ width: "2px !important" }}>
-                        <Box className="hr-border"></Box>
-                      </Box>
+                      <SVG.PauseIcon />
+                      <span className="d-block">Hold</span>
+                    </>
+                  ) : (
+                    <>
+                      <SVG.StartIcon />
+                      <span className="d-block">Start</span>
                     </>
                   )}
-                  <Box mt={2}>
-                    <button
-                      onClick={() => {
-                        handleStartPause();
-                      }}
-                    >
-                      {state.isStart === "active" ? (
-                        <>
-                          <SVG.PauseIcon />
-                          <span className="d-block">Hold</span>
-                        </>
-                      ) : (
-                        <>
-                          <SVG.StartIcon />
-                          <span className="d-block">Start</span>
-                        </>
-                      )}
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (jobDetails?.id) {
-                          navigate(
-                            urlcat("/employer/jobs/post", {
-                              jobId: jobDetails?.id,
-                            })
-                          );
-                        }
-                      }}
-                    >
-                      {<SVG.Edit1 />}
-                      <span className="d-block">Edit</span>
-                    </button>
-                  </Box>
-                  <Box>
-                    <ApplicantList
-                      jobId={jobDetails.id}
-                      totalApplications={jobDetails.applicantCount}
-                    />
-                  </Box>
-                </Box>
-              )
+                </button>
+                <button
+                  onClick={() => {
+                    if (jobDetails?.id) {
+                      navigate(
+                        urlcat("/employer/jobs/post", {
+                          jobId: jobDetails?.id,
+                        })
+                      );
+                    }
+                  }}
+                >
+                  {<SVG.Edit1 />}
+                  <span className="d-block">Edit</span>
+                </button>
+              </Box>
             ) : role === USER_ROLES.jobSeeker ? (
               <React.Fragment>
                 <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
@@ -729,7 +375,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     className="bookmark"
                     sx={{ "@media (max-width: 480px)": { display: "none" } }}
                   >
-                    {state.isSaved ? (
+                    {isSaved ? (
                       <>
                         <SVG.SaveIcon />
                         <span>Saved</span>
@@ -749,56 +395,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           </Stack>
         </Grid>
       </Grid>
-      <DialogBox
-        open={state.registrationWarning}
-        handleClose={() =>
-          setState((prev) => ({
-            ...prev,
-            registrationWarning: false,
-          }))
-        }
-      >
-        <div>
-          <h1 className="heading">Register as jobseeker</h1>
-          <div className="form-content">
-            <p className="jobs_dailog_content">
-              To apply for the job and have many other useful features to find a
-              job, please register on Koor.
-            </p>
-            <div style={{ textAlign: "center", lineHeight: "40px" }}>
-              <Link to="/register?role=job_seeker">
-                <OutlinedButton
-                  title="Register"
-                  jobSeeker
-                  sx={{
-                    width: "100%",
-                    fontSize: "16px !important",
-                    "@media (max-width: 992px)": {
-                      fontSize: "16px !important",
-                    },
-                    "@media (max-width: 480px)": {
-                      fontSize: "14px !important",
-                    },
-                  }}
-                />
-              </Link>
-              <span className="jobs_dailog_login_line">
-                Already have an account?{" "}
-                <Link
-                  to={`/login?role=${USER_ROLES.jobSeeker}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "#EEA23D",
-                    fontWeight: 600,
-                  }}
-                >
-                  Login
-                </Link>
-              </span>
-            </div>
-          </div>
-        </div>
-      </DialogBox>
+      <Dialog open={registrationWarning} setOpen={setRegistrationWarning} />
     </div>
   );
 }

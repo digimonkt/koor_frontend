@@ -32,3 +32,7 @@ export const formatCommaText = (valueFiert, valueSecond) => {
     return `${valueFiert}, ${valueSecond}`;
   }
 };
+
+export function getKeysByValue(object, value) {
+  return Object.keys(object).filter((key) => object[key] === value);
+}
