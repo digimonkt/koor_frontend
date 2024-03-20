@@ -833,7 +833,6 @@ const JobDetails = () => {
       >
         <ShareJob />
       </DialogBox>
-
       <ExpiredBox
         color={getColorByRole(role)}
         open={expiredWarning}

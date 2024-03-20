@@ -336,7 +336,12 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       : ` ${tenderDetails.user.name}` }
                     </span>
                       */}
-                    Institution: <span>{tenderDetails.user.name}</span>{" "}
+                    Institution:{" "}
+                    <span>
+                      {!tenderDetails.company
+                        ? tenderDetails.user.name
+                        : tenderDetails.company}
+                    </span>{" "}
                   </div>
                 </Stack>
               )}
