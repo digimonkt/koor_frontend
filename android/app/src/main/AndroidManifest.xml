@@ -32,8 +32,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http"
-                    android:host="digimonk.co:1652"
-                    android:pathPrefix="activation" />
+                    android:host="digimonk.co"
+                    android:pathPrefix="/activation" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https"
                     android:host="koorjobs.com"
-                    android:pathPrefix="activation" />
+                    android:pathPrefix="/activation" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
