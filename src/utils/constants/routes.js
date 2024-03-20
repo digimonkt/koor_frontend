@@ -17,6 +17,11 @@ const Resources = lazy(() =>
     default: module.Resources,
   }))
 );
+const Activation = lazy(() =>
+  import("../../pages/auth").then((module) => ({
+    default: module.ActiveAcount,
+  }))
+);
 // auth
 const Logout = lazy(() =>
   import("../../pages/auth").then((module) => ({ default: module.Logout }))
@@ -298,6 +303,12 @@ export const ROUTES = [
     name: "Vendor Public Profile",
     path: "/vendor/:userId/profile",
     component: VendorPublicProfile,
+  },
+  {
+    id: "activation",
+    name: "Activation",
+    path: "/activation",
+    component: Activation,
   },
 ];
 

@@ -26,7 +26,7 @@ function ActivatioinUser() {
       setSendingOTP(false);
       dispatch(setSuccessToast("Mail send successfully"));
     } else {
-      dispatch(setErrorToast("Network Error! Try again"));
+      dispatch(setErrorToast("Please register your self"));
     }
   };
 
@@ -48,12 +48,9 @@ function ActivatioinUser() {
       setSendingOTP(false);
       dispatch(setErrorToast("Invalid Link or Expired"));
     } else {
-      dispatch(setErrorToast("Network Error! Try again"));
+      dispatch(setErrorToast("something went wrong"));
     }
   };
-  useEffect(() => {
-    navigate("/");
-  }, [!currentUser.id]);
 
   useEffect(() => {
     if (userVerificationToken) {
@@ -72,6 +69,7 @@ function ActivatioinUser() {
         <FilledButton
           type="button"
           onClick={handleResendOTP}
+          disabled={sendingOTP}
           title={sendingOTP ? <Loader loading={sendingOTP} /> : "Resend Mail"}
         />
       </Box>
