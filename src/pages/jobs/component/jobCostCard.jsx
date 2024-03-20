@@ -47,6 +47,8 @@ function JobCostCard({ amount, payPeriod, user, color = "" }) {
               sx={{
                 width: "100%",
                 height: "100%",
+                minWidth: "80px",
+                minHeight: "80px",
                 margin: "auto",
                 color: "#CACACA",
                 fontSize: "15rem",
@@ -88,12 +90,12 @@ function JobCostCard({ amount, payPeriod, user, color = "" }) {
               <span>
                 <Link
                   to={`tel:${formatPhoneNumberIntl(
-                    user.countryCode + user.mobileNumber,
+                    user.countryCode + user.mobileNumber
                   )}`}
                 >
                   {user.countryCode && user.mobileNumber
                     ? formatPhoneNumberIntl(
-                        user.countryCode + user.mobileNumber,
+                        user.countryCode + user.mobileNumber
                       )
                     : ""}
                 </Link>

@@ -260,7 +260,7 @@ function TenderDetailsComponent() {
                   <SolidButton
                     title={
                       details.expiredInDays > 0
-                        ? `${details.expiredInDays} Days`
+                        ? `${details.expiredInDays} Days left`
                         : "Expired"
                     }
                     style={{
