@@ -48,7 +48,7 @@ function JobCostCard({ amount, payPeriod, user, color = "" }) {
                 width: "100%",
                 height: "100%",
                 minWidth: "80px",
-                minHeight: "80px",
+                minHeight: "90px",
                 margin: "auto",
                 color: "#CACACA",
                 fontSize: "15rem",

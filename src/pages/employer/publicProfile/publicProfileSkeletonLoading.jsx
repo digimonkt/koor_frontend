@@ -45,13 +45,13 @@ function PublicProfileComponent() {
                 <Stack
                   direction={{ xs: "column", lg: "row" }}
                   spacing={{ xs: 1, lg: 2 }}
-                  justifyContent={{ xs: "start", lg: "space-between" }}
-                  alignItems={"center"}
+                  justifyContent={{ xs: "start" }}
+                  alignItems={"flex-start"}
                 >
                   <Stack direction={"row"} spacing={2}>
                     <Skeleton
                       circle
-                      style={{ width: "88px", height: "88px" }}
+                      style={{ width: "90px", height: "100%" }}
                     />
                     <Box>
                       <Typography
@@ -64,7 +64,7 @@ function PublicProfileComponent() {
                           mb: 0,
                         }}
                       >
-                        <Skeleton width={300} />
+                        <Skeleton width={"100%"} />
                       </Typography>
                       <Typography
                         sx={{
@@ -104,7 +104,7 @@ function PublicProfileComponent() {
                     }}
                   >
                     <Skeleton
-                      width={1000}
+                      width={"100%"}
                       count={3}
                       style={{ lineHeight: "10px" }}
                     />
@@ -152,7 +152,7 @@ function PublicProfileComponent() {
                       mb: 2,
                     }}
                   >
-                    Contact infodsfdfghgh
+                    Contact info
                   </Typography>
                   <Stack direction={"row"} spacing={2} alignItems={"center"}>
                     <Box

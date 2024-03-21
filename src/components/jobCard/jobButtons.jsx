@@ -8,7 +8,7 @@ import { SVG } from "@assets/svg";
 
 const AvatarComponent = ({ imageUrl }) => {
   return (
-    <div className="squer-width">
+    <div>
       <Avatar
         sx={{
           width: "100%",
@@ -16,7 +16,7 @@ const AvatarComponent = ({ imageUrl }) => {
           margin: "auto",
           color: "#CACACA",
           maxWidth: "100px",
-          maxhigh: "100px",
+          maxHeight: "100px",
           fontSize: "15rem",
           borderRadius: "10px",
           "&.MuiAvatar-colorDefault": {
