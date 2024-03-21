@@ -19,14 +19,13 @@ import Languages from "./languages";
 import WorkExperience from "./work-experience";
 import Skills from "./skills";
 import AboutMe from "../aboutMe";
-import { Capacitor } from "@capacitor/core";
 import { SVG } from "@assets/svg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const MyProfile = () => {
-  const platform = Capacitor.getPlatform();
   const { currentUser } = useSelector(({ auth }) => auth);
+  const { isMobileView } = useSelector(({ platform }) => platform);
   // const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(["job"]);
@@ -42,7 +41,7 @@ const MyProfile = () => {
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
     );
   };
 
@@ -53,11 +52,12 @@ const MyProfile = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  console.log(currentUser.profileImage);
   return (
     <>
       <div className="dashboard-content">
         <Grid container spacing={2}>
-          {platform === "android" || platform === "ios" ? (
+          {isMobileView ? (
             <>
               <Grid item xs={12}>
                 <Stack

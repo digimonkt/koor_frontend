@@ -212,11 +212,7 @@ const AreaChart = () => {
         <div className="chart-view">
           <h5>
             {" "}
-            {lastMonthComparing > 0
-              ? "+"
-              : lastMonthComparing === 0
-              ? ""
-              : "-"}{" "}
+            {lastMonthComparing > 0 ? "+" : ""}
             {lastMonthComparing}%
           </h5>
           <p>comparing to the previous period</p>
