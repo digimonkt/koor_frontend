@@ -110,17 +110,27 @@ function PublicProfileComponent() {
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
-                      justifyContent={{ xs: "start", lg: "space-between" }}
-                      alignItems={"center"}
+                      justifyContent={{ xs: "start" }}
+                      alignItems={"flex-start"}
                     >
-                      <Stack direction={"row"} spacing={2}>
-                        <div className="squer-width" style={{ width: "100px" }}>
+                      <Stack
+                        alignItems="flex-start"
+                        direction={"row"}
+                        spacing={2}
+                      >
+                        <div
+                          style={{
+                            width: "100px",
+                          }}
+                        >
                           <Avatar
                             sx={{
                               boxShadow: "0px 5px 25px rgba(0, 0, 0, 0.25)",
                               borderRadius: "10%",
                               width: "100%",
                               height: "100%",
+                              minHeight: "90px",
+                              minWidth: "90px",
                               margin: "auto",
                               color: "#CACACA",
                               fontSize: "15rem",
@@ -129,7 +139,7 @@ function PublicProfileComponent() {
                               },
                             }}
                             src={generateFileUrl(
-                              userDetails.profileImage || "",
+                              userDetails.profileImage || ""
                             )}
                           >
                             <BusinessCenterOutlinedIcon
@@ -327,7 +337,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography

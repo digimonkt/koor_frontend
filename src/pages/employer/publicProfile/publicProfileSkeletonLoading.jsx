@@ -54,17 +54,13 @@ function PublicProfileComponent() {
                 <Stack
                   direction={{ xs: "column", lg: "row" }}
                   spacing={{ xs: 1, lg: 2 }}
-                  justifyContent={{ xs: "start", lg: "space-between" }}
-                  alignItems={"center"}
+                  justifyContent={{ xs: "start" }}
+                  alignItems={"flex-start"}
                 >
                   <Stack direction={"row"} p={2} gap={2}>
                     <Skeleton
                       circle
-                      style={{
-                        width: "88px",
-                        height: "88px",
-                        marginLeft: "50px",
-                      }}
+                      style={{ width: "90px", height: "100%", marginLeft: "50px" }}
                     />
                     <Box>
                       <Typography
@@ -77,7 +73,7 @@ function PublicProfileComponent() {
                           mb: 0,
                         }}
                       >
-                        <Skeleton width={300} />
+                        <Skeleton width={"100%"} />
                       </Typography>
                       <Typography
                         sx={{
@@ -117,6 +113,7 @@ function PublicProfileComponent() {
                     }}
                   >
                     <Skeleton
+                      width={"100%"}
                       count={3}
                       style={{
                         lineHeight: "10px",

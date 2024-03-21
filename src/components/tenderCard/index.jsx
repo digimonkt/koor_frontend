@@ -105,8 +105,10 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   <BusinessCenterOutlinedIcon
                     sx={{
                       width: "100%",
-                      padding: "30px",
                       height: "100%",
+                      padding: "30px",
+                      minWidth: "90px",
+                      minHeight: "90px",
                     }}
                   />
                 </Avatar>
@@ -176,7 +178,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                             <span className="d-block">Edit</span>
                           </button>
                         </Box>
-                      ) : isLoggedIn ? (
+                      ) : isLoggedIn && role === USER_ROLES.vendor ? (
                         <React.Fragment>
                           {!applied ? (
                             <div

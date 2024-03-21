@@ -55,10 +55,10 @@ function JobCardSkeletonLoader({ logo, selfJob }) {
             },
           }}
         >
-          <div className="my-jobs" style={{ paddingLeft: "75px" }}>
+          <div className="my-jobs">
             <Skeleton height={24} width={"100%"} />
             <p className="my-3 job-description card-description">
-              <Skeleton count={2} style={{ lineHeight: "9px" }} />
+              <Skeleton count={2} />
             </p>
             <Stack
               direction={{ xs: "column", sm: "row" }}
