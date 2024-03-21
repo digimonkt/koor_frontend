@@ -7,6 +7,8 @@ import dayjs from "dayjs";
 
 function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
+  const { isMobileView } = useSelector((state) => state.platform);
+  console.log({ isMobileView });
   const applicantDetails = user || currentUser;
   return (
     <div className="job-application pages" id="div-to-pdf">
@@ -90,47 +92,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
                   <hr />
                 </>
               )}
-              {/* <div className="education">
-              <h2>Expertise</h2>
-              <div className="education_div">
-                <h3>My expertise area</h3>
-                <h6>
-                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
-                  amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in
-                  vestibulum phasellus eu. Semper nunc eget varius diam habitant
-                  id lacus.
-                </h6>
-              </div>
-              <div style={{ margin: "20px 0px" }}></div>
-              <div className="education_div">
-                <h3>Product development</h3>
-                <h6>
-                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
-                  amet. At sem vitae leo maecenas tincidunt orci ut.{" "}
-                </h6>
-              </div>
-              <div style={{ margin: "20px 0px" }}></div>
-              <div className="education_div">
-                <h3>Digital product development and team management</h3>
-                <h6>
-                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
-                  amet. At sem vitae leo maecenas tincidunt orci ut. Maecenas
-                  bibendum at mattis gravida pellentesque dolor nibh amet. At
-                  sem vitae leo maecenas tincidunt orci ut. Maecenas bibendum at
-                  mattis gravida pellentesque dolor nibh amet. At sem vitae leo
-                  maecenas tincidunt orci ut.{" "}
-                </h6>
-              </div>
-            </div>
-              {/* <div className="certification">
-              <h2>CERTIFICATION</h2>
-              <div className="certification_div">
-                <p>2016-2018</p>
-                <span>Credly</span>
-                <h3>User research and user experience</h3>
-              </div>
-            </div>
-            <hr /> */}
               {Boolean(applicantDetails?.profile?.references[0]?.name) && (
                 <>
                   <div>
@@ -224,10 +185,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
 
         {appliedJob && (
           <>
-            {/* <div className="footer"> */}
-            {/*   <p>This resume is generated with</p> */}
-            {/*   <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} /> */}
-            {/* </div> */}
             <div id="page-break"></div>
             <CoverLetter
               applicantDetails={applicantDetails}
@@ -235,10 +192,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
             />
           </>
         )}
-        {/* <div className="footer">
-          <p>This resume is generated with</p>
-          <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
-        </div> */}
       </div>
     </div>
   );

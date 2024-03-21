@@ -33,6 +33,7 @@ import {
   setTotalItems,
 } from "../../redux/slice/search";
 import AdvanceFilter from "./advanceFilter";
+import { useScrollTop } from "@hooks";
 import { Capacitor } from "@capacitor/core";
 import { getAdSenseAPI } from "@api/adSense";
 import { setAdSense } from "@redux/slice/adSense";
@@ -160,6 +161,7 @@ function Search({ searchTypeForJob }) {
     }
   }, [search, page, totalPages, advanceFilter, searchType, orderBy, sortBy]);
 
+  useScrollTop();
   const pagination = () => {
     return (
       <Pagination
@@ -216,7 +218,7 @@ function Search({ searchTypeForJob }) {
           <>
             <Box sx={{ px: 3, pt: 3 }}>
               <HeaddingSearch
-                title="Browse talents"
+                title={`Browse ${searchType || "jobs"}`}
                 count={
                   <Box
                     component={"span"}
@@ -230,13 +232,8 @@ function Search({ searchTypeForJob }) {
                       ml: 1,
                     }}
                   >
-                    2,513
+                    {totalItems || 0}
                   </Box>
-                }
-                icon={
-                  <IconButton>
-                    <SVG.CalendarMonth />
-                  </IconButton>
                 }
               />
             </Box>
@@ -324,6 +321,10 @@ function Search({ searchTypeForJob }) {
                   className={`${styles.jobcards}`}
                   sx={{
                     minHeight: "450px",
+                    marginBottom:
+                      platform === "android" || platform === "ios"
+                        ? "40px"
+                        : "0px",
                     marginTop:
                       platform === "android" || platform === "ios"
                         ? ""
@@ -512,7 +513,13 @@ function Search({ searchTypeForJob }) {
                   <Component />
                 </Box>
                 {totalPages > 1 ? (
-                  <div className="paginations pt-4">{pagination()}</div>
+                  <div
+                    className={
+                      isMobileView ? "paginations" : "paginations pt-4"
+                    }
+                  >
+                    {pagination()}
+                  </div>
                 ) : (
                   <div style={{ marginTop: "20px" }}></div>
                 )}

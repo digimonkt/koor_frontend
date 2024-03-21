@@ -32,8 +32,10 @@ import CancelApply from "../../../pages/tenders/applyForTender/cancelApply";
 import { applyTenderValidationSchema } from "./validator";
 import { getApplicationDetailsAPI } from "@api/vendor";
 import { getJobAttachmentAPI } from "@api/job";
+import { Capacitor } from "@capacitor/core";
 import { downloadUrlCreator, fileTypeExtractor } from "@utils/fileUtils";
 function ApplyForTender() {
+  const platform = Capacitor.getPlatform();
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -166,7 +168,15 @@ function ApplyForTender() {
   return (
     <div>
       <Container>
-        <div className={`${styles.Jobcard}`}>
+        <div
+          className={`${styles.Jobcard}`}
+          style={{
+            margin:
+              platform === "android" || platform === "ios"
+                ? "15px 0px 130px 0px"
+                : "0px",
+          }}
+        >
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={11} lg={11}>

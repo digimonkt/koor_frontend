@@ -10,6 +10,7 @@ import { SEARCH_TYPE, USER_ROLES } from "../../utils/enum";
 
 const ShowContent = ({ content }) => {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const { isMobileView } = useSelector(({ platform }) => platform);
   const [warningTrue, setWarningTrue] = useState(false);
   const [warningRole, setWarningRole] = useState(USER_ROLES.employer);
   const employerHandler = (e, section) => {
@@ -33,8 +34,11 @@ const ShowContent = ({ content }) => {
   };
   return (
     <>
-      <Box className={styles.about}>
-        <Box className={styles.about_back_color}>
+      <Box className={styles.about} sx={isMobileView && { marginTop: "0" }}>
+        <Box
+          className={styles.about_back_color}
+          sx={isMobileView && { paddingTop: "20px", marginTop: "0px" }}
+        >
           <Container
             maxWidth={false}
             sx={{
@@ -60,7 +64,10 @@ const ShowContent = ({ content }) => {
             </Grid>
           </Container>
         </Box>
-        <Box className={styles.about_black_color}>
+        <Box
+          className={styles.about_black_color}
+          sx={isMobileView ? { marginBottom: "50px" } : {}}
+        >
           <Container
             maxWidth={false}
             sx={{

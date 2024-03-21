@@ -35,17 +35,19 @@ import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
-import { getJobAttachmentAPI } from "@api/job";
 import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
 import {
   downloadUrlCreator,
   fileTypeExtractor,
   cleanHtmlContent,
 } from "@utils/fileUtils";
+import { getJobAttachmentAPI } from "@api/job";
+import { Capacitor } from "@capacitor/core";
 
 function TenderDetailsComponent() {
   const params = useParams();
   const navigate = useNavigate();
+  const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
 
   const [details, setDetails] = useState({
@@ -180,6 +182,7 @@ function TenderDetailsComponent() {
       dispatch(setErrorToast("Cannot be withdraw"));
     }
   };
+
   const handleLoadImage = async (url) => {
     const fileType = fileTypeExtractor(url);
     const response = await getJobAttachmentAPI(url);
@@ -189,6 +192,7 @@ function TenderDetailsComponent() {
       downloadUrlCreator(fileType, base64String);
     }
   };
+
   function handleSendEmail(details) {
     const email = details.contactEmail;
     const ccEmail1 = details.cc1;
@@ -220,13 +224,24 @@ function TenderDetailsComponent() {
       <Container
         maxWidth={false}
         sx={{
+          padding: platform === "android" || platform === "ios" ? "0px" : null,
           "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
         }}
       >
-        <div className={`${styles.Jobcard}`}>
+        <div
+          className={`${styles.Jobcard}`}
+          style={{
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
+            borderRadius:
+              platform === "android" || platform === "ios" ? "0px" : null,
+          }}
+        >
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>

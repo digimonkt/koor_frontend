@@ -856,7 +856,10 @@ span.arrowjobs svg {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 600px) {
+  .user-descrition {
+    width: 100%;
+  }
   .my-jobs p {
     font-size: 10px;
   }
@@ -966,3 +969,4 @@ span.arrowjobs svg {
     font-size: 12px;
   }
 }
+

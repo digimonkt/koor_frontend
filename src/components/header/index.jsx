@@ -16,6 +16,7 @@ import {
 } from "react-router-dom";
 import { SearchCategory, SelectBox } from "./style";
 import { FilledButton, OutlinedButton } from "../button";
+import {} from "@capacitor/core";
 import { SVG } from "../../assets/svg";
 import { SEARCH_TYPE, USER_ROLES } from "../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";

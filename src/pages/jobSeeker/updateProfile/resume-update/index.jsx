@@ -55,8 +55,12 @@ const ResumeUpdate = ({
         >
           <h2 className="mb-0">{title}</h2>
           {platform === "android" || platform === "ios" ? (
-            <IconButton size="small" onClick={() => fun()}>
-              <SVG.ArrowUpIcon />
+            <IconButton
+              size="small"
+              onClick={() => fun()}
+              sx={{ "& svg": { width: "18px", height: "11px" } }}
+            >
+              {toggle ? <SVG.ArrowUpIcon /> : <SVG.Downarrow />}
             </IconButton>
           ) : null}
         </Stack>
@@ -64,13 +68,17 @@ const ResumeUpdate = ({
           <>
             {toggle ? (
               <div>
-                <Stack direction={"row"} spacing={2} className="mt-4">
+                <Stack
+                  direction={{ xs: "column", lg: "row" }}
+                  spacing={2}
+                  className="mt-4"
+                >
                   <IconButton
                     sx={{
                       "&.MuiIconButton-root": {
                         backgroundColor: bgcolor,
-                        width: "60px",
-                        height: "60px",
+                        width: "101px",
+                        height: "101px",
                         color,
                         "@media (max-width:540px)": {
                           margin: "auto",
@@ -81,9 +89,45 @@ const ResumeUpdate = ({
                   >
                     <SVG.ResumeIcon />
                   </IconButton>
-                  <div className="description">{description}</div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      gap: "20px",
+                    }}
+                  >
+                    <div>
+                      {currentUser?.resume?.map((resume) => (
+                        <Link
+                          key={resume.id}
+                          to={generateFileUrl(resume.filePath?.path)}
+                          target="_blank"
+                        >
+                          <span
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "5px",
+                              color: "#EEA23D",
+                            }}
+                          >
+                            <SVG.AttachIcon style={{ color: "#EEA23D" }} /> Your
+                            Resume
+                          </span>{" "}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="description">{description}</div>
+                  </div>
                 </Stack>
-                <div className="my-4 text-center">
+                <div className="mt-4 mb-3 text-center">
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
                   <OutlinedButton
                     style={{ width: "100%" }}
                     disabled={loading}
@@ -116,6 +160,16 @@ const ResumeUpdate = ({
                     }}
                   />
                 </div>
+                <hr style={{ borderColor: "#CACACA" }} />
+                <Box className="create_resume_div">
+                  <h3>Don’t have a resume?</h3>
+                  <p>
+                    Don't worry if you don't have one yet,{" "}
+                    <Link to={`/${role}/my-profile/create-resume`}>
+                      create it with our free tool!
+                    </Link>
+                  </p>
+                </Box>{" "}
               </div>
             ) : (
               ""

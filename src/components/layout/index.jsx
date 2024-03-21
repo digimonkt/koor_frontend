@@ -50,7 +50,7 @@ function Layout() {
           background: "#E5E5E5",
           minHeight: "544px",
           paddingBottom:
-            platform === "android" || platform === "ios" ? "150px" : "",
+            platform === "android" || platform === "ios" ? "100px" : "",
         }}
         className="main_component_class"
       >

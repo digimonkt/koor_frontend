@@ -2,14 +2,32 @@
   "appId": "org.reactjs.example.koor",
   "appName": "koor",
   "bundledWebRuntime": false,
-  "npmClient": "npm",
+  "npmClient": "yarn",
+  "cleartext": true,
+  "hostname": "192.168.0.192",
+  "allowNavigation": [
+    "*"
+  ],
   "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "androidScaleType": "CENTER_CROP"
+    },
+    "GoogleAuth": {
+      "scopes": [
+        "profile",
+        "email"
+      ],
+      "clientId": "526504815298-brq8034npfsoj6lrrm6vfa7m2dn6clrr.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  },
   "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
   },
   "server": {
-    "androidScheme": "http",
-    "cleartext": true
+    "url": "http://192.168.0.192:8100"
   }
 }

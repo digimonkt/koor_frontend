@@ -62,6 +62,7 @@ function ActivatioinUser() {
       return () => clearTimeout(timeoutId);
     }
   }, [userVerificationToken]);
+
   return (
     <div className="form-group mb-3 enterotp_input">
       <Box sx={{ textAlign: "center", mt: 3 }}>

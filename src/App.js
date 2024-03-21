@@ -21,22 +21,26 @@ import { MESSAGE_TYPE, USER_ROLES } from "./utils/enum";
 import { resetToast } from "./redux/slice/toast";
 import { FallbackLoading } from "./components/loader/fallbackLoader";
 import { firebaseInitialize } from "./firebaseProvider";
-// eslint-disable-next-line no-unused-vars
 import { getUserCountryByIpAPI, getUserIpAPI, postUserIpAPI } from "./api/user";
 import InnerFooter from "./components/footer/innerfooter";
 import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
-import { Box } from "@mui/material";
 import { setIsMobileView } from "@redux/slice/platform";
+import { App as CapApp } from "@capacitor/app";
+import { setAppInfo } from "./redux/slice/platform";
+import { useScrollTop } from "@hooks/";
+
 const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const {
     auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { appInfo } = useSelector(({ platform }) => platform);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
@@ -46,17 +50,68 @@ function App() {
       dispatch(setIsLoggedIn(false));
     }
   };
+  const fetchAppInfo = async () => {
+    try {
+      const appInfoResult = await CapApp.getInfo();
+      dispatch(setAppInfo(appInfoResult));
+    } catch (error) {
+      console.error("Error fetching app information:", error);
+    }
+  };
+
+  const backButtonAction = () => {
+    const history = window.history;
+    if (history.length > 1) {
+      history.back();
+    } else {
+      if (Capacitor.isNativePlatform) {
+        CapApp.exitApp();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleDeepLink = async (url) => {
+      const parsedUrl = new URL(url);
+
+      const verifyToken = parsedUrl.searchParams.get("verify-token");
+
+      console.log("Verify Token:", verifyToken);
+      navigate("/activation?verify-token=" + verifyToken);
+    };
+
+    const appUrlOpenListener = (data) => {
+      handleDeepLink(data.url);
+    };
+
+    CapApp.addListener("appUrlOpen", appUrlOpenListener);
+
+    CapApp.getLaunchUrl().then((launchUrl) => {
+      if (launchUrl && launchUrl.url) {
+        handleDeepLink(launchUrl.url);
+      }
+    });
+
+    return () => {
+      CapApp.removeAllListeners("appUrlOpen", appUrlOpenListener);
+    };
+  }, []);
+
   useEffect(() => {
     checkLoginStatus();
   }, []);
+
   useEffect(() => {
     window.addEventListener("storage", checkLoginStatus);
-    return () => window.removeEventListener("storage", checkLoginStatus);
+    if (Capacitor.isNativePlatform) {
+      CapApp.addListener("backButton", backButtonAction);
+    }
   }, []);
 
   useEffect(() => {
     firebaseInitialize();
   }, []);
+
   useEffect(() => {
     const getPosition = async () => {
       const userIp = await getUserIpAPI();
@@ -68,7 +123,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            }),
+            })
           );
         }
       }
@@ -88,11 +143,12 @@ function App() {
   }, []);
   useEffect(() => {
     if (platform === "android" || platform === "ios") {
+      fetchAppInfo();
       dispatch(setIsMobileView(true));
     } else {
       dispatch(setIsMobileView(false));
     }
-  }, [platform]);
+  }, [platform, appInfo.name]);
   useEffect(() => {
     if (currentUser.role !== USER_ROLES.employer) {
       const isVerified = currentUser?.profile?.isVerified;
@@ -107,7 +163,7 @@ function App() {
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token="),
+          pair.startsWith("verify-token=")
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];
@@ -120,6 +176,7 @@ function App() {
     }
   }, [currentUser?.id, window.location.pathname]);
 
+  useScrollTop();
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
@@ -204,31 +261,6 @@ function App() {
         {(platform === "android" || platform === "ios") && isLoggedIn ? (
           <>
             <BottomBar />
-            <Box
-              sx={{
-                position: "fixed",
-                bottom: "0px",
-                left: 0,
-                right: 0,
-                background: "#fff",
-                textAlign: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "20px",
-              }}
-            >
-              <Box
-                component={"span"}
-                sx={{
-                  borderRadius: "10px",
-                  width: "100px",
-                  height: "4px",
-                  background: "#121212",
-                  display: "block",
-                }}
-              ></Box>
-            </Box>
           </>
         ) : (
           <></>

@@ -1222,10 +1222,25 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@byteowls/capacitor-oauth2@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@byteowls/capacitor-oauth2/-/capacitor-oauth2-5.0.0.tgz#faefb7633e2d367dddea6c9c7493515477a4008e"
+  integrity sha512-yW50GypmyPJcH/95NwR2jJcgT78vBN3FYKL2w6A3vrT04bRLQyw2K0fLqfj8Zws6DJy43Ck1wPs0Bcdvbsub7A==
+
 "@capacitor/android@^5.4.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-5.5.1.tgz#128dc5ab00f68c80d64ea18e961876b34b4ed859"
   integrity sha512-WTnPnpaEvTtaEtTNRbh06Y1afF7A4plY/4uajAL0WW8tdR1FxieadF357yKGiAT6CudI/B+eOu6rxn6qWuphKg==
+
+"@capacitor/app@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/app/-/app-5.0.6.tgz#2ee02551115fd2e92dc7e81bc30a6c6fa78efa66"
+  integrity sha512-6ZXVdnNmaYILasC/RjQw+yfTmq2ZO7Q3v5lFcDVfq3PFGnybyYQh+RstBrYri+376OmXOXxBD7E6UxBhrMzXGA==
+
+"@capacitor/browser@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@capacitor/browser/-/browser-5.1.0.tgz#2389638c09716d815765f9622b5f3c71e21d7b6f"
+  integrity sha512-7togqchk2Tvq4SmLaWhcrd4x48ES/GEZsceM+29aun7WhxQEVcDU0cJsVdSU2LNFwNhWgPV2GW90etVd1B3OdQ==
 
 "@capacitor/cli@^5.4.1":
   version "5.5.1"
@@ -1257,10 +1272,35 @@
   dependencies:
     tslib "^2.1.0"
 
+"@capacitor/filesystem@4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@capacitor/filesystem/-/filesystem-4.1.5.tgz#f1f5515881438a1dfead44a759ec6a7d35b4bbbc"
+  integrity sha512-fP8h1rNdhAn29/MCl/+pSHZ0afOTSO+fxwrXAe5LWgtO69Qc3c1s4KS5h4craTOkW6WFpYjPCkZFJEdVoRmTcA==
+
 "@capacitor/ios@^5.4.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-5.5.1.tgz#e07d0752b8934215a9defc2d22a537060f2dd7f7"
   integrity sha512-h00qt8u32t8eEbIkuG4IjR0r34YZC0sIXglDH8fRDdA84xDkTybmz3WtdpRWDzh6ukE2RIY7rmD7p410WSJ2yA==
+
+"@capacitor/splash-screen@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/splash-screen/-/splash-screen-5.0.6.tgz#d29320de49cc68add59e17fecb64aa2f1a08447f"
+  integrity sha512-9B8wSm89D+LlshFw8B+mjPU8pJNf1WOx2mkMjMvcH0/EqxNaE+ZaO8lPCX+9WvWSEZs3O3l11qiSnOFHeK0t9A==
+
+"@capacitor/storage@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@capacitor/storage/-/storage-1.2.5.tgz#48206869cbbf1404fcdbb5c440a882140bd3abd8"
+  integrity sha512-pWhnw4U7wN/zFV4lA4BLMypSufTktCbk548Yk4whSb0KAq3R0mLfSubRIHkGdcPqQWCsM6g/zUuszurhz6ncWQ==
+
+"@capawesome-team/capacitor-file-opener@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@capawesome-team/capacitor-file-opener/-/capacitor-file-opener-5.0.4.tgz#3c5ca65ec0380fba39720ce5e12946bcc3576c96"
+  integrity sha512-l5jOFIos3QJJNg8bI1T7Vqi3cKUMsN2jOap8vTzbxuAqOO5J/5ECQrD77W7X50F7nTYQB/6LPy1BUO3oTCLmHA==
+
+"@codetrix-studio/capacitor-google-auth@^3.3.6":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@codetrix-studio/capacitor-google-auth/-/capacitor-google-auth-3.3.6.tgz#3323bdd3bdfcbd821cd367d284b251ee351d6bf4"
+  integrity sha512-SiMjYq5O2rWzEdKrmu3VZQ2nmFdq6LUXPzsNbjs4Ri6WTJVCtzp1HI12t4Dcwi5YoSw8g94Iyi3Can8msj57QA==
 
 "@colors/colors@1.5.0":
   version "1.5.0"

@@ -37,7 +37,7 @@ function ChatList({ setIsSeleted }) {
 
   const onUpdateChatActivity = (data) => {
     const updatedConversations = data.content.map((conversation) =>
-      transformConversationResponse(conversation)
+      transformConversationResponse(conversation),
     );
     setChatList([...updatedConversations]);
   };
@@ -69,7 +69,7 @@ function ChatList({ setIsSeleted }) {
     const ws = new WebSocketClient(data);
     ws.connect();
     ws.onMessage(onUpdateChatActivity);
-    // Clean up WebSocket connection when component unmounts
+
     return () => {
       ws.close();
     };
@@ -101,7 +101,6 @@ function ChatList({ setIsSeleted }) {
           />
         </div>
       </div>
-
       <div
         className={`chatbox ${
           role === USER_ROLES.jobSeeker ? "jobseekerbox" : null
@@ -111,7 +110,7 @@ function ChatList({ setIsSeleted }) {
           const { scrollTop, clientHeight, scrollHeight } = e.target;
           console.log(
             { scrollHeight, scrollTop, clientHeight },
-            scrollHeight - scrollTop === clientHeight
+            scrollHeight - scrollTop === clientHeight,
           );
         }}
       >

@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 
 function PublicProfileComponent() {
   const params = useParams();
+  const { isMobileView } = useSelector((state) => state.platform);
   const [isLoading, setIsLoading] = useState(true);
   const { role } = useSelector((state) => state.auth);
   const contractsExperience = [];
@@ -56,7 +57,13 @@ function PublicProfileComponent() {
     getUserDetails(userId);
   }, []);
   return (
-    <Box sx={{ marginTop: "67px", py: 3 }}>
+    <Box
+      sx={
+        isMobileView
+          ? { py: 3, marginBottom: "20px" }
+          : { marginTop: "67px", py: 3 }
+      }
+    >
       {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
@@ -322,7 +329,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography

@@ -289,14 +289,14 @@ function PostJobsComponent() {
         "skills",
         data.skills.map ? data.skills.map((skill) => skill.id) : [],
       );
-      formik.setFieldValue("attachments", data.attachments);
+      formik.setFieldValue("attachments", data?.attachments || []);
     }
   }, []);
 
   const getSuggestedAddress = async (search) => {
     const res = await GetSuggestedAddressAPI(search);
     if (res.remote === "success") {
-      setSuggestedAddress(res.data.predictions);
+      setSuggestedAddress(res?.data?.predictions);
     }
   };
   const handleClose = () => {

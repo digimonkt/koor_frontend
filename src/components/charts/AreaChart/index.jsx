@@ -7,13 +7,15 @@ const AreaChart = ({ title }) => {
     data: [
       {
         name: "series1",
-        data: [31, 40, 28, 51, 42, 109, 100],
+        data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65],
       },
     ],
     options: {
       chart: {
         height: 185,
         type: "area",
+        width: "100%",
+
         toolbar: {
           show: false,
           autoSelected: "pan",
@@ -58,9 +60,24 @@ const AreaChart = ({ title }) => {
         },
       },
       xaxis: {
-        categories: ["Jan", "Feb", "March", "Apr", "May", "Jun", "July"],
+        categories: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
         labels: {
+          hideOverlappingLabels: false,
           show: true,
+          rotate: -45,
           style: {
             colors: [
               "#22294399",

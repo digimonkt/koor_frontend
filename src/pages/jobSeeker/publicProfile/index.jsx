@@ -23,13 +23,14 @@ import { formatPhoneNumberIntl } from "react-phone-number-input";
 import LanguageCard from "../../../components/languageCard";
 import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
 import { FilledButton } from "../../../components/button";
-import html2pdf from "html2pdf.js";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { pdfDownloader } from "@utils/fileUtils";
 import { getColorByRole } from "@utils/generateColor";
 
 export default function PublicProfileComponent() {
   const params = useParams();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const { role } = useSelector((state) => state.auth);
@@ -47,17 +48,7 @@ export default function PublicProfileComponent() {
     workExperiences: [],
   });
   const downloadPDF = async () => {
-    setIsDownloadingPDF(true);
-    const element = document.getElementById("div-to-pdf");
-    const options = {
-      margin: [10, 10],
-      filename: `${userDetails.name || "Resume"}.pdf`,
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-    await html2pdf().set(options).from(element).save();
-    setIsDownloadingPDF(false);
+    pdfDownloader(userDetails?.name, setIsDownloadingPDF, dispatch);
   };
   const getUserDetails = async (userId) => {
     setIsLoading(true);
@@ -70,6 +61,7 @@ export default function PublicProfileComponent() {
   const storeProfileAnalytics = async (userId) => {
     await storeProfileAnalyticsAPI({ user_id: userId });
   };
+
   useEffect(() => {
     const userId = params.userId;
     storeProfileAnalytics(userId);
@@ -154,6 +146,7 @@ export default function PublicProfileComponent() {
                               fontFamily: "Bahnschrift",
                               fontSize: "24px",
                               fontWeight: "700",
+                              wordBreak: "break-all",
                               letterSpacing: "0.03em",
                               mb: 0,
                               color: "#121212  !important",

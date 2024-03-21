@@ -1,6 +1,6 @@
 import { GetNotificationAPI } from "../../api/user";
 import { TabContext, TabList } from "@mui/lab";
-import { Box, Button, Stack, Tab, Typography } from "@mui/material";
+import { Box, Button, Divider, Stack, Tab, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import { Link } from "react-router-dom";
@@ -152,6 +152,14 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                       platform === "android" || platform === "ios"
                         ? "0px !important"
                         : "15px",
+                    display:
+                      platform === "android" || platform === "ios"
+                        ? "flex !important"
+                        : null,
+                    justifyContent:
+                      platform === "android" || platform === "ios"
+                        ? "space-between !important"
+                        : null,
                   },
                   "&.tab_list .MuiTabs-indicator": {
                     display:
@@ -308,6 +316,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                           role,
                           handleRemoveMessages,
                         )}
+                        <Divider />
                       </div>
                     </>
                   ))

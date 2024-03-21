@@ -13,9 +13,7 @@ const ApplicantCardSkeletonLoading = ({ sx }) => {
       className="border-recent"
     >
       <Stack direction="row" spacing={2} alignItems="center">
-        {/* profile pic */}
         <Skeleton circle style={{ width: "70px", height: "70px" }} />
-
         <div className="recent-content">
           <Stack
             direction="row"
@@ -23,10 +21,11 @@ const ApplicantCardSkeletonLoading = ({ sx }) => {
             spacing={2}
             flexWrap="wrap"
             alignItems="center"
+            justifyContent="space-between"
             sx={{ mb: 1, ...sx }}
           >
             <h4>
-              <Skeleton width={720} />
+              <Skeleton width={"100%"} />
             </h4>
           </Stack>
           <Stack

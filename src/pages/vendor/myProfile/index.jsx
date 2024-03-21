@@ -47,8 +47,8 @@ import { updateCurrentUser, setProfilePic } from "../../../redux/slice/user";
 import Sectors from "./sectors";
 import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
-import { USER_ROLES } from "@utils/enum";
 import { useNavigate } from "react-router-dom";
+import { USER_ROLES } from "@utils/enum";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -278,6 +278,7 @@ function MyProfile() {
       }
     }
   }, [currentUser]);
+  console.log({ currentUser });
   useEffect(() => {
     if (!countries.data.length) {
       dispatch(getCountries());
@@ -345,7 +346,16 @@ function MyProfile() {
                   alignItems={"center"}
                   justifyContent={"space-between"}
                 >
-                  <h2 className="mb-0">About</h2>
+                  {platform === "android" || platform === "ios" ? (
+                    <Stack direction="row" alignItems="flex-end">
+                      <IconButton onClick={() => navigate(-1)}>
+                        <SVG.LeftArrow />
+                      </IconButton>
+                      <h2 className="mb-0">About</h2>
+                    </Stack>
+                  ) : (
+                    <h2 className="mb-0">About</h2>
+                  )}
                   {platform === "android" || platform === "ios" ? (
                     <IconButton
                       size="small"
@@ -454,7 +464,7 @@ function MyProfile() {
                           placeholder="Address"
                           className="add-form-control"
                           name={formik.getFieldProps("address").name}
-                          onBlur={(e) => formik.getFieldProps("address").onBlur}
+                          onBlur={(_) => formik.getFieldProps("address").onBlur}
                           onChange={(e) => setSearchValue(e.target.value)}
                           value={searchValue}
                         />
@@ -526,7 +536,7 @@ function MyProfile() {
                             }
                             single
                             files={formik.values.businessLicense}
-                            deleteFile={(e) =>
+                            deleteFile={(_) =>
                               formik.setFieldValue("businessLicense", [])
                             }
                           />

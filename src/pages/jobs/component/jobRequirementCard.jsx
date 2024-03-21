@@ -45,7 +45,13 @@ function JobRequirementCard({
         <div className={`${styles.skills}`}>
           {skills.length > 0 && <h6 className="mb-2  mt-3">Skills</h6>}
           <Box sx={{ overflow: "auto" }}>
-            <Stack direction={"row"} spacing={2} alignItems={"center"}>
+            <Stack
+              direction={"row"}
+              spacing={2}
+              alignItems={"center"}
+              flexWrap={"wrap"}
+              useFlexGap
+            >
               {skills.map((skill) => {
                 return (
                   <>

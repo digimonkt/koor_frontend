@@ -18,16 +18,18 @@ import {
 } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
-import { generateFileUrl } from "../../../utils/generateFileUrl";
+import { generateFileUrl } from "@utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { Link, useParams } from "react-router-dom";
 import { getColorByRole } from "@utils/generateColor";
 import { useSelector } from "react-redux";
+import { USER_ROLES } from "@utils/enum";
 
 function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const { isMobileView } = useSelector(({ platform }) => platform);
   const { role } = useSelector(({ auth }) => auth);
   const [userDetails, setUserDetails] = useState({
     educationRecord: [],
@@ -66,21 +68,28 @@ function PublicProfileComponent() {
     getEmployersJob(userId);
   }, []);
   return (
-    <Box sx={{ marginTop: "67px", py: 3 }}>
+    <Box
+      sx={
+        isMobileView ? { marginBottom: "60px" } : { marginTop: "67px", py: 3 }
+      }
+    >
       {isLoading ? (
         <PublicProfileSkeletonLoading />
       ) : (
-        <Container>
+        <Container sx={isMobileView ? { padding: 0 } : {}}>
           <Card
             sx={{
               boxShadow: "0px 15px 40px rgba(0, 0, 0, 0.05)",
-              borderRadius: "20px",
+              borderRadius: isMobileView ? "0" : "20px",
+              marginBottom: "50px",
             }}
           >
             <CardContent
               sx={{
                 "&.MuiCardContent-root": {
-                  padding: "30px",
+                  padding: isMobileView
+                    ? "30px 0px 30px 16px"
+                    : "30px 0px 30px 40px",
                 },
               }}
             >
@@ -97,7 +106,7 @@ function PublicProfileComponent() {
                     },
                   }}
                 >
-                  <Box sx={{ paddingRight: "45px" }}>
+                  <Box sx={{ paddingRight: isMobileView ? "16px" : "45px" }}>
                     <Stack
                       direction={{ xs: "column", lg: "row" }}
                       spacing={{ xs: 1, lg: 2 }}
@@ -145,9 +154,11 @@ function PublicProfileComponent() {
                         <Box>
                           <Typography
                             variant="h4"
+                            ml={2}
                             sx={{
                               fontFamily: "Bahnschrift",
-                              fontSize: "24px",
+                              wordBreak: "break-all",
+                              fontSize: "23px",
                               fontWeight: "700",
                               letterSpacing: "0.03em",
                               mb: 0,
@@ -245,6 +256,11 @@ function PublicProfileComponent() {
                           {jobList.length ? (
                             jobList.map((item, index) => (
                               <li
+                                className={
+                                  role === USER_ROLES.jobSeeker
+                                    ? "beforeClass1"
+                                    : "beforeClass2"
+                                }
                                 key={index}
                                 style={{
                                   borderBottom:
@@ -269,7 +285,14 @@ function PublicProfileComponent() {
                 </Grid>
                 <Grid item lg={4} xs={12}>
                   <Box>
-                    <Stack direction={"column"} spacing={2}>
+                    <Stack
+                      direction={"column"}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
                       <Typography
                         variant="h6"
                         sx={{
@@ -358,6 +381,7 @@ function PublicProfileComponent() {
                             sx={{
                               color: "inherit",
                               wordBreak: "break-all",
+                              marginRight: "20px",
                               fontSize: "16px",
                               fontFamily: "Poppins",
                               fontWeight: "600",
@@ -407,6 +431,7 @@ function PublicProfileComponent() {
                                 color: "inherit",
                                 fontSize: "16px",
                                 fontFamily: "Poppins",
+                                marginRight: "20px",
                                 wordBreak: "break-all",
                                 fontWeight: "600",
                               }}
@@ -462,6 +487,8 @@ function PublicProfileComponent() {
                                 color: "#848484",
                                 fontFamily: "Poppins",
                                 fontSize: "12px",
+                                marginRight: "20px",
+                                wordBreak: "break-all",
                               }}
                             >
                               Address
@@ -474,6 +501,7 @@ function PublicProfileComponent() {
                         sx={{
                           background: "#F2F2F2",
                           height: "300px",
+                          width: "90%",
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",

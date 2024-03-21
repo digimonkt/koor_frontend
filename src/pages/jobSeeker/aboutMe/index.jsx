@@ -44,6 +44,7 @@ import { updateCurrentUser } from "../../../redux/slice/user";
 import DialogBox from "../../../components/dialogBox";
 import NoItem from "../myProfile/noItem";
 import { Capacitor } from "@capacitor/core";
+import { useNavigate } from "react-router-dom";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ const AboutMe = (props) => {
   const [filledData, setFilledData] = useState(null);
   const [countryId, setCountryId] = useState("");
   const currentYear = dayjs().year();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -269,11 +271,37 @@ const AboutMe = (props) => {
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <h2 className="mb-0">About</h2>
               {platform === "android" || platform === "ios" ? (
-                <IconButton size="small" onClick={() => props.fun()}>
-                  <SVG.ArrowUpIcon />
-                </IconButton>
+                <Stack direction="row" alignItems="flex-end">
+                  <IconButton
+                    onClick={() => {
+                      navigate(-1);
+                    }}
+                  >
+                    <SVG.LeftArrow />
+                  </IconButton>
+                  <h2 className="mb-0">About</h2>
+                </Stack>
+              ) : (
+                <h2 className="mb-0">About</h2>
+              )}
+              {platform === "android" || platform === "ios" ? (
+                <>
+                  <IconButton
+                    size="small"
+                    onClick={() => props.fun()}
+                    sx={{
+                      "& svg": {
+                        width: "18px",
+                        height: "11px",
+                        position: "relative",
+                        left: "7px",
+                      },
+                    }}
+                  >
+                    {props.toggle ? <SVG.ArrowUpIcon /> : <SVG.Downarrow />}
+                  </IconButton>
+                </>
               ) : null}
             </Stack>
             {platform === "android" || platform === "ios" ? (

@@ -38,7 +38,7 @@ function RegistrationForm() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        ""
+        "",
       );
       const payload = {
         password: values.password,

@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid } from "@mui/material";
+import { Box, Button, Divider, Grid, IconButton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "./createResume.module.css";
 import { HorizontalPhoneInput, LabeledInput } from "@components/input";
@@ -13,15 +13,18 @@ import { ErrorMessage } from "../../../components/caption";
 import { FilledButton } from "@components/button";
 import DialogBox from "@components/dialogBox";
 import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
+import AppViewResumeTemp from "../updateProfile/resume-update/resumeTemplate/template1/appViewResumeTemp";
 import { pdfDownloader, docsDownloader } from "@utils/fileUtils";
 import {
   formatPhoneNumber,
   formatPhoneNumberIntl,
 } from "react-phone-number-input";
+import { useNavigate } from "react-router-dom";
 
 const CreateResumeComponent = () => {
   const { currentUser } = useSelector(({ auth }) => auth);
   const [loading, setLoading] = useState(false);
+  const { isMobileView } = useSelector((state) => state.platform);
   const [openResume, setOpenResume] = useState(false);
   const [removedReferenceIds, setRemovedReferenceIds] = useState([]);
   const dispatch = useDispatch();
@@ -29,6 +32,7 @@ const CreateResumeComponent = () => {
   const maxWordCount = 300;
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const [isDownloadingDocs, setIsDownloadingDocs] = useState(false);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -50,7 +54,7 @@ const CreateResumeComponent = () => {
           const countryCode = val.mobile_number.international.split(" ")[0];
           const mobileNumber = (val.mobile_number.value || "").replace(
             countryCode,
-            ""
+            "",
           );
           return {
             ...val,
@@ -112,7 +116,7 @@ const CreateResumeComponent = () => {
 
   const handleRemoveReference = (idToRemove) => {
     const updatedReferences = formik.values.reference.filter(
-      (ref) => ref.id !== idToRemove
+      (ref) => ref.id !== idToRemove,
     );
 
     formik.setFieldValue("reference", updatedReferences);
@@ -146,23 +150,23 @@ const CreateResumeComponent = () => {
           newState[key]?.forEach((reference, referenceIndex) => {
             formik.setFieldValue(
               `reference[${referenceIndex}].name`,
-              reference?.name || ""
+              reference?.name || "",
             );
 
             formik.setFieldValue(
               `reference[${referenceIndex}].country_code`,
-              reference?.country_code || "+91"
+              reference?.country_code || "+91",
             );
 
             formik.setFieldValue(`reference[${referenceIndex}].mobile_number`, {
               national: reference?.mobile_number
                 ? formatPhoneNumber(
-                    reference.country_code + reference?.mobile_number
+                    reference.country_code + reference?.mobile_number,
                   )
                 : "",
               international: reference?.mobile_number
                 ? formatPhoneNumberIntl(
-                    reference.country_code + reference?.mobile_number
+                    reference.country_code + reference?.mobile_number,
                   )
                 : "",
               value: reference?.country_code + reference?.mobile_number,
@@ -170,7 +174,7 @@ const CreateResumeComponent = () => {
 
             formik.setFieldValue(
               `reference[${referenceIndex}].email`,
-              reference?.email || ""
+              reference?.email || "",
             );
           });
         }
@@ -181,7 +185,20 @@ const CreateResumeComponent = () => {
     <>
       <Box className={styles.CreateResume_Page}>
         <form onSubmit={formik.handleSubmit}>
-          <h1 className={styles.heading}>Create a resume</h1>
+          {isMobileView ? (
+            <Stack
+              direction="row"
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              <IconButton onClick={() => navigate(-1)}>
+                <SVG.LeftArrow />
+              </IconButton>
+              <h1 className={styles.heading}>Create a resume</h1>
+            </Stack>
+          ) : (
+            <h1 className={styles.heading}>Create a resume</h1>
+          )}
           <Box className={styles.CreateResume_input_box}>
             <h5>Main info</h5>
             <p>
@@ -304,7 +321,7 @@ const CreateResumeComponent = () => {
                       if (!isValid) {
                         formik.setFieldError(
                           `reference[${idx}].mobile_number`,
-                          "Invalid Mobile Number"
+                          "Invalid Mobile Number",
                         );
                       }
                     }}
@@ -380,36 +397,51 @@ const CreateResumeComponent = () => {
           handleClose={() => {
             if (!isDownloadingPDF) setOpenResume(false);
           }}
-          maxWidth="xxl"
+          maxWidth="xl"
           sx={{
             "& .MuiPaper-root": {
-              width: "900px",
+              width: isMobileView ? "100%" : "900px",
+              padding: isMobileView ? "0px  !important" : "30px",
+              margin: isMobileView ? "0px  !important" : "",
             },
           }}
         >
-          <>
-            <FilledButton
-              title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
-              onClick={downloadPDF}
-              style={{ marginBottom: "10px" }}
-              disabled={isDownloadingPDF || isDownloadingDocs}
-            />
-            <FilledButton
-              sx={{
-                marginLeft: "10px",
-                "@media (max-width: 480px)": {
-                  marginLeft: "0px",
-                },
-              }}
-              title={
-                isDownloadingDocs ? "Downloading Docs..." : "Download Docs"
-              }
-              onClick={downloadDocs}
-              style={{ marginBottom: "10px" }}
-              disabled={isDownloadingPDF || isDownloadingDocs}
-            />
-            <ResumeTemplate appliedJob={false} />
-          </>
+          <Box
+            justifyContent="center"
+            alignItems="center"
+            display="flex"
+            flexDirection="column"
+          >
+            <Box mt={2} display="flex" flexWrap="nowrap">
+              {isMobileView && (
+                <IconButton onClick={() => setOpenResume(false)}>
+                  <SVG.LeftArrow />
+                </IconButton>
+              )}
+              <FilledButton
+                title={isDownloadingPDF ? "Downloading PDF..." : "Download PDF"}
+                onClick={downloadPDF}
+                style={{ marginBottom: "10px" }}
+                disabled={isDownloadingPDF || isDownloadingDocs}
+              />
+              <FilledButton
+                sx={{
+                  marginLeft: "10px",
+                }}
+                title={
+                  isDownloadingDocs ? "Downloading Docs..." : "Download Docs"
+                }
+                onClick={downloadDocs}
+                style={{ marginBottom: "10px" }}
+                disabled={isDownloadingPDF || isDownloadingDocs}
+              />
+            </Box>
+            {isMobileView ? (
+              <AppViewResumeTemp appliedJob={false} />
+            ) : (
+              <ResumeTemplate appliedJob={false} />
+            )}
+          </Box>
         </DialogBox>
       </Box>
     </>

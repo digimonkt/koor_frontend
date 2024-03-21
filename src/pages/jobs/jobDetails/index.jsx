@@ -26,7 +26,7 @@ import JobRequirementCard from "../component/jobRequirementCard";
 import { saveJobAPI, unSaveJobAPI } from "../../../api/jobSeeker";
 import { useDispatch, useSelector } from "react-redux";
 import DialogBox, { ExpiredBox } from "../../../components/dialogBox";
-import { USER_ROLES } from "../../../utils/enum";
+import { USER_ROLES } from "@utils/enum";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import { GoogleMapWrapper, GoogleMap } from "../../../components/googleMap";
 import {
@@ -46,6 +46,7 @@ import {
   fileTypeExtractor,
   cleanHtmlContent,
 } from "@utils/fileUtils";
+import { generateFileUrl } from "@utils/generateFileUrl";
 
 const JobDetails = () => {
   const params = useParams();
@@ -56,6 +57,9 @@ const JobDetails = () => {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const platform = Capacitor.getPlatform();
+
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -116,7 +120,7 @@ const JobDetails = () => {
     },
     attachments: [],
   });
-
+  const [addressGeoCode, setAddressGeoCode] = useState({});
   const hasData = (...values) =>
     values.some((value) => {
       if (Array.isArray(value)) {
@@ -126,8 +130,6 @@ const JobDetails = () => {
       }
       return false;
     });
-
-  const [addressGeoCode, setAddressGeoCode] = useState({});
 
   const getJobDetails = async (jobId) => {
     const res = await getJobDetailsByIdAPI({ jobId });
@@ -214,7 +216,6 @@ const JobDetails = () => {
       downloadUrlCreator(fileType, base64String);
     }
   };
-  const platform = Capacitor.getPlatform();
   return (
     <>
       <Container
@@ -230,7 +231,10 @@ const JobDetails = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}
@@ -251,6 +255,7 @@ const JobDetails = () => {
                   >
                     {<SVG.LeftArrow />}
                   </IconButton>
+
                   {/* </Link> */}
                   <p className="mb-0">{details.title}</p>
                 </div>
@@ -282,22 +287,52 @@ const JobDetails = () => {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} md={7} sm={7}>
-                <div className={`mb-4 ${styles.contentJob}`}>
-                  <h4>Details :</h4>
-                  <Box
-                    className={styles.job_detail_description}
-                    sx={{
-                      textAlign: "justify",
+                <Box className={styles.job_detail_description}>
+                  {details?.description?.length > 350 && showMore ? (
+                    <Box
+                      dangerouslySetInnerHTML={{
+                        __html: details?.description,
+                      }}
+                    ></Box>
+                  ) : (
+                    <Box
+                      dangerouslySetInnerHTML={{
+                        __html: details.description.substring(0, 350),
+                      }}
+                    ></Box>
+                  )}
+                  <button
+                    onClick={() => setShowMore((prev) => !prev)}
+                    style={{
+                      textAlign: "center",
+                      width: "100%",
+                      border: "none",
+                      cursor: "pointer",
+                      marginBottom: "20px",
+                      background: "none",
+                      color:
+                        role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                     }}
-                    dangerouslySetInnerHTML={{
-                      __html: details.description,
-                    }}
-                  ></Box>
-                </div>
+                  >
+                    {details?.description?.length > 350 && (
+                      <>
+                        {showMore ? (
+                          <>
+                            Less <SVG.ArrowUpIcon />
+                          </>
+                        ) : (
+                          <>
+                            More <SVG.Downarrow />
+                          </>
+                        )}
+                      </>
+                    )}
+                  </button>
+                </Box>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
-                  spacing={{ xs: 1, lg: 0 }}
+                  spacing={{ xs: 2, lg: 0 }}
                   flexWrap={"wrap"}
                   useFlexGap
                   sx={{
@@ -374,15 +409,24 @@ const JobDetails = () => {
                               }}
                             />
                           </span>
-                          <span
-                            onClick={() => handleLoadImage(attachment.path)}
-                            // target="_blank"
-                            style={{ cursor: "pointer" }}
+                          <a
                             className="m-0"
+                            onClick={(_) => handleLoadImage(attachment.path)}
+                            href={generateFileUrl(attachment.path)}
+                            target="_blank"
                             rel="noreferrer"
+                            style={{
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#eea23d"
+                                  : "#274593",
+                              cursor: "pointer",
+                              whiteSpace: "normal",
+                              wordBreak: "break-all",
+                            }}
                           >
                             {attachment.title}
-                          </span>
+                          </a>
                         </div>
                       );
                     })}

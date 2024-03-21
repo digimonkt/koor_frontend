@@ -208,7 +208,10 @@ const ApplyForJob = () => {
         <div
           className={`${styles.Jobcard}`}
           style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
+            margin:
+              platform === "android" || platform === "ios"
+                ? "0px 0px 130px 0px"
+                : null,
             borderRadius:
               platform === "android" || platform === "ios" ? "0px" : null,
           }}

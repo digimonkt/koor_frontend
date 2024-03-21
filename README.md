@@ -1,72 +1,63 @@
-# Getting Started with Create React App
+# Running a Capacitor App in ReactJS.
 
-### Updated Readme file
+Prerequisites:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Node.js and npm or **yarn** (recommended) installed on your machine.
+- ReactJS project set up.
 
-## Available Scripts
+Could you add the platforms you want to target? For example, to add Android and iOS:
 
-In the project directory, you can run:
+    npx cap add android
+    npx cap add ios
 
-### `npm start`
+Copy the build files to the appropriate Capacitor folder:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    npx cap Copy
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Run sync to update the native project with the latest web code:
 
-### `npm test`
+    npx cap sync
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Copy the web assets to the native project:
 
-### `npm run build`
+    npx cap copy
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Build your ReactJS app (assuming you are using Yarn):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    yarn run build
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Run your Capacitor app on Android with live-reload and external URL:
 
-### `npm run eject`
+    yarn start:app
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Or
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    npx cap run android -l --external
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+when you run `npx cap run android -l --external`, it launches your Capacitor app on an Android device or emulator in Android Studio, enables live reload for web code changes and loads the web assets from an external server.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Generating Signed APK in Android Studio: How to build APK app.
 
-## Learn More
+**Step 1**: Go to **Build** or click on three dots which are located on the hand side where you can find **build option** -> **Generate Signed Bundle** or APK, and a pop-up will arise. Choose APK in the pop-up and click on Next.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![](https://media.geeksforgeeks.org/wp-content/uploads/20200720115426/GSA1-660x273.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Now you Can see some things like this:
 
-### Code Splitting
+![](https://i.stack.imgur.com/PHA2I.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+please select **APK** and click on **next button** as shown in the above image.
 
-### Analyzing the Bundle Size
+**Step 2**: if you already had **keys** and **alias** setup which maybe now is: **android** in both. then, click on the next button
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![](https://i.stack.imgur.com/Zpvu3.png)
 
-### Making a Progressive Web App
+**Step 3**: After clicking Next in the next pop-up _make sure to choose **release** as Build_ Variants and check the two Signature Versions as well. Then click on Finish.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![](https://i.stack.imgur.com/YLPGd.png)
 
-### Advanced Configuration
+**Step 4**: After completing these steps you can locate your signed app at app -> release -> app-release as your APK file by clicking on that pop-up as shown in the below image.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+![](https://media.geeksforgeeks.org/wp-content/uploads/20200720125857/GSA5-660x263.png)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> Now you can put this generated release app into your real device.

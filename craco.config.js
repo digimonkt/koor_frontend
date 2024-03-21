@@ -8,6 +8,7 @@ const alias = (prefix = "src") => ({
   "@api": `${prefix}/api`,
   "@firebaseProvider": `${prefix}/firebaseProvider`,
   "@pages": `${prefix}/pages`,
+  "@hooks": `${prefix}/hooks`,
 });
 
 const SRC = "./src";
