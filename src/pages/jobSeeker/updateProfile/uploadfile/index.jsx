@@ -15,8 +15,8 @@ const UploadFile = ({ title, color, bgcolor, textcolor }) => {
         acceptedFiles.map((file) =>
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          }),
-        ),
+          })
+        )
       );
     },
   });
@@ -41,7 +41,6 @@ const UploadFile = ({ title, color, bgcolor, textcolor }) => {
   ));
 
   useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [files]);
   return (

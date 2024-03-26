@@ -29,7 +29,7 @@ const UpdateProfile = () => {
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
     );
   };
 
@@ -43,7 +43,6 @@ const UpdateProfile = () => {
   const handleProfilePicSave = async (file) => {
     setProfilePicLoading("loading");
     const newFormData = new FormData();
-    newFormData.append("profile_image", file);
     dispatch(setProfilePic(URL.createObjectURL(file)));
     const res = await UpdateProfileImageAPI(newFormData);
     if (res.remote === "success") setProfilePicLoading("updated");

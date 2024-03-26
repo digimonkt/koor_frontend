@@ -60,14 +60,10 @@ const ProfilePicInputComponent = ({
         },
       }}
       src={newImage instanceof File ? URL.createObjectURL(newImage) : newImage}
-      onLoad={() => {
-        URL.revokeObjectURL(newImage);
-      }}
     />
   );
 
   useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach((file) => URL.revokeObjectURL(file.preview));
   }, [files]);
   return (
@@ -146,6 +142,7 @@ const ProfilePicInputComponent = ({
               </Stack>
               <div className="text-center">
                 <OutlinedButton
+                  style={{ marginTop: "10px" }}
                   title={
                     <>
                       {loading ? (
@@ -173,7 +170,7 @@ const ProfilePicInputComponent = ({
                         width: "169px",
                         height: "42px",
                         padding: "10px 10px !important",
-                        marginTop: "10px",
+                        marginTop: "20px",
                       },
                     },
                   }}

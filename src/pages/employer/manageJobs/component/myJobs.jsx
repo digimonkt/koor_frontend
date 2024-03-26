@@ -30,6 +30,7 @@ function MyJobs({ onTabChange }) {
   useEffect(() => {
     getAllJobs();
   }, [isSearching]);
+  console.log(jobs);
   return (
     <div className="py-3">
       <div className="mb-3">

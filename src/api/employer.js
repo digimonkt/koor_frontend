@@ -262,7 +262,7 @@ export const getEmployerActiveJobsAPI = async (data) => {
         next: response.data.next,
         previous: response.data.previous,
         results: response.data.results.map((data) =>
-          transformFullJobDetails(data),
+          transformFullJobDetails(data)
         ),
       },
     };
