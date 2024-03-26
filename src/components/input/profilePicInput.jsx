@@ -60,9 +60,6 @@ const ProfilePicInputComponent = ({
         },
       }}
       src={newImage instanceof File ? URL.createObjectURL(newImage) : newImage}
-      onLoad={() => {
-        URL.revokeObjectURL(newImage);
-      }}
     />
   );
 
