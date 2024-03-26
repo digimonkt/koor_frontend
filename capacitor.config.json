@@ -4,7 +4,7 @@
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "cleartext": true,
-  "hostname": "192.168.0.192",
+  "hostname": "digimonk.co",
   "allowNavigation": [
     "*"
   ],

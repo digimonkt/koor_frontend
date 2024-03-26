@@ -7,7 +7,7 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 // import ModalView from "../updateProfile/modal";
 import DialogBox from "../../../components/dialogBox";
 import UpdateInfo from "../updateProfile/update-info";
@@ -52,7 +52,16 @@ const MyProfile = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  console.log(currentUser.profileImage);
+
+  const generateProfileImage = useCallback(() => {
+    if (currentUser.profileImage.startsWith("blob:")) {
+      console.log("working", currentUser.profileImage);
+      return URL.revokeObjectURL(currentUser.profileImage);
+    } else {
+      return currentUser.profileImage;
+    }
+  }, [currentUser.profileImage]);
+
   return (
     <>
       <div className="dashboard-content">
@@ -98,7 +107,7 @@ const MyProfile = () => {
                 >
                   <Avatar
                     alt="profile"
-                    src={currentUser?.profileImage}
+                    src={generateProfileImage()}
                     style={{
                       width: "80px",
                       height: "80px",
