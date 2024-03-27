@@ -28,13 +28,13 @@ const AvatarComponent = ({ imageUrl }) => {
         <BusinessCenterOutlinedIcon
           sx={{
             width: "100%",
-            padding: "30px",
+            padding: "18px",
             height: "100%",
             maxWidth: "100px",
-            maxhigh: "100px",
+            maxHeight: "100px",
             "@media (max-width: 600px)": {
-              minWidth: "100px",
-              minHeight: "100px",
+              minWidth: "70px",
+              minHeight: "70px",
               height: "100%",
             },
           }}
