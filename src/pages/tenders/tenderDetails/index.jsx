@@ -43,6 +43,7 @@ import {
 } from "@utils/fileUtils";
 import { getJobAttachmentAPI } from "@api/job";
 import { Capacitor } from "@capacitor/core";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -381,17 +382,21 @@ function TenderDetailsComponent() {
                           <span className="d-inline-flex me-2">
                             {<SVG.BlueAttach />}
                           </span>
-                          <span
+                          <a
                             onClick={() => handleLoadImage(attachment.path)}
+                            target="_blank"
+                            href={generateFileUrl(attachment.path)}
                             className="m-0"
+                            rel="noreferrer"
                             style={{
                               cursor: "pointer",
-                              whiteSpace: "normal",
+                              whiteSpace: "nowrap",
+                              color: "#274593",
                               wordBreak: "break-all",
                             }}
                           >
                             {attachment.title}
-                          </span>
+                          </a>
                         </div>
                       );
                     })}

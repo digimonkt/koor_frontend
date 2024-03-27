@@ -18,6 +18,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const matches = useMediaQuery("(max-width:600px)");
+  // const { isMobileView } = useSelector(({ platform }) => platform);
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(tenderDetails?.status);
@@ -55,7 +57,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
     if (tenderDetails) setIsSaved(tenderDetails.isSaved);
   }, [tenderDetails]);
 
-  const matches = useMediaQuery("(max-width:600px)");
   return (
     <div className="job_card tender_job_card_text">
       <Grid

@@ -5,9 +5,10 @@ import Grid from "@mui/material/Grid";
 import { SearchButton, SolidButton } from "../../../components/button";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { Stack, alpha } from "@mui/material";
 import { SVG } from "../../../assets/svg";
 import { useFormik } from "formik";
+import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
 import { applyJobValidationSchema } from "./validator";
 import {
   AttachmentDragNDropInput,
@@ -21,9 +22,8 @@ import {
   updateAppliedJobAPI,
 } from "../../../api/job";
 import dayjs from "dayjs";
-import { getColorByRemainingDays } from "@utils/generateColor";
 import { setErrorToast, setSuccessToast } from "@redux/slice/toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import JobRequirementCard from "../component/jobRequirementCard";
 import JobCostCard from "../component/jobCostCard";
 import DialogBox from "../../../components/dialogBox";
@@ -32,7 +32,10 @@ import ApplySuccessfully from "./applySuccessfully";
 import { getApplicationDetailsAPI } from "../../../api/employer";
 import urlcat from "urlcat";
 import { Capacitor } from "@capacitor/core";
+import AttachmentIcon from "@mui/icons-material/Attachment";
 import { downloadUrlCreator, fileTypeExtractor } from "@utils/fileUtils";
+import { USER_ROLES } from "../../../utils/enum";
+import { generateFileUrl } from "../../../utils/generateFileUrl";
 const ApplyForJob = () => {
   const dispatch = useDispatch();
   // navigate
@@ -95,6 +98,7 @@ const ApplyForJob = () => {
   const [isApplied, setIsApplied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const { role } = useSelector(({ auth }) => auth);
   const maxLength = 200;
   const toggleShowMore = () => {
     setShowMore(!showMore);
@@ -278,19 +282,45 @@ const ApplyForJob = () => {
                       {details.attachments.map((attachment) => {
                         return (
                           <div
-                            className={`${styles.downloadtext}`}
+                            style={{ display: "flex", marginTop: "10px" }}
                             key={attachment.id}
                           >
-                            <span className="d-inline-flex">
-                              {<SVG.OrangeIcon />}
+                            <span className="d-inline-flex  me-2">
+                              <AttachmentIcon
+                                sx={{
+                                  color: getColorByRole(
+                                    role === "" ? USER_ROLES.employer : role
+                                  ),
+                                  rotate: "45deg",
+                                  background: alpha(
+                                    getColorByRole(
+                                      role === "" ? USER_ROLES.employer : role
+                                    ),
+                                    0.3
+                                  ),
+                                  padding: "3px",
+                                  borderRadius: "50%",
+                                }}
+                              />
                             </span>
-                            <span
-                              onClick={() => handleLoadImage(attachment.path)}
-                              style={{ cursor: "pointer" }}
+                            <a
                               className="m-0"
+                              onClick={(_) => handleLoadImage(attachment.path)}
+                              href={generateFileUrl(attachment.path)}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{
+                                color:
+                                  role === USER_ROLES.jobSeeker
+                                    ? "#eea23d"
+                                    : "#274593",
+                                cursor: "pointer",
+                                whiteSpace: "normal",
+                                wordBreak: "break-all",
+                              }}
                             >
                               {attachment.title}
-                            </span>
+                            </a>
                           </div>
                         );
                       })}
