@@ -3,7 +3,7 @@ import { Box, Card, CardContent, Stack } from "@mui/material";
 import { SVG } from "../../../../../assets/svg";
 
 import { getTenderAPI } from "../../../../../api/employer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTotalTenders } from "../../../../../redux/slice/employer";
 import TenderCard from "../../../../../components/tenderCard";
 import ApplicantList from "../applicantList";
@@ -13,6 +13,7 @@ import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPos
 
 const Tenders = ({ onTabChange }) => {
   const dispatch = useDispatch();
+  const { isMobileView } = useSelector(({ platform }) => platform);
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -100,6 +101,7 @@ const Tenders = ({ onTabChange }) => {
               },
             }}
           >
+            {isMobileView && <EmployerMyPostTabs onTabChange={onTabChange} />}
             <NoDataFoundAnimation title="No tender found." />
           </Card>
         ) : (
@@ -121,7 +123,7 @@ const Tenders = ({ onTabChange }) => {
                   },
                 }}
               >
-                {index === 0 && (
+                {isMobileView && (
                   <EmployerMyPostTabs onTabChange={onTabChange} />
                 )}
                 <TenderCard tenderDetails={tender} selfTender />

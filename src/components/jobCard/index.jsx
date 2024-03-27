@@ -303,7 +303,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 marginTop: "58px",
                 "& .bookmark": { width: "auto", marginLeft: "0px" },
               },
-
               "@media (max-width:480px)": {
                 marginTop: "0px",
                 minHeight: "0%",
