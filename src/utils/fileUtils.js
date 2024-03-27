@@ -41,25 +41,37 @@ export function downloadUrlCreator(fileType, base64String) {
 
   URL.revokeObjectURL(downloadUrl);
 }
+export function isBase64Image(str) {
+  const dataUriRegex = /^data:image\/(png|jpg|jpeg|gif);base64,/;
+
+  return dataUriRegex.test(str);
+}
 
 // file downloads
 export const fileDownloader = async (filename, file) => {
   try {
-    const base64Data = file.split("base64,")[1];
+    let fileData;
     const filePath = `${Directory.Documents}/${filename || "attachment"}`;
-
-    // Write the file to the Documents directory
-    const fileData = await Filesystem.writeFile({
-      path: filePath,
-      data: base64Data,
-      directory: Directory.Documents,
-      recursive: true,
-    });
+    if (isBase64Image(file)) {
+      fileData = await Filesystem.writeFile({
+        path: filePath,
+        data: file,
+        directory: Directory.Documents,
+        recursive: true,
+      });
+    } else {
+      const base64Data = file.split("base64,")[1];
+      fileData = await Filesystem.writeFile({
+        path: filePath,
+        data: base64Data,
+        directory: Directory.Documents,
+        recursive: true,
+      });
+    }
 
     await FileOpener.openFile({
       path: fileData.uri,
     });
-    console.log({ fileData });
   } catch (err) {
     console.error("Error in fileDownloader:", err);
   }
@@ -90,6 +102,34 @@ export const pdfDownloader = async (name, state, action) => {
         .set(options)
         .toPdf()
         .get("pdf")
+        .then(async function (pdf) {
+          const totalPages = pdf.internal.getNumberOfPages();
+          for (let i = 1; i <= totalPages; i++) {
+            pdf.setPage(i);
+            pdf.setFontSize(10);
+            pdf.setTextColor(150);
+            const imageX =
+              pdf.internal.pageSize.getWidth() -
+              pdf.internal.pageSize.getWidth() / 2 +
+              footerContent.length -
+              10;
+            pdf.addImage(
+              KoorLogo,
+              "PNG",
+              imageX,
+              pdf.internal.pageSize.getHeight() - 14,
+              imageWidth,
+              imageHeight
+            );
+            pdf.text(
+              footerContent,
+              pdf.internal.pageSize.getWidth() -
+                pdf.internal.pageSize.getWidth() / 2 -
+                footerContent.length,
+              pdf.internal.pageSize.getHeight() - 10
+            );
+          }
+        })
         .output("datauristring")
         .then(async function (pdf) {
           fileDownloader(options.filename, pdf);
