@@ -60,7 +60,7 @@ function PublicProfileComponent() {
                   <Stack direction={"row"} p={2} gap={2}>
                     <Skeleton
                       circle
-                      style={{ width: "90px", height: "100%" }}
+                      style={{ width: "90px", height: "90px" }}
                     />
                     <Box>
                       <Typography

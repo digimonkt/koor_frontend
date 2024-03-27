@@ -123,10 +123,10 @@ const Tenders = ({ onTabChange }) => {
                   },
                 }}
               >
-                {isMobileView && (
+                {index === 0 && isMobileView && (
                   <EmployerMyPostTabs onTabChange={onTabChange} />
                 )}
-                <TenderCard tenderDetails={tender} selfTender />
+                <TenderCard tenderDetails={tender} selfTender={true} />
                 <ApplicantList
                   tenderId={tender.id}
                   totalApplications={tender.vendor}

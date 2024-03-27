@@ -17,7 +17,7 @@ function MyJobs({ onTabChange }) {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { isMobileView } = useSelector(({ platform }) => platform);
-  console.log({ imo: isMobileView });
+
   const getAllJobs = useCallback(async () => {
     setIsLoading(true);
     const res = await getEmployerJobsAPI({ search });
@@ -91,7 +91,7 @@ function MyJobs({ onTabChange }) {
           <NoDataFoundAnimation title="It appears that you haven't created any jobs yet." />
         </Card>
       ) : (
-        jobs.map((job) => {
+        jobs.map((job, idx) => {
           return (
             <Card
               key={job.id}
@@ -110,7 +110,7 @@ function MyJobs({ onTabChange }) {
                   },
                 }}
               >
-                {isMobileView && (
+                {idx === 0 && isMobileView && (
                   <EmployerMyPostTabs onTabChange={onTabChange} />
                 )}
                 <JobCard selfJob jobDetails={job} />
