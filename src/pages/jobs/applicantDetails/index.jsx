@@ -182,16 +182,14 @@ const ApplicantDetails = () => {
                     >
                       <h4>{applicantDetails.user.name}</h4>
                     </Link>
-                    {applicantDetails.user.profile?.country ? (
+                    {applicantDetails.user.profile?.country && (
                       <Stack direction="row" spacing={1} alignItems="center">
                         <span>{<SVG.LocationIcon />}</span>{" "}
                         <span>
-                          {applicantDetails.user.profile?.country},
+                          {applicantDetails.user.profile?.country},{" "}
                           {applicantDetails.user.profile?.city}
                         </span>
                       </Stack>
-                    ) : (
-                      ""
                     )}
                   </div>
                 </Stack>
@@ -218,12 +216,16 @@ const ApplicantDetails = () => {
               direction={{ xs: "column", lg: "row", sm: "row" }}
               spacing={3}
             >
-              <Box className="user-descrition">
+              <Box sx={{ flex: 1 }}>
                 <Typography
                   sx={{
                     wordBreak: "break-word",
                     paddingRight: "10px",
                     textAlign: "justify",
+                    fontFamily: "Poppins",
+                    color: "#121212",
+                    fontweight: "300",
+                    fontzize: "14px",
                   }}
                   dangerouslySetInnerHTML={{
                     __html:
@@ -232,20 +234,22 @@ const ApplicantDetails = () => {
                   }}
                 />
               </Box>
-              <Box sx={{ display: "contents" }}>
-                {
-                  <Divider
-                    orientation="vertical"
-                    flexItem
-                    sx={{
-                      height: "162px !important",
-                      width: "1px",
-                      backgroundColor: "#CACACA",
-                    }}
-                  />
-                }
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "flex" },
+                }}
+              >
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{
+                    height: "162px !important",
+                    width: "1px",
+                    backgroundColor: "#CACACA",
+                  }}
+                />
               </Box>
-              <Box className="attachment-box">
+              <Box className="attachment-box" sx={{ flex: 1 }}>
                 {applicantDetails.attachments.length ? (
                   <h2>Attachments</h2>
                 ) : (
