@@ -17,7 +17,6 @@ function AppView({ prop }) {
   const headleRedirect = (val) => {
     navigate(`/employer/manage-jobs/${val.job.id}/applicant-details/${val.id}`);
   };
-  console.log("details", details);
   return (
     <>
       <Stack
