@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { SVG } from "../../assets/svg";
 import ApplicationOptions from "../../components/applicationOptions";
 import { Capacitor } from "@capacitor/core";
+import { useNavigate } from "react-router-dom";
 
 function ApplicantCard({
   details,
@@ -16,10 +17,16 @@ function ApplicantCard({
   view,
   message,
 }) {
+  const navigate = useNavigate();
   const [jobOrTenderDetails, setJobOrTenderDetails] = useState({});
   useEffect(() => {
     setJobOrTenderDetails(details.tender || details.job);
   });
+
+  const headleRedirect = (val) => {
+    navigate(`/employer/manage-jobs/${val.job.id}/applicant-details/${val.id}`);
+  };
+
   const platform = Capacitor.getPlatform();
   return (
     <Stack
@@ -62,6 +69,7 @@ function ApplicantCard({
             spacing={{ xs: 0, lg: 2 }}
             alignItems={{ xs: "flex-start", lg: "flex-startr" }}
             sx={{ mb: 1, ...sx }}
+            onClick={() => headleRedirect(details)}
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
             <div

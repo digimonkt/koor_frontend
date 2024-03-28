@@ -80,14 +80,14 @@ export const pdfDownloader = async (name, state, action) => {
             imageX,
             pdf.internal.pageSize.getHeight() - 14,
             imageWidth,
-            imageHeight
+            imageHeight,
           );
           pdf.text(
             footerContent,
             pdf.internal.pageSize.getWidth() -
               pdf.internal.pageSize.getWidth() / 2 -
               footerContent.length,
-            pdf.internal.pageSize.getHeight() - 10
+            pdf.internal.pageSize.getHeight() - 10,
           );
         }
       })
@@ -95,7 +95,6 @@ export const pdfDownloader = async (name, state, action) => {
     state(false);
     action(setSuccessToast("File saved successfully"));
   } catch (err) {
-    console.error(err);
     state(false);
     action(setErrorToast("Something went wrong"));
   }

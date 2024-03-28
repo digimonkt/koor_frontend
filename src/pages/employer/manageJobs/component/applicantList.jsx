@@ -45,7 +45,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           rejected: totalRejected,
           plannedInterview: totalPlannedInterview,
         },
-      })
+      }),
     );
   }, [filter]);
 
@@ -61,9 +61,13 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
   const allFilters = () => {
     return (
       <Stack
-        direction={{ xs: "column", lg: "row", sm: "row" }}
+        direction={{ xs: "row" }}
         spacing={1}
-        sx={{ flexWrap: "wrap" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
         useFlexGap
       >
         <Chip
@@ -91,7 +95,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           className="chip-cricle"
           onClick={() => {
             handleGetApplicationByStatus(
-              JOB_APPLICATION_OPTIONS.plannedInterviews
+              JOB_APPLICATION_OPTIONS.plannedInterviews,
             );
           }}
           label={
