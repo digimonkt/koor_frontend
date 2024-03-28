@@ -19,7 +19,6 @@ function ApplicantCard({
 }) {
   const { isMobileView } = useSelector(({ platform }) => platform);
   const [jobOrTenderDetails, setJobOrTenderDetails] = useState({});
-
   useEffect(() => {
     setJobOrTenderDetails(details.tender || details.job);
   });

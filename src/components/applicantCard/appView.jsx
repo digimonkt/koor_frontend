@@ -4,14 +4,20 @@ import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import { SVG } from "../../assets/svg";
 import ApplicationOptions from "../../components/applicationOptions";
+import { useNavigate } from "react-router-dom";
 
 function AppView({ prop }) {
-  console.log({ prop });
+  const navigate = useNavigate();
   const { details, sx, shortlist } = prop;
   const [jobOrTenderDetails, setJobOrTenderDetails] = useState({});
   useEffect(() => {
     setJobOrTenderDetails(details.tender || details.job);
   });
+
+  const headleRedirect = (val) => {
+    navigate(`/employer/manage-jobs/${val.job.id}/applicant-details/${val.id}`);
+  };
+  console.log("details", details);
   return (
     <>
       <Stack
@@ -46,6 +52,7 @@ function AppView({ prop }) {
             width="100%"
             display="flex"
             flewWrap="nowrap"
+            onClick={() => headleRedirect(details)}
           >
             <h4>{details?.user?.name || details?.user?.email}</h4>
             <div
