@@ -175,7 +175,6 @@ export const pdfDownloader = async (name, state, action) => {
     }
     action(setSuccessToast("File saved successfully"));
   } catch (err) {
-    console.error(err);
     state(false);
     action(setErrorToast("Something went wrong"));
   }

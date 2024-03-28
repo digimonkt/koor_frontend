@@ -186,7 +186,7 @@ function ApplicationOptions({
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: { xs: "flex-start", lg: "end" },
+          justifyContent: { xs: "center", lg: "end" },
         }}
       >
         {applicationList &&

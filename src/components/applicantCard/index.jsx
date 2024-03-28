@@ -1,4 +1,4 @@
-import { Avatar, Chip, Stack } from "@mui/material";
+import { Avatar, Chip, Divider, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
@@ -6,6 +6,7 @@ import { SVG } from "../../assets/svg";
 import ApplicationOptions from "../../components/applicationOptions";
 import { useSelector } from "react-redux";
 import AppView from "./appView";
+import { useNavigate } from "react-router-dom";
 
 function ApplicantCard({
   details,
@@ -18,10 +19,16 @@ function ApplicantCard({
   message,
 }) {
   const { isMobileView } = useSelector(({ platform }) => platform);
+  const navigate = useNavigate();
   const [jobOrTenderDetails, setJobOrTenderDetails] = useState({});
   useEffect(() => {
     setJobOrTenderDetails(details.tender || details.job);
   });
+
+  const headleRedirect = (val) => {
+    navigate(`/employer/manage-jobs/${val.job.id}/applicant-details/${val.id}`);
+  };
+
   return (
     <>
       {isMobileView ? (
@@ -35,10 +42,19 @@ function ApplicantCard({
           className="border-recent"
         >
           <Stack
-            direction="row"
-            spacing={2}
-            alignItems={{ xs: "flex-start", lg: "row" }}
-            sx={{ width: "57%", "@media (max-width:992px)": { width: "auto" } }}
+            flexWrap={"wrap"}
+            direction={{ xs: "column", lg: "row" }}
+            divider={
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ display: { xs: "none", lg: "block" } }}
+              />
+            }
+            spacing={{ xs: 0, lg: 2 }}
+            alignItems={{ xs: "flex-start", lg: "flex-startr" }}
+            sx={{ mb: 1, ...sx }}
+            onClick={() => headleRedirect(details)}
           >
             <Avatar
               src={generateFileUrl(details.user.image?.path || "")}
