@@ -221,7 +221,6 @@
 //             </div>
 //           </div>
 //         </div>
-
 //         {appliedJob && (
 //           <>
 //             {/* <div className="footer"> */}
@@ -254,10 +253,13 @@ import dayjs from "dayjs";
 import React from "react";
 import { formatPhoneNumberIntl } from "react-phone-number-input";
 import { useSelector } from "react-redux";
+import CoverLetter from "../cover-letter";
 import "./style.css";
-function ResumeTemplate({ user }) {
+
+function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
   const showUser = user || currentUser;
+
   return (
     <div className="container body" id="div-to-pdf">
       <div className="header">
@@ -272,7 +274,7 @@ function ResumeTemplate({ user }) {
           <span className="phone-val">
             {showUser.countryCode && showUser.mobileNumber
               ? formatPhoneNumberIntl(
-                  showUser.countryCode + showUser.mobileNumber
+                  showUser.countryCode + showUser.mobileNumber,
                 )
               : ""}
           </span>
@@ -288,14 +290,11 @@ function ResumeTemplate({ user }) {
           </a>
         </div>
       </div>
-
       <div className="about">
         <p className="position">PROFILE SUMMARY</p>
-        <p className="job-description">{showUser.profile.description}</p>
+        <p className="job-description">{showUser.profile.shortSummary}</p>
       </div>
-
       <div className="knowledge">
-        {/* also known as skills */}
         <p className="title">KNOWLEDGE AND EXPERTISE</p>
         <ul>
           {showUser.skills.map((skill) => (
@@ -303,7 +302,6 @@ function ResumeTemplate({ user }) {
           ))}
         </ul>
       </div>
-
       <div className="education">
         <p className="title">Education</p>
         <ul>
@@ -354,6 +352,12 @@ function ResumeTemplate({ user }) {
           ))}
         </ul>
       </div>
+      {appliedJob && (
+        <>
+          <div id="page-break"></div>
+          <CoverLetter applicantDetails={showUser} content={appliedJob} />
+        </>
+      )}
     </div>
   );
 }
