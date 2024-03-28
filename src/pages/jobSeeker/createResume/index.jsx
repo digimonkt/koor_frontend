@@ -13,7 +13,6 @@ import { ErrorMessage } from "../../../components/caption";
 import { FilledButton } from "@components/button";
 import DialogBox from "@components/dialogBox";
 import ResumeTemplate from "../updateProfile/resume-update/resumeTemplate/template1";
-import AppViewResumeTemp from "../updateProfile/resume-update/resumeTemplate/template1/appViewResumeTemp";
 import { pdfDownloader, docsDownloader } from "@utils/fileUtils";
 import {
   formatPhoneNumber,
@@ -436,11 +435,7 @@ const CreateResumeComponent = () => {
                 disabled={isDownloadingPDF || isDownloadingDocs}
               />
             </Box>
-            {isMobileView ? (
-              <AppViewResumeTemp appliedJob={false} />
-            ) : (
-              <ResumeTemplate appliedJob={false} />
-            )}
+            <ResumeTemplate appliedJob={false} />
           </Box>
         </DialogBox>
       </Box>

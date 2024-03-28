@@ -261,7 +261,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
   const showUser = user || currentUser;
 
   return (
-    <div className="container body" id="div-to-pdf">
+    <div className="container" id="div-to-pdf">
       <div className="header">
         <div className="full-name">
           <h4>CURICULUM VITAE (CV)</h4>
@@ -274,7 +274,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
           <span className="phone-val">
             {showUser.countryCode && showUser.mobileNumber
               ? formatPhoneNumberIntl(
-                  showUser.countryCode + showUser.mobileNumber
+                  showUser.countryCode + showUser.mobileNumber,
                 )
               : ""}
           </span>

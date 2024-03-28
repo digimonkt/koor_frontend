@@ -14,9 +14,11 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import { USER_ROLES } from "@utils/enum";
 import JobBadges from "./badges";
 import JobButtons from "./jobButtons";
+import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const { isMobileView } = useSelector(({ platform }) => platform);
   const location = useLocation();
   const path = location.pathname;
   const pathParts = path.split("/");
@@ -31,7 +33,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [numLines, setNumLines] = useState(3);
   const handleSeeMoreClick = () => {
     setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3
+      prevNumLines === 3 ? jobDetails?.length : 3,
     );
   };
   const textWrapperStyle = {
@@ -73,8 +75,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -126,7 +128,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -287,7 +289,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -330,6 +332,12 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 ""
               )}
             </Box>
+            {isMobileView && (
+              <ApplicantList
+                jobId={jobDetails.id}
+                totalApplications={jobDetails.applicantCount}
+              />
+            )}
             {Boolean(jobDetails?.budgetAmount) && selfJob && (
               <Box sx={{ width: "2px !important" }}>
                 <Box className="hr-border"></Box>
@@ -363,7 +371,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        })
+                        }),
                       );
                     }
                   }}

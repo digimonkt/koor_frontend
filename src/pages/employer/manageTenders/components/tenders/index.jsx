@@ -127,10 +127,12 @@ const Tenders = ({ onTabChange }) => {
                   <EmployerMyPostTabs onTabChange={onTabChange} />
                 )}
                 <TenderCard tenderDetails={tender} selfTender={true} />
-                <ApplicantList
-                  tenderId={tender.id}
-                  totalApplications={tender.vendor}
-                />
+                {!isMobileView && (
+                  <ApplicantList
+                    tenderId={tender.id}
+                    totalApplications={tender.vendor}
+                  />
+                )}
               </CardContent>
             </Card>
           ))
