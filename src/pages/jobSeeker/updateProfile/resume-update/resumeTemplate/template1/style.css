@@ -141,6 +141,10 @@ html {
   font-weight: 600;
 }
 
+.title {
+  text-transform: uppercase;
+  font-weight: 600;
+}
 .qualification ul {
   margin-top: 10px;
   padding-left: 28px;

@@ -261,7 +261,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
   const showUser = user || currentUser;
 
   return (
-    <div className="container body" id="div-to-pdf">
+    <div id="div-to-pdf">
       <div className="header">
         <div className="full-name">
           <h4>CURICULUM VITAE (CV)</h4>
