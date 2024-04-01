@@ -1222,11 +1222,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@byteowls/capacitor-oauth2@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@byteowls/capacitor-oauth2/-/capacitor-oauth2-5.0.0.tgz#faefb7633e2d367dddea6c9c7493515477a4008e"
-  integrity sha512-yW50GypmyPJcH/95NwR2jJcgT78vBN3FYKL2w6A3vrT04bRLQyw2K0fLqfj8Zws6DJy43Ck1wPs0Bcdvbsub7A==
-
 "@capacitor/android@^5.4.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-5.5.1.tgz#128dc5ab00f68c80d64ea18e961876b34b4ed859"

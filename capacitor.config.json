@@ -4,7 +4,7 @@
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "cleartext": true,
-  "hostname": "digimonk.co",
+  "hostname": "koorjobs.com",
   "allowNavigation": [
     "*"
   ],
@@ -19,16 +19,11 @@
         "profile",
         "email"
       ],
-      "clientId": "526504815298-brq8034npfsoj6lrrm6vfa7m2dn6clrr.apps.googleusercontent.com",
-      "forceCodeForRefreshToken": true
+      "serverClientId": "832980016045-qjipundcgfruvb817bo5954dbfuflfnd.apps.googleusercontent.com"
     }
   },
   "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
-  },
-  "server": {
-    "url": "http://192.168.0.192:8100",
-    "originalUrl": "http://192.168.0.192:8100"
   }
 }
