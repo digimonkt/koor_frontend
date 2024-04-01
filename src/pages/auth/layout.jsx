@@ -173,7 +173,7 @@ function AuthLayout({
     useEffect(() => {
       GoogleAuth.initialize({
         clientId:
-          "832980016045-qjipundcgfruvb817bo5954dbfuflfnd.apps.googleusercontent.com",
+          "902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com",
         scopes: ["profile", "email"],
         grantOfflineAccess: true,
       });

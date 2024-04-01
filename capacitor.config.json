@@ -19,11 +19,13 @@
         "profile",
         "email"
       ],
-      "serverClientId": "832980016045-qjipundcgfruvb817bo5954dbfuflfnd.apps.googleusercontent.com"
+      "serverClientId": "902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com"
     }
   },
-  "cordova": {},
   "android": {
     "namespace": "org.reactjs.example.koor"
+  },
+  "server": {
+    "url": "http://192.168.0.192:8100"
   }
 }

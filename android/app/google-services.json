@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "832980016045",
-    "project_id": "koor-6c490",
-    "storage_bucket": "koor-6c490.appspot.com"
+    "project_number": "902039448819",
+    "project_id": "koor-69f84",
+    "storage_bucket": "koor-69f84.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:832980016045:android:c9d26d1d4fbd241984df24",
+        "mobilesdk_app_id": "1:902039448819:android:7e7a67e9a2df3a584b1b86",
         "android_client_info": {
           "package_name": "org.reactjs.example.koor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "832980016045-95f4n25n6a06b56sh5o2f2muskqc5htk.apps.googleusercontent.com",
+          "client_id": "902039448819-1b3fn7khd6u97nfqr9ll1p2bagi3shsv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "org.reactjs.example.koor",
-            "certificate_hash": "dc88f4c7f29150b6110c8b668581d541ae66856b"
+            "certificate_hash": "316b45cca8d56a7a6eb43670b833b0945014bb2e"
           }
         },
         {
-          "client_id": "832980016045-qjipundcgfruvb817bo5954dbfuflfnd.apps.googleusercontent.com",
+          "client_id": "902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCBkIRVPY_8joFryMTIEEToomARHPHG8fc"
+          "current_key": "AIzaSyDn2bZsETpEcZyDWkKRBQMo-Osi-DRhS4g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "832980016045-qjipundcgfruvb817bo5954dbfuflfnd.apps.googleusercontent.com",
+              "client_id": "902039448819-01a0jmjdccj1b5p9ino8n0m3k0g0e2vt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
