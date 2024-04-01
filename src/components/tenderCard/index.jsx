@@ -107,8 +107,11 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       width: "100%",
                       height: "100%",
                       padding: "30px",
-                      minWidth: "90px",
-                      minHeight: "90px",
+                      minWidth: "auto",
+                      minHeight: "100px",
+                      "@media (max-width:1589px)": {
+                        padding: "20px",
+                      },
                     }}
                   />
                 </Avatar>
