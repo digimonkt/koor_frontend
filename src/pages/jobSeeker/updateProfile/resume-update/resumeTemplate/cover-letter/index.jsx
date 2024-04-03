@@ -4,13 +4,12 @@ import { generateFileUrl } from "@utils/generateFileUrl";
 
 const CoverLetter = ({ applicantDetails, content }) => {
   const [base64Image, setBase64Image] = useState("");
-  console.log("here is data", applicantDetails, content);
 
   useEffect(() => {
     const convertImageToBase64 = async () => {
       try {
         const response = await fetch(
-          generateFileUrl(applicantDetails?.signature?.path),
+          generateFileUrl(applicantDetails?.signature?.path)
         );
         const blob = await response.blob();
         const reader = new FileReader();

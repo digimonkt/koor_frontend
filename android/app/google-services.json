@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "526504815298",
-    "project_id": "koor-417605",
-    "storage_bucket": "koor-417605.appspot.com"
+    "project_number": "788879371406",
+    "project_id": "test-proj-380607",
+    "storage_bucket": "test-proj-380607.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:526504815298:android:f3730350cd2a098a13a95b",
+        "mobilesdk_app_id": "1:788879371406:android:56a95cde7eade59419eddf",
         "android_client_info": {
           "package_name": "org.reactjs.example.koor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "526504815298-brq8034npfsoj6lrrm6vfa7m2dn6clrr.apps.googleusercontent.com",
+          "client_id": "788879371406-oaj6esnlnb5nlcebf1m7hmjaqoqk7r72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.reactjs.example.koor",
+            "certificate_hash": "fef804b245c9ea1b38aba1bc998c1a47804702f6"
+          }
+        },
+        {
+          "client_id": "788879371406-la4nad22sm5nqbkjfgamcmdahq6362br.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDuFb8sYlXTqo4MWkKhD-9rsoYBN5-BKDY"
+          "current_key": "AIzaSyCnMSg_uJEJSSN_0Lt9L454jGYjxFAcnOA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "526504815298-brq8034npfsoj6lrrm6vfa7m2dn6clrr.apps.googleusercontent.com",
+              "client_id": "788879371406-f848eka3dvnusavdm1sg5eqg72gi2quc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

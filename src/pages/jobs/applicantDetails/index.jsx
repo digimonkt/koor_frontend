@@ -309,7 +309,7 @@ const ApplicantDetails = () => {
                                 <WorkExperienceCard {...item} />
                               </div>
                             </li>
-                          )
+                          ),
                         )
                       )}
                     </ul>
@@ -330,7 +330,7 @@ const ApplicantDetails = () => {
                                 // handleEdit={() => handleEdit(item)}
                               />
                             </li>
-                          )
+                          ),
                         )
                       )}
                     </ul>

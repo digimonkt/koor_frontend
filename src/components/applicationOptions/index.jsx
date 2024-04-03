@@ -57,7 +57,7 @@ function ApplicationOptions({
   const [isBlacklisting, setIsBlacklisting] = useState(false);
   const [loading, setLoading] = useState(false);
   const [applicationShortlistStatus, setApplicationShortlistStatus] = useState(
-    details.shortlistedAt
+    details.shortlistedAt,
   );
   const handleMessageClick = async () => {
     const res = await getConversationIdByUserIdAPI({
@@ -69,7 +69,7 @@ function ApplicationOptions({
         urlcat("/employer/chat", {
           conversion: conversationId,
           userId: details?.user?.id,
-        })
+        }),
       );
     }
   };
@@ -112,7 +112,7 @@ function ApplicationOptions({
       case JOB_APPLICATION_OPTIONS.shortlisted:
         setIsShortlisted(true);
         setApplicationShortlistStatus(
-          !details.shortlistedAt ? true : details.shortlistedAt
+          !details.shortlistedAt ? true : details.shortlistedAt,
         );
         applicationStatus = {
           shortlisted: applicationsStatusCount.shortlisted + 1,
@@ -128,7 +128,7 @@ function ApplicationOptions({
         setTotalApplicationsByJob({
           jobId: details.job.id,
           data: applicationStatus,
-        })
+        }),
       );
     } else if (
       details.tender &&
@@ -138,7 +138,7 @@ function ApplicationOptions({
         setTotalApplicationsByTender({
           tenderId: details.tender.id,
           data: applicationStatus,
-        })
+        }),
       );
     }
     setLoading(true);
@@ -263,7 +263,7 @@ function ApplicationOptions({
                   onClick={() => {
                     if (details.id) {
                       handlerChangeApplicationStatus(
-                        JOB_APPLICATION_OPTIONS.shortlisted
+                        JOB_APPLICATION_OPTIONS.shortlisted,
                       );
                     } else {
                       dispatch(setErrorToast("No Application Found"));
@@ -334,7 +334,7 @@ function ApplicationOptions({
               onClick={() => {
                 if (details.id) {
                   handlerChangeApplicationStatus(
-                    JOB_APPLICATION_OPTIONS.shortlisted
+                    JOB_APPLICATION_OPTIONS.shortlisted,
                   );
                 } else {
                   dispatch(setErrorToast("No Application Found"));
@@ -423,8 +423,8 @@ function ApplicationOptions({
                         applicationId: details.id,
                         role: USER_ROLES.employer,
                         jobId: details.job.id,
-                      }
-                    )
+                      },
+                    ),
                   );
                 } else if (details.tender) {
                   navigate(
@@ -434,15 +434,15 @@ function ApplicationOptions({
                         applicationId: details.id,
                         role: USER_ROLES.employer,
                         tenderId: details.tender.id,
-                      }
-                    )
+                      },
+                    ),
                   );
                 } else {
                   navigate(
                     urlcat("/:role/:userId/profile", {
                       userId: details.user.id,
                       role: details.user.role.replace("_", "-"),
-                    })
+                    }),
                   );
                 }
               }}
@@ -468,7 +468,9 @@ function ApplicationOptions({
                     style={{ color: "#274593" }}
                     className="application-option-icon"
                   />
-                  <span style={{ fontSize: "12px" }}>Message</span>
+                  <span style={{ fontSize: "12px", marginLeft: "10px" }}>
+                    Message
+                  </span>
                 </>
               }
               variant="link"
@@ -557,7 +559,7 @@ function ApplicationOptions({
               title="Block the user"
               onClick={() =>
                 handlerChangeApplicationStatus(
-                  JOB_APPLICATION_OPTIONS.blacklisted
+                  JOB_APPLICATION_OPTIONS.blacklisted,
                 )
               }
             />
@@ -590,11 +592,11 @@ function ApplicationOptions({
                 if (interviewTime) {
                   setInvalidPlannedInterviewAlert("");
                   handlerChangeApplicationStatus(
-                    JOB_APPLICATION_OPTIONS.plannedInterviews
+                    JOB_APPLICATION_OPTIONS.plannedInterviews,
                   );
                 } else {
                   setInvalidPlannedInterviewAlert(
-                    "Please select date and time"
+                    "Please select date and time",
                   );
                 }
               }}
