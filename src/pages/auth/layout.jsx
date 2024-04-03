@@ -15,9 +15,9 @@ import {
   loginWithAppleFacebookPopupProvider,
   loginWithFacebookPopupProvider,
 } from "src/firebaseProvider/auth";
+import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 import Marquee from "react-fast-marquee";
 import { Capacitor } from "@capacitor/core";
-import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 const platform = Capacitor.getPlatform();
 const AuthOptions = [
@@ -57,6 +57,7 @@ function AuthLayout({
     const { role, verifyEmail, userVerificationToken } = useSelector(
       (state) => state.auth
     );
+    const { isMobileView } = useSelector(({ platform }) => platform);
 
     const [isLoginPage, setIsLoginPage] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -67,9 +68,27 @@ function AuthLayout({
         return;
       }
       setLoading(false);
-      if (platform === "android") {
-        const user = await GoogleAuth.signIn();
-        console.log({ user });
+      if (isMobileView) {
+        const res = await FirebaseAuthentication.signInWithGoogle();
+        const payload = {
+          email: res.user.email,
+          role,
+          name: res.user.displayName.displayName,
+          display_image: res.user.photoUrl,
+          source: "google",
+        };
+        for (const key in payload) {
+          if (!payload[key]) {
+            delete payload[key];
+          }
+        }
+        console.log({ payload });
+        const result = await SocialLoginAPI(payload);
+        if (result.remote === "success") {
+          // console.log({ result });
+        } else {
+          dispatch(setSocialLoginError(result.error.errors.message));
+        }
       } else {
         const res = await loginWithGooglePopupProvider();
         if (res.remote === "success") {
@@ -102,13 +121,13 @@ function AuthLayout({
         return;
       }
       setLoading(false);
-      const res = await loginWithAppleFacebookPopupProvider();
-      if (res.remote === "success") {
+      if (isMobileView) {
+        const res = await FirebaseAuthentication.signInWithApple();
         const payload = {
-          email: res.data.email,
+          email: res.user.email,
           role,
-          name: res.data.displayName,
-          display_image: res.data.photoURL,
+          name: res.user.displayName.displayName,
+          display_image: res.user.photoUrl,
           source: "apple",
         };
         for (const key in payload) {
@@ -116,13 +135,37 @@ function AuthLayout({
             delete payload[key];
           }
         }
+        console.log({ payload });
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
-          console.log({ result });
+          // console.log({ result });
         } else {
           dispatch(setSocialLoginError(result.error.errors.message));
         }
+      } else {
+        const res = await loginWithAppleFacebookPopupProvider();
+        if (res.remote === "success") {
+          const payload = {
+            email: res.data.email,
+            role,
+            name: res.data.displayName,
+            display_image: res.data.photoURL,
+            source: "apple",
+          };
+          for (const key in payload) {
+            if (!payload[key]) {
+              delete payload[key];
+            }
+          }
+          const result = await SocialLoginAPI(payload);
+          if (result.remote === "success") {
+            console.log({ result });
+          } else {
+            dispatch(setSocialLoginError(result.error.errors.message));
+          }
+        }
       }
+
       setLoading(true);
     };
     const loginWithFacebook = async () => {
@@ -131,21 +174,44 @@ function AuthLayout({
         return;
       }
       setLoading(false);
-      const res = await loginWithFacebookPopupProvider();
-      if (res.remote === "success") {
+      if (isMobileView) {
+        const res = await FirebaseAuthentication.signInWithFacebook();
         const payload = {
-          email: res.data.email,
+          email: res.user.email,
           role,
-          name: res.data.displayName,
-          display_image: res.data.photoURL,
-          social_login_id: res.data.uid,
+          name: res.user.displayName.displayName,
+          display_image: res.user.photoUrl,
           source: "facebook",
         };
+        for (const key in payload) {
+          if (!payload[key]) {
+            delete payload[key];
+          }
+        }
+        console.log({ payload });
         const result = await SocialLoginAPI(payload);
         if (result.remote === "success") {
           // console.log({ result });
         } else {
           dispatch(setSocialLoginError(result.error.errors.message));
+        }
+      } else {
+        const res = await loginWithFacebookPopupProvider();
+        if (res.remote === "success") {
+          const payload = {
+            email: res.data.email,
+            role,
+            name: res.data.displayName,
+            display_image: res.data.photoURL,
+            social_login_id: res.data.uid,
+            source: "facebook",
+          };
+          const result = await SocialLoginAPI(payload);
+          if (result.remote === "success") {
+            // console.log({ result });
+          } else {
+            dispatch(setSocialLoginError(result.error.errors.message));
+          }
         }
       }
       setLoading(true);
@@ -170,14 +236,6 @@ function AuthLayout({
         setActivationLabel(selectedRoleTitle);
       }
     }, [userVerificationToken]);
-    useEffect(() => {
-      GoogleAuth.initialize({
-        clientId:
-          "902039448819-rih72i8p5mg62adl4f7bbsfa6t9ug2sh.apps.googleusercontent.com",
-        scopes: ["profile", "email"],
-        grantOfflineAccess: true,
-      });
-    }, []);
     return (
       <div
         className={`register pb-0 py-lg-5 registerApp ${

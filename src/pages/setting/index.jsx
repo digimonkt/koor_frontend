@@ -7,6 +7,7 @@ import { globalLocalStorage } from "@utils/localStorage";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn } from "@redux/slice/user";
 import { USER_ROLES } from "../../utils/enum";
+import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 
 const Setting = () => {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ const Setting = () => {
     await LogoutUserAPI();
     globalLocalStorage.cleanLocalStorage();
   };
-  const logoutHandle = () => {
+  const logoutHandle = async () => {
     userLogout();
+    await FirebaseAuthentication.signOut();
     dispatch(setIsLoggedIn(false));
   };
 

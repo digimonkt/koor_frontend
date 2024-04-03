@@ -342,7 +342,8 @@ const Home = () => {
                   <h5 className={styles.home_img_contents_h5}>
                     Are you an employer looking for applicants <br /> to fill
                     your job openings fast or explore new opportunities? <br />
-                    Connect with top talent and discover bids that match your needs.
+                    Connect with top talent and discover bids that match your
+                    needs.
                   </h5>
                   <Link
                     to={isLoggedIn ? "/employer/jobs/post" : "/login"}
@@ -429,8 +430,9 @@ const Home = () => {
                     (category?.title || "").length > 15
                       ? `${category.title.slice(0, 12)}...`
                       : category.title,
-                  text: `${category.count || 0} ${category.categoryType === "tender" ? "tenders" : "jobs"
-                    }`,
+                  text: `${category.count || 0} ${
+                    category.categoryType === "tender" ? "tenders" : "jobs"
+                  }`,
                   id: category.id,
                   categoryType: category.categoryType,
                 }))}
@@ -456,7 +458,7 @@ const Home = () => {
                 {(topListingCompanies || []).map((item, key) => {
                   return (
                     <>
-                      <Grid key={{ key }} item xs={4} lg={2} sm={1}>
+                      <Grid key={{ key }} item xs={4} lg={1.5} sm={1}>
                         <img
                           src={generateFileUrl(item.logo.path)}
                           alt="img"
