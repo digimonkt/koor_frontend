@@ -42,6 +42,7 @@ import {
   fileTypeExtractor,
   cleanHtmlContent,
 } from "@utils/fileUtils";
+import { MAX_WORD_SIZE } from "@utils/constants/constants";
 
 function TenderDetailsComponent() {
   const params = useParams();
@@ -115,20 +116,8 @@ function TenderDetailsComponent() {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [tenderSuggestion, setTenderSuggestion] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
-  const [numLines, setNumLines] = useState(details?.description?.length);
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    textAlign: "justify",
-    WebkitLineClamp: numLines,
-  };
+  const [showMore, setShowMore] = useState(true);
 
-  const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? details?.description?.length : 3
-    );
-  };
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
     if (res.remote === "success") {
@@ -280,12 +269,22 @@ function TenderDetailsComponent() {
                 <Box className={styles.contentJob}>
                   <div className={styles.contentJob}>
                     <h4>Details :</h4>
-                    <Box
-                      sx={textWrapperStyle}
-                      dangerouslySetInnerHTML={{
-                        __html: details?.description,
-                      }}
-                    ></Box>
+                    {showMore ? (
+                      <Box
+                        dangerouslySetInnerHTML={{
+                          __html: details?.description,
+                        }}
+                      ></Box>
+                    ) : (
+                      <Box
+                        dangerouslySetInnerHTML={{
+                          __html: details?.description?.substring(
+                            0,
+                            MAX_WORD_SIZE
+                          ),
+                        }}
+                      ></Box>
+                    )}
                   </div>
                   <Box
                     sx={{
@@ -294,27 +293,20 @@ function TenderDetailsComponent() {
                       justifyContent: "center",
                     }}
                   >
-                    {details?.description?.length > 350 && (
+                    {details?.description?.length > MAX_WORD_SIZE && (
                       <button
                         style={{
                           border: "none",
+                          marginBottom: "10px",
                           cursor: "pointer",
                           background: "none",
                           color: getColorByRole(
                             role === "" ? USER_ROLES.employer : role
                           ),
                         }}
-                        onClick={handleSeeMoreClick}
+                        onClick={() => setShowMore((prev) => !prev)}
                       >
-                        {numLines === 3 ? (
-                          <>
-                            More <SVG.arrowDown />
-                          </>
-                        ) : (
-                          <>
-                            Less <SVG.ArrowUpIcon />
-                          </>
-                        )}
+                        {showMore ? "See More" : "See Less"}
                       </button>
                     )}
                   </Box>

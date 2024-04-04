@@ -46,6 +46,7 @@ import {
   fileTypeExtractor,
   cleanHtmlContent,
 } from "@utils/fileUtils";
+import { MAX_WORD_SIZE } from "@utils/constants/constants";
 
 const JobDetails = () => {
   const params = useParams();
@@ -56,6 +57,8 @@ const JobDetails = () => {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
+  const [showMore, setShowMore] = useState(true);
+
   const [details, setDetails] = useState({
     id: "",
     title: "",
@@ -284,15 +287,37 @@ const JobDetails = () => {
               <Grid item xs={12} lg={9} md={7} sm={7}>
                 <div className={`mb-4 ${styles.contentJob}`}>
                   <h4>Details :</h4>
-                  <Box
-                    className={styles.job_detail_description}
-                    sx={{
-                      textAlign: "justify",
-                    }}
-                    dangerouslySetInnerHTML={{
-                      __html: details.description,
-                    }}
-                  ></Box>
+                  {showMore ? (
+                    <Box
+                      dangerouslySetInnerHTML={{ __html: details?.description }}
+                    ></Box>
+                  ) : (
+                    <Box
+                      dangerouslySetInnerHTML={{
+                        __html: details?.description?.substring(
+                          0,
+                          MAX_WORD_SIZE
+                        ),
+                      }}
+                    ></Box>
+                  )}
+                  {details?.description?.length > MAX_WORD_SIZE && (
+                    <button
+                      style={{
+                        border: "none",
+                        textAlign: "center",
+                        width: "100%",
+                        marginTop: "10px",
+                        cursor: "pointer",
+                        background: "none",
+                        color:
+                          role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
+                      }}
+                      onClick={() => setShowMore((prev) => !prev)}
+                    >
+                      {showMore ? "See More" : "See Less"}
+                    </button>
+                  )}
                 </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
