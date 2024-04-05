@@ -15,6 +15,7 @@ import { USER_ROLES } from "@utils/enum";
 import JobBadges from "./badges";
 import JobButtons from "./jobButtons";
 import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
+import { MAX_WORD_SIZE } from "@utils/constants/constants";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
@@ -30,18 +31,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(jobDetails?.status);
   const [applicationStatus, setApplicationStatus] = useState("applied");
-  const [numLines, setNumLines] = useState(3);
-  const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? jobDetails?.length : 3,
-    );
-  };
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    WebkitLineClamp: numLines,
-  };
+  const [showMore, setShowMore] = useState(false);
+
   const handleToggleSave = async () => {
     if (isLoggedIn) {
       setIsSaved(!isSaved);
@@ -54,6 +45,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setRegistrationWarning(true);
     }
   };
+
   const handleStartPause = async () => {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateJob(jobDetails.id);
@@ -75,8 +67,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A",
-          ),
+            "MMMM D, YYYY [at] h:mm A"
+          )
       );
     }
   }, [jobDetails]);
@@ -87,7 +79,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     <div className="job_card">
       <Grid
         justifyContent="space-between"
-        sx={{ alignItems: numLines === 3 ? "center" : "flex-start" }}
+        sx={{ alignItems: showMore ? "flex-start" : "center" }}
         container
         spacing={1.875}
       >
@@ -128,7 +120,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
                 )}
               />
             </Box>
@@ -156,7 +148,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           }}
         >
           <div className="my-jobs">
-            <h2>
+            <h2 style={{ marginBottom: "8px" }}>
               <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
                 {jobDetails?.title}
               </Link>
@@ -175,15 +167,22 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               ) : null}
             </h2>
-            <Box className="job-description mt-1 mb-3">
-              <div style={textWrapperStyle}>
-                <p
+            <Box>
+              {showMore ? (
+                <Box
+                  dangerouslySetInnerHTML={{ __html: jobDetails?.description }}
+                ></Box>
+              ) : (
+                <Box
                   dangerouslySetInnerHTML={{
-                    __html: jobDetails?.description,
+                    __html: jobDetails?.description?.substring(
+                      0,
+                      MAX_WORD_SIZE
+                    ),
                   }}
-                ></p>
-              </div>
-              {jobDetails?.description?.length > 350 && (
+                ></Box>
+              )}
+              {jobDetails?.description?.length > MAX_WORD_SIZE && (
                 <button
                   style={{
                     border: "none",
@@ -192,9 +191,9 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     color:
                       role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                   }}
-                  onClick={handleSeeMoreClick}
+                  onClick={() => setShowMore((prev) => !prev)}
                 >
-                  {numLines === 3 ? "See More" : "See Less"}
+                  {showMore ? "See More" : "See Less"}
                 </button>
               )}
             </Box>
@@ -289,7 +288,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
               )}
             />
           </Box>
@@ -332,7 +331,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 ""
               )}
             </Box>
-            {isMobileView && (
+            {isMobileView && role === USER_ROLES.employer && (
               <ApplicantList
                 jobId={jobDetails.id}
                 totalApplications={jobDetails.applicantCount}
@@ -371,7 +370,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        }),
+                        })
                       );
                     }
                   }}

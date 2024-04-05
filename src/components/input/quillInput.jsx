@@ -62,10 +62,7 @@ const QuillInputComponent = ({
           marginTop: "10px",
           fontFamily: "'Poppins' !important",
           // backgroundColor: "#F0F0F0",
-          height: "150px",
-          "@media screen and (max-width: 600px)": {
-            height: "100px", // Adjust this value based on your needs
-          },
+          minHeight: "150px",
         }}
         {...rest}
       />

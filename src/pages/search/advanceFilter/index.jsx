@@ -26,14 +26,9 @@ import { useFormik } from "formik";
 import DialogBox from "../../../components/dialogBox";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import SaveFilter from "./saveFilter";
-import { Capacitor } from "@capacitor/core";
 import TalentFilter from "./talentFilter";
 import { SEARCH_TYPE, USER_ROLES } from "../../../utils/enum";
-import {
-  DATABASE_DATE_FORMAT,
-  SALARY_MAX,
-  SALARY_MIN,
-} from "../../../utils/constants/constants";
+import { DATABASE_DATE_FORMAT } from "../../../utils/constants/constants";
 import {
   deleteSearchUserFilterAPI,
   getSearchUserFilterAPI,
@@ -55,9 +50,11 @@ import {
 import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { ShowText, getObject } from "./components";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const matches = useMediaQuery("(max-width:768px)");
   const dispatch = useDispatch();
+  const { isMobileView } = useSelector(({ platform }) => platform);
   const [searchParams] = useSearchParams();
   const {
     auth: { role, isLoggedIn },
@@ -96,7 +93,6 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const [open, setOpen] = useState(false);
   const [filterId, setFilterId] = useState(0);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const platform = Capacitor.getPlatform();
 
   const JOBSEEKERCOLOR = role === USER_ROLES.jobSeeker ? "#feefd3" : "#D5E3F7";
 
@@ -235,7 +231,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-        (typeof filter.country === "string" ? filter.country : ""),
+        (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -283,30 +279,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const handleReset = () => {
     formik.resetForm();
     setSelectedFilter("");
-    dispatch(
-      setAdvanceFilter({
-        country: "",
-        city: "",
-        jobCategory: "",
-        jobSubCategories: [],
-        fullTime: false,
-        partTime: false,
-        contract: false,
-        timing: "",
-        isAvailable: false,
-        salaryMin: SALARY_MIN,
-        salaryMax: SALARY_MAX,
-        // tender
-        budgetMin: "",
-        budgetMax: "",
-        deadline: "",
-        sector: "",
-        opportunityType: "",
-        tag: "",
-        // vendor
-        yearsInMarket: "",
-      }),
-    );
+    dispatch(setAdvanceFilter(getObject()));
   };
   const handleSaveJobSearch = async (title) => {
     const rawData = formik.values;
@@ -323,7 +296,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       data.city = city?.id;
     }
@@ -355,7 +328,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -391,7 +364,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -424,7 +397,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -521,49 +494,21 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   }, [searchType]);
 
   const formik = useFormik({
-    initialValues: {
-      id: "",
-      jobCategories: "",
-      jobSubCategories: [],
-      country: "",
-      city: "",
-      isFullTime: false,
-      isPartTime: false,
-      hasContract: false,
-
-      // talent
-      available: false,
-      salaryMin: SALARY_MIN,
-      salaryMax: SALARY_MAX,
-      experience: "",
-
-      // tender
-      budgetMin: "",
-      budgetMax: "",
-      sector: [],
-      deadline: null,
-      opportunityType: [],
-      tag: [],
-      tenderCategories: [],
-      // vendor
-      yearsInMarket: "",
-    },
-
+    initialValues: getObject("from"),
     onSubmit: async (values) => {
-      setData(false);
       const country = countries.data.find(
-        (country) => country.id === values.country,
+        (country) => country.id === values.country
       );
       const payload = {
         country: country ? country.title : "",
         city: values.city,
         jobCategory: jobCategories.data.find(
-          (val) => val.id === values.jobCategories,
+          (val) => val.id === values.jobCategories
         )?.title,
         jobSubCategories: (values.jobSubCategories || [])
           .map((subCategories) => {
             return jobSubCategories.data[values.jobCategories]?.find(
-              (subCategory) => subCategory.id === subCategories,
+              (subCategory) => subCategory.id === subCategories
             );
           })
           .filter((e) => e),
@@ -579,16 +524,16 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
         sector: values.sector?.map((sector) =>
-          sectors.data.find((i) => i.id === sector),
+          sectors.data.find((i) => i.id === sector)
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
         opportunityType: values.opportunityType?.map((type) =>
-          opportunityTypes.data.find((i) => i.id === type),
+          opportunityTypes.data.find((i) => i.id === type)
         ),
         tag: values.tag?.map((tag) => tags.data.find((i) => i.id === tag)),
         tenderCategories: values.tenderCategories?.map((tenderCategory) =>
-          tenderCategories.data.find((i) => i.id === tenderCategory),
+          tenderCategories.data.find((i) => i.id === tenderCategory)
         ),
         // vendor
         years_in_market: values.yearsInMarket,
@@ -605,7 +550,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories }),
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
       );
     }
   }, [formik.values.country, formik.values.jobCategories]);
@@ -627,7 +572,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
         <div
           className={`${styles.label} lables`}
           style={
-            !(platform === "android" || platform === "ios")
+            !isMobileView
               ? {
                   display: "flex",
                   alignItems: "center",
@@ -651,103 +596,23 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               width: "100%",
             }}
           >
-            <span
-              style={{
-                whiteSpace: "nowrap",
-                marginBottom: "10px",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent:
-                  platform === "android" || platform === "ios"
-                    ? "center"
-                    : "space-between",
-              }}
-            >
-              {platform === "android" || platform === "ios" ? (
-                <Box
-                  sx={{
-                    textAlign: "start",
-                    width: "100%",
-                  }}
-                >
-                  {isLoggedIn && "Saved searches:"}
-                </Box>
-              ) : (
-                <>{isLoggedIn && "Saved searches:"}</>
-              )}
-              {platform === "android" || platform === "ios" ? null : (
-                <>
-                  {matches ? (
-                    <>
-                      {!defaultOpen && (
-                        <div
-                          onClick={() => setData(!data)}
-                          style={{
-                            color:
-                              role === USER_ROLES.jobSeeker
-                                ? "#FFA500"
-                                : "#274593",
-                            cursor: "pointer",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Advanced filter{" "}
-                          {data ? (
-                            <>
-                              <span
-                                style={{
-                                  marginLeft: "10px",
-                                  width: "18px",
-                                  display: "inline-block",
-                                  color:
-                                    role === USER_ROLES.jobSeeker
-                                      ? "#FFA500"
-                                      : "#274593",
-                                }}
-                              >
-                                {<SVG.ArrowUpIcon />}
-                              </span>
-                            </>
-                          ) : (
-                            <span
-                              style={{
-                                marginLeft: "10px",
-                                width: "18px",
-                                display: "inline-block",
-                                color:
-                                  role === USER_ROLES.jobSeeker
-                                    ? "#FFA500"
-                                    : "#274593",
-                              }}
-                            >
-                              {<SVG.AdvancedDown />}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </>
-              )}
-            </span>
-
+            <ShowText
+              defaultOpen={defaultOpen}
+              data={data}
+              setData={setData}
+              matches={matches}
+            />
             <Stack
               direction={"row"}
               spacing={1}
               overflow={responsive ? "" : "auto"}
-              flexWrap={
-                platform === "android" || platform === "ios" ? "nowrap" : "wrap"
-              }
+              flexWrap={isMobileView ? "nowrap" : "wrap"}
               useFlexGap
               component={"ul"}
               sx={{
                 p: 0,
                 m: 0,
-                width:
-                  platform === "android" || platform === "ios" ? "100%" : null,
+                width: isMobileView ? "100%" : null,
               }}
             >
               {allFilters.map((filter) => {
@@ -778,12 +643,11 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                                   : "#eea23d"
                               } !important`
                             : "",
-                        height:
-                          platform === "android" || platform === "ios"
-                            ? "50px !important"
-                            : matches
-                              ? "42px !important"
-                              : "42px !important",
+                        height: isMobileView
+                          ? "50px !important"
+                          : matches
+                          ? "42px !important"
+                          : "42px !important",
                       }}
                       className={`${
                         selectedFilter === filter.id
@@ -815,10 +679,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                             resize: "none",
                             display: "flex",
                             alignItems: "center",
-                            width:
-                              platform === "android" || platform === "ios"
-                                ? "50px"
-                                : "auto",
+                            width: isMobileView ? "50px" : "auto",
                             color:
                               selectedFilter === filter.id
                                 ? "#000 !important"
@@ -840,7 +701,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
               })}
             </Stack>
           </Box>
-          {platform === "android" || platform === "ios" ? (
+          {isMobileView ? (
             <Box sx={{ pt: 2 }}>
               <>
                 {!defaultOpen && (
@@ -863,7 +724,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                           style={{
                             marginLeft: "10px",
                             width: "18px",
-                            display: "inline-block",
+                            display: "flex",
                             color:
                               role === USER_ROLES.jobSeeker
                                 ? "#FFA500"

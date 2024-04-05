@@ -357,7 +357,7 @@ span.arrowjobs svg {
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
-  line-height: 16px;
+  line-height: 21px;
   margin: 0 !important;
   letter-spacing: 0.02em;
   color: #121212;
@@ -860,6 +860,7 @@ span.arrowjobs svg {
   .user-descrition {
     width: 100%;
   }
+
   .my-jobs p {
     font-size: 10px;
   }
@@ -969,4 +970,3 @@ span.arrowjobs svg {
     font-size: 12px;
   }
 }
-

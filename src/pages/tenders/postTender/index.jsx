@@ -362,8 +362,17 @@ const PostTender = () => {
                   </Grid>
                   <Grid item xl={12} lg={12} xs={12}>
                     <Box
+                      // sx={{
+                      //   height: { xs: "320px", sm: "270px", md: "250px" },
+                      // }}
                       sx={{
-                        height: { xs: "320px", sm: "270px", md: "250px" },
+                        "& .ql-container.ql-snow": {
+                          minHeight: "150px",
+                          background: "#f0f0f0",
+                        },
+                        "& .ql-toolbar": {
+                          background: "#f0f0f0",
+                        },
                       }}
                     >
                       <label>
@@ -719,7 +728,13 @@ const PostTender = () => {
                   <Grid item xl={12} lg={12} xs={12}>
                     <Box
                       sx={{
-                        height: { xs: "320px", sm: "270px", md: "250px" },
+                        "& .ql-container.ql-snow": {
+                          minHeight: "150px",
+                          background: "#f0f0f0",
+                        },
+                        "& .ql-toolbar": {
+                          background: "#f0f0f0",
+                        },
                       }}
                     >
                       <label>Application Instructions</label>
