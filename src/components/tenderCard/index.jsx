@@ -15,6 +15,7 @@ import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 import { updateEmployerTenderStatusAPI } from "@api/employer";
 import { USER_ROLES } from "@utils/enum";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { MAX_WORD_SIZE } from "@utils/constants/constants";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
@@ -23,20 +24,8 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(tenderDetails?.status);
-  const [numLines, setNumLines] = useState(3);
+  const [showMore, setShowMore] = useState(false);
 
-  const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? tenderDetails.length : 3,
-    );
-  };
-
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    WebkitLineClamp: numLines,
-  };
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -63,7 +52,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         container
         spacing={1.875}
         sx={{
-          alignItems: numLines === 3 ? "center" : "flex-start",
+          alignItems: showMore ? "flex-start" : "center",
         }}
       >
         {logo && (
@@ -134,7 +123,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       color={getColorByRemainingDays(
                         tenderDetails?.expiredInDays > 0
                           ? tenderDetails?.expiredInDays
-                          : 0,
+                          : 0
                       )}
                     />
                   </div>
@@ -173,7 +162,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                 navigate(
                                   urlcat("/employer/tender/post", {
                                     tenderId: tenderDetails?.id,
-                                  }),
+                                  })
                                 );
                               }
                             }}
@@ -245,7 +234,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
           }}
         >
           <div className="my-jobs">
-            <h2>
+            <h2 style={{ marginBottom: "8px" }}>
               <Link to={`/tender/details/${tenderDetails?.id || "tenderId"}`}>
                 {tenderDetails?.title || ""}
                 {tenderDetails.isApplied ? (
@@ -261,14 +250,24 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 ) : null}
               </Link>
             </h2>
-            <Box className="job-description mt-1 mb-3">
-              <div style={textWrapperStyle}>
-                <p
+            <Box>
+              {showMore ? (
+                <Box
                   dangerouslySetInnerHTML={{
                     __html: tenderDetails?.description,
                   }}
-                ></p>
-              </div>
+                ></Box>
+              ) : (
+                <Box
+                  dangerouslySetInnerHTML={{
+                    __html: tenderDetails?.description?.substring(
+                      0,
+                      MAX_WORD_SIZE
+                    ),
+                  }}
+                ></Box>
+              )}
+
               {tenderDetails?.description?.length > 350 && (
                 <button
                   style={{
@@ -278,12 +277,13 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                     color:
                       role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                   }}
-                  onClick={handleSeeMoreClick}
+                  onClick={() => setShowMore((prev) => !prev)}
                 >
-                  {numLines === 3 ? "See More" : "See Less"}
+                  {showMore ? "See More" : "See Less"}
                 </button>
               )}
             </Box>
+
             <Stack
               direction={{ xs: "row", sm: "row" }}
               spacing={{ xs: 1, sm: 1, md: 1 }}
@@ -301,7 +301,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               {tenderDetails.sector && (
                 <ChipBox
                   label={`Sector: ${capitalizeFirst(
-                    tenderDetails?.sector?.title || "",
+                    tenderDetails?.sector?.title || ""
                   )}`}
                   icon={<>{<SVG.SellIcon />}</>}
                 />
@@ -388,7 +388,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 color={getColorByRemainingDays(
                   tenderDetails?.expiredInDays > 0
                     ? tenderDetails?.expiredInDays
-                    : 0,
+                    : 0
                 )}
               />
             </Box>
@@ -426,7 +426,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                           navigate(
                             urlcat("/employer/tender/post", {
                               tenderId: tenderDetails?.id,
-                            }),
+                            })
                           );
                         }
                       }}

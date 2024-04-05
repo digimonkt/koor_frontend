@@ -47,6 +47,7 @@ import {
   cleanHtmlContent,
 } from "@utils/fileUtils";
 import { generateFileUrl } from "@utils/generateFileUrl";
+import { MAX_WORD_SIZE } from "@utils/constants/constants";
 
 const JobDetails = () => {
   const params = useParams();
@@ -57,7 +58,7 @@ const JobDetails = () => {
   const [expiredWarning, setExpiredWarning] = useState(false);
   const [suggestionJobs, setSuggestionJobs] = useState([]);
   const [isSharing, setIsSharing] = useState(false);
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
   const platform = Capacitor.getPlatform();
 
   const [details, setDetails] = useState({
@@ -287,48 +288,40 @@ const JobDetails = () => {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} md={7} sm={7}>
-                <Box className={styles.job_detail_description}>
-                  {details?.description?.length > 350 && showMore ? (
+                <div className={`mb-4 ${styles.contentJob}`}>
+                  <h4>Details :</h4>
+                  {showMore ? (
                     <Box
-                      dangerouslySetInnerHTML={{
-                        __html: details?.description,
-                      }}
+                      dangerouslySetInnerHTML={{ __html: details?.description }}
                     ></Box>
                   ) : (
                     <Box
                       dangerouslySetInnerHTML={{
-                        __html: details.description.substring(0, 350),
+                        __html: details?.description?.substring(
+                          0,
+                          MAX_WORD_SIZE
+                        ),
                       }}
                     ></Box>
                   )}
-                  <button
-                    onClick={() => setShowMore((prev) => !prev)}
-                    style={{
-                      textAlign: "center",
-                      width: "100%",
-                      border: "none",
-                      cursor: "pointer",
-                      marginBottom: "20px",
-                      background: "none",
-                      color:
-                        role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
-                    }}
-                  >
-                    {details?.description?.length > 350 && (
-                      <>
-                        {showMore ? (
-                          <>
-                            Less <SVG.ArrowUpIcon />
-                          </>
-                        ) : (
-                          <>
-                            More <SVG.Downarrow />
-                          </>
-                        )}
-                      </>
-                    )}
-                  </button>
-                </Box>
+                  {details?.description?.length > MAX_WORD_SIZE && (
+                    <button
+                      style={{
+                        border: "none",
+                        textAlign: "center",
+                        width: "100%",
+                        marginTop: "10px",
+                        cursor: "pointer",
+                        background: "none",
+                        color:
+                          role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
+                      }}
+                      onClick={() => setShowMore((prev) => !prev)}
+                    >
+                      {showMore ? "See More" : "See Less"}
+                    </button>
+                  )}
+                </div>
                 <Stack
                   direction={{ xs: "row", lg: "row", sm: "row" }}
                   alignItems={{ xs: "flex-start", lg: "center" }}
