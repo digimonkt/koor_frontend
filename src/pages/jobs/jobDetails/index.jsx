@@ -6,7 +6,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import AttachmentIcon from "@mui/icons-material/Attachment";
 import {
   // getApplyJobByEmailAPI,
-  getJobAttachmentAPI,
   getJobDetailsByIdAPI,
   getJobSuggestionAPI,
   withdrawJobApplicationAPI,
@@ -19,7 +18,7 @@ import {
   FilledButton,
 } from "@components/button";
 import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
-// import { generateFileUrl } from "@utils/generateFileUrl";
+import { generateFileUrl } from "@utils/generateFileUrl";
 import urlcat from "urlcat";
 import JobCostCard from "../component/jobCostCard";
 import JobRequirementCard from "../component/jobRequirementCard";
@@ -41,12 +40,8 @@ import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay, formatCommaText } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
-import {
-  downloadUrlCreator,
-  fileTypeExtractor,
-  cleanHtmlContent,
-} from "@utils/fileUtils";
-import { generateFileUrl } from "@utils/generateFileUrl";
+import { cleanHtmlContent } from "@utils/fileUtils";
+// import { generateFileUrl } from "@utils/generateFileUrl";
 import { MAX_WORD_SIZE } from "@utils/constants/constants";
 
 const JobDetails = () => {
@@ -208,15 +203,6 @@ const JobDetails = () => {
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = fileTypeExtractor(url);
-
-    const response = await getJobAttachmentAPI(url);
-    if (response.remote === "success") {
-      const base64String = response.data.base_image;
-      downloadUrlCreator(fileType, base64String);
-    }
-  };
   return (
     <>
       <Container
@@ -404,7 +390,6 @@ const JobDetails = () => {
                           </span>
                           <a
                             className="m-0"
-                            onClick={(_) => handleLoadImage(attachment.path)}
                             href={generateFileUrl(attachment.path)}
                             target="_blank"
                             rel="noreferrer"

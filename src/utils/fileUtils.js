@@ -41,6 +41,7 @@ export function downloadUrlCreator(fileType, base64String) {
 
   URL.revokeObjectURL(downloadUrl);
 }
+
 export function isBase64Image(str) {
   const dataUriRegex = /^data:image\/(png|jpg|jpeg|gif);base64,/;
 

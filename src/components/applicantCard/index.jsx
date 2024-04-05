@@ -42,19 +42,10 @@ function ApplicantCard({
           className="border-recent"
         >
           <Stack
-            flexWrap={"wrap"}
-            direction={{ xs: "column", lg: "row" }}
-            divider={
-              <Divider
-                orientation="vertical"
-                flexItem
-                sx={{ display: { xs: "none", lg: "block" } }}
-              />
-            }
-            spacing={{ xs: 0, lg: 2 }}
-            alignItems={{ xs: "flex-start", lg: "flex-startr" }}
-            sx={{ mb: 1, ...sx }}
-            onClick={() => headleRedirect(details)}
+            direction="row"
+            spacing={2}
+            alignItems={{ xs: "flex-start", lg: "row" }}
+            sx={{ width: "57%", "@media (max-width:992px)": { width: "auto" } }}
           >
             <Avatar
               src={generateFileUrl(details.user.image?.path || "")}
@@ -71,9 +62,17 @@ function ApplicantCard({
               <Stack
                 flexWrap={"wrap"}
                 direction={{ xs: "column", lg: "row" }}
+                divider={
+                  <Divider
+                    orientation="vertical"
+                    flexItem
+                    sx={{ display: { xs: "none", lg: "block" } }}
+                  />
+                }
                 spacing={{ xs: 0, lg: 2 }}
                 alignItems={{ xs: "flex-start", lg: "flex-startr" }}
                 sx={{ mb: 1, ...sx }}
+                onClick={() => headleRedirect(details)}
               >
                 <h4>{details?.user?.name || details?.user?.email}</h4>
                 <div
@@ -144,6 +143,7 @@ function ApplicantCard({
               </div>
             </div>
           </Stack>
+
           {details?.education || details?.skills || details?.language ? (
             <Stack
               flexWrap={"wrap"}
@@ -193,6 +193,7 @@ function ApplicantCard({
           <div className="recent-descrition mobile-recent-descrition mt-2">
             <p>{details?.shortLetter || details?.user?.description}</p>
           </div>
+
           <Stack
             direction="row"
             spacing={0}

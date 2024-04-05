@@ -331,7 +331,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 ""
               )}
             </Box>
-            {isMobileView && (
+            {isMobileView && role === USER_ROLES.employer && (
               <ApplicantList
                 jobId={jobDetails.id}
                 totalApplications={jobDetails.applicantCount}

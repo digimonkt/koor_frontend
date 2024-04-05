@@ -42,8 +42,8 @@ function Dashboard() {
       setRecentApplication((prevState) =>
         [...prevState, ...res.data.results].filter(
           (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id),
-        ),
+            index === self.findIndex((t) => t.id === value.id)
+        )
       );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
