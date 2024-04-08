@@ -1240,6 +1240,10 @@ function PostJobsComponent() {
           </div>
         </CardContent>
       </Card>
+      <ErrorToast
+        open={!jobId && totalAvailableCredits < minimumCreditJobPost}
+        message="Please Buy Package to Post Job"
+      />
       <SuccessToast
         open={submitting === SUBMITTING_STATUS_ENUM.submitted}
         handleClose={() => setSubmitting(SUBMITTING_STATUS_ENUM.null)}
