@@ -53,9 +53,9 @@ function ResumeTemplate({ user, appliedJob = false }) {
                   )}
                 </ul>
               </div>
-              <hr className="horizontal_line" />
               {Boolean(applicantDetails.skills.length) && (
                 <>
+                  <hr className="horizontal_line" />
                   <div className="skills_div">
                     <h2>SKILLS</h2>
                     {applicantDetails.skills.map((item, index) => (
@@ -64,11 +64,11 @@ function ResumeTemplate({ user, appliedJob = false }) {
                       </button>
                     ))}
                   </div>
-                  <hr />
                 </>
               )}
               {Boolean(applicantDetails.educationRecord.length) && (
                 <>
+                  <hr />
                   <div className="education">
                     <h2>EDUCATION</h2>
                     {applicantDetails.educationRecord.map((item, index) => (
@@ -87,7 +87,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
                       </div>
                     ))}
                   </div>
-                  <hr />
                 </>
               )}
               {/* <div className="education">
@@ -133,6 +132,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
             <hr /> */}
               {Boolean(applicantDetails?.profile?.references[0]?.name) && (
                 <>
+                  <hr />
                   <div>
                     <h2>References</h2>
                     {applicantDetails?.profile?.references?.map(
@@ -157,25 +157,27 @@ function ResumeTemplate({ user, appliedJob = false }) {
                             </span>
                           )}
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </>
               )}
-              <hr />
               {Boolean(applicantDetails.languages.length) && (
-                <div className="language">
-                  <h2>LANGUAGE</h2>
-                  <div className="language_div">
-                    {applicantDetails.languages.map((item, index) => (
-                      <div key={index} style={{ marginRight: "40px" }}>
-                        <h6>{item.language.title}</h6>
-                        <p>Spoken: {item?.spoken}</p>
-                        <p>Written: {item?.written}</p>
-                      </div>
-                    ))}
+                <>
+                  <hr />
+                  <div className="language">
+                    <h2>LANGUAGE</h2>
+                    <div className="language_div">
+                      {applicantDetails.languages.map((item, index) => (
+                        <div key={index} style={{ marginRight: "40px" }}>
+                          <h6>{item.language.title}</h6>
+                          <p>Spoken: {item?.spoken}</p>
+                          <p>Written: {item?.written}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
             <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
@@ -184,39 +186,41 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 <h2>Overview</h2>
                 <p>{applicantDetails.profile?.shortSummary}</p>
               </div>
-              <hr />
               {Boolean(applicantDetails.workExperiences.length) && (
-                <div className="work_experiance">
-                  <h2>Work Experience</h2>
-                  {applicantDetails.workExperiences.map((item, index) => (
-                    <div
-                      className="job_position"
-                      key={index}
-                      style={{ marginTop: "25px" }}
-                    >
-                      <span>{item.title}</span>
-                      <div className="work_experiance_div">
-                        <h3>{item.organization}</h3>
-                        <h3>
-                          {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
-                          {item.present
-                            ? "Present"
-                            : dayjs(item.endDate).format(YEAR_FORMAT)}
-                        </h3>
+                <>
+                  <hr />
+                  <div className="work_experiance">
+                    <h2>Work Experience</h2>
+                    {applicantDetails.workExperiences.map((item, index) => (
+                      <div
+                        className="job_position"
+                        key={index}
+                        style={{ marginTop: "25px" }}
+                      >
+                        <span>{item.title}</span>
+                        <div className="work_experiance_div">
+                          <h3>{item.organization}</h3>
+                          <h3>
+                            {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
+                            {item.present
+                              ? "Present"
+                              : dayjs(item.endDate).format(YEAR_FORMAT)}
+                          </h3>
+                        </div>
+                        {item?.description && (
+                          <p
+                            dangerouslySetInnerHTML={{
+                              __html: item?.description,
+                            }}
+                            style={{
+                              wordBreak: "break-all",
+                            }}
+                          />
+                        )}
                       </div>
-                      {item?.description && (
-                        <p
-                          dangerouslySetInnerHTML={{
-                            __html: item?.description,
-                          }}
-                          style={{
-                            wordBreak: "break-all",
-                          }}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           </div>
