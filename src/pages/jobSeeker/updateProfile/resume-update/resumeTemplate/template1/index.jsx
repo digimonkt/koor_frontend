@@ -67,11 +67,11 @@ function ResumeTemplate({ user, appliedJob = false }) {
                   <hr />
                 </>
               )}
-              {Boolean(applicantDetails.educationRecord.length) && (
+              {Boolean(applicantDetails?.educationRecord?.length) && (
                 <>
                   <div className="education">
                     <h2>EDUCATION</h2>
-                    {applicantDetails.educationRecord.map((item, index) => (
+                    {applicantDetails?.educationRecord.map((item, index) => (
                       <div key={index} style={{ margin: "20px 0px" }}>
                         <div className="education_div">
                           <p>
@@ -157,7 +157,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
                             </span>
                           )}
                         </div>
-                      )
+                      ),
                     )}
                   </div>
                 </>

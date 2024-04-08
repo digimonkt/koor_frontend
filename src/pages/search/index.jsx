@@ -39,6 +39,7 @@ import { getAdSenseAPI } from "@api/adSense";
 import { setAdSense } from "@redux/slice/adSense";
 import Tabs from "@pages/tabs/tabs";
 import HeaddingSearch from "./hedding-search";
+
 function Search({ searchTypeForJob }) {
   const platform = Capacitor.getPlatform();
   const params = useParams();
