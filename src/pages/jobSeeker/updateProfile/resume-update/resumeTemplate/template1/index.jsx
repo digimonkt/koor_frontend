@@ -71,7 +71,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 <>
                   <div className="education">
                     <h2>EDUCATION</h2>
-                    {applicantDetails?.educationRecord.map((item, index) => (
+                    {applicantDetails?.educationRecord?.map((item, index) => (
                       <div key={index} style={{ margin: "20px 0px" }}>
                         <div className="education_div">
                           <p>
@@ -163,11 +163,11 @@ function ResumeTemplate({ user, appliedJob = false }) {
                 </>
               )}
               <hr />
-              {Boolean(applicantDetails.languages.length) && (
+              {Boolean(applicantDetails?.languages?.length) && (
                 <div className="language">
                   <h2>LANGUAGE</h2>
                   <div className="language_div">
-                    {applicantDetails.languages.map((item, index) => (
+                    {applicantDetails?.languages?.map((item, index) => (
                       <div key={index} style={{ marginRight: "40px" }}>
                         <h6>{item.language.title}</h6>
                         <p>Spoken: {item?.spoken}</p>
@@ -231,10 +231,6 @@ function ResumeTemplate({ user, appliedJob = false }) {
             />
           </>
         )}
-        {/* <div className="footer">
-          <p>This resume is generated with</p>
-          <SVG.logoHorizontalTrik style={{ marginRight: "5px" }} />
-        </div> */}
       </div>
     </div>
   );
