@@ -36,7 +36,7 @@ const Skills = (props) => {
     setRemovedSkills((prevState) => [...prevState, id]);
     setAllSkills((prevState) => prevState.filter((state) => state.id !== id));
     setNewSelectedSkills((prevState) =>
-      prevState.filter((state) => state.id !== id)
+      prevState.filter((state) => state.id !== id),
     );
   };
 
@@ -57,7 +57,7 @@ const Skills = (props) => {
 
   useEffect(() => {
     if (selectedSkills) {
-      setAllSkills((prevState) => [
+      setAllSkills(() => [
         ...selectedSkills.map((skill) => ({
           id: skill.id,
           title: skill.skill.title,
@@ -71,7 +71,7 @@ const Skills = (props) => {
       dispatch(
         getSkills({
           search: debouncedSearchSkillValue,
-        })
+        }),
       );
     }
   }, [debouncedSearchSkillValue]);
@@ -171,8 +171,8 @@ const Skills = (props) => {
                                 (skill) =>
                                   !allSkills.some(
                                     (otherItem) =>
-                                      otherItem.title === skill.title
-                                  )
+                                      otherItem.title === skill.title,
+                                  ),
                               )
                               .map((skill) => {
                                 return (
@@ -280,8 +280,8 @@ const Skills = (props) => {
                           .filter(
                             (skill) =>
                               !allSkills.some(
-                                (otherItem) => otherItem.title === skill.title
-                              )
+                                (otherItem) => otherItem.title === skill.title,
+                              ),
                           )
                           .map((skill) => {
                             return (

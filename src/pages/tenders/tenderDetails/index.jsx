@@ -36,12 +36,7 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
-import {
-  downloadUrlCreator,
-  fileTypeExtractor,
-  cleanHtmlContent,
-} from "@utils/fileUtils";
-import { getJobAttachmentAPI } from "@api/job";
+import { cleanHtmlContent } from "@utils/fileUtils";
 import { Capacitor } from "@capacitor/core";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import { MAX_WORD_SIZE } from "@utils/constants/constants";
@@ -173,15 +168,15 @@ function TenderDetailsComponent() {
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = fileTypeExtractor(url);
-    const response = await getJobAttachmentAPI(url);
+  // const handleLoadImage = async (url) => {
+  //   const fileType = fileTypeExtractor(url);
+  //   const response = await getJobAttachmentAPI(url);
 
-    if (response.remote === "success") {
-      const base64String = response.data.base_image;
-      downloadUrlCreator(fileType, base64String);
-    }
-  };
+  //   if (response.remote === "success") {
+  //     const base64String = response.data.base_image;
+  //     downloadUrlCreator(fileType, base64String);
+  //   }
+  // };
 
   function handleSendEmail(details) {
     const email = details.contactEmail;
@@ -190,7 +185,7 @@ function TenderDetailsComponent() {
     const subject = `Tender Application for ${details.title}`;
     const body = `Here is the my tender application for this tender \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -273,7 +268,7 @@ function TenderDetailsComponent() {
                       cursor: "default",
                     }}
                     color={getColorByRemainingDays(
-                      details?.expiredInDays > -1 ? details?.expiredInDays : 0,
+                      details?.expiredInDays > -1 ? details?.expiredInDays : 0
                     )}
                   />
                 </div>
@@ -298,7 +293,7 @@ function TenderDetailsComponent() {
                         dangerouslySetInnerHTML={{
                           __html: details?.description?.substring(
                             0,
-                            MAX_WORD_SIZE,
+                            MAX_WORD_SIZE
                           ),
                         }}
                       ></Box>
@@ -319,7 +314,7 @@ function TenderDetailsComponent() {
                           cursor: "pointer",
                           background: "none",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                         }}
                         onClick={() => setShowMore((prev) => !prev)}
@@ -377,7 +372,6 @@ function TenderDetailsComponent() {
                             {<SVG.BlueAttach />}
                           </span>
                           <a
-                            onClick={() => handleLoadImage(attachment.path)}
                             target="_blank"
                             href={generateFileUrl(attachment.path)}
                             className="m-0"
@@ -400,7 +394,7 @@ function TenderDetailsComponent() {
               <Grid item xs={12} lg={3} sm={5}>
                 <JobCostCard
                   color={getColorByRole(
-                    role === "" ? USER_ROLES.employer : role,
+                    role === "" ? USER_ROLES.employer : role
                   )}
                   amount={details.budgetAmount}
                   user={details?.user}
@@ -438,13 +432,13 @@ function TenderDetailsComponent() {
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
                                   applicationId: details.application.id,
-                                }),
+                                })
                               );
                             } else {
                               navigate(
                                 urlcat("../tender/apply/:tenderId", {
                                   tenderId: params.tenderId,
-                                }),
+                                })
                               );
                             }
                           } else {
@@ -515,10 +509,10 @@ function TenderDetailsComponent() {
                         sx={{
                           height: "44px",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                           border: `2px solid ${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )}`,
                         }}
                         onClick={() => {
@@ -560,10 +554,10 @@ function TenderDetailsComponent() {
                       <OutlinedButton
                         sx={{
                           color: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
@@ -593,10 +587,10 @@ function TenderDetailsComponent() {
                       <OutlinedButton
                         sx={{
                           color: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           borderColor: `${getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           )} !important`,
                           "@media (max-width: 480px)": {
                             fontSize: "14px !important",
@@ -704,7 +698,7 @@ function TenderDetailsComponent() {
                         sx={{
                           textDecoration: "none",
                           color: getColorByRole(
-                            role === "" ? USER_ROLES.employer : role,
+                            role === "" ? USER_ROLES.employer : role
                           ),
                           fontWeight: 600,
                         }}
@@ -730,7 +724,7 @@ function TenderDetailsComponent() {
                   <Link
                     style={{
                       color: getColorByRole(
-                        role === "" ? USER_ROLES.employer : role,
+                        role === "" ? USER_ROLES.employer : role
                       ),
                     }}
                     to={urlcat("/tender/details/:tenderId", {
