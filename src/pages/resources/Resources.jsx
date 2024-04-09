@@ -5,6 +5,7 @@ import { TablePagination } from "./style";
 import { ResourceCard } from "./component/resourceCard";
 import { getResourcesAPI } from "../../api/common";
 import ResourceListSkeletonLoader from "./resourceListSkelton";
+import { NoDataFoundAnimation } from "@components/animations";
 
 const Resources = () => {
   const [resourceList, setResourceList] = useState([]);
@@ -61,7 +62,7 @@ const Resources = () => {
           ) : loading ? (
             <ResourceListSkeletonLoader />
           ) : (
-            <Box className={`${styles.noDataFound}`}>No Data Found</Box>
+            <NoDataFoundAnimation title="We apologize, but we couldn't find any resources" />
           )}
           {pages > 1 && (
             <Box sx={{ display: "flex", justifyContent: "center" }}>

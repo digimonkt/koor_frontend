@@ -337,7 +337,7 @@ function Search({ searchTypeForJob }) {
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <h2 className="m-0">
+                      <h1 className="m-0">
                         {searchName}
                         <Chip
                           label={totalItems}
@@ -356,7 +356,7 @@ function Search({ searchTypeForJob }) {
                             padding: "5px 4px !important",
                           }}
                         />
-                      </h2>
+                      </h1>
                       {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
                       (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                         <>
