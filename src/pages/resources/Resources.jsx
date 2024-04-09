@@ -9,15 +9,20 @@ import ResourceListSkeletonLoader from "./resourceListSkelton";
 const Resources = () => {
   const [resourceList, setResourceList] = useState([]);
   const [pages, setPages] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const getResourceDetails = async () => {
     const page = pages;
     const limit = 10;
+    setLoading(true);
     const response = await getResourcesAPI(limit, page);
     if (response.remote === "success") {
+      setLoading(false);
       setResourceList(response.data.results);
       const totalCounts = Math.ceil(response.data.count / limit);
       setTotalCount(totalCounts);
+    } else {
+      setLoading(false);
     }
   };
   function handlePageChange(_, page) {
@@ -40,10 +45,10 @@ const Resources = () => {
             },
           }}
         >
-          <Box component="h2" className={`${styles.heddingTitle}`}>
+          <Box component="h1" className={`${styles.heddingTitle}`}>
             Resources
           </Box>
-          {resourceList.length > 0 ? (
+          {resourceList.length > 0 && loading ? (
             resourceList.map((item, index) => (
               <ResourceCard
                 key={index}
@@ -53,8 +58,10 @@ const Resources = () => {
                 id={item.id}
               />
             ))
-          ) : (
+          ) : loading ? (
             <ResourceListSkeletonLoader />
+          ) : (
+            <Box className={`${styles.noDataFound}`}>No Data Found</Box>
           )}
           {pages > 1 && (
             <Box sx={{ display: "flex", justifyContent: "center" }}>

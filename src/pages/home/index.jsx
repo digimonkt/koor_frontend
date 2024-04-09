@@ -207,7 +207,7 @@ const Home = () => {
                       paddingTop: "26%",
                     }}
                   >
-                    <h2>Find your dream job</h2>
+                    <h1 style={{ color: "#fff" }}>Find your dream job</h1>
                     <h5 className="mb-5">
                       Search for the best opportunities in your area
                     </h5>
