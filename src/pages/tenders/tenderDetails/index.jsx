@@ -36,12 +36,7 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getLetLongByAddressAPI } from "../../../api/user";
 import ShareTender from "../shareTenders";
 import { getColorByRemainingDays, getColorByRole } from "@utils/generateColor";
-import {
-  downloadUrlCreator,
-  fileTypeExtractor,
-  cleanHtmlContent,
-} from "@utils/fileUtils";
-import { getJobAttachmentAPI } from "@api/job";
+import { cleanHtmlContent } from "@utils/fileUtils";
 import { Capacitor } from "@capacitor/core";
 import { generateFileUrl } from "../../../utils/generateFileUrl";
 import { MAX_WORD_SIZE } from "@utils/constants/constants";
@@ -173,15 +168,15 @@ function TenderDetailsComponent() {
     }
   };
 
-  const handleLoadImage = async (url) => {
-    const fileType = fileTypeExtractor(url);
-    const response = await getJobAttachmentAPI(url);
+  // const handleLoadImage = async (url) => {
+  //   const fileType = fileTypeExtractor(url);
+  //   const response = await getJobAttachmentAPI(url);
 
-    if (response.remote === "success") {
-      const base64String = response.data.base_image;
-      downloadUrlCreator(fileType, base64String);
-    }
-  };
+  //   if (response.remote === "success") {
+  //     const base64String = response.data.base_image;
+  //     downloadUrlCreator(fileType, base64String);
+  //   }
+  // };
 
   function handleSendEmail(details) {
     const email = details.contactEmail;
@@ -282,17 +277,19 @@ function TenderDetailsComponent() {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} sm={7}>
-                <Box className={styles.contentJob}>
-                  <div className={styles.contentJob}>
+                <Box>
+                  <div>
                     <h4>Details :</h4>
                     {showMore ? (
                       <Box
+                        className="details"
                         dangerouslySetInnerHTML={{
                           __html: details?.description,
                         }}
                       ></Box>
                     ) : (
                       <Box
+                        className="details"
                         dangerouslySetInnerHTML={{
                           __html: details?.description?.substring(
                             0,
@@ -375,7 +372,6 @@ function TenderDetailsComponent() {
                             {<SVG.BlueAttach />}
                           </span>
                           <a
-                            onClick={() => handleLoadImage(attachment.path)}
                             target="_blank"
                             href={generateFileUrl(attachment.path)}
                             className="m-0"

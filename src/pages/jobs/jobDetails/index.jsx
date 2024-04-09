@@ -41,7 +41,6 @@ import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay, formatCommaText } from "@utils/constants/utility";
 import { Capacitor } from "@capacitor/core";
 import { cleanHtmlContent } from "@utils/fileUtils";
-// import { generateFileUrl } from "@utils/generateFileUrl";
 import { MAX_WORD_SIZE } from "@utils/constants/constants";
 
 const JobDetails = () => {
@@ -274,14 +273,16 @@ const JobDetails = () => {
             <hr />
             <Grid container spacing={2}>
               <Grid item xs={12} lg={9} md={7} sm={7}>
-                <div className={`mb-4 ${styles.contentJob}`}>
+                <div className="mb-4">
                   <h4>Details :</h4>
                   {showMore ? (
                     <Box
+                      className="details"
                       dangerouslySetInnerHTML={{ __html: details?.description }}
                     ></Box>
                   ) : (
                     <Box
+                      className="details"
                       dangerouslySetInnerHTML={{
                         __html: details?.description?.substring(
                           0,

@@ -122,7 +122,7 @@ const ApplicantDetails = () => {
               <Box sx={{ margin: "0px !important" }}>
                 <IconButton
                   LinkComponent={Link}
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate("/employer/dashboard")}
                   sx={{
                     padding: "0px",
                   }}

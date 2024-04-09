@@ -67,8 +67,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
       setApplicationStatus(
         "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
-          )
+            "MMMM D, YYYY [at] h:mm A",
+          ),
       );
     }
   }, [jobDetails]);
@@ -120,7 +120,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -170,14 +170,16 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <Box>
               {showMore ? (
                 <Box
+                  className="details"
                   dangerouslySetInnerHTML={{ __html: jobDetails?.description }}
                 ></Box>
               ) : (
                 <Box
+                  className="details"
                   dangerouslySetInnerHTML={{
                     __html: jobDetails?.description?.substring(
                       0,
-                      MAX_WORD_SIZE
+                      MAX_WORD_SIZE,
                     ),
                   }}
                 ></Box>
@@ -288,7 +290,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -370,7 +372,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        })
+                        }),
                       );
                     }
                   }}
