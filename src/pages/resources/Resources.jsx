@@ -6,6 +6,7 @@ import { ResourceCard } from "./component/resourceCard";
 import { getResourcesAPI } from "../../api/common";
 import ResourceListSkeletonLoader from "./resourceListSkelton";
 import { NoDataFoundAnimation } from "@components/animations";
+import { Helmet } from "react-helmet";
 
 const Resources = () => {
   const [resourceList, setResourceList] = useState([]);
@@ -36,6 +37,13 @@ const Resources = () => {
 
   return (
     <>
+      <Helmet>
+        <meta
+          name="description"
+          content="Access valuable resources for job seekers and employers on Koor Jobs. Learn essential skills, find career advice, and stay updated with latest trends and news."
+        />
+        <title>Resources for Job Seekers and Employers | Koorjobs</title>
+      </Helmet>
       <Box className={`${styles.resources}`}>
         <Container
           maxWidth={false}
