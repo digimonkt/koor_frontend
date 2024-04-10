@@ -114,7 +114,7 @@ const AboutUs = () => {
             >
               <Grid item md={8} lg={7} xs={12} sm={7}>
                 <Box className={styles.about_text_box}>
-                  <h2>About Our Company</h2>
+                  <h1 style={{ color: "#fff" }}>About Our Company</h1>
                   <p>
                     Koor is an award-winning mobile app which connects
                     non-executive job seekers to reliable employers quickly &
