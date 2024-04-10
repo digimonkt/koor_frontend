@@ -784,7 +784,7 @@ function TenderDetailsComponent() {
                 <NoRecordFoundAnimation title="Tender Not Exist, Anymore" />
                 <FilledButton
                   title="Go Back to Browser Tender"
-                  onClick={() => navigate("/search/tender")}
+                  onClick={() => navigate("/search/tenders")}
                 />
               </Box>
             </>
