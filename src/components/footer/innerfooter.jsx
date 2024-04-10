@@ -359,7 +359,9 @@ const InnerFooter = () => {
                   paddingLeft: "5rem",
                   "@media(max-width:992px)": {
                     paddingLeft: "0rem",
-                    justifyContent: "center",
+                  },
+                  "@media(min-width:1197px)": {
+                    justifyContent: "flex-end",
                   },
                 }}
               >
@@ -370,6 +372,7 @@ const InnerFooter = () => {
                       marginLeft: "0",
                       width: "100%",
                     },
+
                     // "@media(max-width:480px)": { width: "340px" },
                     // "@media(max-width:375px)": { width: "340px" },
                     // "@media(max-width:320px)": { width: "290px" },

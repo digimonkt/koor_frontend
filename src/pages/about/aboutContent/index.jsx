@@ -8,6 +8,7 @@ import { getFAQCategoryAPI } from "../../../api/faq";
 import { USER_ROLES } from "../../../utils/enum";
 import { resetFAQQuestions } from "../../../redux/slice/faq";
 import { useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -61,6 +62,13 @@ const AboutContent = () => {
   }, []);
   return (
     <>
+      <Helmet>
+        <meta
+          name="description"
+          content="Koor Jobs: A trusted platform bridging job seekers to employers in Somalia. Find jobs, post opportunities, and foster business growth."
+        />
+        <title>About Koorjobs: Connecting Job Seekers to Employers</title>
+      </Helmet>
       <Box>
         <Container
           maxWidth={false}
