@@ -123,7 +123,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                       color={getColorByRemainingDays(
                         tenderDetails?.expiredInDays > 0
                           ? tenderDetails?.expiredInDays
-                          : 0,
+                          : 0
                       )}
                     />
                   </div>
@@ -162,7 +162,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                                 navigate(
                                   urlcat("/employer/tender/post", {
                                     tenderId: tenderDetails?.id,
-                                  }),
+                                  })
                                 );
                               }
                             }}
@@ -264,7 +264,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   dangerouslySetInnerHTML={{
                     __html: tenderDetails?.description?.substring(
                       0,
-                      MAX_WORD_SIZE,
+                      MAX_WORD_SIZE
                     ),
                   }}
                 ></Box>
@@ -281,7 +281,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   }}
                   onClick={() => setShowMore((prev) => !prev)}
                 >
-                  {showMore ? "See More" : "See Less"}
+                  {!showMore ? "See More" : "See Less"}
                 </button>
               )}
             </Box>
@@ -303,7 +303,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               {tenderDetails.sector && (
                 <ChipBox
                   label={`Sector: ${capitalizeFirst(
-                    tenderDetails?.sector?.title || "",
+                    tenderDetails?.sector?.title || ""
                   )}`}
                   icon={<>{<SVG.SellIcon />}</>}
                 />
@@ -390,7 +390,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                 color={getColorByRemainingDays(
                   tenderDetails?.expiredInDays > 0
                     ? tenderDetails?.expiredInDays
-                    : 0,
+                    : 0
                 )}
               />
             </Box>
@@ -428,7 +428,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                           navigate(
                             urlcat("/employer/tender/post", {
                               tenderId: tenderDetails?.id,
-                            }),
+                            })
                           );
                         }
                       }}

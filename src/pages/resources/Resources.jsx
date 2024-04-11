@@ -5,19 +5,26 @@ import { TablePagination } from "./style";
 import { ResourceCard } from "./component/resourceCard";
 import { getResourcesAPI } from "../../api/common";
 import ResourceListSkeletonLoader from "./resourceListSkelton";
+import { NoDataFoundAnimation } from "@components/animations";
+import { Helmet } from "react-helmet";
 
 const Resources = () => {
   const [resourceList, setResourceList] = useState([]);
   const [pages, setPages] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const getResourceDetails = async () => {
     const page = pages;
     const limit = 10;
+    setLoading(true);
     const response = await getResourcesAPI(limit, page);
     if (response.remote === "success") {
+      setLoading(false);
       setResourceList(response.data.results);
       const totalCounts = Math.ceil(response.data.count / limit);
       setTotalCount(totalCounts);
+    } else {
+      setLoading(false);
     }
   };
   function handlePageChange(_, page) {
@@ -30,6 +37,13 @@ const Resources = () => {
 
   return (
     <>
+      <Helmet>
+        <meta
+          name="description"
+          content="Access valuable resources for job seekers and employers on Koor Jobs. Learn essential skills, find career advice, and stay updated with latest trends and news."
+        />
+        <title>Resources for Job Seekers and Employers | Koorjobs</title>
+      </Helmet>
       <Box className={`${styles.resources}`}>
         <Container
           maxWidth={false}
@@ -40,10 +54,10 @@ const Resources = () => {
             },
           }}
         >
-          <Box component="h2" className={`${styles.heddingTitle}`}>
+          <Box component="h1" className={`${styles.heddingTitle}`}>
             Resources
           </Box>
-          {resourceList.length > 0 ? (
+          {resourceList.length > 0 && loading ? (
             resourceList.map((item, index) => (
               <ResourceCard
                 key={index}
@@ -53,8 +67,10 @@ const Resources = () => {
                 id={item.id}
               />
             ))
-          ) : (
+          ) : loading ? (
             <ResourceListSkeletonLoader />
+          ) : (
+            <NoDataFoundAnimation title="We apologize, but we couldn't find any resources" />
           )}
           {pages > 1 && (
             <Box sx={{ display: "flex", justifyContent: "center" }}>

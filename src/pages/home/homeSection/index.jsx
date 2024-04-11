@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid } from "@mui/material";
 import { IMAGES } from "../../../assets/images";
 import styles from "./home_section.module.css";
+import { Helmet } from "react-helmet";
 
 const sectionItem = [
   {
@@ -41,6 +42,14 @@ const sectionItem = [
 const HomeSection = () => {
   return (
     <>
+      <Helmet>
+        <meta name="keywords" content="somali jobs,jobs in somalia" />
+        <meta
+          name="description"
+          content="Find your dream job in Somalia or post opening for top talent. KoorJobs connects employers and applicants full time or part time, offering the best opportunities."
+        />
+        <title>Koorjobs | Find Your Dream Job in Somalia</title>
+      </Helmet>
       <Box mt={20} className={`${styles.home_section_box}`}>
         <Grid container spacing={2}>
           {sectionItem.map((item) => (

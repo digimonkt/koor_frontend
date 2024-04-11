@@ -5,7 +5,7 @@ import Skeleton from "react-loading-skeleton";
 const ApplicantCardSkeletonLoading = ({ sx }) => {
   return (
     <Stack
-      direction={{ xs: "column", lg: "row" }}
+      direction={{ xs: "column" }}
       spacing={{ xs: "2", lg: "2" }}
       justifyContent={{ lg: "space-between" }}
       className="border-recent"
