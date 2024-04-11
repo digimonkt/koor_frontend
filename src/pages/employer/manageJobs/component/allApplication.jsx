@@ -5,7 +5,7 @@ import { getRecentApplicationAPI } from "../../../../api/employer";
 import { setTotalApplications } from "../../../../redux/slice/employer";
 import { useDispatch } from "react-redux";
 import { NoDataFoundAnimation } from "../../../../components/animations";
-import ApplicantCardSkeletonLoading from "../../../../components/applicantCard/skeletonLoading";
+import ApplicantCardSkeletonLoading from "@components/applicantCard/skeletonLoading";
 import ApplicantCard from "../../../../components/applicantCard";
 import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
 function AllApplication({ onTabChange }) {
@@ -65,7 +65,6 @@ function AllApplication({ onTabChange }) {
         >
           <EmployerMyPostTabs onTabChange={onTabChange} />
           {isLoading ? (
-            // skeleton loading need to be implemented
             [1, 2, 3].map((loader) => (
               <ApplicantCardSkeletonLoading key={loader} />
             ))

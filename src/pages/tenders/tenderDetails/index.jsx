@@ -284,12 +284,14 @@ function TenderDetailsComponent() {
                         {state.showMore ? (
                           <Box
                             className="details"
+                            sx={{ lineHeight: "18px" }}
                             dangerouslySetInnerHTML={{
                               __html: details?.description,
                             }}
                           ></Box>
                         ) : (
                           <Box
+                            sx={{ lineHeight: "18px" }}
                             className="details"
                             dangerouslySetInnerHTML={{
                               __html: details?.description?.substring(

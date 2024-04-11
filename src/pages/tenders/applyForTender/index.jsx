@@ -99,7 +99,7 @@ function ApplyForTender() {
         newValues.attachments_remove = values.attachmentsRemove;
       }
       newValues.attachments = newValues.attachments.filter(
-        (attachment) => !attachment.id
+        (attachment) => !attachment.id,
       );
       for (const key in newValues) {
         if (newValues[key].forEach) {
@@ -174,7 +174,7 @@ function ApplyForTender() {
             margin:
               platform === "android" || platform === "ios"
                 ? "15px 0px 130px 0px"
-                : "0px",
+                : "110px 0px 130px 0px",
           }}
         >
           <div className={`${styles.grids}`}>
@@ -216,7 +216,7 @@ function ApplyForTender() {
                         : "Expired"
                     }
                     color={getColorByRemainingDays(
-                      details.expiredInDays > 0 ? details.expiredInDays : 0
+                      details.expiredInDays > 0 ? details.expiredInDays : 0,
                     )}
                     className="apply_dd_btn"
                   />
@@ -233,10 +233,11 @@ function ApplyForTender() {
                   },
                 }}
               >
-                <div className={`${styles.contentJob}`}>
+                <div>
                   <h4>Details:</h4>
                   <div
-                    className="job-description"
+                    className="details"
+                    style={{ lineHeight: "20px", paddingRight: "10px" }}
                     dangerouslySetInnerHTML={{
                       __html: details.description,
                     }}
@@ -255,7 +256,7 @@ function ApplyForTender() {
                         className={styles.more_text_p}
                         style={{ marginBottom: "10px" }}
                       >
-                        Please check out my attachements below..
+                        Please check out my attachements below.
                       </p>
                       {details.attachments.map((attachment) => {
                         return (
@@ -375,14 +376,14 @@ function ApplyForTender() {
                       ]);
                       formik.setFieldValue("attachments", [
                         ...formik.values.attachments.filter(
-                          (attachment) => attachment.id !== file.id
+                          (attachment) => attachment.id !== file.id,
                         ),
                       ]);
                     } else {
                       formik.setValues({
                         ...formik.values,
                         attachments: formik.values.attachments.filter(
-                          (el) => el !== file
+                          (el) => el !== file,
                         ),
                       });
                     }
@@ -414,8 +415,8 @@ function ApplyForTender() {
                     isSubmitting
                       ? "Submitting..."
                       : searchParams.get("applicationId")
-                      ? "Update"
-                      : "Apply"
+                        ? "Update"
+                        : "Apply"
                   }
                   sx={{
                     "@media (max-width: 480px)": {
