@@ -59,8 +59,8 @@ const Dashboard = () => {
       setRecentApplication((prevState) =>
         [...prevState, ...res.data.results].filter(
           (value, index, self) =>
-            index === self.findIndex((t) => t.id === value.id)
-        )
+            index === self.findIndex((t) => t.id === value.id),
+        ),
       );
       setIsMoreApplicationAvailable(!!res.data.next);
     } else {
@@ -332,7 +332,7 @@ const Dashboard = () => {
                     {/* <p>Applicants for past 12 hours shown</p> */}
                   </Stack>
 
-                  {isLoading ? (
+                  {!isLoading ? (
                     // skeleton loading need to implement
                     [1, 2, 3, 4, 5].map((loader) => (
                       <ApplicantCardSkeletonLoading key={loader} />
