@@ -333,7 +333,7 @@ const Dashboard = () => {
                     <h3>recent application</h3>
                   </Stack>
 
-                  {isLoading ? (
+                  {!isLoading ? (
                     [1, 2, 3, 4, 5].map((loader) => (
                       <ApplicantCardSkeletonLoading key={loader} />
                     ))

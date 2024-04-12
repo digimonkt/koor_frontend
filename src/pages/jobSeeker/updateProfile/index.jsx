@@ -43,6 +43,7 @@ const UpdateProfile = () => {
   const handleProfilePicSave = async (file) => {
     setProfilePicLoading("loading");
     const newFormData = new FormData();
+    newFormData.append("profile_image", file);
     dispatch(setProfilePic(URL.createObjectURL(file)));
     const res = await UpdateProfileImageAPI(newFormData);
     if (res.remote === "success") setProfilePicLoading("updated");

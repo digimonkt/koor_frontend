@@ -54,10 +54,10 @@ const ShowContent = ({ content }) => {
               direction={{ sm: "row-reverse", md: "row", lg: "row-reverse" }}
             >
               <Grid item md={8} lg={8} sm={8} xs={12}>
-                <Box className={styles.about_text_box}>
+                <Box>
                   <div
+                    className="details"
                     dangerouslySetInnerHTML={{ __html: content }}
-                    style={{ color: "white" }}
                   />
                 </Box>
               </Grid>
