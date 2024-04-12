@@ -10,7 +10,7 @@ const ApplicantCardSkeletonLoading = ({ sx }) => {
       sx={{ padding: 2 }}
       direction="row"
     >
-      <Skeleton variant="circular" sx={{ width: 100, height: 100 }} />
+      <Skeleton variant="circular" sx={{ width: 100, height: 80 }} />
       <Stack direction="column" width="100%">
         <Skeleton sx={{ width: "100%", height: 30 }} />
         <Skeleton
