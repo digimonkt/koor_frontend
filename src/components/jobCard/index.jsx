@@ -325,7 +325,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <span className="d-block">UP TO</span>
                   <h4>
                     <small>{"$"}</small>
-                    {jobDetails?.budgetAmount || "3,500"}
+                    {jobDetails?.budgetAmount}
                   </h4>
                   <span>{jobDetails?.budgetPayPeriod}</span>
                 </>

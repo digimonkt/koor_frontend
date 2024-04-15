@@ -4,23 +4,27 @@ import ShortlistedCard from "./shortlistedCard";
 import TalentCardSkeletonLoader from "../../../components/talentCard/talentCardSkeletonLoader";
 import React, { useEffect, useState } from "react";
 import { AD_AFTER_RECORDS } from "@utils/constants/constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getApplicationByFilterAPI } from "@api/employer";
+import { setSearchTrue } from "@redux/slice/search";
 
 function ShortlistedTab() {
   const { isSearching } = useSelector((state) => state.search);
   const { adSense } = useSelector((state) => state.adSense);
+  const dispatch = useDispatch();
   const [applicantDetails, setApplicantDetails] = useState({});
-
+  console.log(isSearching);
   const getApplicantsData = async () => {
+    dispatch(setSearchTrue(true));
     const res = await getApplicationByFilterAPI("shortlisted");
-    if (res.remote === "success") {
+    if (res?.remote === "success") {
       setApplicantDetails(res.data);
     }
+    dispatch(setSearchTrue(false));
   };
 
   const adSenseData = adSense.data.find(
-    (item) => item.pageName === "browseTalents",
+    (item) => item.pageName === "browseTalents"
   );
 
   useEffect(() => {
