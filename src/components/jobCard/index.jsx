@@ -16,6 +16,7 @@ import JobBadges from "./badges";
 import JobButtons from "./jobButtons";
 import ApplicantList from "@pages/employer/manageJobs/component/applicantList";
 import { MAX_WORD_SIZE } from "@utils/constants/constants";
+import Budget from "./budget";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
@@ -25,61 +26,88 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const pathParts = path.split("/");
   const endRouter = pathParts[pathParts.length - 1];
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState("");
-
-  const [registrationWarning, setRegistrationWarning] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-  const [isStart, setIsStart] = useState(jobDetails?.status);
-  const [applicationStatus, setApplicationStatus] = useState("applied");
-  const [showMore, setShowMore] = useState(false);
+  const [state, setState] = useState({
+    searchValue: "",
+    isStart: jobDetails?.status,
+    applicationStatus: "applied",
+    isSaved: false,
+    showMore: false,
+    registrationWarning: false,
+  });
 
   const handleToggleSave = async () => {
     if (isLoggedIn) {
-      setIsSaved(!isSaved);
-      if (!isSaved) {
+      setState((prev) => ({
+        ...prev,
+        isSaved: !prev.isSaved,
+      }));
+      if (!state.isSaved) {
         await saveJobAPI(jobDetails.id);
       } else {
         await unSaveJobAPI(jobDetails.id);
       }
     } else {
-      setRegistrationWarning(true);
+      setState((prev) => ({
+        ...prev,
+        registrationWarning: true,
+      }));
     }
   };
 
   const handleStartPause = async () => {
-    setIsStart(isStart === "active" ? "inactive" : "active");
+    setState((prev) => ({
+      ...prev,
+      isStart: prev.isStart === "active" ? "inactive" : "active",
+    }));
     updateJob(jobDetails.id);
   };
   const updateJob = async (jobId) => {
     await updateEmployerJobStatusAPI(jobId);
   };
   useEffect(() => {
-    if (jobDetails) setIsSaved(jobDetails.isSaved);
+    if (jobDetails) {
+      setState((prev) => ({
+        ...prev,
+        isSaved: jobDetails.isSaved,
+      }));
+    }
   }, [jobDetails]);
+
   useEffect(() => {
     if (jobDetails.isShortlisted) {
-      setApplicationStatus("Shortlisted");
+      setState((prev) => ({
+        ...prev,
+        applicationStatus: "Shortlisted",
+      }));
     }
     if (jobDetails.isRejected) {
-      setApplicationStatus("Rejected");
+      setState((prev) => ({
+        ...prev,
+        applicationStatus: "Rejected",
+      }));
     }
     if (jobDetails.isPlannedInterview) {
-      setApplicationStatus(
-        "Interview planned on " +
+      setState((prev) => ({
+        ...prev,
+        applicationStatus:
+          "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
             "MMMM D, YYYY [at] h:mm A"
-          )
-      );
+          ),
+      }));
     }
   }, [jobDetails]);
   useEffect(() => {
-    setSearchValue(endRouter);
+    setState((prev) => ({
+      ...prev,
+      setSearchValue: endRouter,
+    }));
   }, [endRouter]);
   return (
     <div className="job_card">
       <Grid
         justifyContent="space-between"
-        sx={{ alignItems: showMore ? "flex-start" : "center" }}
+        sx={{ alignItems: state.showMore ? "flex-start" : "center" }}
         container
         spacing={1.875}
       >
@@ -126,10 +154,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             </Box>
             <JobButtons
               jobDetails={jobDetails}
-              isStart={isStart}
+              isStart={state.isStart}
               selfJob={selfJob}
               isLoggedIn={isLoggedIn}
-              isSaved={isSaved}
+              isSaved={state.isSaved}
               isApplied={applied}
               handleSave={handleToggleSave}
             />
@@ -156,7 +184,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 <Chip
                   color={jobDetails.isRejected ? "error" : "success"}
                   size="small"
-                  label={applicationStatus}
+                  label={state.applicationStatus}
                   sx={{
                     marginLeft: "5px",
                     textTransform: "capitalize",
@@ -168,7 +196,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               ) : null}
             </h2>
             <Box>
-              {showMore ? (
+              {state.showMore ? (
                 <Box
                   className="details"
                   dangerouslySetInnerHTML={{ __html: jobDetails?.description }}
@@ -193,9 +221,14 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     color:
                       role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
                   }}
-                  onClick={() => setShowMore((prev) => !prev)}
+                  onClick={() =>
+                    setState((prev) => ({
+                      ...prev,
+                      showMore: !prev.showMore,
+                    }))
+                  }
                 >
-                  {!showMore ? "See More" : "See Less"}
+                  {state.showMore ? "See More" : "See Less"}
                 </button>
               )}
             </Box>
@@ -216,14 +249,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     <SVG.BriefcaseIcon />
                   </span>{" "}
                   <div className="textdes">
-                    {/*
-                    {jobDetails.isPostedByAdmin ? "Posted By" : "Institution:"}
-                    <span>
-                      {jobDetails.isPostedByAdmin
-                        ? " Koor"
-                        : ` ${jobDetails.user.name}`}
-                    </span>
-                      */}
                     Institution:{" "}
                     <span>
                       {!jobDetails.company
@@ -316,22 +341,16 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
             <Box
               sx={{
                 "@media (max-width: 480px)":
-                  searchValue === "manage-jobs" ? {} : { display: "none" },
+                  state.searchValue === "manage-jobs"
+                    ? {}
+                    : { display: "none" },
               }}
               className="pricebox py-3 upto-slide"
             >
-              {jobDetails?.budgetAmount > 0 && jobDetails?.budgetAmount ? (
-                <>
-                  <span className="d-block">UP TO</span>
-                  <h4>
-                    <small>{"$"}</small>
-                    {jobDetails?.budgetAmount}
-                  </h4>
-                  <span>{jobDetails?.budgetPayPeriod}</span>
-                </>
-              ) : (
-                ""
-              )}
+              <Budget
+                budgetAmount={jobDetails?.budgetAmount}
+                budgetPayPeriod={jobDetails?.budgetPayPeriod}
+              />
             </Box>
             {isMobileView && role === USER_ROLES.employer && (
               <ApplicantList
@@ -354,7 +373,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     handleStartPause();
                   }}
                 >
-                  {isStart === "active" ? (
+                  {state.isStart === "active" ? (
                     <>
                       <SVG.PauseIcon />
                       <span className="d-block">Hold</span>
@@ -388,7 +407,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     className="bookmark"
                     sx={{ "@media (max-width: 480px)": { display: "none" } }}
                   >
-                    {isSaved ? (
+                    {state.isSaved ? (
                       <>
                         <SVG.SaveIcon />
                         <span>Saved</span>
@@ -408,7 +427,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           </Stack>
         </Grid>
       </Grid>
-      <Dialog open={registrationWarning} setOpen={setRegistrationWarning} />
+      <Dialog
+        open={state.registrationWarning}
+        setOpen={() =>
+          setState((prev) => ({
+            ...prev,
+            registrationWarning: false,
+          }))
+        }
+      />
     </div>
   );
 }

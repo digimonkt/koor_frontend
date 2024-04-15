@@ -1280,8 +1280,8 @@ function PostJobsComponent() {
             <h1 className="mb-3">Done!</h1>
             <p>
               {jobId
-                ? "Your job post just updated. It will be reviewed and available on Koor shortly."
-                : "Your new job post just submitted. It will be reviewed and available on Koor shortly."}
+                ? "Your job post Successfully"
+                : "Your new job post Successfully"}
             </p>
             <Box className={`${styles.cancel_popup}`}>
               <OutlinedButton

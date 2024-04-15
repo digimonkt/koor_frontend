@@ -334,6 +334,7 @@ const Dashboard = () => {
                   </Stack>
 
                   {isLoading ? (
+                    // skeleton loading need to implement
                     [1, 2, 3, 4, 5].map((loader) => (
                       <ApplicantCardSkeletonLoading key={loader} />
                     ))
