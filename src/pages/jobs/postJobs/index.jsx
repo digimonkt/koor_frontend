@@ -85,7 +85,7 @@ function PostJobsComponent() {
     skills,
   } = useSelector((state) => state.choices);
   const { minimumCreditJobPost, totalAvailableCredits } = useSelector(
-    (state) => state.employer,
+    (state) => state.employer
   );
   const { isMobileView } = useSelector((state) => state.platform);
   const [searchParams] = useSearchParams();
@@ -252,42 +252,42 @@ function PostJobsComponent() {
       formik.setFieldValue("startDate", dayjs(data.startDate));
       formik.setFieldValue(
         "isContactEmail",
-        Boolean(data?.contactEmail) || false,
+        Boolean(data?.contactEmail) || false
       );
       formik.setFieldValue("contactEmail", data?.contactEmail || "");
       formik.setFieldValue("cc1", data?.cc1 || "");
       formik.setFieldValue("cc2", data?.cc2 || "");
       formik.setFieldValue(
         "isApplyThroughKoor",
-        Boolean(data?.isApplyThroughKoor) || false,
+        Boolean(data?.isApplyThroughKoor) || false
       );
       formik.setFieldValue(
         "isApplyThroughEmail",
-        Boolean(data?.isApplyThroughEmail) || false,
+        Boolean(data?.isApplyThroughEmail) || false
       );
       formik.setFieldValue(
         "isApplyThroughWebsite",
-        Boolean(data?.isApplyThroughWebsite) || false,
+        Boolean(data?.isApplyThroughWebsite) || false
       );
       formik.setFieldValue(
         "applicationInstruction",
-        data?.applicationInstruction || "",
+        data?.applicationInstruction || ""
       );
       formik.setFieldValue("websiteLink", data?.websiteLink || "");
       formik.setFieldValue(
         "highestEducation",
-        data?.highestEducation?.id || "",
+        data?.highestEducation?.id || ""
       );
       // !TEMPORARY SOLUTION
       formik.setFieldValue(
         "languages",
         data.languages.map && data.languages.length
           ? [...data.languages.map((language) => language.language.id)]
-          : [],
+          : []
       );
       formik.setFieldValue(
         "skills",
-        data.skills.map ? data.skills.map((skill) => skill.id) : [],
+        data.skills.map ? data.skills.map((skill) => skill.id) : []
       );
       formik.setFieldValue("attachments", data.attachments);
     }
@@ -340,14 +340,14 @@ function PostJobsComponent() {
     setDescData(content);
     formik.setFieldValue(
       "description",
-      content !== "<p><br></p>" ? content : "",
+      content !== "<p><br></p>" ? content : ""
     );
   };
   const handleApplicationInstructionEditorValue = (content) => {
     setApplicationInstructionData(content);
     formik.setFieldValue(
       "applicationInstruction",
-      content !== "<p><br></p>" ? content : "",
+      content !== "<p><br></p>" ? content : ""
     );
   };
 
@@ -401,7 +401,7 @@ function PostJobsComponent() {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories }),
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
       );
     }
   }, [formik.values.jobCategories]);
@@ -564,7 +564,7 @@ function PostJobsComponent() {
                         (country) => ({
                           value: country.id,
                           label: country.title,
-                        }),
+                        })
                       )}
                       {...formik.getFieldProps("city")}
                     />
@@ -598,7 +598,7 @@ function PostJobsComponent() {
                                   onClick={() => {
                                     formik.setFieldValue(
                                       "address",
-                                      address.description,
+                                      address.description
                                     );
                                     setSearchValue(address.description);
                                   }}
@@ -1055,12 +1055,12 @@ function PostJobsComponent() {
                           "attachments",
                           `Maximum 10 files allowed. you can upload only ${
                             10 - currentAttachments.length
-                          } remaining`,
+                          } remaining`
                         );
                       } else {
                         const filesTaken = file.slice(
                           0,
-                          10 - currentAttachments.length,
+                          10 - currentAttachments.length
                         );
                         formik.setFieldValue("attachments", [
                           ...currentAttachments,
@@ -1077,15 +1077,15 @@ function PostJobsComponent() {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (attachment) => attachment.path !== file.path,
-                          ),
+                            (attachment) => attachment.path !== file.path
+                          )
                         );
                       } else {
                         formik.setFieldValue(
                           "attachments",
                           formik.values.attachments.filter(
-                            (_, i) => i !== index,
-                          ),
+                            (_, i) => i !== index
+                          )
                         );
                       }
                     }}
@@ -1141,8 +1141,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1203,8 +1203,8 @@ function PostJobsComponent() {
                             ? "Updating..."
                             : "Posting..."
                           : jobId
-                            ? "UPDATE THE JOB"
-                            : "POST NEW JOB"
+                          ? "UPDATE THE JOB"
+                          : "POST NEW JOB"
                       }
                       type="submit"
                       disabled={
@@ -1280,8 +1280,8 @@ function PostJobsComponent() {
             <h1 className="mb-3">Done!</h1>
             <p>
               {jobId
-                ? "Your job post just updated. It will be reviewed and available on Koor shortly."
-                : "Your new job post just submitted. It will be reviewed and available on Koor shortly."}
+                ? "Your job post Successfully"
+                : "Your new job post Successfully"}
             </p>
             <Box className={`${styles.cancel_popup}`}>
               <OutlinedButton
