@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
 import { Fragment } from "react";
 import { SVG } from "@assets/svg";
+import Budget from "./badges";
 
 const AvatarComponent = ({ imageUrl }) => {
   return (
@@ -55,19 +56,10 @@ const JobDetailsComponent = ({
   applied,
   handleSave,
 }) => {
-  console.log(applied);
+  const { budgetAmount, budgetPayPeriod } = jobDetails;
   return (
     <>
-      {Boolean(jobDetails.budgetAmount) && (
-        <div className="pricebox py-3 me-lg-4">
-          <span className="d-block">UP TO</span>
-          <h4>
-            <small>{"$"}</small>
-            {jobDetails?.budgetAmount || ""}
-          </h4>
-          <span>{jobDetails.budgetPayPeriod}</span>
-        </div>
-      )}
+      <Budget budgetAmount={budgetAmount} budgetPayPeriod={budgetPayPeriod} />
       {selfJob ? (
         <div className="job-button-card">
           <button>
@@ -112,7 +104,7 @@ const JobDetailsComponent = ({
                 </div>
               </div>
             ) : (
-              "sdf"
+              ""
             )}
           </Fragment>
         )

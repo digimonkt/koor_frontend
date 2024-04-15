@@ -47,6 +47,16 @@ function ManageJobsComponent() {
     setPanel(newValue);
     dispatch(setManageJobActiveTab(newValue));
   };
+
+  const currentTab = panel === 0 ? "jobs" : "tender";
+  const handleCreatePost = () => {
+    if (currentUser.profile.isVerified) {
+      navigate(urlcat(`../employer/${currentTab}/post`));
+    } else {
+      setAccountVerifiedWarning(true);
+    }
+  };
+
   useEffect(() => {
     setPanel(manageJobActiveTab);
   }, [manageJobActiveTab]);
@@ -109,13 +119,7 @@ function ManageJobsComponent() {
         {isMobileView ? (
           <>
             <IconButton
-              onClick={() => {
-                if (currentUser.profile.isVerified) {
-                  navigate(urlcat("../employer/jobs/post"));
-                } else {
-                  setAccountVerifiedWarning(true);
-                }
-              }}
+              onClick={handleCreatePost}
               sx={{
                 width: "56px",
                 height: "56px",
@@ -142,7 +146,7 @@ function ManageJobsComponent() {
                 sx={{ whiteSpace: "nowrap" }}
                 onClick={() => {
                   if (currentUser.profile.isVerified) {
-                    navigate(urlcat("../employer/jobs/post"));
+                    navigate(urlcat(`../employer/${currentTab}/post`));
                   } else {
                     setAccountVerifiedWarning(true);
                   }

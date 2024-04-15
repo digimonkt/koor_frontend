@@ -339,26 +339,49 @@ function Search({ searchTypeForJob }) {
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <h1 className="m-0">
-                        {searchName}
-                        <Chip
-                          label={totalItems}
-                          className="ms-3"
-                          sx={{
-                            background:
-                              role === USER_ROLES.jobSeeker
-                                ? "#FEEFD3"
-                                : "#D5E3F7",
-                            color:
-                              role === USER_ROLES.jobSeeker
-                                ? "#EEA23D"
-                                : "#274593",
-                            fontFamily: "Bahnschrift",
-                            fontSize: "16px",
-                            padding: "5px 4px !important",
-                          }}
-                        />
-                      </h1>
+                      {isMobileView ? (
+                        <h2 className="m-0">
+                          {searchName}
+                          <Chip
+                            label={totalItems}
+                            className="ms-3"
+                            sx={{
+                              background:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#FEEFD3"
+                                  : "#D5E3F7",
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#EEA23D"
+                                  : "#274593",
+                              fontFamily: "Bahnschrift",
+                              fontSize: "16px",
+                              padding: "5px 4px !important",
+                            }}
+                          />
+                        </h2>
+                      ) : (
+                        <h1 className="m-0">
+                          {searchName}
+                          <Chip
+                            label={totalItems}
+                            className="ms-3"
+                            sx={{
+                              background:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#FEEFD3"
+                                  : "#D5E3F7",
+                              color:
+                                role === USER_ROLES.jobSeeker
+                                  ? "#EEA23D"
+                                  : "#274593",
+                              fontFamily: "Bahnschrift",
+                              fontSize: "16px",
+                              padding: "5px 4px !important",
+                            }}
+                          />
+                        </h1>
+                      )}
                       {(searchType === SEARCH_TYPE.jobs && jobs.length) ||
                       (searchType === SEARCH_TYPE.tenders && tenders.length) ? (
                         <>
