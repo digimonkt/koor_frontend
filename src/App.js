@@ -29,6 +29,7 @@ import { setIsMobileView } from "@redux/slice/platform";
 import { App as CapApp } from "@capacitor/app";
 import { setAppInfo } from "./redux/slice/platform";
 import { useScrollTop } from "@hooks/";
+import { SafeArea } from "capacitor-plugin-safe-area";
 
 const platform = Capacitor.getPlatform();
 function App() {
@@ -123,7 +124,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            }),
+            })
           );
         }
       }
@@ -139,6 +140,13 @@ function App() {
         await postUserIpAPI(ip);
       }
     };
+
+    SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
+      const appElement = document.querySelector(".App");
+      if (appElement) {
+        appElement.style.marginTop = `${statusBarHeight - 20}px`;
+      }
+    });
     getAPI();
   }, []);
   useEffect(() => {
@@ -163,7 +171,7 @@ function App() {
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token="),
+          pair.startsWith("verify-token=")
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];
@@ -175,7 +183,6 @@ function App() {
       }
     }
   }, [currentUser?.id, window.location.pathname]);
-
   useScrollTop();
   return (
     <div className="App">
