@@ -43,12 +43,14 @@ const HomeSection = () => {
   return (
     <>
       <Helmet>
-        <meta name="keywords" content="somali jobs,jobs in somalia" />
+        <meta name="keywords" content="Somali jobs, jobs in Somali" />
         <meta
           name="description"
-          content="Find your dream job in Somalia or post opening for top talent. KoorJobs connects employers and applicants full time or part time, offering the best opportunities."
+          content="Join Koor, the all-in-one platform connecting Employers, Jobseekers & vendors in Somalia. Post opportunities, find talent, access jobs & tenders - Get notified of the latest updates."
         />
-        <title>Koorjobs | Find Your Dream Job in Somalia</title>
+        <title>
+          Koor - All-in-One Platform for Jobs and Tenders in Somalia.
+        </title>
       </Helmet>
       <Box mt={20} className={`${styles.home_section_box}`}>
         <Grid container spacing={2}>

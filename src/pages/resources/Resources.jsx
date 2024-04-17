@@ -38,11 +38,12 @@ const Resources = () => {
   return (
     <>
       <Helmet>
+        <meta name="keywords" content="Resources, advice, and Notification " />
         <meta
           name="description"
-          content="Access valuable resources for job seekers and employers on Koor Jobs. Learn essential skills, find career advice, and stay updated with latest trends and news."
+          content="Level up with Koor's resources for employers, job seekers & vendors. Get expert advice, insights and stay updated on hiring, job seeking & industry trends in Somalia."
         />
-        <title>Resources for Job Seekers and Employers | Koorjobs</title>
+        <title>Career & Business Resources for Somalia | Koor</title>
       </Helmet>
       <Box className={`${styles.resources}`}>
         <Container
