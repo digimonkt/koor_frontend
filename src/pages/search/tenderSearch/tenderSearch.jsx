@@ -29,13 +29,16 @@ function TenderSearchComponent() {
   return (
     <>
       <Helmet>
-        <meta name="keywords" content="bids jobs" />
+        <meta
+          name="keywords"
+          content="Tenders, Bids, RFPs, RFQ, & Opportunities in Somalia."
+        />
         <meta
           name="description"
-          content="Apply for tenders in Somalia through Koor. Stay updated with the latest opportunities and pave the way for business growth. Start bidding today!"
+          content="Apply Latest Tenders and Opportunities in Somalia. Vendors, grow your business on Koor. Access the latest tenders, RFPs, RFQ & showcase your company's core business activities. Submit competitive bids to unlock new growth avenues."
         />
         <title>
-          Apply Tenders in Somalia | Latest Opportunities | Koorjobs
+          Find the latest tenders and opportunities in Somalia on Koor
         </title>
       </Helmet>
       <div>

@@ -924,8 +924,8 @@ const PostTender = () => {
             </div>
             <p>
               {tenderId
-                ? "Your tender post just updated. It will be reviewed and available on Koor shortly."
-                : "Your new tender post just submitted. It will be reviewed and available on Koor shortly."}
+                ? "Your tender post Successfully"
+                : "Your new tender post Successfully"}
             </p>
             <div className={`${styles.cancel_popup}`}>
               <OutlinedButton
