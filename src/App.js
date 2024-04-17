@@ -27,8 +27,9 @@ import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
 import { setIsMobileView } from "@redux/slice/platform";
 import { App as CapApp } from "@capacitor/app";
-import { setAppInfo } from "./redux/slice/platform";
+import { setAppInfo, setStatusBar } from "./redux/slice/platform";
 import { useScrollTop } from "@hooks/";
+import { SafeArea } from "capacitor-plugin-safe-area";
 
 const platform = Capacitor.getPlatform();
 function App() {
@@ -40,7 +41,7 @@ function App() {
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { appInfo } = useSelector(({ platform }) => platform);
+  const { appInfo, isMobileView } = useSelector(({ platform }) => platform);
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
@@ -123,7 +124,7 @@ function App() {
             setCurrentLocation({
               countryCode: res.data.country_code2,
               countryName: res.data.country_name,
-            }),
+            })
           );
         }
       }
@@ -139,6 +140,15 @@ function App() {
         await postUserIpAPI(ip);
       }
     };
+
+    SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
+      dispatch(setStatusBar(statusBarHeight));
+      const appElement = document.querySelector(".App");
+      if (appElement) {
+        appElement.style.marginTop = `${statusBarHeight}px`;
+        appElement.style.marginBottom = `${statusBarHeight - 20}px`;
+      }
+    });
     getAPI();
   }, []);
   useEffect(() => {
@@ -163,7 +173,7 @@ function App() {
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token="),
+          pair.startsWith("verify-token=")
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];
@@ -175,7 +185,6 @@ function App() {
       }
     }
   }, [currentUser?.id, window.location.pathname]);
-
   useScrollTop();
   return (
     <div className="App">
@@ -258,13 +267,7 @@ function App() {
             }
           />
         </Routes>
-        {(platform === "android" || platform === "ios") && isLoggedIn ? (
-          <>
-            <BottomBar />
-          </>
-        ) : (
-          <></>
-        )}
+        {isLoggedIn && isMobileView && <BottomBar />}
         <SuccessToast
           open={toastType === MESSAGE_TYPE.success}
           message={toastMessage}

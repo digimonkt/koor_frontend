@@ -49,7 +49,7 @@ const BottomBar = () => {
         left: 0,
         right: 0,
         height: "auto",
-        padding: "15px 0px",
+        padding: "15px 5px ",
         borderTop: "1px solid #848484",
         zIndex: 999,
       }}
