@@ -28,6 +28,14 @@ const AboutUs = () => {
   return (
     <>
       <Helmet>
+        <meta name="keywords" content="Talent, Jobs, and Business." />
+        <meta
+          name="description"
+          content="Koor bridges the gap between Somali employers, Jobseekers & Vendors on one platform. Hire talent, find jobs, collaborate with businesses - powered by seamless real-time interactions."
+        />
+        <title>
+          About Koor: Connecting Employers, Talent & Vendors in Somalia
+        </title>
         <script type="application/ld+json">
           {`
 {

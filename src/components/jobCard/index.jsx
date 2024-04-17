@@ -228,7 +228,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     }))
                   }
                 >
-                  {state.showMore ? "See More" : "See Less"}
+                  {state.showMore ? "See Less" : "See More"}
                 </button>
               )}
             </Box>

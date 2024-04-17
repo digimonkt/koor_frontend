@@ -31,12 +31,15 @@ function JobSearchComponent() {
   return (
     <>
       <Helmet>
-        <meta name="keywords" content="core jobs,un jobs somalia" />
+        <meta
+          name="keywords"
+          content="Core Jobs, Government Jobs, UN Jobs Somali"
+        />
         <meta
           name="description"
-          content="Apply for core jobs,Ngo,Goverment and world bank jobs in Somalia. Koor connects job seekers with the right opportunities in the region. Kickstart your career today."
+          content="Job seekers - explore diverse roles including NGO, government, UN positions on Koor. Create a standout profile to connect with top employers for full-time, part-time & consulting jobs."
         />
-        <title>Apply for Core and UN Jobs in Somalia | Koorjobs</title>
+        <title>Find NGO, Government, UN Jobs & More in Somalia | Koor.</title>
       </Helmet>
       <div>
         {!renderJobCard || isSearching ? (
