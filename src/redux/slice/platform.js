@@ -28,5 +28,6 @@ export const platformSlice = createSlice({
   },
 });
 
-export const { setIsMobileView, setAppInfo } = platformSlice.actions;
+export const { setIsMobileView, setAppInfo, setStatusBar } =
+  platformSlice.actions;
 export default platformSlice.reducer;

@@ -1,5 +1,6 @@
 import { Alert, Snackbar } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function ErrorToastComponent({
   message,
@@ -9,6 +10,7 @@ function ErrorToastComponent({
   vertical,
   horizontal,
 }) {
+  const { stateBar } = useSelector(({ platform }) => platform);
   return (
     <Snackbar
       anchorOrigin={{
@@ -19,7 +21,11 @@ function ErrorToastComponent({
       autoHideDuration={duration || 2000}
       onClose={handleClose}
     >
-      <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+      <Alert
+        onClose={handleClose}
+        severity="error"
+        sx={{ width: "100%", marginTop: stateBar + "px" }}
+      >
         {message}
       </Alert>
     </Snackbar>
