@@ -59,7 +59,7 @@ export const searchJobs = createAsyncThunk(
       dispatch(setSearchTrue(false));
       return res.data;
     } else if (res.error.errors.detail === "I") {
-      res = await getTenderSearchAPI({
+      res = await getSearchJobsAPI({
         ...payload,
         page: 1,
       });
@@ -75,7 +75,7 @@ export const searchJobs = createAsyncThunk(
       dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
 export const searchTalent = createAsyncThunk(
   "search/searchTalent",
@@ -102,7 +102,7 @@ export const searchTalent = createAsyncThunk(
       dispatch(setSearchTrue(false));
       return res.data;
     } else if (res.error.errors.detail === "I") {
-      res = await getTenderSearchAPI({
+      res = await searchUserByRole({
         ...payload,
         page: 1,
       });
@@ -118,7 +118,7 @@ export const searchTalent = createAsyncThunk(
       dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
 
 export const searchTender = createAsyncThunk(
@@ -161,7 +161,7 @@ export const searchTender = createAsyncThunk(
       dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
 
 export const searchVendor = createAsyncThunk(
@@ -206,7 +206,7 @@ export const searchVendor = createAsyncThunk(
       dispatch(setSearchTrue(false));
       return rejectWithValue(res.error);
     }
-  },
+  }
 );
 
 const searchSlice = createSlice({
