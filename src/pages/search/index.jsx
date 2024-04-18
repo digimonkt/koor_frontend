@@ -212,37 +212,33 @@ function Search({ searchTypeForJob }) {
           },
         }}
       >
-        {isMobileView ? (
-          <>
-            <Box sx={{ px: 3, pt: 3 }}>
-              <HeaddingSearch
-                title="Browse talents"
-                count={
-                  <Box
-                    component={"span"}
-                    sx={{
-                      background: "#D5E3F7",
-                      padding: "5px 12px",
-                      borderRadius: "73px",
-                      fontFamily: "Bahnschrift",
-                      fontWeight: 600,
-                      fontSize: "14px",
-                      ml: 1,
-                    }}
-                  >
-                    2,513
-                  </Box>
-                }
-                icon={
-                  <IconButton>
-                    <SVG.CalendarMonth />
-                  </IconButton>
-                }
-              />
-            </Box>
-          </>
-        ) : (
-          ""
+        {isMobileView && (
+          <Box sx={{ px: 3, pt: 3 }}>
+            <HeaddingSearch
+              title="Browse talents"
+              count={
+                <Box
+                  component={"span"}
+                  sx={{
+                    background: "#D5E3F7",
+                    padding: "5px 12px",
+                    borderRadius: "73px",
+                    fontFamily: "Bahnschrift",
+                    fontWeight: 600,
+                    fontSize: "14px",
+                    ml: 1,
+                  }}
+                >
+                  2,513
+                </Box>
+              }
+              icon={
+                <IconButton>
+                  <SVG.CalendarMonth />
+                </IconButton>
+              }
+            />
+          </Box>
         )}
 
         <Grid container spacing={2}>
@@ -299,35 +295,30 @@ function Search({ searchTypeForJob }) {
             >
               <AdvanceFilter searchType={searchType || searchTypeForJob} />
             </Box>
-            {(platform === "android" || platform === "ios") &&
-            (role === USER_ROLES.vendor || role === USER_ROLES.employer) ? (
-              <Box
-                sx={{
-                  marginTop: { lg: "24px", xs: "24px" },
-                  background: "#fff",
-                  padding: "10px 16px 0px",
-                  borderRadius: "15px 15px 0px 0px",
-                  marginBottom: "-10px",
-                  "& .MuiTabs-indicator": {
-                    background: "#274593 !important",
-                  },
-                }}
-              >
-                <Tabs setValue={setValue} value={value} role={role} />
-              </Box>
-            ) : (
-              <></>
-            )}
+            {isMobileView &&
+              (role === USER_ROLES.vendor || role === USER_ROLES.employer) && (
+                <Box
+                  sx={{
+                    marginTop: { lg: "24px", xs: "24px" },
+                    background: "#fff",
+                    padding: "10px 16px 0px",
+                    borderRadius: "15px 15px 0px 0px",
+                    marginBottom: "-10px",
+                    "& .MuiTabs-indicator": {
+                      background: "#274593 !important",
+                    },
+                  }}
+                >
+                  <Tabs setValue={setValue} value={value} role={role} />
+                </Box>
+              )}
             {value !== "2" && (
               <>
                 <Box
                   className={`${styles.jobcards}`}
                   sx={{
                     minHeight: "450px",
-                    marginTop:
-                      platform === "android" || platform === "ios"
-                        ? ""
-                        : "24px",
+                    marginTop: isMobileView ? "" : "24px",
                   }}
                 >
                   <div className="saved-jobs">
