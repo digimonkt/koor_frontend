@@ -769,7 +769,7 @@ const JobDetails = () => {
                   handleClose={() =>
                     setState((prev) => ({
                       ...prev,
-                      registrationWarning: prev.registrationWarning,
+                      registrationWarning: false,
                     }))
                   }
                 >

@@ -338,15 +338,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            <Box
-              sx={{
-                "@media (max-width: 480px)":
-                  state.searchValue === "manage-jobs"
-                    ? {}
-                    : { display: "none" },
-              }}
-              className="pricebox py-3 upto-slide"
-            >
+            <Box className="pricebox py-3 upto-slide">
               <Budget
                 budgetAmount={jobDetails?.budgetAmount}
                 budgetPayPeriod={jobDetails?.budgetPayPeriod}
@@ -400,7 +392,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   <span className="d-block">Edit</span>
                 </button>
               </Box>
-            ) : role === USER_ROLES.jobSeeker ? (
+            ) : isLoggedIn && role === USER_ROLES.jobSeeker ? (
               <React.Fragment>
                 <div onClick={handleToggleSave} style={{ cursor: "pointer" }}>
                   <Box
@@ -427,15 +419,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
           </Stack>
         </Grid>
       </Grid>
-      <Dialog
-        open={state.registrationWarning}
-        setOpen={() =>
-          setState((prev) => ({
-            ...prev,
-            registrationWarning: false,
-          }))
-        }
-      />
+      <Dialog open={state.registrationWarning} setOpen={setState} />
     </div>
   );
 }

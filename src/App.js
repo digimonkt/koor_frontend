@@ -30,6 +30,7 @@ import { App as CapApp } from "@capacitor/app";
 import { setAppInfo, setStatusBar } from "./redux/slice/platform";
 import { useScrollTop } from "@hooks/";
 import { SafeArea } from "capacitor-plugin-safe-area";
+import { deepLinked, backButtonAction } from "@utils/appUtils";
 
 const platform = Capacitor.getPlatform();
 function App() {
@@ -60,57 +61,23 @@ function App() {
     }
   };
 
-  const backButtonAction = () => {
-    const history = window.history;
-    if (history.length > 1) {
-      history.back();
-    } else {
-      if (Capacitor.isNativePlatform) {
-        CapApp.exitApp();
-      }
-    }
-  };
-
   useEffect(() => {
-    const handleDeepLink = async (url) => {
-      const parsedUrl = new URL(url);
-
-      const verifyToken = parsedUrl.searchParams.get("verify-token");
-
-      console.log("Verify Token:", verifyToken);
-      navigate("/activation?verify-token=" + verifyToken);
-    };
-
     const appUrlOpenListener = (data) => {
-      handleDeepLink(data.url);
+      deepLinked(navigate, data.url);
     };
 
     CapApp.addListener("appUrlOpen", appUrlOpenListener);
+    window.addEventListener("storage", checkLoginStatus);
+    if (Capacitor.isNativePlatform()) {
+      CapApp.addListener("backButton", backButtonAction);
+    }
 
-    CapApp.getLaunchUrl().then((launchUrl) => {
-      if (launchUrl && launchUrl.url) {
-        handleDeepLink(launchUrl.url);
-      }
-    });
+    checkLoginStatus();
+    firebaseInitialize();
 
     return () => {
       CapApp.removeAllListeners("appUrlOpen", appUrlOpenListener);
     };
-  }, []);
-
-  useEffect(() => {
-    checkLoginStatus();
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("storage", checkLoginStatus);
-    if (Capacitor.isNativePlatform) {
-      CapApp.addListener("backButton", backButtonAction);
-    }
-  }, []);
-
-  useEffect(() => {
-    firebaseInitialize();
   }, []);
 
   useEffect(() => {
@@ -146,13 +113,16 @@ function App() {
       const appElement = document.querySelector(".App");
       if (appElement) {
         appElement.style.marginTop = `${statusBarHeight}px`;
-        appElement.style.marginBottom = `${statusBarHeight - 20}px`;
+        const platform = Capacitor.getPlatform;
+        if (platform === "ios") {
+          appElement.style.marginBottom = `${statusBarHeight - 20}px`;
+        }
       }
     });
     getAPI();
   }, []);
   useEffect(() => {
-    if (platform === "android" || platform === "ios") {
+    if (Capacitor.isNativePlatform()) {
       fetchAppInfo();
       dispatch(setIsMobileView(true));
     } else {
