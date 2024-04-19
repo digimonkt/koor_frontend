@@ -5,7 +5,12 @@ import { USER_ROLES } from "../../utils/enum";
 
 const Dialog = ({ open, setOpen }) => {
   return (
-    <DialogBox open={open} handleClose={() => setOpen(false)}>
+    <DialogBox
+      open={open}
+      handleClose={() =>
+        setOpen((prev) => ({ ...prev, registrationWarning: false }))
+      }
+    >
       <div>
         <h1 className="heading">Register as jobseeker</h1>
         <div className="form-content">

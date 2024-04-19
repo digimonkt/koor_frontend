@@ -122,16 +122,25 @@ const AboutUs = () => {
             >
               <Grid item md={8} lg={7} xs={12} sm={7}>
                 <Box className={styles.about_text_box}>
-                  <h1 style={{ color: "#fff" }}>About Our Company</h1>
+                  <h1 style={{ color: "#fff" }}>About Us</h1>
                   <p>
-                    Koor is an award-winning mobile app which connects
-                    non-executive job seekers to reliable employers quickly &
-                    easily. With just a tap, applicants can apply for jobs
-                    offered by thousands of trusted employers in Singapore,
-                    across all sectors! <br /> <br /> Start finding jobs near
-                    home or simply discover jobs based on your search
-                    preferences. With FastChat in-app, employers and shortlisted
-                    candidates can connect in real-time and receive responses.
+                    Welcome to Koor, a cutting-edge web and mobile app
+                    transforming the way employers, job seekers, and vendors
+                    connect across Somalia. We are dedicated to revolutionizing
+                    the employment landscape with exceptional services tailored
+                    to meet the unique needs of our diverse users. Designed as a
+                    vibrant hub, Koor facilitates effortless connections and
+                    opens up a wealth of opportunities. As an employer, you can
+                    register to post job opportunities or access a pool of
+                    talented professionals and suppliers. As a job seeker or
+                    vendor, simply register, build your profile, and discover
+                    the best opportunities available. Koor is the ideal platform
+                    for you. Enjoy seamless real-time interactions and prompt
+                    responses—our app features ensure effective engagement where
+                    employers initiate contact with job seekers and vendors.
+                    Receive notifications tailored to your preferences and stay
+                    updated with the latest posts by downloading the Koorjobs
+                    app.
                   </p>
                 </Box>
                 <Box className={styles.about_social}>
@@ -206,28 +215,26 @@ const AboutUs = () => {
                     spacing={{ xs: 2, lg: 2, sm: 2 }}
                   >
                     {OTHER_BUTTON.map((item, index) => {
-                      return (
-                        <>
-                          <>
-                            {item.section === "talents" &&
-                            role !== USER_ROLES.employer ? (
-                              ""
-                            ) : (
-                              <Link
-                                sx={{ textTransform: "capitalize" }}
-                                key={index}
-                                variant="contained"
-                                className={styles.btn_about}
-                                to={`${item.url}`}
-                              >
-                                <span className={styles.icon}>{item.icon}</span>
-                                <span className="mx-2">{item.text}</span>
-                                {item.svg}
-                              </Link>
-                            )}
-                          </>
-                        </>
-                      );
+                      switch (true) {
+                        case (item.section === "talents" ||
+                          item.section === "vendors") &&
+                          role !== USER_ROLES.employer:
+                          return "";
+                        default:
+                          return (
+                            <Link
+                              sx={{ textTransform: "capitalize" }}
+                              key={index}
+                              variant="contained"
+                              className={styles.btn_about}
+                              to={`${item.url}`}
+                            >
+                              <span className={styles.icon}>{item.icon}</span>
+                              <span className="mx-2">{item.text}</span>
+                              {item.svg}
+                            </Link>
+                          );
+                      }
                     })}
                   </Stack>
                 </Box>
