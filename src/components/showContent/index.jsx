@@ -74,12 +74,15 @@ const ShowContent = ({ content }) => {
               <Grid item lg={6}>
                 <Box className={styles.about_stack_box}>
                   <Box className={styles.about_black_box_text}>
-                    <h1>Koor is a global job search platform </h1>
+                    <h1>
+                      Maximize Potential with Opportunities for All on Koor!
+                    </h1>
                     <p>
-                      Get access to exciting job openings across full-time,
-                      part-time and contract roles! New candidates can easily
-                      register for an account and create a professional resume
-                      with the app.
+                      Tailored Solutions for Employers, Job Seekers, and
+                      Vendors. As an employer, post job or tender listings and
+                      access a pool of qualified candidates and suppliers. As a
+                      job seeker or vendor, find opportunities and create
+                      profiles to connect with employers.
                     </p>
                   </Box>
                 </Box>
