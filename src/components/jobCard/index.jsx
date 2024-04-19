@@ -1,6 +1,6 @@
 import { Box, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import { SVG } from "../../assets/svg";
 import { SolidButton } from "../button";
 import Dialog from "./dialog";
@@ -26,6 +26,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const pathParts = path.split("/");
   const endRouter = pathParts[pathParts.length - 1];
   const navigate = useNavigate();
+  const params = useParams();
+  console.log(params.type);
   const [state, setState] = useState({
     searchValue: "",
     isStart: jobDetails?.status,
@@ -92,7 +94,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         applicationStatus:
           "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A"
+            "MMMM D, YYYY [at] h:mm A",
           ),
       }));
     }
@@ -148,7 +150,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
                 )}
               />
             </Box>
@@ -207,7 +209,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   dangerouslySetInnerHTML={{
                     __html: jobDetails?.description?.substring(
                       0,
-                      MAX_WORD_SIZE
+                      MAX_WORD_SIZE,
                     ),
                   }}
                 ></Box>
@@ -315,7 +317,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
               )}
             />
           </Box>
@@ -338,12 +340,14 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            <Box className="pricebox py-3 upto-slide">
-              <Budget
-                budgetAmount={jobDetails?.budgetAmount}
-                budgetPayPeriod={jobDetails?.budgetPayPeriod}
-              />
-            </Box>
+            {params.type !== "jobs" && (
+              <Box className="pricebox py-3 upto-slide">
+                <Budget
+                  budgetAmount={jobDetails?.budgetAmount}
+                  budgetPayPeriod={jobDetails?.budgetPayPeriod}
+                />
+              </Box>
+            )}
             {isMobileView && role === USER_ROLES.employer && (
               <ApplicantList
                 jobId={jobDetails.id}
@@ -383,7 +387,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        })
+                        }),
                       );
                     }
                   }}
