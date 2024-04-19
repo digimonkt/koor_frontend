@@ -555,6 +555,7 @@ function TenderDetailsComponent() {
                     <div className={`${styles.LikeJob}`}>
                       <h2>Application Instructions:</h2>
                       <div
+                        className="details"
                         dangerouslySetInnerHTML={{
                           __html: details.applicationInstruction,
                         }}
