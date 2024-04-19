@@ -38,7 +38,7 @@ export const OTHER_BUTTON = [
     section: "jobs",
   },
   {
-    icon: <SVG.Work />,
+    icon: <SVG.employeUserGroup />,
     svg: <SVG.ArrowForward />,
     text: "Find Vendor",
     url: "/search/vendors",
