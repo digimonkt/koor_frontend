@@ -37,6 +37,13 @@ export const OTHER_BUTTON = [
     url: "/search/jobs",
     section: "jobs",
   },
+  {
+    icon: <SVG.Work />,
+    svg: <SVG.ArrowForward />,
+    text: "Find Vendor",
+    url: "/search/vendors",
+    section: "vendors",
+  },
 ];
 
 export const BOTOM_BAR_NAVBAR = (ROLE) => [
