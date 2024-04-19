@@ -475,11 +475,12 @@ const Home = () => {
             <Box className={`${styles.home_powerfull_box}`}>
               <Box>
                 <h3 className={styles.home_powerfull_h3}>
-                  Powerfull platform for everyone
+                  A Powerful Platform for Everyone!
                 </h3>
                 <p className={styles.home_powerfull_p}>
-                  While our competitors say they are the best, we prove it by
-                  doing. You can read more about us competitors say they
+                  At Koor, we foster an inclusive ecosystem where employers, job
+                  seekers, and vendors connect. Our robust platform meets the
+                  diverse needs of all users. Join us today!
                 </p>
               </Box>
               <Box className={styles.home_new_job_box} useflexGap>
@@ -531,12 +532,12 @@ const Home = () => {
                   <Grid item xs={12} lg={5} md={7} sm={6}>
                     <Box className={styles.stay_text_box}>
                       <h4>Mobile app</h4>
-                      <h2>Stay in touch</h2>
+                      <h2>Stay Connected with us!</h2>
                       <p>
-                        Meet our app right in your smartphone! Whether you’re a
-                        jobseeker, employer or vendor – you’ll get a lot of
-                        benefits of using the app. Get instant notifications and
-                        stay in touch with prospects.
+                        Download our app to your smartphone today! Whether you
+                        are an employer, jobseekers, or vendors, you'll find
+                        great value in using our app. Enjoy instant
+                        notifications for real-time updates and insights.
                       </p>
                       <Box
                         className={styles.stay_social_icon}
