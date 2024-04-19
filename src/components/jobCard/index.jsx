@@ -338,15 +338,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            <Box
-              sx={{
-                "@media (max-width: 480px)":
-                  state.searchValue === "manage-jobs"
-                    ? {}
-                    : { display: "none" },
-              }}
-              className="pricebox py-3 upto-slide"
-            >
+            <Box className="pricebox py-3 upto-slide">
               <Budget
                 budgetAmount={jobDetails?.budgetAmount}
                 budgetPayPeriod={jobDetails?.budgetPayPeriod}

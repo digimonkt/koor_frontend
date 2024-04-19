@@ -22,5 +22,9 @@
         "google.com"
       ]
     }
+  },
+  "server": {
+    "url": "http://192.168.0.192:8100",
+    "originalUrl": "http://192.168.0.192:8100"
   }
 }
