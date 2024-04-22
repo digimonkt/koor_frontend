@@ -1,6 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { useFormik } from "formik";
 import { createTenderAPI, updateTenderAPI } from "../../../api/employer";
 import dayjs from "dayjs";
@@ -24,7 +29,8 @@ import {
 } from "../../../redux/slice/choices";
 import CurrencyInput from "../../../pages/jobs/postJobs/currencyInput";
 import { FilledButton, OutlinedButton } from "../../../components/button";
-import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
+import { PAY_PERIOD } from "@utils/enum";
+import { TENDER_POST_ROUTE } from "@utils/constants/constants";
 import {
   Box,
   Card,
@@ -46,8 +52,10 @@ import styles from "./postTender.module.css";
 import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "../../../api/user";
 import urlcat from "urlcat";
+
 const PostTender = () => {
   const { currentUser } = useSelector((state) => state.auth);
+  const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -74,6 +82,7 @@ const PostTender = () => {
       setSuggestedAddress(res.data.predictions);
     }
   };
+  console.log(params, "this");
   const handleRedirect = () => {
     setOpen(close);
     setIsRedirect(true);
@@ -239,6 +248,7 @@ const PostTender = () => {
       content !== "<p><br></p>" ? content : ""
     );
   };
+
   useEffect(() => {
     if (
       debouncedSearchValue &&
@@ -275,7 +285,7 @@ const PostTender = () => {
 
   useEffect(() => {
     if (isRedirect) {
-      navigate(`/${USER_ROLES.employer}/manage-tenders`);
+      navigate(TENDER_POST_ROUTE);
     }
   }, [isRedirect]);
 
@@ -290,7 +300,7 @@ const PostTender = () => {
   }, [searchParams.get("tenderId")]);
   useEffect(() => {
     if (!currentUser.profile.isVerified) {
-      navigate(urlcat("../employer/manage-tenders"));
+      navigate(urlcat(`..${TENDER_POST_ROUTE}`));
     }
   }, []);
   return (
@@ -882,7 +892,7 @@ const PostTender = () => {
                         },
                       }}
                       disabled={formik.isSubmitting}
-                      onClick={() => navigate("/employer/manage-tenders")}
+                      onClick={() => navigate(TENDER_POST_ROUTE)}
                     />
                     <FilledButton
                       sx={{

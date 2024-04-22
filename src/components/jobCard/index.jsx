@@ -1,6 +1,6 @@
 import { Box, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import { SVG } from "../../assets/svg";
 import { SolidButton } from "../button";
 import Dialog from "./dialog";
@@ -26,6 +26,11 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const pathParts = path.split("/");
   const endRouter = pathParts[pathParts.length - 1];
   const navigate = useNavigate();
+  const params = useParams();
+  const showingBottomDetails =
+    params.type !== "jobs" &&
+    params !== "job_seeker/job-feed" &&
+    role !== USER_ROLES.jobSeeker;
   const [state, setState] = useState({
     searchValue: "",
     isStart: jobDetails?.status,
@@ -338,13 +343,15 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            <Box className="pricebox py-3 upto-slide">
-              <Budget
-                budgetAmount={jobDetails?.budgetAmount}
-                budgetPayPeriod={jobDetails?.budgetPayPeriod}
-              />
-            </Box>
-            {isMobileView && role === USER_ROLES.employer && (
+            {showingBottomDetails && (
+              <Box className="pricebox py-3 upto-slide">
+                <Budget
+                  budgetAmount={jobDetails?.budgetAmount}
+                  budgetPayPeriod={jobDetails?.budgetPayPeriod}
+                />
+              </Box>
+            )}
+            {isMobileView && showingBottomDetails && (
               <ApplicantList
                 jobId={jobDetails.id}
                 totalApplications={jobDetails.applicantCount}

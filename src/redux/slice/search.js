@@ -56,7 +56,7 @@ export const searchJobs = createAsyncThunk(
     }
     let res = await getSearchJobsAPI({ ...payload });
     if (res.remote === "success") {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return res.data;
     } else if (res.error.errors.detail === "I") {
       res = await getSearchJobsAPI({
@@ -64,15 +64,15 @@ export const searchJobs = createAsyncThunk(
         page: 1,
       });
       if (res.remote === "success") {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         dispatch(setJobPage(1));
         return res.data;
       } else {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         return rejectWithValue(res.error);
       }
     } else {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return rejectWithValue(res.error);
     }
   }
@@ -99,7 +99,7 @@ export const searchTalent = createAsyncThunk(
       role: USER_ROLES.jobSeeker,
     });
     if (res.remote === "success") {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return res.data;
     } else if (res.error.errors.detail === "I") {
       res = await searchUserByRole({
@@ -107,15 +107,15 @@ export const searchTalent = createAsyncThunk(
         page: 1,
       });
       if (res.remote === "success") {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         dispatch(setJobPage(1));
         return res.data;
       } else {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         return rejectWithValue(res.error);
       }
     } else {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return rejectWithValue(res.error);
     }
   }
@@ -142,7 +142,7 @@ export const searchTender = createAsyncThunk(
       ...payload,
     });
     if (res.remote === "success") {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return res.data;
     } else if (res.error.errors.detail === "I") {
       res = await getTenderSearchAPI({
@@ -150,15 +150,15 @@ export const searchTender = createAsyncThunk(
         page: 1,
       });
       if (res.remote === "success") {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         dispatch(setJobPage(1));
         return res.data;
       } else {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         return rejectWithValue(res.error);
       }
     } else {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return rejectWithValue(res.error);
     }
   }
@@ -186,24 +186,24 @@ export const searchVendor = createAsyncThunk(
       role: USER_ROLES.vendor,
     });
     if (res.remote === "success") {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return res.data;
     } else if (res.error.errors.detail === "I") {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       res = await getTenderSearchAPI({
         ...payload,
         page: 1,
       });
       if (res.remote === "success") {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         dispatch(setJobPage(1));
         return res.data;
       } else {
-        dispatch(setSearchTrue(false));
+        dispatch(setSearching(false));
         return rejectWithValue(res.error);
       }
     } else {
-      dispatch(setSearchTrue(false));
+      dispatch(setSearching(false));
       return rejectWithValue(res.error);
     }
   }
@@ -219,8 +219,8 @@ const searchSlice = createSlice({
     setAdvanceFilter: (state, action) => {
       state.advanceFilter = action.payload;
     },
-    setSearchTrue: (state) => {
-      state.isSearching = true;
+    setSearching: (state, action) => {
+      state.isSearching = action.payload;
     },
     setTotalItems: (state, action) => {
       state.totalItems = action.payload;
@@ -285,6 +285,6 @@ const searchSlice = createSlice({
     });
   },
 });
-export const { setJobPage, setAdvanceFilter, setSearchTrue, setTotalItems } =
+export const { setJobPage, setAdvanceFilter, setSearching, setTotalItems } =
   searchSlice.actions;
 export default searchSlice.reducer;

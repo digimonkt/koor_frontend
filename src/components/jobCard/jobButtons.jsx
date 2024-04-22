@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
 import { Fragment } from "react";
 import { SVG } from "@assets/svg";
-import Budget from "./badges";
+import Budget from "./budget";
 
 const AvatarComponent = ({ imageUrl }) => {
   return (

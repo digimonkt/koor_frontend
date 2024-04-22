@@ -78,7 +78,6 @@ function Search({ searchTypeForJob }) {
       setSearch(value);
     }
   };
-
   const handlePageChange = (page) => {
     dispatch(setJobPage(page));
   };

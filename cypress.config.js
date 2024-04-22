@@ -8,11 +8,11 @@ module.exports = defineConfig({
     },
   },
 
-  viewportWidth: 1920,
-  viewportHeight: 1080,
+  viewportWidth: 1921,
+  viewportHeight: 1081,
 
   e2e: {
     setupNodeEvents(on, config) {},
-    baseUrl: "http://localhost:3000",
+    baseUrl: "http://localhost:3001",
   },
 });

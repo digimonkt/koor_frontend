@@ -1,5 +1,13 @@
 import { USER_ROLES } from "@utils/enum";
+import { Capacitor } from "@capacitor/core";
 import { SVG } from "../../assets/svg";
+
+// constants
+const isNative = Capacitor.isNativePlatform();
+export const TENDER_POST_ROUTE = isNative
+  ? `/${USER_ROLES.employer}/manage-jobs`
+  : `/${USER_ROLES.employer}/manage-tenders`;
+export const NATIVE_PLATFORM = Capacitor.getPlatform();
 export const DATE_FORMAT = "MM-DD-YYYY";
 export const DATABASE_DATE_FORMAT = "YYYY-MM-DD";
 export const YEAR_FORMAT = "YYYY";
@@ -9,6 +17,8 @@ export const MAX_WORD_SIZE = 350;
 export const SALARY_MAX = "";
 export const TESTIMONIAL_MAX_WORD = 450;
 export const AD_AFTER_RECORDS = 5;
+
+// enums
 export const BLACKLIST_REASON_LIST = [
   { label: "Spam", value: "Spam" },
   { label: "Offensive Behavior", value: "Offensive Behavior" },
@@ -38,7 +48,7 @@ export const OTHER_BUTTON = [
     section: "jobs",
   },
   {
-    icon: <SVG.employeUserGroup />,
+    icon: <SVG.groupPersonsIcon />,
     svg: <SVG.ArrowForward />,
     text: "Find Vendor",
     url: "/search/vendors",
