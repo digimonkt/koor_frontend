@@ -63,11 +63,14 @@ const AboutContent = () => {
   return (
     <>
       <Helmet>
+        <meta name="keywords" content="Talent, Jobs, and Business." />
         <meta
           name="description"
-          content="Koor Jobs: A trusted platform bridging job seekers to employers in Somalia. Find jobs, post opportunities, and foster business growth."
+          content="Koor bridges the gap between Somali employers, Jobseekers & Vendors on one platform. Hire talent, find jobs, collaborate with businesses - powered by seamless real-time interactions."
         />
-        <title>About Koorjobs: Connecting Job Seekers to Employers</title>
+        <title>
+          About Koor: Connecting Employers, Talent & Vendors in Somalia
+        </title>
       </Helmet>
       <Box>
         <Container
