@@ -10,7 +10,8 @@ function SuccessToastComponent({
   vertical,
   horizontal,
 }) {
-  const { stateBar } = useSelector(({ platform }) => platform);
+  const { stateBar, platform } = useSelector(({ platform }) => platform);
+  const ios = platform === "ios";
   return (
     <Snackbar
       anchorOrigin={{
@@ -24,7 +25,7 @@ function SuccessToastComponent({
       <Alert
         onClose={handleClose}
         severity="success"
-        sx={{ width: "100%", marginTop: stateBar + "px" }}
+        sx={{ width: "100%", marginTop: ios ? stateBar + "px" : "0px" }}
       >
         {message}
       </Alert>

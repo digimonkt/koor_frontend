@@ -27,7 +27,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
   const endRouter = pathParts[pathParts.length - 1];
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params.type);
+  const showingBottomDetails =
+    params.type !== "jobs" &&
+    params !== "job_seeker/job-feed" &&
+    role !== USER_ROLES.jobSeeker;
   const [state, setState] = useState({
     searchValue: "",
     isStart: jobDetails?.status,
@@ -94,7 +97,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         applicationStatus:
           "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A",
+            "MMMM D, YYYY [at] h:mm A"
           ),
       }));
     }
@@ -150,7 +153,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
                 )}
               />
             </Box>
@@ -209,7 +212,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   dangerouslySetInnerHTML={{
                     __html: jobDetails?.description?.substring(
                       0,
-                      MAX_WORD_SIZE,
+                      MAX_WORD_SIZE
                     ),
                   }}
                 ></Box>
@@ -317,7 +320,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
               )}
             />
           </Box>
@@ -340,7 +343,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            {params.type !== "jobs" && (
+            {showingBottomDetails && (
               <Box className="pricebox py-3 upto-slide">
                 <Budget
                   budgetAmount={jobDetails?.budgetAmount}
@@ -348,7 +351,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 />
               </Box>
             )}
-            {isMobileView && role === USER_ROLES.employer && (
+            {isMobileView && showingBottomDetails && (
               <ApplicantList
                 jobId={jobDetails.id}
                 totalApplications={jobDetails.applicantCount}
@@ -387,7 +390,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        }),
+                        })
                       );
                     }
                   }}

@@ -4,9 +4,8 @@ import { ChipBox } from "../../components/jobCard/style";
 import { Avatar, Box, Chip, Divider, Grid, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
-import urlcat from "urlcat";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
@@ -16,16 +15,16 @@ import { updateEmployerTenderStatusAPI } from "@api/employer";
 import { USER_ROLES } from "@utils/enum";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { MAX_WORD_SIZE } from "@utils/constants/constants";
+import StartHoldEdit from "./startHoldEdit";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const matches = useMediaQuery("(max-width:600px)");
-  // const { isMobileView } = useSelector(({ platform }) => platform);
-  const navigate = useNavigate();
+  const { isMobileView } = useSelector(({ platform }) => platform);
+  const params = useParams();
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(tenderDetails?.status);
   const [showMore, setShowMore] = useState(false);
-
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -41,11 +40,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
     setIsStart(isStart === "active" ? "inactive" : "active");
     updateTender(tenderDetails.id);
   };
-
   useEffect(() => {
     if (tenderDetails) setIsSaved(tenderDetails.isSaved);
   }, [tenderDetails]);
-
   return (
     <div className="job_card tender_job_card_text">
       <Grid
@@ -138,39 +135,11 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                   >
                     <div>
                       {selfTender ? (
-                        <Box className="job-button-card">
-                          <button
-                            onClick={() => {
-                              handleStartPause();
-                            }}
-                          >
-                            {isStart === "active" ? (
-                              <>
-                                <SVG.PauseIcon />
-                                <span className="d-block">Hold</span>
-                              </>
-                            ) : (
-                              <>
-                                <SVG.StartIcon />
-                                <span className="d-block">Start</span>
-                              </>
-                            )}
-                          </button>
-                          <button
-                            onClick={() => {
-                              if (tenderDetails?.id) {
-                                navigate(
-                                  urlcat("/employer/tender/post", {
-                                    tenderId: tenderDetails?.id,
-                                  })
-                                );
-                              }
-                            }}
-                          >
-                            {<SVG.Edit1 />}
-                            <span className="d-block">Edit</span>
-                          </button>
-                        </Box>
+                        <StartHoldEdit
+                          handleStartPause={handleStartPause}
+                          tenderDetails={tenderDetails}
+                          isStart={isStart}
+                        />
                       ) : isLoggedIn && role === USER_ROLES.vendor ? (
                         <React.Fragment>
                           {!applied ? (
@@ -221,7 +190,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             </Stack>
           </Grid>
         )}
-
         <Grid
           sm={8}
           xs={12}
@@ -366,7 +334,9 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             </Stack>
           </div>
         </Grid>
-        {!matches ? (
+        {!matches ||
+        (isMobileView &&
+          Object.values(params)[0] === "employer/manage-jobs") ? (
           <Grid
             item
             lg={logo ? 2 : 3}
@@ -404,39 +374,11 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             >
               <div className="py-4 border-left-1 py-4 ps-3">
                 {selfTender ? (
-                  <Box className="job-button-card">
-                    <button
-                      onClick={() => {
-                        handleStartPause();
-                      }}
-                    >
-                      {isStart === "active" ? (
-                        <>
-                          <SVG.PauseIcon />
-                          <span className="d-block">Hold</span>
-                        </>
-                      ) : (
-                        <>
-                          <SVG.StartIcon />
-                          <span className="d-block">Start</span>
-                        </>
-                      )}
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (tenderDetails?.id) {
-                          navigate(
-                            urlcat("/employer/tender/post", {
-                              tenderId: tenderDetails?.id,
-                            })
-                          );
-                        }
-                      }}
-                    >
-                      {<SVG.Edit1 />}
-                      <span className="d-block">Edit</span>
-                    </button>
-                  </Box>
+                  <StartHoldEdit
+                    handleStartPause={handleStartPause}
+                    tenderDetails={tenderDetails}
+                    isStart={isStart}
+                  />
                 ) : isLoggedIn && role !== USER_ROLES.jobSeeker ? (
                   <React.Fragment>
                     {!applied ? (

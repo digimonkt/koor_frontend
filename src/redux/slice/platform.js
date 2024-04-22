@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { NATIVE_PLATFORM } from "@utils/constants/constants";
 
 const initialState = {
   isMobileView: false,
+  platform: NATIVE_PLATFORM || undefined,
   stateBar: 0,
   appInfo: {
     // version: "",
@@ -13,7 +15,6 @@ const initialState = {
 
 export const platformSlice = createSlice({
   name: "platform",
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setIsMobileView: (state, action) => {

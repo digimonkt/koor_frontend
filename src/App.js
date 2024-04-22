@@ -27,22 +27,24 @@ import { Capacitor } from "@capacitor/core";
 import BottomBar from "@components/layout/bottom-navigation";
 import { setIsMobileView } from "@redux/slice/platform";
 import { App as CapApp } from "@capacitor/app";
-import { setAppInfo, setStatusBar } from "./redux/slice/platform";
 import { useScrollTop } from "@hooks/";
-import { SafeArea } from "capacitor-plugin-safe-area";
-import { deepLinked, backButtonAction } from "@utils/appUtils";
+import {
+  deepLinked,
+  backButtonAction,
+  fetchAppInfo,
+  safeAreaSetter,
+} from "@utils/appUtils";
 
-const platform = Capacitor.getPlatform();
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const {
     auth: { isGlobalLoading, currentUser },
     toast: { message: toastMessage, type: toastType },
   } = useSelector((state) => state);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { appInfo, isMobileView } = useSelector(({ platform }) => platform);
+
   const checkLoginStatus = () => {
     const accessToken = globalLocalStorage.getAccessToken();
     const refreshToken = globalLocalStorage.getRefreshToken();
@@ -52,98 +54,63 @@ function App() {
       dispatch(setIsLoggedIn(false));
     }
   };
-  const fetchAppInfo = async () => {
-    try {
-      const appInfoResult = await CapApp.getInfo();
-      dispatch(setAppInfo(appInfoResult));
-    } catch (error) {
-      console.error("Error fetching app information:", error);
+
+  const getAPI = async () => {
+    const userIp = await getUserIpAPI();
+    if (userIp.remote === "success") {
+      const ip = userIp.data.ip;
+      await postUserIpAPI(ip);
+    }
+  };
+
+  const getPosition = async () => {
+    const userIp = await getUserIpAPI();
+    if (userIp.remote === "success") {
+      const ip = userIp.data.ip;
+      const res = await getUserCountryByIpAPI(ip);
+      if (res.remote === "success") {
+        dispatch(
+          setCurrentLocation({
+            countryCode: res.data.country_code2,
+            countryName: res.data.country_name,
+          })
+        );
+      }
     }
   };
 
   useEffect(() => {
-    const appUrlOpenListener = (data) => {
-      deepLinked(navigate, data.url);
-    };
-
-    CapApp.addListener("appUrlOpen", appUrlOpenListener);
-    window.addEventListener("storage", checkLoginStatus);
     if (Capacitor.isNativePlatform()) {
-      CapApp.addListener("backButton", backButtonAction);
-    }
-
-    checkLoginStatus();
-    firebaseInitialize();
-
-    return () => {
-      CapApp.removeAllListeners("appUrlOpen", appUrlOpenListener);
-    };
-  }, []);
-
-  useEffect(() => {
-    const getPosition = async () => {
-      const userIp = await getUserIpAPI();
-      if (userIp.remote === "success") {
-        const ip = userIp.data.ip;
-        const res = await getUserCountryByIpAPI(ip);
-        if (res.remote === "success") {
-          dispatch(
-            setCurrentLocation({
-              countryCode: res.data.country_code2,
-              countryName: res.data.country_name,
-            }),
-          );
-        }
-      }
-    };
-
-    getPosition();
-  }, []);
-  useEffect(() => {
-    const getAPI = async () => {
-      const userIp = await getUserIpAPI();
-      if (userIp.remote === "success") {
-        const ip = userIp.data.ip;
-        await postUserIpAPI(ip);
-      }
-    };
-
-    SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
-      dispatch(setStatusBar(statusBarHeight));
-      const appElement = document.querySelector(".App");
-      if (appElement) {
-        appElement.style.marginTop = `${statusBarHeight}px`;
-        const platform = Capacitor.getPlatform;
-        if (platform === "ios") {
-          appElement.style.marginBottom = `${statusBarHeight - 20}px`;
-        }
-      }
-    });
-    getAPI();
-  }, []);
-  useEffect(() => {
-    if (Capacitor.isNativePlatform()) {
-      fetchAppInfo();
+      fetchAppInfo(dispatch);
+      safeAreaSetter(dispatch);
       dispatch(setIsMobileView(true));
+      const appUrlOpenListener = (data) => {
+        deepLinked(navigate, data.url);
+      };
+      CapApp.addListener("appUrlOpen", appUrlOpenListener);
+      window.addEventListener("storage", checkLoginStatus);
+      if (Capacitor.isNativePlatform()) {
+        CapApp.addListener("backButton", backButtonAction);
+      }
+      checkLoginStatus();
+      firebaseInitialize();
+      return () => {
+        CapApp.removeAllListeners("appUrlOpen", appUrlOpenListener);
+      };
     } else {
       dispatch(setIsMobileView(false));
     }
-  }, [platform, appInfo.name]);
+  }, [isMobileView, appInfo.name]);
   useEffect(() => {
     if (currentUser.role !== USER_ROLES.employer) {
       const isVerified = currentUser?.profile?.isVerified;
-      // Get the current URL
       const currentUrl = window.location.href;
-      // Split the URL based on the '?' character
       const urlParts = currentUrl.split("?");
-
-      // Check if there is a second part (after '?')
       if (urlParts.length === 2) {
-        // Get the second part, which contains the query parameters
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
-          pair.startsWith("verify-token="),
+          pair.startsWith("verify-token=")
         );
         if (verifyTokenPair) {
           const verifyToken = verifyTokenPair.split("=")[1];
@@ -155,13 +122,16 @@ function App() {
       }
     }
   }, [currentUser?.id, window.location.pathname]);
+  useEffect(() => {
+    getPosition();
+    getAPI();
+  }, []);
   useScrollTop();
   return (
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
       <div style={{ display: isGlobalLoading ? "none" : "" }}>
-        {platform === "android" || platform === "ios" ? null : <Header />}
-
+        {isMobileView ? null : <Header />}
         <Routes>
           {ROUTES.map((route) => {
             if (!route.path) {
@@ -175,9 +145,7 @@ function App() {
                     <Suspense fallback={<FallbackLoading />}>
                       <route.component />
                     </Suspense>
-                    {platform === "android" || platform === "ios" ? null : (
-                      <InnerFooter />
-                    )}
+                    {isMobileView ? null : <InnerFooter />}
                     {/* <Footer /> */}
                   </>
                 }
@@ -202,9 +170,7 @@ function App() {
                       <></>
                     </Suspense>
                     {/* <Footer /> */}
-                    {platform === "android" || platform === "ios" ? null : (
-                      <InnerFooter />
-                    )}
+                    {isMobileView ? null : <InnerFooter />}
                   </>
                 }
               />

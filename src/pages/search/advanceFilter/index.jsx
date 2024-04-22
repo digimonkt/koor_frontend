@@ -20,7 +20,7 @@ import {
   getTenderSector,
   getJobSubCategories,
 } from "../../../redux/slice/choices";
-import { setAdvanceFilter, setSearchTrue } from "../../../redux/slice/search";
+import { setAdvanceFilter, setSearching } from "../../../redux/slice/search";
 import JobSeekerFilter from "./jobSeekerFilter";
 import { useFormik } from "formik";
 import DialogBox from "../../../components/dialogBox";
@@ -224,7 +224,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
 
   const handleSelectFilter = async (filter) => {
     setSelectedFilter(filter.id);
-    dispatch(setSearchTrue());
+    dispatch(setSearching(true));
     formik.setFieldValue("id", filter.id);
     formik.setFieldValue("jobCategories", filter.jobCategories?.[0]);
     formik.setFieldValue("jobSubCategories", filter.jobSubCategory || []);
