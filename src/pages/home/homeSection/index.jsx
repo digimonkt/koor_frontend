@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Grid } from "@mui/material";
 import { IMAGES } from "../../../assets/images";
 import styles from "./home_section.module.css";
-import { Helmet } from "react-helmet";
 
 const sectionItem = [
   {
@@ -41,54 +40,40 @@ const sectionItem = [
 
 const HomeSection = () => {
   return (
-    <>
-      <Helmet>
-        <meta name="keywords" content="Somali jobs, jobs in Somali" />
-        <meta
-          name="description"
-          content="Join Koor, the all-in-one platform connecting Employers, Jobseekers & vendors in Somalia. Post opportunities, find talent, access jobs & tenders - Get notified of the latest updates."
-        />
-        <title>
-          Koor - All-in-One Platform for Jobs and Tenders in Somalia.
-        </title>
-      </Helmet>
-      <Box mt={20} className={`${styles.home_section_box}`}>
-        <Grid container spacing={2}>
-          {sectionItem.map((item) => (
-            <>
-              <Grid
-                item
-                xs={12}
-                md={6}
-                lg={6}
-                key="index"
-                className={styles.home_section_grid}
-              >
-                <Box className={`${styles.home_section_img_box}`}>
-                  <img src={item.image} alt="img" rel="nofollow" />
-                  <h5 className={styles.homeheadding}>{item.imgtext}</h5>
+    <Box mt={20} className={`${styles.home_section_box}`}>
+      <Grid container spacing={2}>
+        {sectionItem.map((item) => (
+          <>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={6}
+              key="index"
+              className={styles.home_section_grid}
+            >
+              <Box className={`${styles.home_section_img_box}`}>
+                <img src={item.image} alt="img" rel="nofollow" />
+                <h5 className={styles.homeheadding}>{item.imgtext}</h5>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <Box className={`${styles.home_section_text_box}`}>
+                <Box>
+                  <h3 className={`${styles.home_section_text_h3}`}>
+                    {item.heading}
+                  </h3>
+                  <p className={`${styles.home_section_text_p}`}>{item.text}</p>
+                  <p className={`${styles.home_section_text_p}`}>
+                    {item.title}
+                  </p>
                 </Box>
-              </Grid>
-              <Grid item xs={12} md={6} lg={6}>
-                <Box className={`${styles.home_section_text_box}`}>
-                  <Box>
-                    <h3 className={`${styles.home_section_text_h3}`}>
-                      {item.heading}
-                    </h3>
-                    <p className={`${styles.home_section_text_p}`}>
-                      {item.text}
-                    </p>
-                    <p className={`${styles.home_section_text_p}`}>
-                      {item.title}
-                    </p>
-                  </Box>
-                </Box>
-              </Grid>
-            </>
-          ))}
-        </Grid>
-      </Box>
-    </>
+              </Box>
+            </Grid>
+          </>
+        ))}
+      </Grid>
+    </Box>
   );
 };
 

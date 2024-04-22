@@ -37,6 +37,7 @@ import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import { Capacitor } from "@capacitor/core";
 import DialogBox from "../../components/dialogBox";
+import { Helmet } from "react-helmet";
 const platform = Capacitor.getPlatform();
 
 const Home = () => {
@@ -164,126 +165,141 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <div className="homepage">
-        <Box className={styles.home_page}>
-          <Box
-            className={styles.bg_corav}
-            sx={{
-              background: `url(${CoravImg})`,
-              backgroundPosition: "bottom center",
-              backgroundRepeat: "no-repeat",
-              position: "relative",
-              "@media (max-width:992px)": { backgroundSize: "contain" },
-              "@media (min-width:992px)": { backgroundSize: "contain" },
-            }}
-          >
+    <>
+      <Helmet>
+        <meta name="keywords" content="Somali jobs, jobs in Somali" />
+        <meta
+          name="description"
+          content="Join Koor, the all-in-one platform connecting Employers, Jobseekers & vendors in Somalia. Post opportunities, find talent, access jobs & tenders - Get notified of the latest updates."
+        />
+        <title>
+          Koor - All-in-One Platform for Jobs and Tenders in Somalia.
+        </title>
+      </Helmet>
+      <div>
+        <div className="homepage">
+          <Box className={styles.home_page}>
             <Box
-              className={styles.back_img_div}
+              className={styles.bg_corav}
               sx={{
-                marginTop:
-                  platform === "android" || platform === "ios" ? "0px" : "68px",
-                "@media (max-width:992px)": {
+                background: `url(${CoravImg})`,
+                backgroundPosition: "bottom center",
+                backgroundRepeat: "no-repeat",
+                position: "relative",
+                "@media (max-width:992px)": { backgroundSize: "contain" },
+                "@media (min-width:992px)": { backgroundSize: "contain" },
+              }}
+            >
+              <Box
+                className={styles.back_img_div}
+                sx={{
                   marginTop:
                     platform === "android" || platform === "ios"
                       ? "0px"
-                      : "60px",
-                },
-              }}
-            >
-              <Box sx={{ width: "100%" }}>
-                <Container
-                  maxWidth={false}
-                  sx={{
-                    "@media(min-width:992px)": {
-                      paddingLeft: "100px",
-                      paddingRight: "100px",
-                    },
-                  }}
-                >
-                  <Box
-                    className={styles.headding}
+                      : "68px",
+                  "@media (max-width:992px)": {
+                    marginTop:
+                      platform === "android" || platform === "ios"
+                        ? "0px"
+                        : "60px",
+                  },
+                }}
+              >
+                <Box sx={{ width: "100%" }}>
+                  <Container
+                    maxWidth={false}
                     sx={{
-                      paddingTop: "26%",
+                      "@media(min-width:992px)": {
+                        paddingLeft: "100px",
+                        paddingRight: "100px",
+                      },
                     }}
                   >
-                    <h1 style={{ color: "#fff" }}>Find your dream job</h1>
-                    <h5 className="mb-5">
-                      Search for the best opportunities in your area
-                    </h5>
-                    <form onSubmit={handleSubmit}>
-                      <Grid
-                        container
-                        columnGap={2}
-                        sx={{
-                          "@media(max-width:1274px)": {
-                            justifyContent: "space-between",
-                            gap: "0px",
-                          },
-                          "@media(max-width:480px)": {
-                            justifyContent: "space-between",
-                            columnGap: "0px",
-                            padding: "0px 0px 0px 14px !important",
-                            "& .MuiGrid-root": {
-                              width: "50%",
-                              paddingRight: "16px",
+                    <Box
+                      className={styles.headding}
+                      sx={{
+                        paddingTop: "26%",
+                      }}
+                    >
+                      <h1 style={{ color: "#fff" }}>Find your dream job</h1>
+                      <h5 className="mb-5">
+                        Search for the best opportunities in your area
+                      </h5>
+                      <form onSubmit={handleSubmit}>
+                        <Grid
+                          container
+                          columnGap={2}
+                          sx={{
+                            "@media(max-width:1274px)": {
+                              justifyContent: "space-between",
+                              gap: "0px",
                             },
-                          },
-                        }}
-                      >
-                        <Grid item className="mb-2">
-                          <InputSearch
-                            sx={{
-                              marginRight: "16px",
-                              width: 100,
-                              "@media(max-width:480px)": {
-                                width: "100% !important",
+                            "@media(max-width:480px)": {
+                              justifyContent: "space-between",
+                              columnGap: "0px",
+                              padding: "0px 0px 0px 14px !important",
+                              "& .MuiGrid-root": {
+                                width: "50%",
+                                paddingRight: "16px",
                               },
-                            }}
-                            onChange={handleSearchValueChange}
-                          />
-                          {message && (
-                            <p
-                              style={{
-                                color: "#eea23d",
-                                fontWeight: "300",
-                                fontFamily: "Poppins",
-                                fontSize: "14px",
-                                margin: "0",
-                                position: "absolute",
+                            },
+                          }}
+                        >
+                          <Grid item className="mb-2">
+                            <InputSearch
+                              sx={{
+                                marginRight: "16px",
+                                width: 100,
+                                "@media(max-width:480px)": {
+                                  width: "100% !important",
+                                },
                               }}
-                            >
-                              Please fill the required value
-                            </p>
-                          )}
-                        </Grid>
-                        <Grid item className="mb-2 ">
-                          <SelectInput
-                            fullWidth
-                            value={categories}
-                            onChange={handleCategoriesChange}
-                            options={jobCategories.data.map((jobCategory) => ({
-                              value: jobCategory.id,
-                              label: jobCategory.title,
-                            }))}
-                            label="Category"
-                            placeholder="Category"
-                            className={`${styles.category_select}`}
-                          />
-                        </Grid>
-                        <Grid item className="mb-2 ">
-                          <SelectInput
-                            value={location}
-                            onChange={handleLocationChange}
-                            options={countries.data.map((country) => ({
-                              value: country.id,
-                              label: country.title,
-                            }))}
-                            label="Location"
-                            placeholder={"Location"}
-                            className={`${styles.location_select}`}
-                          />
-                          {/* {message && (
+                              onChange={handleSearchValueChange}
+                            />
+                            {message && (
+                              <p
+                                style={{
+                                  color: "#eea23d",
+                                  fontWeight: "300",
+                                  fontFamily: "Poppins",
+                                  fontSize: "14px",
+                                  margin: "0",
+                                  position: "absolute",
+                                }}
+                              >
+                                Please fill the required value
+                              </p>
+                            )}
+                          </Grid>
+                          <Grid item className="mb-2 ">
+                            <SelectInput
+                              fullWidth
+                              value={categories}
+                              onChange={handleCategoriesChange}
+                              options={jobCategories.data.map(
+                                (jobCategory) => ({
+                                  value: jobCategory.id,
+                                  label: jobCategory.title,
+                                })
+                              )}
+                              label="Category"
+                              placeholder="Category"
+                              className={`${styles.category_select}`}
+                            />
+                          </Grid>
+                          <Grid item className="mb-2 ">
+                            <SelectInput
+                              value={location}
+                              onChange={handleLocationChange}
+                              options={countries.data.map((country) => ({
+                                value: country.id,
+                                label: country.title,
+                              }))}
+                              label="Location"
+                              placeholder={"Location"}
+                              className={`${styles.location_select}`}
+                            />
+                            {/* {message && (
                             <p
                               style={{
                                 color: "#eea23d",
@@ -295,211 +311,233 @@ const Home = () => {
                               Please fill the search value.
                             </p>
                           )} */}
+                          </Grid>
+                          <Grid item className="mb-2">
+                            <Button
+                              fullWidth
+                              variant="contained"
+                              type="submit"
+                              className={styles.home_btn_btn}
+                              sx={{
+                                "@media (max-width: 700px)": {
+                                  width: "100% !important",
+                                },
+                              }}
+                            >
+                              Search
+                            </Button>
+                          </Grid>
                         </Grid>
-                        <Grid item className="mb-2">
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            type="submit"
-                            className={styles.home_btn_btn}
-                            sx={{
-                              "@media (max-width: 700px)": {
-                                width: "100% !important",
-                              },
-                            }}
-                          >
-                            Search
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </form>
-                  </Box>
-                </Container>
+                      </form>
+                    </Box>
+                  </Container>
+                </Box>
               </Box>
+              <Container
+                maxWidth={false}
+                sx={{
+                  "@media(min-width:992px)": {
+                    marginBottom: "10rem",
+                    paddingLeft: "100px",
+                    paddingRight: "100px",
+                  },
+                }}
+              >
+                {role !== USER_ROLES.jobSeeker && role !== USER_ROLES.vendor ? (
+                  <Stack
+                    direction={"row"}
+                    alignItems={"center"}
+                    spacing={2}
+                    justifyContent={"center"}
+                    sx={{
+                      padding: "40px 0px",
+                      position: "relative",
+                      zIndex: 1,
+                    }}
+                  >
+                    <h5 className={styles.home_img_contents_h5}>
+                      Are you an employer looking to post jobs and tenders?
+                      Register now on Koor and post anytime to find qualified
+                      candidates and vendors.
+                    </h5>
+                    <Link
+                      to={isLoggedIn ? "/employer/jobs/post" : "/login"}
+                      className={styles.home_img_contents_p}
+                    >
+                      Post a job{" "}
+                      <SVG.RightArrow className={styles.rightarrow} />
+                    </Link>
+                  </Stack>
+                ) : (
+                  ""
+                )}
+              </Container>
             </Box>
             <Container
               maxWidth={false}
               sx={{
                 "@media(min-width:992px)": {
-                  marginBottom: "10rem",
                   paddingLeft: "100px",
                   paddingRight: "100px",
                 },
               }}
             >
-              {role !== USER_ROLES.jobSeeker && role !== USER_ROLES.vendor ? (
+              <Box>
                 <Stack
-                  direction={"row"}
-                  alignItems={"center"}
+                  direction="row"
                   spacing={2}
-                  justifyContent={"center"}
+                  className={styles.stack_box}
                   sx={{
-                    padding: "40px 0px",
-                    position: "relative",
-                    zIndex: 1,
-                  }}
-                >
-                  <h5 className={styles.home_img_contents_h5}>
-                    Are you an employer looking for applicants <br /> to fill
-                    your job openings fast or explore new opportunities? <br />
-                    Connect with top talent and discover bids that match your
-                    needs.
-                  </h5>
-                  <Link
-                    to={isLoggedIn ? "/employer/jobs/post" : "/login"}
-                    className={styles.home_img_contents_p}
-                  >
-                    Post a job <SVG.RightArrow className={styles.rightarrow} />
-                  </Link>
-                </Stack>
-              ) : (
-                ""
-              )}
-            </Container>
-          </Box>
-          <Container
-            maxWidth={false}
-            sx={{
-              "@media(min-width:992px)": {
-                paddingLeft: "100px",
-                paddingRight: "100px",
-              },
-            }}
-          >
-            <Box>
-              <Stack
-                direction="row"
-                spacing={2}
-                className={styles.stack_box}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Typography className={styles.popular_job}>
-                  Trending opportunities
-                </Typography>
-                <Box
-                  sx={{
-                    marginLeft: "auto !important",
                     display: "flex",
-                    flexDirection: "row",
                     justifyContent: "flex-end",
                   }}
                 >
-                  <Typography
-                    className={styles.see_all_jobs}
+                  <Typography className={styles.popular_job}>
+                    Trending opportunities
+                  </Typography>
+                  <Box
                     sx={{
-                      cursor: "pointer",
-                      "@media(min-width:600px)": {
-                        marginRight: "8em",
+                      marginLeft: "auto !important",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Typography
+                      className={styles.see_all_jobs}
+                      sx={{
+                        cursor: "pointer",
+                        "@media(min-width:600px)": {
+                          marginRight: "8em",
+                        },
+                      }}
+                      onClick={() => {
+                        navigate("/search/tenders");
+                      }}
+                    >
+                      See all {totalTenders} Tenders{" "}
+                      <IconButton>
+                        <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                      </IconButton>
+                    </Typography>
+
+                    <Typography
+                      className={`ms-auto ${styles.see_all_jobs}`}
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        navigate("/search/jobs");
+                      }}
+                    >
+                      See all {totalJobs} jobs{" "}
+                      <IconButton>
+                        <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                      </IconButton>
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box>
+                <SlickSlider
+                  items={topJobCategories.map((category) => ({
+                    icon: <SVG.Market />,
+                    title:
+                      (category?.title || "").length > 15
+                        ? `${category.title.slice(0, 12)}...`
+                        : category.title,
+                    text: `${category.count || 0} ${
+                      category.categoryType === "tender" ? "tenders" : "jobs"
+                    }`,
+                    id: category.id,
+                    categoryType: category.categoryType,
+                  }))}
+                />
+                <Divider
+                  sx={{
+                    marginTop: "110px",
+                    "@media(max-width:992px)": { marginTop: "24px" },
+                  }}
+                />
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <Typography
+                  className={`${styles.first_heading}`}
+                  sx={{ mb: 4 }}
+                >
+                  Listings from the top institutions
+                </Typography>
+                <Grid
+                  container
+                  spacing={{ xs: 2, lg: 10 }}
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  {(topListingCompanies || []).map((item, key) => {
+                    return (
+                      <>
+                        <Grid key={{ key }} item xs={4} lg={1.5} sm={1}>
+                          <img
+                            src={generateFileUrl(item.logo.path)}
+                            alt="img"
+                            className={`${styles.mintra}`}
+                          />
+                        </Grid>
+                      </>
+                    );
+                  })}
+                </Grid>
+              </Box>
+            </Container>
+            <Box className={`${styles.home_back}`}>
+              <Box className={`${styles.home_powerfull_box}`}>
+                <Box>
+                  <h3 className={styles.home_powerfull_h3}>
+                    A Powerful Platform for Everyone!
+                  </h3>
+                  <p className={styles.home_powerfull_p}>
+                    At Koor, we foster an inclusive ecosystem where employers,
+                    job seekers, and vendors connect. Our robust platform meets
+                    the diverse needs of all users. Join us today!
+                  </p>
+                </Box>
+                <Box className={styles.home_new_job_box} useflexGap>
+                  <Box className={`${styles.new_jobs}`}>
+                    <h2>{siteUpdates.jobs}</h2>
+                    <p>New jobs posted today</p>
+                  </Box>
+                  <Box className={`${styles.new_jobs}`}>
+                    <h2>{siteUpdates.employer}</h2>
+                    <p>Employers are hiring now</p>
+                  </Box>
+                  <Box className={`${styles.new_jobs}`}>
+                    <h2>{siteUpdates.tenders}</h2>
+                    <p>Tenders are currently active</p>
+                  </Box>
+                </Box>
+              </Box>
+              {Boolean(testimonialList.length) > 0 && (
+                <Box className={styles.home_testi_box}>
+                  <Container
+                    maxWidth={false}
+                    sx={{
+                      "@media(min-width:992px)": {
+                        paddingLeft: "100px",
+                        paddingRight: "100px",
                       },
                     }}
-                    onClick={() => {
-                      navigate("/search/tenders");
-                    }}
                   >
-                    See all {totalTenders} Tenders{" "}
-                    <IconButton>
-                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
-                    </IconButton>
-                  </Typography>
-
-                  <Typography
-                    className={`ms-auto ${styles.see_all_jobs}`}
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      navigate("/search/jobs");
-                    }}
-                  >
-                    See all {totalJobs} jobs{" "}
-                    <IconButton>
-                      <ArrowForwardIcon sx={{ color: "#eea23d" }} />
-                    </IconButton>
-                  </Typography>
+                    <TestimonialSlider testimonialList={testimonialList} />
+                  </Container>
                 </Box>
-              </Stack>
-            </Box>
-            <Box>
-              <SlickSlider
-                items={topJobCategories.map((category) => ({
-                  icon: <SVG.Market />,
-                  title:
-                    (category?.title || "").length > 15
-                      ? `${category.title.slice(0, 12)}...`
-                      : category.title,
-                  text: `${category.count || 0} ${
-                    category.categoryType === "tender" ? "tenders" : "jobs"
-                  }`,
-                  id: category.id,
-                  categoryType: category.categoryType,
-                }))}
-              />
-              <Divider
-                sx={{
-                  marginTop: "110px",
-                  "@media(max-width:992px)": { marginTop: "24px" },
-                }}
-              />
-            </Box>
-            <Box sx={{ width: "100%" }}>
-              <Typography className={`${styles.first_heading}`} sx={{ mb: 4 }}>
-                Listings from the top institutions
-              </Typography>
-              <Grid
-                container
-                spacing={{ xs: 2, lg: 10 }}
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
+              )}
+              <Box
+                marginTop={Boolean(testimonialList.length) > 0 ? "0px" : "60px"}
               >
-                {(topListingCompanies || []).map((item, key) => {
-                  return (
-                    <>
-                      <Grid key={{ key }} item xs={4} lg={1.5} sm={1}>
-                        <img
-                          src={generateFileUrl(item.logo.path)}
-                          alt="img"
-                          className={`${styles.mintra}`}
-                        />
-                      </Grid>
-                    </>
-                  );
-                })}
-              </Grid>
-            </Box>
-          </Container>
-          <Box className={`${styles.home_back}`}>
-            <Box className={`${styles.home_powerfull_box}`}>
-              <Box>
-                <h3 className={styles.home_powerfull_h3}>
-                  A Powerful Platform for Everyone!
-                </h3>
-                <p className={styles.home_powerfull_p}>
-                  At Koor, we foster an inclusive ecosystem where employers, job
-                  seekers, and vendors connect. Our robust platform meets the
-                  diverse needs of all users. Join us today!
-                </p>
+                <TextSlide />
               </Box>
-              <Box className={styles.home_new_job_box} useflexGap>
-                <Box className={`${styles.new_jobs}`}>
-                  <h2>{siteUpdates.jobs}</h2>
-                  <p>New jobs posted today</p>
-                </Box>
-                <Box className={`${styles.new_jobs}`}>
-                  <h2>{siteUpdates.employer}</h2>
-                  <p>Employers are hiring now</p>
-                </Box>
-                <Box className={`${styles.new_jobs}`}>
-                  <h2>{siteUpdates.tenders}</h2>
-                  <p>Tenders are currently active</p>
-                </Box>
-              </Box>
-            </Box>
-            {Boolean(testimonialList.length) > 0 && (
-              <Box className={styles.home_testi_box}>
+              <Box className={styles.stay_back_img} sx={{ marginTop: "50px" }}>
                 <Container
                   maxWidth={false}
                   sx={{
@@ -509,118 +547,100 @@ const Home = () => {
                     },
                   }}
                 >
-                  <TestimonialSlider testimonialList={testimonialList} />
-                </Container>
-              </Box>
-            )}
-            <Box
-              marginTop={Boolean(testimonialList.length) > 0 ? "0px" : "60px"}
-            >
-              <TextSlide />
-            </Box>
-            <Box className={styles.stay_back_img} sx={{ marginTop: "50px" }}>
-              <Container
-                maxWidth={false}
-                sx={{
-                  "@media(min-width:992px)": {
-                    paddingLeft: "100px",
-                    paddingRight: "100px",
-                  },
-                }}
-              >
-                <Grid container spacing={3}>
-                  <Grid item xs={12} lg={5} md={7} sm={6}>
-                    <Box className={styles.stay_text_box}>
-                      <h4>Mobile app</h4>
-                      <h2>Stay Connected with us!</h2>
-                      <p>
-                        Download our app to your smartphone today! Whether you
-                        are an employer, jobseekers, or vendors, you'll find
-                        great value in using our app. Enjoy instant
-                        notifications for real-time updates and insights.
-                      </p>
-                      <Box
-                        className={styles.stay_social_icon}
-                        sx={{
-                          "@media (max-width:480px)": {
-                            "& img": { width: "45%" },
-                          },
-                        }}
-                      >
-                        <Box className={styles.about_social}>
-                          <Link to="/" onClick={handleCommingSoon}>
-                            <img
-                              src={IMAGES.Googleplay}
-                              rel="nofollow"
-                              alt="img"
-                            />
-                          </Link>
-                          <Link
-                            to="/"
-                            onClick={handleCommingSoon}
-                            className="mx-3"
-                          >
-                            <img
-                              src={IMAGES.Appstore}
-                              rel="nofollow"
-                              alt="img"
-                            />
-                          </Link>
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} lg={5} md={7} sm={6}>
+                      <Box className={styles.stay_text_box}>
+                        <h4>Mobile app</h4>
+                        <h2>Stay Connected with us!</h2>
+                        <p>
+                          Download our app to your smartphone today! Whether you
+                          are an employer, jobseekers, or vendors, you'll find
+                          great value in using our app. Enjoy instant
+                          notifications for real-time updates and insights.
+                        </p>
+                        <Box
+                          className={styles.stay_social_icon}
+                          sx={{
+                            "@media (max-width:480px)": {
+                              "& img": { width: "45%" },
+                            },
+                          }}
+                        >
+                          <Box className={styles.about_social}>
+                            <Link to="/" onClick={handleCommingSoon}>
+                              <img
+                                src={IMAGES.Googleplay}
+                                rel="nofollow"
+                                alt="img"
+                              />
+                            </Link>
+                            <Link
+                              to="/"
+                              onClick={handleCommingSoon}
+                              className="mx-3"
+                            >
+                              <img
+                                src={IMAGES.Appstore}
+                                rel="nofollow"
+                                alt="img"
+                              />
+                            </Link>
+                          </Box>
                         </Box>
                       </Box>
-                    </Box>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      lg={7}
+                      md={5}
+                      sm={6}
+                      sx={{
+                        padding: "0px 0px",
+                        marginBottom: "-5px",
+                        "@media (max-width:480px)": {
+                          padding: "0px 0px 0px",
+                        },
+                      }}
+                    >
+                      <img
+                        src={IMAGES.MobileApp2}
+                        alt=""
+                        className={styles.appview}
+                        rel="nofollow"
+                      />
+                      <img
+                        src={IMAGES.MobileApp}
+                        alt=""
+                        className={styles.mobile_appview}
+                        rel="nofollow"
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    lg={7}
-                    md={5}
-                    sm={6}
-                    sx={{
-                      padding: "0px 0px",
-                      marginBottom: "-5px",
-                      "@media (max-width:480px)": {
-                        padding: "0px 0px 0px",
-                      },
-                    }}
-                  >
-                    <img
-                      src={IMAGES.MobileApp2}
-                      alt=""
-                      className={styles.appview}
-                      rel="nofollow"
-                    />
-                    <img
-                      src={IMAGES.MobileApp}
-                      alt=""
-                      className={styles.mobile_appview}
-                      rel="nofollow"
-                    />
-                  </Grid>
-                </Grid>
-              </Container>
+                </Container>
+              </Box>
             </Box>
           </Box>
-        </Box>
-        <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
-          <Box
-            sx={{
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-              width: "100%",
-              textDecoration: "capitalize",
-              color: "#eea23d",
-            }}
-          >
-            <h2 className="mb-4">Stay In Touch</h2>
-            <h1 className="mb-4" style={{ color: "#000" }}>
-              Mobile App Is Coming Soon!
-            </h1>
-          </Box>
-        </DialogBox>
+          <DialogBox open={openDialog} handleClose={() => setOpenDialog(false)}>
+            <Box
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                width: "100%",
+                textDecoration: "capitalize",
+                color: "#eea23d",
+              }}
+            >
+              <h2 className="mb-4">Stay In Touch</h2>
+              <h1 className="mb-4" style={{ color: "#000" }}>
+                Mobile App Is Coming Soon!
+              </h1>
+            </Box>
+          </DialogBox>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
