@@ -10,6 +10,7 @@ function OutlinedButtonComponent({
   onClick,
   sx,
   component,
+  disabled = false,
   ...rest
 }) {
   const query = {};
@@ -32,6 +33,7 @@ function OutlinedButtonComponent({
   }
   return (
     <Button
+      disabled={disabled}
       sx={sx}
       variant="outlined"
       className={`outline-button ${className}`}

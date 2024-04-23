@@ -49,6 +49,7 @@ import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
 import { useNavigate } from "react-router-dom";
 import { USER_ROLES } from "@utils/enum";
+import { setErrorToast } from "@redux/slice/toast";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -133,7 +134,8 @@ function MyProfile() {
       otherNotification: false,
     },
     validationSchema: validateVendorAboutMe,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting }) => {
+      setSubmitting(true);
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
@@ -166,9 +168,14 @@ function MyProfile() {
         delete payload.mobile_number;
         delete payload.country_code;
       }
+      if (!payload.registration_number) {
+        delete payload.registration_number;
+      }
+      if (!payload.organization_type) {
+        delete payload.organization_type;
+      }
       const newFormData = new FormData();
       for (const keys in payload) {
-        // using only for files only !
         if (payload[keys] !== undefined && payload[keys] !== null) {
           if (payload[keys].forEach) {
             payload[keys].forEach((data) => {
@@ -185,6 +192,7 @@ function MyProfile() {
       const response = await updateVendorAboutMeAPI(newFormData);
       if (response.remote === "success") {
         handleToggleModel();
+        setSubmitting(false);
         const updatedUser = {
           name: values.organizationName,
           mobileNumber,
@@ -221,6 +229,9 @@ function MyProfile() {
           delete updatedUser.profile.country;
         }
         dispatch(updateCurrentUser(updatedUser));
+      } else {
+        dispatch(setErrorToast("Something went wrong"));
+        setSubmitting(false);
       }
     },
   });
@@ -300,6 +311,7 @@ function MyProfile() {
       getSuggestedAddress(debouncedSearchValue);
     }
   }, [debouncedSearchValue]);
+  console.log(formik.isSubmitting, "her");
   return (
     <>
       {!currentUser?.profileCompleted && (
@@ -643,7 +655,12 @@ function MyProfile() {
                           <OutlinedButton
                             type="submit"
                             variant="outlined"
-                            title="update info"
+                            disabled={formik.isSubmitting}
+                            title={
+                              formik.isSubmitting
+                                ? "updating..."
+                                : "update info"
+                            }
                             startIcon={<SVG.CheckIcon />}
                           />
                         </div>
@@ -924,7 +941,9 @@ function MyProfile() {
                         <OutlinedButton
                           type="submit"
                           variant="outlined"
-                          title="update info"
+                          title={
+                            formik.isSubmitting ? "updating..." : "update info"
+                          }
                           startIcon={<SVG.CheckIcon />}
                         />
                       </div>
