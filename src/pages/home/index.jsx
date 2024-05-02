@@ -363,7 +363,7 @@ const Home = () => {
                     <Link
                       to={isLoggedIn ? "/employer/jobs/post" : "/login"}
                       className={styles.home_img_contents_p}
-                      style={{whiteSpace:"nowrap"}}
+                      style={{ whiteSpace: "nowrap" }}
                     >
                       Post a job{" "}
                       <SVG.RightArrow className={styles.rightarrow} />
