@@ -584,3 +584,6 @@ ul.listvertical li {
 .details * {
   margin: 0 !important;
 }
+iframe {
+    width: 100%;
+}
