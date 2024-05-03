@@ -14,19 +14,19 @@ export const validateVendorAboutMe = Yup.object().shape({
     }
   ),
   businessLicenseId: Yup.number().typeError("Business License Id must be a number ").required("Business License Id is required"),
-  businessLicense: Yup.mixed().test(
-    "elementPresent",
-    "Business License is required",
-    (value) => !!value.length
-  ),
+  // businessLicense: Yup.mixed().test(
+  //   "elementPresent",
+  //   "Business License is required",
+  //   (value) => !!value.length
+  // ),
   certificationNumber: Yup.string().required(
     "Certification Number is required"
   ),
-  certification: Yup.mixed().test(
-    "elementPresent",
-    "Certification is required",
-    (value) => !!value.length
-  ),
+  // certification: Yup.mixed().test(
+  //   "elementPresent",
+  //   "Certification is required",
+  //   (value) => !!value.length
+  // ),
   website: Yup.string().url(
     "Please enter a valid URL, e.g. https://www.example.com"
   ),
