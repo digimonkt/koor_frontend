@@ -174,7 +174,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         >
           <div className="my-jobs">
             <h2 style={{ marginBottom: "8px" }}>
-              <Link to={`/jobs/details/${jobDetails?.slug || "jobId"}`}>
+              <Link to={`/jobs/details/${jobDetails?.slug}`}>
                 {jobDetails?.title}
               </Link>
               {jobDetails.isApplied ? (

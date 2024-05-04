@@ -230,7 +230,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         >
           <div className="my-jobs">
             <h2 style={{ marginBottom: "8px" }}>
-              <Link to={`/tender/details/${tenderDetails?.slug || "tenderId"}`}>
+              <Link to={`/tender/details/${tenderDetails?.slug}`}>
                 {tenderDetails?.title || ""}
                 {tenderDetails.isApplied ? (
                   <Chip
