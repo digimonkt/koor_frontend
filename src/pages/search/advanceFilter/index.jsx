@@ -626,7 +626,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     setTimeout(() => formik.handleSubmit(), 500);
   }, [searchParams]);
   return (
-    <div style={{ border: "10px solid black" }}>
+    <div>
       <div className={`${styles.searchResult}`}>
         <div
           className={`${styles.label} lables`}
