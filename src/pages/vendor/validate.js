@@ -13,27 +13,17 @@ export const validateVendorAboutMe = Yup.object().shape({
       return isValidPhoneNumber(value.value);
     }
   ),
-<<<<<<< HEAD
-  businessLicenseId: Yup.number().typeError("Business License Id must be a number ").required("Business License Id is required"),
-=======
-
-  // commented out this code to make license and certification optional
-  // businessLicenseId: Yup.number().typeError("Business License Id must be a number ").required("Business License Id is required"),
->>>>>>> df72d18ea7683e118ff98600608ef579bcf4bd16
+  // businessLicenseId: Yup.number()
+  //   .typeError("Business License Id must be a number ")
+  //   .required("Business License Id is required"),
   // businessLicense: Yup.mixed().test(
   //   "elementPresent",
   //   "Business License is required",
   //   (value) => !!value.length
   // ),
-<<<<<<< HEAD
-  certificationNumber: Yup.string().required(
-    "Certification Number is required"
-  ),
-=======
   // certificationNumber: Yup.string().required(
   //   "Certification Number is required"
   // ),
->>>>>>> df72d18ea7683e118ff98600608ef579bcf4bd16
   // certification: Yup.mixed().test(
   //   "elementPresent",
   //   "Certification is required",

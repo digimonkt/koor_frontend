@@ -24,8 +24,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const [isStart, setIsStart] = useState(tenderDetails?.status);
   const [showMore, setShowMore] = useState(false);
 
-  // console.log("tenderDetails", tenderDetails);
-  // console.log("tenderDetails", tenderDetails);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
