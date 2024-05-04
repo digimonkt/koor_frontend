@@ -57,7 +57,12 @@ export const FeatureSection = () => {
                     justifyContent="flex-start"
                     alignItems="center"
                     display="flex"
-                    sx={{ marginTop: 2, color: "#121212", opacity: 0.7 }}
+                    sx={{
+                      marginTop: 2,
+                      color: "#121212",
+                      opacity: 0.7,
+                      textAlign: "justify",
+                    }}
                   >
                     Eliminate the hassle and save time on navigating different
                     platforms. Koor acts as a comprehensive solution and helps
@@ -86,7 +91,12 @@ export const FeatureSection = () => {
                     variant="body1"
                     fontSize={"16px"}
                     fontWeight={600}
-                    sx={{ marginTop: 2, color: "#121212", opacity: 0.7 }}
+                    sx={{
+                      marginTop: 2,
+                      color: "#121212",
+                      opacity: 0.7,
+                      textAlign: "justify",
+                    }}
                   >
                     Are you a vendor looking to expand your business? Koor
                     facilitates collaboration between vendors and businesses and
@@ -113,7 +123,12 @@ export const FeatureSection = () => {
                     fontSize={"16px"}
                     variant="body1"
                     fontWeight={600}
-                    sx={{ marginTop: 2, color: "#121212", opacity: 0.7 }}
+                    sx={{
+                      marginTop: 2,
+                      color: "#121212",
+                      opacity: 0.7,
+                      textAlign: "justify",
+                    }}
                   >
                     Communication is key and Koor ensures seamless interaction
                     between employers, job seekers, and vendors. Our integrated

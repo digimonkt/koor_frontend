@@ -204,6 +204,7 @@ function PublicProfileComponent() {
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
                           wordBreak: "break-word",
+                          textAlign: "justify",
                         }}
                       >
                         {userDetails.profile.description}
@@ -322,7 +323,7 @@ function PublicProfileComponent() {
                             >
                               {formatPhoneNumberIntl(
                                 userDetails.countryCode +
-                                  userDetails.mobileNumber,
+                                  userDetails.mobileNumber
                               )}
                             </Typography>
                             <Typography
