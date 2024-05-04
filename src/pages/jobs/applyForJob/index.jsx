@@ -174,7 +174,7 @@ const ApplyForJob = () => {
   };
 
   const getJobDetails = async (jobId) => {
-    const res = await getJobDetailsByIdAPI({ jobId });
+    const res = await getJobDetailsByIdAPI({ slug: jobId });
     if (res.remote === "success") {
       setDetails(res.data);
     }
@@ -192,6 +192,7 @@ const ApplyForJob = () => {
   useEffect(() => {
     getJobDetails(params.jobId);
   }, [params.jobId]);
+
   useEffect(() => {
     if (searchParams.get("applicationId")) {
       getApplicantDetails();

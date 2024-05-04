@@ -7,7 +7,7 @@ import {
 } from "./transform/job";
 export const getJobDetailsByIdAPI = async (data) => {
   const response = await api.request({
-    url: urlcat("/v1/jobs/:jobId", data),
+    url: urlcat("/v1/jobs/:slug", data),
     method: "GET",
   });
   if (response.remote === "success") {

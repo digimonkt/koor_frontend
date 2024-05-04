@@ -46,6 +46,7 @@ export const transformJobListResponse = (data) => {
           email: res.user.email,
           image: res.user.image || res.company_logo,
         },
+        slug: res.slug,
       };
     }),
   };
@@ -104,6 +105,7 @@ export const transformFullJobDetails = (data) => {
       mobileNumber: data.user.mobile_number,
       image: data.user.image || data.company_logo,
     },
+    slug: data.slug,
     attachments:
       data.attachments?.map((attachment) => ({
         id: attachment.id,
