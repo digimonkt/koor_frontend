@@ -204,6 +204,7 @@ function PublicProfileComponent() {
                           fontSize: "14px",
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
+                          textAlign: "justify",
                         }}
                       >
                         {userDetails.profile.description}

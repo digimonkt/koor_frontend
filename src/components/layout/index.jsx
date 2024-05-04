@@ -35,11 +35,13 @@ function Layout() {
       }}
     >
       {platform === "android" || platform === "ios" ? null : (
-        <Sidebar
-          SidebarMenu={SidebarMenu}
-          toggleDrawer={toggleDrawer}
-          handleDrawerClose={handleDrawerClose}
-        />
+        <div>
+          <Sidebar
+            SidebarMenu={SidebarMenu}
+            toggleDrawer={toggleDrawer}
+            handleDrawerClose={handleDrawerClose}
+          />
+        </div>
       )}
 
       <Box

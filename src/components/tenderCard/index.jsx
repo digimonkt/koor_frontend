@@ -23,7 +23,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(tenderDetails?.status);
   const [showMore, setShowMore] = useState(false);
-
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -160,7 +159,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
                               if (tenderDetails?.id) {
                                 navigate(
                                   urlcat("/employer/tender/post", {
-                                    tenderId: tenderDetails?.id,
+                                    tenderId: tenderDetails?.slug,
                                   })
                                 );
                               }
@@ -231,7 +230,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         >
           <div className="my-jobs">
             <h2 style={{ marginBottom: "8px" }}>
-              <Link to={`/tender/details/${tenderDetails?.id || "tenderId"}`}>
+              <Link to={`/tender/details/${tenderDetails?.slug || "tenderId"}`}>
                 {tenderDetails?.title || ""}
                 {tenderDetails.isApplied ? (
                   <Chip
