@@ -110,7 +110,6 @@ function TenderDetailsComponent() {
       },
     },
     attachments: [],
-    slug: "",
   });
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [addressGeoCode, setAddressGeoCode] = useState({});
@@ -122,6 +121,8 @@ function TenderDetailsComponent() {
     showMore: true,
     postExist: true,
   });
+
+  console.log("tesnder");
 
   const getTenderDetails = async (tenderId) => {
     const res = await getTenderDetailsByIdAPI({ tenderId });
@@ -211,7 +212,6 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
-
   return (
     <>
       <Container
@@ -767,7 +767,7 @@ function TenderDetailsComponent() {
                           ),
                         }}
                         to={urlcat("/tender/details/:tenderId", {
-                          tenderId: item?.slug,
+                          tenderId: item.id,
                         })}
                       >
                         {item?.title}

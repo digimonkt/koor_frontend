@@ -110,7 +110,6 @@ export const transformTenderSuggestion = (data) => {
     count: data.count,
     next: data.next,
     previous: data.previous,
-
     results: data.results.map((res) => ({
       id: res.id,
       title: res.title,
@@ -118,7 +117,6 @@ export const transformTenderSuggestion = (data) => {
       city: res.city.title,
       budgetAmount: res.budget_amount,
       budgetCurrency: res.budget_currency,
-      slug: res.slug,
     })),
   };
 };

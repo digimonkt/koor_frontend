@@ -192,10 +192,11 @@ const JobDetails = () => {
     tag.click();
     document.body.removeChild(tag);
   }
+
   useEffect(() => {
     getJobDetails(params.jobId);
     getJobSuggestions(params.jobId);
-  }, [params.slug, params.jobId]);
+  }, [params.jobId]);
   const handleSaveJob = async (jobId) => {
     if (isLoggedIn) {
       setDetails((prevState) => ({
@@ -224,6 +225,7 @@ const JobDetails = () => {
     }
   };
   const platform = Capacitor.getPlatform();
+
   return (
     <>
       <Container

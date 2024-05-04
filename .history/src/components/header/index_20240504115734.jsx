@@ -81,6 +81,7 @@ function Header() {
   }, [location.pathname]);
   const matches = useMediaQuery("(min-width: 600px) and (max-width: 1024px)");
 
+  console.log("tedner");
   return (
     <header>
       <Container

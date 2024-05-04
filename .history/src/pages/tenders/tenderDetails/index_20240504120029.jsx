@@ -110,7 +110,6 @@ function TenderDetailsComponent() {
       },
     },
     attachments: [],
-    slug: "",
   });
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [addressGeoCode, setAddressGeoCode] = useState({});
@@ -211,7 +210,6 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
-
   return (
     <>
       <Container
@@ -436,7 +434,7 @@ function TenderDetailsComponent() {
                                 if (details.isEditable) {
                                   navigate(
                                     urlcat("../tender/apply/:tenderId", {
-                                      tenderId: params.tenderId,
+                                      tenderId: params.slug,
                                       applicationId: details.application.id,
                                     })
                                   );
@@ -767,7 +765,7 @@ function TenderDetailsComponent() {
                           ),
                         }}
                         to={urlcat("/tender/details/:tenderId", {
-                          tenderId: item?.slug,
+                          tenderId: item.id,
                         })}
                       >
                         {item?.title}

@@ -110,7 +110,6 @@ function TenderDetailsComponent() {
       },
     },
     attachments: [],
-    slug: "",
   });
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [addressGeoCode, setAddressGeoCode] = useState({});
@@ -767,7 +766,7 @@ function TenderDetailsComponent() {
                           ),
                         }}
                         to={urlcat("/tender/details/:tenderId", {
-                          tenderId: item?.slug,
+                          tenderId: item.id,
                         })}
                       >
                         {item?.title}
