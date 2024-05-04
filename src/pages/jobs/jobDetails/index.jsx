@@ -157,7 +157,7 @@ const JobDetails = () => {
   };
   const handleWithdrawJobApplication = async () => {
     if (details.isEditable) {
-      const res = await withdrawJobApplicationAPI({ jobId: params.jobId });
+      const res = await withdrawJobApplicationAPI({ jobId: details.id });
       if (res.remote === "success") {
         setDetails({
           ...details,
