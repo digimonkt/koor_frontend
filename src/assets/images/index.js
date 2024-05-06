@@ -47,6 +47,7 @@ import Detail1 from "./detail1.png";
 import Detail2 from "./detail2.png";
 import Detail3 from "./detail3.png";
 import Detail4 from "./detail4.png";
+import NotFound from "./404_not_found.png";
 
 export const IMAGES = {
   Detail4,
@@ -98,4 +99,5 @@ export const IMAGES = {
   appleStroe,
   GoogleStroe,
   Banner,
+  NotFound,
 };

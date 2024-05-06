@@ -154,7 +154,7 @@ const ApplyForJob = () => {
   };
 
   const applyForJob = async (data) => {
-    const res = await applyForJobAPI(params.jobId, data);
+    const res = await applyForJobAPI(details.id, data);
     if (res.remote === "success") {
       dispatch(setSuccessToast("Applied successfully"));
       setIsApplied(true);
