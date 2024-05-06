@@ -162,7 +162,7 @@ function TenderDetailsComponent() {
   const handleWithdrawTenderApplication = async () => {
     if (details.isEditable) {
       const res = await withdrawTenderApplicationAPI({
-        tenderId: params.tenderId,
+        tenderId: details.id,
       });
       if (res.remote === "success") {
         setDetails({
