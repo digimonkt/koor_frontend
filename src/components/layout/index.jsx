@@ -26,7 +26,6 @@ function Layout() {
   };
 
   const hideSideBar = useSelector((state) => state.employer.hideSideBar);
-  console.log(hideSideBar);
   return (
     <Box
       sx={{
