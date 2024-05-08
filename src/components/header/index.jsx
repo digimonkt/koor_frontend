@@ -118,7 +118,11 @@ function Header() {
                 },
               }}
             >
-              <Box sx={{ position: "relative" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                }}
+              >
                 <SearchCategory direction="row" spacing={0} alignItems="center">
                   {role === "employer" ? (
                     <FormControl
@@ -144,51 +148,60 @@ function Header() {
                   ) : (
                     ""
                   )}
-                  <input
-                    onKeyDown={(e) => {
-                      if (e.key === "enter" || e.key === "Enter") {
-                        switch (search) {
-                          case SEARCH_TYPE.jobs:
-                            navigate(
-                              role === USER_ROLES.jobSeeker
-                                ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
-                                : "/"
-                            );
-                            break;
-                          case SEARCH_TYPE.talents:
-                            navigate(
-                              role === USER_ROLES.employer
-                                ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
-                                : "/"
-                            );
-                            break;
-                          case SEARCH_TYPE.vendors:
-                            navigate(
-                              role === USER_ROLES.employer
-                                ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
-                                : "/"
-                            );
-                            break;
-                          case SEARCH_TYPE.tenders:
-                            navigate(
-                              role === USER_ROLES.vendor
-                                ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
-                                : "/"
-                            );
-                            break;
-                          default:
-                            break;
-                        }
-                      }
+                  <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                     }}
-                    className="employersearch"
-                    placeholder={
-                      role === USER_ROLES.employer ? "" : searchPlaceholder
-                    }
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    value={searchValue}
-                  />
-                  <SVG.SearchIcon className="login_header_search_icon" />
+                  >
+                    <SVG.SearchIcon className="login_header_search_icon" />
+                    <input
+                      onKeyDown={(e) => {
+                        if (e.key === "enter" || e.key === "Enter") {
+                          switch (search) {
+                            case SEARCH_TYPE.jobs:
+                              navigate(
+                                role === USER_ROLES.jobSeeker
+                                  ? `/search/${SEARCH_TYPE.jobs}?search=${searchValue}`
+                                  : "/"
+                              );
+                              break;
+                            case SEARCH_TYPE.talents:
+                              navigate(
+                                role === USER_ROLES.employer
+                                  ? `/search/${SEARCH_TYPE.talents}?search=${searchValue}`
+                                  : "/"
+                              );
+                              break;
+                            case SEARCH_TYPE.vendors:
+                              navigate(
+                                role === USER_ROLES.employer
+                                  ? `/search/${SEARCH_TYPE.vendors}?search=${searchValue}`
+                                  : "/"
+                              );
+                              break;
+                            case SEARCH_TYPE.tenders:
+                              navigate(
+                                role === USER_ROLES.vendor
+                                  ? `/search/${SEARCH_TYPE.tenders}?search=${searchValue}`
+                                  : "/"
+                              );
+                              break;
+                            default:
+                              break;
+                          }
+                        }
+                      }}
+                      className="employersearch"
+                      placeholder={
+                        role === USER_ROLES.employer ? "" : searchPlaceholder
+                      }
+                      onChange={(e) => setSearchValue(e.target.value)}
+                      value={searchValue}
+                    />
+                  </Box>
                 </SearchCategory>
               </Box>
             </Stack>

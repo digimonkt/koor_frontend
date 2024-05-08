@@ -266,6 +266,17 @@
   font-family: "Bahnschrift", sans-serif !important;
   color: #eea23d;
   line-height: 22px !important;
+  transition: color 0.3s;
+}
+
+.see_all_jobs button svg {
+  color: #eea23d;
+  transition: color 0.3s;
+}
+
+.see_all_jobs:hover,
+.see_all_jobs:hover button svg {
+  color: #c07511;
 }
 
 .popular_job {
@@ -303,7 +314,12 @@
 }
 
 .back_img_div {
-  background-image: url(../../assets/images/newbanner.jpg);
+  background-image: linear-gradient(
+      71.35deg,
+      rgba(0, 0, 0, 0.4) 27.39%,
+      rgba(0, 0, 0, 0) 57.1%
+    ),
+    url(../../assets/images/newbanner.jpg);
   background-size: cover;
   height: 630px;
   background-position: center;
@@ -320,9 +336,8 @@
 }
 
 .headding h2 {
-  font-family: Bahnschrift, sans-serif !important;
-  font-size: 54px;
-  font-weight: 700;
+  font-family: Poppins, sans-serif !important;
+  font-size: 24px;
   justify-content: center;
   line-height: 64px;
   color: #fff;

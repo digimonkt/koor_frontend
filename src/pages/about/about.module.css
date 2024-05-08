@@ -5,7 +5,7 @@
 }
 
 .btn_about:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: #393939 !important;
 }
 
 .btn_about {
@@ -20,6 +20,7 @@
   border-radius: 40px !important;
   display: flex !important;
   align-items: center !important;
+  transition: 0.3s background;
 }
 
 .btn_about_box {
@@ -101,8 +102,6 @@
 .about_back_color {
   background-color: #eea23d;
   padding: 107px 0px;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
 }
 
 .about {

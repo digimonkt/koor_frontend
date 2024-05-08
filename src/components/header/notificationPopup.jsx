@@ -44,7 +44,7 @@ function NotificationPopup() {
 
   return (
     <div>
-      <SVG.NotificationIcon onClick={handleClick} />
+      <SVG.NotificationIcon width={20} height={25} onClick={handleClick} />
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

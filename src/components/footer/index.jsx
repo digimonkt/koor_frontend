@@ -27,6 +27,7 @@ function Footer() {
             direction={{ xs: "column", sm: "row" }}
             spacing={{ xs: 1, sm: 2, md: 4 }}
             alignItems="center"
+            sx={{ gap: "15px" }}
           >
             <SVG.KoorLogo />
             <span className="copy-right">

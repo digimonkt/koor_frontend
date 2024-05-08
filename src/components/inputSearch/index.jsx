@@ -16,7 +16,7 @@ const InputSearch = ({ placeholder, svg, ...rest }) => {
         >
           <MenuIcon />
         </IconButton> */}
-        <div className="searchmainbox">
+        <div className={styles.searchmainbox}>
           <small className="telentsearchicon">{<SVG.HeaderSearch />}</small>
           <input
             className={`${styles.searchbox}`}

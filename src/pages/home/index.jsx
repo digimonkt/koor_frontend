@@ -221,10 +221,20 @@ const Home = () => {
                         paddingTop: "26%",
                       }}
                     >
-                      <h1 style={{ color: "#fff" }}>Find your dream job</h1>
-                      <h5 className="mb-5">
+                      <Typography
+                        variant="h1"
+                        style={{
+                          color: "#fff",
+                          fontSize: 54,
+                          fontFamily: "Bahnschrift, sans-serif",
+                          fontWeight: 700,
+                        }}
+                      >
+                        Find your dream job
+                      </Typography>
+                      <Typography variant="h2" className="mb-5">
                         Search for the best opportunities in your area
-                      </h5>
+                      </Typography>
                       <form onSubmit={handleSubmit}>
                         <Grid
                           container
@@ -418,7 +428,7 @@ const Home = () => {
                     >
                       See all {totalTenders} Tenders{" "}
                       <IconButton>
-                        <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                        <ArrowForwardIcon />
                       </IconButton>
                     </Typography>
 
@@ -433,7 +443,7 @@ const Home = () => {
                     >
                       See all {totalJobs} jobs{" "}
                       <IconButton>
-                        <ArrowForwardIcon sx={{ color: "#eea23d" }} />
+                        <ArrowForwardIcon />
                       </IconButton>
                     </Typography>
                   </Box>

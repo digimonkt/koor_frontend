@@ -511,6 +511,10 @@ header {
   padding: 0px 8px;
 }
 
+.menu li:has(a) {
+  padding: 0px 20px;
+}
+
 .menu li:last-child {
   padding-right: 0px;
 }
@@ -704,6 +708,7 @@ header {
   padding: 12px 40px;
   cursor: pointer;
   margin-bottom: 16px;
+  transition: 0.15s background, 0.15s box-shadow, 0.15s border;
 }
 
 .register-des > a:last-child {
@@ -2280,9 +2285,7 @@ span.count {
     background: #fff;
     visibility: hidden;
     opacity: 0;
-    transition:
-      visibility 1s,
-      opacity 0.5s linear;
+    transition: visibility 1s, opacity 0.5s linear;
     display: block;
   }
 
@@ -2371,7 +2374,7 @@ a {
 }
 
 input.employersearch {
-  padding: 10px 10px 10px 50px;
+  padding: 12px 10px 10px 10px;
   background: transparent;
   border: 0;
   width: 100%;
@@ -2379,7 +2382,6 @@ input.employersearch {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 22px;
   /* identical to box height, or 138% */
   letter-spacing: 0.03em;
   position: relative;
@@ -2404,12 +2406,10 @@ input.employersearch {
 }
 
 .login_header_search_icon {
-  position: absolute;
   color: #848484;
-  left: 17px;
-  width: 24px;
-  height: 24px;
-  top: 10px;
+  width: 17px;
+  height: 17px;
+  margin-left: 17px;
 }
 
 .iconfooter a {
@@ -3090,8 +3090,8 @@ input.employersearch {
 }
 
 .telentsearchicon svg {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
 }
 
 .d-flex-img {

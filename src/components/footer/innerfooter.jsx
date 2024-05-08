@@ -402,7 +402,7 @@ const InnerFooter = () => {
                         border: "0px",
                         fontFamily: "Poppins",
                         fontSize: "14px",
-                        padding: "0px 10px",
+                        padding: "0px 20px",
                         height: "50px",
                       },
                     }}
@@ -421,10 +421,8 @@ const InnerFooter = () => {
                         fontFamily: "Bahnschrift",
                         fontSize: "15px",
                         fontWeight: "400",
-                        height: "39px",
-                        width: "116px",
-                        marginTop: "5.4px",
-                        marginRight: "5px",
+                        margin: "5px 5px 5px 0",
+                        padding: "8px 30px",
                         whiteSpace: "nowrap",
                         "&:hover": {
                           background: "#274593",
@@ -468,7 +466,7 @@ const InnerFooter = () => {
               },
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
               <SVG.KoorLogo style={{ width: "90px" }} />
               <Typography
                 sx={{

@@ -4,6 +4,12 @@
   align-items: center;
   position: relative;
 }
+.searchmainbox {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
 .searchInput span {
   position: absolute;
   right: 11px;
@@ -30,6 +36,7 @@
   height: 54px;
   /* background: #fff url('../../../assert/images/search.png') no-repeat 22px 18px; */
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 .searchbox::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -58,5 +65,4 @@
   .searchbox {
     width: 100% !important;
   }
- 
 }

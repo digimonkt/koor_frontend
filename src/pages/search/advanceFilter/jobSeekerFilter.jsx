@@ -22,7 +22,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories }),
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
       );
     }
   }, [formik.values.jobCategories]);
@@ -93,8 +93,8 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                         ? "Job Sub Category"
                         : "Select Category"
                       : formik.values.jobCategories
-                        ? "Job Sub Category"
-                        : "Select Category first"
+                      ? "Job Sub Category"
+                      : "Select Category first"
                   }
                   options={(
                     jobSubCategories.data[formik.values.jobCategories] || []
@@ -143,33 +143,27 @@ function JobSeekerFilter({ formik, footer, responsive }) {
             lg={responsive ? 12 : 3}
             sm={6}
           >
-            <div>
-              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
-                <SelectInput
-                  title="City"
-                  placeholder={
-                    platform === "android" || platform === "ios"
-                      ? formik.values.country
-                        ? "City"
-                        : "Select Country "
-                      : formik.values.country
-                        ? "City"
-                        : "Select Country first"
-                  }
-                  disabled={!formik.values.country}
-                  options={(cities.data[formik.values.country] || []).map(
-                    (country) => ({
-                      value: country.title,
-                      label: country.title,
-                    }),
-                  )}
-                  {...formik.getFieldProps("city")}
-                />
-                {formik.touched.city && formik.errors.city ? (
-                  <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                ) : null}
-              </FormControl>
-            </div>
+            {formik.values.country && (
+              <div>
+                <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+                  <SelectInput
+                    title="City"
+                    placeholder="City"
+                    disabled={!formik.values.country}
+                    options={(cities.data[formik.values.country] || []).map(
+                      (country) => ({
+                        value: country.title,
+                        label: country.title,
+                      })
+                    )}
+                    {...formik.getFieldProps("city")}
+                  />
+                  {formik.touched.city && formik.errors.city ? (
+                    <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                  ) : null}
+                </FormControl>
+              </div>
+            )}
           </Grid>
           <Grid item xs={12} lg={responsive ? 12 : 4} sm={12} md={4}>
             <label style={{ marginBottom: "25px" }}>Job type</label>

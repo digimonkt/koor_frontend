@@ -36,7 +36,7 @@ const Skills = (props) => {
     setRemovedSkills((prevState) => [...prevState, id]);
     setAllSkills((prevState) => prevState.filter((state) => state.id !== id));
     setNewSelectedSkills((prevState) =>
-      prevState.filter((state) => state.id !== id),
+      prevState.filter((state) => state.id !== id)
     );
   };
 
@@ -71,7 +71,7 @@ const Skills = (props) => {
       dispatch(
         getSkills({
           search: debouncedSearchSkillValue,
-        }),
+        })
       );
     }
   }, [debouncedSearchSkillValue]);
@@ -112,7 +112,13 @@ const Skills = (props) => {
               <>
                 {props.toggle ? (
                   <div>
-                    <p style={{ color: "#848484", marginBottom: "16px" }}>
+                    <p
+                      style={{
+                        color: "#848484",
+                        marginBottom: "16px",
+                        marginTop: "5px",
+                      }}
+                    >
                       Maximum 15 skills
                     </p>
                     <Stack
@@ -167,8 +173,8 @@ const Skills = (props) => {
                                 (skill) =>
                                   !allSkills.some(
                                     (otherItem) =>
-                                      otherItem.title === skill.title,
-                                  ),
+                                      otherItem.title === skill.title
+                                  )
                               )
                               .map((skill) => {
                                 return (
@@ -229,7 +235,15 @@ const Skills = (props) => {
               </>
             ) : (
               <div>
-                <p>Maximum 15 skills</p>
+                <p
+                  style={{
+                    color: "#848484",
+                    marginTop: "5px",
+                    fontFamily: "Poppins",
+                  }}
+                >
+                  Maximum 15 skills
+                </p>
                 <Stack direction="row" spacing={0} flexWrap="wrap">
                   {allSkills.length ? (
                     allSkills.map((item, index) => (
@@ -276,8 +290,8 @@ const Skills = (props) => {
                           .filter(
                             (skill) =>
                               !allSkills.some(
-                                (otherItem) => otherItem.title === skill.title,
-                              ),
+                                (otherItem) => otherItem.title === skill.title
+                              )
                           )
                           .map((skill) => {
                             return (

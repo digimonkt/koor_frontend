@@ -58,7 +58,7 @@ const Education = (props) => {
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <h2 className="mb-0">Education</h2>
+              <h2 className="mb-4">Education</h2>
               {platform === "android" || platform === "ios" ? (
                 <IconButton size="small" onClick={() => props.fun()}>
                   <SVG.ArrowUpIcon />
