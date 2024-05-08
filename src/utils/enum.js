@@ -108,3 +108,11 @@ export const SHARE_PLATFORM = {
   linkedin: "linked_in",
   directLink: "direct_link",
 };
+
+export const SOCIAL_LINKS = {
+  instagram: "https://www.instagram.com/koorjobs?igsh=enY5Z2N6MGhjeDBx",
+  youtube: "https://www.youtube.com/@Koorjobs",
+  linkedin: "https://www.linkedin.com/in/koorjobs",
+  facebook: "https://www.facebook.com/koorjobs",
+  twitter: "#",
+};
