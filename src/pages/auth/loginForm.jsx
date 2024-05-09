@@ -94,7 +94,7 @@ function LoginForm() {
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group mb-3">
             <LabeledInput
-              placeholder="your Email or Phone number"
+              placeholder="Your e-mail or phone number"
               title="Login"
               subtitle={
                 role !== USER_ROLES.jobSeeker && [

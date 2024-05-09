@@ -77,44 +77,40 @@ function JobSeekerFilter({ formik, footer, responsive }) {
             lg={responsive ? 12 : 3}
             sm={6}
           >
-            <div>
-              <FormControl
-                sx={{ m: 1, marginLeft: 0, width: 330 }}
-                className="filter_input"
-              >
-                <SelectInput
-                  multiple
-                  title="SubCategory"
-                  defaultValue=""
-                  disabled={!formik.values.jobCategories}
-                  placeholder={
-                    platform === "android" || platform === "ios"
-                      ? formik.values.jobCategories
-                        ? "Job Sub Category"
-                        : "Select Category"
-                      : formik.values.jobCategories
-                      ? "Job Sub Category"
-                      : "Select Category first"
-                  }
-                  options={(
-                    jobSubCategories.data[formik.values.jobCategories] || []
-                  ).map((jobCategory) => ({
-                    value: jobCategory.id,
-                    label: jobCategory.title,
-                  }))}
-                  name={"jobSubCategories"}
-                  value={formik.values.jobSubCategories}
-                  onChange={(e) => {
-                    formik.handleChange(e);
-                  }}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.jobSubCategories &&
-                formik.errors.jobSubCategories ? (
-                  <ErrorMessage>{formik.errors.jobSubCategories}</ErrorMessage>
-                ) : null}
-              </FormControl>
-            </div>
+            {formik.values.jobCategories && (
+              <div>
+                <FormControl
+                  sx={{ m: 1, marginLeft: 0, width: 330 }}
+                  className="filter_input"
+                >
+                  <SelectInput
+                    multiple
+                    title="Subcategory"
+                    defaultValue=""
+                    disabled={!formik.values.jobCategories}
+                    placeholder="Subcategory"
+                    options={(
+                      jobSubCategories.data[formik.values.jobCategories] || []
+                    ).map((jobCategory) => ({
+                      value: jobCategory.id,
+                      label: jobCategory.title,
+                    }))}
+                    name={"jobSubCategories"}
+                    value={formik.values.jobSubCategories}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                    }}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.jobSubCategories &&
+                  formik.errors.jobSubCategories ? (
+                    <ErrorMessage>
+                      {formik.errors.jobSubCategories}
+                    </ErrorMessage>
+                  ) : null}
+                </FormControl>
+              </div>
+            )}
           </Grid>
           <Grid
             item
