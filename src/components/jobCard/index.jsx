@@ -101,7 +101,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     }));
   }, [endRouter]);
   return (
-    <div className="job_card">
+    <div className="job_card ">
       <Grid
         justifyContent="space-between"
         sx={{ alignItems: state.showMore ? "flex-start" : "center" }}

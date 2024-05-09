@@ -52,7 +52,7 @@ function Footer() {
             </ul>
           </div>
           <Divider orientation="vertical" flexItem />
-          <div style={{ border: "2px solid black" }}>
+          <div>
             <ul className="social-icons">
               <li>
                 <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.twitter}>
