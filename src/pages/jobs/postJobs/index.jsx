@@ -229,7 +229,7 @@ function PostJobsComponent() {
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const getJobDetailsById = useCallback(async (jobId) => {
-    const response = await getJobDetailsByIdAPI({ jobId });
+    const response = await getJobDetailsByIdAPI({ slug: jobId });
     if (response.remote === "success") {
       const { data } = response;
       formik.setFieldValue("title", data?.title || "");
