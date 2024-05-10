@@ -114,5 +114,5 @@ export const SOCIAL_LINKS = {
   youtube: "https://www.youtube.com/@Koorjobs",
   linkedin: "https://www.linkedin.com/in/koorjobs",
   facebook: "https://www.facebook.com/koorjobs",
-  twitter: "#",
+  twitter: "https://twitter.com/Koorjobs",
 };
