@@ -58,21 +58,24 @@ const Resources = () => {
           <Box component="h1" className={`${styles.heddingTitle}`}>
             Resources
           </Box>
-          {resourceList.length > 0 && loading ? (
-            resourceList.map((item, index) => (
-              <ResourceCard
-                key={index}
-                title={item.title}
-                description={item.description}
-                image={item.attachment.path}
-                id={item.id}
-              />
-            ))
+          {resourceList.length && !loading ? (
+            resourceList.map((item, index) => {
+              return (
+                <ResourceCard
+                  key={index}
+                  title={item.title}
+                  description={item.description}
+                  image={item.attachment.path}
+                  id={item.id}
+                />
+              );
+            })
           ) : loading ? (
             <ResourceListSkeletonLoader />
           ) : (
             <NoDataFoundAnimation title="We apologize, but we couldn't find any resources" />
           )}
+
           {pages > 1 && (
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <TablePagination
