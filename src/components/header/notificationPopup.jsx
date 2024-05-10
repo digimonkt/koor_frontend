@@ -60,13 +60,13 @@ function NotificationPopup() {
         onClose={handleClose}
         PaperProps={{
           style: {
-            maxHeight: "500px",
+            borderRadius: "14px",
           },
         }}
         className="drop_menu"
       >
         <div ref={wrapperRef} id="notificationPopup">
-          <MenuItem sx={{ padding: "20px 15px 15px 15px", cursor: "default" }}>
+          <MenuItem sx={{ padding: "20px 15px", cursor: "default" }}>
             <div className={styles.notification_heading_div}>
               <div>
                 <h3 className={styles.notification_heading}>Notifications</h3>
@@ -83,7 +83,7 @@ function NotificationPopup() {
             className="w-100"
             sx={{ padding: "0px", cursor: "default" }}
           >
-            <NotificationContent footer handleClose={handleClose} />
+            <NotificationContent handleClose={handleClose} />
           </MenuItem>
         </div>
       </Menu>

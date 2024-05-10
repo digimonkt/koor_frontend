@@ -76,6 +76,7 @@
   justify-content: space-between;
   align-items: center;
   cursor: default;
+  padding: 25px 30px;
 }
 
 .settings {
@@ -128,7 +129,7 @@
   align-items: center !important;
 }
 .scrollbarNotification {
-  max-height: 300px;
+  max-height: 75dvh;
   overflow-x: hidden;
   overflow-y: auto;
 }
