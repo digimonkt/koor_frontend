@@ -21,11 +21,7 @@ import {
   HorizontalLabelInput,
   HorizontalPhoneInput,
 } from "../../../components/input";
-import {
-  getCities,
-  getCountries,
-  getEducationLevels,
-} from "../../../redux/slice/choices";
+import { getCities, getEducationLevels } from "../../../redux/slice/choices";
 import { validateJobSeekerAboutMe } from "./validator";
 import { ErrorMessage } from "../../../components/caption";
 import {
@@ -44,18 +40,20 @@ import { updateCurrentUser } from "../../../redux/slice/user";
 import DialogBox from "../../../components/dialogBox";
 import NoItem from "../myProfile/noItem";
 import { Capacitor } from "@capacitor/core";
+import { getCountries } from "@api/countries";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
   const platform = Capacitor.getPlatform();
   const {
     auth: { currentUser },
-    choices: { educationLevels, countries, cities },
+    choices: { educationLevels, cities },
   } = useSelector((state) => state);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [filledData, setFilledData] = useState(null);
   const [countryId, setCountryId] = useState("");
+  const [countries, setCountries] = useState([]);
   const currentYear = dayjs().year();
   const formik = useFormik({
     initialValues: {
@@ -162,6 +160,10 @@ const AboutMe = (props) => {
       setLoading(false);
     },
   });
+
+  const getCountriesList = async () =>
+    await getCountries().then((res) => setCountries(res));
+
   useEffect(() => {
     if (filledData) {
       formik.setFieldValue("city", filledData.city);
@@ -194,8 +196,8 @@ const AboutMe = (props) => {
     if (!educationLevels.data.length) {
       dispatch(getEducationLevels());
     }
-    if (!countries.data.length) {
-      dispatch(getCountries());
+    if (!countries.length) {
+      getCountriesList();
     }
   }, []);
   useEffect(() => {
@@ -416,7 +418,7 @@ const AboutMe = (props) => {
                       label="Country"
                       type="select"
                       placeholder="Select Country"
-                      options={countries.data.map((country) => ({
+                      options={countries.map((country) => ({
                         value: country.id,
                         label: country.title,
                       }))}
@@ -720,7 +722,7 @@ const AboutMe = (props) => {
                     label="Country"
                     type="select"
                     placeholder="Select Country"
-                    options={countries.data.map((country) => ({
+                    options={countries.map((country) => ({
                       value: country.id,
                       label: country.title,
                     }))}
@@ -729,21 +731,21 @@ const AboutMe = (props) => {
                   {formik.touched.country && formik.errors.country ? (
                     <ErrorMessage>{formik.errors.country}</ErrorMessage>
                   ) : null}
-                  <HorizontalLabelInput
-                    label="City"
-                    type="select"
-                    placeholder={
-                      formik.values.country ? "City" : "Select Country first"
-                    }
-                    disabled={!formik.values.country}
-                    options={(cities.data[formik.values.country] || []).map(
-                      (educationLevel) => ({
-                        value: educationLevel.id,
-                        label: educationLevel.title,
-                      })
-                    )}
-                    {...formik.getFieldProps("city")}
-                  />
+                  {formik.values.country && (
+                    <HorizontalLabelInput
+                      label="City"
+                      type="select"
+                      placeholder="City"
+                      disabled={!formik.values.country}
+                      options={(cities.data[formik.values.country] || []).map(
+                        (educationLevel) => ({
+                          value: educationLevel.id,
+                          label: educationLevel.title,
+                        })
+                      )}
+                      {...formik.getFieldProps("city")}
+                    />
+                  )}
                   {formik.touched.city && formik.errors.city ? (
                     <ErrorMessage>{formik.errors.city}</ErrorMessage>
                   ) : null}

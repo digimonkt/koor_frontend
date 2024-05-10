@@ -19,7 +19,7 @@ import { SVG } from "../../assets/svg";
 import { Link, useNavigate } from "react-router-dom";
 import TextSlide from "./textSlide";
 import { SelectInput } from "../../components/input";
-import { getCountries, getJobCategories } from "../../redux/slice/choices";
+import { getJobCategories } from "../../redux/slice/choices";
 import { USER_ROLES } from "../../utils/enum";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CoravImg from "../../assets/images/corav-bg.png";
@@ -38,14 +38,16 @@ import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import { Capacitor } from "@capacitor/core";
 import DialogBox from "../../components/dialogBox";
 import { Helmet } from "react-helmet";
+import { getCountries } from "@api/countries";
 const platform = Capacitor.getPlatform();
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { countries, jobCategories } = useSelector((state) => state.choices);
+  const { jobCategories } = useSelector((state) => state.choices);
   const { role, isLoggedIn } = useSelector((state) => state.auth);
 
+  const [countries, setCountries] = useState([]);
   const [totalTenders, setTotalTenders] = useState(0);
   const [totalJobs, setTotalJobs] = useState(0);
   const [topJobCategories, setTopJobCategories] = useState([]);
@@ -102,6 +104,9 @@ const Home = () => {
     }
   };
 
+  const getCountriesList = async () =>
+    await getCountries().then((res) => setCountries(res));
+
   const getTopTenderCategories = async () => {
     const res = await getTopTenderCategoriesAPI();
     if (res.remote === "success") {
@@ -153,8 +158,8 @@ const Home = () => {
   }, []);
   useEffect(() => {
     dispatch(setIstHomePage(true));
-    if (!countries.data.length) {
-      dispatch(getCountries());
+    if (!countries.length) {
+      getCountriesList();
     }
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
@@ -301,7 +306,7 @@ const Home = () => {
                             <SelectInput
                               value={location}
                               onChange={handleLocationChange}
-                              options={countries.data.map((country) => ({
+                              options={countries.map((country) => ({
                                 value: country.id,
                                 label: country.title,
                               }))}

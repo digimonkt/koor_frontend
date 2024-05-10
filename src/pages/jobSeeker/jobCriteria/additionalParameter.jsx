@@ -4,22 +4,24 @@ import { SVG } from "../../../assets/svg";
 import { OutlinedButton } from "../../../components/button";
 import { CheckboxInput, SelectInput } from "../../../components/input";
 import { useDispatch, useSelector } from "react-redux";
-import { getCities, getCountries } from "../../../redux/slice/choices";
+import { getCities } from "../../../redux/slice/choices";
 import { FormControlReminder } from "../../../components/style";
 import { UpdateJobSeekerAdditionalParametersAPI } from "../../../api/jobSeeker";
 import { useNavigate } from "react-router-dom";
 import { USER_ROLES } from "../../../utils/enum";
 import { updateCurrentUser } from "../../../redux/slice/user";
 import { Capacitor } from "@capacitor/core";
+import { getCountries } from "@api/countries";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
-    choices: { countries, cities },
+    choices: { cities },
     auth: { currentUser },
   } = useSelector((state) => state);
+  const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [jobType, setJobType] = useState({
@@ -27,6 +29,9 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
     fullTime: false,
     contract: false,
   });
+
+  const getCountriesList = async () =>
+    await getCountries().then((res) => setCountries(res));
 
   const handleSaveAdditionalParameters = async () => {
     const payload = {
@@ -52,21 +57,21 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             hasContract: payload.has_contract,
           },
           profile: {
-            country: countries.data.find(
-              (country) => country.id === payload.country,
+            country: countries.find(
+              (country) => country.id === payload.country
             ),
             city: cities.data[payload.country].find(
-              (city) => city.id === payload.city,
+              (city) => city.id === payload.city
             ),
           },
-        }),
+        })
       );
       navigate(`/${USER_ROLES.jobSeeker}/my-profile/update-profile`);
     }
   };
   useEffect(() => {
-    if (!countries.data.length) {
-      dispatch(getCountries());
+    if (!countries.length) {
+      getCountriesList();
     }
     if (currentUser.profile.country?.id) {
       setSelectedCountry(currentUser.profile.country?.id);
@@ -105,7 +110,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               <SelectInput
                 placeholder="Country"
                 defaultValue=""
-                options={countries.data.map((country) => ({
+                options={countries.map((country) => ({
                   value: country.id,
                   label: country.title,
                 }))}
@@ -114,29 +119,31 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               />
             </FormControl>
           </Grid>
-          <Grid
-            item
-            md={6}
-            xs={platform === "android" || platform === "ios" ? "6" : "12"}
-          >
-            <FormControl fullWidth size="small">
-              <label className="d-block mb-2">City</label>
-              <SelectInput
-                placeholder={
-                  selectedCountry ? "Choose City" : "Select Country first"
-                }
-                disabled={!selectedCountry}
-                options={(cities.data[selectedCountry] || []).map(
-                  (country) => ({
-                    value: country.id,
-                    label: country.title,
-                  }),
-                )}
-                onChange={(e) => setSelectedCity(e.target.value)}
-                value={selectedCity}
-              />
-            </FormControl>
-          </Grid>
+          {selectedCountry.length > 0 && (
+            <Grid
+              item
+              md={6}
+              xs={platform === "android" || platform === "ios" ? "6" : "12"}
+            >
+              <FormControl fullWidth size="small">
+                <label className="d-block mb-2">City</label>
+                <SelectInput
+                  placeholder={
+                    selectedCountry ? "Choose City" : "Select Country first"
+                  }
+                  disabled={!selectedCountry}
+                  options={(cities.data[selectedCountry] || []).map(
+                    (country) => ({
+                      value: country.id,
+                      label: country.title,
+                    })
+                  )}
+                  onChange={(e) => setSelectedCity(e.target.value)}
+                  value={selectedCity}
+                />
+              </FormControl>
+            </Grid>
+          )}
           <Grid item md={12} xs={12}>
             {platform === "android" || platform === "ios" ? null : (
               <Divider className="mb-3" />

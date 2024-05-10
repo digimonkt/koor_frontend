@@ -17,7 +17,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCities,
-  getCountries,
   getJobCategories,
   getTenderOpportunityType,
   getTenderTags,
@@ -60,6 +59,7 @@ import VendorFilter from "./vendorFilter";
 import { useSearchParams } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Capacitor } from "@capacitor/core";
+import { getCountries } from "@api/countries";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const matches = useMediaQuery("(max-width:768px)");
   const dispatch = useDispatch();
@@ -67,7 +67,6 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const {
     auth: { role, isLoggedIn },
     choices: {
-      countries,
       jobCategories,
       cities,
       jobSubCategories,
@@ -98,6 +97,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
+  const [countries, setCountries] = useState(false);
   const [open, setOpen] = useState(false);
   const [filterId, setFilterId] = useState(0);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -205,6 +205,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     setOpen(!open);
   };
 
+  const getCountriesList = async () =>
+    await getCountries().then((res) => setCountries(res));
+
   const getSearchJobsFilter = async () => {
     const data = await getSearchJobsFilterAPI();
     if (data.remote === "success") {
@@ -240,7 +243,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     formik.setFieldValue(
       "country",
       filter.country?.id ||
-        (typeof filter.country === "string" ? filter.country : ""),
+        (typeof filter.country === "string" ? filter.country : "")
     );
     formik.setFieldValue("city", filter.city?.title);
     formik.setFieldValue("isFullTime", filter.isFullTime);
@@ -310,7 +313,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
         tag: "",
         // vendor
         yearsInMarket: "",
-      }),
+      })
     );
   };
   const handleSaveJobSearch = async (title) => {
@@ -328,7 +331,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       data.city = city?.id;
     }
@@ -360,7 +363,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -396,7 +399,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -429,7 +432,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     };
     if (rawData.country) {
       const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city,
+        (city) => city.title === rawData.city
       );
       if (city && city.id) {
         data.city = city?.id;
@@ -486,8 +489,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     handleReset();
   }, [location.pathname]);
   useEffect(() => {
-    if (!countries.data.length) {
-      dispatch(getCountries());
+    if (!countries.length) {
+      getCountriesList();
     }
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
@@ -555,19 +558,19 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     },
 
     onSubmit: async (values) => {
-      const country = countries.data.find(
-        (country) => country.id === values.country,
+      const country = countries.find(
+        (country) => country.id === values.country
       );
       const payload = {
         country: country ? country.title : "",
         city: values.city,
         jobCategory: jobCategories.data.find(
-          (val) => val.id === values.jobCategories,
+          (val) => val.id === values.jobCategories
         )?.title,
         jobSubCategories: (values.jobSubCategories || [])
           .map((subCategories) => {
             return jobSubCategories.data[values.jobCategories]?.find(
-              (subCategory) => subCategory.id === subCategories,
+              (subCategory) => subCategory.id === subCategories
             );
           })
           .filter((e) => e),
@@ -583,16 +586,16 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
           values.deadline &&
           dayjs(values.deadline).format(DATABASE_DATE_FORMAT),
         sector: values.sector?.map((sector) =>
-          sectors.data.find((i) => i.id === sector),
+          sectors.data.find((i) => i.id === sector)
         ),
         budget_min: values.budgetMin,
         budget_max: values.budgetMax,
         opportunityType: values.opportunityType?.map((type) =>
-          opportunityTypes.data.find((i) => i.id === type),
+          opportunityTypes.data.find((i) => i.id === type)
         ),
         tag: values.tag?.map((tag) => tags.data.find((i) => i.id === tag)),
         tenderCategories: values.tenderCategories?.map((tenderCategory) =>
-          tenderCategories.data.find((i) => i.id === tenderCategory),
+          tenderCategories.data.find((i) => i.id === tenderCategory)
         ),
         // vendor
         years_in_market: values.yearsInMarket,
@@ -609,7 +612,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories }),
+        getJobSubCategories({ categoryId: formik.values.jobCategories })
       );
     }
   }, [formik.values.country, formik.values.jobCategories]);
@@ -766,8 +769,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
                           platform === "android" || platform === "ios"
                             ? "50px !important"
                             : matches
-                              ? "42px !important"
-                              : "42px !important",
+                            ? "42px !important"
+                            : "42px !important",
                       }}
                       className={`${
                         selectedFilter === filter.id

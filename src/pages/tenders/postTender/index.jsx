@@ -15,7 +15,6 @@ import {
   QuillInput,
 } from "../../../components/input";
 import {
-  getCountries,
   getCities,
   getTenderTags,
   getTenderSector,
@@ -46,23 +45,19 @@ import styles from "./postTender.module.css";
 import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "../../../api/user";
 import urlcat from "urlcat";
+import { getCountries } from "@api/countries";
 const PostTender = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const {
-    countries,
-    tenderCategories,
-    tags,
-    cities,
-    sectors,
-    opportunityTypes,
-  } = useSelector((state) => state.choices);
+  const { tenderCategories, tags, cities, sectors, opportunityTypes } =
+    useSelector((state) => state.choices);
   const [tenderId, setTenderId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [countries, setCountries] = useState([]);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [descData, setDescData] = useState("");
@@ -184,6 +179,10 @@ const PostTender = () => {
       content !== "<p><br></p>" ? content : ""
     );
   };
+
+  const getCountriesList = async () =>
+    await getCountries().then((res) => setCountries(res));
+
   const getTenderDetailsById = useCallback(async (tenderId) => {
     const response = await getTenderDetailsByIdAPI({ tenderId });
     if (response.remote === "success") {
@@ -249,8 +248,8 @@ const PostTender = () => {
   }, [debouncedSearchValue]);
 
   useEffect(() => {
-    if (!countries.data.length) {
-      dispatch(getCountries());
+    if (!countries.length) {
+      getCountriesList();
     }
     if (!tenderCategories.data.length) {
       dispatch(getTenderCategories());
@@ -410,7 +409,7 @@ const PostTender = () => {
                     <SelectInput
                       placeholder="Country"
                       defaultValue=""
-                      options={countries.data.map((country) => ({
+                      options={countries.map((country) => ({
                         value: country.id,
                         label: country.title,
                       }))}
@@ -420,27 +419,27 @@ const PostTender = () => {
                       <ErrorMessage>{formik.errors.country}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  <Grid item xl={4} lg={4} sm={6} xs={12}>
-                    <label>
-                      City <span className="required-field">*</span>
-                    </label>
-                    <SelectInput
-                      placeholder={
-                        formik.values.country ? "City" : "Select Country first"
-                      }
-                      disabled={!formik.values.country}
-                      options={(cities.data[formik.values.country] || []).map(
-                        (country) => ({
-                          value: country.id,
-                          label: country.title,
-                        })
-                      )}
-                      {...formik.getFieldProps("city")}
-                    />
-                    {formik.touched.city && formik.errors.city ? (
-                      <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                    ) : null}
-                  </Grid>
+                  {formik.values.country && (
+                    <Grid item xl={4} lg={4} sm={6} xs={12}>
+                      <label>
+                        City <span className="required-field">*</span>
+                      </label>
+                      <SelectInput
+                        placeholder="City"
+                        disabled={!formik.values.country}
+                        options={(cities.data[formik.values.country] || []).map(
+                          (country) => ({
+                            value: country.id,
+                            label: country.title,
+                          })
+                        )}
+                        {...formik.getFieldProps("city")}
+                      />
+                      {formik.touched.city && formik.errors.city ? (
+                        <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                      ) : null}
+                    </Grid>
+                  )}
                   <Grid item xl={4} lg={4} sm={12} xs={12}>
                     <label>
                       Working place address{" "}

@@ -23,11 +23,7 @@ import {
 import { SVG } from "../../../assets/svg";
 import { FormControlReminder } from "../../../components/style";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCities,
-  getCountries,
-  getTenderSector,
-} from "../../../redux/slice/choices";
+import { getCities, getTenderSector } from "../../../redux/slice/choices";
 import NoItem from "../../../pages/jobSeeker/myProfile/noItem";
 import { useFormik } from "formik";
 import { useDebounce } from "usehooks-ts";
@@ -49,6 +45,7 @@ import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
 import { USER_ROLES } from "@utils/enum";
 import { useNavigate } from "react-router-dom";
+import { getCountries } from "@api/countries";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -85,9 +82,10 @@ function MyProfile() {
 
   const {
     auth: { currentUser },
-    choices: { countries, cities, sectors },
+    choices: { cities, sectors },
   } = useSelector((state) => state);
   const [profilePicLoading, setProfilePicLoading] = useState("");
+  const [countries, setCountries] = useState([]);
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
@@ -206,9 +204,7 @@ function MyProfile() {
             ),
 
             address: values.address,
-            country: countries.data.find(
-              (country) => country.id === values.country
-            ),
+            country: countries.find((country) => country.id === values.country),
             city: cities.data[values.country]?.find(
               (city) => city.id === values.city
             ),
@@ -234,6 +230,9 @@ function MyProfile() {
     if (res.remote === "success") setProfilePicLoading("updated");
     else setProfilePicLoading("error");
   };
+
+  const getCountriesList = async () =>
+    await getCountries().then((res) => setCountries(res));
 
   useEffect(() => {
     if (currentUser) {
@@ -279,8 +278,8 @@ function MyProfile() {
     }
   }, [currentUser]);
   useEffect(() => {
-    if (!countries.data.length) {
-      dispatch(getCountries());
+    if (!countries.length) {
+      getCountriesList();
     }
     if (!sectors.data.length) {
       dispatch(getTenderSector());
@@ -423,7 +422,7 @@ function MyProfile() {
                           className="add-form-control"
                           label="Country"
                           type="select"
-                          options={countries.data.map((country) => ({
+                          options={countries.map((country) => ({
                             value: country.id,
                             label: country.title,
                           }))}
@@ -715,19 +714,21 @@ function MyProfile() {
                       {formik.touched.country && formik.errors.country ? (
                         <ErrorMessage>{formik.errors.country}</ErrorMessage>
                       ) : null}
-                      <HorizontalLabelInput
-                        placeholder="City"
-                        className="add-form-control"
-                        label="City"
-                        type="select"
-                        options={(cities.data[formik.values.country] || []).map(
-                          (country) => ({
+                      {formik.values.country && (
+                        <HorizontalLabelInput
+                          placeholder="City"
+                          className="add-form-control"
+                          label="City"
+                          type="select"
+                          options={(
+                            cities.data[formik.values.country] || []
+                          ).map((country) => ({
                             value: country.id,
                             label: country.title,
-                          })
-                        )}
-                        {...formik.getFieldProps("city")}
-                      />
+                          }))}
+                          {...formik.getFieldProps("city")}
+                        />
+                      )}
                       {formik.touched.city && formik.errors.city ? (
                         <ErrorMessage>{formik.errors.city}</ErrorMessage>
                       ) : null}

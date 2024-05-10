@@ -37,15 +37,12 @@ import DialogBox from "../../../components/dialogBox";
 import { useNavigate } from "react-router-dom";
 import NoItem from "../../../pages/jobSeeker/myProfile/noItem";
 import { SVG } from "../../../assets/svg";
-import {
-  getCities,
-  getCountries,
-  getTenderSector,
-} from "../../../redux/slice/choices";
+import { getCities, getTenderSector } from "../../../redux/slice/choices";
 import { useDebounce } from "usehooks-ts";
 import styles from "./myProfile.module.css";
 import { setErrorToast } from "../../../redux/slice/toast";
 import { USER_ROLES } from "@utils/enum";
+import { getCountries } from "@api/countries";
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
@@ -54,7 +51,8 @@ function MyProfileComponent() {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
-  const { countries, cities, sectors } = useSelector((state) => state.choices);
+  const [countries, setCountries] = useState([]);
+  const { cities, sectors } = useSelector((state) => state.choices);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const navigate = useNavigate();
   const formik = useFormik({
@@ -82,7 +80,7 @@ function MyProfileComponent() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        "",
+        ""
       );
 
       const payload = {
@@ -129,7 +127,7 @@ function MyProfileComponent() {
             profile: {
               // website: values.website,
               organizationType: sectors.data.find(
-                (sector) => sector.id === values.organizationType,
+                (sector) => sector.id === values.organizationType
               ),
               licenseId: values.licenseId,
               licenseIdFile: values.license[0],
@@ -137,21 +135,21 @@ function MyProfileComponent() {
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
               country: countries.data.find(
-                (country) => country.id === values.country,
+                (country) => country.id === values.country
               ),
               city: cities.data[values.country]?.find(
-                (city) => city.id === values.city,
+                (city) => city.id === values.city
               ),
               address: values.address,
             },
-          }),
+          })
         );
         setLoading(false);
       } else {
         dispatch(
           setErrorToast(
-            res.error.errors.mobile_number || "Something went wrong",
-          ),
+            res.error.errors.mobile_number || "Something went wrong"
+          )
         );
         setLoading(false);
       }
@@ -163,14 +161,18 @@ function MyProfileComponent() {
       setSuggestedAddress(res.data.predictions);
     }
   };
+
+  const getCountriesList = async () =>
+    await getCountries().then((res) => setCountries(res));
+
   useEffect(() => {
     if (formik.values.country && !cities.data[formik.values.country]?.length) {
       dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
   useEffect(() => {
-    if (!countries.data.length) {
-      dispatch(getCountries());
+    if (!countries.length) {
+      getCountriesList();
     }
     if (!sectors.data.length) {
       dispatch(getTenderSector());
@@ -193,7 +195,7 @@ function MyProfileComponent() {
       formik.setFieldValue("organizationName", currentUser.name);
       formik.setFieldValue(
         "organizationType",
-        currentUser.profile.organizationType?.id,
+        currentUser.profile.organizationType?.id
       );
       formik.setFieldValue("country", currentUser.profile.country?.id || "");
       formik.setFieldValue("city", currentUser.profile.city?.id || "");
@@ -205,7 +207,7 @@ function MyProfileComponent() {
         "license",
         currentUser.profile.licenseIdFile
           ? [currentUser.profile.licenseIdFile]
-          : [],
+          : []
       );
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
@@ -309,7 +311,7 @@ function MyProfileComponent() {
                       if (!isValid) {
                         formik.setFieldError(
                           "mobileNumber",
-                          "Invalid Mobile Number",
+                          "Invalid Mobile Number"
                         );
                       }
                     }}
@@ -322,24 +324,26 @@ function MyProfileComponent() {
                     placeholder="Country"
                     label="Country"
                     type="select"
-                    options={countries.data.map((country) => ({
+                    options={countries.map((country) => ({
                       value: country.id,
                       label: country.title,
                     }))}
                     {...formik.getFieldProps("country")}
                   />
-                  <HorizontalLabelInput
-                    placeholder="City"
-                    label="City"
-                    type="select"
-                    options={(cities.data[formik.values.country] || []).map(
-                      (country) => ({
-                        value: country.id,
-                        label: country.title,
-                      }),
-                    )}
-                    {...formik.getFieldProps("city")}
-                  />
+                  {formik.values.country && (
+                    <HorizontalLabelInput
+                      placeholder="City"
+                      label="City"
+                      type="select"
+                      options={(cities.data[formik.values.country] || []).map(
+                        (country) => ({
+                          value: country.id,
+                          label: country.title,
+                        })
+                      )}
+                      {...formik.getFieldProps("city")}
+                    />
+                  )}
                   <HorizontalLabelInput
                     label="Address"
                     type="text"
@@ -361,7 +365,7 @@ function MyProfileComponent() {
                               onClick={() => {
                                 formik.setFieldValue(
                                   "address",
-                                  address.description,
+                                  address.description
                                 );
                                 setSearchValue(address.description);
                               }}
@@ -409,7 +413,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "otherNotification",
-                          e.target.checked,
+                          e.target.checked
                         )
                       }
                       checked={formik.values.otherNotification}
@@ -426,7 +430,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "marketingInformationNotification",
-                          e.target.checked,
+                          e.target.checked
                         )
                       }
                       checked={formik.values.marketingInformationNotification}
