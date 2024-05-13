@@ -93,6 +93,7 @@ function App() {
         CapApp.addListener("backButton", backButtonAction);
       }
       checkLoginStatus();
+
       return () => {
         CapApp.removeAllListeners("appUrlOpen", appUrlOpenListener);
       };
@@ -145,7 +146,7 @@ function App() {
                     <Suspense fallback={<FallbackLoading />}>
                       <route.component />
                     </Suspense>
-                    <InnerFooter />
+                    {isMobileView ? null : <InnerFooter />}
                     {/* <Footer /> */}
                   </>
                 }
