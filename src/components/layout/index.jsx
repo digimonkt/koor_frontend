@@ -12,6 +12,8 @@ import { Suspense, useState } from "react";
 import { FallbackLoading } from "../../components/loader/fallbackLoader";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Capacitor } from "@capacitor/core";
+import NotFoundPage from "@pages/notFound";
+import { useSelector } from "react-redux";
 
 function Layout() {
   const platform = Capacitor.getPlatform();
@@ -22,6 +24,8 @@ function Layout() {
   const handleDrawerClose = () => {
     setSideBarMenu(false);
   };
+
+  const hideSideBar = useSelector((state) => state.employer.hideSideBar);
   return (
     <Box
       sx={{
@@ -34,13 +38,17 @@ function Layout() {
         },
       }}
     >
-      {platform === "android" || platform === "ios" ? null : (
-        <Sidebar
-          SidebarMenu={SidebarMenu}
-          toggleDrawer={toggleDrawer}
-          handleDrawerClose={handleDrawerClose}
-        />
-      )}
+      {platform === "android" || platform === "ios"
+        ? null
+        : !hideSideBar && (
+            <div>
+              <Sidebar
+                SidebarMenu={SidebarMenu}
+                toggleDrawer={toggleDrawer}
+                handleDrawerClose={handleDrawerClose}
+              />
+            </div>
+          )}
 
       <Box
         component="main"
@@ -86,9 +94,6 @@ function Layout() {
               />
             );
           })}
-        </Routes>
-        {/* ) : role === USER_ROLES.employer ? ( */}
-        <Routes>
           {EMPLOYER_ROUTES.map((route) => {
             return (
               <Route
@@ -104,9 +109,6 @@ function Layout() {
               />
             );
           })}
-        </Routes>
-        {/* ) : role === USER_ROLES.vendor ? ( */}
-        <Routes>
           {VENDOR_ROUTES.map((route) => {
             return (
               <Route
@@ -122,7 +124,18 @@ function Layout() {
               />
             );
           })}
+          <Route
+            path={"/*"}
+            element={
+              <>
+                <Suspense fallback={<FallbackLoading />}>
+                  <NotFoundPage />
+                </Suspense>
+              </>
+            }
+          />
         </Routes>
+
         {/* ) : (
           ""
         )} */}

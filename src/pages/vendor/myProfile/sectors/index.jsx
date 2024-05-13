@@ -150,7 +150,7 @@ const Sectors = (props) => {
                           <NoItem
                             icon={<SVG.SkillsIcon />}
                             description={
-                              <p>
+                              <p style={{ textAlign: "justify" }}>
                                 List your sectors that you think will be useful
                                 for a tender you’re looking for. Highlight your
                                 strengths and remember to be honest.
@@ -259,7 +259,7 @@ const Sectors = (props) => {
                     <NoItem
                       icon={<SVG.SkillsIcon />}
                       description={
-                        <p>
+                        <p style={{ textAlign: "justify" }}>
                           List your sectors that you think will be useful for a
                           tender you’re looking for. Highlight your strengths
                           and remember to be honest.

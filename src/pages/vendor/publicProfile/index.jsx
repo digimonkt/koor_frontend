@@ -211,6 +211,7 @@ function PublicProfileComponent() {
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
                           wordBreak: "break-word",
+                          textAlign: "justify",
                         }}
                       >
                         {userDetails.profile.description}

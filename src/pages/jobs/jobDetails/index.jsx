@@ -116,6 +116,7 @@ const JobDetails = () => {
         type: "image",
       },
     },
+    slug: "",
     attachments: [],
   });
   const [addressGeoCode, setAddressGeoCode] = useState({});
@@ -129,8 +130,8 @@ const JobDetails = () => {
       return false;
     });
 
-  const getJobDetails = async (jobId) => {
-    const res = await getJobDetailsByIdAPI({ jobId });
+  const getJobDetails = async (slug) => {
+    const res = await getJobDetailsByIdAPI({ slug });
     if (res.remote === "success") {
       setDetails(res.data);
       const geoCode = await getLetLongByAddressAPI(res.data.address);
@@ -149,7 +150,7 @@ const JobDetails = () => {
   };
   const handleWithdrawJobApplication = async () => {
     if (details.isEditable) {
-      const res = await withdrawJobApplicationAPI({ jobId: params.jobId });
+      const res = await withdrawJobApplicationAPI({ jobId: details.id });
       if (res.remote === "success") {
         setDetails({
           ...details,
@@ -169,7 +170,7 @@ const JobDetails = () => {
     const subject = `Job Application for ${details.title}`;
     const body = `Here is the my job application for this job \n ${window.location.href}`;
     let link = `mailto:${email}?&subject=${encodeURIComponent(
-      subject,
+      subject
     )}&body=${encodeURIComponent(body)}`;
     if (ccEmail1) {
       link += `&cc=${ccEmail1}`;
@@ -269,7 +270,7 @@ const JobDetails = () => {
                         color={getColorByRemainingDays(
                           details?.expiredInDays > 0
                             ? details?.expiredInDays
-                            : 0,
+                            : 0
                         )}
                       />
                     </div>
@@ -293,7 +294,7 @@ const JobDetails = () => {
                           dangerouslySetInnerHTML={{
                             __html: details?.description?.substring(
                               0,
-                              MAX_WORD_SIZE,
+                              MAX_WORD_SIZE
                             ),
                           }}
                         ></Box>
@@ -389,16 +390,14 @@ const JobDetails = () => {
                                 <AttachmentIcon
                                   sx={{
                                     color: getColorByRole(
-                                      role === "" ? USER_ROLES.employer : role,
+                                      role === "" ? USER_ROLES.employer : role
                                     ),
                                     rotate: "45deg",
                                     background: alpha(
                                       getColorByRole(
-                                        role === ""
-                                          ? USER_ROLES.employer
-                                          : role,
+                                        role === "" ? USER_ROLES.employer : role
                                       ),
-                                      0.3,
+                                      0.3
                                     ),
                                     padding: "3px",
                                     borderRadius: "50%",
@@ -467,13 +466,13 @@ const JobDetails = () => {
                                       urlcat("../job/apply/:jobId", {
                                         jobId: params.jobId,
                                         applicationId: details.application.id,
-                                      }),
+                                      })
                                     );
                                   } else {
                                     navigate(
                                       urlcat("../job/apply/:jobId", {
                                         jobId: params.jobId,
-                                      }),
+                                      })
                                     );
                                   }
                                 } else {
@@ -597,7 +596,7 @@ const JobDetails = () => {
                 <>
                   {details?.applicationInstruction &&
                     Boolean(
-                      cleanHtmlContent(details?.applicationInstruction),
+                      cleanHtmlContent(details?.applicationInstruction)
                     ) && (
                       <div className={`${styles.LikeJob}`}>
                         <h2>Application Instructions:</h2>
@@ -704,7 +703,7 @@ const JobDetails = () => {
                     details.highestEducation,
                     details.languages,
                     details.skills,
-                    details.experience,
+                    details.experience
                   ) && (
                     <Grid item xs={12} lg={7} sm={7}>
                       <JobRequirementCard
@@ -723,7 +722,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience,
+                        details.experience
                       )
                         ? 5
                         : 6
@@ -733,7 +732,7 @@ const JobDetails = () => {
                         details.highestEducation,
                         details.languages,
                         details.skills,
-                        details.experience,
+                        details.experience
                       )
                         ? 5
                         : 12
@@ -751,7 +750,7 @@ const JobDetails = () => {
                             details.highestEducation,
                             details.languages,
                             details.skills,
-                            details.experience,
+                            details.experience
                           )
                             ? "75%"
                             : "250px",
@@ -854,7 +853,7 @@ const JobDetails = () => {
                         style={{
                           color: getColorByRole(role),
                         }}
-                        to={urlcat("/jobs/details/:jobId", { jobId: item.id })}
+                        to={urlcat("/jobs/details/:slug", { slug: item.slug })}
                       >
                         {item.title}
                       </Link>

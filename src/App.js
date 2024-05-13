@@ -93,7 +93,6 @@ function App() {
         CapApp.addListener("backButton", backButtonAction);
       }
       checkLoginStatus();
-      firebaseInitialize();
       return () => {
         CapApp.removeAllListeners("appUrlOpen", appUrlOpenListener);
       };
@@ -125,6 +124,7 @@ function App() {
   useEffect(() => {
     getPosition();
     getAPI();
+    firebaseInitialize();
   }, []);
   useScrollTop();
   return (
@@ -145,7 +145,7 @@ function App() {
                     <Suspense fallback={<FallbackLoading />}>
                       <route.component />
                     </Suspense>
-                    {isMobileView ? null : <InnerFooter />}
+                    <InnerFooter />
                     {/* <Footer /> */}
                   </>
                 }

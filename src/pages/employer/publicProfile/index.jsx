@@ -25,6 +25,8 @@ import { Link, useParams } from "react-router-dom";
 import { getColorByRole } from "@utils/generateColor";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
+import { getEmployerActiveTendersAPI } from "@api/tender";
+import TenderCard from "@components/tenderCard";
 
 function PublicProfileComponent() {
   const params = useParams();
@@ -62,10 +64,24 @@ function PublicProfileComponent() {
       setJobList(res.data.results);
     }
   };
+
+  const [activeTenderList, setActiveTenderList] = useState([]);
+
+  const getEmployersActiveTenders = async (userId) => {
+    const res = await getEmployerActiveTendersAPI({
+      employerId: userId,
+      limit: 3,
+    });
+    if (res.remote === "success") {
+      setActiveTenderList(res.data.results);
+    }
+  };
+
   useEffect(() => {
     const userId = params.userId;
     getUserDetails(userId);
     getEmployersJob(userId);
+    getEmployersActiveTenders(params.userId);
   }, []);
   return (
     <Box
@@ -215,6 +231,7 @@ function PublicProfileComponent() {
                           fontSize: "14px",
                           fontFamily: "Poppins",
                           whiteSpace: "pre-line",
+                          textAlign: "justify",
                         }}
                       >
                         {userDetails.profile.description}
@@ -271,6 +288,62 @@ function PublicProfileComponent() {
                                 }}
                               >
                                 <JobCard jobDetails={item} />
+                              </li>
+                            ))
+                          ) : (
+                            <div>
+                              <NoRecordFoundAnimation title="No Work Experiences have been added by the user." />
+                            </div>
+                          )}
+                        </ul>
+                      </Box>
+                      <Box>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontSize: "26px",
+                              fontFamily: "Bahnschrift",
+                              fontWeight: "600",
+                              marginTop: "1rem",
+                            }}
+                          >
+                            Active Tenders
+                          </Typography>
+                          <Typography
+                            variant="string"
+                            sx={{
+                              fontSize: "15px",
+                              fontFamily: "Bahnschrift",
+                            }}
+                          >
+                            <Link
+                              to={`/search/tenders?search=${userDetails.name}`}
+                            >
+                              See All
+                            </Link>
+                          </Typography>
+                        </div>
+                        <ul className="listitems">
+                          {activeTenderList.length ? (
+                            activeTenderList.map((item, index) => (
+                              <li
+                                key={index}
+                                style={{
+                                  borderBottom:
+                                    index !==
+                                    userDetails.workExperiences.length - 1
+                                      ? "1px solid #cacaca"
+                                      : "",
+                                }}
+                              >
+                                <TenderCard tenderDetails={item} />
                               </li>
                             ))
                           ) : (
