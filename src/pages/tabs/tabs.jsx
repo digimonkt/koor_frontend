@@ -6,7 +6,7 @@ import React from "react";
 import ShortlistedCard from "./Shortlisted";
 
 const Tabs = ({ setValue, value, role }) => {
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
   return (
