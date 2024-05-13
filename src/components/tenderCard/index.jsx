@@ -15,14 +15,13 @@ import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 import { updateEmployerTenderStatusAPI } from "@api/employer";
 import { USER_ROLES } from "@utils/enum";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { MAX_WORD_SIZE } from "@utils/constants/constants";
+import { ShowLessText } from "@components/common";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(tenderDetails?.status);
-  const [showMore, setShowMore] = useState(false);
   const handleToggleSave = async () => {
     setIsSaved(!isSaved);
     if (!isSaved) {
@@ -50,7 +49,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
         container
         spacing={1.875}
         sx={{
-          alignItems: showMore ? "flex-start" : "center",
+          alignItems: "flex-start",
         }}
       >
         {logo && (
@@ -246,39 +245,7 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               </Link>
             </h2>
             <Box>
-              {showMore ? (
-                <Box
-                  className="details"
-                  dangerouslySetInnerHTML={{
-                    __html: tenderDetails?.description,
-                  }}
-                ></Box>
-              ) : (
-                <Box
-                  className="details"
-                  dangerouslySetInnerHTML={{
-                    __html: tenderDetails?.description?.substring(
-                      0,
-                      MAX_WORD_SIZE
-                    ),
-                  }}
-                ></Box>
-              )}
-
-              {tenderDetails?.description?.length > 350 && (
-                <button
-                  style={{
-                    border: "none",
-                    cursor: "pointer",
-                    background: "none",
-                    color:
-                      role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
-                  }}
-                  onClick={() => setShowMore((prev) => !prev)}
-                >
-                  {!showMore ? "See More" : "See Less"}
-                </button>
-              )}
+              <ShowLessText item={tenderDetails.description} />
             </Box>
 
             <Stack
