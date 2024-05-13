@@ -107,6 +107,7 @@ function TenderDetailsComponent() {
       },
     },
     attachments: [],
+    slug: "",
   });
   const { role, isLoggedIn } = useSelector((state) => state.auth);
   const [addressGeoCode, setAddressGeoCode] = useState({});
@@ -158,7 +159,7 @@ function TenderDetailsComponent() {
   const handleWithdrawTenderApplication = async () => {
     if (details.isEditable) {
       const res = await withdrawTenderApplicationAPI({
-        tenderId: params.tenderId,
+        tenderId: details.id,
       });
       if (res.remote === "success") {
         setDetails({
@@ -209,6 +210,7 @@ function TenderDetailsComponent() {
     getTenderDetails(params.tenderId);
     getTenderSuggestion(params.tenderId);
   }, [params.tenderId]);
+
   return (
     <>
       <Container
@@ -390,9 +392,9 @@ function TenderDetailsComponent() {
                                 rel="noreferrer"
                                 style={{
                                   cursor: "pointer",
-                                  whiteSpace: "nowrap",
                                   color: "#274593",
                                   wordBreak: "break-all",
+                                  wordWrap: "break-word",
                                 }}
                               >
                                 {attachment.title}
@@ -778,7 +780,7 @@ function TenderDetailsComponent() {
                           ),
                         }}
                         to={urlcat("/tender/details/:tenderId", {
-                          tenderId: item.id,
+                          tenderId: item?.slug,
                         })}
                       >
                         {item?.title}

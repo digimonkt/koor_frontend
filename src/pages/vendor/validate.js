@@ -11,7 +11,7 @@ export const validateVendorAboutMe = Yup.object().shape({
         return true;
       }
       return isValidPhoneNumber(value.value);
-    },
+    }
   ),
   // businessLicenseId: Yup.number()
   //   .typeError("Business License Id must be a number ")
@@ -19,17 +19,17 @@ export const validateVendorAboutMe = Yup.object().shape({
   // businessLicense: Yup.mixed().test(
   //   "elementPresent",
   //   "Business License is required",
-  //   (value) => !!value.length,
+  //   (value) => !!value.length
   // ),
   // certificationNumber: Yup.string().required(
-  //   "Certification Number is required",
+  //   "Certification Number is required"
   // ),
   // certification: Yup.mixed().test(
   //   "elementPresent",
   //   "Certification is required",
-  //   (value) => !!value.length,
+  //   (value) => !!value.length
   // ),
   website: Yup.string().url(
-    "Please enter a valid URL, e.g. https://www.example.com",
+    "Please enter a valid URL, e.g. https://www.example.com"
   ),
 });

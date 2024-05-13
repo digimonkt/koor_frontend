@@ -21,9 +21,7 @@ function TalentCard({ talentDetails }) {
   const { role } = useSelector(({ auth }) => auth);
   const { isMobileView } = useSelector((state) => state.platform);
 
-  const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
-
   const [numLines, setNumLines] = useState(3);
 
   const handleSeeMoreClick = () => {
@@ -42,6 +40,8 @@ function TalentCard({ talentDetails }) {
   const handleMessageClick = async (id) => {
     chatRedirector(id, navigate);
   };
+
+  const matches = useMediaQuery("(max-width:600px)");
 
   return (
     <>

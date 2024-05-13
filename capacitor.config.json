@@ -5,7 +5,9 @@
   "npmClient": "yarn",
   "cleartext": true,
   "hostname": "koorjobs.com",
-  "allowNavigation": ["*"],
+  "allowNavigation": [
+    "*"
+  ],
   "webDir": "build",
   "plugins": {
     "SplashScreen": {
@@ -14,7 +16,11 @@
     },
     "FirebaseAuthentication": {
       "skipNativeAuth": false,
-      "providers": ["apple.com", "facebook.com", "google.com"]
+      "providers": [
+        "apple.com",
+        "facebook.com",
+        "google.com"
+      ]
     }
   }
 }

@@ -23,7 +23,7 @@ export const showDay = (days) => {
 
 export const formatCommaText = (valueFiert, valueSecond) => {
   if (!valueFiert && !valueSecond) {
-    return "Dusseldorf";
+    return "";
   } else if (!valueFiert) {
     return valueSecond || "";
   } else if (!valueSecond) {

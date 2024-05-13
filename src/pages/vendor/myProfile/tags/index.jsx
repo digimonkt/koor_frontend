@@ -147,7 +147,7 @@ const Tags = (props) => {
                         <NoItem
                           icon={<SVG.SkillsIcon />}
                           description={
-                            <p>
+                            <p style={{ textAlign: "justify" }}>
                               List your tags that you think will be useful for a
                               tender you’re looking for. Highlight your
                               strengths and remember to be honest.
@@ -256,7 +256,7 @@ const Tags = (props) => {
                     <NoItem
                       icon={<SVG.SkillsIcon />}
                       description={
-                        <p>
+                        <p style={{ textAlign: "justify" }}>
                           List your tags that you think will be useful for a
                           tender you’re looking for. Highlight your strengths
                           and remember to be honest.
