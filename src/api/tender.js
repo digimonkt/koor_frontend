@@ -130,3 +130,17 @@ export const changeTenderApplicationStatusAPI = async ({
     data,
   });
 };
+
+export const getEmployerActiveTendersAPI = async ({ employerId }) => {
+  const response = await api.request({
+    url: urlcat(`/v1/users/employer/active-tenders/${employerId}?limit=3`),
+    method: "GET",
+  });
+  if (response.remote === "success") {
+    return {
+      remote: "success",
+      data: transformTenderResponse(response.data),
+    };
+  }
+  return response;
+};
