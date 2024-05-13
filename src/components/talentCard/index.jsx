@@ -14,31 +14,12 @@ import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
 import { getConversationIdByUserIdAPI } from "../../api/chat";
 import { Capacitor } from "@capacitor/core";
-import { useState } from "react";
-import { USER_ROLES } from "@utils/enum";
-import { useSelector } from "react-redux";
+import { ShowLessText } from "@components/common";
 
 function TalentCard({ talentDetails }) {
-  const { role } = useSelector(({ auth }) => auth);
-
   const platform = Capacitor.getPlatform();
   const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
-
-  const [numLines, setNumLines] = useState(3);
-
-  const handleSeeMoreClick = () => {
-    setNumLines((prevNumLines) =>
-      prevNumLines === 3 ? talentDetails.description.length : 3
-    );
-  };
-  const textWrapperStyle = {
-    display: "-webkit-box",
-    WebkitBoxOrient: "vertical",
-    textAlign: "justify",
-    overflow: "hidden",
-    WebkitLineClamp: numLines,
-  };
 
   const handleMessageClick = async () => {
     const res = await getConversationIdByUserIdAPI({
@@ -59,7 +40,7 @@ function TalentCard({ talentDetails }) {
       className="border-recent"
       direction={{ xs: "column", lg: "row", sm: "row" }}
       spacing={{ xs: 2, lg: 2 }}
-      alignItems={{ xs: "start", lg: numLines === 3 ? "center" : "flex-start" }}
+      alignItems={{ xs: "start", lg: "flex-start" }}
       justifyContent={{ xs: "flex-start", lg: "space-between" }}
     >
       <Stack
@@ -68,7 +49,7 @@ function TalentCard({ talentDetails }) {
         spacing={{ xs: 2, lg: 2 }}
         alignItems={{
           xs: "start",
-          lg: numLines === 3 ? "center" : "flex-start",
+          lg: "flex-start",
         }}
         justifyContent={{ xs: "flex-start", lg: "space-between" }}
         sx={{
@@ -144,15 +125,19 @@ function TalentCard({ talentDetails }) {
                 }}
                 orientation="vertical"
               />
-              {talentDetails?.profile?.profileTitle && (
-                <>
+              {talentDetails?.profileTitle && (
+                <Box display="flex" justifyContent="center">
                   <hr
                     style={{ rotate: "90deg", width: "20px", height: "5px" }}
                   />
-                  <Typography size="small">
+                  <Typography
+                    size="small"
+                    fontWeight={500}
+                    fontFamily={"Poppins"}
+                  >
                     {talentDetails?.profileTitle}
                   </Typography>
-                </>
+                </Box>
               )}
               <p className="job-description card-description mt-1 mb-2">
                 {talentDetails?.profile?.description}
@@ -169,7 +154,7 @@ function TalentCard({ talentDetails }) {
               className="meets_div"
             >
               {talentDetails.country ? (
-                <>
+                <Box display="flex" justifyContent="center" gap={0.5}>
                   <span className="meets">
                     <SVG.LocationIcon />
                   </span>
@@ -177,34 +162,14 @@ function TalentCard({ talentDetails }) {
                   <span className="meets">
                     {talentDetails.country}, {talentDetails.city}
                   </span>
-                </>
+                </Box>
               ) : (
                 ""
               )}
             </Stack>
             <div className="recent-descrition">
               <Box className="job-description mt-1 mb-3">
-                <div style={textWrapperStyle}>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: talentDetails.description,
-                    }}
-                  ></p>
-                </div>
-                {talentDetails.description.length > 350 && (
-                  <button
-                    style={{
-                      border: "none",
-                      cursor: "pointer",
-                      background: "none",
-                      color:
-                        role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
-                    }}
-                    onClick={handleSeeMoreClick}
-                  >
-                    {numLines === 3 ? "See More" : "See Less"}
-                  </button>
-                )}
+                <ShowLessText item={talentDetails.description} />
               </Box>
             </div>
             <Stack
@@ -245,25 +210,6 @@ function TalentCard({ talentDetails }) {
           </div>
         </div>
       </Stack>
-      {!matches ? (
-        <Stack direction="row" spacing={2} alignItems="center">
-          {talentDetails?.readyForChat && (
-            <Stack direction="row" spacing={0} className="edit-button">
-              <Button variant="link" onClick={handleMessageClick}>
-                <SVG.MessageIcon
-                  style={{
-                    color: "#274593",
-                  }}
-                  className="application-option-icon"
-                />
-                <span>Message</span>
-              </Button>
-            </Stack>
-          )}
-        </Stack>
-      ) : (
-        ""
-      )}
     </Stack>
   );
 }
