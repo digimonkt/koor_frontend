@@ -21,7 +21,7 @@ import {
   HorizontalLabelInput,
   HorizontalPhoneInput,
 } from "../../../components/input";
-import { getCities, getEducationLevels } from "../../../redux/slice/choices";
+import { getEducationLevels } from "../../../redux/slice/choices";
 import { validateJobSeekerAboutMe } from "./validator";
 import { ErrorMessage } from "../../../components/caption";
 import {
@@ -41,19 +41,21 @@ import DialogBox from "../../../components/dialogBox";
 import NoItem from "../myProfile/noItem";
 import { Capacitor } from "@capacitor/core";
 import { getCountries } from "@api/countries";
+import { getCities } from "@api/cities";
 
 const AboutMe = (props) => {
   const dispatch = useDispatch();
   const platform = Capacitor.getPlatform();
   const {
     auth: { currentUser },
-    choices: { educationLevels, cities },
+    choices: { educationLevels },
   } = useSelector((state) => state);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [filledData, setFilledData] = useState(null);
   const [countryId, setCountryId] = useState("");
   const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const currentYear = dayjs().year();
   const formik = useFormik({
     initialValues: {
@@ -126,12 +128,10 @@ const AboutMe = (props) => {
             mobileNumber,
             countryCode,
             profile: {
-              country: countries.data.find(
+              country: countries.find(
                 (country) => country.id === values.country
               ),
-              city: cities.data[values.country].find(
-                (city) => city.id === values.city
-              ),
+              city: cities[values.country].find((city) => city === values.city),
               gender: values.gender,
               dob: dayjs(values.dob).format(DATE_FORMAT),
               employmentStatus: values.employmentStatus,
@@ -163,6 +163,9 @@ const AboutMe = (props) => {
 
   const getCountriesList = async () =>
     await getCountries().then((res) => setCountries(res));
+
+  const getCitiesList = async (country) =>
+    await getCities(country).then((res) => setCities(res));
 
   useEffect(() => {
     if (filledData) {
@@ -203,9 +206,8 @@ const AboutMe = (props) => {
   useEffect(() => {
     if (formik.values.country) {
       setCountryId(formik.values.country);
-    }
-    if (countryId) {
-      dispatch(getCities({ countryId }));
+      getCitiesList(formik.values.country);
+      formik.values.city = "";
     }
   }, [formik.values.country, countryId]);
   useEffect(() => {
@@ -427,18 +429,16 @@ const AboutMe = (props) => {
                     {formik.touched.country && formik.errors.country ? (
                       <ErrorMessage>{formik.errors.country}</ErrorMessage>
                     ) : null}
-                    {formik.values.country && (
+                    {formik.values.country && cities && (
                       <HorizontalLabelInput
                         label="City"
                         type="select"
                         placeholder="City"
                         disabled={!formik.values.country}
-                        options={(cities.data[formik.values.country] || []).map(
-                          (educationLevel) => ({
-                            value: educationLevel.id,
-                            label: educationLevel.title,
-                          })
-                        )}
+                        options={cities.map((city) => ({
+                          value: city,
+                          label: city,
+                        }))}
                         {...formik.getFieldProps("city")}
                       />
                     )}
@@ -731,18 +731,16 @@ const AboutMe = (props) => {
                   {formik.touched.country && formik.errors.country ? (
                     <ErrorMessage>{formik.errors.country}</ErrorMessage>
                   ) : null}
-                  {formik.values.country && (
+                  {formik.values.country && cities && (
                     <HorizontalLabelInput
                       label="City"
                       type="select"
                       placeholder="City"
                       disabled={!formik.values.country}
-                      options={(cities.data[formik.values.country] || []).map(
-                        (educationLevel) => ({
-                          value: educationLevel.id,
-                          label: educationLevel.title,
-                        })
-                      )}
+                      options={cities.map((city) => ({
+                        value: city,
+                        label: city,
+                      }))}
                       {...formik.getFieldProps("city")}
                     />
                   )}

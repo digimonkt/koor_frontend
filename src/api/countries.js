@@ -9,7 +9,7 @@ export const getCountries = async () => {
       );
 
       return data.map((data) => ({
-        id: data.ccn3,
+        id: data.cca2,
         title: data.name.common,
         currencyCode: Object.keys({ ...data.currencies })[0],
         countryCode: data.ccn3,

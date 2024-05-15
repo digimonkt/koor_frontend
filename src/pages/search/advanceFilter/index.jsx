@@ -16,7 +16,6 @@ import {
 } from "../../../api/job";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getCities,
   getJobCategories,
   getTenderOpportunityType,
   getTenderTags,
@@ -60,6 +59,7 @@ import { useSearchParams } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Capacitor } from "@capacitor/core";
 import { getCountries } from "@api/countries";
+import { getCities } from "@api/cities";
 function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const matches = useMediaQuery("(max-width:768px)");
   const dispatch = useDispatch();
@@ -68,7 +68,6 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     auth: { role, isLoggedIn },
     choices: {
       jobCategories,
-      cities,
       jobSubCategories,
       opportunityTypes,
       tags,
@@ -97,7 +96,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   const [allFilters, setAllFilters] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [data, setData] = useState(false);
-  const [countries, setCountries] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const [open, setOpen] = useState(false);
   const [filterId, setFilterId] = useState(0);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -207,6 +207,9 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
 
   const getCountriesList = async () =>
     await getCountries().then((res) => setCountries(res));
+
+  const getCitiesList = async (country) =>
+    await getCities(country).then((res) => setCities(res));
 
   const getSearchJobsFilter = async () => {
     const data = await getSearchJobsFilterAPI();
@@ -330,10 +333,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       salary_max: rawData.salaryMax,
     };
     if (rawData.country) {
-      const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
-      );
-      data.city = city?.id;
+      const city = cities.find((city) => city === rawData.city);
+      data.city = city;
     }
     const res = await saveSearchJobsFilterAPI(data);
     if (res.remote === "success") {
@@ -362,12 +363,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       role: USER_ROLES.jobSeeker,
     };
     if (rawData.country) {
-      const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
-      );
-      if (city && city.id) {
-        data.city = city?.id;
-      }
+      const city = cities.find((city) => city === rawData.city);
+      data.city = city;
     }
 
     const res = await saveSearchUserFilterAPI(data);
@@ -398,12 +395,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
         dayjs(rawData.deadline).format(DATABASE_DATE_FORMAT),
     };
     if (rawData.country) {
-      const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
-      );
-      if (city && city.id) {
-        data.city = city?.id;
-      }
+      const city = cities.find((city) => city === rawData.city);
+      data.city = city;
     }
 
     const res = await saveSearchTenderFilterAPI(data);
@@ -431,12 +424,8 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
       role: USER_ROLES.vendor,
     };
     if (rawData.country) {
-      const city = cities.data[rawData.country].find(
-        (city) => city.title === rawData.city
-      );
-      if (city && city.id) {
-        data.city = city?.id;
-      }
+      const city = cities.find((city) => city === rawData.city);
+      data.city = city;
     }
 
     const res = await saveSearchVendorFilterAPI(data);
@@ -604,8 +593,14 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
     },
   });
   useEffect(() => {
-    if (formik.values.country && !cities.data[formik.values.country]?.length) {
-      dispatch(getCities({ countryId: formik.values.country }));
+    if (formik.values.country) {
+      getCitiesList(formik.values.country);
+    }
+  }, [formik.values.country]);
+
+  useEffect(() => {
+    if (formik.values.country && !cities.length) {
+      getCities(formik.values.country);
     }
     if (
       formik.values.jobCategories &&

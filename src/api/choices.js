@@ -1,23 +1,6 @@
 import api from ".";
 import urlcat from "urlcat";
 
-export const getCitiesAPI = async (data) => {
-  const response = await api.request({
-    url: urlcat("/v1/admin/city", {
-      ...data,
-      limit: 500,
-    }),
-    method: "GET",
-  });
-  if (response.remote === "success") {
-    return {
-      remote: "success",
-      data: response.data.results,
-    };
-  }
-  return response;
-};
-
 export const getJobCategoriesAPI = async (data) => {
   const response = await api.request({
     url: urlcat(

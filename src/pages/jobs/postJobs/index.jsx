@@ -30,7 +30,6 @@ import { PAY_PERIOD, USER_ROLES } from "../../../utils/enum";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
-  getCities,
   getEducationLevels,
   getJobCategories,
   getJobSubCategories,
@@ -64,6 +63,7 @@ import { getPackageAPI } from "../../../api/choices";
 import { Package } from "../../../components/package";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { getCountries } from "@api/countries";
+import { getCities } from "@api/cities";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -76,7 +76,6 @@ function PostJobsComponent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
-    cities,
     jobCategories,
     jobSubCategories,
     educationLevels,
@@ -90,6 +89,7 @@ function PostJobsComponent() {
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
   const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const [jobId, setJobId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
@@ -325,6 +325,9 @@ function PostJobsComponent() {
   const getCountriesList = async () =>
     await getCountries().then((res) => setCountries(res));
 
+  const getCitiesList = async (country) =>
+    await getCities(country).then((res) => setCities(res));
+
   const handleBuyPackage = async (planDetails) => {
     const data = {
       package: planDetails.title.toLowerCase(),
@@ -395,8 +398,12 @@ function PostJobsComponent() {
     }
   }, []);
   useEffect(() => {
-    if (formik.values.country && !cities.data[formik.values.country]?.length) {
-      dispatch(getCities({ countryId: formik.values.country }));
+    if (formik.values.country) {
+      const countryName = countries.find(
+        (x) => x.id === formik.values.country
+      ).title;
+      getCitiesList(countryName);
+      formik.values.city = "";
     }
   }, [formik.values.country]);
   useEffect(() => {
@@ -565,12 +572,10 @@ function PostJobsComponent() {
                       <SelectInput
                         placeholder="City"
                         disabled={!formik.values.country}
-                        options={(cities.data[formik.values.country] || []).map(
-                          (country) => ({
-                            value: country.id,
-                            label: country.title,
-                          })
-                        )}
+                        options={cities.map((city) => ({
+                          value: city,
+                          label: city,
+                        }))}
                         {...formik.getFieldProps("city")}
                       />
                       {formik.touched.city && formik.errors.city ? (
