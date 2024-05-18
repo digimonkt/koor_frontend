@@ -40,10 +40,7 @@ function TalentFilter({ formik, footer, responsive }) {
   useEffect(() => getCountriesList(), []);
   useEffect(() => {
     if (formik.values.country) {
-      const countryName = countries.find(
-        (x) => x.id === formik.values.country
-      ).title;
-      getCitiesList(countryName);
+      getCitiesList(formik.values.country);
     }
   }, []);
 

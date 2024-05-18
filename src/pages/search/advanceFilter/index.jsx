@@ -594,10 +594,7 @@ function AdvanceFilter({ searchType, defaultOpen, responsive }) {
   });
   useEffect(() => {
     if (formik.values.country) {
-      const countryName = countries.find(
-        (x) => x.id === formik.values.country
-      ).title;
-      getCitiesList(countryName);
+      getCitiesList(formik.values.country);
     }
   }, [formik.values.country]);
 

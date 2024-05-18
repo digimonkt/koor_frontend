@@ -170,10 +170,7 @@ function MyProfileComponent() {
 
   useEffect(() => {
     if (formik.values.country) {
-      const countryName = countries.find(
-        (x) => x.id === formik.values.country
-      ).title;
-      getCitiesList(countryName);
+      getCitiesList(formik.values.country);
       formik.values.city = "";
     }
   }, [formik.values.country]);
