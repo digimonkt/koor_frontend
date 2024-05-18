@@ -1,5 +1,6 @@
 import {
   getCitiesAPI,
+  getCountriesAPI,
   getEducationLevelsAPI,
   getJobCategoriesAPI,
   getJobSubCategoriesAPI,
@@ -116,6 +117,18 @@ const initialState = {
     data: [],
   },
 };
+
+export const getCountries = createAsyncThunk(
+  "choices/getCountries",
+  async (_, { rejectWithValue }) => {
+    const res = await getCountriesAPI();
+    if (res.remote === "success") {
+      return res.data;
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
 
 export const getCities = createAsyncThunk(
   "choices/getCities",
@@ -248,6 +261,24 @@ export const choiceSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getCountries.fulfilled, (state, action) => {
+      state.countries = {
+        loading: false,
+        data: action.payload,
+      };
+    });
+    builder.addCase(getCountries.pending, (state) => {
+      state.countries = {
+        loading: true,
+        data: [],
+      };
+    });
+    builder.addCase(getCountries.rejected, (state) => {
+      state.countries = {
+        ...state.countries,
+        loading: false,
+      };
+    });
     builder.addCase(getCities.fulfilled, (state, action) => {
       state.cities = {
         loading: false,

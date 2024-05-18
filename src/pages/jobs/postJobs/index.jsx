@@ -31,6 +31,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   getCities,
+  getCountries,
   getEducationLevels,
   getJobCategories,
   getJobSubCategories,
@@ -63,7 +64,6 @@ import {
 import { getPackageAPI } from "../../../api/choices";
 import { Package } from "../../../components/package";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
-import { getCountries } from "@api/countries";
 const SUBMITTING_STATUS_ENUM = Object.freeze({
   loading: "loading",
   submitted: "submitted",
@@ -76,6 +76,7 @@ function PostJobsComponent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
+    countries,
     cities,
     jobCategories,
     jobSubCategories,
@@ -89,7 +90,6 @@ function PostJobsComponent() {
   const { isMobileView } = useSelector((state) => state.platform);
   const [searchParams] = useSearchParams();
   const [submitting, setSubmitting] = useState(SUBMITTING_STATUS_ENUM.null);
-  const [countries, setCountries] = useState([]);
   const [jobId, setJobId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
@@ -321,10 +321,6 @@ function PostJobsComponent() {
       setPackageData(resp.data);
     }
   };
-
-  const getCountriesList = async () =>
-    await getCountries().then((res) => setCountries(res));
-
   const handleBuyPackage = async (planDetails) => {
     const data = {
       package: planDetails.title.toLowerCase(),
@@ -378,8 +374,8 @@ function PostJobsComponent() {
     }
   }, [jobId]);
   useEffect(() => {
-    if (!countries.length) {
-      getCountriesList();
+    if (!countries.data.length) {
+      dispatch(getCountries());
     }
     if (!jobCategories.data.length) {
       dispatch(getJobCategories());
@@ -549,7 +545,7 @@ function PostJobsComponent() {
                       className="location-select"
                       placeholder="Country"
                       defaultValue=""
-                      options={countries.map((country) => ({
+                      options={countries.data.map((country) => ({
                         value: country.id,
                         label: country.title,
                       }))}
@@ -559,25 +555,23 @@ function PostJobsComponent() {
                       <ErrorMessage>{formik.errors.country}</ErrorMessage>
                     ) : null}
                   </Grid>
-                  {formik.values.country && (
-                    <Grid item xl={4} lg={4} sm={4} xs={12}>
-                      <label>City</label>
-                      <SelectInput
-                        placeholder="City"
-                        disabled={!formik.values.country}
-                        options={(cities.data[formik.values.country] || []).map(
-                          (country) => ({
-                            value: country.id,
-                            label: country.title,
-                          })
-                        )}
-                        {...formik.getFieldProps("city")}
-                      />
-                      {formik.touched.city && formik.errors.city ? (
-                        <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                      ) : null}
-                    </Grid>
-                  )}
+                  <Grid item xl={4} lg={4} sm={4} xs={12}>
+                    <label>City</label>
+                    <SelectInput
+                      placeholder={formik.values.country ? "City" : "City"}
+                      disabled={!formik.values.country}
+                      options={(cities.data[formik.values.country] || []).map(
+                        (country) => ({
+                          value: country.id,
+                          label: country.title,
+                        })
+                      )}
+                      {...formik.getFieldProps("city")}
+                    />
+                    {formik.touched.city && formik.errors.city ? (
+                      <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                    ) : null}
+                  </Grid>
                   <Grid item xl={3} lg={3} sm={4} xs={12}>
                     <label>
                       Working place address{" "}
