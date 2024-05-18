@@ -7,33 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "../../../redux/slice/choices";
 import { Capacitor } from "@capacitor/core";
-import { getCountries } from "@api/countries";
-import { getCities } from "@api/cities";
 
 function JobSeekerFilter({ formik, footer, responsive }) {
   const platform = Capacitor.getPlatform();
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const [isSubmmited, setSubmmited] = useState(false);
   const dispatch = useDispatch();
   const {
-    choices: { jobCategories, jobSubCategories },
+    choices: { countries, cities, jobCategories, jobSubCategories },
     search: { totalItems },
   } = useSelector((state) => state);
-  const getCountriesList = async () =>
-    await getCountries().then((res) => setCountries(res));
-
-  const getCitiesList = async (country) =>
-    await getCities(country).then((res) => setCities(res));
-
-  useEffect(() => {
-    getCountriesList();
-  }, []);
-  useEffect(() => {
-    if (formik.values.country) {
-      getCitiesList(formik.values.country);
-    }
-  }, [formik.values.country]);
   useEffect(() => {
     if (
       formik.values.jobCategories &&
@@ -142,7 +124,7 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                   title="Country"
                   placeholder="Country"
                   defaultValue=""
-                  options={countries.map((country) => ({
+                  options={countries.data.map((country) => ({
                     value: country.id,
                     label: country.title,
                   }))}
@@ -164,10 +146,12 @@ function JobSeekerFilter({ formik, footer, responsive }) {
                     title="City"
                     placeholder="City"
                     disabled={!formik.values.country}
-                    options={cities.map((city) => ({
-                      value: city,
-                      label: city,
-                    }))}
+                    options={(cities.data[formik.values.country] || []).map(
+                      (country) => ({
+                        value: country.title,
+                        label: country.title,
+                      })
+                    )}
                     {...formik.getFieldProps("city")}
                   />
                   {formik.touched.city && formik.errors.city ? (

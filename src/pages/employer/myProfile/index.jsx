@@ -37,13 +37,12 @@ import DialogBox from "../../../components/dialogBox";
 import { useNavigate } from "react-router-dom";
 import NoItem from "../../../pages/jobSeeker/myProfile/noItem";
 import { SVG } from "../../../assets/svg";
-import { getTenderSector } from "../../../redux/slice/choices";
+import { getCities, getTenderSector } from "../../../redux/slice/choices";
 import { useDebounce } from "usehooks-ts";
 import styles from "./myProfile.module.css";
 import { setErrorToast } from "../../../redux/slice/toast";
 import { USER_ROLES } from "@utils/enum";
 import { getCountries } from "@api/countries";
-import { getCities } from "@api/cities";
 function MyProfileComponent() {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
@@ -53,8 +52,7 @@ function MyProfileComponent() {
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
-  const { sectors } = useSelector((state) => state.choices);
+  const { cities, sectors } = useSelector((state) => state.choices);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const navigate = useNavigate();
   const formik = useFormik({
@@ -136,10 +134,12 @@ function MyProfileComponent() {
               marketingInformationNotification:
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
-              country: countries.find(
+              country: countries.data.find(
                 (country) => country.id === values.country
               ),
-              city: cities[values.country].find((city) => city === values.city),
+              city: cities.data[values.country]?.find(
+                (city) => city.id === values.city
+              ),
               address: values.address,
             },
           })
@@ -165,13 +165,9 @@ function MyProfileComponent() {
   const getCountriesList = async () =>
     await getCountries().then((res) => setCountries(res));
 
-  const getCitiesList = async (country) =>
-    await getCities(country).then((res) => setCities(res));
-
   useEffect(() => {
-    if (formik.values.country) {
-      getCitiesList(formik.values.country);
-      formik.values.city = "";
+    if (formik.values.country && !cities.data[formik.values.country]?.length) {
+      dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
   useEffect(() => {
@@ -334,15 +330,17 @@ function MyProfileComponent() {
                     }))}
                     {...formik.getFieldProps("country")}
                   />
-                  {formik.values.country && cities && (
+                  {formik.values.country && (
                     <HorizontalLabelInput
                       placeholder="City"
                       label="City"
                       type="select"
-                      options={cities.map((city) => ({
-                        value: city,
-                        label: city,
-                      }))}
+                      options={(cities.data[formik.values.country] || []).map(
+                        (country) => ({
+                          value: country.id,
+                          label: country.title,
+                        })
+                      )}
                       {...formik.getFieldProps("city")}
                     />
                   )}

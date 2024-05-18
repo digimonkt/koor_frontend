@@ -18,39 +18,21 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 import { getJobSubCategories } from "../../../redux/slice/choices";
-import { getCountries } from "@api/countries";
-import { getCities } from "@api/cities";
 
 function TalentFilter({ formik, footer, responsive }) {
   const [isSubmmited, setSubmmited] = useState(false);
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const dispatch = useDispatch();
   const {
-    choices: { jobCategories, jobSubCategories },
+    choices: { countries, cities, jobCategories, jobSubCategories },
     search: { totalItems },
   } = useSelector((state) => state);
-
-  const getCountriesList = async () =>
-    await getCountries().then((res) => setCountries(res));
-
-  const getCitiesList = async (country) =>
-    await getCities(country).then((res) => setCities(res));
-
-  useEffect(() => getCountriesList(), []);
-  useEffect(() => {
-    if (formik.values.country) {
-      getCitiesList(formik.values.country);
-    }
-  }, []);
-
   useEffect(() => {
     if (
       formik.values.jobCategories &&
       !jobSubCategories.data[formik.values.jobCategories]?.length
     ) {
       dispatch(
-        getJobSubCategories({ categoryId: formik.values.jobCategories })
+        getJobSubCategories({ categoryId: formik.values.jobCategories }),
       );
     }
   }, [formik.values.jobCategories]);
@@ -127,7 +109,7 @@ function TalentFilter({ formik, footer, responsive }) {
                   title="Country"
                   placeholder="Country"
                   defaultValue=""
-                  options={countries.map((country) => ({
+                  options={countries.data.map((country) => ({
                     value: country.id,
                     label: country.title,
                   }))}
@@ -137,27 +119,31 @@ function TalentFilter({ formik, footer, responsive }) {
             </div>
           </Grid>
 
-          {formik.values.country && (
-            <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
-              <div>
-                <FormControl sx={{ m: 1 }} className="filter_input">
-                  <SelectInput
-                    title="City"
-                    placeholder="Choose city"
-                    disabled={!formik.values.country}
-                    options={cities.map((city) => ({
-                      value: city,
-                      label: city,
-                    }))}
-                    {...formik.getFieldProps("city")}
-                  />
-                  {formik.touched.city && formik.errors.city ? (
-                    <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                  ) : null}
-                </FormControl>
-              </div>
-            </Grid>
-          )}
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
+            <div>
+              <FormControl sx={{ m: 1 }} className="filter_input">
+                <SelectInput
+                  title="City"
+                  placeholder={
+                    formik.values.country
+                      ? "Choose city"
+                      : "Select Country first"
+                  }
+                  disabled={!formik.values.country}
+                  options={(cities.data[formik.values.country] || []).map(
+                    (country) => ({
+                      value: country.title,
+                      label: country.title,
+                    }),
+                  )}
+                  {...formik.getFieldProps("city")}
+                />
+                {formik.touched.city && formik.errors.city ? (
+                  <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                ) : null}
+              </FormControl>
+            </div>
+          </Grid>
           <Grid item xs={12} sm={6} lg={responsive ? 12 : 3}>
             <label>Years of experience</label>
             <LabeledInput

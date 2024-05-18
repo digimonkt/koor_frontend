@@ -15,6 +15,7 @@ import {
   QuillInput,
 } from "../../../components/input";
 import {
+  getCities,
   getTenderTags,
   getTenderSector,
   getTenderCategories,
@@ -45,21 +46,18 @@ import { useDebounce } from "usehooks-ts";
 import { GetSuggestedAddressAPI } from "../../../api/user";
 import urlcat from "urlcat";
 import { getCountries } from "@api/countries";
-import { getCities } from "@api/cities";
 const PostTender = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const { tenderCategories, tags, sectors, opportunityTypes } = useSelector(
-    (state) => state.choices
-  );
+  const { tenderCategories, tags, cities, sectors, opportunityTypes } =
+    useSelector((state) => state.choices);
   const [tenderId, setTenderId] = useState(null);
   const [open, setOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const [suggestedAddress, setSuggestedAddress] = useState([]);
   const [descData, setDescData] = useState("");
@@ -185,9 +183,6 @@ const PostTender = () => {
   const getCountriesList = async () =>
     await getCountries().then((res) => setCountries(res));
 
-  const getCitiesList = async (country) =>
-    await getCities(country).then((res) => setCities(res));
-
   const getTenderDetailsById = useCallback(async (tenderId) => {
     const response = await getTenderDetailsByIdAPI({ tenderId });
     if (response.remote === "success") {
@@ -253,13 +248,6 @@ const PostTender = () => {
   }, [debouncedSearchValue]);
 
   useEffect(() => {
-    if (formik.values.country) {
-      getCitiesList(formik.values.country);
-      formik.values.city = "";
-    }
-  }, [formik.values.country]);
-
-  useEffect(() => {
     if (!countries.length) {
       getCountriesList();
     }
@@ -291,8 +279,8 @@ const PostTender = () => {
   }, [isRedirect]);
 
   useEffect(() => {
-    if (formik.values.country && !cities.length) {
-      getCities(formik.values.country);
+    if (formik.values.country && !cities.data[formik.values.country]?.length) {
+      dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
   useEffect(() => {
@@ -439,10 +427,12 @@ const PostTender = () => {
                       <SelectInput
                         placeholder="City"
                         disabled={!formik.values.country}
-                        options={cities.map((city) => ({
-                          value: city,
-                          label: city,
-                        }))}
+                        options={(cities.data[formik.values.country] || []).map(
+                          (country) => ({
+                            value: country.id,
+                            label: country.title,
+                          })
+                        )}
                         {...formik.getFieldProps("city")}
                       />
                       {formik.touched.city && formik.errors.city ? (

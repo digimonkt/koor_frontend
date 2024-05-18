@@ -7,31 +7,21 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./advanceFilter.module.css";
 // import CurrencyInput from "@pages/jobs/postJobs/currencyInput";
 import { getTenderSector } from "../../../redux/slice/choices";
-import { getCountries } from "@api/countries";
-import { getCities } from "@api/cities";
 
 function TenderFilter({ formik, footer, responsive }) {
   const [isSubmmited, setSubmmited] = useState(false);
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const dispatch = useDispatch();
   const {
-    choices: { tenderCategories, tags, opportunityTypes, sectors },
+    choices: {
+      countries,
+      cities,
+      tenderCategories,
+      tags,
+      opportunityTypes,
+      sectors,
+    },
     search: { totalItems },
   } = useSelector((state) => state);
-
-  const getCountriesList = async () =>
-    await getCountries().then((res) => setCountries(res));
-
-  const getCitiesList = async (country) =>
-    await getCities(country).then((res) => setCities(res));
-
-  useEffect(() => getCountriesList(), []);
-  useEffect(() => {
-    if (formik.values.country) {
-      getCitiesList(formik.values.country);
-    }
-  }, []);
 
   useEffect(() => {
     if (!sectors.data.length) {
@@ -111,7 +101,7 @@ function TenderFilter({ formik, footer, responsive }) {
                     (opportunityType) => ({
                       value: opportunityType.id,
                       label: opportunityType.title,
-                    })
+                    }),
                   )}
                   name={"opportunityType"}
                   value={formik.values.opportunityType}
@@ -161,7 +151,7 @@ function TenderFilter({ formik, footer, responsive }) {
                   title="Country"
                   placeholder="Country"
                   defaultValue=""
-                  options={countries.map((country) => ({
+                  options={countries.data.map((country) => ({
                     value: country.id,
                     label: country.title,
                   }))}
@@ -170,28 +160,30 @@ function TenderFilter({ formik, footer, responsive }) {
               </FormControl>
             </div>
           </Grid>
-          {formik.values.country && (
-            <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
-              <div>
-                <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
-                  <SelectInput
-                    sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
-                    title="City"
-                    placeholder="City"
-                    disabled={!formik.values.country}
-                    options={cities.map((city) => ({
-                      value: city,
-                      label: city,
-                    }))}
-                    {...formik.getFieldProps("city")}
-                  />
-                  {formik.touched.city && formik.errors.city ? (
-                    <ErrorMessage>{formik.errors.city}</ErrorMessage>
-                  ) : null}
-                </FormControl>
-              </div>
-            </Grid>
-          )}
+          <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
+            <div>
+              <FormControl sx={{ m: 1, width: 330 }} className="filter_input">
+                <SelectInput
+                  sx={{ "& .MuiSelect-select": { padding: "10px 15px" } }}
+                  title="City"
+                  placeholder={
+                    formik.values.country ? "City" : "Select Country first"
+                  }
+                  disabled={!formik.values.country}
+                  options={(cities.data[formik.values.country] || []).map(
+                    (country) => ({
+                      value: country.title,
+                      label: country.title,
+                    }),
+                  )}
+                  {...formik.getFieldProps("city")}
+                />
+                {formik.touched.city && formik.errors.city ? (
+                  <ErrorMessage>{formik.errors.city}</ErrorMessage>
+                ) : null}
+              </FormControl>
+            </div>
+          </Grid>
           <Grid item xs={12} sm={6} lg={responsive ? 12 : 4}>
             <div style={{ display: "flex", flexDirection: "column" }}>
               <Stack

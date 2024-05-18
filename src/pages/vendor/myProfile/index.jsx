@@ -23,7 +23,7 @@ import {
 import { SVG } from "../../../assets/svg";
 import { FormControlReminder } from "../../../components/style";
 import { useDispatch, useSelector } from "react-redux";
-import { getTenderSector } from "../../../redux/slice/choices";
+import { getCities, getTenderSector } from "../../../redux/slice/choices";
 import NoItem from "../../../pages/jobSeeker/myProfile/noItem";
 import { useFormik } from "formik";
 import { useDebounce } from "usehooks-ts";
@@ -46,7 +46,6 @@ import { Capacitor } from "@capacitor/core";
 import { USER_ROLES } from "@utils/enum";
 import { useNavigate } from "react-router-dom";
 import { getCountries } from "@api/countries";
-import { getCities } from "@api/cities";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -83,11 +82,10 @@ function MyProfile() {
 
   const {
     auth: { currentUser },
-    choices: { sectors },
+    choices: { cities, sectors },
   } = useSelector((state) => state);
   const [profilePicLoading, setProfilePicLoading] = useState("");
   const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [suggestedAddress, setSuggestedAddress] = useState([]);
@@ -207,7 +205,9 @@ function MyProfile() {
 
             address: values.address,
             country: countries.find((country) => country.id === values.country),
-            city: cities.find((city) => city === values.city),
+            city: cities.data[values.country]?.find(
+              (city) => city.id === values.city
+            ),
           },
         };
         if (!updatedUser.profile.city) {
@@ -233,9 +233,6 @@ function MyProfile() {
 
   const getCountriesList = async () =>
     await getCountries().then((res) => setCountries(res));
-
-  const getCitiesList = async (country) =>
-    await getCities(country).then((res) => setCities(res));
 
   useEffect(() => {
     if (currentUser) {
@@ -289,9 +286,8 @@ function MyProfile() {
     }
   }, []);
   useEffect(() => {
-    if (formik.values.country) {
-      getCitiesList(formik.values.country);
-      formik.values.city = "";
+    if (formik.values.country && !cities.data[formik.values.country]?.length) {
+      dispatch(getCities({ countryId: formik.values.country }));
     }
   }, [formik.values.country]);
   useEffect(() => {
@@ -435,19 +431,19 @@ function MyProfile() {
                         {formik.touched.country && formik.errors.country ? (
                           <ErrorMessage>{formik.errors.country}</ErrorMessage>
                         ) : null}
-                        {formik.values.country && (
-                          <HorizontalLabelInput
-                            placeholder="City"
-                            className="add-form-control"
-                            label="City"
-                            type="select"
-                            options={cities.map((city) => ({
-                              value: city,
-                              label: city,
-                            }))}
-                            {...formik.getFieldProps("city")}
-                          />
-                        )}
+                        <HorizontalLabelInput
+                          placeholder="City"
+                          className="add-form-control"
+                          label="City"
+                          type="select"
+                          options={(
+                            cities.data[formik.values.country] || []
+                          ).map((country) => ({
+                            value: country.id,
+                            label: country.title,
+                          }))}
+                          {...formik.getFieldProps("city")}
+                        />
                         {formik.touched.city && formik.errors.city ? (
                           <ErrorMessage>{formik.errors.city}</ErrorMessage>
                         ) : null}
@@ -709,7 +705,7 @@ function MyProfile() {
                         className="add-form-control"
                         label="Country"
                         type="select"
-                        options={countries.map((country) => ({
+                        options={countries.data.map((country) => ({
                           value: country.id,
                           label: country.title,
                         }))}
@@ -724,9 +720,11 @@ function MyProfile() {
                           className="add-form-control"
                           label="City"
                           type="select"
-                          options={cities.map((city) => ({
-                            value: city,
-                            label: city,
+                          options={(
+                            cities.data[formik.values.country] || []
+                          ).map((country) => ({
+                            value: country.id,
+                            label: country.title,
                           }))}
                           {...formik.getFieldProps("city")}
                         />

@@ -1,4 +1,5 @@
 import {
+  getCitiesAPI,
   getEducationLevelsAPI,
   getJobCategoriesAPI,
   getJobSubCategoriesAPI,
@@ -116,6 +117,21 @@ const initialState = {
   },
 };
 
+export const getCities = createAsyncThunk(
+  "choices/getCities",
+  async (data, { rejectWithValue }) => {
+    const res = await getCitiesAPI(data);
+    if (res.remote === "success") {
+      return {
+        countryId: data.countryId,
+        data: res.data,
+      };
+    } else {
+      return rejectWithValue(res.error);
+    }
+  }
+);
+
 export const getJobCategories = createAsyncThunk(
   "choices/getJobCategories",
   async (_, { rejectWithValue }) => {
@@ -232,6 +248,27 @@ export const choiceSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getCities.fulfilled, (state, action) => {
+      state.cities = {
+        loading: false,
+        data: {
+          ...(state.cities.data || {}),
+          [action.payload.countryId]: action.payload.data,
+        },
+      };
+    });
+    builder.addCase(getCities.pending, (state) => {
+      state.cities = {
+        ...state.cities,
+        loading: true,
+      };
+    });
+    builder.addCase(getCities.rejected, (state) => {
+      state.cities = {
+        ...state.cities,
+        loading: false,
+      };
+    });
     builder.addCase(getJobCategories.fulfilled, (state, action) => {
       state.jobCategories = {
         loading: false,

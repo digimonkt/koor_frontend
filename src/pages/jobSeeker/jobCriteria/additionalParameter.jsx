@@ -4,6 +4,7 @@ import { SVG } from "../../../assets/svg";
 import { OutlinedButton } from "../../../components/button";
 import { CheckboxInput, SelectInput } from "../../../components/input";
 import { useDispatch, useSelector } from "react-redux";
+import { getCities } from "../../../redux/slice/choices";
 import { FormControlReminder } from "../../../components/style";
 import { UpdateJobSeekerAdditionalParametersAPI } from "../../../api/jobSeeker";
 import { useNavigate } from "react-router-dom";
@@ -11,17 +12,16 @@ import { USER_ROLES } from "../../../utils/enum";
 import { updateCurrentUser } from "../../../redux/slice/user";
 import { Capacitor } from "@capacitor/core";
 import { getCountries } from "@api/countries";
-import { getCities } from "@api/cities";
 
 const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
+    choices: { cities },
     auth: { currentUser },
   } = useSelector((state) => state);
   const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [jobType, setJobType] = useState({
@@ -33,10 +33,6 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   const getCountriesList = async () =>
     await getCountries().then((res) => setCountries(res));
 
-  const getCitiesList = async () =>
-    await getCities(selectedCountry).then((res) => setCities(res));
-
-  // TODO: Fix PUT request error
   const handleSaveAdditionalParameters = async () => {
     const payload = {
       is_part_time: jobType.partTime,
@@ -64,7 +60,9 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
             country: countries.find(
               (country) => country.id === payload.country
             ),
-            city: cities.find((city) => city === payload.city),
+            city: cities.data[payload.country].find(
+              (city) => city.id === payload.city
+            ),
           },
         })
       );
@@ -89,8 +87,7 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
   }, []);
   useEffect(() => {
     if (selectedCountry) {
-      getCitiesList();
-      setSelectedCity("");
+      dispatch(getCities({ countryId: selectedCountry }));
     }
   }, [selectedCountry]);
   return (
@@ -131,12 +128,16 @@ const AdditionalParameter = ({ handleChange, age, city, handleCity }) => {
               <FormControl fullWidth size="small">
                 <label className="d-block mb-2">City</label>
                 <SelectInput
-                  placeholder="Choose City"
+                  placeholder={
+                    selectedCountry ? "Choose City" : "Select Country first"
+                  }
                   disabled={!selectedCountry}
-                  options={cities.map((city) => ({
-                    value: city,
-                    label: city,
-                  }))}
+                  options={(cities.data[selectedCountry] || []).map(
+                    (country) => ({
+                      value: country.id,
+                      label: country.title,
+                    })
+                  )}
                   onChange={(e) => setSelectedCity(e.target.value)}
                   value={selectedCity}
                 />
