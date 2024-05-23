@@ -27,10 +27,12 @@ import html2pdf from "html2pdf.js";
 import PublicProfileSkeletonLoading from "./publicProfileSkeletonLoading";
 import { useSelector } from "react-redux";
 import { getColorByRole } from "@utils/generateColor";
+import { getCVAccessAPI, requestCVAccessAPI } from "@api/employer";
 
 export default function PublicProfileComponent() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [authorizedCV, setAuthorizedCV] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
   const { role } = useSelector((state) => state.auth);
   const [userDetails, setUserDetails] = useState({
@@ -46,6 +48,12 @@ export default function PublicProfileComponent() {
     skills: [],
     workExperiences: [],
   });
+  const downloadButtonTitle = () => {
+    if (!authorizedCV) return "Request CV";
+    if (authorizedCV && !isDownloadingPDF) return "Download CV";
+    return "Downloading CV...";
+  };
+
   const downloadPDF = async () => {
     setIsDownloadingPDF(true);
     const element = document.getElementById("div-to-pdf");
@@ -58,6 +66,14 @@ export default function PublicProfileComponent() {
     };
     await html2pdf().set(options).from(element).save();
     setIsDownloadingPDF(false);
+  };
+  const CVisAuthorized = async () => {
+    const res = getCVAccessAPI({ userId: params.userId });
+    res.then((data) => setAuthorizedCV(data.message === "Results found"));
+  };
+  const requestCVAcess = () => {
+    const res = requestCVAccessAPI({ userId: params.userId });
+    res();
   };
   const getUserDetails = async (userId) => {
     setIsLoading(true);
@@ -77,6 +93,9 @@ export default function PublicProfileComponent() {
   useEffect(() => {
     const userId = params.userId;
     getUserDetails(userId);
+  }, []);
+  useEffect(() => {
+    CVisAuthorized();
   }, []);
   const { isMobileView } = useSelector((state) => state.platform);
   return (
@@ -365,20 +384,35 @@ export default function PublicProfileComponent() {
                             fontSize: "26px",
                             fontFamily: "Bahnschrift",
                             fontWeight: "600",
+                            marginBottom: "10px",
                           }}
                         >
                           Download resume
                         </Typography>
+                        {!authorizedCV && (
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontFamily: "Poppins",
+                              color: "#848484",
+                              marginTop: "10px",
+                              marginBottom: "20px",
+                            }}
+                          >
+                            You can't access this CV unless you send a request
+                            to the jobseeker
+                          </Typography>
+                        )}
                         <Typography>
                           <FilledButton
-                            title={
-                              isDownloadingPDF
-                                ? "Downloading PDF..."
-                                : "Download PDF"
+                            title={downloadButtonTitle()}
+                            onClick={
+                              authorizedCV
+                                ? () => downloadPDF()
+                                : () => requestCVAcess()
                             }
-                            onClick={downloadPDF}
-                            style={{ marginBottom: "10px" }}
                             disabled={isDownloadingPDF}
+                            className="outlineLogin"
                           />
                           <div style={{ display: "none" }}>
                             <ResumeTemplate user={userDetails} />

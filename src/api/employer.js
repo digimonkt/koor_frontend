@@ -210,6 +210,22 @@ export const getShareCountDataAPI = async () => {
   return res;
 };
 
+export const getCVAccessAPI = async (userId) => {
+  const res = await api.request({
+    url: urlcat("v1/users/employer/resume-access", userId),
+    method: "GET",
+  });
+  return res;
+};
+
+export const requestCVAccessAPI = async (userId) => {
+  const res = await api.request({
+    url: urlcat("v1/users/employer/resume-access", userId),
+    method: "POST",
+  });
+  return res;
+};
+
 export const getTenderAPI = async (data) => {
   const response = await api.request({
     url: urlcat("/v1/users/employer/tenders", data || {}),
@@ -262,7 +278,7 @@ export const getEmployerActiveJobsAPI = async (data) => {
         next: response.data.next,
         previous: response.data.previous,
         results: response.data.results.map((data) =>
-          transformFullJobDetails(data),
+          transformFullJobDetails(data)
         ),
       },
     };

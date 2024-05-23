@@ -1,6 +1,4 @@
 import { Button } from "@mui/material";
-import { USER_ROLES } from "../../utils/enum";
-import { useSelector } from "react-redux";
 
 function FilledButtonComponent({
   className,
@@ -9,14 +7,10 @@ function FilledButtonComponent({
   onClick,
   ...rest
 }) {
-  const { role } = useSelector((state) => state.auth);
-
   return (
     <Button
       disabled={disabled}
-      className={`outline-login ${className} ${
-        role !== USER_ROLES.jobSeeker && "bluebtn"
-      }`}
+      className={`outline-login ${className}`}
       onClick={(e) => (onClick ? onClick(e) : null)}
       {...rest}
     >
