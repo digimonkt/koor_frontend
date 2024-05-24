@@ -69,11 +69,9 @@ export default function PublicProfileComponent() {
   };
   const CVisAuthorized = async () => {
     const res = getCVAccessAPI({ userId: params.userId });
-    res.then((data) => setAuthorizedCV(data.message === "Results found"));
-  };
-  const requestCVAcess = () => {
-    const res = requestCVAccessAPI({ userId: params.userId });
-    res();
+    res.then(
+      (data) => data.data.message === "Found results" && setAuthorizedCV(true)
+    );
   };
   const getUserDetails = async (userId) => {
     setIsLoading(true);
@@ -409,7 +407,10 @@ export default function PublicProfileComponent() {
                             onClick={
                               authorizedCV
                                 ? () => downloadPDF()
-                                : () => requestCVAcess()
+                                : () =>
+                                    requestCVAccessAPI({
+                                      userId: params.userId,
+                                    })
                             }
                             disabled={isDownloadingPDF}
                             className="outlineLogin"

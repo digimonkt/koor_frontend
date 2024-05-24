@@ -272,3 +272,11 @@ export const uploadResumeAPI = async (data) => {
     data,
   });
 };
+
+export const shareResumeAPI = async (employerId) => {
+  const res = await api.request({
+    url: "v1/users/job-seeker/share-resume?employerId=" + employerId,
+    method: "POST",
+  });
+  return res;
+};

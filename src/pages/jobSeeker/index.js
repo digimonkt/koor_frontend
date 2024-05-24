@@ -5,6 +5,7 @@ import AppliedJobsComponent from "./appliedJobs";
 import SavedJobsComponent from "./savedJobs";
 import PublicProfileComponent from "./publicProfile";
 import CreateResumeComponent from "./createResume";
+import SharedCVComponent from "./sharedCV";
 
 export const MyProfile = MyProfileComponent;
 export const UpdateProfile = UpdateProfileComponent;
@@ -13,3 +14,4 @@ export const AppliedJobs = AppliedJobsComponent;
 export const SavedJobs = SavedJobsComponent;
 export const JobSeekerPublicProfile = PublicProfileComponent;
 export const CreateResume = CreateResumeComponent;
+export const SharedCV = SharedCVComponent;

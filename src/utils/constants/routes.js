@@ -82,6 +82,11 @@ const CreateResume = lazy(() =>
     default: module.CreateResume,
   }))
 );
+const SharedCV = lazy(() =>
+  import("../../pages/jobSeeker").then((module) => ({
+    default: module.SharedCV,
+  }))
+);
 const AppliedJobs = lazy(() =>
   import("../../pages/jobSeeker").then((module) => ({
     default: module.AppliedJobs,
@@ -388,6 +393,12 @@ export const JOB_SEEKER_ROUTES = [
     name: "Create Resume",
     path: "/my-profile/create-resume",
     component: CreateResume,
+  },
+  {
+    id: "sharedcv",
+    name: "Shared CV",
+    path: "/share-cv/:employerId",
+    component: SharedCV,
   },
   {
     id: "jobCriteria",
