@@ -29,7 +29,7 @@ const UpdateProfile = () => {
 
   const handleToggleModel = (type) => {
     setToggle((prev) =>
-      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type],
+      prev.includes(type) ? prev.filter((el) => el !== type) : [...prev, type]
     );
   };
 
@@ -158,8 +158,8 @@ const UpdateProfile = () => {
           description={[
             <>
               <p>
-                Thank you for adding this important information. Our team will
-                review it and activate your account within 24 hours.{" "}
+                Your profile has been updated, Thank you for adding this
+                important information.
               </p>
               <br />
               <br />

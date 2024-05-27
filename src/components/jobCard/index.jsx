@@ -161,13 +161,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         )}
         <Grid
           item
-          lg={logo ? 8 : 7}
+          lg={8}
           xs={12}
           sm={7}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "64%",
-              flexBasis: "64%",
+              maxWidth: "74%",
+              flexBasis: "74%",
             },
           }}
         >
@@ -247,13 +247,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         </Grid>
         <Grid
           item
-          lg={logo ? 2 : 5}
+          lg={logo ? 2 : 2}
           xs={12}
-          sm={logo ? 3 : 5}
+          sm={logo ? 3 : 3}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "25%",
-              flexBasis: "25%",
+              maxWidth: "15%",
+              flexBasis: "15%",
             },
           }}
         >

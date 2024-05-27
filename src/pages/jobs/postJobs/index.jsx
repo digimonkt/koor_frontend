@@ -1241,6 +1241,7 @@ function PostJobsComponent() {
         </CardContent>
       </Card>
       <ErrorToast
+        duration={10000}
         open={!jobId && totalAvailableCredits < minimumCreditJobPost}
         message="Please Buy Package to Post Job"
       />
