@@ -49,6 +49,7 @@ import Tags from "./tags";
 import { Capacitor } from "@capacitor/core";
 import { USER_ROLES } from "@utils/enum";
 import { useNavigate } from "react-router-dom";
+import { setErrorToast } from "../../../redux/slice/toast";
 
 export const SelectBox = styled(Select)`
   & .MuiSelect-select {
@@ -166,9 +167,13 @@ function MyProfile() {
         delete payload.mobile_number;
         delete payload.country_code;
       }
+      for (const key in payload) {
+        if (!payload[key]) {
+          delete payload[key];
+        }
+      }
       const newFormData = new FormData();
       for (const keys in payload) {
-        // using only for files only !
         if (payload[keys] !== undefined && payload[keys] !== null) {
           if (payload[keys].forEach) {
             payload[keys].forEach((data) => {
@@ -221,6 +226,25 @@ function MyProfile() {
           delete updatedUser.profile.country;
         }
         dispatch(updateCurrentUser(updatedUser));
+      } else if (Array.isArray(response.error.errors)) {
+        response.error.errors.forEach((message) => {
+          dispatch(setErrorToast(message));
+        });
+      } else if (
+        typeof response.error.errors === "object" &&
+        response.error.errors !== null
+      ) {
+        Object.values(response.error.errors).forEach((errorArray) => {
+          if (Array.isArray(errorArray)) {
+            errorArray.forEach((message) => {
+              dispatch(setErrorToast(message));
+            });
+          } else {
+            dispatch(setErrorToast(String(errorArray)));
+          }
+        });
+      } else {
+        dispatch(setErrorToast(String(response.error.errors)));
       }
     },
   });
