@@ -361,8 +361,8 @@ const MyProfile = () => {
           description={[
             <>
               <p>
-                Thank you for adding this important information. Our team will
-                review it and activate your account within 24 hours.{" "}
+                Your profile has been updated, Thank you for adding this
+                important information.
               </p>
               <p>Psst, it may happen even faster, stay tuned 😉</p>
             </>,
