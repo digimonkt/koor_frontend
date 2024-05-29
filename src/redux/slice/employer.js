@@ -9,12 +9,13 @@ const initialState = {
   totalApplicationsByJob: [],
   totalApplicationsByTender: [],
   jobPostUpdate: false,
-  totalAvailableCredits: 0,
-  minimumCreditJobPost: 10,
+  totalAvailableCredits: null,
+  minimumCreditJobPost: null,
   manageJobActiveTab: 0,
   jobSeekerJobApplication: [],
   vendorTenderApplication: [],
   tabsStep: 0,
+  hideSideBar: false,
 };
 
 export const employerSlice = createSlice({
@@ -76,6 +77,9 @@ export const employerSlice = createSlice({
     setEmployerTabsSteps: (state, action) => {
       state.tabsStep = action.payload;
     },
+    setHideSideBar: (state, action) => {
+      state.hideSideBar = action.payload;
+    },
   },
 });
 export const {
@@ -93,5 +97,6 @@ export const {
   setManageJobActiveTab,
   setVendorTenderApplication,
   setEmployerTabsSteps,
+  setHideSideBar,
 } = employerSlice.actions;
 export default employerSlice.reducer;

@@ -20,7 +20,7 @@ import { storeNewsletterAPI } from "../../api/home";
 import { ErrorToast, SuccessToast } from "../../components/toast";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-import { USER_ROLES } from "../../utils/enum";
+import { SOCIAL_LINKS, USER_ROLES } from "../../utils/enum";
 import DialogBox from "../../components/dialogBox";
 
 const InnerFooter = () => {
@@ -548,19 +548,19 @@ const InnerFooter = () => {
               },
             }}
           >
-            <a href="#!">
+            <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.twitter}>
               <XIcon />
             </a>
-            <a href="#!">
+            <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.youtube}>
               <SVG.YoutubeIcon />
             </a>
-            <a href="#!">
+            <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.instagram}>
               <SVG.InstagramIcon />
             </a>
-            <a href="#!">
+            <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.linkedin}>
               <SVG.LinkedInIcon />
             </a>
-            <a href="#!">
+            <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.facebook}>
               <SVG.FacebookIcon />
             </a>
           </Stack>

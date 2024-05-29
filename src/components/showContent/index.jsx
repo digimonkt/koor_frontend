@@ -77,7 +77,7 @@ const ShowContent = ({ content }) => {
                     <h1>
                       Maximize Potential with Opportunities for All on Koor!
                     </h1>
-                    <p>
+                    <p style={{ textAlign: "justify" }}>
                       Tailored Solutions for Employers, Job Seekers, and
                       Vendors. As an employer, post job or tender listings and
                       access a pool of qualified candidates and suppliers. As a

@@ -905,9 +905,8 @@ const AboutMe = (props) => {
                 icon={<SVG.AlertCheckICon />}
                 description={
                   <p>
-                    Thank you for adding this important information. Our team
-                    will review it and activate your account within 24 hours.
-                    Psst, it may happen even faster, stay tuned 😉
+                    Your profile has been updated, Thank you for adding this
+                    important information.
                   </p>
                 }
               />

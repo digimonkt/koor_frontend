@@ -157,7 +157,7 @@ function ResumeTemplate({ user, appliedJob = false }) {
                             </span>
                           )}
                         </div>
-                      ),
+                      )
                     )}
                   </div>
                 </>
@@ -182,7 +182,13 @@ function ResumeTemplate({ user, appliedJob = false }) {
             </div>
             <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
             <div style={{ width: "54%", padding: "20px 0px 20px 15px" }}>
-              <div className="profile">
+              <div
+                className="profile"
+                style={{
+                  textAlign: "justify",
+                  wordWrap: "break-word",
+                }}
+              >
                 <h2>Overview</h2>
                 <p>{applicantDetails.profile?.shortSummary}</p>
               </div>

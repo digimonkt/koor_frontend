@@ -82,7 +82,7 @@ function MyProfileComponent() {
       const countryCode = values.mobileNumber.international.split(" ")[0];
       const mobileNumber = (values.mobileNumber.value || "").replace(
         countryCode,
-        "",
+        ""
       );
 
       const payload = {
@@ -129,7 +129,7 @@ function MyProfileComponent() {
             profile: {
               // website: values.website,
               organizationType: sectors.data.find(
-                (sector) => sector.id === values.organizationType,
+                (sector) => sector.id === values.organizationType
               ),
               licenseId: values.licenseId,
               licenseIdFile: values.license[0],
@@ -137,21 +137,21 @@ function MyProfileComponent() {
                 values.marketingInformationNotification,
               otherNotification: values.otherNotification,
               country: countries.data.find(
-                (country) => country.id === values.country,
+                (country) => country.id === values.country
               ),
               city: cities.data[values.country]?.find(
-                (city) => city.id === values.city,
+                (city) => city.id === values.city
               ),
               address: values.address,
             },
-          }),
+          })
         );
         setLoading(false);
       } else {
         dispatch(
           setErrorToast(
-            res.error.errors.mobile_number || "Something went wrong",
-          ),
+            res.error.errors.mobile_number || "Something went wrong"
+          )
         );
         setLoading(false);
       }
@@ -193,7 +193,7 @@ function MyProfileComponent() {
       formik.setFieldValue("organizationName", currentUser.name);
       formik.setFieldValue(
         "organizationType",
-        currentUser.profile.organizationType?.id,
+        currentUser.profile.organizationType?.id
       );
       formik.setFieldValue("country", currentUser.profile.country?.id || "");
       formik.setFieldValue("city", currentUser.profile.city?.id || "");
@@ -205,7 +205,7 @@ function MyProfileComponent() {
         "license",
         currentUser.profile.licenseIdFile
           ? [currentUser.profile.licenseIdFile]
-          : [],
+          : []
       );
       formik.setFieldValue("mobileNumber", {
         national: currentUserMobileNumber
@@ -309,7 +309,7 @@ function MyProfileComponent() {
                       if (!isValid) {
                         formik.setFieldError(
                           "mobileNumber",
-                          "Invalid Mobile Number",
+                          "Invalid Mobile Number"
                         );
                       }
                     }}
@@ -336,7 +336,7 @@ function MyProfileComponent() {
                       (country) => ({
                         value: country.id,
                         label: country.title,
-                      }),
+                      })
                     )}
                     {...formik.getFieldProps("city")}
                   />
@@ -361,7 +361,7 @@ function MyProfileComponent() {
                               onClick={() => {
                                 formik.setFieldValue(
                                   "address",
-                                  address.description,
+                                  address.description
                                 );
                                 setSearchValue(address.description);
                               }}
@@ -409,7 +409,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "otherNotification",
-                          e.target.checked,
+                          e.target.checked
                         )
                       }
                       checked={formik.values.otherNotification}
@@ -426,7 +426,7 @@ function MyProfileComponent() {
                       onChange={(e) =>
                         formik.setFieldValue(
                           "marketingInformationNotification",
-                          e.target.checked,
+                          e.target.checked
                         )
                       }
                       checked={formik.values.marketingInformationNotification}

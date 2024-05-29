@@ -14,8 +14,8 @@ import { getColorByRemainingDays } from "@utils/generateColor";
 import { USER_ROLES } from "@utils/enum";
 import JobBadges from "./badges";
 import JobButtons from "./jobButtons";
-import { MAX_WORD_SIZE } from "@utils/constants/constants";
 import Budget from "./budget";
+import { ShowLessText } from "../../components/common";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
@@ -29,10 +29,8 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     isStart: jobDetails?.status,
     applicationStatus: "applied",
     isSaved: false,
-    showMore: false,
     registrationWarning: false,
   });
-
   const handleToggleSave = async () => {
     if (isLoggedIn) {
       setState((prev) => ({
@@ -90,7 +88,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         applicationStatus:
           "Interview planned on " +
           dayjs(jobDetails.isPlannedInterview).format(
-            "MMMM D, YYYY [at] h:mm A",
+            "MMMM D, YYYY [at] h:mm A"
           ),
       }));
     }
@@ -102,10 +100,10 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
     }));
   }, [endRouter]);
   return (
-    <div className="job_card">
+    <div className="job_card ">
       <Grid
         justifyContent="space-between"
-        sx={{ alignItems: state.showMore ? "flex-start" : "center" }}
+        sx={{ alignItems: "flex-start" }}
         container
         spacing={1.875}
       >
@@ -146,7 +144,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                     : "Closed"
                 }
                 color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
                 )}
               />
             </Box>
@@ -163,19 +161,19 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         )}
         <Grid
           item
-          lg={logo ? 8 : 7}
+          lg={8}
           xs={12}
           sm={7}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "64%",
-              flexBasis: "64%",
+              maxWidth: "74%",
+              flexBasis: "74%",
             },
           }}
         >
           <div className="my-jobs">
             <h2 style={{ marginBottom: "8px" }}>
-              <Link to={`/jobs/details/${jobDetails?.id || "jobId"}`}>
+              <Link to={`/jobs/details/${jobDetails?.slug}`}>
                 {jobDetails?.title}
               </Link>
               {jobDetails.isApplied ? (
@@ -194,41 +192,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               ) : null}
             </h2>
             <Box>
-              {state.showMore ? (
-                <Box
-                  className="details"
-                  dangerouslySetInnerHTML={{ __html: jobDetails?.description }}
-                ></Box>
-              ) : (
-                <Box
-                  className="details"
-                  dangerouslySetInnerHTML={{
-                    __html: jobDetails?.description?.substring(
-                      0,
-                      MAX_WORD_SIZE,
-                    ),
-                  }}
-                ></Box>
-              )}
-              {jobDetails?.description?.length > MAX_WORD_SIZE && (
-                <button
-                  style={{
-                    border: "none",
-                    cursor: "pointer",
-                    background: "none",
-                    color:
-                      role !== USER_ROLES.jobSeeker ? "#274593" : "#fe7f00",
-                  }}
-                  onClick={() =>
-                    setState((prev) => ({
-                      ...prev,
-                      showMore: !prev.showMore,
-                    }))
-                  }
-                >
-                  {state.showMore ? "See Less" : "See More"}
-                </button>
-              )}
+              <ShowLessText item={jobDetails.description} />
             </Box>
             <JobBadges jobDetails={jobDetails} />
             <Stack
@@ -283,13 +247,13 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         </Grid>
         <Grid
           item
-          lg={logo ? 2 : 5}
+          lg={logo ? 2 : 2}
           xs={12}
-          sm={logo ? 3 : 5}
+          sm={logo ? 3 : 3}
           sx={{
             "@media (min-width: 1200px)": {
-              maxWidth: "25%",
-              flexBasis: "25%",
+              maxWidth: "15%",
+              flexBasis: "15%",
             },
           }}
         >
@@ -313,7 +277,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                   : "Closed"
               }
               color={getColorByRemainingDays(
-                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0,
+                jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
               )}
             />
           </Box>
@@ -384,7 +348,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                       navigate(
                         urlcat("/employer/jobs/post", {
                           jobId: jobDetails?.id,
-                        }),
+                        })
                       );
                     }
                   }}

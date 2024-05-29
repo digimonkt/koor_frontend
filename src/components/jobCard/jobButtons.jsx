@@ -124,7 +124,6 @@ const JobButtons = ({
 }) => {
   const matches = useMediaQuery("(max-width:600px)");
   const { role } = useSelector(({ auth }) => auth);
-  console.log(role, "role");
   return (
     <Stack
       direction={"row"}

@@ -80,6 +80,7 @@ function Header() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
   const matches = useMediaQuery("(min-width: 600px) and (max-width: 1024px)");
+
   return (
     <header>
       <Container

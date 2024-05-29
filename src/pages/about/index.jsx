@@ -121,8 +121,17 @@ const AboutUs = () => {
               direction={{ sm: "row-reverse", md: "row", lg: "row-reverse" }}
             >
               <Grid item md={8} lg={7} xs={12} sm={7}>
-                <Box className={styles.about_text_box}>
-                  <h1 style={{ color: "#fff" }}>About Us</h1>
+                <Box
+                  style={{ textAlign: "justify" }}
+                  className={styles.about_text_box}
+                >
+                  <h1
+                    style={{
+                      color: "#fff",
+                    }}
+                  >
+                    About Us
+                  </h1>
                   <p>
                     Welcome to Koor, a cutting-edge web and mobile app
                     transforming the way employers, job seekers, and vendors
@@ -201,7 +210,7 @@ const AboutUs = () => {
                     <h1>
                       Maximize Potential with Opportunities for All on Koor!
                     </h1>
-                    <p>
+                    <p style={{ textAlign: "justify" }}>
                       Tailored Solutions for Employers, Job Seekers, and
                       Vendors. As an employer, post job or tender listings and
                       access a pool of qualified candidates and suppliers. As a

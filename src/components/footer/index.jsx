@@ -4,6 +4,7 @@ import XIcon from "@mui/icons-material/X";
 import { Link } from "react-router-dom";
 import { SVG } from "../../assets/svg";
 import dayjs from "dayjs";
+import { SOCIAL_LINKS } from "@utils/enum";
 
 function Footer() {
   return (
@@ -55,29 +56,41 @@ function Footer() {
           <div>
             <ul className="social-icons">
               <li>
-                <Link to="/">
+                <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.twitter}>
                   <XIcon />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/">
+                <a target="_blank" rel="noreferrer" href={SOCIAL_LINKS.youtube}>
                   <SVG.YoutubeIcon />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={SOCIAL_LINKS.instagram}
+                >
                   <SVG.InstagramIcon />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={SOCIAL_LINKS.linkedin}
+                >
                   <SVG.LinkedInIcon />
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={SOCIAL_LINKS.facebook}
+                >
                   <SVG.FacebookIcon />
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

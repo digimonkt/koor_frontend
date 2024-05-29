@@ -15,9 +15,9 @@ const PrivacyPolicy = () => {
     userRights();
   }, []);
   return (
-    <>
+    <div style={{ textAlign: "justify", border: "2px solid black" }}>
       <ShowContent content={privacyPolicy} />
-    </>
+    </div>
   );
 };
 
