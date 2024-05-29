@@ -217,7 +217,19 @@ const Home = () => {
                       >
                         Find your dream job
                       </Typography>
-                      <Typography variant="h2">
+                      <Typography
+                        variant="h2"
+                        sx={{
+                          color: "#0e2f59",
+                          fontSize: "24px",
+                          fontFamily: "Poppins, sans-serif",
+                          marginTop: "10px",
+                          marginBottom: "40px",
+                          "@media screen and (max-width: 992px)": {
+                            fontSize: "20px",
+                          },
+                        }}
+                      >
                         Search for the best opportunities in your area
                       </Typography>
                       <form onSubmit={handleSubmit}>
