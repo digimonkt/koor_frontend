@@ -35,10 +35,8 @@ import {
 } from "../../api/home";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
-import { Capacitor } from "@capacitor/core";
 import DialogBox from "../../components/dialogBox";
 import { Helmet } from "react-helmet";
-const platform = Capacitor.getPlatform();
 
 const Home = () => {
   const navigate = useNavigate();
@@ -178,7 +176,7 @@ const Home = () => {
       </Helmet>
       <div>
         <div className="homepage">
-          <Box className={styles.home_page}>
+          <Box className={styles.home_page} sx={{ marginTop: "62.5px" }}>
             <Box
               className={styles.bg_corav}
               sx={{
@@ -190,21 +188,7 @@ const Home = () => {
                 "@media (min-width:992px)": { backgroundSize: "contain" },
               }}
             >
-              <Box
-                className={styles.back_img_div}
-                sx={{
-                  marginTop:
-                    platform === "android" || platform === "ios"
-                      ? "0px"
-                      : "68px",
-                  "@media (max-width:992px)": {
-                    marginTop:
-                      platform === "android" || platform === "ios"
-                        ? "0px"
-                        : "60px",
-                  },
-                }}
-              >
+              <Box className={styles.back_img_div}>
                 <Box sx={{ width: "100%" }}>
                   <Container
                     maxWidth={false}
@@ -215,24 +199,25 @@ const Home = () => {
                       },
                     }}
                   >
-                    <Box
-                      className={styles.headding}
-                      sx={{
-                        paddingTop: "26%",
-                      }}
-                    >
+                    <Box className={styles.headding}>
                       <Typography
                         variant="h1"
-                        style={{
-                          color: "#fff",
-                          fontSize: 54,
+                        sx={{
+                          color: "#0e2f59",
+                          fontSize: "54px",
                           fontFamily: "Bahnschrift, sans-serif",
                           fontWeight: 700,
+                          "@media screen and (max-width: 992px)": {
+                            fontSize: "40px",
+                          },
+                          "@media screen and (max-width: 480px)": {
+                            fontSize: "32px",
+                          },
                         }}
                       >
                         Find your dream job
                       </Typography>
-                      <Typography variant="h2" className="mb-5">
+                      <Typography variant="h2">
                         Search for the best opportunities in your area
                       </Typography>
                       <form onSubmit={handleSubmit}>
