@@ -59,7 +59,11 @@ const JobDetailsComponent = ({
   const { budgetAmount, budgetPayPeriod } = jobDetails;
   return (
     <>
-      <Budget budgetAmount={budgetAmount} budgetPayPeriod={budgetPayPeriod} />
+      <Budget
+        jobDetails={jobDetails}
+        budgetAmount={budgetAmount}
+        budgetPayPeriod={budgetPayPeriod}
+      />
       {selfJob ? (
         <div className="job-button-card">
           <button>

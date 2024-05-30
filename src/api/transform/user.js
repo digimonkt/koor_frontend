@@ -11,6 +11,7 @@ export const transformGetUserDetails = (data) => {
     profileImage: data.image?.path ? generateFileUrl(data.image.path) : "",
     role: data.role,
     profileCompleted: data.profile_completed,
+    notificationCount: data.notification_count || 0,
     profile: {
       description: data.profile.description || "",
       country: data.profile.country || data.country || {},

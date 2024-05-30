@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, Stack } from "@mui/material";
+import { Box, Chip, Grid, Stack, useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { SVG } from "../../assets/svg";
@@ -12,13 +12,14 @@ import { updateEmployerJobStatusAPI } from "../../api/employer";
 import { showDay } from "@utils/constants/utility";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { USER_ROLES } from "@utils/enum";
-import JobBadges from "./badges";
 import JobButtons from "./jobButtons";
 import Budget from "./budget";
 import { ShowLessText } from "../../components/common";
+import ToggleElm from "./toggleElm";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
+  const isMobile = useMediaQuery("(max-width: 600px)");
   const location = useLocation();
   const path = location.pathname;
   const pathParts = path.split("/");
@@ -105,7 +106,7 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
         justifyContent="space-between"
         sx={{ alignItems: "flex-start" }}
         container
-        spacing={1.875}
+        spacing={1}
       >
         {logo && (
           <Grid
@@ -119,35 +120,6 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               },
             }}
           >
-            <Box
-              sx={{
-                display: "none",
-
-                "@media (max-width: 480px)": {
-                  display: "block",
-                  "& .btn_font_lower": {
-                    display: "inline-block !important",
-                  },
-                },
-              }}
-              className="text-start text-end mb-0 mb-lg-4"
-            >
-              <SolidButton
-                className={
-                  jobDetails?.expiredInDays > 0
-                    ? "btn_font_lower"
-                    : "btn_font_capitalize"
-                }
-                title={
-                  jobDetails?.expiredInDays > 0
-                    ? showDay(jobDetails?.expiredInDays)
-                    : "Closed"
-                }
-                color={getColorByRemainingDays(
-                  jobDetails?.expiredInDays > 0 ? jobDetails?.expiredInDays : 0
-                )}
-              />
-            </Box>
             <JobButtons
               jobDetails={jobDetails}
               isStart={state.isStart}
@@ -192,57 +164,20 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
               ) : null}
             </h2>
             <Box>
-              <ShowLessText item={jobDetails.description} />
+              <ShowLessText
+                item={jobDetails.description}
+                components={
+                  <ToggleElm
+                    sx={{ display: isMobile ? "block" : "none" }}
+                    selfJob={selfJob}
+                    jobDetails={jobDetails}
+                  />
+                }
+              />
             </Box>
-            <JobBadges jobDetails={jobDetails} />
-            <Stack
-              direction="row"
-              spacing={2}
-              className="mt-3"
-              sx={{
-                "@media(max-width: 480px)": {
-                  display: "block",
-                },
-              }}
-            >
-              {!selfJob && (
-                <Stack direction="row" spacing={1}>
-                  <span>
-                    <SVG.BriefcaseIcon />
-                  </span>{" "}
-                  <div className="textdes">
-                    Institution:{" "}
-                    <span>
-                      {!jobDetails.company
-                        ? jobDetails.user.name
-                        : jobDetails.company}
-                    </span>
-                  </div>
-                </Stack>
-              )}
-              <Stack
-                direction="row"
-                spacing={1}
-                sx={{
-                  borderLeft: "1px solid #ccc",
-                  paddingLeft: "15px",
-                  "@media(max-width: 480px)": {
-                    borderLeft: "0px",
-                    paddingLeft: "0px",
-                    marginLeft: "0px !important",
-                    marginTop: "10px !important",
-                  },
-                }}
-              >
-                <span>
-                  <SVG.ClockIconSmall />
-                </span>{" "}
-                <div className="textdes">
-                  Posted At:{" "}
-                  <span>{dayjs(jobDetails?.startDate).format("ll")}</span>
-                </div>
-              </Stack>
-            </Stack>
+            {!isMobile && (
+              <ToggleElm selfJob={selfJob} jobDetails={jobDetails} />
+            )}
           </div>
         </Grid>
         <Grid
