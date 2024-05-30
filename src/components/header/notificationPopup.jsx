@@ -1,12 +1,14 @@
 import { SVG } from "../../assets/svg";
 import NotificationContent from "../../components/notification";
-import { Menu, MenuItem } from "@mui/material";
+import { Badge, Menu, MenuItem } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import styles from "./notificationPopup.module.css";
+import { useSelector } from "react-redux";
 
 function NotificationPopup() {
   const wrapperRef = useRef(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { currentUser } = useSelector(({ auth }) => auth);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -44,7 +46,9 @@ function NotificationPopup() {
 
   return (
     <div>
-      <SVG.NotificationIcon onClick={handleClick} />
+      <Badge badgeContent={currentUser.notificationCount} color="error">
+        <SVG.NotificationIcon onClick={handleClick} />
+      </Badge>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
