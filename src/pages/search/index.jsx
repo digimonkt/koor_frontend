@@ -328,7 +328,12 @@ function Search({ searchTypeForJob }) {
                       justifyContent="space-between"
                       alignItems="center"
                     >
-                      <h1 className="m-0">
+                      <h1
+                        className="m-0"
+                        style={{
+                          fontSize: "1.8rem",
+                        }}
+                      >
                         {searchName}
                         <Chip
                           label={totalItems}

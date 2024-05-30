@@ -14,7 +14,7 @@ export const getNotificationCardByType = (
   item,
   handleClose,
   role,
-  handleRemoveMessages,
+  handleRemoveMessages
 ) => {
   switch (item.notificationType) {
     case NOTIFICATION_TYPE.advanceFilter:
