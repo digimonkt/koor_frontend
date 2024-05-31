@@ -343,10 +343,14 @@ const Home = () => {
               <Container
                 maxWidth={false}
                 sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  clipPath: "ellipse(55% 55% at 50% 45%)",
                   "@media(min-width:992px)": {
                     marginBottom: "10rem",
                     paddingLeft: "100px",
                     paddingRight: "100px",
+                    background: "#e4f0ff",
                   },
                 }}
               >
@@ -356,16 +360,16 @@ const Home = () => {
                     alignItems={"center"}
                     spacing={2}
                     justifyContent={"center"}
+                    maxWidth={550}
                     sx={{
-                      padding: "40px 0px",
+                      paddingBottom: "30px",
                       position: "relative",
                       zIndex: 1,
                     }}
                   >
                     <h5 className={styles.home_img_contents_h5}>
-                      Are you an employer looking to post jobs and tenders?
-                      Register now on Koor and post anytime to find qualified
-                      candidates and vendors.
+                      Post anytime, find qualified candidates & suppliers.
+                      Connect with us!
                     </h5>
                     <Link
                       to={isLoggedIn ? "/employer/jobs/post" : "/login"}

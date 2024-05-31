@@ -72,7 +72,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 0px;
+  padding: 10px 0 40px 0;
 }
 
 .location_select {
@@ -341,10 +341,10 @@
 
 .bg_corav:before {
   content: "";
-  background: #fffaf1;
+  background: #e4f0ff;
   width: 100%;
   left: 0px;
-  bottom: 75px;
+  bottom: 65px;
   position: absolute;
   height: 125px;
 }
