@@ -405,7 +405,7 @@ const Home = () => {
                   }}
                 >
                   <Typography className={styles.popular_job}>
-                    Trending opportunities
+                    Trending jobs
                   </Typography>
                   <Box
                     sx={{
@@ -415,24 +415,6 @@ const Home = () => {
                       justifyContent: "flex-end",
                     }}
                   >
-                    <Typography
-                      className={styles.see_all_jobs}
-                      sx={{
-                        cursor: "pointer",
-                        "@media(min-width:600px)": {
-                          marginRight: "8em",
-                        },
-                      }}
-                      onClick={() => {
-                        navigate("/search/tenders");
-                      }}
-                    >
-                      See all {totalTenders} Tenders{" "}
-                      <IconButton>
-                        <ArrowForwardIcon />
-                      </IconButton>
-                    </Typography>
-
                     <Typography
                       className={`ms-auto ${styles.see_all_jobs}`}
                       style={{
@@ -450,20 +432,74 @@ const Home = () => {
                   </Box>
                 </Stack>
               </Box>
+              <Box sx={{ marginBottom: "100px" }}>
+                <SlickSlider
+                  items={topJobCategories
+                    .filter((category) => category.categoryType === "job")
+                    .map((category) => ({
+                      icon: <SVG.Market />,
+                      title:
+                        (category?.title || "").length > 15
+                          ? `${category.title.slice(0, 12)}...`
+                          : category.title,
+                      text: `${category.count || 0} jobs`,
+                      id: category.id,
+                      categoryType: category.categoryType,
+                    }))}
+                />
+              </Box>
+              <Box>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  className={styles.stack_box}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Typography className={styles.popular_job}>
+                    Popular tenders
+                  </Typography>
+                  <Box
+                    sx={{
+                      marginLeft: "auto !important",
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Typography
+                      className={styles.see_all_jobs}
+                      sx={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        navigate("/search/tenders");
+                      }}
+                    >
+                      See all {totalTenders} Tenders{" "}
+                      <IconButton>
+                        <ArrowForwardIcon />
+                      </IconButton>
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Box>
               <Box>
                 <SlickSlider
-                  items={topJobCategories.map((category) => ({
-                    icon: <SVG.Market />,
-                    title:
-                      (category?.title || "").length > 15
-                        ? `${category.title.slice(0, 12)}...`
-                        : category.title,
-                    text: `${category.count || 0} ${
-                      category.categoryType === "tender" ? "tenders" : "jobs"
-                    }`,
-                    id: category.id,
-                    categoryType: category.categoryType,
-                  }))}
+                  items={topJobCategories
+                    .filter((category) => category.categoryType === "tender")
+                    .map((category) => ({
+                      icon: <SVG.Market />,
+                      title:
+                        (category?.title || "").length > 15
+                          ? `${category.title.slice(0, 12)}...`
+                          : category.title,
+                      text: `${category.count || 0} tenders`,
+                      id: category.id,
+                      categoryType: category.categoryType,
+                    }))}
                 />
                 <Divider
                   sx={{
