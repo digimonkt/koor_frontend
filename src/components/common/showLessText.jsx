@@ -38,7 +38,9 @@ const ShowLessText = ({ item, components }) => {
       <div
         className="details"
         dangerouslySetInnerHTML={{
-          __html: state.show ? item : state.truncatedDescription + "...",
+          __html: state.show
+            ? item
+            : state.truncatedDescription + (isToggle ? "..." : ""),
         }}
       />
       {Boolean(components) && state.show && components}
