@@ -7,6 +7,9 @@ import ShortlistedUserCard from "./shortlistedUserCard";
 import MessageNotificationCard from "./messageCard";
 import PlannedInterviewCard from "./plannedInterviewCard";
 import RejectedCard from "./rejectedCard";
+import JobPreference from "./jobPreference";
+import UpdatePassword from "./updatePassword";
+import AppliedTenderCard from "./appliedTenderCard";
 
 const NotificationContent = NotificationContentComponent;
 
@@ -33,7 +36,7 @@ export const getNotificationCardByType = (
           role={role}
         />
       );
-    case NOTIFICATION_TYPE.applied:
+    case NOTIFICATION_TYPE.appliedJob:
       return (
         <AppliedJobCard
           {...item}
@@ -69,6 +72,30 @@ export const getNotificationCardByType = (
     case NOTIFICATION_TYPE.rejected:
       return (
         <RejectedCard {...item} handleClose={() => handleClose()} role={role} />
+      );
+    case NOTIFICATION_TYPE.jobPreference:
+      return (
+        <JobPreference
+          {...item}
+          handleClose={() => handleClose()}
+          role={role}
+        />
+      );
+    case NOTIFICATION_TYPE.passwordUpdate:
+      return (
+        <UpdatePassword
+          {...item}
+          handleClose={() => handleClose()}
+          role={role}
+        />
+      );
+    case NOTIFICATION_TYPE.appliedTender:
+      return (
+        <AppliedTenderCard
+          {...item}
+          handleClose={() => handleClose()}
+          role={role}
+        />
       );
     default:
       return <></>;

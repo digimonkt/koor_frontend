@@ -110,6 +110,7 @@ export const transformNotificationResponse = (data) => {
     id: data.id,
     createdAt: data.created,
     notificationType: data.notification_type,
+    notificationCount: data.notification_count || 0,
     jobFilter: data.job_filter,
     seen: data.seen,
     message: data?.message || "",
@@ -117,7 +118,20 @@ export const transformNotificationResponse = (data) => {
     conversion: data?.conversation_id,
     userId: data?.message_sender,
     tender: data.tender,
-    tenderApplication: data.tender_application,
+    tenderApplication: {
+      id: data.tender_application?.id,
+      attachments: data.tender_application
+        ? data.tender_application.attachments[0]
+        : {},
+      tender: data.tender_application?.tender,
+      user: data.tender_application?.user,
+    },
+    receiver: {
+      id: data.receiver.id,
+      name: data.receiver.name,
+      email: data.receiver.email,
+      image: data.receiver.image,
+    },
     application: {
       id: data.application?.id,
       attachments: data.application ? data.application.attachments[0] : {},
@@ -136,10 +150,10 @@ export const transformNotificationResponse = (data) => {
       },
     },
     sender: {
-      id: data.sender?.id,
-      name: data.sender?.name,
-      email: data.sender?.email,
-      image: data.sender?.image,
+      id: data.message_sender?.id,
+      name: data.message_sender?.name,
+      email: data.message_sender?.email,
+      image: data.message_sender?.image,
     },
   };
 };

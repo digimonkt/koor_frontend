@@ -77,14 +77,16 @@ export const TENDER_SORT_BY = {
 };
 
 export const NOTIFICATION_TYPE = {
-  applied: "applied",
+  appliedJob: "applied",
   rejected: "rejected",
   passwordUpdate: "password_update",
   shortlisted: "shortlisted",
   message: "message",
   advanceFilter: "advance_filter",
   plannedInterviews: "planned_interviews",
-  expiredJob: "expired_save_job", // pending from backend
+  expiredJob: "expired_save_job",
+  jobPreference: "job_preference",
+  appliedTender: "applied_tender",
 };
 
 export const JOB_APPLICATION_OPTIONS = {

@@ -284,6 +284,9 @@ export const authSlice = createSlice({
     setUserVerificationToken: (state, action) => {
       state.userVerificationToken = action.payload;
     },
+    updateNotificationCount: (state, action) => {
+      state.notificationCount = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.pending, (state) => {
@@ -325,5 +328,6 @@ export const {
   setResumeData,
   setCoverLetterData,
   setUserVerificationToken,
+  updateNotificationCount,
 } = authSlice.actions;
 export default authSlice.reducer;

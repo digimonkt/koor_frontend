@@ -1,25 +1,26 @@
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { SVG } from "../../assets/svg";
-import { ChipBox } from "../../components/jobCard/style";
 import { Avatar, Box, Chip, Divider, Grid, Stack } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import React, { useEffect, useState } from "react";
 import urlcat from "urlcat";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { SolidButton } from "@components/button";
-import { capitalizeFirst, showDay } from "@utils/constants/utility";
+import { showDay } from "@utils/constants/utility";
 import { saveTenderAPI, unSaveTenderAPI } from "@api/vendor";
 import { updateEmployerTenderStatusAPI } from "@api/employer";
 import { USER_ROLES } from "@utils/enum";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { ShowLessText } from "@components/common";
+import ToggleElm from "./toggleElm";
+// import Clips from "./clips";
 
 function TenderCard({ tenderDetails, selfTender, applied, logo }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width: 600px)");
   const [isSaved, setIsSaved] = useState(false);
   const [isStart, setIsStart] = useState(tenderDetails?.status);
   const handleToggleSave = async () => {
@@ -215,7 +216,6 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
             </Stack>
           </Grid>
         )}
-
         <Grid
           sm={8}
           xs={12}
@@ -245,87 +245,25 @@ function TenderCard({ tenderDetails, selfTender, applied, logo }) {
               </Link>
             </h2>
             <Box>
-              <ShowLessText item={tenderDetails.description} />
-            </Box>
-
-            <Stack
-              direction={{ xs: "row", sm: "row" }}
-              spacing={{ xs: 1, sm: 1, md: 1 }}
-              sx={{
-                width: "100%",
-                flexWrap: "wrap",
-                "@media (max-width: 667px)": {
-                  overflow: "hidden",
-                  overflowX: "auto",
-                },
-              }}
-              useFlexGap
-              className="tender_card_chip"
-            >
-              {tenderDetails.sector && (
-                <ChipBox
-                  label={`Sector: ${capitalizeFirst(
-                    tenderDetails?.sector?.title || ""
-                  )}`}
-                  icon={<>{<SVG.SellIcon />}</>}
-                />
-              )}
-              {(tenderDetails?.tenderCategory || []).map((category, k) => {
-                return (
-                  <ChipBox
-                    key={k}
-                    label={category.title}
-                    icon={<>{<SVG.SellIcon />}</>}
+              <ShowLessText
+                item={tenderDetails.description}
+                components={
+                  <ToggleElm
+                    sx={{
+                      display: isMobile ? "block" : "none",
+                    }}
+                    selfTender={selfTender}
+                    tenderDetails={tenderDetails}
                   />
-                );
-              })}
-            </Stack>
-            <Stack
-              direction="row"
-              spacing={2}
-              className="mt-3"
-              sx={{
-                "@media (max-width: 992px)": {
-                  display: "block",
-                },
-              }}
-              // divider={<Divider orientation="vertical" flexItem />}
-            >
-              {!selfTender && (
-                <Stack direction="row" spacing={1}>
-                  <span>
-                    <SVG.BriefcaseIcon />
-                  </span>
-                  <div className="textdes">
-                    {/*
-                    { tenderDetails.isPostedByAdmin
-                      ? "Posted By"
-                      : "Institution:"}
-                    <span>
-                      {tenderDetails.isPostedByAdmin
-                        ? " Koor"
-                      : ` ${tenderDetails.user.name}` }
-                    </span>
-                      */}
-                    Institution:{" "}
-                    <span>
-                      {!tenderDetails.company
-                        ? tenderDetails.user.name
-                        : tenderDetails.company}
-                    </span>{" "}
-                  </div>
-                </Stack>
-              )}
-              <Stack direction="row" spacing={1} className="company_textdes">
-                <span>
-                  <SVG.ClockIconSmall />
-                </span>{" "}
-                <div className="textdes">
-                  Posted At:{" "}
-                  <span>{dayjs(tenderDetails?.startDate).format("ll")}</span>
-                </div>
-              </Stack>
-            </Stack>
+                }
+              />
+            </Box>
+            {!isMobile && (
+              <ToggleElm
+                selfTender={selfTender}
+                tenderDetails={tenderDetails}
+              />
+            )}
           </div>
         </Grid>
         {!matches ? (
