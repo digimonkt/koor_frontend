@@ -1,13 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { SolidButton } from "@components/button";
 import { getColorByRemainingDays } from "@utils/generateColor";
 import { showDay } from "@utils/constants/utility";
 
 const Budget = ({ jobDetails, budgetAmount, budgetPayPeriod }) => {
+  const isMobile = useMediaQuery("(max-width: 600px)");
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "flex-end",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+      }}
+    >
       <Box
         sx={{
           display: "none",
@@ -37,11 +45,36 @@ const Budget = ({ jobDetails, budgetAmount, budgetPayPeriod }) => {
         />
       </Box>
       {Boolean(parseInt(budgetAmount)) && (
-        <div className="pricebox py-0 me-lg-4">
+        <div
+          className="pricebox py-2"
+          style={
+            isMobile
+              ? {
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  flexDirection: "column",
+                  alignItems: "flex-end",
+                }
+              : {}
+          }
+        >
           <span className="d-block">UP TO</span>
-          <h4>
-            <small>{"$"}</small>
-            {budgetAmount}
+          <h4
+            style={
+              isMobile
+                ? {
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    flexDirection: "column",
+                    alignItems: "flex-end",
+                  }
+                : {}
+            }
+          >
+            <div>
+              <small>{"$"}</small>
+              {budgetAmount}
+            </div>
           </h4>
           <span>{budgetPayPeriod}</span>
         </div>

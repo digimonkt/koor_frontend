@@ -14,11 +14,9 @@ import DialogBox from "../../components/dialogBox";
 import Settings from "./settings";
 import dayjs from "dayjs";
 import { Capacitor } from "@capacitor/core";
-
-function NotificationContentComponent({ footer, header, handleClose, ref }) {
+function NotificationContentComponent({ footer, header, handleClose }) {
   const { role } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
-
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -26,24 +24,24 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
   const [settings, setSetting] = useState(false);
   const [filterByDate, setFilterByDate] = useState(
     // dayjs().format("YYYY-MM-DD")
-    null,
+    null
   );
-  const handleChangeSection = (event, newValue) => {
-    const filterNotification = (type) => {
+  const handleChangeSection = (_, newValue) => {
+    const filterNotification = (_) => {
       const notificationData = [...notification];
       let notificationResult = "";
       if (newValue === "message") {
         notificationResult = notificationData.filter(
-          (notification) => notification.notificationType === "message",
+          (notification) => notification.notificationType === "message"
         );
       } else {
         notificationResult = notificationData.filter(
-          (notification) => notification.notificationType !== "message",
+          (notification) => notification.notificationType !== "message"
         );
       }
       if (role === USER_ROLES.employer) {
         notificationResult = notificationResult.filter(
-          (notification) => notification.notificationType !== "applied_tender",
+          (notification) => notification.notificationType !== "applied_tender"
         );
       }
       setFilterData(notificationResult);
@@ -72,7 +70,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
 
   const handleRemoveMessages = (id) => {
     const updatedNotifications = notification.filter(
-      (item) => item.messageId !== id,
+      (item) => item.messageId !== id
     );
     setNotification(updatedNotifications);
   };
@@ -306,7 +304,7 @@ function NotificationContentComponent({ footer, header, handleClose, ref }) {
                           item,
                           handleClose,
                           role,
-                          handleRemoveMessages,
+                          handleRemoveMessages
                         )}
                       </div>
                     </>

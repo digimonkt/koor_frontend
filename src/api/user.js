@@ -113,6 +113,7 @@ export const GetNotificationAPI = async ({ type, created, exactDate }) => {
     url: urlcat("v1/users/notification", {
       type,
       created,
+      limit: 1000,
       exact_date: exactDate,
     }),
     method: "GET",
@@ -295,6 +296,14 @@ export const getSettingUpdateAPI = async () => {
   const res = await api.request({
     url: urlcat("v1/users/notification/settings"),
     method: "GET",
+  });
+  return res;
+};
+
+export const updateNotificationReadAPI = async (id) => {
+  const res = await api.request({
+    url: urlcat("v1/users/notification/:id", { id }),
+    method: "PUT",
   });
   return res;
 };

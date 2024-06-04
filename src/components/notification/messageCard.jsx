@@ -3,9 +3,13 @@ import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import styles from "./notification.module.css";
+import { updateNotificationReadAPI } from "../../api/user";
+import { useDispatch } from "react-redux";
+import { updateNotificationCount } from "../../redux/slice/user";
+
 function MessageNotificationCard({
   sender,
   message,
@@ -15,12 +19,31 @@ function MessageNotificationCard({
   role,
   conversion,
   userId,
+  id,
+  seen,
   // handleRemoveMessages,
 }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSeen = async (id) => {
+    const res = await updateNotificationReadAPI(id);
+    console.log(res.data, "sdfd");
+
+    if (res.remote === "success") {
+      dispatch(updateNotificationCount(res.data.notification_count));
+      navigate(
+        urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`
+      );
+    }
+  };
   return (
-    <Link
-      onClick={() => handleClose()}
-      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}
+    <div
+      style={{ background: seen ? "#f0ecec" : "" }}
+      onClick={() => {
+        handleClose();
+        handleSeen(id);
+      }}
     >
       <div
         className={`${styles.content_div}`}
@@ -84,7 +107,7 @@ function MessageNotificationCard({
           </p>
         </Box>
       </div>
-    </Link>
+    </div>
   );
 }
 

@@ -1,18 +1,33 @@
 import { SVG } from "../../assets/svg";
 import { Avatar } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
 import styles from "./notification.module.css";
 import urlcat from "urlcat";
-function ExpiredJobCard({ job, createdAt, handleClose }) {
-  const jobId = job?.id;
+import { updateNotificationReadAPI } from "../../api/user";
+import { useDispatch } from "react-redux";
+import { updateNotificationCount } from "@redux/slice/user";
 
+function ExpiredJobCard({ id, seen, job, createdAt, handleClose }) {
+  const jobId = job?.id;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleSeen = async (id) => {
+    const res = await updateNotificationReadAPI(id);
+    if (res.remote === "success") {
+      dispatch(updateNotificationCount(res.data.notification_count));
+      navigate(job?.id ? urlcat("/jobs/details/:jobId", { jobId }) : "#");
+    }
+  };
   return (
     <Link
-      onClick={() => handleClose()}
-      to={job?.id ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}
+      onClick={() => {
+        handleClose();
+        handleSeen(id);
+      }}
+      style={{ background: seen ? "#f0ecec" : "" }}
     >
       <div
         className={`${styles.content_div}`}
