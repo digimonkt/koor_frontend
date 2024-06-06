@@ -2,6 +2,10 @@ import { getJobAnalyticsAPI } from "../../../../api/employer";
 import { Stack } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
+import { GetUserDetailsAPI } from "@api/user";
+import { useDispatch } from "react-redux";
+import { updateCurrentUser } from "@redux/slice/user";
+
 const OPTIONS = {
   chart: {
     height: 185,
@@ -96,6 +100,7 @@ const OPTIONS = {
     },
   },
 };
+
 const transformData = (data) => {
   let total = 0;
   const counts = new Array(12).fill(0);
@@ -113,6 +118,7 @@ const transformData = (data) => {
   return { result, total };
 };
 function JobAnalytics({ title }) {
+  const dispatch = useDispatch();
   const [applicationCount, setApplicationCount] = useState(0);
   const [chartData, setChartData] = useState({
     options: OPTIONS,
@@ -134,8 +140,15 @@ function JobAnalytics({ title }) {
       setApplicationCount(total);
     }
   };
+  const updateProjectDetails = async () => {
+    const res = await GetUserDetailsAPI();
+    if (res.remote === "success") {
+      dispatch(updateCurrentUser({ profile: { ...res.data.profile } }));
+    }
+  };
   useEffect(() => {
     getJobAnalytics();
+    updateProjectDetails();
   }, []);
   return (
     <>

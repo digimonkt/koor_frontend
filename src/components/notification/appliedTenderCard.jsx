@@ -4,36 +4,17 @@ import { Avatar, Box } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { useNavigate } from "react-router-dom";
-import { updateNotificationReadAPI } from "../../api/user";
-import { useDispatch } from "react-redux";
-import { updateNotificationCount } from "@redux/slice/user";
 
 function AppliedTenderCard({
   tenderApplication,
   tender,
   createdAt,
   handleClose,
-  role,
-  conversion,
-  userId,
   id,
   seen,
+  handleSeen,
 }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  console.log(tenderApplication);
-  const handleLinks = async () => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      console.log(res.data);
-      dispatch(updateNotificationCount(res.data.notification_count));
-
-      navigate(
-        `/employer/manage-tenders/${tenderApplication.tender.id}/applicant-details/${tenderApplication.id}`
-      );
-    }
-  };
+  const url = `/employer/manage-tenders/${tenderApplication?.tender?.id}/applicant-details/${tenderApplication?.id}`;
   return (
     <Box
       sx={{
@@ -43,7 +24,7 @@ function AppliedTenderCard({
       className={`${styles.content_div}`}
       onClick={() => {
         handleClose();
-        handleLinks();
+        handleSeen(id, url);
       }}
     >
       <div>

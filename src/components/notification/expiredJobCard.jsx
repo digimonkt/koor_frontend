@@ -1,31 +1,20 @@
 import { SVG } from "../../assets/svg";
 import { Avatar } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
 import styles from "./notification.module.css";
 import urlcat from "urlcat";
-import { updateNotificationReadAPI } from "../../api/user";
-import { useDispatch } from "react-redux";
-import { updateNotificationCount } from "@redux/slice/user";
 
-function ExpiredJobCard({ id, seen, job, createdAt, handleClose }) {
+function ExpiredJobCard({ id, seen, job, createdAt, handleClose, handleSeen }) {
   const jobId = job?.id;
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleSeen = async (id) => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      dispatch(updateNotificationCount(res.data.notification_count));
-      navigate(job?.id ? urlcat("/jobs/details/:jobId", { jobId }) : "#");
-    }
-  };
+  const url = jobId ? urlcat("/jobs/details/:jobId", { jobId }) : "#";
   return (
     <Link
       onClick={() => {
         handleClose();
-        handleSeen(id);
+        handleSeen(id, url);
       }}
       style={{ background: seen ? "#f0ecec" : "" }}
     >

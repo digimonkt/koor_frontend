@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(function (response) {
   return response;
 });
 
-export const request = async config => {
+export const request = async (config) => {
   try {
     if (!config.headers) {
       config.headers = {};
@@ -94,7 +94,7 @@ export const request = async config => {
   }
 };
 
-export const parseResponse = response => {
+export const parseResponse = (response) => {
   const data = JSON.parse(response);
   if (data && (data.errors || data.error)) {
     return {
