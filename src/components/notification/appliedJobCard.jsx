@@ -4,12 +4,8 @@ import { Avatar, Box } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { USER_ROLES } from "../../utils/enum";
-import { updateNotificationReadAPI } from "../../api/user";
-import { updateNotificationCount } from "@redux/slice/user";
-import { useDispatch } from "react-redux";
 
 function AppliedJobCard({
   application,
@@ -17,33 +13,27 @@ function AppliedJobCard({
   createdAt,
   handleClose,
   role,
-  conversion,
-  userId,
   id,
   seen,
+  handleSeen,
 }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const handleLinks = async () => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      dispatch(updateNotificationCount(res.data.notification_count));
-      if (role === USER_ROLES.employer && application.job?.id) {
-        navigate(
-          urlcat("/:role/manage-jobs/:jobId/applicant-details/:applicationId", {
-            applicationId: application.id,
-            role: USER_ROLES.employer,
-            jobId: application.job.id,
-          })
-        );
-      } else if (role === USER_ROLES.jobSeeker) {
-        navigate(
-          urlcat("/jobs/details/:jobId", {
-            jobId: application.job.id,
-          })
-        );
-      }
+    let url;
+    if (role === USER_ROLES.employer && application.job?.id) {
+      url = urlcat(
+        "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+        {
+          applicationId: application.id,
+          role: USER_ROLES.employer,
+          jobId: application.job.id,
+        }
+      );
+    } else if (role === USER_ROLES.jobSeeker) {
+      url = urlcat("/jobs/details/:jobId", {
+        jobId: application.job.id,
+      });
     }
+    handleSeen(id, url);
   };
   return (
     <Box

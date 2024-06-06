@@ -14,7 +14,14 @@ import DialogBox from "../../components/dialogBox";
 import Settings from "./settings";
 import dayjs from "dayjs";
 import { Capacitor } from "@capacitor/core";
-function NotificationContentComponent({ footer, header, handleClose }) {
+
+function NotificationContentComponent({
+  footer,
+  header,
+  handleClose,
+  handleSeen,
+  setAllNotificationToRead,
+}) {
   const { role } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
   const [loading, setLoading] = useState(false);
@@ -22,10 +29,7 @@ function NotificationContentComponent({ footer, header, handleClose }) {
   const [filterData, setFilterData] = useState([]);
   const [section, setSection] = useState("all");
   const [settings, setSetting] = useState(false);
-  const [filterByDate, setFilterByDate] = useState(
-    // dayjs().format("YYYY-MM-DD")
-    null
-  );
+  const [filterByDate, setFilterByDate] = useState(null);
   const handleChangeSection = (_, newValue) => {
     const filterNotification = (_) => {
       const notificationData = [...notification];
@@ -110,6 +114,7 @@ function NotificationContentComponent({ footer, header, handleClose }) {
       return date.toLocaleDateString("en-US", options);
     }
   };
+
   useEffect(() => {
     getNotifications();
   }, [filterByDate]);
@@ -304,7 +309,8 @@ function NotificationContentComponent({ footer, header, handleClose }) {
                           item,
                           handleClose,
                           role,
-                          handleRemoveMessages
+                          handleRemoveMessages,
+                          handleSeen
                         )}
                       </div>
                     </>
@@ -335,6 +341,7 @@ function NotificationContentComponent({ footer, header, handleClose }) {
                 to="/notification"
                 className={styles.view_all}
                 onClick={() => {
+                  setAllNotificationToRead();
                   if (handleClose) {
                     handleClose();
                   }

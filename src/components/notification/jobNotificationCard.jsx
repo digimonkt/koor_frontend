@@ -3,28 +3,22 @@ import { Avatar } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import styles from "./notification.module.css";
-import { updateNotificationReadAPI } from "../../api/user";
-import { useDispatch } from "react-redux";
-import { updateNotificationCount } from "@redux/slice/user";
 
-function JobNotificationCard({ id, job, jobFilter, createdAt, seen }) {
-  const naviagte = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleSeen = async (id) => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      dispatch(updateNotificationCount(res.data.notification_count));
-      naviagte(urlcat("/jobs/details/:jobId", { jobId: job.id }));
-    }
-  };
+function JobNotificationCard({
+  id,
+  job,
+  jobFilter,
+  createdAt,
+  seen,
+  handleSeen,
+}) {
+  const url = urlcat("/jobs/details/:jobId", { jobId: job.id });
   return (
     <div
       style={{ background: seen ? "#f0ecec" : "" }}
-      onClick={() => handleSeen(id)}
+      onClick={() => handleSeen(id, url)}
     >
       <div className={`${styles.content_div}`}>
         <div>

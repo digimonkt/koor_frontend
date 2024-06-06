@@ -3,13 +3,9 @@ import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { USER_ROLES } from "../../utils/enum";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { updateNotificationReadAPI } from "../../api/user";
-import { useDispatch } from "react-redux";
-import { updateNotificationCount } from "@redux/slice/user";
 
 function ShortlistedUserCard({
   id,
@@ -21,10 +17,9 @@ function ShortlistedUserCard({
   tenderApplication,
   createdAt,
   role,
+  handleSeen,
 }) {
-  const navigate = useNavigate();
   const jobId = application?.job?.id;
-  const dispatch = useDispatch();
   const tenderId = tender?.id;
   let newUrl = "#";
   let applicationFor = "";
@@ -50,18 +45,11 @@ function ShortlistedUserCard({
     applicationOriginName = tenderApplication?.tender?.title;
   }
 
-  const handleSeen = async () => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      dispatch(updateNotificationCount(res.data.notification_count));
-      navigate(newUrl);
-    }
-  };
   return (
     <div
       style={{ background: seen ? "#f0ecec" : "" }}
       onClick={() => {
-        handleSeen();
+        handleSeen(id, newUrl);
         handleClose();
       }}
       to={newUrl}
