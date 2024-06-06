@@ -3,12 +3,8 @@ import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { updateNotificationReadAPI } from "../../api/user";
-import { useDispatch } from "react-redux";
-import { updateNotificationCount } from "@redux/slice/user";
 
 function RejectedCard({
   id,
@@ -19,11 +15,11 @@ function RejectedCard({
   tenderApplication,
   createdAt,
   application,
+  handleSeen,
 }) {
   const jobId = application?.job?.id;
   const tenderId = tender?.id;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   let newUrl = "#";
   let applicationFor = "";
   let applicationOriginName = "";
@@ -36,20 +32,12 @@ function RejectedCard({
     applicationFor = "Tender";
     applicationOriginName = tenderApplication?.tender?.title;
   }
-
-  const handleSeen = async (id) => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      dispatch(updateNotificationCount(res.data.notification_count));
-      navigate(newUrl);
-    }
-  };
   return (
     <div
       style={{ background: seen ? "#f0ecec" : "" }}
       onClick={() => {
         handleClose();
-        handleSeen(id);
+        handleSeen(id, newUrl);
       }}
     >
       <div className={`${styles.content_div}`}>

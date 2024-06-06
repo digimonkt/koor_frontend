@@ -160,6 +160,12 @@ const PostTender = () => {
         if (response.remote === "success") {
           dispatch(setSuccessToast("Tender Created Successfully"));
           resetForm();
+        } else if (response.error.errors.message === "Y") {
+          dispatch(
+            setErrorToast(
+              "You do not have enough points to create a new tender."
+            )
+          );
         } else {
           dispatch(setErrorToast("Something went wrong"));
         }

@@ -48,6 +48,7 @@ const MyProfile = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <>
       <div className="dashboard-content">

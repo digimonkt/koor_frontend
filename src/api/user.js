@@ -307,3 +307,11 @@ export const updateNotificationReadAPI = async (id) => {
   });
   return res;
 };
+
+export const setAllNotificationToReadAPI = async () => {
+  const res = await api.request({
+    url: "v1/users/notification",
+    method: "POST",
+  });
+  return res;
+};

@@ -11,7 +11,9 @@ import { addSkillsDetailsAPI } from "../../../../api/jobSeeker";
 import { setErrorToast, setSuccessToast } from "../../../../redux/slice/toast";
 import Loader from "../../../../components/loader";
 import { Capacitor } from "@capacitor/core";
-
+import { GetUserDetailsAPI } from "../../../../api/user";
+import { updateCurrentUser } from "../../../../redux/slice/user";
+import { useLocation } from "react-router-dom";
 const Skills = (props) => {
   const platform = Capacitor.getPlatform();
   const dispatch = useDispatch();
@@ -19,6 +21,7 @@ const Skills = (props) => {
   const {
     currentUser: { skills: selectedSkills },
   } = useSelector((state) => state.auth);
+  const location = useLocation();
   const [searchSkill, setSearchSkill] = useState("");
   const debouncedSearchSkillValue = useDebounce(searchSkill, 1000);
   const [newSelectedSkills, setNewSelectedSkills] = useState([]);
@@ -36,7 +39,7 @@ const Skills = (props) => {
     setRemovedSkills((prevState) => [...prevState, id]);
     setAllSkills((prevState) => prevState.filter((state) => state.id !== id));
     setNewSelectedSkills((prevState) =>
-      prevState.filter((state) => state.id !== id),
+      prevState.filter((state) => state.id !== id)
     );
   };
 
@@ -64,18 +67,28 @@ const Skills = (props) => {
         })),
       ]);
     }
-  }, []);
+  }, [location.pathname, selectedSkills]);
 
   useEffect(() => {
     if (debouncedSearchSkillValue) {
       dispatch(
         getSkills({
           search: debouncedSearchSkillValue,
-        }),
+        })
       );
     }
   }, [debouncedSearchSkillValue]);
 
+  const updateProjectDetails = async () => {
+    const res = await GetUserDetailsAPI();
+    if (res.remote === "success") {
+      dispatch(updateCurrentUser(res.data));
+    }
+  };
+
+  useEffect(() => {
+    updateProjectDetails();
+  }, [location.pathname]);
   return (
     <>
       <Card
@@ -167,8 +180,8 @@ const Skills = (props) => {
                                 (skill) =>
                                   !allSkills.some(
                                     (otherItem) =>
-                                      otherItem.title === skill.title,
-                                  ),
+                                      otherItem.title === skill.title
+                                  )
                               )
                               .map((skill) => {
                                 return (
@@ -276,8 +289,8 @@ const Skills = (props) => {
                           .filter(
                             (skill) =>
                               !allSkills.some(
-                                (otherItem) => otherItem.title === skill.title,
-                              ),
+                                (otherItem) => otherItem.title === skill.title
+                              )
                           )
                           .map((skill) => {
                             return (

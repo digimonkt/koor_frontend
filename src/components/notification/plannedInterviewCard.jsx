@@ -3,12 +3,8 @@ import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { updateNotificationReadAPI } from "../../api/user";
-import { useDispatch } from "react-redux";
-import { updateNotificationCount } from "@redux/slice/user";
 
 function PlannedInterviewCard({
   id,
@@ -17,26 +13,18 @@ function PlannedInterviewCard({
   handleClose,
   application,
   createdAt,
+  handleSeen,
 }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const handleSeen = async (id) => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      dispatch(updateNotificationCount(res.data.notification_count));
-      navigate(
-        application?.job
-          ? urlcat("/jobs/details/:jobId", { jobId: application?.job?.id })
-          : "#"
-      );
-    }
-  };
+  const url = application?.job
+    ? urlcat("/jobs/details/:jobId", { jobId: application?.job?.id })
+    : "#";
+
   return (
     <div
       style={{ background: seen ? "#f0ecec" : "" }}
       onClick={() => {
         handleClose();
-        handleSeen(id);
+        handleSeen(id, url);
       }}
     >
       <div className={`${styles.content_div}`}>

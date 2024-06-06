@@ -17,7 +17,8 @@ export const getNotificationCardByType = (
   item,
   handleClose,
   role,
-  handleRemoveMessages
+  handleRemoveMessages,
+  handleSeen
 ) => {
   switch (item.notificationType) {
     case NOTIFICATION_TYPE.advanceFilter:
@@ -26,6 +27,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.expiredJob:
@@ -34,6 +36,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.appliedJob:
@@ -42,6 +45,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.shortlisted:
@@ -50,6 +54,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.plannedInterviews:
@@ -58,6 +63,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.message:
@@ -67,11 +73,17 @@ export const getNotificationCardByType = (
           handleClose={() => handleClose()}
           handleRemoveMessages={handleRemoveMessages}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.rejected:
       return (
-        <RejectedCard {...item} handleClose={() => handleClose()} role={role} />
+        <RejectedCard
+          {...item}
+          handleSeen={handleSeen}
+          handleClose={() => handleClose()}
+          role={role}
+        />
       );
     case NOTIFICATION_TYPE.jobPreference:
       return (
@@ -79,6 +91,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.passwordUpdate:
@@ -87,6 +100,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.appliedTender:
@@ -95,6 +109,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     default:

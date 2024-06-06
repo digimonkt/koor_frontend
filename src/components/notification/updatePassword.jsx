@@ -4,31 +4,20 @@ import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
 import styles from "./notification.module.css";
-import { updateNotificationReadAPI } from "../../api/user";
-import { useDispatch } from "react-redux";
-import { updateNotificationCount } from "@redux/slice/user";
 
 function UpdatePassword({
   handleClose,
   receiver,
   id,
-  job,
-  jobFilter,
   createdAt,
   seen,
+  handleSeen,
 }) {
-  const dispatch = useDispatch();
-  const handleSeen = async (id) => {
-    const res = await updateNotificationReadAPI(id);
-    if (res.remote === "success") {
-      dispatch(updateNotificationCount(res.data.notification_count));
-    }
-  };
   return (
     <div
       style={{ background: seen ? "#f0ecec" : "" }}
       onClick={() => {
-        handleSeen(id);
+        handleSeen(id, null);
         handleClose();
       }}
     >
