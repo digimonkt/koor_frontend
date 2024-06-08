@@ -180,12 +180,13 @@ const Home = () => {
             <Box
               className={styles.bg_corav}
               sx={{
-                background: `url(${CoravImg})`,
-                backgroundPosition: "bottom center",
-                backgroundRepeat: "no-repeat",
                 position: "relative",
-                "@media (max-width:992px)": { backgroundSize: "contain" },
-                "@media (min-width:992px)": { backgroundSize: "contain" },
+                "@media (min-width:992px)": {
+                  background: `url(${CoravImg})`,
+                  backgroundPosition: "bottom center",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                },
               }}
             >
               <Box className={styles.back_img_div}>
@@ -342,11 +343,13 @@ const Home = () => {
               </Box>
               <Container
                 maxWidth={false}
+                className={styles.ribbon_stack}
                 sx={{
                   display: "flex",
                   justifyContent: "center",
-                  clipPath: "ellipse(55% 55% at 50% 45%)",
+                  position: "relative",
                   "@media(min-width:992px)": {
+                    clipPath: "ellipse(55% 55% at 50% 45%)",
                     marginBottom: "10rem",
                     paddingLeft: "100px",
                     paddingRight: "100px",
@@ -354,6 +357,7 @@ const Home = () => {
                   },
                 }}
               >
+                <div className={styles.ribbon_fix}></div>
                 {role !== USER_ROLES.jobSeeker && role !== USER_ROLES.vendor ? (
                   <Stack
                     direction={"row"}
