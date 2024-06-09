@@ -24,6 +24,7 @@ import { USER_ROLES } from "../../utils/enum";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CoravImg from "../../assets/images/corav-bg.png";
 import {
+  getSearchJobsAPI,
   getTopJobCategoriesAPI,
   getTopTenderCategoriesAPI,
 } from "../../api/job";
@@ -37,6 +38,9 @@ import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
 import DialogBox from "../../components/dialogBox";
 import { Helmet } from "react-helmet";
+import dayjs from "dayjs";
+import { getTenderSearchAPI } from "@api/tender";
+import { FilledButton } from "@components/button";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -44,6 +48,8 @@ const Home = () => {
   const { countries, jobCategories } = useSelector((state) => state.choices);
   const { role, isLoggedIn } = useSelector((state) => state.auth);
 
+  const [latestJobs, setLatestJobs] = useState([]);
+  const [latestTenders, setLatestTenders] = useState([]);
   const [totalTenders, setTotalTenders] = useState(0);
   const [totalJobs, setTotalJobs] = useState(0);
   const [topJobCategories, setTopJobCategories] = useState([]);
@@ -138,11 +144,62 @@ const Home = () => {
     }
   };
 
+  const getJobs = async () =>
+    await getSearchJobsAPI()
+      .then((res) =>
+        res.data.results.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
+      )
+      .then((jobs) => {
+        let latest = [];
+        console.log(jobs);
+        jobs.map(
+          (job) =>
+            (latest = [
+              ...latest,
+              {
+                title: job.title,
+                date: dayjs(job.createdAt).fromNow(),
+                link: "/jobs/details/" + job.slug,
+              },
+            ])
+        );
+
+        setLatestJobs(latest.slice(0, 5));
+      });
+
+  const getTenders = async () =>
+    await getTenderSearchAPI()
+      .then((res) =>
+        res.data.results.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
+      )
+      .then((tenders) => {
+        let latest = [];
+        tenders.map(
+          (tender) =>
+            (latest = [
+              ...latest,
+              {
+                title: tender.title,
+                date: dayjs(tender.createdAt).fromNow(),
+                link: "/tender/details/" + tender.slug,
+              },
+            ])
+        );
+
+        setLatestTenders(latest.slice(0, 3));
+      });
+
   const handleCommingSoon = () => {
     setOpenDialog(true);
   };
 
   useEffect(() => {
+    getJobs();
+    getTenders();
     getTopTenderCategories();
     getTopJobCategories();
     getTopListingCompanies();
@@ -181,7 +238,7 @@ const Home = () => {
               className={styles.bg_corav}
               sx={{
                 position: "relative",
-                "@media (min-width:992px)": {
+                "@media (min  -width:992px)": {
                   background: `url(${CoravImg})`,
                   backgroundPosition: "bottom center",
                   backgroundRepeat: "no-repeat",
@@ -389,6 +446,142 @@ const Home = () => {
                 )}
               </Container>
             </Box>
+            <Container
+              maxWidth={false}
+              disableGutters
+              sx={{
+                width: "100%",
+                padding: "0 100px",
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "52px",
+                "@media screen and (max-width: 992px)": {
+                  flexDirection: "column",
+                  padding: "0 24px",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "27px",
+                  alignItems: "flex-start",
+                  maxWidth: "600px",
+                  "@media screen and (max-width: 992px)": { marginTop: "30px" },
+                  "@media screen and (max-width: 480px)": { marginTop: "45px" },
+                }}
+              >
+                <Typography className={styles.popular_job}>
+                  Latest jobs
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "27px",
+                    "@media screen and (max-width: 480px)": { gap: "18px" },
+                  }}
+                >
+                  {latestJobs.map((job, idx) => (
+                    <Box key={idx}>
+                      <Link to={job.link}>
+                        <Typography
+                          sx={{
+                            color: "#ffa500",
+                            fontSize: "24px",
+                            marginBottom: "5px",
+                            textDecoration: "underline",
+                            fontFamily: "Bahnschrift",
+                            "@media screen and (max-width: 480px)": {
+                              fontSize: "20px",
+                            },
+                          }}
+                        >
+                          {job.title}
+                        </Typography>
+                      </Link>
+                      <Typography
+                        sx={{
+                          opacity: 0.5,
+                          fontSize: "15px",
+                          fontFamily: "Bahnschrift",
+                          "@media screen and (max-width: 480px)": {
+                            fontSize: "12px",
+                          },
+                        }}
+                      >
+                        Posted {job.date}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+                <FilledButton
+                  onClick={() => navigate("/search/jobs")}
+                  title={`See all ${totalJobs} jobs`}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "27px",
+                  alignItems: "flex-start",
+                  maxWidth: "600px",
+                  "@media screen and (max-width: 992px)": { marginTop: "30px" },
+                  "@media screen and (max-width: 480px)": { marginTop: "45px" },
+                }}
+              >
+                <Typography className={styles.popular_job}>
+                  Newest tenders
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "27px",
+                    "@media screen and (max-width: 480px)": { gap: "18px" },
+                  }}
+                >
+                  {latestTenders.map((tender, idx) => (
+                    <Box key={idx}>
+                      <Link to={tender.link}>
+                        <Typography
+                          sx={{
+                            color: "#ffa500",
+                            fontSize: "24px",
+                            marginBottom: "5px",
+                            textDecoration: "underline",
+                            fontFamily: "Bahnschrift",
+                            "@media screen and (max-width: 480px)": {
+                              fontSize: "20px",
+                            },
+                          }}
+                        >
+                          {tender.title}
+                        </Typography>
+                      </Link>
+                      <Typography
+                        sx={{
+                          opacity: 0.5,
+                          fontSize: "15px",
+                          fontFamily: "Bahnschrift",
+                          "@media screen and (max-width: 480px)": {
+                            fontSize: "12px",
+                          },
+                        }}
+                      >
+                        Posted {tender.date}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+                <FilledButton
+                  onClick={() => navigate("/search/tenders")}
+                  title={`See all ${totalTenders} tenders`}
+                />
+              </Box>
+            </Container>
             <Container
               maxWidth={false}
               sx={{

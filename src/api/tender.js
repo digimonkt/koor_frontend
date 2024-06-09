@@ -7,25 +7,29 @@ import {
 } from "./transform/tender";
 export const getTenderSearchAPI = async (data) => {
   const newData = { ...data };
-  delete newData.sector;
+  if (newData.sector) delete newData.sector;
 
   const { sector, tenderCategories, opportunityType, ...restData } = newData;
   let url = urlcat("v1/tenders", { ...restData });
-  if (data.sector) {
-    data.sector.forEach((sector) => {
-      url += `&sector=${sector.title}`;
-    });
-  }
 
-  if (data.tenderCategories) {
-    data.tenderCategories.forEach((category) => {
-      url += `&tenderCategory=${category.title}`;
-    });
-  }
-  if (data.opportunityType) {
-    data.opportunityType.forEach((category) => {
-      url += `&opportunityType=${category.title}`;
-    });
+  if (data) {
+    if (data.sector) {
+      data.sector.forEach((sector) => {
+        url += `&sector=${sector.title}`;
+      });
+    }
+
+    if (data.tenderCategories) {
+      data.tenderCategories.forEach((category) => {
+        url += `&tenderCategory=${category.title}`;
+      });
+    }
+
+    if (data.opportunityType) {
+      data.opportunityType.forEach((category) => {
+        url += `&opportunityType=${category.title}`;
+      });
+    }
   }
 
   const response = await api.request({
