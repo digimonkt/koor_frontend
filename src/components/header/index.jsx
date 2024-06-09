@@ -82,7 +82,7 @@ function Header() {
   const matches = useMediaQuery("(min-width: 600px) and (max-width: 1024px)");
 
   return (
-    <header>
+    <header style={{ zIndex: 10 }}>
       <Container
         maxWidth={false}
         sx={{
