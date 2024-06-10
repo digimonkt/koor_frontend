@@ -3,11 +3,13 @@ import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import { USER_ROLES } from "../../utils/enum";
 import { generateFileUrl } from "@utils/generateFileUrl";
+
 function ShortlistedUserCard({
+  id,
+  seen,
   job,
   handleClose,
   application,
@@ -15,6 +17,7 @@ function ShortlistedUserCard({
   tenderApplication,
   createdAt,
   role,
+  handleSeen,
 }) {
   const jobId = application?.job?.id;
   const tenderId = tender?.id;
@@ -30,7 +33,7 @@ function ShortlistedUserCard({
           applicationId: application.id,
           role: USER_ROLES.employer,
           jobId,
-        },
+        }
       );
     }
 
@@ -41,8 +44,16 @@ function ShortlistedUserCard({
     applicationFor = "Tender";
     applicationOriginName = tenderApplication?.tender?.title;
   }
+
   return (
-    <Link onClick={() => handleClose()} to={newUrl}>
+    <div
+      style={{ background: seen ? "#f0ecec" : "" }}
+      onClick={() => {
+        handleSeen(id, newUrl);
+        handleClose();
+      }}
+      to={newUrl}
+    >
       <div className={`${styles.content_div}`}>
         <div>
           <Avatar
@@ -55,7 +66,8 @@ function ShortlistedUserCard({
                 background: "#F0F0F0",
               },
             }}
-            src={generateFileUrl(job.user.image) || SVG.KoorShortLogo}>
+            src={generateFileUrl(job.user.image) || SVG.KoorShortLogo}
+          >
             <SVG.KoorShortLogo />
           </Avatar>
         </div>
@@ -69,7 +81,7 @@ function ShortlistedUserCard({
           </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

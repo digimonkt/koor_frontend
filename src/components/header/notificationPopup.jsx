@@ -1,12 +1,23 @@
 import { SVG } from "../../assets/svg";
 import NotificationContent from "../../components/notification";
-import { Menu, MenuItem } from "@mui/material";
+import { Badge, Menu, MenuItem } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import styles from "./notificationPopup.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setAllNotificationToReadAPI,
+  updateNotificationReadAPI,
+} from "../../api/user";
+import { updateNotificationCount } from "../../redux/slice/user";
+import { useNavigate } from "react-router-dom";
 
 function NotificationPopup() {
   const wrapperRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector(({ auth }) => auth);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [count, setCount] = React.useState(currentUser.notificationCount);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -15,10 +26,25 @@ function NotificationPopup() {
     setAnchorEl(null);
   };
 
+  const handleSeen = async (id, navigateUrl) => {
+    const res = await updateNotificationReadAPI(id);
+    if (res.remote === "success") {
+      dispatch(updateNotificationCount(res.data.notification_count));
+      setCount(res.data.notification_count);
+      if (navigateUrl) {
+        navigate(navigateUrl);
+      }
+    }
+  };
+  const setAllNotificationToRead = async () => {
+    const res = await setAllNotificationToReadAPI();
+    if (res.remote === "success") {
+      dispatch(updateNotificationCount(0));
+      setCount(0);
+    }
+  };
+
   useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
     function handleClickOutside(event) {
       const notificationSettings = document.getElementById(
         "notification-settings"
@@ -33,10 +59,8 @@ function NotificationPopup() {
       }
     }
 
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Unbind the event listener on clean up
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -44,7 +68,9 @@ function NotificationPopup() {
 
   return (
     <div>
-      <SVG.NotificationIcon width={20} height={25} onClick={handleClick} />
+      <Badge badgeContent={count} color="error">
+        <SVG.NotificationIcon onClick={handleClick} />
+      </Badge>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -83,7 +109,12 @@ function NotificationPopup() {
             className="w-100"
             sx={{ padding: "0px", cursor: "default" }}
           >
-            <NotificationContent handleClose={handleClose} />
+            <NotificationContent
+              footer
+              handleSeen={handleSeen}
+              handleClose={handleClose}
+              setAllNotificationToRead={setAllNotificationToRead}
+            />
           </MenuItem>
         </div>
       </Menu>

@@ -7,6 +7,9 @@ import ShortlistedUserCard from "./shortlistedUserCard";
 import MessageNotificationCard from "./messageCard";
 import PlannedInterviewCard from "./plannedInterviewCard";
 import RejectedCard from "./rejectedCard";
+import JobPreference from "./jobPreference";
+import UpdatePassword from "./updatePassword";
+import AppliedTenderCard from "./appliedTenderCard";
 
 const NotificationContent = NotificationContentComponent;
 
@@ -15,6 +18,7 @@ export const getNotificationCardByType = (
   handleClose,
   role,
   handleRemoveMessages,
+  handleSeen
 ) => {
   switch (item.notificationType) {
     case NOTIFICATION_TYPE.advanceFilter:
@@ -23,6 +27,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.expiredJob:
@@ -31,14 +36,16 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
-    case NOTIFICATION_TYPE.applied:
+    case NOTIFICATION_TYPE.appliedJob:
       return (
         <AppliedJobCard
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.shortlisted:
@@ -47,6 +54,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.plannedInterviews:
@@ -55,6 +63,7 @@ export const getNotificationCardByType = (
           {...item}
           handleClose={() => handleClose()}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.message:
@@ -64,11 +73,44 @@ export const getNotificationCardByType = (
           handleClose={() => handleClose()}
           handleRemoveMessages={handleRemoveMessages}
           role={role}
+          handleSeen={handleSeen}
         />
       );
     case NOTIFICATION_TYPE.rejected:
       return (
-        <RejectedCard {...item} handleClose={() => handleClose()} role={role} />
+        <RejectedCard
+          {...item}
+          handleSeen={handleSeen}
+          handleClose={() => handleClose()}
+          role={role}
+        />
+      );
+    case NOTIFICATION_TYPE.jobPreference:
+      return (
+        <JobPreference
+          {...item}
+          handleClose={() => handleClose()}
+          role={role}
+          handleSeen={handleSeen}
+        />
+      );
+    case NOTIFICATION_TYPE.passwordUpdate:
+      return (
+        <UpdatePassword
+          {...item}
+          handleClose={() => handleClose()}
+          role={role}
+          handleSeen={handleSeen}
+        />
+      );
+    case NOTIFICATION_TYPE.appliedTender:
+      return (
+        <AppliedTenderCard
+          {...item}
+          handleClose={() => handleClose()}
+          role={role}
+          handleSeen={handleSeen}
+        />
       );
     default:
       return <></>;

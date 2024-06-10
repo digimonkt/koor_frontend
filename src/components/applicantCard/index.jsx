@@ -24,7 +24,9 @@ function ApplicantCard({
   });
 
   const headleRedirect = (val) => {
-    navigate(`/employer/manage-jobs/${val.job.id}/applicant-details/${val.id}`);
+    navigate(
+      `/employer/manage-tenders/${val?.tender?.id}/applicant-details/${val.id}`
+    );
   };
 
   const platform = Capacitor.getPlatform();

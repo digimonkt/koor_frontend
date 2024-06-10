@@ -3,9 +3,9 @@ import { Avatar, Box } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
-import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import styles from "./notification.module.css";
+
 function MessageNotificationCard({
   sender,
   message,
@@ -15,12 +15,19 @@ function MessageNotificationCard({
   role,
   conversion,
   userId,
-  // handleRemoveMessages,
+  id,
+  seen,
+  handleSeen,
 }) {
+  const url = urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`;
+
   return (
-    <Link
-      onClick={() => handleClose()}
-      to={urlcat(`/${role}/chat`, { conversion, userId }) + `#${messageId}`}
+    <div
+      style={{ background: seen ? "#f0ecec" : "" }}
+      onClick={() => {
+        handleClose();
+        handleSeen(id, url);
+      }}
     >
       <div
         className={`${styles.content_div}`}
@@ -84,7 +91,7 @@ function MessageNotificationCard({
           </p>
         </Box>
       </div>
-    </Link>
+    </div>
   );
 }
 

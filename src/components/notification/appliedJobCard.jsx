@@ -4,7 +4,6 @@ import { Avatar, Box } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { useNavigate } from "react-router-dom";
 import urlcat from "urlcat";
 import { USER_ROLES } from "../../utils/enum";
 
@@ -14,31 +13,33 @@ function AppliedJobCard({
   createdAt,
   handleClose,
   role,
-  conversion,
-  userId,
+  id,
+  seen,
+  handleSeen,
 }) {
-  const navigate = useNavigate();
-  const handleLinks = () => {
+  const handleLinks = async () => {
+    let url;
     if (role === USER_ROLES.employer && application.job?.id) {
-      navigate(
-        urlcat("/:role/manage-jobs/:jobId/applicant-details/:applicationId", {
+      url = urlcat(
+        "/:role/manage-jobs/:jobId/applicant-details/:applicationId",
+        {
           applicationId: application.id,
           role: USER_ROLES.employer,
           jobId: application.job.id,
-        })
+        }
       );
     } else if (role === USER_ROLES.jobSeeker) {
-      navigate(
-        urlcat("/jobs/details/:jobId", {
-          jobId: application.job.id,
-        })
-      );
+      url = urlcat("/jobs/details/:jobId", {
+        jobId: application.job.id,
+      });
     }
+    handleSeen(id, url);
   };
   return (
     <Box
       sx={{
         cursor: "pointer",
+        background: seen ? "#f0ecec" : "",
       }}
       className={`${styles.content_div}`}
       onClick={() => {

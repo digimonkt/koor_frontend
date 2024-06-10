@@ -6,13 +6,17 @@ import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
 import styles from "./notification.module.css";
 import urlcat from "urlcat";
-function ExpiredJobCard({ job, createdAt, handleClose }) {
-  const jobId = job?.id;
 
+function ExpiredJobCard({ id, seen, job, createdAt, handleClose, handleSeen }) {
+  const jobId = job?.id;
+  const url = jobId ? urlcat("/jobs/details/:jobId", { jobId }) : "#";
   return (
     <Link
-      onClick={() => handleClose()}
-      to={job?.id ? urlcat("/jobs/details/:jobId", { jobId }) : "#"}
+      onClick={() => {
+        handleClose();
+        handleSeen(id, url);
+      }}
+      style={{ background: seen ? "#f0ecec" : "" }}
     >
       <div
         className={`${styles.content_div}`}

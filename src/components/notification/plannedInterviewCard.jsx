@@ -3,19 +3,29 @@ import styles from "./notification.module.css";
 import { Avatar } from "@mui/material";
 import { SVG } from "../../assets/svg";
 import { timeAgoFromNow } from "../../utils/timeAgo";
-import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import { generateFileUrl } from "@utils/generateFileUrl";
 
-function PlannedInterviewCard({ job, handleClose, application, createdAt }) {
+function PlannedInterviewCard({
+  id,
+  seen,
+  job,
+  handleClose,
+  application,
+  createdAt,
+  handleSeen,
+}) {
+  const url = application?.job
+    ? urlcat("/jobs/details/:jobId", { jobId: application?.job?.id })
+    : "#";
+
   return (
-    <Link
-      onClick={() => handleClose()}
-      to={
-        application?.job
-          ? urlcat("/jobs/details/:jobId", { jobId: application?.job?.id })
-          : "#"
-      }
+    <div
+      style={{ background: seen ? "#f0ecec" : "" }}
+      onClick={() => {
+        handleClose();
+        handleSeen(id, url);
+      }}
     >
       <div className={`${styles.content_div}`}>
         <div>
@@ -45,7 +55,7 @@ function PlannedInterviewCard({ job, handleClose, application, createdAt }) {
           </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

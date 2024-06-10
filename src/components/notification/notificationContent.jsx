@@ -15,10 +15,15 @@ import Settings from "./settings";
 import dayjs from "dayjs";
 import { Capacitor } from "@capacitor/core";
 
-function NotificationContentComponent({ header, handleClose, ref }) {
+function NotificationContentComponent({
+  footer,
+  header,
+  handleClose,
+  handleSeen,
+  setAllNotificationToRead,
+}) {
   const { role } = useSelector((state) => state.auth);
   const platform = Capacitor.getPlatform();
-
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState([]);
   const [filterData, setFilterData] = useState();
@@ -112,6 +117,7 @@ function NotificationContentComponent({ header, handleClose, ref }) {
       return date.toLocaleDateString("en-US", options);
     }
   };
+
   useEffect(() => {
     getNotifications();
   }, [filterByDate]);
@@ -331,25 +337,30 @@ function NotificationContentComponent({ header, handleClose, ref }) {
               </Box>
             )}
           </div>
-          <div className={`border-top ${styles.view_div}`}>
-            <Link
-              to="/notification"
-              className={styles.view_all}
-              onClick={() => {
-                if (handleClose) {
-                  handleClose();
-                }
-              }}
-            >
-              View All Notification
-            </Link>
-            <div
-              onClick={() => setSetting(true)}
-              className={styles.notification_setting}
-            >
-              Settings
+          {footer ? (
+            <div className={`px-3 border-top pt-3 ${styles.view_div}`}>
+              <Link
+                to="/notification"
+                className={styles.view_all}
+                onClick={() => {
+                  setAllNotificationToRead();
+                  if (handleClose) {
+                    handleClose();
+                  }
+                }}
+              >
+                View All Notification
+              </Link>
+              <div
+                onClick={() => setSetting(true)}
+                className={styles.notification_setting}
+              >
+                Settings
+              </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
         </TabContext>
       </Box>
       {/* don't remove `notification-settings` id from the bottom div it is preventing the

@@ -3,16 +3,24 @@ import { Avatar } from "@mui/material";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import { timeAgoFromNow } from "../../utils/timeAgo";
 import React from "react";
-import { Link } from "react-router-dom";
 import urlcat from "urlcat";
 import styles from "./notification.module.css";
-function JobNotificationCard({ job, jobFilter, createdAt }) {
+
+function JobNotificationCard({
+  id,
+  job,
+  jobFilter,
+  createdAt,
+  seen,
+  handleSeen,
+}) {
+  const url = urlcat("/jobs/details/:jobId", { jobId: job.id });
   return (
-    <Link to={urlcat("/jobs/details/:jobId", { jobId: job.id })}>
-      <div
-        className={`${styles.content_div}`}
-        //   style={{ background: item.color }}
-      >
+    <div
+      style={{ background: seen ? "#f0ecec" : "" }}
+      onClick={() => handleSeen(id, url)}
+    >
+      <div className={`${styles.content_div}`}>
         <div>
           <Avatar
             sx={{
@@ -43,7 +51,7 @@ function JobNotificationCard({ job, jobFilter, createdAt }) {
           </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
