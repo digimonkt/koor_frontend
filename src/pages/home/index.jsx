@@ -452,23 +452,33 @@ const Home = () => {
               sx={{
                 width: "100%",
                 padding: "0 100px",
-                display: "flex",
-                justifyContent: "space-between",
+                display: "grid",
+                gridTemplateColumns: "repeat(5, 1fr)",
                 gap: "52px",
                 "@media screen and (max-width: 992px)": {
-                  flexDirection: "column",
+                  gap: 0,
+                  rowGap: "52px",
+                  gridTemplateColumns: "1fr",
+                  gridTemplateRows: "auto 1fr",
                   padding: "0 24px",
+                },
+                "@media screen and (max-width: 600px)": {
+                  rowGap: "32px",
                 },
               }}
             >
               <Box
                 sx={{
+                  gridColumn: "1 / 3",
                   display: "flex",
                   flexDirection: "column",
                   gap: "27px",
                   alignItems: "flex-start",
-                  maxWidth: "600px",
-                  "@media screen and (max-width: 992px)": { marginTop: "30px" },
+                  "@media screen and (max-width: 992px)": {
+                    marginTop: "30px",
+                    gridColumn: 1,
+                    gridRow: 1,
+                  },
                   "@media screen and (max-width: 480px)": { marginTop: "45px" },
                 }}
               >
@@ -523,12 +533,16 @@ const Home = () => {
               </Box>
               <Box
                 sx={{
+                  gridColumn: "3 / 6",
                   display: "flex",
                   flexDirection: "column",
                   gap: "27px",
                   alignItems: "flex-start",
-                  maxWidth: "600px",
-                  "@media screen and (max-width: 992px)": { marginTop: "30px" },
+                  "@media screen and (max-width: 992px)": {
+                    marginTop: "30px",
+                    gridColumn: 1,
+                    gridRow: 2,
+                  },
                   "@media screen and (max-width: 480px)": { marginTop: "45px" },
                 }}
               >
