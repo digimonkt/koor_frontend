@@ -12,6 +12,41 @@
   padding: 15px 25px 15px 25px !important;
 }
 
+@media screen and (max-width: 992px) {
+  .ribbon_stack::before {
+    content: "";
+    height: 30px;
+    width: calc(100% + 40px);
+    transform: translateX(-50%);
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    background-color: #f2b800;
+    border-radius: 0 0 70% 70%;
+    z-index: 4;
+  }
+
+  .ribbon_fix {
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    top: -20px;
+    background: #e4f0ff;
+  }
+
+  .ribbon_stack::after {
+    content: "";
+    height: 30px;
+    width: calc(100% + 40px);
+    transform: translateX(-50%);
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    background-color: #e4f0ff;
+    border-radius: 0 0 70% 70%;
+  }
+}
+
 .home_banner_heading_h5 {
   font-family: "Poppins", sans-serif !important;
   font-size: 24px;
@@ -314,7 +349,7 @@
 }
 
 .back_img_div {
-  background-image: url(../../assets/images/newbanner.jpg);
+  background-image: url(../../assets/images/newbanner.png);
   background-size: cover;
   height: 630px;
   background-position: center;
@@ -372,7 +407,7 @@
   }
   .back_img_div {
     clip-path: polygon(0 0, 100% 1%, 100% 100%, 0 100%, 0 49%);
-    background-image: url(../../assets/images/newbanner.jpg);
+    background-image: url(../../assets/images/newbanner.png);
     background-size: cover;
     height: 800px;
     background-position: center;

@@ -2266,10 +2266,6 @@ span.count {
 }
 
 @media (min-width: 1536px) {
-  .MuiContainer-root {
-    max-width: 1780px !important;
-  }
-
   .register {
     min-height: calc(100vh - 222px);
     background-size: cover;
