@@ -391,6 +391,7 @@ const Home = () => {
                   sx={{
                     display: "flex",
                     justifyContent: "flex-end",
+                    flexWrap: "wrap",
                   }}
                 >
                   <Typography className={styles.popular_job}>
@@ -402,6 +403,12 @@ const Home = () => {
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "flex-end",
+                      "@media(max-width:768px)": {
+                        justifyContent: "flex-start",
+                        flexDirection: "column",
+                        marginLeft: "0px !important",
+                        width: "100%",
+                      },
                     }}
                   >
                     <Typography
@@ -423,7 +430,7 @@ const Home = () => {
                     </Typography>
 
                     <Typography
-                      className={`ms-auto ${styles.see_all_jobs}`}
+                      className={`ms-lg-auto ${styles.see_all_jobs}`}
                       style={{
                         cursor: "pointer",
                       }}
@@ -563,11 +570,17 @@ const Home = () => {
                           className={styles.stay_social_icon}
                           sx={{
                             "@media (max-width:480px)": {
-                              "& img": { width: "45%" },
+                              "& img": { width: "auto", height: "auto" },
                             },
                           }}
                         >
-                          <Box className={styles.about_social}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              gap: "15px",
+                              justifyContent: "space-between",
+                            }}
+                          >
                             <Link to="/" onClick={handleCommingSoon}>
                               <img
                                 src={IMAGES.Googleplay}
@@ -578,7 +591,7 @@ const Home = () => {
                             <Link
                               to="/"
                               onClick={handleCommingSoon}
-                              className="mx-3"
+                              className="mx-lg-3"
                             >
                               <img
                                 src={IMAGES.Appstore}

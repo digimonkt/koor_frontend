@@ -1,4 +1,4 @@
-import { Box, Chip, Grid, Stack, useMediaQuery } from "@mui/material";
+import { Box, Chip, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { SVG } from "../../assets/svg";
@@ -19,7 +19,7 @@ import ToggleElm from "./toggleElm";
 
 function JobCard({ logo, selfJob, applied, jobDetails }) {
   const { isLoggedIn, role } = useSelector((state) => state.auth);
-  const isMobile = useMediaQuery("(max-width: 600px)");
+  // const isMobile = useMediaQuery("(max-width: 600px)");
   const location = useLocation();
   const path = location.pathname;
   const pathParts = path.split("/");
@@ -168,16 +168,16 @@ function JobCard({ logo, selfJob, applied, jobDetails }) {
                 item={jobDetails.description}
                 components={
                   <ToggleElm
-                    sx={{ display: isMobile ? "block" : "none" }}
+                    // sx={{ display: isMobile ? "block" : "none" }}
                     selfJob={selfJob}
                     jobDetails={jobDetails}
                   />
                 }
               />
             </Box>
-            {!isMobile && (
+            {/* {!isMobile && (
               <ToggleElm selfJob={selfJob} jobDetails={jobDetails} />
-            )}
+            )} */}
           </div>
         </Grid>
         <Grid

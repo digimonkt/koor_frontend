@@ -52,3 +52,9 @@
 .slick-active {
   width: 20px;
 }
+
+@media screen and (max-width: 768px) {
+  .slider_box {
+    width: 100%;
+  }
+}

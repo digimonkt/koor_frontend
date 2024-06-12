@@ -2697,6 +2697,7 @@ input.employersearch {
 
   .bookmark {
     width: 32px !important;
+    margin: auto !important;
   }
 
   .step-continer svg.Mui-active,

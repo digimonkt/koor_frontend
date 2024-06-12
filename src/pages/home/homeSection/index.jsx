@@ -40,7 +40,7 @@ const sectionItem = [
 
 const HomeSection = () => {
   return (
-    <Box mt={20} className={`${styles.home_section_box}`}>
+    <Box mt={{ lg: 20 }} className={`${styles.home_section_box}`}>
       <Grid container spacing={2}>
         {sectionItem.map((item) => (
           <>

@@ -1,11 +1,14 @@
 import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlined";
 import { generateFileUrl } from "@utils/generateFileUrl";
-import { Stack, Avatar, useMediaQuery } from "@mui/material";
+import { Stack, Avatar, useMediaQuery, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { USER_ROLES } from "@utils/enum";
 import { Fragment } from "react";
 import { SVG } from "@assets/svg";
 import Budget from "./budget";
+import { SolidButton } from "@components/button";
+import { getColorByRemainingDays } from "@utils/generateColor";
+import { showDay } from "@utils/constants/utility";
 
 const AvatarComponent = ({ imageUrl }) => {
   return (
@@ -22,6 +25,9 @@ const AvatarComponent = ({ imageUrl }) => {
           borderRadius: "10px",
           "&.MuiAvatar-colorDefault": {
             background: "#F0F0F0",
+          },
+          "@media(max-width:600px)": {
+            width: "50px",
           },
         }}
         src={generateFileUrl(imageUrl || "")}
@@ -90,6 +96,36 @@ const JobDetailsComponent = ({
                 onClick={handleSave}
                 style={{ marginLeft: "6px", cursor: "pointer" }}
               >
+                <Box
+                  sx={{
+                    display: "none",
+                    "@media (max-width: 480px)": {
+                      display: "block",
+                      "& .btn_font_lower": {
+                        display: "inline-block !important",
+                      },
+                    },
+                  }}
+                  className="text-start text-end mb-0 mb-lg-4"
+                >
+                  <SolidButton
+                    className={
+                      jobDetails?.expiredInDays > 0
+                        ? "btn_font_lower"
+                        : "btn_font_capitalize"
+                    }
+                    title={
+                      jobDetails?.expiredInDays > 0
+                        ? showDay(jobDetails?.expiredInDays)
+                        : "Closed"
+                    }
+                    color={getColorByRemainingDays(
+                      jobDetails?.expiredInDays > 0
+                        ? jobDetails?.expiredInDays
+                        : 0
+                    )}
+                  />
+                </Box>
                 <div
                   className="bookmark"
                   style={{ width: matches ? "auto" : "" }}

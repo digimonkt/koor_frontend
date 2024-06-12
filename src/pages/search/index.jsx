@@ -198,14 +198,15 @@ function Search({ searchTypeForJob }) {
     <Box
       className={`${styles.body}`}
       sx={{
-        marginTop: platform === "android" || platform === "ios" ? "" : "118px",
+        // marginTop: platform === "android" || platform === "ios" ? "" : "118px",
+        marginTop: "118px",
       }}
     >
       <Container
         maxWidth={false}
         sx={{
-          padding:
-            platform === "android" || platform === "ios" ? "0px" : "0px 16px",
+          padding: "0px 16px",
+          // platform === "android" || platform === "ios" ? "0px" : "0px 16px",
           "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",

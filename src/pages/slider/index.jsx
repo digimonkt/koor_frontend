@@ -39,7 +39,7 @@ const SlickSlider = ({ items }) => {
   const settings = {
     dots: false,
     infinite: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 1500,
     speed: 500,
     slidesToShow: 4,

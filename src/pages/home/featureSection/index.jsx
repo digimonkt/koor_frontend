@@ -6,7 +6,7 @@ import { SVG } from "../../../assets/svg";
 export const FeatureSection = () => {
   return (
     <Box>
-      <Container maxWidth={false} sx={{ mt: 10 }}>
+      <Container maxWidth={false} sx={{ mt: { lg: "10" } }}>
         <Grid
           container
           spacing={{ xs: 2, sm: 3, lg: 10 }}
