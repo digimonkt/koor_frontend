@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import "./style.css";
-import { SVG } from "@assets/svg";
 import CoverLetter from "../cover-letter";
 import { YEAR_FORMAT } from "@utils/constants/constants";
 import dayjs from "dayjs";
+import { SVG } from "@assets/svg";
 
 function ResumeTemplate({ user, appliedJob = false }) {
   const { currentUser } = useSelector((state) => state.auth);
@@ -14,219 +14,156 @@ function ResumeTemplate({ user, appliedJob = false }) {
         <div className="heading">
           <h1>{applicantDetails.name}</h1>
         </div>
-        <div className="heading">
-          <h5>{applicantDetails?.profile?.profileTitle}</h5>
-        </div>
         <div className="section">
           <div className="cv_first_div">
-            <div style={{ width: "44%", padding: "20px 15px 20px 0px" }}>
-              <div className="top_div">
-                <ul>
-                  {applicantDetails.mobileNumber && (
-                    <li>
-                      {" "}
-                      <SVG.callTrik style={{ marginRight: "5px" }} />
+            <div className="top_div">
+              {currentUser.profile.homeAddress && (
+                <div className="element">
+                  <div>
+                    <h2>Adress:</h2>
+                    <p>{currentUser.profile.homeAddress}</p>
+                  </div>
+                </div>
+              )}
+              <div className="element">
+                {applicantDetails.mobileNumber && (
+                  <div>
+                    <h2>Phone:</h2>
+                    <a
+                      href={`tel:${
+                        applicantDetails.countryCode +
+                        applicantDetails.mobileNumber
+                      }`}
+                    >
                       {applicantDetails.countryCode +
                         " " +
                         applicantDetails.mobileNumber}
-                    </li>
-                  )}
-                  {applicantDetails.email && (
-                    <li>
-                      <SVG.mailTrik style={{ marginRight: "5px" }} />
-                      {applicantDetails.email}
-                    </li>
-                  )}
-                  {applicantDetails?.profile?.personalWebsite && (
-                    <li>
-                      <SVG.languageTrik style={{ marginRight: "5px" }} />
-                      {applicantDetails?.profile?.personalWebsite}
-                    </li>
-                  )}
-                  {applicantDetails.profile?.country?.title && (
-                    <li>
-                      <SVG.locationTrik style={{ marginRight: "5px" }} />
-                      {applicantDetails.profile?.city &&
-                        applicantDetails.profile?.city.title + ", "}
-                      {applicantDetails.profile?.country?.title}
-                    </li>
-                  )}
-                </ul>
-              </div>
-              {Boolean(applicantDetails.skills.length) && (
-                <>
-                  <hr className="horizontal_line" />
-                  <div className="skills_div">
-                    <h2>SKILLS</h2>
-                    {applicantDetails.skills.map((item, index) => (
-                      <button key={index} className="skills_btn">
-                        {item.skill.title}
-                      </button>
-                    ))}
+                    </a>
                   </div>
-                </>
-              )}
-              {Boolean(applicantDetails.educationRecord.length) && (
-                <>
-                  <hr />
-                  <div className="education">
-                    <h2>EDUCATION</h2>
-                    {applicantDetails.educationRecord.map((item, index) => (
-                      <div key={index} style={{ margin: "20px 0px" }}>
-                        <div className="education_div">
-                          <p>
-                            {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
-                            {item.present
-                              ? "Present"
-                              : dayjs(item.endDate).format(YEAR_FORMAT)}
-                          </p>
-                          <span>{item.educationLevel.title}</span>
-                          <h3>{item.institute}</h3>
-                          <h6>{item?.description}</h6>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              )}
-              {/* <div className="education">
-              <h2>Expertise</h2>
-              <div className="education_div">
-                <h3>My expertise area</h3>
-                <h6>
-                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
-                  amet. At sem vitae leo maecenas tincidunt orci ut. Arcu in
-                  vestibulum phasellus eu. Semper nunc eget varius diam habitant
-                  id lacus.
-                </h6>
-              </div>
-              <div style={{ margin: "20px 0px" }}></div>
-              <div className="education_div">
-                <h3>Product development</h3>
-                <h6>
-                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
-                  amet. At sem vitae leo maecenas tincidunt orci ut.{" "}
-                </h6>
-              </div>
-              <div style={{ margin: "20px 0px" }}></div>
-              <div className="education_div">
-                <h3>Digital product development and team management</h3>
-                <h6>
-                  Maecenas bibendum at mattis gravida pellentesque dolor nibh
-                  amet. At sem vitae leo maecenas tincidunt orci ut. Maecenas
-                  bibendum at mattis gravida pellentesque dolor nibh amet. At
-                  sem vitae leo maecenas tincidunt orci ut. Maecenas bibendum at
-                  mattis gravida pellentesque dolor nibh amet. At sem vitae leo
-                  maecenas tincidunt orci ut.{" "}
-                </h6>
-              </div>
-            </div>
-              {/* <div className="certification">
-              <h2>CERTIFICATION</h2>
-              <div className="certification_div">
-                <p>2016-2018</p>
-                <span>Credly</span>
-                <h3>User research and user experience</h3>
-              </div>
-            </div>
-            <hr /> */}
-              {Boolean(applicantDetails?.profile?.references[0]?.name) && (
-                <>
-                  <hr />
+                )}
+                {applicantDetails.email && (
                   <div>
-                    <h2>References</h2>
-                    {applicantDetails?.profile?.references?.map(
-                      (reference, idx) => (
-                        <div key={idx} className="reference">
-                          <h3 style={{ marginBottom: "5px" }}>
-                            {reference?.name}
-                          </h3>
-                          {Boolean(reference?.mobile_number) && (
-                            <>
-                              <span>
-                                <SVG.callTrik style={{ marginRight: "5px" }} />
-                                {reference?.mobile_number}
-                              </span>
-                              <br />
-                            </>
-                          )}
-                          {Boolean(reference?.email) && (
-                            <span>
-                              <SVG.mailTrik style={{ marginRight: "5px" }} />
-                              {reference?.email}
-                            </span>
-                          )}
-                        </div>
-                      )
-                    )}
+                    <h2>Email:</h2>
+                    <a href={`mailto:${applicantDetails.email}`}>
+                      {applicantDetails.email}
+                    </a>
                   </div>
-                </>
-              )}
-              {Boolean(applicantDetails.languages.length) && (
-                <>
-                  <hr />
-                  <div className="language">
-                    <h2>LANGUAGE</h2>
-                    <div className="language_div">
-                      {applicantDetails.languages.map((item, index) => (
-                        <div key={index} style={{ marginRight: "40px" }}>
-                          <h6>{item.language.title}</h6>
-                          <p>Spoken: {item?.spoken}</p>
-                          <p>Written: {item?.written}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-            <div style={{ width: "2px", backgroundColor: "#cacaca" }}></div>
-            <div style={{ width: "54%", padding: "20px 0px 20px 15px" }}>
-              <div
-                className="profile"
-                style={{
-                  textAlign: "justify",
-                  wordWrap: "break-word",
-                }}
-              >
-                <h2>Overview</h2>
-                <p>{applicantDetails.profile?.shortSummary}</p>
+                )}
               </div>
-              {Boolean(applicantDetails.workExperiences.length) && (
-                <>
-                  <hr />
-                  <div className="work_experiance">
-                    <h2>Work Experience</h2>
-                    {applicantDetails.workExperiences.map((item, index) => (
-                      <div
-                        className="job_position"
-                        key={index}
-                        style={{ marginTop: "25px" }}
-                      >
-                        <span>{item.title}</span>
-                        <div className="work_experiance_div">
-                          <h3>{item.organization}</h3>
-                          <h3>
-                            {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
-                            {item.present
-                              ? "Present"
-                              : dayjs(item.endDate).format(YEAR_FORMAT)}
-                          </h3>
-                        </div>
-                        {item?.description && (
-                          <p
-                            dangerouslySetInnerHTML={{
-                              __html: item?.description,
-                            }}
-                            style={{
-                              wordBreak: "break-all",
-                            }}
-                          />
+            </div>
+            <div className="main_content">
+              {applicantDetails.profile?.shortSummary && (
+                <div className="element">
+                  <h2>Summary profile</h2>
+                  <p>{applicantDetails.profile?.shortSummary}</p>
+                </div>
+              )}
+              {applicantDetails.educationRecord.length > 0 && (
+                <div className="element">
+                  <h2>Education and certificate</h2>
+                  {applicantDetails.educationRecord.map((item, index) => (
+                    <div key={index} className="education_div">
+                      <div>
+                        <span>{item.educationLevel.title}</span>
+                        <p>{item.institute}</p>
+                      </div>
+                      <div>
+                        <p>
+                          {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
+                          {item.present
+                            ? "Present"
+                            : dayjs(item.endDate).format(YEAR_FORMAT)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {applicantDetails.workExperiences.length > 0 && (
+                <div className="element">
+                  <h2>Experience</h2>
+                  {applicantDetails.workExperiences.map((item, index) => (
+                    <div className="job_position" key={index}>
+                      <span>
+                        {item.title} at {item.organization}
+                      </span>
+                      <div className="work_experiance_div">
+                        <p>
+                          {dayjs(item.startDate).format(YEAR_FORMAT)} -{" "}
+                          {item.present
+                            ? "Present"
+                            : dayjs(item.endDate).format(YEAR_FORMAT)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {applicantDetails.skills.length > 0 && (
+                <div className="element">
+                  <h2>Skills</h2>
+                  <p>
+                    {applicantDetails.skills.map(
+                      (item, index) =>
+                        `${item.skill.title}${
+                          applicantDetails.skills.length - 1 === index
+                            ? ""
+                            : ", "
+                        }`
+                    )}
+                  </p>
+                </div>
+              )}
+              {applicantDetails.languages.length > 0 && (
+                <div className="element">
+                  <h2>Languages</h2>
+                  <p>
+                    {applicantDetails.languages.map(
+                      (item, index) =>
+                        `${item.language.title}${
+                          applicantDetails.languages.length - 1 === index
+                            ? ""
+                            : ", "
+                        }`
+                    )}
+                  </p>
+                </div>
+              )}
+              {applicantDetails?.profile?.references.length > 0 && (
+                <div className="element">
+                  <h2>References</h2>
+                  {applicantDetails?.profile?.references?.map(
+                    (reference, index) => (
+                      <div className="references_div" key={index}>
+                        <p>{reference?.name}</p>
+                        {(reference?.mobile_number || reference?.email) && (
+                          <div>
+                            {reference?.mobile_number && (
+                              <a
+                                href={`tel:${
+                                  applicantDetails.countryCode +
+                                  reference?.mobile_number
+                                }`}
+                              >
+                                <SVG.callTrik style={{ marginRight: "5px" }} />
+                                <span>
+                                  {applicantDetails.countryCode +
+                                    reference?.mobile_number}
+                                </span>
+                              </a>
+                            )}
+                            {reference?.email && (
+                              <a href={`mailto:${reference?.email}`}>
+                                <SVG.mailTrik style={{ marginRight: "5px" }} />
+                                <span>{reference?.email}</span>
+                              </a>
+                            )}
+                          </div>
                         )}
                       </div>
-                    ))}
-                  </div>
-                </>
+                    )
+                  )}
+                </div>
               )}
             </div>
           </div>
