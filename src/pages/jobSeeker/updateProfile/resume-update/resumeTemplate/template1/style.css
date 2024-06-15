@@ -10,10 +10,6 @@
   src: url("../../../../../../assets/fonts/aptos-bold.ttf");
 }
 
-* {
-  font-family: "Aptos";
-}
-
 .container {
   padding-left: 30px;
   padding-right: 30px;
@@ -21,6 +17,7 @@
 
 .resume_template p {
   text-align: justify;
+  font-family: "Aptos";
 }
 
 .resume_template hr {
@@ -30,12 +27,14 @@
 .resume_template h1 {
   padding: 0;
   margin: 0 0 10px 0;
+  font-family: "Aptos";
 }
 
 .resume_template h2 {
   padding: 0;
   margin: 0;
   font-size: 16px;
+  font-family: "Aptos";
 }
 
 .resume_template .main_content h2 {
@@ -70,6 +69,7 @@ a {
   letter-spacing: 0.14px;
   margin-bottom: 0;
   text-transform: capitalize;
+  font-family: "Aptos";
 }
 
 .heading h5 {
@@ -79,6 +79,7 @@ a {
   text-align: center;
   letter-spacing: 0.14px;
   margin-top: 0;
+  font-family: "Aptos";
 }
 
 .top_div {
@@ -140,6 +141,7 @@ a {
   align-items: center;
   gap: 3px;
   text-decoration: underline;
+  font-family: "Aptos";
 }
 
 .language_div {
@@ -161,6 +163,7 @@ a {
   letter-spacing: 0.28px;
   color: #121212;
   opacity: 80%;
+  font-family: "Aptos";
 }
 
 .profile p {
@@ -212,6 +215,7 @@ a {
   align-items: center;
   justify-content: center;
   padding: 20px 0px;
+  font-family: "Aptos";
 }
 
 .footer p {
