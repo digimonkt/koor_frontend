@@ -1,6 +1,13 @@
 @font-face {
-  font-family: "Roboto";
-  src: url("https: //fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+  font-family: "Aptos";
+  font-weight: 500;
+  src: url("../../../../../../assets/fonts/aptos.ttf");
+}
+
+@font-face {
+  font-family: "Aptos";
+  font-weight: 800;
+  src: url("../../../../../../assets/fonts/aptos-bold.ttf");
 }
 
 .container {
@@ -10,6 +17,7 @@
 
 .resume_template p {
   text-align: justify;
+  font-family: "Aptos";
 }
 
 .resume_template hr {
@@ -18,48 +26,29 @@
 
 .resume_template h1 {
   padding: 0;
-  margin: 0;
+  margin: 0 0 10px 0;
+  font-family: "Aptos";
 }
 
 .resume_template h2 {
   padding: 0;
   margin: 0;
+  font-size: 16px;
+  font-family: "Aptos";
 }
 
-.resume_template h3 {
-  padding: 0;
-  margin: 0;
+.resume_template .main_content h2 {
+  margin-bottom: 5px;
 }
 
-.resume_template h4 {
-  padding: 0;
-  margin: 0;
-}
-
-.resume_template h5 {
-  padding: 0;
-  margin: 0;
-}
-
-.resume_template h6 {
-  padding: 0;
-  margin: 0;
-}
-
-.resume_template h2 {
-  font-size: 24px;
-  font-weight: 600;
-  font-family: "Bahnschrift";
-  letter-spacing: 0.7px;
-  color: #121212;
-  margin: 10px 0px 5px 0px;
-  text-transform: uppercase;
+a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .cv_first_div {
   display: flex;
-  border-top: 2px solid #cacaca;
-  border-bottom: 2px solid #cacaca;
+  flex-direction: column;
 }
 
 .resume_template p {
@@ -75,39 +64,41 @@
 .heading h1 {
   font-size: 32px;
   font-weight: 600;
-  font-family: "Poppins";
   color: #121212;
   text-align: center;
   letter-spacing: 0.14px;
   margin-bottom: 0;
   text-transform: capitalize;
+  font-family: "Aptos";
 }
 
 .heading h5 {
   font-size: 16px;
   font-weight: 400;
-  font-family: "Poppins";
   color: #848484;
   text-align: center;
   letter-spacing: 0.14px;
   margin-top: 0;
+  font-family: "Aptos";
 }
 
-.top_div ul {
-  margin: 0px;
-  padding: 0px;
-}
-
-.top_div ul li {
-  font-size: 12px;
-  font-weight: 400;
-  color: #121212;
-  margin-bottom: 5px;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
+.top_div {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  list-style: none;
+  gap: 10px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #cacaca;
+}
+
+.top_div > .element:nth-of-type(2) {
+  display: flex;
+  gap: 20px;
+}
+
+.top_div > .element > div {
+  display: flex;
+  gap: 5px;
 }
 
 .skills_div .skills_btn {
@@ -120,83 +111,38 @@
   font-weight: 400;
   color: #121212;
   margin-bottom: 5px;
-  font-family: "Poppins";
   letter-spacing: 0.28px;
   opacity: 80%;
   margin-right: 5px;
 }
 
-.education_div {
-  padding: 10px 20px;
-  border-left: 2px solid #cacaca;
+.main_content > .element {
+  margin-top: 20px;
 }
 
-.education_div p {
-  font-size: 12px;
-  font-weight: 400;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
-  color: #121212;
-  opacity: 80%;
+.education_div,
+.job_position,
+.references_div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.references_div {
   margin-bottom: 10px;
 }
 
-.education_div span {
-  font-size: 12px;
-  font-weight: 500;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
-  color: #121212;
-  opacity: 80%;
-  margin-bottom: 5px;
+.references_div > div {
+  display: flex;
+  gap: 25px;
 }
 
-.education_div h3 {
-  font-size: 12px;
-  font-weight: 400;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
-  color: #121212;
-  opacity: 80%;
-}
-
-.education_div h6 {
-  font-size: 12px;
-  font-weight: 300;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
-  color: #121212;
-  opacity: 80%;
-}
-
-.certification_div p {
-  font-size: 12px;
-  font-weight: 400;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
-  color: #121212;
-  opacity: 80%;
-  margin-bottom: 10px;
-}
-
-.certification_div span {
-  font-size: 12px;
-  font-weight: 500;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
-  color: #121212;
-  opacity: 80%;
-  margin-bottom: 5px;
-}
-
-.certification_div h3 {
-  font-size: 14px;
-  font-weight: 400;
-  font-family: "Poppins";
-  letter-spacing: 0.28px;
-  color: #121212;
-  opacity: 80%;
-  margin-bottom: 5px;
+.references_div > div > a {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  text-decoration: underline;
+  font-family: "Aptos";
 }
 
 .language_div {
@@ -207,7 +153,6 @@
 .language_div h6 {
   font-size: 14px;
   font-weight: 400;
-  font-family: "Poppins";
   letter-spacing: 0.28px;
   color: #121212;
   opacity: 80%;
@@ -216,16 +161,15 @@
 .language_div p {
   font-size: 12px;
   font-weight: 300;
-  font-family: "Poppins";
   letter-spacing: 0.28px;
   color: #121212;
   opacity: 80%;
+  font-family: "Aptos";
 }
 
 .profile p {
   font-size: 12px;
   font-weight: 300;
-  font-family: "Poppins";
   letter-spacing: 0.14px;
   color: #121212;
 }
@@ -233,7 +177,6 @@
 .work_experiance h3 {
   font-size: 12px;
   font-weight: 500;
-  font-family: "Poppins";
   letter-spacing: 0.14px;
   color: #121212;
 }
@@ -248,7 +191,6 @@
 .work_experiance_div h3 {
   font-size: 12px;
   font-weight: 400;
-  font-family: "Poppins";
   letter-spacing: 0.14px;
   color: #121212;
 }
@@ -256,7 +198,6 @@
 .work_experiance p {
   font-size: 12px;
   font-weight: 300;
-  font-family: "Poppins";
   letter-spacing: 0.14px;
   color: #121212;
   margin-top: 10px;
@@ -265,25 +206,6 @@
 .work_experiance ul li {
   font-size: 12px;
   font-weight: 300;
-  font-family: "Poppins";
-  letter-spacing: 0.14px;
-  color: #121212;
-  margin-top: 10px;
-}
-
-.job_position span {
-  font-size: 12px;
-  font-weight: 500;
-  font-family: "Poppins";
-  letter-spacing: 0.14px;
-  color: #121212;
-  margin-top: 10px;
-}
-
-.job_position p {
-  font-size: 12px;
-  font-weight: 300;
-  font-family: "Poppins";
   letter-spacing: 0.14px;
   color: #121212;
   margin-top: 10px;
@@ -294,12 +216,12 @@
   align-items: center;
   justify-content: center;
   padding: 20px 0px;
+  font-family: "Aptos";
 }
 
 .footer p {
   font-size: 8px;
   font-weight: 300;
-  font-family: "Poppins";
   letter-spacing: 0.14px;
   color: #121212;
   margin-top: 2px;
@@ -309,7 +231,6 @@
 .refrence h3 {
   font-size: 14px;
   font-weight: 400;
-  font-family: "Poppins";
   letter-spacing: 0.28px;
   color: #121212;
   opacity: 80%;
@@ -318,7 +239,6 @@
 .refrence span {
   font-size: 12px;
   font-weight: 400;
-  font-family: "Poppins";
   letter-spacing: 0.28px;
   color: #121212;
   opacity: 80%;
