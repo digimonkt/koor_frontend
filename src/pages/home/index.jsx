@@ -40,7 +40,6 @@ import DialogBox from "../../components/dialogBox";
 import { Helmet } from "react-helmet";
 import dayjs from "dayjs";
 import { getTenderSearchAPI } from "@api/tender";
-import { FilledButton } from "@components/button";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -526,10 +525,6 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-                <FilledButton
-                  onClick={() => navigate("/search/jobs")}
-                  title={`See all ${totalJobs} jobs`}
-                />
               </Box>
               <Box
                 sx={{
@@ -590,10 +585,6 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-                <FilledButton
-                  onClick={() => navigate("/search/tenders")}
-                  title={`See all ${totalTenders} tenders`}
-                />
               </Box>
             </Container>
             <Container
