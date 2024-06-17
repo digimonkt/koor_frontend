@@ -65,6 +65,8 @@
   },
   "scripts": {
     "start": "craco start",
+    "start:android": "npx cap sync && ionic cap run android --external --livereload",
+    "start:ios": "npx cap sync && ionic cap run ios --external --livereload",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",

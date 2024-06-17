@@ -2,14 +2,25 @@
   "appId": "org.reactjs.example.koor",
   "appName": "koor",
   "bundledWebRuntime": false,
-  "npmClient": "npm",
+  "npmClient": "yarn",
+  "cleartext": true,
+  "hostname": "koorjobs.com",
+  "allowNavigation": [
+    "*"
+  ],
   "webDir": "build",
-  "cordova": {},
-  "android": {
-    "namespace": "org.reactjs.example.koor"
-  },
-  "server": {
-    "androidScheme": "http",
-    "cleartext": true
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "androidScaleType": "CENTER_CROP"
+    },
+    "FirebaseAuthentication": {
+      "skipNativeAuth": false,
+      "providers": [
+        "apple.com",
+        "facebook.com",
+        "google.com"
+      ]
+    }
   }
 }

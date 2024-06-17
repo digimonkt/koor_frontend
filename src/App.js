@@ -96,14 +96,10 @@ function App() {
   useEffect(() => {
     if (currentUser.role !== USER_ROLES.employer) {
       const isVerified = currentUser?.profile?.isVerified;
-      // Get the current URL
       const currentUrl = window.location.href;
-      // Split the URL based on the '?' character
       const urlParts = currentUrl.split("?");
 
-      // Check if there is a second part (after '?')
       if (urlParts.length === 2) {
-        // Get the second part, which contains the query parameters
         const queryParams = urlParts[1];
         const paramPairs = queryParams.split("&");
         const verifyTokenPair = paramPairs.find((pair) =>
@@ -124,8 +120,7 @@ function App() {
     <div className="App">
       {isGlobalLoading ? <FallbackLoading /> : ""}
       <div style={{ display: isGlobalLoading ? "none" : "" }}>
-        {platform === "android" || platform === "ios" ? null : <Header />}
-
+        <Header />
         <Routes>
           {ROUTES.map((route) => {
             if (!route.path) {
