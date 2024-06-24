@@ -36,7 +36,6 @@ import AdvanceFilter from "./advanceFilter";
 import { Capacitor } from "@capacitor/core";
 import { getAdSenseAPI } from "@api/adSense";
 import { setAdSense } from "@redux/slice/adSense";
-import Tabs from "@pages/tabs/tabs";
 function Search({ searchTypeForJob }) {
   const platform = Capacitor.getPlatform();
   const params = useParams();
@@ -55,9 +54,8 @@ function Search({ searchTypeForJob }) {
   const [sortBy, setSortBy] = useState(JOB_SORT_BY.created);
   const [orderBy, setOrderBy] = useState(JOB_ORDER_BY.descending);
   const [search, setSearch] = useState("");
-  const [value, setValue] = useState("1");
+  const [value] = useState("1");
   const { adSense } = useSelector((state) => state.adSense);
-  const { isMobileView } = useSelector((state) => state.platform);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -197,7 +195,6 @@ function Search({ searchTypeForJob }) {
     <Box
       className={`${styles.body}`}
       sx={{
-        // marginTop: platform === "android" || platform === "ios" ? "" : "118px",
         marginTop: "118px",
       }}
     >
@@ -205,52 +202,18 @@ function Search({ searchTypeForJob }) {
         maxWidth={false}
         sx={{
           padding: "0px 16px",
-          // platform === "android" || platform === "ios" ? "0px" : "0px 16px",
           "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
         }}
       >
-        {/* {isMobileView && (
-          <Box sx={{ px: 3, pt: 3 }}>
-            <HeaddingSearch
-              title="Browse talents"
-              count={
-                <Box
-                  component={"span"}
-                  sx={{
-                    background: "#D5E3F7",
-                    padding: "5px 12px",
-                    borderRadius: "73px",
-                    fontFamily: "Bahnschrift",
-                    fontWeight: 600,
-                    fontSize: "14px",
-                    ml: 1,
-                  }}
-                >
-                  2,513
-                </Box>
-              }
-              icon={
-                <IconButton>
-                  <SVG.CalendarMonth />
-                </IconButton>
-              }
-            />
-          </Box>
-        )} */}
-
         <Grid container spacing={2}>
           <Grid
             item
             lg={3.5}
             sx={{
               display: { xs: "none", lg: "block" },
-              // position: "sticky",
-              // top: "60px",
-              // height: "580px",
-              // overflow: "hidden",
             }}
           >
             <AdvanceFilter
@@ -295,30 +258,13 @@ function Search({ searchTypeForJob }) {
             >
               <AdvanceFilter searchType={searchType || searchTypeForJob} />
             </Box>
-            {isMobileView &&
-              (role === USER_ROLES.vendor || role === USER_ROLES.employer) && (
-                <Box
-                  sx={{
-                    marginTop: { lg: "24px", xs: "24px" },
-                    background: "#fff",
-                    padding: "10px 16px 0px",
-                    borderRadius: "15px 15px 0px 0px",
-                    marginBottom: "-10px",
-                    "& .MuiTabs-indicator": {
-                      background: "#274593 !important",
-                    },
-                  }}
-                >
-                  <Tabs setValue={setValue} value={value} role={role} />
-                </Box>
-              )}
             {value !== "2" && (
               <>
                 <Box
                   className={`${styles.jobcards}`}
                   sx={{
                     minHeight: "450px",
-                    marginTop: isMobileView ? "" : "24px",
+                    marginTop: "24px",
                   }}
                 >
                   <div className="saved-jobs">

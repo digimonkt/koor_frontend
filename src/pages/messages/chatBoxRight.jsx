@@ -55,7 +55,6 @@ import {
   getApplicationOnJobAPI,
   getApplicationOnTenderAPI,
 } from "@api/employer";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 dayjs.extend(utcPlugin);
 dayjs.extend(timezonePlugin);
 dayjs.extend(relativeTime);
@@ -67,7 +66,6 @@ function ChatBox({ setIsSeleted }) {
   const { role, currentUser, isBlackListedByEmployer } = useSelector(
     (state) => state.auth
   );
-  const { isMobileView } = useSelector((state) => state.platform);
   const { jobSeekerJobApplication, vendorTenderApplication } = useSelector(
     (state) => state.employer
   );
@@ -460,11 +458,6 @@ function ChatBox({ setIsSeleted }) {
     setIsLoading(false);
   };
 
-  const handleBack = () => {
-    setIsSeleted(false);
-    navigate(`/${role}/chat`);
-  };
-
   useEffect(() => {
     if (!isScrollToBottom) {
       scrollToBottom();
@@ -621,11 +614,6 @@ function ChatBox({ setIsSeleted }) {
               <div className="headerbox">
                 <h3 style={{ display: "flex", alignItems: "center" }}>
                   {" "}
-                  {isMobileView && (
-                    <IconButton onClick={handleBack} sx={{ mr: 1 }}>
-                      <ArrowBackIcon />
-                    </IconButton>
-                  )}
                   <span> {userDetails.name || userDetails.email}</span>
                 </h3>
                 {/* <p className="mb-2">Online Research Participant</p> */}

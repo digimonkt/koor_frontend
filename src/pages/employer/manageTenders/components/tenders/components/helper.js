@@ -35,7 +35,6 @@ export const MANAGE_TENDERS_ITEMS = [
     img: IMAGES.Education,
     title: "Education development trust",
     plan: "Interview planned",
-
     chiplabel: (
       <>
         <Chip

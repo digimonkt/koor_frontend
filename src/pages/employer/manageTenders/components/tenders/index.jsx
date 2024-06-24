@@ -9,7 +9,6 @@ import TenderCard from "../../../../../components/tenderCard";
 import ApplicantList from "../applicantList";
 import { NoDataFoundAnimation } from "../../../../../components/animations";
 import TenderCardSkeletonLoader from "../../../../../components/tenderCard/tenderCardSkeletonLoader";
-import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
 
 const Tenders = ({ onTabChange }) => {
   const dispatch = useDispatch();
@@ -121,9 +120,6 @@ const Tenders = ({ onTabChange }) => {
                   },
                 }}
               >
-                {index === 0 && (
-                  <EmployerMyPostTabs onTabChange={onTabChange} />
-                )}
                 <TenderCard tenderDetails={tender} selfTender />
                 <ApplicantList
                   tenderId={tender.id}

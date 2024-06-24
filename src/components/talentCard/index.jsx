@@ -13,11 +13,9 @@ import { generateFileUrl } from "../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
 import { getConversationIdByUserIdAPI } from "../../api/chat";
-import { Capacitor } from "@capacitor/core";
 import { ShowLessText } from "@components/common";
 
 function TalentCard({ talentDetails }) {
-  const platform = Capacitor.getPlatform();
   const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
 
@@ -75,10 +73,8 @@ function TalentCard({ talentDetails }) {
             src={generateFileUrl(talentDetails.profilePicture?.path || "")}
             sx={{
               borderRadius: "0px !important",
-              width:
-                platform === "android" || platform === "ios" ? "40px" : "70px",
-              height:
-                platform === "android" || platform === "ios" ? "40px" : "70px",
+              width: "70px",
+              height: "70px",
             }}
           />
           {matches && (

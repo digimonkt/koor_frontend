@@ -13,137 +13,9 @@ import { generateFileUrl } from "../../utils/generateFileUrl";
 import urlcat from "urlcat";
 import { Link, useNavigate } from "react-router-dom";
 import { getConversationIdByUserIdAPI } from "../../api/chat";
-import { Capacitor } from "@capacitor/core";
 import { ShowLessText } from "@components/common";
 
-// function VendorCard({ vendorDetails }) {
-//   const navigate = useNavigate();
-
-//   const handleMessageClick = async () => {
-//     const res = await getConversationIdByUserIdAPI({
-//       userId: vendorDetails?.id,
-//     });
-//     if (res.remote === "success") {
-//       const conversationId = res.data.conversation_id;
-//       navigate(
-//         urlcat("/employer/chat", {
-//           conversion: conversationId,
-//           userId: vendorDetails?.id,
-//         })
-//       );
-//     }
-//   };
-
-//   return (
-//     <Stack
-//       direction={{ xs: "column", lg: "row" }}
-//       spacing={{ xs: "2", lg: "2" }}
-//       alignItems={{ xs: "start", lg: "center" }}
-//       justifyContent={{ xs: "center", lg: "space-between" }}
-//       className="border-recent"
-//       textAlign="justify"
-//     >
-//       <Stack direction="row" spacing={2} sx={{ alignItems: "flex-start" }}>
-//         <Avatar
-//           src={generateFileUrl(vendorDetails.profilePicture?.path || "")}
-//           sx={{ width: "70px", height: "70px", borderRadius: "0px !important" }}
-//         />
-//         <div className="recent-content">
-//           <Stack
-//             direction="row"
-//             divider={<Divider orientation="vertical" flexItem />}
-//             spacing={2}
-//             flexWrap="wrap"
-//             alignItems="center"
-//             sx={{ mb: 1 }}
-//           >
-//             <h4>
-//               <Link
-//                 to={urlcat("/vendor/:userId/profile", {
-//                   userId: vendorDetails.id,
-//                 })}
-//               >
-//                 {vendorDetails.name || vendorDetails.email}
-//               </Link>
-//             </h4>
-//             <div className="recent-research" style={{ flexWrap: "wrap" }}>
-//               <span>{vendorDetails.highestEducation}</span>
-//             </div>
-//           </Stack>
-//           <Stack
-//             direction="row"
-//             spacing={2}
-//             alignItems="center"
-//             sx={{ mb: 1 }}
-//             className="meets_div"
-//           >
-//             {vendorDetails.country ? (
-//               <>
-//                 <div>
-//                   <span className="meets">
-//                     <SVG.LocationIcon />
-//                   </span>
-//                 </div>
-//                 <div>
-//                   <span className="meets">
-//                     {vendorDetails.country}, {vendorDetails.city}
-//                   </span>
-//                 </div>
-//               </>
-//             ) : (
-//               ""
-//             )}
-//           </Stack>
-//           <div>
-//             <ShowLessText item={vendorDetails.description} />
-//           </div>
-//           <Stack
-//             direction="row"
-//             spacing={2}
-//             alignItems="center"
-//             sx={{ mb: 1, mt: 2, flexWrap: "wrap" }}
-//             useFlexGap
-//             className="meets_div"
-//           >
-//             {vendorDetails.sectors.map((sector) => (
-//               <Chip
-//                 key={sector.id}
-//                 label={`Sector: ${sector.title}`}
-//                 className="chiplabel"
-//                 icon={<SVG.Sector />}
-//               />
-//             ))}
-
-//             {vendorDetails.tags.map((tag) => (
-//               <Chip
-//                 key={tag.id}
-//                 label={`Tag: ${tag.title}`}
-//                 className="chiplabel"
-//                 icon={<SVG.Tag />}
-//               />
-//             ))}
-//           </Stack>
-//         </div>
-//       </Stack>
-//       <Stack direction="row" spacing={2} alignItems="center">
-//         <Stack direction="row" spacing={0} className="edit-button">
-//           <Button variant="link" onClick={handleMessageClick}>
-//             <SVG.MessageIcon
-//               style={{
-//                 color: "#274593",
-//               }}
-//               className="application-option-icon"
-//             />
-//             <span>Message</span>
-//           </Button>
-//         </Stack>
-//       </Stack>
-//     </Stack>
-//   );
-// }
-
 function VendorCard({ vendorDetails }) {
-  const platform = Capacitor.getPlatform();
   const matches = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
 
@@ -201,10 +73,8 @@ function VendorCard({ vendorDetails }) {
             src={generateFileUrl(vendorDetails.profilePicture?.path || "")}
             sx={{
               borderRadius: "0px !important",
-              width:
-                platform === "android" || platform === "ios" ? "40px" : "70px",
-              height:
-                platform === "android" || platform === "ios" ? "40px" : "70px",
+              width: "70px",
+              height: "70px",
             }}
           />
           {matches && (

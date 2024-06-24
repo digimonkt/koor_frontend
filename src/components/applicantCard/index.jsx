@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
 import { SVG } from "../../assets/svg";
 import ApplicationOptions from "../../components/applicationOptions";
-import { Capacitor } from "@capacitor/core";
 import { useNavigate } from "react-router-dom";
 
 function ApplicantCard({
@@ -29,7 +28,6 @@ function ApplicantCard({
     );
   };
 
-  const platform = Capacitor.getPlatform();
   return (
     <Stack
       direction={{ xs: "column", lg: "row" }}
@@ -50,10 +48,8 @@ function ApplicantCard({
             width: "70px",
             height: "70px",
             "@media(max-width:768px)": {
-              width:
-                platform === "android" || platform === "ios" ? "40px" : "86px",
-              height:
-                platform === "android" || platform === "ios" ? "40px" : "86px",
+              width: "86px",
+              height: "86px",
             },
           }}
         />

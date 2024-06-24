@@ -35,10 +35,8 @@ import {
 } from "../../api/home";
 import { generateFileUrl } from "../../utils/generateFileUrl";
 import TestimonialSlider from "./verticalSlider/TestimonialSlider";
-import { Capacitor } from "@capacitor/core";
 import DialogBox from "../../components/dialogBox";
 import { Helmet } from "react-helmet";
-const platform = Capacitor.getPlatform();
 
 const Home = () => {
   const navigate = useNavigate();
@@ -193,15 +191,9 @@ const Home = () => {
               <Box
                 className={styles.back_img_div}
                 sx={{
-                  marginTop:
-                    platform === "android" || platform === "ios"
-                      ? "0px"
-                      : "68px",
+                  marginTop: "68px",
                   "@media (max-width:992px)": {
-                    marginTop:
-                      platform === "android" || platform === "ios"
-                        ? "0px"
-                        : "60px",
+                    marginTop: "60px",
                   },
                 }}
               >

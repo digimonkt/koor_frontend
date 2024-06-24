@@ -11,7 +11,7 @@ import ApplicantCard from "../../../../components/applicantCard";
 import ApplicantCardSkeletonLoading from "../../../../components/applicantCard/skeletonLoading";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalApplicationsByJob } from "../../../../redux/slice/employer";
-const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
+const ApplicantList = ({ totalApplications, jobId }) => {
   const { totalApplicationsByJob } = useSelector((state) => state.employer);
   const [applicants, setApplicants] = useState([]);
   const [filter, setFilter] = useState("");
@@ -45,7 +45,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           rejected: totalRejected,
           plannedInterview: totalPlannedInterview,
         },
-      }),
+      })
     );
   }, [filter]);
 
@@ -95,7 +95,7 @@ const ApplicantList = ({ totalApplications, jobId, tenderId }) => {
           className="chip-cricle"
           onClick={() => {
             handleGetApplicationByStatus(
-              JOB_APPLICATION_OPTIONS.plannedInterviews,
+              JOB_APPLICATION_OPTIONS.plannedInterviews
             );
           }}
           label={

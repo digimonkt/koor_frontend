@@ -78,13 +78,12 @@ export default function PublicProfileComponent() {
     const userId = params.userId;
     getUserDetails(userId);
   }, []);
-  const { isMobileView } = useSelector((state) => state.platform);
   return (
     <Box
       sx={{
-        marginTop: isMobileView ? "0px" : "67px",
+        marginTop: "67px",
         py: 3,
-        pb: isMobileView ? 15 : null,
+        pb: null,
       }}
     >
       {isLoading ? (

@@ -31,7 +31,6 @@ import CancelApply from "./cancelApply";
 import ApplySuccessfully from "./applySuccessfully";
 import { getApplicationDetailsAPI } from "../../../api/employer";
 import urlcat from "urlcat";
-import { Capacitor } from "@capacitor/core";
 import { downloadUrlCreator, fileTypeExtractor } from "@utils/fileUtils";
 const ApplyForJob = () => {
   const dispatch = useDispatch();
@@ -198,22 +197,10 @@ const ApplyForJob = () => {
       getApplicantDetails();
     }
   }, [searchParams.get("applicationId")]);
-  const platform = Capacitor.getPlatform();
   return (
     <div>
-      <Container
-        sx={{
-          padding: platform === "android" || platform === "ios" ? "0px" : null,
-        }}
-      >
-        <div
-          className={`${styles.Jobcard}`}
-          style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
-            borderRadius:
-              platform === "android" || platform === "ios" ? "0px" : null,
-          }}
-        >
+      <Container>
+        <div className={`${styles.Jobcard}`}>
           <div className={`${styles.grids}`}>
             <Grid container spacing={2}>
               <Grid item xs={11} sm={11} lg={11}>
@@ -408,11 +395,7 @@ const ApplyForJob = () => {
               </Grid>
 
               <Stack
-                direction={
-                  platform === "android" || platform === "ios"
-                    ? "column-reverse"
-                    : "row"
-                }
+                direction={"row"}
                 spacing={2}
                 className={`${styles.applybtns}`}
               >
@@ -430,11 +413,7 @@ const ApplyForJob = () => {
                       ? "Update"
                       : "Apply"
                   }
-                  className={`${styles.applybtn} ${
-                    platform === "android" || platform === "ios"
-                      ? styles.applybtnapp
-                      : ""
-                  }`}
+                  className={styles.applybtn}
                   type="submit"
                   disabled={isSubmitting}
                 />

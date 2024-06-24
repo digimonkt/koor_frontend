@@ -13,7 +13,6 @@ import { SVG } from "../../assets/svg";
 import DialogBox from "../../components/dialogBox";
 import Settings from "./settings";
 import dayjs from "dayjs";
-import { Capacitor } from "@capacitor/core";
 
 function NotificationContentComponent({
   footer,
@@ -23,7 +22,6 @@ function NotificationContentComponent({
   setAllNotificationToRead,
 }) {
   const { role } = useSelector((state) => state.auth);
-  const platform = Capacitor.getPlatform();
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState([]);
   const [filterData, setFilterData] = useState([]);
@@ -145,22 +143,12 @@ function NotificationContentComponent({
                 onChange={handleChangeSection}
                 sx={{
                   "&.tab_list .MuiTabs-scroller": {
-                    marginBottom:
-                      platform === "android" || platform === "ios"
-                        ? "24px"
-                        : "0px",
+                    marginBottom: "0px",
                   },
                   "&.tab_list .MuiTabs-flexContainer": {
-                    marginBottom:
-                      platform === "android" || platform === "ios"
-                        ? "0px !important"
-                        : "15px",
+                    marginBottom: "15px",
                   },
                   "&.tab_list .MuiTabs-indicator": {
-                    display:
-                      platform === "android" || platform === "ios"
-                        ? "inherit !important"
-                        : null,
                     background: "#EEA23D",
                     height: "3px",
                     borderRadius: "8px 12px 0px 0px",
@@ -169,80 +157,26 @@ function NotificationContentComponent({
               >
                 <Tab
                   label="All"
-                  className={
-                    platform === "android" || platform === "ios"
-                      ? ""
-                      : styles.tabs_btn
-                  }
+                  className={styles.tabs_btn}
                   value="all"
                   sx={{
                     "&.MuiButtonBase-root.MuiTab-root": { color: "#848484" },
-                    "&.MuiButtonBase-root.MuiTab-root.Mui-selected": {
-                      background:
-                        platform === "android" || platform === "ios"
-                          ? "#fff !important"
-                          : "",
-                      color:
-                        platform === "android" || platform === "ios"
-                          ? "#121212 !important"
-                          : "",
-                      opacity:
-                        platform === "android" || platform === "ios"
-                          ? "1 !important"
-                          : "",
-                    },
                   }}
                 />
                 <Tab
                   label={role === "vendor" ? "Tenders" : "Jobs"}
-                  className={
-                    platform === "android" || platform === "ios"
-                      ? ""
-                      : styles.tabs_btn
-                  }
+                  className={styles.tabs_btn}
                   value={role === "vendor" ? "tenders" : "jobs"}
                   sx={{
                     "&.MuiButtonBase-root.MuiTab-root": { color: "#848484" },
-                    "&.MuiButtonBase-root.MuiTab-root.Mui-selected": {
-                      background:
-                        platform === "android" || platform === "ios"
-                          ? "#fff !important"
-                          : "",
-                      color:
-                        platform === "android" || platform === "ios"
-                          ? "#121212 !important"
-                          : "",
-                      opacity:
-                        platform === "android" || platform === "ios"
-                          ? "1 !important"
-                          : "",
-                    },
                   }}
                 />
                 <Tab
                   label="Message"
-                  className={
-                    platform === "android" || platform === "ios"
-                      ? ""
-                      : styles.tabs_btn
-                  }
+                  className={styles.tabs_btn}
                   value="message"
                   sx={{
                     "&.MuiButtonBase-root.MuiTab-root": { color: "#848484" },
-                    "&.MuiButtonBase-root.MuiTab-root.Mui-selected": {
-                      background:
-                        platform === "android" || platform === "ios"
-                          ? "#fff !important"
-                          : "",
-                      color:
-                        platform === "android" || platform === "ios"
-                          ? "#121212 !important"
-                          : "",
-                      opacity:
-                        platform === "android" || platform === "ios"
-                          ? "1 !important"
-                          : "",
-                    },
                   }}
                 />
               </TabList>

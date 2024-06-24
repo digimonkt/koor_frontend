@@ -1,24 +1,18 @@
-import { Chip, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SVG } from "../../../assets/svg";
 import { OutlinedButton } from "../../../components/button";
 import AllApplication from "./component/allApplication";
 import MyJobs from "./component/myJobs";
-import { AntTab, AntTabs } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import Blacklist from "./component/blacklist";
 import urlcat from "urlcat";
 import DialogBox from "../../../components/dialogBox";
 import { setManageJobActiveTab } from "../../../redux/slice/employer";
-import Tenders from "../manageTenders/components/tenders";
 
 function ManageJobsComponent() {
-  // const platform = Capacitor.getPlatform();
   const { totalCreatedJobs } = useSelector((state) => state.employer);
-  const { totalApplications } = useSelector((state) => state.employer);
-  const { isMobileView } = useSelector((state) => state.platform);
-  const { totalBlacklist } = useSelector((state) => state.employer);
+
   const [panel, setPanel] = useState(0);
   const [accountVerifiedWarning, setAccountVerifiedWarning] = useState(false);
   const { currentUser } = useSelector((state) => state.auth);
@@ -34,12 +28,12 @@ function ManageJobsComponent() {
     {
       title: "All applications",
       count: 0,
-      component: isMobileView ? Tenders : AllApplication,
+      component: AllApplication,
     },
     {
       title: "Blacklist",
       count: 0,
-      component: isMobileView ? AllApplication : Blacklist,
+      component: Blacklist,
     },
   ]);
 
@@ -65,47 +59,6 @@ function ManageJobsComponent() {
   return (
     <div className="manage-jobs">
       <div className="ant_tabs_div">
-        {!isMobileView && (
-          <AntTabs
-            value={panel}
-            onChange={(e, newValue) => handlePageTab(newValue)}
-            variant="scrollable"
-            scrollButtons
-            allowScrollButtonsMobile
-          >
-            <AntTab
-              label={
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <span>My Jobs</span>{" "}
-                  <Chip label={totalCreatedJobs} className="job-count" />
-                </Stack>
-              }
-              id={`simple - tab - ${0}`}
-            aria-controls={`simple - tabpanel - ${0}`}
-            />
-            <AntTab
-              label={
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <span>All applications</span>{" "}
-                  <Chip label={totalApplications} className="job-count" />
-                </Stack>
-              }
-              id={`simple - tab - ${1}`}
-              aria-controls={`simple - tabpanel - ${1}`}
-            />
-            <AntTab
-              label={
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <span>Blacklisted</span>{" "}
-                  <Chip label={totalBlacklist} className="job-count" />
-                </Stack>
-              }
-              id={`simple - tab - ${1}`}
-              aria-controls={`simple - tabpanel - ${1}`}
-            />
-          </AntTabs>
-        )}
-
         <div className="post_new_job_btn">
           <OutlinedButton
             sx={{ whiteSpace: "nowrap" }}
@@ -133,35 +86,34 @@ function ManageJobsComponent() {
           role="tabpanel"
           hidden={index !== panel}
           id={`simple - tabpanel - ${index}`}
-      style={{ height: "100%" }}
+          style={{ height: "100%" }}
         >
-      <tab.component onTabChange={handlePageTab} />
-    </div>
-  ))
-}
-<DialogBox
-  open={accountVerifiedWarning}
-  handleClose={() => setAccountVerifiedWarning(false)}
->
-  <div>
-    <SVG.Warning
-      style={{
-        marginLeft: "39%",
-        height: "50px",
-        width: "50px",
-        color: "red",
-      }}
-    />
-    <h1 className="heading">Account Verification Status </h1>
-    <div className="form-content">
-      <p>
-        Dear {currentUser.name || currentUser.email}, your account is not
-        verified by the administrator. Please contact the administrator
-        for further assistance.
-      </p>
-    </div>
-  </div>
-</DialogBox>
+          <tab.component onTabChange={handlePageTab} />
+        </div>
+      ))}
+      <DialogBox
+        open={accountVerifiedWarning}
+        handleClose={() => setAccountVerifiedWarning(false)}
+      >
+        <div>
+          <SVG.Warning
+            style={{
+              marginLeft: "39%",
+              height: "50px",
+              width: "50px",
+              color: "red",
+            }}
+          />
+          <h1 className="heading">Account Verification Status </h1>
+          <div className="form-content">
+            <p>
+              Dear {currentUser.name || currentUser.email}, your account is not
+              verified by the administrator. Please contact the administrator
+              for further assistance.
+            </p>
+          </div>
+        </div>
+      </DialogBox>
     </div>
   );
 }

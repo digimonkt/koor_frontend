@@ -41,7 +41,6 @@ import {
 import ShareJob from "../shareJob";
 import { setErrorToast, setSuccessToast } from "../../../redux/slice/toast";
 import { showDay, formatCommaText } from "@utils/constants/utility";
-import { Capacitor } from "@capacitor/core";
 import {
   downloadUrlCreator,
   fileTypeExtractor,
@@ -224,28 +223,19 @@ const JobDetails = () => {
       downloadUrlCreator(fileType, base64String);
     }
   };
-  const platform = Capacitor.getPlatform();
 
   return (
     <>
       <Container
         maxWidth={false}
         sx={{
-          padding: platform === "android" || platform === "ios" ? "0px" : null,
           "@media(min-width:992px)": {
             paddingLeft: "100px",
             paddingRight: "100px",
           },
         }}
       >
-        <div
-          className={`${styles.Jobcard}`}
-          style={{
-            margin: platform === "android" || platform === "ios" ? "0px" : null,
-            borderRadius:
-              platform === "android" || platform === "ios" ? "0px" : null,
-          }}
-        >
+        <div className={`${styles.Jobcard}`}>
           {state.postExist ? (
             <>
               <div className={`${styles.grids}`}>
@@ -841,30 +831,6 @@ const JobDetails = () => {
                 sx={{
                   "& p": {
                     position: "relative",
-                    padding:
-                      platform === "android" || platform === "ios"
-                        ? "16px 30px 16px 0px"
-                        : "",
-                    margin:
-                      platform === "android" || platform === "ios" ? "0" : "",
-                    borderBottom:
-                      platform === "android" || platform === "ios"
-                        ? "1px solid #ccc"
-                        : "",
-                  },
-                  "& p:last-child": {
-                    borderBottom:
-                      platform === "android" || platform === "ios" ? "0" : "",
-                  },
-                  "& p:first-child": {
-                    paddingTop:
-                      platform === "android" || platform === "ios" ? "0px" : "",
-                  },
-                  "& span": {
-                    display:
-                      platform === "android" || platform === "ios"
-                        ? "block"
-                        : "",
                   },
                 }}
               >
@@ -886,20 +852,6 @@ const JobDetails = () => {
                         {formatCommaText(item.city.title, item.country.title)}
                         {item.budgetAmount > 0 && ` $${item.budgetAmount}`}
                       </span>
-                      {platform === "android" || platform === "ios" ? (
-                        <b
-                          style={{
-                            position: "absolute",
-                            right: "10px",
-                            top: "37px",
-                            transform: "translate(0%, -37%)",
-                          }}
-                        >
-                          <SVG.ArrowAngle />
-                        </b>
-                      ) : (
-                        ""
-                      )}
                     </p>
                   );
                 })}

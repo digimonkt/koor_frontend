@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { NoDataFoundAnimation } from "../../../../components/animations";
 import BlacklistCardSkeletonLoading from "../../../../components/blacklistCard/blacklistCardSkeletonLoading";
 import BlacklistCard from "../../../../components/blacklistCard";
-import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
 function Blacklist({ onTabChange }) {
   const dispatch = useDispatch();
   const [blacklistData, setBlacklistData] = useState([]);
@@ -74,7 +73,6 @@ function Blacklist({ onTabChange }) {
             },
           }}
         >
-          <EmployerMyPostTabs onTabChange={onTabChange} />
           {isLoading ? (
             [1, 2, 3].map((loader) => (
               <BlacklistCardSkeletonLoading key={loader} />

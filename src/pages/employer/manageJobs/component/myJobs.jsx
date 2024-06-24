@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { setTotalCreatedJobs } from "../../../../redux/slice/employer";
 import { NoDataFoundAnimation } from "../../../../components/animations";
 import JobCardSkeletonLoader from "../../../../components/jobCard/jobCardSkeletonLoader";
-import EmployerMyPostTabs from "@pages/employer/employerMyPostTabs/employerMyPostTabs";
 
 function MyJobs({ onTabChange }) {
   const dispatch = useDispatch();
@@ -106,9 +105,6 @@ function MyJobs({ onTabChange }) {
                   },
                 }}
               >
-                {index === 0 && (
-                  <EmployerMyPostTabs onTabChange={onTabChange} />
-                )}
                 <JobCard selfJob jobDetails={job} />
                 <ApplicantList
                   jobId={job.id}

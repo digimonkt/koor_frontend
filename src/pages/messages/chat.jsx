@@ -4,12 +4,10 @@ import ChatList from "./chatList";
 import ChatBox from "./chatBoxRight";
 import { useSearchParams } from "react-router-dom";
 import { ChatNotSelected } from "../../components/animations";
-import { useSelector } from "react-redux";
 
 function ChatComponent() {
   const [searchParams] = useSearchParams();
   const [isSeleted, setIsSeleted] = useState(false);
-  const { isMobileView } = useSelector((state) => state.platform);
 
   return (
     <>
@@ -38,11 +36,7 @@ function ChatComponent() {
             }}
             className="leftchatbox"
           >
-            {!isMobileView ? (
-              <ChatList setIsSeleted={setIsSeleted} />
-            ) : (
-              <>{!isSeleted && <ChatList setIsSeleted={setIsSeleted} />}</>
-            )}
+            {!isSeleted && <ChatList setIsSeleted={setIsSeleted} />}
           </Box>
           <Box
             component="main"
